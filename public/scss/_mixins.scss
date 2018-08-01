@@ -1,0 +1,52 @@
+@mixin rounded-corners($radius: 3px) {
+  	border-radius: $radius;
+  	-webkit-border-radius: $radius;
+  	-moz-border-radius: $radius;
+}
+
+@mixin rotate($deg){
+  transform: rotate($deg);
+  -webkit-transform: rotate($deg);
+  -moz-transform: rotate($deg);
+  -o-transform: rotate($deg);
+  -ms-transform: rotate($deg);
+}
+
+@mixin transition($seconds){
+	-webkit-transition: $seconds linear;
+	-moz-transition: $seconds linear;
+	-ms-transition: $seconds linear;
+	-o-transition: $seconds linear;
+	transition: $seconds linear;
+}
+
+@mixin translate($value1, $value2){
+  transform: translate($value1, $value2);
+  -webkit-transform: translate($value1, $value2);
+  -moz-transform: translate($value1, $value2);
+  -o-transform: translate($value1, $value2);
+  -ms-transform: translate($value1, $value2);
+}
+
+@mixin gradient($startColor, $endColor) {	
+	  background-color: $startColor;
+    background-image: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+    background-image: -webkit-linear-gradient(top, $startColor, $endColor);
+    background-image:    -moz-linear-gradient(top, $startColor, $endColor);
+    background-image:     -ms-linear-gradient(top, $startColor, $endColor);
+    background-image:      -o-linear-gradient(top, $startColor, $endColor);
+    background-image:         linear-gradient(top, $startColor, $endColor);
+    filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$startColor}', endColorStr='#{$endColor}');
+}
+
+@mixin clearfix() {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+@mixin hide-text() {
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}

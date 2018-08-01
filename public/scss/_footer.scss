@@ -1,0 +1,128 @@
+/*=====================FOOTER======================*/
+.shadow-container{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 99999999;
+}
+.footer{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+	padding-bottom: 65px;
+	&.dark{
+		position: relative;
+		background-color: #000;
+		padding-top: 22px;
+		.games-listing-block .games-listing{
+			text-align: center;
+			display: block;
+			li{
+				margin-right: 38px;
+				&:last-child{
+					margin-right: 0;
+				}
+				a{
+					padding: 14px;
+					padding-bottom: 10px;
+					padding-right: 29px;
+					padding-left: 39px;
+					@include rounded-corners(19px);
+					&:hover{
+						background-color: #fff;
+						color: #000;
+					}
+					&:before{
+						font-family: 'FontAwesome';
+						content: '\f054';
+						background: none;
+						color: #7d66f7;
+						font-size: 8px;
+						width: auto;
+						height: auto;
+						top: 50%;
+						margin-top: -4px;
+						left: 14px;
+					}
+				}
+				&.active{
+					a{
+						background-color: #fff;
+						color: #000;
+					}
+				}
+			}
+		}
+	}
+	.msg-block{
+		text-align: right;
+		padding-right: 10%;
+		margin-bottom: 42px;
+		.msg{
+			font-size: 17px;
+			letter-spacing: 2px;
+		}
+	}
+	.games-listing-block{
+		width: 1140px;
+		margin: 0 auto;
+		.games-listing{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			display: -webkit-flex;
+			-webkit-justify-content: space-around;
+			display: flex;
+			justify-content: space-around;
+			li{
+				display: inline-block;
+				a{
+					display: block;
+					font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+					color: $main_font_color;
+					text-transform: uppercase;
+					letter-spacing: 2px;
+					@include transition(0.2s);
+					text-decoration: none;
+					position: relative;
+					padding-left: 57px;
+					z-index: 99999999999999999;
+					&:before{
+						content: '';
+						position: absolute;
+						left: 0;
+						top: 50%;
+						margin-top: -14.5px;
+						height: 29px;
+						width: 37px;
+						background: url('../media/images/sprite.png');
+					}
+					&.slots:before{
+						background-position: 0 -59px;
+					}
+					&.bjack:before{
+						background-position: -55px -58px;
+					}
+					&.roulette:before{
+						background-position: -110px -58px;
+					}
+					&.baccarat:before{
+						background-position: -170px -57px;
+					}
+					&.bonumbers:before{
+						background-position: -235px -58px;
+					}
+					&.keno:before{
+						background-position: -302px -59px;
+					}
+					&:hover{
+						opacity: .8;
+					}
+				}
+			}
+		}
+	}
+}

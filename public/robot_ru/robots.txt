@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /password/reset
+Disallow: /login
+Disallow: /registr
+Host: https://www.casinobit.ru
+Sitemap: https://www.casinobit.ru/sitemap.xml

@@ -1,0 +1,2309 @@
+/*=====================RESPONSIVE======================*/
+/* Large desktop */
+@media (min-width: 1920px) {
+
+}
+@media (max-width: 1634px) {
+	body{
+		.header.usr{
+			padding-right: 162px;
+			.header-right-part{
+				right: 60px;
+			}
+		}
+	}
+}
+@media (max-width: 1430px) {
+	body{
+		.header{
+			padding-left: 20px;
+			&.usr{
+				.header-right-part .usr-block{
+					padding-right: 35px;
+					.wlc-usr{
+						float: none;
+						margin-right: 0;
+					}
+					.deposit-block{
+						display: none;
+					}
+				}
+			}
+			.header-right-part{
+				right: 20px;
+			}
+		}
+		.slots-block .block-container .games-entry .single-game{
+			width: 25%;
+		}
+		.bitcoin-block{
+			top: 24%;
+		}
+		.main-title-block{
+			bottom: 24%;
+		}
+	}
+}
+@media (max-width: 1220px) {
+	body{
+		.header{
+			padding-right: 45px;
+			&.usr{
+				padding-right: 75px;
+			}
+			.language-block{
+				margin-right: 16px;
+			}
+			.navigation{
+				margin-right: 16px;
+				.navigation-list li{
+					padding: 0px 8px;
+				}
+			}
+			.header-right-part .login-block{
+				margin-right: 16px;
+			}
+		}
+		.reg-popup .popup-container,
+		.log-popup .popup-container{
+			max-width: 472px;
+			.popup-entry{
+				.popup-heading{
+					padding-top: 40px;
+					&:before{
+						width: 25px;
+						height: 26px;
+						background-position: 0 0;
+						margin-left: -12px;
+					}
+					.subtitle{
+						font-size: 20px;
+						letter-spacing: 5px;
+					}
+					.popup-title{
+						font-size: 48px;
+					}
+				}
+				.popup-form{
+					padding-top: 20px;
+					.send-btn-block .send-btn .btn-entry{
+						font-size: 26px;
+						padding: 19px 36px;
+						letter-spacing: 3px;
+					}
+				}
+			}
+		}
+		.bitcoin-block{
+			top: 22%;
+		}
+		.msg-popup{
+			left: 12%;
+			max-width: 136px;
+			padding-top: 12px;
+			padding-bottom: 40px;
+			.top-text{
+				.number-value{
+					font-size: 36px;
+				}
+				font-size: 16px;
+			}
+			.middle-text{
+				font-size: 15px;
+				letter-spacing: 1px;
+			}
+			.registration-btn{
+				padding: 10px 0;
+				height: 34px;
+				font-size: 14px;
+			}
+		}
+		.main-title-block{
+			bottom: 23%;
+			max-width: 480px;
+			.game-name{
+				margin-top: 10px;
+			}
+			.main-btn-block{
+				margin-top: 20px;
+			}
+		}
+	}
+}	
+/* Small screens */
+@media (max-width: 1170px) {
+	body{
+		.footer .games-listing-block{
+			width: 1040px;
+		}
+	}
+}
+@media (max-width: 1080px) {
+	body{
+		overflow-x: hidden;
+		.header{
+			z-index: 9999999;
+			padding-left: 73px;
+			&.usr{
+				padding-right: 0;
+				.header-right-part{
+					right: 20px;
+					.usr-block{
+						display: none;
+					}
+				}
+			}
+			.logo-block{
+				max-width: 383px;
+				margin-top: 43px;
+				position: relative;
+				float: left;
+			}
+			.header-right-part{
+				right: auto;
+				position: relative;
+				float: right;
+				padding-right: 64px;
+				.login-block{
+					height: 146px;
+					border-right: 1px solid rgba(246,23,202,0.5);
+					padding: 45px 0;
+					.login-btn{
+						height: 56px;
+						padding: 14px 0;
+						padding-left: 83px;
+						font-family: $fonts;
+						font-size: 29px;
+						margin-right: 55px;
+						&:before{
+							height: 56px;
+							width: 53px;
+							margin-top: -28px;
+							background-position: -314px -217px;
+						}
+					}
+				}
+				.menu-button-block{
+					display: block;
+				}
+			}
+
+		}
+		.slots-block{
+			display: none;
+			padding-bottom: 120px;
+			&.mobile{
+				display: block;
+			}
+			.block-container{
+				padding-right: 0;
+			}
+			.bg{
+				background: url('../media/images/bg/smoke-mobile.png') center no-repeat!important;
+				background-size: cover!important;
+				max-height: 1523px;
+				height: 100%;
+				opacity: 1;
+			}
+			.side-title{
+				display: none;
+			}
+			.block-heading{
+				margin-top: 280px;
+				.page-title{
+					color: #fff;
+					font-size: 101px;
+					letter-spacing: 58px;
+					margin-bottom: 40px;
+				}
+				.subtitle{
+					font-size: 41px;
+				}
+			}
+			.block-container{
+				margin-top: 90px;
+				.games-entry{
+					padding: 0;
+					.single-game{
+						width: 50%;
+						a{
+							.game-preview{
+								height: 200px;
+								max-width: 348px;
+								background-size: cover!important;
+							}
+							.title{
+								font-size: 34px;
+								margin-top: 40px;
+							}
+						}
+					}
+				}
+			}
+			.games-listing-block{
+				margin-top: 90px;
+				&.hidden-mob{
+					display: none;
+				}
+				.games-listing{
+					display: block;
+					list-style: none;
+					margin: 0;
+					padding: 0;
+					text-align: left;
+					max-width: 640px;
+					margin: 0 auto;
+					li{
+						width: 50%;
+						float: left;
+						&:last-child{
+							margin-right: 0;
+						}
+						a{
+							padding: 14px;
+							padding-right: 29px;
+							padding-left: 39px;
+							@include rounded-corners(19px);
+							font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+							color: $main_font_color;
+							font-size: 24px;
+							text-transform: uppercase;
+							letter-spacing: 3px;
+							text-decoration: none;
+							display: inline-block;
+							position: relative;
+							padding-bottom: 8px;
+							&:hover{
+								background-color: #fff;
+								color: #000;
+							}
+							&:before{
+								position: absolute;
+								font-family: 'FontAwesome';
+								content: '\f054';
+								color: #7d66f7;
+								font-size: 8px;
+								width: auto;
+								height: auto;
+								top: 50%;
+								margin-top: -6px;
+								left: 14px;
+							}
+						}
+					}
+					&:after{
+						@include clearfix();
+					}
+				}
+			}
+			.btn-block{
+				display: block;
+			}
+		}
+		.video-popup{
+			background: none;
+			background-color: #000;
+			.video-container{
+				max-width: 100%;
+				max-height: 100%;
+				height: 100%;
+				padding: 0;
+				.left-info{
+					left: 0;
+					top: 35px;
+					-webkit-transform: rotate(0) translateX(0);
+					transform: rotate(0) translateX(0);
+					-webkit-transform-origin: 0px 0px;
+					transform-origin: 0px 0px;
+					width: 100%;
+					padding-left: 207px;
+					&:before{
+						position: absolute;
+						content: '';
+						background: url('../media/images/sprite.png') -416px -216px;
+						height: 84px;
+						width: 84px;
+						left: 80px;
+						top: 50%;
+						margin-top: -42px;
+					}
+					.region{
+						font-size: 34px;
+					}
+					.game-name{
+						font-size: 24px;
+					}
+				}
+				.right-nav{
+					right: 46px;
+					left: auto;
+					top: 39px;
+					margin-left: 0;
+					.exit-btn{
+						height: 97px;
+						width: 97px;
+						display: block;
+						text-indent: -999999999px;
+						@include rounded-corners(100%);
+						background-color: #160521;
+						padding: 0;
+						.text{
+							display: none;
+						}
+						&:before{
+							height: 31px;
+							width: 31px;
+							background: url('../media/images/sprite.png') -335px 0;
+							transform: rotate(0);
+							-webkit-transform: rotate(0);
+							-moz-transform: rotate(0);
+							-o-transform: rotate(0);
+							-ms-transform: rotate(0);
+							left: 50%;
+							top: 50%;
+							margin-top: -15px;
+							margin-left: -15px;
+						}
+						&:after{
+							display: none;
+						}
+					}
+				}
+				.game-entry{
+					img{
+						height: 100%;
+					}
+				}
+			}
+		}
+		.live-block{
+			display: none;
+			&.mobile{
+				display: block;
+				.bg{
+					background: url('../media/images/bg/smoke-mobile.png') center no-repeat!important;
+					background-size: cover!important;
+					max-height: 1523px;
+					height: 100%;
+					opacity: 1;
+				}
+				.block-heading{
+					margin-top: 322px;
+				}
+				.btn-block{
+					display: block;
+				}
+				.games-listing-block{
+					margin-top: 90px;
+					&.hidden-mob{
+						display: none;
+					}
+					.games-listing{
+						display: block;
+						list-style: none;
+						margin: 0;
+						padding: 0;
+						text-align: left;
+						max-width: 640px;
+						margin: 0 auto;
+						li{
+							width: 50%;
+							float: left;
+							&:last-child{
+								margin-right: 0;
+							}
+							a{
+								padding: 14px;
+								padding-right: 29px;
+								padding-left: 39px;
+								@include rounded-corners(19px);
+								font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+								color: $main_font_color;
+								font-size: 24px;
+								text-transform: uppercase;
+								letter-spacing: 3px;
+								text-decoration: none;
+								display: inline-block;
+								position: relative;
+								padding-bottom: 8px;
+								&:hover{
+									background-color: #fff;
+									color: #000;
+								}
+								&:before{
+									position: absolute;
+									font-family: 'FontAwesome';
+									content: '\f054';
+									color: #7d66f7;
+									font-size: 8px;
+									width: auto;
+									height: auto;
+									top: 50%;
+									margin-top: -6px;
+									left: 14px;
+								}
+							}
+						}
+						&:after{
+							@include clearfix();
+						}
+					}
+				}
+			}
+		}
+		.sections-nav,
+		.sections-container,
+		.footer .games-listing-block,
+		.footer .msg-block,
+		.header .navigation-container,
+		.header .registration-block{
+			display: none;
+		}
+		.footer{
+			padding: 0;
+		}
+		.mobile-container{
+			display: block;
+		}
+		.cabinet-block{
+			padding: 0 20px;
+			padding-top: 332px;
+			background: #000!important;
+			&:before{
+				content: '';
+				top: 0;
+				left: 0;
+				position: absolute;
+				display: block;
+				width: 100%;
+				background: url("../media/images/bg/smoke-mobile.png") center no-repeat !important;
+				background-size: cover !important;
+				max-height: 1523px;
+				height: 100%;
+				opacity: 1;
+			}
+			.cabinet-entry{
+				padding-bottom: 40px;
+				position: relative;
+				.main-content{
+					max-width: 100%;
+					float: none;
+					.credits-block{
+						display: block;
+						position: relative;
+						padding-left: 250px;
+						margin: 0 auto;
+						margin-bottom: 170px;
+						max-width: 636px;
+						.bitcoin-icon{
+							display: block;
+							position: absolute;
+							left: 0;
+							top: 50%;
+							width: 189px;
+							height: 189px;
+							margin-top: -95px;
+							@include rounded-corners(100%);
+							border: 1px solid #9350c2;
+							&:after{
+								content: '';
+								display: block;
+								width: 125px;
+								height: 73px;
+								background: url('../media/images/sprite.png') 0 -216px;
+								margin: 0 auto;
+								margin-top: 58px;
+							}
+						}
+						.balance{
+							font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+							font-size: 47px;
+							letter-spacing: 6px;
+							display: inline-block;
+							vertical-align: middle;
+							.value{
+								font-size: 105px;
+								letter-spacing: 25px;
+								display: inline-block;
+								vertical-align: middle;
+							}
+						}
+						.add-credits-btn{
+							font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+							position: absolute;
+							font-size: 22px;
+							color: $main_font_color;
+							text-transform: uppercase;
+							letter-spacing: 1px;
+							display: inline-block;
+							max-width: 240px;
+							width: 100%;
+							padding: 20px 0;
+							padding-bottom: 16px;
+		    				padding-left: 64px;
+		    				text-decoration: none;
+		    				@include transition(0.2s);
+							right: 0%;
+							bottom: -40px;
+							.text{
+								position: relative;
+								z-index: 1;
+							}
+							&:before{
+								content: '+';
+								position: absolute;
+								font-size: 26px;
+								z-index: 1;
+								left: 35px;
+								top: 50%;
+								margin-top: -14px;
+							}
+							&:after{
+								content: '';
+								top: -8px;
+								left: 0;
+								position: absolute;
+								display: block;
+								height: 45px;
+								width: 123px;
+								background: url('../media/images/bg/credits-button.png') center no-repeat;
+								background-size: cover;
+								height: 72px;
+								width: 240px;
+							}
+							&:hover{
+								opacity: .8;
+							}
+						}
+					}
+					.main-content-entry{
+						max-width: 760px;
+						margin: 0 auto;
+						padding-left: 0;
+						.deposit-entry{
+							padding-right: 0;
+							.left-content{
+								text-align: right;
+								.text-block{
+									display: inline-block;
+									max-width: 460px;
+									.descr{
+										text-align: left;
+										font-size: 38px;
+										letter-spacing: 1px;
+									}
+								}
+								.generated-key{
+									font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+									display: block;
+									margin: 0 auto;
+									max-width: 800px;
+									background-color: #fff;
+									color: #000;
+									font-size: 40px;
+									@include rounded-corners(41px);
+									margin-top: 140px;
+								}
+							}
+						}
+						.withdraw-entry{
+							.btn-history-block{
+								display: block;
+							}
+							.middle-block table td{
+								text-align: center;
+								input[type="text"]{
+									font-size: 39px;
+									height: 90px;
+									color: #fff;
+									border-color: #fff;
+									@include rounded-corners(45px);
+									padding-left: 48px;
+									text-align: left;
+									&::-webkit-input-placeholder{
+										color: #fff;
+									}
+									&::-moz-placeholder{
+										color: #fff;
+									}
+									&:-moz-placeholder{
+										color: #fff;
+									}
+									&:-ms-input-placeholder{
+										color: #fff;
+									}
+								}
+								button.withdraw{
+									font-size: 52px;
+									@include rounded-corners(38px);
+									&:after{
+										font-size: 38px;
+										top: 13px;
+									}
+								}
+								&:first-child{
+									width: auto;
+									.text{
+										display: none;
+									}
+								}
+							}
+							.bottom-block{
+								display: none;
+							}
+						}
+						.bonus-entry{
+							.middle-block{
+								padding-left: 0;
+								.nav-block{
+									margin-bottom: 100px;
+								}
+							}
+						}
+						.bonuses-listing{
+							.owl-stage-outer{
+								position: relative;
+								overflow: hidden;
+								.owl-stage{
+									position: relative;
+									.owl-item{
+										float: left;
+										.item{
+											width: 100%;
+											float: none;
+											padding: 0 60px;
+											.single-bonus{
+												max-width: 100%;
+											}
+											.title{
+												font-size: 61px;
+												letter-spacing: 37px;
+												margin-bottom: 80px;
+											}
+											.text{
+												margin-bottom: 110px;
+												font-size: 40px;
+											}
+											.push-button{
+												font-size: 35px;
+												letter-spacing: 4px;
+											}
+										}
+									}
+									&:after{
+										@include clearfix();
+									}
+								}
+							}
+						}
+						.qr-code{
+							display: none;
+						}
+					}
+					.page-heading{
+						max-width: 760px;
+						border-bottom: 0;
+						padding: 0;
+						padding-bottom: 38px;
+						margin: 0 auto;
+						.page-title{
+							font-size: 90px;
+							margin-bottom: 28px;
+						}
+						.sub-text{
+							font-size: 40px;
+						}
+						.bonuses-btn{
+							font-size: 25px;
+							padding: 20px;
+							padding-bottom: 12px;
+							// padding-top: 10px;
+							padding-left: 68px;
+							padding-right: 34px;
+							margin-top: 40px;
+							@include rounded-corners(28px);
+							&:before{
+								left: 27px;
+								height: 23px;
+								width: 23px;
+								background-size: 3500%;
+								background-position: 153px 0;
+								margin-top: -10px;
+							}
+						}
+					}
+					.main-content-entry{
+						.setting-entry{
+							.setting-tabs{
+								display: none;
+							}
+							.setting-accordion{
+								display: block;
+							}
+						}
+					}
+				}
+				.cabinet-sidebar{
+					float: none;
+					max-width: 100%;
+					.credits-block{
+						display: none;
+					}
+					.cabinet-menu-listing{
+						max-width: 100%;
+						padding: 0 65px;
+						margin-top: 302px;
+						li{
+							width: 25%;
+							float: left;
+							padding: 0 25px;
+							a{
+								padding-top: 84px;
+								padding-left: 0;
+								padding-right: 0;
+								text-align: center;
+								border: none;
+								font-size: 34px;
+								&:before{
+									left: 50%;
+									margin-left: -19px;
+									top: 0;
+									margin-top: 0;
+									width: 39px;
+									height: 39px;
+									background-size: 1700%;
+								}
+								&.deposite{
+									&:before{
+										background-position: -61px -433px;
+									}
+								}
+								&.withdraw{
+									&:before{
+										background-position: 0px -433px;
+									}
+								}
+								&.bonus{
+									&:before{
+										background-position: -131px -433px;
+									}
+								}
+								&.setting{
+									&:before{
+										background-position: -202px -433px;
+									}
+								}
+								&:after{
+									display: none;
+								}
+							}
+							&.active{
+								a{
+									border-bottom: 5px solid #fff;
+								}
+							}
+						}
+						&:after{
+							@include clearfix();
+						}
+					}
+				}
+			}
+		}
+		.page-content-block .page-content-container{
+			padding-top: 312px;
+			.page-content-entry{
+				margin: 0 auto;
+				max-width: 700px;
+				float: none;
+				.page-heading{
+					padding-bottom: 100px;
+					border-bottom: 1px solid #d30582;
+					.page-title{
+						font-size: 74px;
+						line-height: 110px;
+					}
+					.descr{
+						font-size: 51px;
+					}
+				}
+				.page-entry{
+					.col-sm-6{
+						width: 100%;
+					}
+					.text{
+						font-size: 38px;
+						margin-bottom: 140px;
+					}
+				}
+			}
+			.btn-block.mobile{
+				display: block;
+				text-align: center;
+				margin-bottom: 100px;
+				.live-btn{
+					font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+					display: inline-block;
+					border: 1px solid #b188de;
+					@include rounded-corners(42px);
+					padding: 23px;
+					padding-bottom: 13px;
+					font-size: 39px;
+					padding-left: 87px;
+					padding-right: 215px;
+					letter-spacing: 6px;
+					color: #fff;
+					display: block;
+					width: 100%;
+					text-decoration: none;
+					text-transform: uppercase;
+					position: relative;
+					@include transition(0.2s);
+					&:before,
+					&:after{
+						position: absolute;
+						content: '';
+						display: block;
+						width: 46px;
+						height: 5px;
+						background-color: #fff;
+						@include rounded-corners(3px);
+						top: 50%;
+						right: 76px;
+						@include transition(0.2s);
+					}
+					&:before{
+						margin-top: -11px;
+					}
+					&:after{
+						margin-top: 5px;
+					}
+					&.active{
+						&:before{
+							transform: rotate(-45deg);
+							-webkit-transform: rotate(-45deg);
+							-moz-transform: rotate(-45deg);
+							-o-transform: rotate(-45deg);
+							-ms-transform: rotate(-45deg);
+							margin: 0;
+						}
+						&:after{
+							margin: 0;
+							transform: rotate(45deg);
+							-webkit-transform: rotate(45deg);
+							-moz-transform: rotate(45deg);
+							-o-transform: rotate(45deg);
+							-ms-transform: rotate(45deg);
+						}
+					}
+				}
+			}
+			.page-content-navigation{
+				display: none;
+				// &.mobile{
+				// 	display: block;
+				// }
+			}
+		}
+	}
+}
+@media (min-width: 1071px) {
+
+}
+@media (max-width: 1071px) {
+
+}
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 991px) {
+	body{
+		.header{
+			padding: 0 30px;
+			padding-top: 22px;
+			.logo-block{
+				max-width: 283px;
+				margin-top: 0;
+			}
+			.header-right-part{
+				padding-right: 0;
+				top: 0;
+				.login-block{
+					height: 75px;
+					padding: 11px 0;
+					margin-right: 0;
+					.login-btn{
+						font-size: 25px;
+						padding-left: 46px;
+						margin-right: 30px;
+						&:before{
+							width: 25px;
+							height: 26px;
+							top: 50%;
+							margin-top: -13px;
+							background-position: 0 0;
+						}
+					}
+				}
+				.menu-button-block{
+					padding: 29px 0;
+					margin-left: 30px;
+					.menu-btn{
+						width: 34px;
+						height: 16px;
+						&:before,
+						&:after{
+							height: 5px;
+							@include rounded-corners(3px);
+						}
+					}
+				}
+			}
+		}
+		.mobile-menu{
+			.popup-entry{
+				.auth-block-mobile{
+					.login-block{
+						.login-btn{
+							height: 50px;
+							padding: 13px 0;
+							padding-left: 30px;
+							padding-right: 48px;
+							.text{
+								padding-left: 46px;
+								font-size: 22px;
+								&:before{
+									width: 25px;
+									height: 26px;
+									top: 50%;
+									margin-top: -15px;
+									background-position: 0 0;
+								}
+							}
+						}
+					}
+					.registration-block{
+						vertical-align: middle;
+						.reg-btn{
+							height: 50px;
+							padding: 14px 0;
+							width: 203px;
+							margin-top: -9px;
+							.text{
+								font-size: 22px;
+								letter-spacing: 2px;
+							}
+							&:before{
+								height: 59px;
+								width: 203px;
+								background-size: cover;
+								margin-top: -34px;
+							}
+						}
+					}
+				}
+				.block-heading{
+					.subtitle{
+						font-size: 16px;
+						letter-spacing: 5px;
+					}
+					.title{
+						font-size: 40px;
+						letter-spacing: 20px;
+					}
+				}
+				.games-listing li a{
+					font-size: 23px;
+				}
+				.navigation .navigation-list li a{
+					font-size: 23px;
+				}
+			}
+		}
+		.slots-block{
+			.block-heading{
+				margin-top: 180px;
+				.page-title{
+					font-size: 68px;
+					letter-spacing: 20px;
+					margin-bottom: 10px;
+				}
+				.subtitle{
+					font-size: 23px;
+				}
+			}
+			.block-container{
+				margin-top: 30px;
+				.games-entry .single-game{
+					text-align: center;
+					&.hidden-mob{
+						display: none;
+					}
+					a{
+						display: inline-block;
+						&:first-child{
+							display: block;
+							margin: 0 auto;
+							max-width: 160px;
+							width: 100%;
+						}
+						.game-preview{
+							height: 100px;
+							width: 100%;
+							max-width: 160px;
+							border-radius: 22px;
+							-webkit-border-radius: 22px;
+							-moz-border-radius: 22px;
+							background-size: 100% !important;
+						}
+						.title{
+							display: inline-block;
+							font-size: 17px;
+							margin-top: 24px;
+						}
+					}
+				}
+			}
+			.btn-block{
+				margin-top: 20px;
+				.live-btn{
+					font-size: 17px;
+					letter-spacing: 2px;
+					padding: 17px;
+					padding-bottom: 13px;
+					padding-left: 40px;
+					padding-right: 80px;
+					&:before,
+					&:after{
+						width: 20px;
+						height: 2px;
+						right: 34px;
+					}
+					&:before{
+						margin-top: -5px;
+					}
+					&:after{
+						margin-top: 2px;
+					}
+				}
+			}
+			.games-listing-block{
+				margin-top: 20px;
+				.games-listing li a{
+					font-size: 17px;
+					&:before{
+						margin-top: -3px;
+					}
+				}
+			}
+		}
+		.live-block{
+			&.mobile{
+				.block-heading{
+					margin-top: 180px;
+					.page-title{
+						font-size: 68px;
+						letter-spacing: 20px;
+						margin-bottom: 10px;
+					}
+					.subtitle{
+						font-size: 23px;
+					}
+				}
+			}
+			.live-listing-block{
+				padding-right: 80px;
+				margin-top: 35px;
+				.side-name{
+					font-size: 20px;
+					right: 40px;
+				}
+				.live-listing{
+					padding-left: 20px;
+					max-width: 540px;
+					margin: 0 auto;
+					li{
+						min-height: 115px;
+						padding-left: 142px;
+						margin-bottom: 36px;
+						.preview{
+							margin-top: -66px;
+							max-width: 115px;
+							max-height: 115px;
+						}
+						.text-container{
+							.region{
+								font-size: 30px;
+								letter-spacing: 5px;
+							}
+							.category{
+								font-size: 22px;
+							}
+						}
+					}
+				}
+			}
+			.btn-block{
+				margin-top: 20px;
+				.slots-btn{
+					font-size: 17px;
+					letter-spacing: 2px;
+					padding: 17px;
+					padding-bottom: 13px;
+					padding-left: 63px;
+					padding-right: 35px;
+					&:before{
+						font-size: 13px;
+						margin-top: -6px;
+						left: 28px;
+					}
+				}
+				.live-btn{
+					font-size: 17px;
+					letter-spacing: 2px;
+					padding: 17px;
+					padding-bottom: 13px;
+					padding-left: 40px;
+					padding-right: 80px;
+					&:before,
+					&:after{
+						width: 20px;
+						height: 2px;
+						right: 34px;
+					}
+					&:before{
+						margin-top: -5px;
+					}
+					&:after{
+						margin-top: 2px;
+					}
+				}
+			}
+		}
+		.slots-block .games-listing-block .games-listing{
+			max-width: 440px;
+		}
+		.mobile-container{
+			.welcome-mob{
+				padding-top: 629px;
+				padding-bottom: 287px;
+				.side-name{
+					top: 289px;
+					font-size: 16px;
+					letter-spacing: 8px;
+					left: 45px;
+				}
+				.main-title-block{
+					max-width: 600px;
+					margin-bottom: 440px;
+					.category-title{
+						font-size: 24px;
+						letter-spacing: 8px;
+					}
+					.game-name{
+						margin-top: 16px;
+						font-size: 80px;
+						margin-bottom: 10px;
+					}
+					.descr-block .descr{
+						font-size: 24px;
+					}
+					.main-btn-block{
+						margin-top: 91px;
+						.play-btn{
+							padding: 9px;
+							@include rounded-corners(35px);
+							.btn-entry{
+								font-size: 38px;
+								padding: 13px 36px;
+								height: 65px;
+								@include rounded-corners(27px);
+							}
+							&:after{
+								@include rounded-corners(35px);
+							}
+						}
+					}
+				}
+				.bitcoin-block .bitcoin-msg{
+					padding-left: 90px;
+					position: relative;
+					font-size: 28px;
+					letter-spacing: 2px;
+					.bitcoin-icon{
+						display: block;
+						position: absolute;
+						left: 0;
+						top: 50%;
+						margin-top: -40px;
+						height: 81px;
+						width: 81px;
+						@include rounded-corners(100%);
+						border: 1px solid #9350c2;
+						&:after{
+							content: '';
+							display: block;
+							width: 53px;
+							height: 31px;
+							background: url('../media/images/sprite.png') -57px 0;
+							margin: 0 auto;
+							margin-top: 22px;
+						}
+					}
+				}
+				.games-listing{
+					max-width: 550px;
+					li{
+						min-height: 27px;
+						margin-bottom: 20px;
+						a{
+							font-size: 16px;
+							padding-left: 57px;
+							&:before{
+								margin-top: -14.5px;
+								height: 29px;
+								width: 37px;
+							}
+							&.slots:before{
+								background-position: 0 -59px;
+							}
+							&.bjack:before{
+								background-position: -55px -58px;
+							}
+							&.roulette:before{
+								background-position: -110px -58px;
+							}
+							&.baccarat:before{
+								background-position: -170px -57px;
+							}
+							&.bonumbers:before{
+								background-position: -235px -58px;
+							}
+							&.keno:before{
+								background-position: -302px -59px;
+							}
+						}
+					}
+				}
+			}
+			.free-games-block{
+				padding-top: 90px;
+				padding-bottom: 100px;
+				.top-text{
+					font-size: 30px;
+					line-height: 34px;
+					.number-value{
+						font-size: 80px;
+						line-height: 89px;
+					}
+				}
+				.middle-text{
+					font-size: 30px;
+				}
+				.registration-btn{
+					height: 50px;
+					padding: 14px 0;
+					width: 203px;
+					margin-top: 16px;
+					.text{
+						font-size: 22px;
+						letter-spacing: 2px;
+					}
+					&:before{
+						height: 59px;
+						width: 203px;
+						background-size: cover;
+						margin-top: -34px;
+					}
+				}
+			}
+		}
+		.cabinet-block{
+			padding-top: 170px;
+			.cabinet-entry{
+				.main-content{
+					.page-heading{
+						.page-title{
+							font-size: 50px;
+							letter-spacing: 18px;
+							margin-bottom: 15px;
+						}
+						.sub-text{
+							font-size: 22px;
+						}
+						.bonuses-btn{
+							font-size: 16px;
+							padding: 16px;
+							padding-bottom: 12px;
+							padding-left: 68px;
+							padding-right: 34px;
+							padding-left: 51px;
+							&:before{
+								width: 14px;
+								height: 14px;
+								left: 23px;
+								background-size: auto;
+								background-position: 94px 0;
+								margin-top: -7px;
+							}
+						}
+					}
+					.credits-block{
+						padding-left: 100px;
+						max-width: 260px;
+						margin-bottom: 70px;
+						.bitcoin-icon{
+							margin-top: -40px;
+							height: 81px;
+							width: 81px;
+							&:after{
+								width: 53px;
+								height: 31px;
+								background-position: -57px 0;
+								margin: 0 auto;
+								margin-top: 22px;
+							}
+						}
+						.balance{
+							font-size: 16px;
+							letter-spacing: 2px;
+							.value{
+								font-size: 36px;
+								letter-spacing: 5px;
+							}
+						}
+						.add-credits-btn{
+							right: 0;
+							font-size: 14px;
+							max-width: 142px;
+							padding: 9px 0;
+							padding-bottom: 5px;
+							padding-left: 36px;
+							&:before{
+								left: 13px;
+								font-size: 16px;
+								margin-top: -8px;
+							}
+							&:after{
+								top: -6px;
+								background-size: auto;
+								height: 39px;
+								width: 127px;
+							}
+						}
+					}
+					.main-content-entry{
+						.deposit-entry{
+							padding-top: 40px;
+							
+							.left-content{
+								text-align: left;
+								.text-block .descr{
+									font-size: 23px;
+								}
+								.generated-key{
+									max-width: 450px;
+									font-size: 20px;
+									margin-top: 25px;
+								}
+							}
+						}
+						.withdraw-entry {
+							.middle-block{
+								padding: 0;
+								padding-bottom: 50px;
+								table td {
+									input[type="text"]{
+										font-size: 19px;
+										height: 39px;
+									}
+									button.withdraw{
+										font-size: 20px;
+										padding-bottom: 5px;
+										&:after{
+											font-size: 18px;
+											top: 9px;
+										}
+									}
+								}	
+							}
+							.btn-history-block{
+								margin-top: 45px;
+								.open-history-link{
+									font-size: 22px;
+								}
+							}
+						}
+						.setting-entry .setting-accordion{
+							.setting-title{
+								font-size: 36px;
+								.ui-icon{
+									&:after{
+										font-size: 20px;
+									}
+								}
+							}
+							.ui-accordion-content {
+								.single-section{
+									.section-title{
+										font-size: 26px;
+										margin-bottom: 10px;
+									}
+									.text{
+										font-size: 17px;
+										margin-bottom: 10px;
+									}
+									.field-block{
+										margin-bottom: 20px;
+									}
+									input[type="text"],
+									input[type="email"],
+									select{
+										font-size: 19px;
+										height: 39px;
+									}
+									select{
+										margin-bottom: 50px;
+									}
+									.descr{
+										bottom: -20px;
+										padding-left: 39px;
+										letter-spacing: 2px;
+										font-size: 13px;
+									}
+								}
+								.btn-block .update-btn{
+									font-size: 14px;
+									&:after{
+										font-size: 14px;
+										position: absolute;
+										top: 50%;
+										margin-top: -8px;
+										right: 39px;
+									}
+								}
+							}
+						}
+					}
+				}
+				.cabinet-sidebar .cabinet-menu-listing{
+					margin-top: 85px;
+					li{
+						a{
+							font-size: 18px;
+							padding-top: 45px;
+							&:before{
+								width: 22px;
+								height: 22px;
+								margin-left: -11px;
+								background-size: auto;
+							}
+							&.deposite:before{
+								background-position: -49px -329px;
+							}
+							&.withdraw:before{
+								background-position: 0 -329px;
+							}
+							&.bonus:before{
+								background-position: -104px -329px;
+							}
+							&.setting:before{
+								background-position: -157px -329px;
+							}
+						}
+						&.active{
+							a{
+								border-bottom: 1px solid #fff;
+							}
+						}
+					}
+				}
+			}
+		}
+		.page-content-block .page-content-container{
+			padding-top: 152px;
+			padding-bottom: 100px;
+			.page-content-entry{
+				padding: 0 30px;
+				.btn-block.mobile{
+					margin-bottom: 30px;
+					.live-btn{
+						font-size: 17px;
+						letter-spacing: 2px;
+						padding: 17px;
+						padding-bottom: 13px;
+						padding-left: 40px;
+						padding-right: 80px;
+						&:after,
+						&:before{
+							width: 20px;
+							height: 2px;
+							right: 34px;
+						}
+						&:after{
+							margin-top: 2px;
+						}
+						&:before{
+							margin-top: -5px;
+						}
+						&.active{
+							&:after,
+							&:before{
+								margin-top: -3px;
+							}
+						}
+					}
+				}
+				.page-content-navigation .side-nav-listing li{
+					margin-bottom: 5px;
+					a{
+						font-size: 14px;
+					}
+				}
+				.page-heading{
+					padding-bottom: 20px;
+					margin-bottom: 20px;
+					.page-title{
+						font-size: 24px;
+						line-height: 32px;
+						margin-bottom: 20px;
+						letter-spacing: 3px;
+					}
+					.descr{
+						font-size: 16px;
+					}
+				}
+				.page-entry .text{
+					font-size: 16px;
+					margin-bottom: 20px;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 886px) {
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	body{
+		.header{
+			.logo-block{
+				max-width: 153px;
+			}
+			.header-right-part{
+				.login-block{
+					height: auto;
+					padding: 0;
+					.login-btn{
+						height: 41px;
+						padding: 13px 0;
+						padding-left: 36px;
+						font-size: 16px;
+						&:before{
+							background-size: 1600%;
+							margin-top: -10px;
+						}
+					}
+				}
+				.menu-button-block{
+					padding: 15px 0;
+					.menu-btn{
+						width: 18px;
+						height: 9px;
+						&:before,
+						&:after{
+							height: 2px;
+							@include rounded-corners(1px);
+						}
+					}
+				}
+			}
+		}
+		.reg-popup .popup-container,
+		.log-popup .popup-container{
+			max-width: 360px;
+		}
+		.log-popup .popup-container .popup-entry .popup-form{
+			.forget-link{
+				position: relative;
+				right: auto;
+				top: auto;
+				margin: 0;
+				display: inline-block;
+				vertical-align: top;
+				margin-top: -20px;
+				margin-bottom: 20px;
+			}
+			.block-thumbnail{
+				margin-top: 0;
+				margin-bottom: 20px;
+				.btn-block{
+					float: none;
+					text-align: center;
+					.account-btn{
+						margin-top: 0;
+					}
+				}
+			}
+		}
+		.simple-popup .popup-entry{
+			min-width: 380px;
+			padding: 30px;
+			padding-top: 50px;
+			padding-bottom: 60px;
+			.side-title{
+				display: none;
+			}
+			.close-icon{
+				right: 30px;
+				top: 30px;
+			}
+			.popup-heading{
+				padding-bottom: 20px;
+				.popup-title{
+					font-size: 28px;
+				}
+				.subtitle{
+					font-size: 16px;
+				}
+			}
+			.popup-text-block{
+				padding-top: 20px;
+				.text{
+					font-size: 16px;
+					line-height: 23px;
+				}
+			}
+			.btn-block{
+				margin-top: 20px;
+				.push-btn{
+					font-size: 20px;
+					padding-top: 10px;
+				}
+			}
+		}
+		.mobile-menu{
+			&:before{
+				height: 714px;
+			}
+			.popup-entry{
+				padding: 30px;
+				padding-top: 40px;
+				.logo-container{
+					max-width: 200px;
+					margin: 0 auto;
+				}
+				.close-icon{
+					top: 30px;
+					right: 30px;
+					height: 20px;
+					width: 20px;
+					&:before,
+					&:after{
+						height: 3px;
+					}
+				}
+				.auth-block-mobile{
+					margin-top: 40px;
+					padding-bottom: 30px;
+					.login-block{
+						margin-right: 30px;
+					}
+				}
+				.block-heading{
+					padding: 0 30px;
+					padding-top: 20px;
+					margin-bottom: 40px;
+					.subtitle{
+						margin-top: 20px;
+					}
+					.title{
+						margin-bottom: 30px;
+					}
+				}
+				.games-listing{
+					margin-bottom: -30px;
+					li{
+						min-height: 31px;
+						margin-bottom: 30px;
+						padding-left: 0;
+						a{
+							padding-left: 55px;
+							font-size: 16px;
+							&:before{
+								margin-top: -14.5px;
+								height: 29px;
+								width: 37px;
+							}
+							&.slots:before{
+								background-position: 0 -59px;
+							}
+							&.bjack:before{
+								background-position: -55px -58px;
+							}
+							&.roulette:before{
+								background-position: -110px -58px;
+							}
+							&.baccarat:before{
+								background-position: -170px -57px;
+							}
+							&.bonumbers:before{
+								background-position: -235px -58px;
+							}
+							&.keno:before{
+								background-position: -302px -59px;
+							}
+							&:hover{
+								opacity: .8;
+							}
+						}
+					}
+				}
+				.navigation .navigation-list li{
+					padding-left: 30px;
+					margin-bottom: 30px;
+					min-height: 19px;
+					a{
+						font-size: 16px;
+						letter-spacing: 2px;
+					}
+					&:before{
+						font-family: 'FontAwesome';
+						background: none;
+						content: '\f054';
+						color: #a915c6;
+						width: 15px;
+						height: 17px;
+						margin-top: -10px;
+					}
+				}
+			}
+		}
+		.mobile-container {
+			.welcome-mob{
+				.main-title-block{
+					max-width: 400px;
+					margin-bottom: 298px;
+					.category-title{
+						font-size: 18px;
+					}
+					.game-name{
+						font-size: 60px;
+						margin: 0;
+					}
+					.descr-block .descr{
+						font-size: 16px;
+					}
+					.main-btn-block{
+						margin-top: 50px;
+					}
+				}
+				.games-listing{
+					max-width: 400px;
+				}
+				.nav-block{
+					bottom: 112px;
+				}
+				.bitcoin-block{
+					margin-top: 160px;
+					.bitcoin-msg{
+						font-size: 20px;
+					}
+				}
+			}
+			.game-entry {
+				height: 570px;
+				padding-top: 189px;
+				.main-title-block{
+					max-width: 397px;
+					.category-title{
+						font-size: 20px;
+						letter-spacing: 9px;
+					}
+					.game-name{
+						font-size: 60px;
+					}
+					.main-btn-block{
+						.play-btn{
+							padding: 9px;
+							@include rounded-corners(35px);
+							.btn-entry{
+								font-size: 38px;
+								padding: 13px 36px;
+								height: 65px;
+								@include rounded-corners(27px);
+							}
+							&:after{
+								@include rounded-corners(35px);
+							}
+						}
+					}
+				}
+			}
+		}
+		.live-block{
+			&.mobile .block-heading {
+				.page-title{
+					font-size: 36px;
+					color: #fff;
+					letter-spacing: 5px;
+				}
+				.subtitle{
+					font-size: 16px;
+				}
+			}
+			.live-listing-block{
+				padding-right: 20px;
+				.side-name{
+					display: none;
+				}
+				.live-listing li{
+					.text-container{
+						padding-right: 60px;
+						.region{
+							font-size: 20px;
+						}
+						.category{
+							font-size: 14px;
+						}
+					}
+					.show-modal-btn{
+						height: 30px;
+						width: 30px;
+						line-height: 32px;
+						i{
+							font-size: 13px;
+						}
+					}
+				}
+			}
+			.btn-block{
+				padding: 0 20px;
+				.slots-btn{
+					display: block;
+					margin-right: 0;
+					padding-left: 0;
+					padding-right: 0;
+				}
+				.live-btn{
+					display: block;
+					width: 100%;
+					margin-top: 20px;
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+		.video-popup .video-container{
+			.left-info{
+				padding-left: 75px;
+				&:before{
+					width: 40px;
+					height: 40px;
+					background-size: 600%;
+					background-position: 40px -102px;
+					left: 20px;
+					margin-top: -25px;
+				}
+				.region{
+					font-size: 18px;
+					letter-spacing: 3px;
+					margin-top: 0;
+				}
+				.game-name{
+					font-size: 14px;
+					letter-spacing: 2px;
+				}
+			}
+			.right-nav{
+				right: 15px;
+				.exit-btn{
+					height: 48px;
+					width: 48px;
+					&:before{
+						height: 25px;
+						width: 25px;
+						background-size: 1200%;
+						background-position: -198px 2px;
+						margin-top: -12px;
+						margin-left: -13px;
+					}
+				}
+			}
+		}
+		.cabinet-block{
+			padding-top: 120px;
+			.cabinet-entry{
+				.main-content{
+					.page-heading{
+						.page-title{
+							font-size: 30px;
+							letter-spacing: 5px;
+						}
+						.sub-text{
+							font-size: 16px;
+						}
+					}
+					.main-content-entry{
+						.deposit-entry .left-content{
+							.text-block .descr{
+								font-size: 15px;
+							}
+							.generated-key{
+								font-size: 15px;
+							}
+						}
+						.bonus-entry .middle-block{
+							padding-top: 0;
+							.nav-block{
+								margin-bottom: 40px;
+							}
+							// .owl-next,
+							// .owl-prev{
+							// 	top: 54%;
+							// }
+						}
+						.bonuses-listing .owl-stage-outer .owl-stage .owl-item .item{
+							.title{
+								font-size: 22px;
+								letter-spacing: 5px;
+								margin-bottom: 17px;
+							}
+							.text{
+								font-size: 16px;
+								letter-spacing: 2px;
+								margin-bottom: 30px;
+							}
+							.push-button{
+								font-size: 14px;
+								padding: 10px 27px;
+								padding-bottom: 5px;
+							}
+						}
+						.setting-entry .setting-accordion .ui-accordion-content .single-section{
+							margin-bottom: 30px;
+							.descr{
+								bottom: 26px;
+							}
+						}
+					}
+				}
+				.cabinet-sidebar{
+					.cabinet-menu-listing{
+						padding: 0;
+						max-width: 300px;
+						li{
+							width: 100%;
+							float: none;
+							margin-bottom: 20px;
+							a{
+								padding: 20px 0;
+								padding-left: 60px;
+								font-size: 13px;
+								padding-bottom: 17px;
+								text-align: left;
+								&:before{
+									left: 0;
+									margin: 0;
+									top: 50%;
+									margin-top: -11px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+} 
+@media (max-width: 520px) {
+	body{
+		.mobile-menu .popup-entry .auth-block-mobile{
+			.login-block{
+				display: block;
+				max-width: 203px;
+				margin: 0 auto;
+				margin-bottom: 40px;
+			}
+		}
+	}
+}
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	body{
+		input[type="email"],
+		input[type="password"]{
+			height: 44px;
+			font-size: 18px;
+			margin-bottom: 20px;
+			padding-left: 22px;
+		}
+		.header{
+			padding: 0 20px;
+			padding-top: 22px;
+			.header-right-part{
+				.login-block{
+					display: none;
+				}
+				.menu-button-block{
+					margin-left: 20px;
+				}
+			}
+		}
+		.reg-popup .popup-container,
+		.log-popup .popup-container{
+			max-width: 280px;
+			.popup-entry{
+				.popup-heading{
+					.subtitle{
+						font-size: 16px;
+						letter-spacing: 2px;
+					}
+					.popup-title{
+						font-size: 34px;
+						margin-top: 10px;
+					}
+				}
+				.popup-form{
+					padding-top: 10px;
+					.send-btn-block .send-btn{
+						padding: 4px;
+						.btn-entry{
+							font-size: 16px;
+							height: 54px;
+						}
+					}
+				}
+			}
+		}
+		.log-popup .popup-container .popup-entry .popup-form{
+			label{
+				margin-bottom: 10px;
+			}
+			.forget-link{
+				margin-top: 0;
+			}
+		}
+		.simple-popup{
+			padding: 0 20px;
+			.popup-entry{
+				min-width: 100%;
+			}
+		}
+		.mobile-menu{
+			&:before{
+				height: 714px;
+			}
+			.popup-entry{
+				padding: 20px;
+				.logo-container{
+					max-width: 160px;
+				}
+				.close-icon{
+					top: 20px;
+					right: 20px;
+				}
+				.auth-block-mobile{
+					margin-top: 20px;
+					padding-bottom: 20px;
+					.login-block{
+						margin-bottom: 30px;
+					}
+				}
+				.block-heading{
+					padding: 0 20px;
+					padding-top: 20px;
+					margin-bottom: 40px;
+					.subtitle{
+						margin-top: 0px;
+					}
+					.title{
+						font-size: 30px;
+						letter-spacing: 10px;
+						margin-top: 10px;
+						margin-bottom: 20px;
+					}
+				}
+				.games-listing{
+					margin-bottom: -20px;
+					li{
+						margin-bottom: 20px;
+						width: 100%;
+						float: none;
+					}
+				}
+				.navigation .navigation-list li{
+					margin-bottom: 20px;
+					min-height: 19px;
+					width: 100%;
+					a{
+						font-size: 16px;
+						letter-spacing: 2px;
+					}
+				}
+			}
+		}
+		.mobile-container{
+			background-color: #000;
+			.welcome-mob{
+				padding-top: 100px;
+				padding-bottom: 280px;
+				background: none;
+				background-size: 100%;
+				// margin-bottom: 285px;
+				&:before{
+					content: '';
+					display: block;
+					position: absolute;
+					height: 274px;
+					height: 100%;
+					top: -150px;
+					left: 0;
+					width: 100%;
+					// top: 100%;
+					// background: url('../media/images/bg/smoke-mobile-2.png') center no-repeat;
+					background: url('../media/images/bg/welcome-mobile-bg.png') center no-repeat;
+					background-size: cover;
+					opacity: .6;
+				}
+				.side-name{
+					display: none;
+				}
+				.games-listing{
+					padding-bottom: 40px;
+					li{
+						width: 100%;
+						float: none;
+					}
+				}
+				.main-title-block{
+					margin-bottom: 80px;
+					max-width: 280px;
+					.category-title{
+						font-size: 14px;
+						font-family: $fonts;
+					}
+					.game-name{
+						line-height: 44px;
+						font-size: 38px;
+					}
+					.descr-block .descr{
+						letter-spacing: 3px;
+					}
+					.main-btn-block{
+						margin-top: 15px;
+						.play-btn{
+							padding: 4px;
+							@include rounded-corners(35px);
+							.btn-entry{
+								font-size: 16px;
+								padding: 8px 16px;
+								height: 32px;
+								@include rounded-corners(27px);
+							}
+							&:after{
+								@include rounded-corners(35px);
+								-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							    -moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							    box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							}
+							&:hover:after{
+								-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							    -moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							    box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							}
+						}
+					}
+				}
+				.bitcoin-block{
+					margin-top: 60px;
+				}
+				.nav-block{
+					bottom: 140px;
+					z-index: 1;
+				}
+			}
+			.games-block{
+				margin-top: -100px;
+			}
+			.game-entry{
+				height: 300px;
+				padding-top: 60px;
+				.main-title-block{
+					max-width: 280px;
+					.category-title{
+						font-size: 16px;
+						letter-spacing: 5px;
+					}
+					.game-name{
+						font-size: 42px;
+					}
+					.main-btn-block{
+						.play-btn{
+							padding: 4px;
+							@include rounded-corners(35px);
+							.btn-entry{
+								font-size: 16px;
+								padding: 8px 16px;
+								height: 32px;
+								@include rounded-corners(27px);
+								letter-spacing: 2px;
+							}
+							&:after{
+								@include rounded-corners(35px);
+								-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							    -moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							    box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 0);
+							}
+							&:hover:after{
+								-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							    -moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							    box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+							}
+						}
+					}
+				}
+			}
+		}
+		.slots-block{
+			.block-heading{
+				margin-top: 100px;
+				.page-title{
+					font-size: 36px;
+					letter-spacing: 8px;
+					line-height: 42px;
+				}
+				.subtitle{
+					font-size: 17px;
+					letter-spacing: 3px;
+				}
+			}
+			.games-listing-block .games-listing li{
+				width: 100%;
+				float: none;
+			}
+			.block-container .games-entry .single-game{
+				width: 100%;
+				margin-bottom: 20px;
+				a .title{
+					margin-top: 5px;
+				}
+			}
+		}
+		.cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block{
+			.owl-prev,
+			.owl-next{
+				top: 40%;
+			}
+		}
+		.cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry{
+			padding-left: 0;
+		}
+	}
+}
