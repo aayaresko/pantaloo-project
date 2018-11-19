@@ -183,3 +183,6 @@ Route::group(['prefix' => 'games'], function (){
     Route::get('/rollback', ['as' => 'games.rollback', 'uses' => 'GamesController@rollback']);
 
 });
+
+//testing
+Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
