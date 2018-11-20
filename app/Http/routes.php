@@ -169,20 +169,25 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);
         Route::post('/withdraw', ['as' => 'agent.withdrawDo', 'uses' => 'AgentController@withdrawDo']);
     });
+
+    /* Pantallo Games */
+    Route::group(['prefix' => 'games/pantallo'], function (){
+        Route::get('/getGameList', ['as' => 'games.pantallo.getGameList', 'uses' => 'PantalloGamesController@getGameList']);
+    });
 });
 
-Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
-Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
-
-
+/* Pantallo Games */
 Route::group(['prefix' => 'games'], function (){
     Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'GamesController@balance']);
     Route::get('/balance', ['as' => 'games.balance', 'uses' => 'GamesController@balance']);
     Route::get('/debit', ['as' => 'games.debit', 'uses' => 'GamesController@debit']);
     Route::get('/credit', ['as' => 'games.credit', 'uses' => 'GamesController@credit']);
     Route::get('/rollback', ['as' => 'games.rollback', 'uses' => 'GamesController@rollback']);
-
 });
+
+Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
+Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
+
 
 //testing
 Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);

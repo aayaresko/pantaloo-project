@@ -143,7 +143,7 @@ class User extends Authenticatable
             'cancel' => $cancel
         ];
 
-        $res = DB::transaction(function($data) use ($data)
+        $res = DB::transaction(function() use ($data)
         {
             $sum = $data['sum'];
             $user_id = $data['user_id'];

@@ -6,13 +6,23 @@ use GuzzleHttp\Client;
 
 class PantalloGames
 {
+    /**
+     * @var mixed
+     */
     private $paramsDefault;
 
+    /**
+     * PantalloGames constructor.
+     */
     public function __construct()
     {
         $this->paramsDefault = config('pantalloGames');
     }
 
+    /**
+     * @param $params
+     * @return string
+     */
     protected function client($params)
     {
         //to edit this and add ssl certificate
@@ -30,15 +40,21 @@ class PantalloGames
         } catch (\Exception $e) {
             dd($e);
         }
-        $responseBody = json_decode($response->getBody()->getContents());
+        $responseBody = $response->getBody()->getContents();
         return $responseBody;
     }
 
-    public function getGameList()
+    /**
+     * @param $name
+     * @param $arguments
+     * @return string
+     */
+    public function __call($name, $arguments)
     {
-        $params['method'] = __FUNCTION__;
+        $params = [];
+        $params['method'] = $name;
+        $paramsUser = isset($arguments[0]) ? $arguments[0] : [];
+        $params = array_merge($paramsUser, $params);
         return $this->client($params);
     }
-
-
 }

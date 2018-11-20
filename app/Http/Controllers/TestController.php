@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use  App\Modules\PantalloGames;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -10,9 +11,9 @@ class TestController extends Controller
 {
     public function test(Request $request)
     {
-
+        dd($request->user());
         $pantalloGames = new PantalloGames;
-        $getGameList = $pantalloGames->getGameList();
+        $getGameList = $pantalloGames->getGameList([]);
         dd($getGameList);
 
 
