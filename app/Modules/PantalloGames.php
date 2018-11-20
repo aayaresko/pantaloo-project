@@ -54,7 +54,12 @@ class PantalloGames
         $params = [];
         $params['method'] = $name;
         $paramsUser = isset($arguments[0]) ? $arguments[0] : [];
+        $handler = isset($arguments[1]) ? $arguments[1] : false;
         $params = array_merge($paramsUser, $params);
-        return $this->client($params);
+        if ($handler) {
+            return json_decode($this->client($params));
+        } else {
+            return $this->client($params);
+        }
     }
 }

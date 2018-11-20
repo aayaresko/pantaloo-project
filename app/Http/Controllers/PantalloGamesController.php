@@ -8,6 +8,8 @@ use  App\Modules\PantalloGames;
 
 class PantalloGamesController extends Controller
 {
+    //why constant - in doc for integration write such make
+    const PASSWORD = 'r';
 
     public function endpoint(Request $request){
 
@@ -24,53 +26,58 @@ class PantalloGamesController extends Controller
         return $pantalloGames->getGameList($params);
     }
 
-    public function createPlayer(Request $request)
-    {
-
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        return $pantalloGames->createPlayer();
-    }
-
-    public function playerExists(Request $request)
-    {
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        return $pantalloGames->getGameList();
-    }
-
     public function loginPlayer(Request $request)
     {
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        return $pantalloGames->getGameList();
-    }
 
-    public function getGame(Request $request)
-    {
-        //what is game
-        //what is game
-        $this->validate($request, [
-            'gameID' => 'required|numeric|min:1',
-        ]);
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        return $pantalloGames->getGameList();
-    }
+//        try{
+//
+//        } catch (\Exception $e){
+//
+//        }
 
-    public function getGameDirect(Request $request)
-    {
-        //what is game
-        $this->validate($request, [
-            'gameID' => 'required|numeric|min:1',
-        ]);
+
+        $user = $request->user();
         $pantalloGames = new PantalloGames;
+        $playerExists = $pantalloGames->playerExists([
+            'user_username' => $user->id,
+        ], true);
+
+        if ($playerExists->response === false ) {
+            $player = $pantalloGames->createPlayer([
+                'user_id' => $user->id,
+                'user_username' => $user->id,
+                'password' => self::PASSWORD
+            ], true);
+        } else {
+            $player = $playerExists;
+        }
+
+        //login
+        $login = $pantalloGames->loginPlayer([
+            'user_id' => $user->id,
+            'user_username' => $user->id,
+            'password' => self::PASSWORD
+        ]);
+
+
+        dd($login);
+        dd($pantalloGames->createPlayer([
+            'user_id' => $user->id,
+            'user_username' => $user->id,
+            'password' => self::PASSWORD
+        ]));
+        dd($pantalloGames->playerExists());
         $params = [];
         return $pantalloGames->getGameList();
     }
 
     public function logoutPlayer(Request $request)
     {
+        //what is game
+        //what is game
+        $this->validate($request, [
+            'gameID' => 'required|numeric|min:1',
+        ]);
         $pantalloGames = new PantalloGames;
         $params = [];
         return $pantalloGames->getGameList();

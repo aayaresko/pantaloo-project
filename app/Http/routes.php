@@ -173,6 +173,8 @@ Route::group(['middleware' => ['auth']], function () {
     /* Pantallo Games */
     Route::group(['prefix' => 'games/pantallo'], function (){
         Route::get('/getGameList', ['as' => 'games.pantallo.getGameList', 'uses' => 'PantalloGamesController@getGameList']);
+        Route::get('/loginPlayer', ['as' => 'games.pantallo.loginPlayer', 'uses' => 'PantalloGamesController@loginPlayer']);
+        Route::get('/logoutPlayer', ['as' => 'games.pantallo.logoutPlayer', 'uses' => 'PantalloGamesController@logoutPlayer']);
     });
 });
 
