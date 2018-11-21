@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTablesPantalloGamesTable extends Migration
+class AddGamesPantalloSessionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddTablesPantalloGamesTable extends Migration
      */
     public function up()
     {
-        Schema::table('games_pantallo_games', function (Blueprint $table) {
+        Schema::create('games_pantallo_session', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('user_id')->unsigned();
@@ -25,6 +25,7 @@ class AddTablesPantalloGamesTable extends Migration
             $table->dateTime('created');
             $table->decimal('agent_balance', 14, 5);
             $table->string('sessionid');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
@@ -36,8 +37,8 @@ class AddTablesPantalloGamesTable extends Migration
      */
     public function down()
     {
-        Schema::table('games_pantallo_games', function (Blueprint $table) {
-            //
+        Schema::table('games_pantallo_session', function (Blueprint $table) {
+            Schema::drop('games_pantallo_session');
         });
     }
 }
