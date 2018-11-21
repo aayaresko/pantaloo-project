@@ -24,7 +24,7 @@ class AddGamesPantalloSessionTable extends Migration
             $table->string('currencycode');
             $table->dateTime('created');
             $table->decimal('agent_balance', 14, 5);
-            $table->string('sessionid');
+            $table->string('sessionid')->unique();
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

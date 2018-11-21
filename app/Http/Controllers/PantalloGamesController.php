@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\GamesPantalloSession;
@@ -29,12 +30,17 @@ class PantalloGamesController extends Controller
 
     public function loginPlayer(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->toArray(), [
             'gameId' => 'required|numeric|min:1',
         ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
         try {
             $gameId = $request->gameId;
             $user = $request->user();
+            $userId = $user->id;
             $pantalloGames = new PantalloGames;
             $playerExists = $pantalloGames->playerExists([
                 'user_username' => $user->id,
@@ -43,8 +49,8 @@ class PantalloGamesController extends Controller
             //active player request
             if ($playerExists->response === false ) {
                 $player = $pantalloGames->createPlayer([
-                    'user_id' => $user->id,
-                    'user_username' => $user->id,
+                    'user_id' => $userId,
+                    'user_username' => $userId,
                     'password' => self::PASSWORD
                 ], true);
             } else {
@@ -53,29 +59,30 @@ class PantalloGamesController extends Controller
 
             //login request
             $login = $pantalloGames->loginPlayer([
-                'user_id' => $user->id,
-                'user_username' => $user->id,
+                'user_id' => $userId,
+                'user_username' => $userId,
                 'password' => self::PASSWORD
             ], true);
-
-            $loginResponse = $login->response;
-            $idLogin = $loginResponse->id;
+            $loginResponse = (array)$login->response;
+            $idLogin = $loginResponse['id'];
             unset($loginResponse['id']);
-            $loginResponse['user_id'] = $idLogin;
-            dd($loginResponse);
-            GamesPantalloSession::create($loginResponse);
-
+            $loginResponse['system_id'] = $idLogin;
+            $loginResponse['user_id'] = $userId;
+            //GamesPantalloSession::create($loginResponse);
+            dump($gameId);
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
                 'user_id' => $user->id,
                 'user_username' => $user->id,
                 'user_password' => self::PASSWORD,
-                'gameId' => $gameId,
+                'gameid' => $gameId,
                 'play_for_fun' => 0,
-                'homeurl' => url(),
+                'homeurl' => url(''),
             ], true);
-
+            //dd($getGame);
+            return view('testtest', ['link' => $getGame]);
+            dd($getGame);
             return response()->json([
                 'success' => false,
                 'message' => [
@@ -83,6 +90,7 @@ class PantalloGamesController extends Controller
                 ]
             ]);
         } catch (\Exception $e){
+            dd($e);
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
