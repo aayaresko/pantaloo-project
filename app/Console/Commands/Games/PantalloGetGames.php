@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Games;
 
+use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
 
 class PantalloGetGames extends Command
@@ -37,6 +38,12 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
+        $pantalloGames = new PantalloGames;
+        $params = [];
+        $allGames = $pantalloGames->getGameList($params);
+        //ask
+
+
         //get games and load or update
         $this->info("All users get new addresses");
     }
