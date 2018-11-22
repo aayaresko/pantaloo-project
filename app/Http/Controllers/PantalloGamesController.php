@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\GamesPantalloSession;
+use App\Models\Pantallo\GamesPantalloSession;
+use App\Models\Pantallo\GamesPantalloSessionGame;
 use App\Modules\PantalloGames;
 
 class PantalloGamesController extends Controller
@@ -80,6 +81,11 @@ class PantalloGamesController extends Controller
                 'play_for_fun' => 0,
                 'homeurl' => url(''),
             ], true);
+
+//            GamesPantalloSessionGame::create(['session_id' => $idLogin,
+//                    'gamesession_id' => $getGame->gamesession_id
+//                ]);
+
             //dd($getGame);
             return view('testtest', ['link' => $getGame]);
             dd($getGame);
