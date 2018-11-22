@@ -41,6 +41,10 @@ class PantalloGetGames extends Command
         $pantalloGames = new PantalloGames;
         $params = [];
         $allGames = $pantalloGames->getGameList($params);
+        foreach ($allGames->response as $game) {
+
+        }
+        dd($allGames);
         //ask
 
 
