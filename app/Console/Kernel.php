@@ -16,11 +16,12 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
         Commands\BitcoinGetTransactions::class,
-        Commands\BitcoinSend::class,
+        Commands\Games\PantalloGetGames::class,
         Commands\UpdateTransactions::class,
         Commands\BitcoinNewAddr::class,
         Commands\BitcoinResend::class,
         Commands\SlotChecker::class,
+        Commands\BitcoinSend::class,
         Commands\BonusTest::class,
         Commands\BonusJobs::class
     ];

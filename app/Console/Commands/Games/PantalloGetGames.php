@@ -38,13 +38,24 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        $allGames = $pantalloGames->getGameList($params);
-        foreach ($allGames->response as $game) {
-
+        $this->info("All users get new addresses");
+        $category = [];
+        $subCategory = [];
+        $type = [];
+        try {
+            $pantalloGames = new PantalloGames;
+            $allGames = $pantalloGames->getGameList([], true);
+            foreach ($allGames->response as $game) {
+                $category[$game->category] = 1;
+                $subCategory[$game->subcategory] = 1;
+                $type[$game->type] = 1;
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
-        dd($allGames);
+        dump($subCategory);
+        dump($category);
+        dump($type);
         //ask
 
 
