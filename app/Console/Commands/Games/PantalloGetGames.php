@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands\Games;
 
+use App\Models\GamesType;
+use App\Models\GamesList;
+use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
 
@@ -39,27 +42,69 @@ class PantalloGetGames extends Command
     public function handle()
     {
         $this->info("Start ...");
-        $category = [];
-        $subCategory = [];
-        $type = [];
+        $unwantedCharacter  = '_';
         try {
             $pantalloGames = new PantalloGames;
-            $allGames = $pantalloGames->getGameList([], true);
+            //$allGames = $pantalloGames->getGameList([], true);
+            //get list categories
+            $types = GamesType::all()->keyBy('code');
+            $categories = GamesCategory::all()->keyBy('code');
+            $allGames = file_get_contents(base_path().'/gameList.txt');
+            $allGames = json_decode($allGames);
+            //get list types
             foreach ($allGames->response as $game) {
                 //use trim and
-                $category[$game->category] = 1;
-                $subCategory[$game->subcategory] = 1;
-                $type[$game->type] = 1;
+                $gameId = $game->id;
+                if ($game->category !== '') {
+                    $gameCategory = $game->category;
+                } else {
+                    if ($game->subcategory !== '') {
+                        $subcategory = $game->subcategory;
+                        if ($subcategory[0] === $unwantedCharacter) {
+                            $subcategory = ltrim($subcategory, $unwantedCharacter);
+                        }
+                        $gameCategory = $subcategory;
+                    } else {
+                        $gameCategory = 'empty';
+                    }
+                }
+
+                $gameCategory = trim($gameCategory);
+                $gameType = trim($game->type);
+                if (!isset($categories[$gameCategory])) {
+                    GamesCategory::create([
+                        'code' => $gameCategory,
+                        'name' => $gameCategory
+                    ]);
+                    $categories = GamesCategory::all()->keyBy('code');
+                }
+
+                if (!isset($types[$gameType])) {
+                    GamesType::create([
+                        'code' => $gameType,
+                        'name' => $gameType
+                    ]);
+                    $types = GamesType::all()->keyBy('code');
+                }
+
+                $gameDate = [
+                    'system_id' => $gameId,
+                    'name' => $game->name,
+                    'type_id' => $types[$gameType]->id,
+                    'category_id' => $categories[$gameCategory]->id,
+                    'details' => $game->details,
+                    'mobile' => (int)$game->mobile,
+                    'image' => $game->image,
+                    'image_preview' => $game->image_preview,
+                    'image_filled' => $game->image_filled,
+                    'image_background' => $game->image_background,
+                    'rating' => 1
+                ];
+                GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
             }
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-        dump($subCategory);
-        dump($category);
-        dump($type);
-        //ask
-
-
         //get games and load or update
         $this->info("Games loaded or updated.");
     }

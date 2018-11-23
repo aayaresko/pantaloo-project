@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use DB;
-use  App\Modules\PantalloGames;
+use App\Models\GamesType;
+use App\Models\GamesList;
+use App\Models\GamesCategory;
+use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -11,6 +14,11 @@ class TestController extends Controller
 {
     public function test(Request $request)
     {
+
+        $GamesCategory = GamesCategory::all()->keyBy('code');
+        dd($GamesCategory['fugaso']);
+        $allGames = file_get_contents(base_path().'/gameList.txt');
+        dd(json_decode($allGames));
         dd($request->user());
         $pantalloGames = new PantalloGames;
         $getGameList = $pantalloGames->getGameList([]);

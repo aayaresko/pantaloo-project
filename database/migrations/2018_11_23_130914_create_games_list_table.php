@@ -14,6 +14,19 @@ class CreateGamesListTable extends Migration
     {
         Schema::create('gemes_list', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('system_id')->unsigned()->unique();
+            $table->string('name');
+            $table->integer('type_id')->unsigned();
+            $table->foreign('type_id')->references('id')->on('games_types');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('games_categories');
+            $table->text('details')->nullable();
+            $table->boolean('mobile');
+            $table->text('image');
+            $table->text('image_preview');
+            $table->text('image_filled');
+            $table->text('image_background');
+            $table->integer('rating')->unsigned();
             $table->timestamps();
         });
     }
