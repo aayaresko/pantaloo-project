@@ -42,7 +42,7 @@ class GamesTagSeeder extends Seeder
      */
     protected function getParams()
     {
-        $currentDate =new DateTime();
+        $currentDate = new DateTime();
         return [
             [
                 'id' => 1,
