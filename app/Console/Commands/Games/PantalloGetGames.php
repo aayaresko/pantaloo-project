@@ -38,7 +38,7 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
-        $this->info("All users get new addresses");
+        $this->info("Start ...");
         $category = [];
         $subCategory = [];
         $type = [];
@@ -46,6 +46,7 @@ class PantalloGetGames extends Command
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
             foreach ($allGames->response as $game) {
+                //use trim and
                 $category[$game->category] = 1;
                 $subCategory[$game->subcategory] = 1;
                 $type[$game->type] = 1;
@@ -60,6 +61,6 @@ class PantalloGetGames extends Command
 
 
         //get games and load or update
-        $this->info("All users get new addresses");
+        $this->info("Games loaded or updated.");
     }
 }
