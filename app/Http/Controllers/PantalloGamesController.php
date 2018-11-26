@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Log;
 use Validator;
 use App\Http\Requests;
 use App\Models\GamesList;
@@ -22,6 +23,12 @@ class PantalloGamesController extends Controller
      */
     public function endpoint(Request $request)
     {
+        try {
+            Log::info($request->toArray());
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
         return response()->json([
             'status' => 200,
             'balance' => 100

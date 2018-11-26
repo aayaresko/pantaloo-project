@@ -180,7 +180,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 /* Pantallo Games */
 Route::group(['prefix' => 'games'], function (){
-    Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'GamesController@balance']);
+    Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
 });
 
 //testing

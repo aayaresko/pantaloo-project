@@ -67,10 +67,10 @@ class TestController extends Controller
 
     public function testTypes(Request $request)
     {
-        $games = GamesList::leftJoin('games_types', 'games_types.id', '=', 'gemes_list.type_id')
+        $games = GamesList::leftJoin('games_types', 'games_types.id', '=', 'games_list.type_id')
             ->where([
                 ['games_types.code', '=', $request->category]
-            ])->select(['games_types.id', 'gemes_list.name'])->get();
+            ])->select(['games_types.id', 'games_list.name'])->get();
         return view('test.listGames')->with(['games' => $games]);
     }
 
