@@ -45,12 +45,12 @@ class PantalloGetGames extends Command
         $unwantedCharacter  = '_';
         try {
             $pantalloGames = new PantalloGames;
-            //$allGames = $pantalloGames->getGameList([], true);
+            $allGames = $pantalloGames->getGameList([], true);
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
-            $allGames = file_get_contents(base_path().'/gameList.txt');
-            $allGames = json_decode($allGames);
+//            $allGames = file_get_contents(base_path().'/gameList.txt');
+//            $allGames = json_decode($allGames);
             //get list types
             foreach ($allGames->response as $game) {
                 //use trim and
