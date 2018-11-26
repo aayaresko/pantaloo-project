@@ -42,7 +42,7 @@ class PantalloGetGames extends Command
     public function handle()
     {
         $this->info("Start ...");
-        $unwantedCharacter  = '_';
+        $unwantedCharacter = '_';
         try {
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
