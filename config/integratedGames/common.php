@@ -7,4 +7,9 @@ return [
     'categories' => [
 
     ],
+
+    'statusSession' => [
+        'login' => 0,
+        'logout' => 1
+    ]
 ];

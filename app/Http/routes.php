@@ -181,15 +181,12 @@ Route::group(['middleware' => ['auth']], function () {
 /* Pantallo Games */
 Route::group(['prefix' => 'games'], function (){
     Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'GamesController@balance']);
-    Route::get('/balance', ['as' => 'games.balance', 'uses' => 'GamesController@balance']);
-    Route::get('/debit', ['as' => 'games.debit', 'uses' => 'GamesController@debit']);
-    Route::get('/credit', ['as' => 'games.credit', 'uses' => 'GamesController@credit']);
-    Route::get('/rollback', ['as' => 'games.rollback', 'uses' => 'GamesController@rollback']);
 });
-
-Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
-Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
-
 
 //testing
 Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
+Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestController@testTypes']);
+Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);
+
+Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
+Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);

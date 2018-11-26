@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Validator;
 use App\Http\Requests;
+use App\Models\GamesList;
 use Illuminate\Http\Request;
+use App\Modules\PantalloGames;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
-use App\Modules\PantalloGames;
 
 class PantalloGamesController extends Controller
 {
     //why constant - in doc for integration write such make
     const PASSWORD = 'rf3js1Q';
 
-    public function endpoint(Request $request){
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function endpoint(Request $request)
+    {
         return response()->json([
             'status' => 200,
-            'balance' => 0
+            'balance' => 100
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function getGameList(Request $request)
     {
         $pantalloGames = new PantalloGames;
@@ -29,6 +39,10 @@ class PantalloGamesController extends Controller
         return $pantalloGames->getGameList($params);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function loginPlayer(Request $request)
     {
         $validator = Validator::make($request->toArray(), [
@@ -37,9 +51,10 @@ class PantalloGamesController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         }
-
+        DB::beginTransaction();
         try {
-            $gameId = $request->gameId;
+            $game = GamesList::where('id', $request->gameId)->first();
+            $gameId = $game->id;
             $user = $request->user();
             $userId = $user->id;
             $pantalloGames = new PantalloGames;
@@ -48,7 +63,7 @@ class PantalloGamesController extends Controller
             ], true);
 
             //active player request
-            if ($playerExists->response === false ) {
+            if ($playerExists->response === false) {
                 $player = $pantalloGames->createPlayer([
                     'user_id' => $userId,
                     'user_username' => $userId,
@@ -69,8 +84,9 @@ class PantalloGamesController extends Controller
             unset($loginResponse['id']);
             $loginResponse['system_id'] = $idLogin;
             $loginResponse['user_id'] = $userId;
-            //GamesPantalloSession::create($loginResponse);
-            dump($gameId);
+
+            GamesPantalloSession::updateOrCreate(
+                ['sessionid' => $loginResponse['sessionid']], $loginResponse);
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
@@ -82,37 +98,64 @@ class PantalloGamesController extends Controller
                 'homeurl' => url(''),
             ], true);
 
-//            GamesPantalloSessionGame::create(['session_id' => $idLogin,
-//                    'gamesession_id' => $getGame->gamesession_id
-//                ]);
+            GamesPantalloSessionGame::create(['session_id' => $idLogin,
+                'gamesession_id' => $getGame->gamesession_id]);
 
-            //dd($getGame);
-            return view('testtest', ['link' => $getGame]);
-            dd($getGame);
-            return response()->json([
-                'success' => false,
-                'message' => [
-                    'gameLink' => $getGame->response
-                ]
-            ]);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
+            DB::rollBack();
             dd($e);
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
             ]);
         }
+
+        DB::commit();
+        return response()->json([
+            'success' => false,
+            'message' => [
+                'gameLink' => $getGame->response
+            ]
+        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logoutPlayer(Request $request)
     {
-        //what is game
-        //what is game
-        $this->validate($request, [
-            'gameID' => 'required|numeric|min:1',
+        DB::beginTransaction();
+        try {
+            $configCommon = config('integratedGames.common');
+            $statusLogout = $configCommon['statusSession']['logout'];
+            $statusLogin = $configCommon['statusSession']['login'];
+            $pantalloGames = new PantalloGames;
+            $user = $request->user();
+            $userId = $user->id;
+            $logout = $pantalloGames->logoutPlayer([
+                'user_id' => $userId,
+                'user_username' => $userId,
+                'password' => self::PASSWORD
+            ], true);
+            $session = GamesPantalloSession::where([
+                ['user_id', '=', $user->id],
+                ['status', '<>', $statusLogout],
+            ])->first();
+            $session->status = 1;
+            $session->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        DB::commit();
+        return response()->json([
+            'success' => true
         ]);
-        $pantalloGames = new PantalloGames;
-        $params = [];
-        return $pantalloGames->getGameList();
     }
 }

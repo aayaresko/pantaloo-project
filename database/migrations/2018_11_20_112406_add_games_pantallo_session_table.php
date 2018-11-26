@@ -18,7 +18,7 @@ class AddGamesPantalloSessionTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('system_id')->index();
+            $table->integer('system_id')->unsigned()->index();
             $table->string('username');
             $table->decimal('balance', 14, 5);
             $table->string('currencycode');

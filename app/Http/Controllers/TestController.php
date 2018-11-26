@@ -8,22 +8,29 @@ use App\Models\GamesList;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
+use App\Models\Pantallo\GamesPantalloSession;
+use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
+    const PASSWORD = 'rf3js1Q';
+
     public function test(Request $request)
     {
-
-        $GamesCategory = GamesCategory::all()->keyBy('code');
-        dd($GamesCategory['fugaso']);
-        $allGames = file_get_contents(base_path().'/gameList.txt');
-        dd(json_decode($allGames));
-        dd($request->user());
+        $types = GamesType::all();
+        return view('test.listTypes')->with(['types' => $types]);
+//
+//        dd(11);
+//        $GamesCategory = GamesCategory::all()->keyBy('code');
+//        dd($GamesCategory['fugaso']);
+//        $allGames = file_get_contents(base_path().'/gameList.txt');
+//        dd(json_decode($allGames));
+//        dd($request->user());
+        ini_set('max_execution_time', 60);
         $pantalloGames = new PantalloGames;
-        $getGameList = $pantalloGames->getGameList([]);
-        dd($getGameList);
-
+        $getGameList = $pantalloGames->getGameList([], true);
+        dd(count($getGameList->response));
 
 
         $post = [
@@ -55,6 +62,78 @@ class TestController extends Controller
             ]
         ]);
         dd($result->getBody());
-       return view('testtest');
+        return view('testtest');
+    }
+
+    public function testTypes(Request $request)
+    {
+        $games = GamesList::leftJoin('games_types', 'games_types.id', '=', 'gemes_list.type_id')
+            ->where([
+                ['games_types.code', '=', $request->category]
+            ])->select(['games_types.id', 'gemes_list.name'])->get();
+        return view('test.listGames')->with(['games' => $games]);
+    }
+
+    public function game(Request $request)
+    {
+        try {
+            $game = GamesList::where('name', $request->game)->first();
+            dump($game);
+            $gameId = $game->system_id;
+            $user = $request->user();
+            $userId = $user->id;
+            $pantalloGames = new PantalloGames;
+            $playerExists = $pantalloGames->playerExists([
+                'user_username' => $user->id,
+            ], true);
+
+            //active player request
+            if ($playerExists->response === false) {
+                $player = $pantalloGames->createPlayer([
+                    'user_id' => $userId,
+                    'user_username' => $userId,
+                    'password' => self::PASSWORD
+                ], true);
+            } else {
+                $player = $playerExists;
+            }
+
+            //login request
+            $login = $pantalloGames->loginPlayer([
+                'user_id' => $userId,
+                'user_username' => $userId,
+                'password' => self::PASSWORD
+            ], true);
+
+            $loginResponse = (array)$login->response;
+            $idLogin = $loginResponse['id'];
+            unset($loginResponse['id']);
+            $loginResponse['system_id'] = $idLogin;
+            $loginResponse['user_id'] = $userId;
+            GamesPantalloSession::updateOrCreate(['sessionid' => $loginResponse['sessionid']], $loginResponse);
+            dump($gameId);
+            //get games
+            $getGame = $pantalloGames->getGame([
+                'lang' => 'en',
+                'user_id' => $user->id,
+                'user_username' => $user->id,
+                'user_password' => self::PASSWORD,
+                'gameid' => $gameId,
+                'play_for_fun' => 0,
+                'homeurl' => url(''),
+            ], true);
+            dump($idLogin);
+            dump($getGame);
+            GamesPantalloSessionGame::create(['session_id' => $idLogin,
+                    'gamesession_id' => $getGame->gamesession_id]);
+
+            return view('testtest', ['link' => $getGame]);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

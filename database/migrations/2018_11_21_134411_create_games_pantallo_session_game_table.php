@@ -15,7 +15,7 @@ class CreateGamesPantalloSessionGameTable extends Migration
         Schema::create('games_pantallo_session_game', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('session_id')->unsigned();
-            $table->foreign('session_id')->references('id')->on('games_pantallo_session');
+            $table->foreign('session_id')->references('system_id')->on('games_pantallo_session');
             $table->string('gamesession_id');
             $table->timestamps();
         });
