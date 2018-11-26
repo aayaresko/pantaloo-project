@@ -12,7 +12,7 @@ class CreateGamesListTable extends Migration
      */
     public function up()
     {
-        Schema::create('gemes_list', function (Blueprint $table) {
+        Schema::create('games_list', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('system_id')->unsigned()->unique();
             $table->string('name');
@@ -38,6 +38,6 @@ class CreateGamesListTable extends Migration
      */
     public function down()
     {
-        Schema::drop('gemes_list');
+        Schema::drop('games_list');
     }
 }
