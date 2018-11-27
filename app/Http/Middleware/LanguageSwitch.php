@@ -4,10 +4,17 @@ namespace App\Http\Middleware;
 
 use App\User;
 use Closure;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
-class LanguageSwitch
+use Illuminate\Support\Facades\Cookie;
+
+class LanguageSwitch extends CommonMiddleware
 {
+    /**
+     * @var array
+     */
+    protected $except = [
+        '/games/endpoint'
+    ];
     /**
      * Handle an incoming request.
      *
@@ -17,6 +24,11 @@ class LanguageSwitch
      */
     public function handle($request, Closure $next)
     {
+        $shouldPassThrough = $this->shouldPassThrough($request);
+        if ($shouldPassThrough) {
+            return $next($request);
+        }
+
         if($request->has('session_id'))
         {
             $data = json_decode(decrypt($request->input('session_id')), true);

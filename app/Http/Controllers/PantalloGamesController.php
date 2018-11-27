@@ -14,7 +14,9 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class PantalloGamesController extends Controller
 {
-    //why constant - in doc for integration write such make
+    /**
+     * Why constant - in doc for integration write such make
+     */
     const PASSWORD = 'rf3js1Q';
 
     /**
