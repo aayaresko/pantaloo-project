@@ -13,6 +13,7 @@ use App\Models\GamesList;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
 use App\Models\Pantallo\GamesPantalloSession;
+use App\Models\Pantallo\GamesPantalloTransaction;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class PantalloGamesController extends Controller
@@ -28,6 +29,7 @@ class PantalloGamesController extends Controller
      */
     public function endpoint(Request $request)
     {
+        dd($request->toArray());
         DB::beginTransaction();
         try {
             //validation
@@ -69,7 +71,68 @@ class PantalloGamesController extends Controller
                     ];
                     break;
                 case 'debit':
-                    dd(2);
+                    $amount = $requestParams['amount'];
+                    $externalTransactionId = $requestParams['transaction_id'];
+                    $roundId = $requestParams['round_id'];
+
+                    //if existing two transaction then return response how respond docs
+
+                    //create transaction own and external
+                    //update user balance +
+                    GamesPantalloTransaction::where('')->first();
+
+                    $resp['roundId'] = $round_id;
+                    $resp['token'] = $token->token;
+                    $resp['balance'] = $user->getRealBalance();
+                    $resp['currency'] = 'mBTC';
+                    $resp['transactionId'] = $ext_id;
+
+                    $rollback = Rollback::where('ext_id', $ext_id)->first();
+                    if($rollback) throw new \Exception('Debit after rollback / General Error', 1);
+
+                    if(!is_numeric($round_id)) throw new \Exception('General error', 1);
+
+                    if(!is_numeric($sum)) throw new \Exception('General error', 1);
+                    if($sum < 0) throw new \Exception('General error', 1);
+
+                    if(empty($ext_id)) throw new \Exception('General error', 1);
+
+                    $transaction = Transaction::where('ext_id', $ext_id)->first();
+
+                    if($transaction) throw new \Exception('Transaction has already processed', 0);
+
+                    if((string)$input['uid'] != (string)$user->id) throw new \Exception('User not found', 7);
+
+                    $transaction = new Transaction();
+                    $transaction->ext_id = $ext_id;
+                    $transaction->type = 1;
+                    $transaction->user()->associate($user);
+                    $transaction->token()->associate($token);
+                    $transaction->round_id = $round_id;
+                    $transaction->bonus_sum = 0;
+
+                    if($user->balance < $sum)
+                    {
+                        throw new \Exception('Insufficient funds', 3);
+                    }
+
+                    $transaction->sum = -1*$sum;
+
+                    try {
+                        $user->changeBalance($transaction);
+                    }
+                    catch (\Exception $e)
+                    {
+                        throw new \Exception('Insufficient funds', 3);
+                    }
+
+                    $balance = $user->getRealBalance();
+
+                    $resp['balance'] = $balance;
+
+                    $resp['errorCode'] = 0;
+                    $resp['errorDescription'] = 'OK';
+                    $resp['timestamp'] = Ezugi::GetTime();
                     break;
                 case 'credit':
                     dd(2);
