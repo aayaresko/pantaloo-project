@@ -16,7 +16,7 @@ class PantalloGames
      */
     public function __construct()
     {
-        $this->paramsDefault = config('pantalloGames');
+        $this->paramsDefault = config('pantalloGames.forRequest');
     }
 
     /**
