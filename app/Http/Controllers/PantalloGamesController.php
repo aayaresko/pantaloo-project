@@ -83,7 +83,7 @@ class PantalloGamesController extends Controller
             ];
             switch ($action) {
                 case 'balance':
-                    $response['balance'] = $params['user']->balance;
+                    $response['balance'] = (float)$params['user']->balance;
                     break;
                 case 'debit':
                     dd(2);
@@ -106,10 +106,7 @@ class PantalloGamesController extends Controller
             'request' => json_encode($requestParams),
             'response' => json_encode($response)
         ]);
-        return response()->json([
-            'status' => 200,
-            'balance' => 100
-        ]);
+        return response()->json($response);
     }
 
     /**
