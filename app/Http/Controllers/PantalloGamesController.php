@@ -7,6 +7,7 @@ use Log;
 use Validator;
 use App\RawLog;
 use App\User;
+use App\Transaction;
 use App\Http\Requests;
 use App\Models\GamesList;
 use Illuminate\Http\Request;
@@ -32,25 +33,6 @@ class PantalloGamesController extends Controller
             //validation
             $params = [];
             $requestParams = $request->query();
-
-            $validator = Validator::make($requestParams, [
-                'callerId' => 'required|string',
-                'callerPassword' => 'required|string',
-                'callerPrefix' => 'required|string',
-                'username' => 'required|string',
-
-                'action' => 'required|string',
-                'remote_id' => 'required|integer',
-                'game_id' => 'required|string',
-                'session_id' => 'required',
-                'key' => 'required|string',
-                'gamesession_id' => 'required|string',
-                'game_id_hash' => 'string',
-            ]);
-
-            if ($validator->fails()) {
-                throw new \Exception('Problem with validation');
-            }
 
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
@@ -78,12 +60,13 @@ class PantalloGamesController extends Controller
             }
             $action = $requestParams['action'];
 
-            $response = [
-                'status' => 200
-            ];
+
             switch ($action) {
                 case 'balance':
-                    $response['balance'] = (float)$params['user']->balance;
+                    $response = [
+                        'status' => 200,
+                        'balance' => (float)$params['user']->balance
+                    ];
                     break;
                 case 'debit':
                     dd(2);
@@ -97,15 +80,21 @@ class PantalloGamesController extends Controller
                 default:
                     throw new \Exception('Action is not found');
             }
+            RawLog::create([
+                'request' => json_encode($requestParams),
+                'response' => json_encode($response)
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            $response = [
+                'status' => 500,
+                'balance' => 0,
+                'msg' => $e->getMessage()
+            ];
             dd($e->getMessage());
         }
         DB::commit();
-        RawLog::create([
-            'request' => json_encode($requestParams),
-            'response' => json_encode($response)
-        ]);
+
         return response()->json($response);
     }
 
