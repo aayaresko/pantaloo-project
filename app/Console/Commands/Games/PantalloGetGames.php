@@ -49,8 +49,6 @@ class PantalloGetGames extends Command
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
-//            $allGames = file_get_contents(base_path().'/gameList.txt');
-//            $allGames = json_decode($allGames);
             //get list types
             foreach ($allGames->response as $game) {
                 //use trim and
