@@ -14,7 +14,7 @@ class CreateGamesPantalloTransactionsTable extends Migration
     {
         Schema::create('games_pantallo_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('system_id')->unsigned();
+            $table->string('system_id')->index();
             $table->integer('transaction_id')->unsigned()->unique();
             $table->foreign('transaction_id')->references('id')->on('transactions');
             $table->decimal('balance', 14, 5);

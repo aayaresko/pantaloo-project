@@ -9,6 +9,8 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = ['sum', 'user_id', 'round_id'];
+
     protected $dates = ['deleted_at'];
 
     public function scopeDeposits($query)

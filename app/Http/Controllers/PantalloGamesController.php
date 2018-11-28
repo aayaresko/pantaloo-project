@@ -29,7 +29,6 @@ class PantalloGamesController extends Controller
      */
     public function endpoint(Request $request)
     {
-        dd($request->toArray());
         DB::beginTransaction();
         try {
             //validation
@@ -71,71 +70,101 @@ class PantalloGamesController extends Controller
                     ];
                     break;
                 case 'debit':
-                    $amount = $requestParams['amount'];
+                    $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = $requestParams['round_id'];
-
                     //if existing two transaction then return response how respond docs
 
                     //create transaction own and external
                     //update user balance +
-                    GamesPantalloTransaction::where('')->first();
+                    $transaction = GamesPantalloTransaction::leftJoin('transactions',
+                        'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                        ->where([
+                            ['system_id', '=', $externalTransactionId]
+                        ])->select([
+                            'transactions.id',
+                            'games_pantallo_transactions.balance as current_balance'
+                        ])->first();
 
-                    $resp['roundId'] = $round_id;
-                    $resp['token'] = $token->token;
-                    $resp['balance'] = $user->getRealBalance();
-                    $resp['currency'] = 'mBTC';
-                    $resp['transactionId'] = $ext_id;
+                    if (is_null($transaction)) {
+                        //create and return value
+                        $transaction = Transaction::create([
+                            'comment' => 'Pantallo games',
+                            'sum' => $amount,
+                            'user_id' => $params['user']->id,
+                            'round_id' => $roundId
+                        ]);
 
-                    $rollback = Rollback::where('ext_id', $ext_id)->first();
-                    if($rollback) throw new \Exception('Debit after rollback / General Error', 1);
+                        //edit balance user
+                        $balance = (float)$params['user']->balance - (float)$amount;
 
-                    if(!is_numeric($round_id)) throw new \Exception('General error', 1);
+                        User::where('id', $params['user']->id)->update([
+                            //'balance' => DB::raw("balance+{$amount}")
+                            'balance' => $balance
+                        ]);
 
-                    if(!is_numeric($sum)) throw new \Exception('General error', 1);
-                    if($sum < 0) throw new \Exception('General error', 1);
-
-                    if(empty($ext_id)) throw new \Exception('General error', 1);
-
-                    $transaction = Transaction::where('ext_id', $ext_id)->first();
-
-                    if($transaction) throw new \Exception('Transaction has already processed', 0);
-
-                    if((string)$input['uid'] != (string)$user->id) throw new \Exception('User not found', 7);
-
-                    $transaction = new Transaction();
-                    $transaction->ext_id = $ext_id;
-                    $transaction->type = 1;
-                    $transaction->user()->associate($user);
-                    $transaction->token()->associate($token);
-                    $transaction->round_id = $round_id;
-                    $transaction->bonus_sum = 0;
-
-                    if($user->balance < $sum)
-                    {
-                        throw new \Exception('Insufficient funds', 3);
+                        $pantalloTransaction = [
+                            'system_id' => $externalTransactionId,
+                            'transaction_id' => $transaction->id,
+                            'balance' => $balance
+                        ];
+                        GamesPantalloTransaction::create($pantalloTransaction);
+                    } else {
+                        $balance = $transaction->current_balance;
                     }
+                    $response = [
+                        'status' => 200,
+                        'balance' => $balance
+                    ];
 
-                    $transaction->sum = -1*$sum;
-
-                    try {
-                        $user->changeBalance($transaction);
-                    }
-                    catch (\Exception $e)
-                    {
-                        throw new \Exception('Insufficient funds', 3);
-                    }
-
-                    $balance = $user->getRealBalance();
-
-                    $resp['balance'] = $balance;
-
-                    $resp['errorCode'] = 0;
-                    $resp['errorDescription'] = 'OK';
-                    $resp['timestamp'] = Ezugi::GetTime();
                     break;
                 case 'credit':
-                    dd(2);
+                    $amount = (float)$requestParams['amount'];
+                    $externalTransactionId = $requestParams['transaction_id'];
+                    $roundId = $requestParams['round_id'];
+                    //if existing two transaction then return response how respond docs
+
+                    //create transaction own and external
+                    //update user balance +
+                    $transaction = GamesPantalloTransaction::leftJoin('transactions',
+                        'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                        ->where([
+                            ['system_id', '=', $externalTransactionId]
+                        ])->select([
+                            'transactions.id',
+                            'games_pantallo_transactions.balance as current_balance'
+                        ])->first();
+
+                    if (is_null($transaction)) {
+                        //create and return value
+                        $transaction = Transaction::create([
+                            'comment' => 'Pantallo games',
+                            'sum' => $amount,
+                            'user_id' => $params['user']->id,
+                            'round_id' => $roundId
+                        ]);
+
+                        //edit balance user
+                        $balance = (float)$params['user']->balance + (float)$amount;
+
+                        User::where('id', $params['user']->id)->update([
+                            //'balance' => DB::raw("balance+{$amount}")
+                            'balance' => $balance
+                        ]);
+
+                        $pantalloTransaction = [
+                            'system_id' => $externalTransactionId,
+                            'transaction_id' => $transaction->id,
+                            'balance' => $balance
+                        ];
+                        GamesPantalloTransaction::create($pantalloTransaction);
+                    } else {
+                        $balance = $transaction->current_balance;
+                    }
+                    $response = [
+                        'status' => 200,
+                        'balance' => $balance
+                    ];
                     break;
                 case 'rollback':
                     dd(2);
@@ -149,15 +178,13 @@ class PantalloGamesController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
             $response = [
                 'status' => 500,
-                'balance' => 0,
                 'msg' => $e->getMessage()
             ];
-            dd($e->getMessage());
         }
         DB::commit();
-
         return response()->json($response);
     }
 
