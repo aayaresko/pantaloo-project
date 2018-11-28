@@ -272,7 +272,7 @@ class PantalloGamesController extends Controller
                 'response' => json_encode($response)
             ]);
         } catch (\Exception $e) {
-            dd($e);
+            //dd($e);
             $errorCode = $e->getCode();
             $errorMessage = $e->getMessage();
             DB::rollBack();
