@@ -235,6 +235,7 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
+                        $currentOperation = ($currentOperation === 'debit') ? 'credit' : 'debit';
                         $balance = $typesOperation[$currentOperation]((float)$params['user']->balance, (float)$amount);
 
                         //CHECK THIS = ASK MAX
