@@ -19,8 +19,8 @@ return [
             'rollback' => 3
         ],
         'operation' => [
-            'debit' => 'bcadd',
-            'credit' => 'bcsub',
+            'debit' => 'bcsub',
+            'credit' => 'bcadd',
         ]
     ]
 ];

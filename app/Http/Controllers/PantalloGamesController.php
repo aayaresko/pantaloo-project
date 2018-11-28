@@ -107,7 +107,7 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
-                        $balance = (float)$params['user']->balance - (float)$amount;
+                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
@@ -123,11 +123,11 @@ class PantalloGamesController extends Controller
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                     } else {
-                        $balance = (float)$transaction->balance_after;
+                        $balance = $transaction->balance_after;
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => $balance
+                        'balance' => (float)$balance
                     ];
                     break;
                 case 'credit':
@@ -152,9 +152,9 @@ class PantalloGamesController extends Controller
 
                     if (is_null($transaction)) {
                         //create and return value
-                        if ((float)$amount > $params['user']->balance) {
-                            throw new \Exception('Insufficient funds', 403);
-                        }
+//                        if ((float)$amount > $params['user']->balance) {
+//                            throw new \Exception('Insufficient funds', 403);
+//                        }
 
                         $transaction = Transaction::create([
                             'comment' => 'Pantallo games',
@@ -164,7 +164,7 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
-                        $balance = (float)$params['user']->balance + (float)$amount;
+                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
@@ -180,11 +180,11 @@ class PantalloGamesController extends Controller
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                     } else {
-                        $balance = (float)$transaction->balance_after;
+                        $balance = $transaction->balance_after;
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => $balance
+                        'balance' => (float)$balance
                     ];
                     break;
                 case 'rollback':
@@ -203,6 +203,7 @@ class PantalloGamesController extends Controller
                             ['games_pantallo_transactions.action_id', '<>', $typesActions[$caseAction]]
                         ])->select([
                             'transactions.id',
+                            'action_id',
                             'games_pantallo_transactions.balance_before as balance_before',
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
@@ -224,9 +225,7 @@ class PantalloGamesController extends Controller
 
                     if (is_null($transaction)) {
                         //create and return value
-                        if ((float)$amount > $params['user']->balance) {
-                            throw new \Exception('Insufficient funds', 403);
-                        }
+                        $currentOperation = array_search($transactionHas->action_id, $typesActions);
 
                         $transaction = Transaction::create([
                             'comment' => 'Pantallo games',
@@ -236,7 +235,12 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
-                        $balance = (float)$params['user']->balance + (float)$amount;
+                        $balance = $typesOperation[$currentOperation]((float)$params['user']->balance, (float)$amount);
+
+                        //CHECK THIS = ASK MAX
+                        if ($balance < 0) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
