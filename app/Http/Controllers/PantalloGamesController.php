@@ -256,11 +256,11 @@ class PantalloGamesController extends Controller
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                     } else {
-                        $balance = (float)$transaction->balance_after;
+                        $balance = $transaction->balance_after;
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => $balance
+                        'balance' => (float)$balance
                     ];
                     break;
                 default:
