@@ -14,10 +14,13 @@ class CreateGamesPantalloTransactionsTable extends Migration
     {
         Schema::create('games_pantallo_transactions', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('action_id')->index();
             $table->string('system_id')->index();
-            $table->integer('transaction_id')->unsigned()->unique();
-            $table->foreign('transaction_id')->references('id')->on('transactions');
-            $table->decimal('balance', 14, 5);
+            $table->integer('transaction_id')->unsigned()->index();
+            $table->foreign('transaction_id')->references('id')
+                ->on('transactions')->onDelete('cascade');
+            $table->decimal('balance_before', 14, 5);
+            $table->decimal('balance_after', 14, 5);
             $table->timestamps();
         });
     }

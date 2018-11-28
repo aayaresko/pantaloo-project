@@ -37,13 +37,15 @@ class PantalloGamesController extends Controller
 
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
+            $typesActions = $configPantalloGames['additional']['action'];
+            $typesOperation = $configPantalloGames['additional']['operation'];
             $validationDate = $requestParams;
             $key = $validationDate['key'];
             unset($validationDate['key']);
             $hash = sha1($salt . http_build_query($validationDate));
 
             if ($key != $hash) {
-                throw new \Exception('Incorrect input date');
+                //throw new \Exception('Incorrect input date');
             }
             //end validation
 
@@ -59,8 +61,10 @@ class PantalloGamesController extends Controller
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
             }
+            if ((float)$params['user']->balance < 0) {
+                throw new \Exception('Insufficient funds', 403);
+            }
             $action = $requestParams['action'];
-
 
             switch ($action) {
                 case 'balance':
@@ -70,6 +74,7 @@ class PantalloGamesController extends Controller
                     ];
                     break;
                 case 'debit':
+                    $caseAction = 'debit';
                     $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = $requestParams['round_id'];
@@ -77,17 +82,23 @@ class PantalloGamesController extends Controller
 
                     //create transaction own and external
                     //update user balance +
-                    $transaction = GamesPantalloTransaction::leftJoin('transactions',
+                    $transaction = Transaction::leftJoin('games_pantallo_transactions',
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
-                            ['system_id', '=', $externalTransactionId]
+                            ['system_id', '=', $externalTransactionId],
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
                         ])->select([
                             'transactions.id',
-                            'games_pantallo_transactions.balance as current_balance'
+                            'games_pantallo_transactions.balance_before as balance_before',
+                            'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
                     if (is_null($transaction)) {
                         //create and return value
+                        if ((float)$amount > $params['user']->balance) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
                         $transaction = Transaction::create([
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
@@ -106,19 +117,21 @@ class PantalloGamesController extends Controller
                         $pantalloTransaction = [
                             'system_id' => $externalTransactionId,
                             'transaction_id' => $transaction->id,
-                            'balance' => $balance
+                            'balance_before' => $params['user']->balance,
+                            'balance_after' => $balance,
+                            'action_id' => $typesActions[$caseAction]
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                     } else {
-                        $balance = $transaction->current_balance;
+                        $balance = (float)$transaction->balance_after;
                     }
                     $response = [
                         'status' => 200,
                         'balance' => $balance
                     ];
-
                     break;
                 case 'credit':
+                    $caseAction = 'credit';
                     $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = $requestParams['round_id'];
@@ -126,17 +139,23 @@ class PantalloGamesController extends Controller
 
                     //create transaction own and external
                     //update user balance +
-                    $transaction = GamesPantalloTransaction::leftJoin('transactions',
+                    $transaction = Transaction::leftJoin('games_pantallo_transactions',
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
-                            ['system_id', '=', $externalTransactionId]
+                            ['system_id', '=', $externalTransactionId],
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
                         ])->select([
                             'transactions.id',
-                            'games_pantallo_transactions.balance as current_balance'
+                            'games_pantallo_transactions.balance_before as balance_before',
+                            'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
                     if (is_null($transaction)) {
                         //create and return value
+                        if ((float)$amount > $params['user']->balance) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
                         $transaction = Transaction::create([
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
@@ -155,11 +174,13 @@ class PantalloGamesController extends Controller
                         $pantalloTransaction = [
                             'system_id' => $externalTransactionId,
                             'transaction_id' => $transaction->id,
-                            'balance' => $balance
+                            'balance_before' => $params['user']->balance,
+                            'balance_after' => $balance,
+                            'action_id' => $typesActions[$caseAction]
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                     } else {
-                        $balance = $transaction->current_balance;
+                        $balance = (float)$transaction->balance_after;
                     }
                     $response = [
                         'status' => 200,
@@ -167,7 +188,76 @@ class PantalloGamesController extends Controller
                     ];
                     break;
                 case 'rollback':
-                    dd(2);
+                    $caseAction = 'rollback';
+                    $amount = (float)$requestParams['amount'];
+                    $externalTransactionId = $requestParams['transaction_id'];
+                    $roundId = $requestParams['round_id'];
+                    //if existing two transaction then return response how respond docs
+
+                    //create transaction own and external
+                    //update user balance +
+                    $transactionHas = Transaction::leftJoin('games_pantallo_transactions',
+                        'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                        ->where([
+                            ['system_id', '=', $externalTransactionId],
+                            ['games_pantallo_transactions.action_id', '<>', $typesActions[$caseAction]]
+                        ])->select([
+                            'transactions.id',
+                            'games_pantallo_transactions.balance_before as balance_before',
+                            'games_pantallo_transactions.balance_after as balance_after'
+                        ])->first();
+
+                    if (is_null($transactionHas)) {
+                        throw new \Exception('Does not have a transaction', 404);
+                    }
+
+                    $transaction = Transaction::leftJoin('games_pantallo_transactions',
+                        'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                        ->where([
+                            ['system_id', '=', $externalTransactionId],
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
+                        ])->select([
+                            'transactions.id',
+                            'games_pantallo_transactions.balance_before as balance_before',
+                            'games_pantallo_transactions.balance_after as balance_after'
+                        ])->first();
+
+                    if (is_null($transaction)) {
+                        //create and return value
+                        if ((float)$amount > $params['user']->balance) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
+                        $transaction = Transaction::create([
+                            'comment' => 'Pantallo games',
+                            'sum' => $amount,
+                            'user_id' => $params['user']->id,
+                            'round_id' => $roundId
+                        ]);
+
+                        //edit balance user
+                        $balance = (float)$params['user']->balance + (float)$amount;
+
+                        User::where('id', $params['user']->id)->update([
+                            //'balance' => DB::raw("balance+{$amount}")
+                            'balance' => $balance
+                        ]);
+
+                        $pantalloTransaction = [
+                            'system_id' => $externalTransactionId,
+                            'transaction_id' => $transaction->id,
+                            'balance_before' => $params['user']->balance,
+                            'balance_after' => $balance,
+                            'action_id' => $typesActions[$caseAction]
+                        ];
+                        GamesPantalloTransaction::create($pantalloTransaction);
+                    } else {
+                        $balance = (float)$transaction->balance_after;
+                    }
+                    $response = [
+                        'status' => 200,
+                        'balance' => $balance
+                    ];
                     break;
                 default:
                     throw new \Exception('Action is not found');
@@ -177,12 +267,18 @@ class PantalloGamesController extends Controller
                 'response' => json_encode($response)
             ]);
         } catch (\Exception $e) {
+            dd($e);
+            $errorCode = $e->getCode();
+            $errorMessage = $e->getMessage();
             DB::rollBack();
-            dd($e->getMessage());
             $response = [
                 'status' => 500,
-                'msg' => $e->getMessage()
+                'msg' => $errorMessage
             ];
+
+            if ($errorCode) {
+                $response['status'] = $errorCode;
+            }
         }
         DB::commit();
         return response()->json($response);

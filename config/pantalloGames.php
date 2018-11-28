@@ -12,6 +12,15 @@ return [
     ],
 
     'additional' => [
-        'salt' => 'REnd48fg3'
+        'salt' => 'REnd48fg3',
+        'action' => [
+            'debit' => 1,
+            'credit' => 2,
+            'rollback' => 3
+        ],
+        'operation' => [
+            'debit' => 'bcadd',
+            'credit' => 'bcsub',
+        ]
     ]
 ];
