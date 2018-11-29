@@ -45,7 +45,7 @@ class PantalloGamesController extends Controller
             $hash = sha1($salt . http_build_query($validationDate));
 
             if ($key != $hash) {
-                //throw new \Exception('Incorrect input date');
+                throw new \Exception('Incorrect input date');
             }
             //end validation
 
@@ -267,6 +267,7 @@ class PantalloGamesController extends Controller
                 default:
                     throw new \Exception('Action is not found');
             }
+            //create add database for pantallo games only
             RawLog::create([
                 'request' => json_encode($requestParams),
                 'response' => json_encode($response)
@@ -275,10 +276,11 @@ class PantalloGamesController extends Controller
             //dd($e);
             $errorCode = $e->getCode();
             $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
             DB::rollBack();
             $response = [
                 'status' => 500,
-                'msg' => $errorMessage
+                'msg' => $errorMessage . ' Line:' . $errorLine
             ];
 
             if ($errorCode) {
