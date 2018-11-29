@@ -17,7 +17,7 @@ class CreateGamesCategoriesTable extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->string('image')->nullable();
-            $table->boolean('active')->default(0);
+            $table->boolean('active')->default(1);
             $table->string('rating')->default(0);
             $table->timestamps();
         });
