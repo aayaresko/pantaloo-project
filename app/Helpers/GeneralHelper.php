@@ -10,6 +10,7 @@ class GeneralHelper
      */
     static public function formatAmount($amount)
     {
-        return round($amount, 5, PHP_ROUND_HALF_DOWN);
+        $accuracyValues = config('app.accuracyValues');
+        return round($amount, $accuracyValues, PHP_ROUND_HALF_DOWN);
     }
 }

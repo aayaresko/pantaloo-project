@@ -39,6 +39,7 @@ class PantalloGamesController extends Controller
             $salt = $configPantalloGames['additional']['salt'];
             $typesActions = $configPantalloGames['additional']['action'];
             $typesOperation = $configPantalloGames['additional']['operation'];
+            $accuracyValues = config('app.accuracyValues');
             $validationDate = $requestParams;
             $key = $validationDate['key'];
             unset($validationDate['key']);
@@ -109,7 +110,7 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
-                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount);
+                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount, $accuracyValues);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
@@ -166,7 +167,7 @@ class PantalloGamesController extends Controller
                         ]);
 
                         //edit balance user
-                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount);
+                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount, $accuracyValues);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
@@ -209,7 +210,7 @@ class PantalloGamesController extends Controller
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
-                    $diffBalance = bcsub((float)$transactionHas->balance_after, (float)$transactionHas->balance_before);
+                    $diffBalance = bcsub((float)$transactionHas->balance_after, (float)$transactionHas->balance_before, $accuracyValues);
                     $amount  = abs($diffBalance);
 
                     if (is_null($transactionHas)) {

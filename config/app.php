@@ -110,6 +110,8 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
+    'accuracyValues' => 5,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
