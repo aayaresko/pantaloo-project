@@ -16,6 +16,9 @@ class CreateGamesTypesTable extends Migration
             $table->increments('id');
             $table->string('code')->unique();
             $table->string('name');
+            $table->string('image')->nullable();
+            $table->boolean('active')->default(0);
+            $table->string('rating')->default(0);
             $table->timestamps();
         });
     }

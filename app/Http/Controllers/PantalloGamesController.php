@@ -61,6 +61,8 @@ class PantalloGamesController extends Controller
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
             }
+
+            $balanceBefore = (float)$params['user']->balance;
             if ((float)$params['user']->balance < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
@@ -77,7 +79,7 @@ class PantalloGamesController extends Controller
                     $caseAction = 'debit';
                     $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
-                    $roundId = $requestParams['round_id'];
+                    $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
 
                     //create transaction own and external
@@ -134,7 +136,7 @@ class PantalloGamesController extends Controller
                     $caseAction = 'credit';
                     $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
-                    $roundId = $requestParams['round_id'];
+                    $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
 
                     //create transaction own and external
@@ -189,9 +191,8 @@ class PantalloGamesController extends Controller
                     break;
                 case 'rollback':
                     $caseAction = 'rollback';
-                    $amount = (float)$requestParams['amount'];
                     $externalTransactionId = $requestParams['transaction_id'];
-                    $roundId = $requestParams['round_id'];
+                    $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
 
                     //create transaction own and external
@@ -207,6 +208,9 @@ class PantalloGamesController extends Controller
                             'games_pantallo_transactions.balance_before as balance_before',
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
+
+                    $diffBalance = bcsub((float)$transactionHas->balance_after, (float)$transactionHas->balance_before);
+                    $amount  = abs($diffBalance);
 
                     if (is_null($transactionHas)) {
                         throw new \Exception('Does not have a transaction', 404);
@@ -285,6 +289,7 @@ class PantalloGamesController extends Controller
 
             if ($errorCode) {
                 $response['status'] = $errorCode;
+                $response['balance'] = $balanceBefore;
             }
         }
         DB::commit();
