@@ -34,6 +34,7 @@ class PantalloGamesController extends Controller
             //validation
             $params = [];
             $requestParams = $request->query();
+            Log::info($requestParams);
 
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
@@ -51,7 +52,7 @@ class PantalloGamesController extends Controller
             //end validation
 
             //action
-            Log::info($requestParams);
+
             //get user for this session
             $params['session'] = GamesPantalloSession::where('sessionid', $requestParams['session_id'])->first();
             if (is_null($params['session'])) {

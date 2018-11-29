@@ -12,6 +12,9 @@
 */
 
 
+Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@getGames']);
+Route::get('/integratedGame/{providerId}/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
+
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@home']);
