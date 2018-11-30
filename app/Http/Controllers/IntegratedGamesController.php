@@ -48,16 +48,16 @@ class IntegratedGamesController extends Controller
             ['active', '=', 1],
         ];
 
-        if ($request->has('search')) {
+        if ($request->search !== '') {
             array_push($whereGameList, ['name', 'LIKE', '%' . $request->search . '%']);
         }
 
-        if ($request->has('category_id')) {
-            array_push($whereGameList, ['category_id', '=', $request->category_id]);
+        if ((int)$request->categoryId !== 0) {
+            array_push($whereGameList, ['category_id', '=', $request->categoryId]);
         }
 
-        if ($request->has('type_id')) {
-            array_push($whereGameList, ['type_id', '=', $request->type_id]);
+        if ((int)$request->typeId !== 0) {
+            array_push($whereGameList, ['type_id', '=', $request->typeId]);
         }
 
         $gameList = GamesList::where($whereGameList)->orderBy('rating')->paginate($paginationCount);

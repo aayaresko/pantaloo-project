@@ -11,4 +11,6 @@
     </div>
 </div>
 
-{{$gameList->render()}}
+<div class="paginationGame">
+    {{$gameList->render()}}
+</div>

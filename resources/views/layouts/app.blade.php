@@ -28,7 +28,7 @@
 </head>
 <body>
 <div id="preloader" class="preloader-block"><span class="spin"></span></div>
-
+<div class="preloaderCommon" style="display: none"></div>
 <script>
 
     var CasinoTranslate = {
@@ -296,6 +296,7 @@
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/main.js?v=1.26"></script>
+<script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/vendors/new.js"></script>
 

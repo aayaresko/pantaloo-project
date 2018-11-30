@@ -1,6 +1,5 @@
 <div class="block-container">
     <div class="games-entry">
-        <div style="width: 100px; height: 100px;"></div>
         @foreach($gameList as $game)
             <div class="single-game ng-scope" data-slot_id="{{$game->id}}">
                 <div class="games-block ng-scope">
@@ -22,4 +21,6 @@
     </div>
 </div>
 
-{{$gameList->render()}}
+<div class="paginationGame">
+    {{$gameList->render()}}
+</div>
