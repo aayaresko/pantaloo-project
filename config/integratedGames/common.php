@@ -13,7 +13,11 @@ return [
         'logout' => 1
     ],
 
-    'provider' => [
-        App\Models\GamesList::class,
+
+    'listGames' => [
+        'pagination' => [
+            'desktop' => 30,
+            'mobile' => 6
+        ]
     ]
 ];

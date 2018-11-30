@@ -12,8 +12,11 @@
 */
 
 
-Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@getGames']);
-Route::get('/integratedGame/{providerId}/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
+Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
+Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
+Route::get('/integratedGame/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
+Route::get('/integratedGameJson/{providerId}/{gameId}', ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
+
 
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 

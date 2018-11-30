@@ -296,7 +296,6 @@
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/main.js?v=1.26"></script>
-<script src="/assets/js/filter.js?v=1.11<?php echo time(); ?>"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/vendors/new.js"></script>
 

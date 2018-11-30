@@ -162,6 +162,7 @@
 @endsection
 
 @section('js')
+    <script src="/assets/js/filter.js?v=1.11<?php echo time(); ?>"></script>
     <script>
         var free_game = 0;
         var free_spins = @if(Auth::check()) {{Auth::user()->free_spins }} @else 0 @endif;
