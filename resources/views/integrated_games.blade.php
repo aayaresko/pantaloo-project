@@ -58,7 +58,6 @@
         </div>
 
         <div class="insertGames">
-            <div style="height: 600px;"></div>
         </div>
     </div>
 

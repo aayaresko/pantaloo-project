@@ -11,13 +11,6 @@
 |
 */
 
-
-Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
-Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
-Route::get('/integratedGame/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
-Route::get('/integratedGameJson/{providerId}/{gameId}', ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
-
-
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@home']);
@@ -182,7 +175,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/loginPlayer', ['as' => 'games.pantallo.loginPlayer', 'uses' => 'PantalloGamesController@loginPlayer']);
         Route::get('/logoutPlayer', ['as' => 'games.pantallo.logoutPlayer', 'uses' => 'PantalloGamesController@logoutPlayer']);
     });
+
+
+    Route::get('/integratedGame/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
+    Route::get('/integratedGameJson/{providerId}/{gameId}', ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
+
+Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
+Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
+
 
 /* Pantallo Games */
 Route::group(['prefix' => 'games'], function (){

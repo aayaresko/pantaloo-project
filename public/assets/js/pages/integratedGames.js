@@ -46,6 +46,7 @@ let events = function () {
 
 
 function getListGames() {
+    $('.preloaderCommon').show();
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'GET',
@@ -58,16 +59,16 @@ function getListGames() {
             //insert
             $(".insertGames").append(response.desktop);
             $(".insertGamesMobile").append(response.mobile);
+            $('.preloaderCommon').hide();
         }
     });
 }
 
 $(function () {
-    Helper.preloaderPageTable();
     events();
     getListGames();
 });
 
 $('body').ready(function() {
-    console.log(1);
+
 });
