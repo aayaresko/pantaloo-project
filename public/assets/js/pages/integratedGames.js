@@ -10,6 +10,11 @@ let listGameParamsDefault = {
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {
+
+    $('body').on('click', '.games-block__buttons a', function(e){
+        let url = new URL(this.getAttribute('href'));
+    });
+
     $('body').on('click', '.paginationGame a', function(e){
         e.preventDefault();
         let url = new URL(this.getAttribute('href'));
@@ -60,6 +65,23 @@ function getListGames() {
             //insert
             $(".insertGames").append(response.desktop);
             $(".insertGamesMobile").append(response.mobile);
+            $('.preloaderCommon').hide();
+        }
+    });
+}
+
+
+function getGame(url) {
+    $('.preloaderCommon').show();
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: 'GET',
+        url: url,
+        data: {},
+        success: function (response) {
+            //clear
+            //insert games link
+
             $('.preloaderCommon').hide();
         }
     });

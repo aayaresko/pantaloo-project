@@ -70,6 +70,7 @@ class IntegratedGamesController extends Controller
     public function getGame(Request $request)
     {
         //use provider and class get games
-        return view('integrated_games');
+        dd(111);
+        return view('load.integrated_games_link');
     }
 }
