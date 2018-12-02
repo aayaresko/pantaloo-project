@@ -14,6 +14,7 @@ class CreateGamesListTable extends Migration
     {
         Schema::create('games_list', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('provider_id')->unsigned()->index();
             $table->integer('system_id')->unsigned()->unique();
             $table->string('name');
             $table->integer('type_id')->unsigned();

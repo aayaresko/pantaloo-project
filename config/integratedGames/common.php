@@ -1,9 +1,11 @@
 <?php
 
 return [
+
     'types' => [
         //list
     ],
+
     'categories' => [
 
     ],
@@ -13,6 +15,12 @@ return [
         'logout' => 1
     ],
 
+    'providers' =>[
+        'pantallo' => [
+            'id' => 1,
+            'lib' => 'class'
+        ]
+    ],
 
     'listGames' => [
         'pagination' => [

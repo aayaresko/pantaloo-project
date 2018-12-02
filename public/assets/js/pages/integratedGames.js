@@ -6,6 +6,7 @@ let listGameParamsDefault = {
     search: '',
     page: 1
 };
+
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {
@@ -30,7 +31,7 @@ let events = function () {
     $('#filter_provider').on('change', function (e) {
         e.preventDefault();
         listGameParams.categoryId =  Number($("#filter_provider").val());
-        console.log(listGameParams);
+
         getListGames();
         $('html,body').scrollTop(0);
     });

@@ -46,9 +46,11 @@ class PantalloGetGames extends Command
         try {
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
+            $providerId = 1;
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
+
             //get list types
             foreach ($allGames->response as $game) {
                 //use trim and
@@ -69,6 +71,7 @@ class PantalloGetGames extends Command
 
                 $gameCategory = trim($gameCategory);
                 $gameType = trim($game->type);
+
                 if (!isset($categories[$gameCategory])) {
                     GamesCategory::create([
                         'code' => $gameCategory,
@@ -86,6 +89,7 @@ class PantalloGetGames extends Command
                 }
 
                 $gameDate = [
+                    'provider_id' => $providerId,
                     'system_id' => $gameId,
                     'name' => $game->name,
                     'type_id' => $types[$gameType]->id,

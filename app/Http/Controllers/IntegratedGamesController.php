@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use Validator;
-use App\RawLog;
-use App\User;
 use App\Slots\Casino;
-use App\Transaction;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use App\Models\GamesCategory;
-use Illuminate\Http\Request;
 
 class IntegratedGamesController extends Controller
 {
@@ -73,8 +69,7 @@ class IntegratedGamesController extends Controller
 
     public function getGame(Request $request)
     {
-        $a = GamesList::paginate(20);
-        dd($a);
+        //use provider and class get games
         return view('integrated_games');
     }
 }

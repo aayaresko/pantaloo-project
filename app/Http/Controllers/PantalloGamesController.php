@@ -8,7 +8,6 @@ use Validator;
 use App\RawLog;
 use App\User;
 use App\Transaction;
-use App\Http\Requests;
 use App\Models\GamesList;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
