@@ -12,7 +12,8 @@ let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 let events = function () {
 
     $('body').on('click', '.games-block__buttons a', function(e){
-        let url = new URL(this.getAttribute('href'));
+        let url = String(this.getAttribute('href'));
+        getGame(url)
     });
 
     $('body').on('click', '.paginationGame a', function(e){
@@ -81,7 +82,7 @@ function getGame(url) {
         success: function (response) {
             //clear
             //insert games link
-
+            console.log(response);
             $('.preloaderCommon').hide();
         }
     });

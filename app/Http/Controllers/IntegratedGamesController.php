@@ -6,14 +6,21 @@ use DB;
 use Log;
 use Validator;
 use App\Slots\Casino;
-use Illuminate\Http\Request;
 use App\Models\GamesList;
 use App\Models\GamesType;
+use Illuminate\Http\Request;
 use App\Models\GamesCategory;
 
+/**
+ * Class IntegratedGamesController
+ * @package App\Http\Controllers
+ */
 class IntegratedGamesController extends Controller
 {
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $gamesTypes = GamesType::where([
@@ -30,6 +37,10 @@ class IntegratedGamesController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getGames(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
@@ -67,10 +78,34 @@ class IntegratedGamesController extends Controller
         ]);
     }
 
-    public function getGame(Request $request)
+    public function getGameLink(Request $request)
     {
-        //use provider and class get games
-        dd(111);
-        return view('load.integrated_games_link');
+        //validate
+        $configIntegratedGames = config('integratedGames.common');
+        $providerId = $request->providerId;
+        $gameId = $request->gameId;
+
+        $validateParams = [
+            'providerId' => $request->providerId,
+            'gameId' => $request->gameId,
+        ];
+
+        $providers = $configIntegratedGames['providers'];
+        $providerIds = array_map(function($key, $value) {
+            return $key;
+        }, array_keys($providers), $providers);
+
+        $validator = Validator::make($validateParams, [
+            'gameId' => 'required|integer|exists:games_list,id',
+            'providerId' => 'required|integer|in:' . implode(',', $providerIds),
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+        //end validate
+
+        $link = $providers[$providerId]['lib']($request);
+        return view('load.integrated_games_link')->with(['link' => $link]);
     }
 }

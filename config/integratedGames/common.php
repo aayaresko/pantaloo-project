@@ -16,9 +16,10 @@ return [
     ],
 
     'providers' =>[
-        'pantallo' => [
-            'id' => 1,
-            'lib' => 'class'
+        1 => [
+            'code' => 'pantallo',
+            'lib' => App\Modules\Games\PantalloGamesSystem::class
+
         ]
     ],
 

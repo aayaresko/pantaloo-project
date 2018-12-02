@@ -178,7 +178,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('/integratedGame/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
-    Route::get('/integratedGameLink/provider/{providerId}/game/{gameId}', ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
+    Route::get('/integratedGameLink/provider/{providerId}/game/{gameId}',
+        ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
 
 Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
