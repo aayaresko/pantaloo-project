@@ -13,7 +13,7 @@ let events = function () {
 
     $('body').on('click', '.games-block__buttons a', function(e){
         let url = String(this.getAttribute('href'));
-        getGame(url)
+        getGame(url);
     });
 
     $('body').on('click', '.paginationGame a', function(e){
@@ -73,17 +73,17 @@ function getListGames() {
 
 
 function getGame(url) {
-    $('.preloaderCommon').show();
+    //$('.preloaderCommon').show();
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'GET',
         url: url,
         data: {},
-        success: function (response) {
+        success: function (html) {
             //clear
             //insert games link
-            console.log(response);
-            $('.preloaderCommon').hide();
+            $('.video-popup .game-entry').html(html);
+            //$('.preloaderCommon').hide();
         }
     });
 }

@@ -35,8 +35,9 @@ class PantalloGamesSystem implements GamesSystem
         DB::beginTransaction();
         try {
             $game = GamesList::where('id', $request->gameId)->first();
-            $gameId = $game->id;
+            $gameId = $game->system_id;
             $user = $request->user();
+
             $userId = $user->id;
             $pantalloGames = new PantalloGames;
             $playerExists = $pantalloGames->playerExists([

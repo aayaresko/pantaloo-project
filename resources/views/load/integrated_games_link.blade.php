@@ -1,1 +1,1 @@
-<iframe src="{{ $link }}" width="1200" height="1200"></iframe>
+<iframe src="{{ $link }}" width="960" height="620"></iframe>
