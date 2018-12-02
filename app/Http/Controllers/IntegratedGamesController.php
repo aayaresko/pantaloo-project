@@ -106,6 +106,10 @@ class IntegratedGamesController extends Controller
         //end validate
 
         $link = $providers[$providerId]['lib']($request);
+        if ($link['success'] === true) {
+            $link = $link['message']['gameLink'];
+        }
+        $link = 'exeption';
         return view('load.integrated_games_link')->with(['link' => $link]);
     }
 }

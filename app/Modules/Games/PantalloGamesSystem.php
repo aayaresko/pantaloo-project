@@ -94,7 +94,7 @@ class PantalloGamesSystem implements GamesSystem
 
         DB::commit();
         return [
-            'success' => false,
+            'success' => true,
             'message' => [
                 'gameLink' => $getGame->response
             ]
