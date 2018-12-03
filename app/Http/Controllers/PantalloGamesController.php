@@ -34,7 +34,7 @@ class PantalloGamesController extends Controller
         $pantalloGames = new PantalloGames;
         $params = [];
         $games = $pantalloGames->getGameList($params, true);
-        return count($games->response);
+        return $games->response;
     }
 
     /**
