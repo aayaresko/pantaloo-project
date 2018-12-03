@@ -3,7 +3,7 @@
         @foreach($gameList as $game)
             <div class="single-game">
                 <a href="{{route('integratedGame', $game)}}">
-                    <div class="game-preview" style="background: url('{{$game->image_preview}}')center no-repeat"></div>
+                    <div class="game-preview" style="background: url('{{$game->image_filled}}')center no-repeat"></div>
                 </a>
                 <a href="{{route('integratedGame', $game)}}"><span class="title">{{$game->name}}</span></a>
             </div>

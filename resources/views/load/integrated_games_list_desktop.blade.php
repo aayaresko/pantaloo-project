@@ -10,7 +10,7 @@
                         background-color: rgba(0, 0, 0, 0.2);
                         background-position: center;">
                         <span class="games-block__item ng-scope">
-                            <img class="games-block__image show-animated" src="{{$game->image_preview}}"/>
+                            <img class="games-block__image show-animated" src="{{$game->image_filled}}"/>
                         </span>
                     </div>
                     <div class="games-block__wrap ng-scope">
