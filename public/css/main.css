@@ -2445,12 +2445,14 @@ html.cropped {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  justify-content: center;
+
 }
 /* line 1060, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game {
   padding: 0 15px;
-  width: 20%;
-  float: left;
+  width: 300px;
+  /* float: left; */
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -7260,9 +7262,9 @@ html.cropped {
     box-shadow: inset 0px 0px 0px 4px white;
   }
   /* line 2275, ../scss/_responsive.scss */
-  body .slots-block .block-heading {
-    margin-top: 100px;
-  }
+  /*body .slots-block .block-heading {*/
+  /*margin-top: 100px;*/
+  /*}*/
   /* line 2277, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
     font-size: 36px;
@@ -7306,6 +7308,13 @@ html.cropped {
   transition: -webkit-transform .12s linear;
   transition: transform .12s linear;
   transition: transform .12s linear,-webkit-transform .12s linear;
+  height: 200px;
+  overflow: hidden;
+}
+
+.games-block .games-block__item {
+  height: 158px;
+  display: block;
 }
 
 .games-block .img_box:hover, .games-block:hover {
@@ -7325,6 +7334,12 @@ html.cropped {
 .games-block .games-block__wrap {
   background-color: transparent;
   transition: background-color .12s linear;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 42px);
 }
 
 .games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap {
@@ -7341,6 +7356,7 @@ html.cropped {
 
 .games-block__image {
   width: 100%;
+  height: 100%;
 }
 
 .games-block__label {
@@ -7379,7 +7395,10 @@ html.cropped {
 }
 
 .games-block__action {
-  display: none;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .games-block .img_box:hover .games-block__wrap .games-block__action, .games-block:hover .games-block__wrap .games-block__action {
@@ -7390,8 +7409,8 @@ html.cropped {
 }
 
 .games-block__name {
-  display: none;
   height: 42px;
+  display: block;
   color: #fff;
   text-align: center;
   overflow: hidden;
@@ -7406,7 +7425,8 @@ html.cropped {
   box-sizing: border-box;
 }
 
-.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name {
+.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name,
+.games-block .img_box:hover .games-block__buttons, .games-block:hover .games-block__buttons {
   display: block;
 }
 
@@ -7419,6 +7439,7 @@ html.cropped {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  display: none;
 }
 
 .games-block__button {
