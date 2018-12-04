@@ -7,16 +7,18 @@ let listGameParamsDefault = {
     page: 1
 };
 
+let dummy = 'media/images/preloader/image-not-available.png';
+
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {
 
-    $('body').on('click', '.games-block__buttons a', function(e){
+    $('body').on('click', '.games-block__buttons a', function (e) {
         let url = String(this.getAttribute('href'));
         getGame(url);
     });
 
-    $('body').on('click', '.paginationGame a', function(e){
+    $('body').on('click', '.paginationGame a', function (e) {
         e.preventDefault();
         let url = new URL(this.getAttribute('href'));
         let page = Number(url.searchParams.get('page'));
@@ -28,7 +30,7 @@ let events = function () {
 
     $('#type_of_game').on('change', function (e) {
         e.preventDefault();
-        listGameParams.typeId =  Number($("#type_of_game").val());
+        listGameParams.typeId = Number($("#type_of_game").val());
 
         getListGames();
         $('html,body').scrollTop(0);
@@ -36,7 +38,7 @@ let events = function () {
 
     $('#filter_provider').on('change', function (e) {
         e.preventDefault();
-        listGameParams.categoryId =  Number($("#filter_provider").val());
+        listGameParams.categoryId = Number($("#filter_provider").val());
 
         getListGames();
         $('html,body').scrollTop(0);
@@ -44,12 +46,17 @@ let events = function () {
 
     $(document).on('submit', '.block-filter form', function (e) {
         e.preventDefault();
-        listGameParams.search =  $("input[name='search']").val();
+        listGameParams.search = $("input[name='search']").val();
 
         getListGames();
         $('html,body').scrollTop(0);
     });
+
 };
+
+function handleImage(img) {
+    $(img).attr("src", dummy);
+}
 
 
 function getListGames() {
@@ -93,6 +100,6 @@ $(function () {
     getListGames();
 });
 
-$('body').ready(function() {
+$('body').ready(function () {
 
 });

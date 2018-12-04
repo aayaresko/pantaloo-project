@@ -7530,3 +7530,10 @@ html.cropped {
     background-color: rgba(0, 0, 0, 0.2);
     background-position: center;
 }
+
+.preloaderPictureGame {
+    background: url('/media/images/preloader/preloader3.svg');
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.2);
+    background-position: center;
+}

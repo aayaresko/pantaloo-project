@@ -3,14 +3,9 @@
         @foreach($gameList as $game)
             <div class="single-game ng-scope" data-slot_id="{{$game->id}}">
                 <div class="games-block ng-scope">
-                    <div style="
-                        min-height: 226px;
-                        background: url('/media/images/preloader/preloader2.gif');
-                        background-repeat: no-repeat;
-                        background-color: rgba(0, 0, 0, 0.2);
-                        background-position: center;">
+                    <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
-                            <img class="games-block__image show-animated" src="{{$game->image_filled}}"/>
+                            <img class="games-block__image show-animated" src="{{$game->image_filled}}" onerror="handleImage(this);"/>
                         </span>
                     </div>
                     <div class="games-block__wrap ng-scope">
