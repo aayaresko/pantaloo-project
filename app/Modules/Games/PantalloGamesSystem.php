@@ -148,6 +148,10 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function callback($request)
     {
+        $start = microtime(true);
+        $startTime = explode(" ", microtime());
+        $startDate = date("m-d-y H:i:s", $startTime[1]) . substr((string)$startTime[0], 1, 4);
+
         DB::beginTransaction();
         try {
             //validation
@@ -394,9 +398,18 @@ class PantalloGamesSystem implements GamesSystem
                     throw new \Exception('Action is not found');
             }
             //create add database for pantallo games only
+            //time counter
+            $endTime = explode(" ", microtime());
+            $endDate = date("m-d-y H:i:s", $endTime[1]) . substr((string)$endTime[0], 1, 4);
+            $time = round(microtime(true) - $start, 4);
+            $responseLog = $response;
+            $responseLog['time'] = $time;
+            $responseLog['startDate'] = $startDate;
+            $responseLog['endDate'] = $endDate;
+
             RawLog::create([
                 'request' => json_encode($requestParams),
-                'response' => json_encode($response)
+                'response' => json_encode($responseLog)
             ]);
         } catch (\Exception $e) {
             //dd($e);
