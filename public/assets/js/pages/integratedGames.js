@@ -61,11 +61,11 @@ function getListGames() {
         data: listGameParams,
         success: function (response) {
             //clear
-            $(".insertGames").empty();
-            $(".insertGamesMobile").empty();
+            //$(".insertGames").empty();
+            //$(".insertGamesMobile").empty();
             //insert
-            $(".insertGames").append(response.desktop);
-            $(".insertGamesMobile").append(response.mobile);
+            $(".insertGames").html(response.desktop);
+            $(".insertGamesMobile").html(response.mobile);
             $('.preloaderCommon').hide();
         }
     });
