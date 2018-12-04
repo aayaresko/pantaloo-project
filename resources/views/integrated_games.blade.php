@@ -121,5 +121,8 @@
 @endsection
 
 @section('js')
+    <script>
+        let dummy = "{{ $dummyPicture }}";
+    </script>
     <script src="/assets/js/pages/integratedGames.js"></script>
 @endsection

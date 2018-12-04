@@ -23,6 +23,9 @@ class IntegratedGamesController extends Controller
      */
     public function index(Request $request)
     {
+        $configIntegratedGames = config('integratedGames.common');
+        $dummyPicture = $configIntegratedGames['dummyPicture'];
+
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
         ])->orderBy('rating', 'desc')->get();
@@ -33,7 +36,8 @@ class IntegratedGamesController extends Controller
 
         return view('integrated_games')->with([
             'gamesTypes' => $gamesTypes,
-            'gamesCategories' => $gamesCategories
+            'gamesCategories' => $gamesCategories,
+            'dummyPicture' => $dummyPicture
         ]);
     }
 

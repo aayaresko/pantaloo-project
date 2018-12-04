@@ -7,8 +7,6 @@ let listGameParamsDefault = {
     page: 1
 };
 
-let dummy = 'media/images/preloader/image-not-available.png';
-
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {

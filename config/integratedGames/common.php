@@ -28,5 +28,7 @@ return [
             'desktop' => 30,
             'mobile' => 6
         ]
-    ]
+    ],
+
+    'dummyPicture' => 'media/images/preloader/image-not-available.png'
 ];
