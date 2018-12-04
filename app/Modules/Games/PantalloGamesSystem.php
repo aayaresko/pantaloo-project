@@ -292,7 +292,8 @@ class PantalloGamesSystem implements GamesSystem
                         ]);
 
                         //edit balance user
-                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance, (float)$amount, $accuracyValues);
+                        $balance = $typesOperation[$caseAction]((float)$params['user']->balance,
+                            (float)$amount, $accuracyValues);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
@@ -335,7 +336,8 @@ class PantalloGamesSystem implements GamesSystem
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
-                    $diffBalance = bcsub((float)$transactionHas->balance_after, (float)$transactionHas->balance_before, $accuracyValues);
+                    $diffBalance = bcsub((float)$transactionHas->balance_after,
+                        (float)$transactionHas->balance_before, $accuracyValues);
                     $amount = abs($diffBalance);
 
                     if (is_null($transactionHas)) {
