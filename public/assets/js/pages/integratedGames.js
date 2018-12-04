@@ -21,7 +21,6 @@ let events = function () {
         let url = new URL(this.getAttribute('href'));
         let page = Number(url.searchParams.get('page'));
         listGameParams.page = page;
-
         getListGames();
         $('html,body').scrollTop(0);
     });
@@ -29,7 +28,7 @@ let events = function () {
     $('#type_of_game').on('change', function (e) {
         e.preventDefault();
         listGameParams.typeId = Number($("#type_of_game").val());
-
+        listGameParams.page = 1;
         getListGames();
         $('html,body').scrollTop(0);
     });
@@ -37,7 +36,7 @@ let events = function () {
     $('#filter_provider').on('change', function (e) {
         e.preventDefault();
         listGameParams.categoryId = Number($("#filter_provider").val());
-
+        listGameParams.page = 1;
         getListGames();
         $('html,body').scrollTop(0);
     });
@@ -45,7 +44,7 @@ let events = function () {
     $(document).on('submit', '.block-filter form', function (e) {
         e.preventDefault();
         listGameParams.search = $("input[name='search']").val();
-
+        listGameParams.page = 1;
         getListGames();
         $('html,body').scrollTop(0);
     });
