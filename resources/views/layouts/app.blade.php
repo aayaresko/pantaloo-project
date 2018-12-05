@@ -21,7 +21,7 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link href="/css/new.css" rel="stylesheet">
-    <link href="/css/main.css?v=1.29" rel="stylesheet">
+    <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
     <link rel="icon" href="/favicon.png">
@@ -295,7 +295,7 @@
 <script src="/vendors/lettering/jquery.lettering.js"></script>
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
-<script src="/vendors/main.js?v=1.26"></script>
+<script src="/vendors/main.js?v={{ time() }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/vendors/new.js"></script>

@@ -125,5 +125,5 @@
     <script>
         let dummy = "{{ $dummyPicture }}";
     </script>
-    <script src="/assets/js/pages/integratedGames.js"></script>
+    <script src="/assets/js/pages/integratedGames.js?v={{ time() }}"></script>
 @endsection
