@@ -7533,7 +7533,7 @@ html.cropped {
 }
 
 .preloaderPictureGame {
-    background: url('/media/images/preloader/preloader3.svg');
+    background: url('/media/images/preloader/preloader3.svg?v=2.1');
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.2);
     background-position: center;
