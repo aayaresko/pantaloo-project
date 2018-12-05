@@ -13,6 +13,7 @@
                             <div class="games-block__buttons is-full">
                                 <a href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}"
                                    class="open_game games-block__button games-block__button_play-real ng-binding">Play</a>
+                                {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>
                         <span class="games-block__name ng-binding">{{$game->name}}</span>

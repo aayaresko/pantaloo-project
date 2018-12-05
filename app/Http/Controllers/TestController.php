@@ -77,7 +77,7 @@ class TestController extends Controller
     public function game(Request $request)
     {
         try {
-            $game = GamesList::where('name', $request->game)->first();
+            $game = GamesList::where('id', $request->game)->first();
             dump($game);
             $gameId = $game->system_id;
             $user = $request->user();

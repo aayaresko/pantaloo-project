@@ -7537,3 +7537,17 @@ html.cropped {
     background-color: rgba(0, 0, 0, 0.2);
     background-position: center;
 }
+
+
+.colorGame {
+  background: black;
+}
+
+.preloaderGame {
+  background: black;
+  width: 100%;
+  height: 620px;
+  background-image: url(/media/images/preloader/preloader2.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+}

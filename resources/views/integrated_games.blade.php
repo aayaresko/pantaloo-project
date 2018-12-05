@@ -7,8 +7,9 @@
 @section('content')
     <div class="video-popup">
         <div class="video-container">
-            <div class="game-entry">
-                <img src="media/images/game.jpg" alt="game">
+            <div class="game-entry colorGame">
+                {{--<img src="media/images/logo.png" alt="game">--}}
+                <div class="preloaderGame"></div>
             </div>
             <div class="left-info">
                 <h2 class="region">Eastern Europe</h2>

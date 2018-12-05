@@ -70,7 +70,8 @@ function gamePopup(){
 	$('.video-popup .exit-btn').click(function(){
 		$(this).parents('.video-popup').removeClass('active');
 		$('header.header').removeClass('active');
-		$('.video-popup .game-entry').html('<img src="media/images/game.jpg" alt="game">');
+		//$('.video-popup .game-entry').html('<img src="media/images/game.jpg" alt="game">');
+        $('.video-popup .game-entry').html(' <div class="preloaderGame"></div>');
 		return false;
 	});
 }

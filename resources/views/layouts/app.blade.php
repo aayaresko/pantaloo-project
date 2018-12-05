@@ -387,7 +387,9 @@
 
     if(auth)
     {
-        setBalance();
+        //off
+        //setBalance();
+        //end off
     }
 
     function setBalance() {
@@ -426,90 +428,91 @@
             }
         });
     }
-
-    $(document).on('click', 'a.open_game', function () {
-        if(auth) {
-            $.ajax({
-                type: "GET",
-                url: '/ajax/start/' + $(this).parent().parent().parent().parent().parent().data('slot_id'), // serializes the form's elements.
-                dateType: 'json',
-                success: function (data) {
-                    if(is_mobile)
-                        if(data.url) location.href = data.url;
-
-                    var sizes = '';
-
-                    if(data.category == 6)
-                    {
-                        sizes = 'width="960" height="620"';
-                        $('.video-popup').addClass('popup-casino');
-                    }
-                    else
-                    {
-                        sizes = 'width="100%" height="100%"';
-                        $('.video-popup').addClass('popup-slot');
-                    }
-
-                    if (data.url) html = '<iframe ' + sizes + ' allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" frameborder="0" scrolling="no"  src="' + data.url + '"></iframe>';
-                    else html = data.object;
-
-                    $('.video-popup .game-entry').html(html);
-                },
-                error: function (data) {
-                    //alert(data);
-                }
-            });
-
-            $('.video-popup').addClass('active');
-            $('header.header').addClass('active');
-        }
-        else
-        {
-            $('.log-popup').addClass('active');
-        }
-
-        return false;
-    });
-
-    $(document).on('click', '.games-block__button_play-fun', function () {
-        var url = $(this).attr('href');
-
-        if(url != '')
-        {
-            var html = '<iframe width="960" height="620" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true"  webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" src="' + url + '"></iframe>';
-
-            $('.video-popup .game-entry').html(html);
-            $('.video-popup').addClass('active');
-        }
-
-        return false;
-    });
-
-    $(document).on('click', 'a.open_casino', function () {
-        if(iso_code == 'US' || $(this).parents('.disabled_casino').length > 0) return false;
-
-        //if(auth) {
-            var url = $(this).attr('href');
-
-            if(url != '')
-            {
-                var html = '<iframe width="960" height="620" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true"  webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" src="' + url + '"></iframe>';
-
-                $('.video-popup .game-entry').html(html);
-
-                $('.video-popup').addClass('active popup-casino');
-                $('header.header').addClass('active');
-            }
-            /*
-        }
-        else
-        {
-            $('.log-popup').addClass('active');
-        }
-        */
-
-        return false;
-    });
+    //off
+    // $(document).on('click', 'a.open_game', function () {
+    //     if(auth) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: '/ajax/start/' + $(this).parent().parent().parent().parent().parent().data('slot_id'), // serializes the form's elements.
+    //             dateType: 'json',
+    //             success: function (data) {
+    //                 if(is_mobile)
+    //                     if(data.url) location.href = data.url;
+    //
+    //                 var sizes = '';
+    //
+    //                 if(data.category == 6)
+    //                 {
+    //                     sizes = 'width="960" height="620"';
+    //                     $('.video-popup').addClass('popup-casino');
+    //                 }
+    //                 else
+    //                 {
+    //                     sizes = 'width="100%" height="100%"';
+    //                     $('.video-popup').addClass('popup-slot');
+    //                 }
+    //
+    //                 if (data.url) html = '<iframe ' + sizes + ' allowtransparency="true" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" frameborder="0" scrolling="no"  src="' + data.url + '"></iframe>';
+    //                 else html = data.object;
+    //
+    //                 $('.video-popup .game-entry').html(html);
+    //             },
+    //             error: function (data) {
+    //                 //alert(data);
+    //             }
+    //         });
+    //
+    //         $('.video-popup').addClass('active');
+    //         $('header.header').addClass('active');
+    //     }
+    //     else
+    //     {
+    //         $('.log-popup').addClass('active');
+    //     }
+    //
+    //     return false;
+    // });
+    //
+    // $(document).on('click', '.games-block__button_play-fun', function () {
+    //     var url = $(this).attr('href');
+    //
+    //     if(url != '')
+    //     {
+    //         var html = '<iframe width="960" height="620" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true"  webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" src="' + url + '"></iframe>';
+    //
+    //         $('.video-popup .game-entry').html(html);
+    //         $('.video-popup').addClass('active');
+    //     }
+    //
+    //     return false;
+    // });
+    //
+    // $(document).on('click', 'a.open_casino', function () {
+    //     if(iso_code == 'US' || $(this).parents('.disabled_casino').length > 0) return false;
+    //
+    //     //if(auth) {
+    //         var url = $(this).attr('href');
+    //
+    //         if(url != '')
+    //         {
+    //             var html = '<iframe width="960" height="620" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true"  webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen="true" src="' + url + '"></iframe>';
+    //
+    //             $('.video-popup .game-entry').html(html);
+    //
+    //             $('.video-popup').addClass('active popup-casino');
+    //             $('header.header').addClass('active');
+    //         }
+    //         /*
+    //     }
+    //     else
+    //     {
+    //         $('.log-popup').addClass('active');
+    //     }
+    //     */
+    //
+    //     return false;
+    // });
+    //end off
     
     $('ul.cabinet-menu-listing li a').each(function () {
 

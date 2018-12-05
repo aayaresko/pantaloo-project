@@ -10,7 +10,7 @@
         <div class="cabinet-entry">
             <div class="main-content">
                 @foreach ($games as $item)
-                    <p><a href="/test/game/{{$item->name}}">{{ $item->name }}</a></p>
+                    <p><a href="/test/game/{{$item->id}}">{{ $item->name }}</a></p>
                 @endforeach
             </div>
         </div>

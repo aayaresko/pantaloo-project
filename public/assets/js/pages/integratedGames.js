@@ -12,6 +12,7 @@ let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 let events = function () {
 
     $('body').on('click', '.games-block__buttons a', function (e) {
+        e.preventDefault();
         let url = String(this.getAttribute('href'));
         getGame(url);
     });
@@ -78,6 +79,9 @@ function getListGames() {
 
 function getGame(url) {
     //$('.preloaderCommon').show();
+    $('.video-popup').addClass('popup-slot');
+    $('.video-popup').addClass('active');
+    $('header.header').addClass('active');
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'GET',
