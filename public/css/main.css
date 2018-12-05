@@ -2374,6 +2374,7 @@ html.cropped {
   text-align: center;
   overflow: auto;
   padding-bottom: 50px;
+  min-height: calc(100vh - 169px);
 }
 /* line 999, ../scss/_middle.scss */
 .slots-block.mobile {
