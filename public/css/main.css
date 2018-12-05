@@ -7552,3 +7552,9 @@ html.cropped {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.mainBackGround {
+  background: url(/media/images/bg/slots.jpg) top no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}

@@ -25,8 +25,7 @@
     </div>
 
     <div class="slots-block desk top-shadow">
-        <div class="bg"
-             style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
+        <div class="bg mainBackGround" ></div>
         <span class="side-title">Slots</span>
         <div class="block-heading">
             <h1 class="page-title">Slots</h1>
