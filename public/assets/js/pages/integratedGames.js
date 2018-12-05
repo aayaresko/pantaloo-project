@@ -13,8 +13,14 @@ let events = function () {
 
     $('body').on('click', '.games-block__buttons a', function (e) {
         e.preventDefault();
-        let url = String(this.getAttribute('href'));
-        getGame(url);
+        if(auth) {
+            let url = String(this.getAttribute('href'));
+            getGame(url);
+        }
+        else {
+            $('.log-popup').addClass('active');
+        }
+        return false;
     });
 
     $('body').on('click', '.paginationGame a', function (e) {

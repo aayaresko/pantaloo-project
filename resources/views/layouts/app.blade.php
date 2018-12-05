@@ -387,9 +387,7 @@
 
     if(auth)
     {
-        //off
-        //setBalance();
-        //end off
+        setBalance();
     }
 
     function setBalance() {
