@@ -11,6 +11,15 @@
 |
 */
 
+
+//sub-domain
+Route::group(['domain' => 'partner.casinobit.io'], function () {
+    Route::get('/', function () {
+        dd('it is okey');
+    });
+});
+
+
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@home']);
