@@ -112,6 +112,10 @@ return [
 
     'accuracyValues' => 5,
 
+    'foreignPages' => [
+        'partner' => 'http://partner.casinobit.io',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

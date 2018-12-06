@@ -14,7 +14,6 @@ else
 }
 
 $pages = $pages->get();
-
 @endphp
 
 @foreach($pages as $page)
@@ -23,4 +22,5 @@ $pages = $pages->get();
 
 <li><a href="{{route('support')}}">{{translate('Support')}}</a></li>
 <li><a href="{{route('bonus.promo')}}">{{translate('Bonuses')}}</a></li>
+<li><a href="{{$partnerPage}}" target="_blank">AFFILIATES</a></li>
 
