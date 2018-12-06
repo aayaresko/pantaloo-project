@@ -15,7 +15,7 @@
 //sub-domain
 Route::group(['domain' => 'partner.casinobit.io'], function () {
     Route::get('/', function () {
-        dd('it is okey');
+        return view('partner.lending');
     });
 });
 
