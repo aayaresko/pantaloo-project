@@ -156,6 +156,13 @@
                     </li>
 
                     <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Games </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="{{route('admin.integratedGames')}}">List</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span> Pages </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             <li><a href="{{route('pages')}}">List</a></li>
