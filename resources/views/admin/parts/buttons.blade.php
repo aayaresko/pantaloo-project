@@ -1,0 +1,1 @@
+<a href="/admin/integratedGame/{{ $id }}" class="btn btn-primary">Edit</a>
