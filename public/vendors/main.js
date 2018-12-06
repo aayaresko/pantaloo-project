@@ -71,7 +71,19 @@ function gamePopup(){
 		$(this).parents('.video-popup').removeClass('active');
 		$('header.header').removeClass('active');
 		//$('.video-popup .game-entry').html('<img src="media/images/game.jpg" alt="game">');
-        $('.video-popup .game-entry').html(' <div class="preloaderGame"></div>');
+        $('.video-popup .game-entry').html(
+        	` <div class="gameLoadingWrapper">
+                    <h1 class = "gameLoading">
+                        <span class="let1">l</span>
+                        <span class="let2">o</span>
+                        <span class="let3">a</span>
+                        <span class="let4">d</span>
+                        <span class="let5">i</span>
+                        <span class="let6">n</span>
+                        <span class="let7">g</span>
+                    </h1>
+                </div>`
+		);
 		return false;
 	});
 }

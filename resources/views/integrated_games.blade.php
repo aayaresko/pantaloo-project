@@ -9,7 +9,17 @@
         <div class="video-container">
             <div class="game-entry colorGame">
                 {{--<img src="media/images/logo.png" alt="game">--}}
-                <div class="preloaderGame"></div>
+                <div class="gameLoadingWrapper">
+                    <h1 class = "gameLoading">
+                        <span class="let1">l</span>
+                        <span class="let2">o</span>
+                        <span class="let3">a</span>
+                        <span class="let4">d</span>
+                        <span class="let5">i</span>
+                        <span class="let6">n</span>
+                        <span class="let7">g</span>
+                    </h1>
+                </div>
             </div>
             <div class="left-info">
                 <h2 class="region">Eastern Europe</h2>
