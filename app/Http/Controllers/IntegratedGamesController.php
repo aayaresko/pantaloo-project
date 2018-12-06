@@ -111,7 +111,7 @@ class IntegratedGamesController extends Controller
 
         $providerClass = new $providers[$providerId]['lib']();
         $link = $providerClass->loginPlayer($request);
-;
+
         if ($link['success'] === true) {
             $link = $link['message']['gameLink'];
         }
