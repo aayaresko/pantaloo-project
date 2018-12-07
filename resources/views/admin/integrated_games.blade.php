@@ -51,5 +51,8 @@
 @endsection
 
 @section('js')
+    <script>
+        let dummy = "{{ $dummyPicture }}";
+    </script>
     <script src="/adminPanel/js/page/gamesAdminPanel.js?v={{time()}}"></script>
 @endsection

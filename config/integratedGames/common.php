@@ -30,5 +30,5 @@ return [
         ]
     ],
 
-    'dummyPicture' => 'media/images/preloader/image-not-available.png'
+    'dummyPicture' => '/media/images/preloader/image-not-available.png'
 ];

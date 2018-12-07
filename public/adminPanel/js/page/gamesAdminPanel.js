@@ -2,6 +2,10 @@ function getToken() {
     return $('meta[name="csrf-token"]').attr('content');
 }
 
+function handleImage(img) {
+    $(img).attr("src", dummy);
+}
+
 let globalTable;
 let optionsDefault = {};
 let options = JSON.parse(JSON.stringify(optionsDefault));
@@ -37,9 +41,9 @@ function initDataTable() {
             {"data": "type"},
             {"data": "category"},
             {"data": "image"},
+            {"data": "rating"},
             {"data": "active"},
             {"data": "mobile"},
-            {"data": "rating"},
             {"data": "edit"},
         ],
     });
