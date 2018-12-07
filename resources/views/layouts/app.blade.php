@@ -69,13 +69,13 @@
         <a href="/"><img src="/media/images/logo.png" alt="logo"></a>
     </div>
     <div class="navigation-container">
-        <div class="language-block floated">
+        <!-- <div class="language-block floated">
             <ul class="language-listing">
                 <li>
                     <a href="{{$change_url}}">{{strtoupper($change_lang)}}</a>
                 </li>
             </ul>
-        </div>
+        </div> -->
         <nav class="navigation hidden-xs floated">
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])

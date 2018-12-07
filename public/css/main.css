@@ -7526,8 +7526,9 @@ html.cropped {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-image: url("/media/images/preloader/preloader2.gif");
+    background: url("/media/images/preloader/preloader3.svg?v=2.1");
     background-repeat: no-repeat;
+    background-size: 15%;
     background-color: rgba(0, 0, 0, 0.2);
     background-position: center;
 }

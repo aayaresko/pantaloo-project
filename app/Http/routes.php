@@ -17,6 +17,29 @@ Route::group(['domain' => 'partner.casinobit.io'], function () {
     Route::get('/', function () {
         return view('partner.lending');
     });
+
+    Route::group(['prefix' => 'main', 'middleware' => ['agent']], function (){
+        Route::get('/', function (){
+            return redirect()->route('agent.dashboard');
+        });
+
+        Route::get('/logout', ['as' => 'agent.logout', 'uses' => 'AgentController@logout']);
+
+        Route::get('/dashboard', ['as' => 'agent.dashboard', 'uses' => 'AgentController@dashboard']);
+
+        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'TransactionController@index']);
+        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'TransactionController@filter']);
+
+        Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
+        Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);
+        Route::post('/tracker/{tracker}/update', ['as' => 'agent.updateTracker', 'uses' => 'AgentController@updateTracker']);
+
+        Route::get('/banners', ['as' => 'agent.banners', 'uses' => 'BannerController@view']);
+        Route::get('/faq', ['as' => 'agent.faq', 'uses' => 'QuestionController@view']);
+
+        Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);
+        Route::post('/withdraw', ['as' => 'agent.withdrawDo', 'uses' => 'AgentController@withdrawDo']);
+    });
 });
 
 
