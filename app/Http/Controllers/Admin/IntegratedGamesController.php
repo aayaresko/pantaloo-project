@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use DB;
+use Validator;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use App\Models\GamesCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class IntegratedGamesController extends Controller
 {
@@ -28,6 +30,7 @@ class IntegratedGamesController extends Controller
             7 => 'games_list.active',
             8 => 'games_list.mobile',
             9 => 'games_list.created_at',
+            10 => 'games_list.our_image',
 
         ];
 
@@ -67,7 +70,52 @@ class IntegratedGamesController extends Controller
 
     public function gameUpdate(Request $request)
     {
-        dd(2);
+        $this->validate($request, [
+            'name' => 'string|min:3|max:100',
+            'type_id' => 'integer|exists:games_types,id',
+            'category_id' => 'integer|exists:games_categories,id',
+            'rating' => 'integer',
+            'image' => 'image',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $game = GamesList::where('id', $request->id)->first();
+            $updatedGame = $request->toArray();
+            if ($request->hasFile('image')) {
+                $image = $request->image;
+                $nameImage = $request->id . '.' . $image->getClientOriginalExtension();
+                $pathImage = "/gamesPictures/{$nameImage}";
+                Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
+                $updatedGame['our_image'] = $pathImage;
+                unset($updatedGame['image']);
+            }
+
+            $active = $request->input('active');
+            if (!is_null($active)) {
+                $updatedGame['active'] = ($active === 'on') ? 1 : 0;
+            }
+
+            $mobile = $request->input('mobile');
+            if (!is_null($active)) {
+                $updatedGame['mobile'] = ($mobile === 'on') ? 1 : 0;
+            }
+
+            unset($updatedGame['_token']);
+            $default_provider_image = $request->input('default_provider_image');
+
+            if (!is_null($default_provider_image)) {
+                if ($default_provider_image === 'on') {
+                    $updatedGame['our_image'] = $game->image_filled;
+                }
+            }
+            GamesList::where('id', $request->id)->update($updatedGame);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([$e->getMessage()]);
+        }
+        DB::commit();
+        return redirect()->route('admin.integratedGame', $game->id)->with('msg', 'Game was edited');
     }
 
     protected function preparationParams(Request $request)

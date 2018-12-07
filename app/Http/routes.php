@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/integratedGames', ['as' => 'admin.integratedGames', 'uses' => 'Admin\IntegratedGamesController@index']);
         Route::get('/integratedGame', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@getAll']);
         Route::get('/integratedGame/{id}', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@game']);
+        Route::post('/integratedGame/{id}', ['as' => 'admin.integratedGameUpdate', 'uses' => 'Admin\IntegratedGamesController@gameUpdate']);
 
         Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);
         Route::post('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@sendBitcoins']);

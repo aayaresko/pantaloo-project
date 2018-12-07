@@ -16,7 +16,8 @@
                                 <table class="table table-hover">
                                     <tr>
                                         <td>Name</td>
-                                        <td><input type="text" name="display_name" class="form-control"
+                                        <td>
+                                            <input type="text" name="name" class="form-control"
                                                    value="{{$game->name}}" required></td>
                                     </tr>
                                     <tr>
@@ -35,9 +36,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Type</td>
+                                        <td>Categoty</td>
                                         <td>
-                                            <select name="categoty_id" class="form-control">
+                                            <select name="category_id" class="form-control">
                                                 @foreach($categories as $category)
                                                     @if($game->categoty_id === $category->id)
                                                         <option value="{{ $category->id }}"
@@ -51,15 +52,22 @@
                                     </tr>
                                     <tr>
                                         <td>Image</td>
-                                        <td><img class="games-block__image show-animated" src="{{$game->image_filled}}"
+                                        <td>
+                                            <img class="games-block__image show-animated"
+                                                 @if(is_null($game->our_image))
+                                                 src="{{$game->image_filled}}"
+                                                 @else
+                                                 src="{{$game->our_image}}"
+                                                 @endif
                                                  onerror="handleImage(this);"/>
-                                            <span>Use Default Image</span> <input type="checkbox" name="default_image">
+                                            <br>
+                                            <span>Use Default Provider Image</span>
+                                            <input type="checkbox" name="default_provider_image">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>New image</td>
-                                        <td><input type="file" name="image" class="form-control" multiple
-                                                   accept="image/*,image/jpeg"></td>
+                                        <td><input id="laodImage" type="file" name="image" class="form-control"></td>
                                     </tr>
                                     <tr>
                                         <td>Active</td>
@@ -76,11 +84,11 @@
                                         <td><input type="number" name="rating" value="{{ $game->rating }}" min="0"></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="submit" name="save" value="Save" class="btn btn-success"></td>
-                                        <td></td>
+                                        <td><input type="submit" value="Save" class="btn btn-success"></td>
+                                        <td><a class="btn btn-primary" href="/admin/integratedGames"
+                                               role="button">Back</a></td>
                                     </tr>
                                 </table>
-
                                 {{csrf_field()}}
                             </form>
                         </div>
