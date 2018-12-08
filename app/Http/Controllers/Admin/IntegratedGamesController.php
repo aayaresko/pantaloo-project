@@ -87,7 +87,7 @@ class IntegratedGamesController extends Controller
                 $nameImage = $request->id . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
                 Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['our_image'] = $pathImage;
+                $updatedGame['our_image'] = '/storage' . $pathImage;
                 unset($updatedGame['image']);
             }
 
