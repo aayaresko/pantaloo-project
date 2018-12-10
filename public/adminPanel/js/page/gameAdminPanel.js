@@ -2,7 +2,6 @@
 
 function checkFile(e) {
     let txt;
-    console.log(e);
     var file_list = e.target.files;
     var maxSize = 1000000;
     for (var i = 0, file; file = file_list[i]; i++) {
@@ -12,7 +11,7 @@ function checkFile(e) {
         var iConvert = (file.size / maxSize).toFixed(2);
 
         if (!(sFileExtension === "jpg" || sFileExtension === "jpeg" ||
-            sFileExtension === "png") || iFileSize > 10000000) {
+            sFileExtension === "png") || iFileSize > maxSize) {
             txt = "File type : " + sFileExtension + "\n\n";
             txt += "Size: " + iConvert + " MB \n\n";
             txt += `Please make sure your file is in jpg, jpeg, png or doc format and less than ${maxSize / 1000000} MB.\n\n`;
