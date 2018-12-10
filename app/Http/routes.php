@@ -129,10 +129,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/slot/{slot}', ['as' => 'admin.slot', 'uses' => 'SlotController@edit']);
         Route::post('/slot/{slot}', ['uses' => 'SlotController@update']);
 
+        //admin for integrated games
+        //games
         Route::get('/integratedGames', ['as' => 'admin.integratedGames', 'uses' => 'Admin\IntegratedGamesController@index']);
         Route::get('/integratedGame', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@getAll']);
         Route::get('/integratedGame/{id}', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@game']);
         Route::post('/integratedGame/{id}', ['as' => 'admin.integratedGameUpdate', 'uses' => 'Admin\IntegratedGamesController@gameUpdate']);
+        //type
+        Route::get('/integratedTypes', ['as' => 'admin.integratedTypes', 'uses' => 'Admin\IntegratedTypesController@index']);
+        Route::get('/integratedType/{id}', ['as' => 'admin.integratedType', 'uses' => 'Admin\IntegratedTypesController@edit']);
+        Route::post('/integratedType/{id}', ['as' => 'admin.integratedTypeUpdate', 'uses' => 'Admin\IntegratedTypesController@update']);
+        //category
+        Route::get('/integratedCategories', ['as' => 'admin.integratedCategories', 'uses' => 'Admin\IntegratedCategoriesController@index']);
+        Route::get('/integratedCategory/{id}', ['as' => 'admin.integratedCategory', 'uses' => 'Admin\IntegratedCategoriesController@edit']);
+        Route::post('/integratedCategory/{id}', ['as' => 'admin.integratedCategoryUpdate', 'uses' => 'Admin\IntegratedCategoriesController@update']);
+        //end
 
         Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);
         Route::post('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@sendBitcoins']);

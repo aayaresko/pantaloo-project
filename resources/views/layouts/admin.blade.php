@@ -162,6 +162,8 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Games </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             <li><a href="{{route('admin.integratedGames')}}">List</a></li>
+                            <li><a href="{{route('admin.integratedTypes')}}">Types</a></li>
+                            <li><a href="{{route('admin.integratedCategories')}}">Categories</a></li>
                         </ul>
                     </li>
 
