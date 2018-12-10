@@ -11,7 +11,7 @@ let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {
 
-    $('body').on('click', '.games-block__buttons a', function (e) {
+    $('body').on('click', 'a.open_game', function (e) {
         e.preventDefault();
         if(auth) {
             let url = String(this.getAttribute('href'));
