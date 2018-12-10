@@ -7551,7 +7551,7 @@ html.cropped {
     z-index: 9999;
     background: url("/media/images/preloader/preloader3.svg?v=2.1");
     background-repeat: no-repeat;
-    background-size: 15%;
+    background-size: 7%;
     background-color: rgba(0, 0, 0, 0.2);
     background-position: center;
 }
