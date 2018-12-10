@@ -30,12 +30,42 @@ class IntegratedSettingsController extends Controller
      */
     public function index(Request $request)
     {
+        $configIntegratedGames = config('integratedGames.common');
+        $definitionSettings = $configIntegratedGames['listSettings'];
         $settings = GamesListSettings::all();
-        return view('admin.integrated_settings')->with(['settings' => $settings]);
+        return view('admin.integrated_settings')->with([
+            'definitionSettings' => $definitionSettings,
+            'settings' => $settings,
+        ]);
     }
 
     public function update(Request $request)
     {
+        //to do validate image
+        $this->validate($request, [
+            'games' => 'integer',
+            'categories' => 'integer',
+            'types' => 'integer',
+            //to do list array
+        ]);
 
+        DB::beginTransaction();
+        try {
+            if ($request->has('games')) {
+                GamesListSettings::where('code','games')->update(['value' => $request->games]);
+            }
+            if ($request->has('categories')) {
+                GamesListSettings::where('code','categories')->update(['value' => $request->categories]);
+            }
+
+            if ($request->has('types')) {
+                GamesListSettings::where('code','types')->update(['value' => $request->types]);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([$e->getMessage()]);
+        }
+        DB::commit();
+        return redirect()->route('admin.integratedSettings')->with('msg', 'Settings was edited');
     }
 }

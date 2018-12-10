@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/integratedCategory/{id}', ['as' => 'admin.integratedCategoryUpdate', 'uses' => 'Admin\IntegratedCategoriesController@update']);
         //Settings
         Route::get('/integratedSettings', ['as' => 'admin.integratedSettings', 'uses' => 'Admin\IntegratedSettingsController@index']);
+        Route::post('/integratedSettings', ['as' => 'admin.integratedSettingsUpdate', 'uses' => 'Admin\IntegratedSettingsController@update']);
         //end
 
         Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);

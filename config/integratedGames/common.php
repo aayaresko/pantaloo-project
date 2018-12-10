@@ -30,5 +30,11 @@ return [
         ]
     ],
 
-    'dummyPicture' => '/media/images/preloader/image-not-available.png'
+    'dummyPicture' => '/media/images/preloader/image-not-available.png',
+
+    'listSettings' => [
+        'rating' => 1,
+        'desc' => 2,
+        'asc' => 3,
+    ],
 ];
