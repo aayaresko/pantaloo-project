@@ -408,6 +408,7 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header .navigation {
   padding-top: 5px;
   margin-right: 47px;
+  margin-left: -47px;
 }
 /* line 225, ../scss/_navigation.scss */
 .header .navigation:after {
