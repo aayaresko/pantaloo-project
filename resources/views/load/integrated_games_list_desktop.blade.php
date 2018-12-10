@@ -6,9 +6,9 @@
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
                             @php
-                                $image = is_null($game->our_image) ? $game->image_fille : $game->our_image;
+                                $image = is_null($game->our_image) ? $game->image_filled : $game->our_image;
                             @endphp
-                            <img class="games-block__image show-animated" src="{{ $game->image_filled }}"
+                            <img class="games-block__image show-animated" src="{{ $image }}"
                                  onerror="handleImage(this);"/>
                         </span>
                     </div>
