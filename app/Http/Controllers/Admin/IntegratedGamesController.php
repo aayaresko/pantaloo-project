@@ -108,6 +108,7 @@ class IntegratedGamesController extends Controller
             if (!is_null($default_provider_image)) {
                 if ($default_provider_image === 'on') {
                     $updatedGame['our_image'] = $game->image_filled;
+                    unset($updatedGame['default_provider_image']);
                 }
             }
             GamesList::where('id', $request->id)->update($updatedGame);
@@ -194,10 +195,9 @@ class IntegratedGamesController extends Controller
         $data->map(function ($item, $key) use ($param) {
             $idProvider = $item->provider;
             $item->provider = $param['providers'][$idProvider]['code'];
-
             $item->edit = view('admin.parts.buttons', ['id' => $item->id])->render();
-            $item->image = view('admin.parts.imageTable', ['image' => $item->image])->render();
-            //$item->rating = view('admin.parts.switch', ['switch' => $item->rating])->render();
+            $image = is_null($item->our_image) ? $item->image : $item->our_image;
+            $item->image = view('admin.parts.imageTable', ['image' => $image])->render();
             $item->mobile = view('admin.parts.switch', ['switch' => $item->mobile])->render();
             $item->active = view('admin.parts.switch', ['switch' => $item->active])->render();
 

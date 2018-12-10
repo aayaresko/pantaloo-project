@@ -5,7 +5,11 @@
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
-                            <img class="games-block__image show-animated" src="{{$game->image_filled}}" onerror="handleImage(this);"/>
+                            @php
+                                $image = is_null($game->our_image) ? $game->image_fille : $game->our_image;
+                            @endphp
+                            <img class="games-block__image show-animated" src="{{ $game->image_filled }}"
+                                 onerror="handleImage(this);"/>
                         </span>
                     </div>
                     <div class="games-block__wrap ng-scope">
