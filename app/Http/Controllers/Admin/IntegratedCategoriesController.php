@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
-use App\Models\GamesType;
+use App\Models\GamesCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class IntegratedTypesController
+ * Class IntegratedCategoriesController
  * @package App\Http\Controllers\Admin
  */
-class IntegratedTypesController extends Controller
+class IntegratedCategoriesController extends Controller
 {
+
     /**
      * @var array
      */
@@ -39,8 +41,8 @@ class IntegratedTypesController extends Controller
     public function index(Request $request)
     {
         $fields = $this->fields;
-        $gamesTypes = GamesType::select($fields)->get();
-        return view('admin.integrated_types')->with(['gamesTypes' => $gamesTypes]);
+        $gamesTypes = GamesCategory::select($fields)->get();
+        return view('admin.integrated_categories')->with(['gamesTypes' => $gamesTypes]);
     }
 
     /**
@@ -50,8 +52,8 @@ class IntegratedTypesController extends Controller
     public function edit(Request $request)
     {
         $fields = $this->fields;
-        $type = GamesType::where('id', $request->id)->select($fields)->first();
-        return view('admin.integrated_type')->with([
+        $type = GamesCategory::where('id', $request->id)->select($fields)->first();
+        return view('admin.integrated_category')->with([
             'item' => $type,
         ]);
     }
@@ -86,12 +88,12 @@ class IntegratedTypesController extends Controller
             }
             unset($updatedGame['_token']);
 
-            GamesType::where('id', $request->id)->update($updatedGame);
+            GamesCategory::where('id', $request->id)->update($updatedGame);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         DB::commit();
-        return redirect()->route('admin.integratedType', $request->id)->with('msg', 'Type was edited');
+        return redirect()->route('admin.integratedCategory', $request->id)->with('msg', 'Type was edited');
     }
 }
