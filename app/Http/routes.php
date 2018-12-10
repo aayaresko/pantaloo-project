@@ -143,6 +143,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/integratedCategories', ['as' => 'admin.integratedCategories', 'uses' => 'Admin\IntegratedCategoriesController@index']);
         Route::get('/integratedCategory/{id}', ['as' => 'admin.integratedCategory', 'uses' => 'Admin\IntegratedCategoriesController@edit']);
         Route::post('/integratedCategory/{id}', ['as' => 'admin.integratedCategoryUpdate', 'uses' => 'Admin\IntegratedCategoriesController@update']);
+        //Settings
+        Route::get('/integratedSettings', ['as' => 'admin.integratedSettings', 'uses' => 'Admin\IntegratedSettingsController@index']);
         //end
 
         Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);

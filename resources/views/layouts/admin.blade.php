@@ -164,6 +164,7 @@
                             <li><a href="{{route('admin.integratedGames')}}">List</a></li>
                             <li><a href="{{route('admin.integratedTypes')}}">Types</a></li>
                             <li><a href="{{route('admin.integratedCategories')}}">Categories</a></li>
+                            <li><a href="{{route('admin.integratedSettings')}}">Settings</a></li>
                         </ul>
                     </li>
 
