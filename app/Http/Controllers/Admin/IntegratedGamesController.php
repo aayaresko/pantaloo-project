@@ -70,6 +70,7 @@ class IntegratedGamesController extends Controller
 
     public function gameUpdate(Request $request)
     {
+        //to do validate image
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
