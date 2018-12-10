@@ -6,17 +6,30 @@ use DB;
 use Validator;
 use App\Models\GamesList;
 use App\Models\GamesType;
-use App\Models\GamesCategory;
 use Illuminate\Http\Request;
+use App\Models\GamesCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class IntegratedGamesController
+ * @package App\Http\Controllers\Admin
+ */
 class IntegratedGamesController extends Controller
 {
-
+    /**
+     * @var array
+     */
     protected $fields;
+    /**
+     * @var array
+     */
     protected $relatedFields;
 
+    /**
+     * IntegratedGamesController constructor.
+     */
     public function __construct()
     {
         $this->fields = [
@@ -41,7 +54,6 @@ class IntegratedGamesController extends Controller
         $this->relatedFields[5] = 'games_list.image_filled as image';
     }
 
-
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -50,13 +62,20 @@ class IntegratedGamesController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
-        return view('admin.integrated_games')->with(['dummyPicture' => $dummyPicture]);
+        View::share('dummyPicture', $dummyPicture);
+        return view('admin.integrated_games');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function game(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
+        View::share('dummyPicture', $dummyPicture);
+
         $types = GamesType::select(['id', 'code', 'name'])->get();
         $categories = GamesCategory::select(['id', 'code', 'name'])->get();
         $game = GamesList::where([['games_list.id', '=', $request->id]])->select($this->fields)->first();
@@ -64,10 +83,13 @@ class IntegratedGamesController extends Controller
             'game' => $game,
             'types' => $types,
             'categories' => $categories,
-            'dummyPicture' => $dummyPicture
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function gameUpdate(Request $request)
     {
         //to do validate image
@@ -120,6 +142,10 @@ class IntegratedGamesController extends Controller
         return redirect()->route('admin.integratedGame', $game->id)->with('msg', 'Game was edited');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     protected function preparationParams(Request $request)
     {
         /* COLUMNS */
@@ -130,6 +156,10 @@ class IntegratedGamesController extends Controller
         return $param;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAll(Request $request)
     {
         $param = $this->preparationParams($request);

@@ -4,6 +4,13 @@
     Admin
 @endsection
 
+@section('preJs')
+    <script>
+        let dummy = "{{ $dummyPicture }}";
+    </script>
+    <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+@endsection
+
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -51,8 +58,5 @@
 @endsection
 
 @section('js')
-    <script>
-        let dummy = "{{ $dummyPicture }}";
-    </script>
     <script src="/adminPanel/js/page/gamesAdminPanel.js?v={{time()}}"></script>
 @endsection

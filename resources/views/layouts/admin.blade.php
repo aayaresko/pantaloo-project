@@ -75,9 +75,8 @@
 
     <!-- jQuery  -->
     <script src="/assets/js/jquery.min.js"></script>
-    <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+    @yield('preJs')
 </head>
-
 
 <body class="fixed-left">
 

@@ -4,6 +4,13 @@
     {{ucfirst($game->name)}}
 @endsection
 
+@section('preJs')
+    <script>
+        let dummy = "{{ $dummyPicture }}";
+    </script>
+    <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+@endsection
+
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -53,7 +60,7 @@
                                     <tr>
                                         <td>Image</td>
                                         <td>
-                                            <img class="games-block__image show-animated"
+                                            <img style="max-width: 350px;" class="games-block__image show-animated"
                                                  @if(is_null($game->our_image))
                                                  src="{{$game->image_filled}}"
                                                  @else
@@ -99,10 +106,6 @@
     </div>
 @endsection
 
-
 @section('js')
-    <script>
-        let dummy = "{{ $dummyPicture }}";
-    </script>
     <script src="/adminPanel/js/page/gameAdminPanel.js?v={{time()}}"></script>
 @endsection

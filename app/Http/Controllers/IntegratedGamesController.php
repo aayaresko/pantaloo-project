@@ -10,6 +10,7 @@ use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
 use App\Models\GamesCategory;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class IntegratedGamesController
@@ -25,6 +26,7 @@ class IntegratedGamesController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
+        View::share('dummyPicture', $dummyPicture);
 
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
@@ -37,7 +39,6 @@ class IntegratedGamesController extends Controller
         return view('integrated_games')->with([
             'gamesTypes' => $gamesTypes,
             'gamesCategories' => $gamesCategories,
-            'dummyPicture' => $dummyPicture
         ]);
     }
 
