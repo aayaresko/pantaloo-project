@@ -98,7 +98,7 @@ class IntegratedGamesController extends Controller
             'type_id' => 'integer|exists:games_types,id',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
-            'image' => 'image',
+            'image' => 'image|max:1000|mimes:jpeg,png',//to do this to config file if will DRY
         ]);
 
         DB::beginTransaction();
