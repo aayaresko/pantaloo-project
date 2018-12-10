@@ -26,6 +26,7 @@
                 <span class="game-name">BlackJack</span>
             </div>
             <div class="right-nav">
+                <div class="expand-game"><img src="images/expand.png" alt=""></div>
                 <a href="" class="exit-btn"><span class="text">Exit</span></a>
             </div>
             <div class="bottom-nav">
