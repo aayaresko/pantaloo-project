@@ -33,8 +33,9 @@ return [
     'dummyPicture' => '/media/images/preloader/image-not-available.png',
 
     'listSettings' => [
-        'rating' => 1,
-        'desc' => 2,
-        'asc' => 3,
+        1 => ['id', 'asc'],
+        2 => ['id', 'desc'],
+        3 => ['rating', 'asc'],
+        4 => ['rating', 'desc'],
     ],
 ];

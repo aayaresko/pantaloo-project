@@ -28,6 +28,8 @@ class IntegratedGamesController extends Controller
         $dummyPicture = $configIntegratedGames['dummyPicture'];
         View::share('dummyPicture', $dummyPicture);
 
+        $definitionSettings = $configIntegratedGames['listSettings'];
+
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
         ])->orderBy('rating', 'desc')->get();

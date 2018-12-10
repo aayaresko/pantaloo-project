@@ -24,11 +24,11 @@
                                             <td>
                                                 <select name="{{ $setting->code }}" class="form-control">
                                                     @foreach($definitionSettings as $key => $definitionSetting)
-                                                        @if((int)$setting->value === (int)$definitionSetting)
-                                                            <option value="{{ $definitionSetting }}"
-                                                                    selected>{{ $key }}</option>
+                                                        @if((int)$setting->value === (int)$key)
+                                                            <option value="{{ $key }}"
+                                                                    selected>{{ implode(",", $definitionSetting) }}</option>
                                                         @else
-                                                            <option value="{{ $definitionSetting }}">{{ $key }}</option>
+                                                            <option value="{{ $key }}">{{  implode(",", $definitionSetting) }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>

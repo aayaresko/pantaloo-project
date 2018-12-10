@@ -42,17 +42,20 @@ class IntegratedSettingsController extends Controller
     public function update(Request $request)
     {
         //to do validate image
+        $configIntegratedGames = config('integratedGames.common');
+        $definitionSettings = $configIntegratedGames['listSettings'];
+        dump(implode(',', array_keys($definitionSettings)));
+
         $this->validate($request, [
-            'games' => 'integer',
-            'categories' => 'integer',
-            'types' => 'integer',
-            //to do list array
+            'games' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
+            'categories' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
+            'types' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
         ]);
 
         DB::beginTransaction();
         try {
             if ($request->has('games')) {
-                GamesListSettings::where('code','games')->update(['value' => $request->games]);
+                GamesListSettings::where('code','games')->update(['valufde' => $request->games]);
             }
             if ($request->has('categories')) {
                 GamesListSettings::where('code','categories')->update(['value' => $request->categories]);
