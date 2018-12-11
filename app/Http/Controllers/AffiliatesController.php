@@ -12,40 +12,45 @@ use Illuminate\Support\Facades\Auth;
 
 class AffiliatesController extends Controller
 {
-    public function login()
+    public function index()
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
-            else return redirect('/');
+        //test to two auth
+        if (Auth::check()) {
+            if (Auth::user()->isAgent()) {
+                return redirect()->route('agent.dashboard');
+            }
         }
 
-        return view('agent.login');
+        return view('affiliates.lending');
     }
 
     public function enter(Request $request)
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
-            else return redirect()->url('/');
+        if (Auth::check()) {
+            if (Auth::user()->isAgent()) {
+                return redirect()->route('agent.dashboard');
+            }
         }
 
-        if($request->input('remember_me') == 'on') $remember = true;
-        else $remember = false;
+        if ($request->input('remember_me') == 'on') {
+            $remember = true;
+        } else {
+            $remember = false;
+        }
 
-        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1], $remember))
-        {
+        $authData = ['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1];
+        if (Auth::attempt($authData, $remember)) {
             return redirect()->route('agent.dashboard');
+        } else {
+            return redirect()->route('affiliates.index');
         }
-        else return redirect()->route('agent.login');
     }
 
     public function logout()
     {
         Auth::logout();
 
-        return redirect()->route('agent.login');
+        return redirect()->route('affiliates.index');
     }
 
     public function dashboard(Request $request)
@@ -85,8 +90,7 @@ class AffiliatesController extends Controller
 
         $trackers = collect();
 
-        foreach (Auth::user()->trackers as $tracker)
-        {
+        foreach (Auth::user()->trackers as $tracker) {
             $stat = $tracker->stat($from, $to);
 
             $stat['tracker'] = $tracker->name;
@@ -133,7 +137,7 @@ class AffiliatesController extends Controller
 
     public function updateTracker(Tracker $tracker, Request $request)
     {
-        if($tracker->user_id != Auth::user()->id) return redirect()->back();
+        if ($tracker->user_id != Auth::user()->id) return redirect()->back();
 
         $this->validate($request, [
             'name' => 'required|max:50'
@@ -160,10 +164,10 @@ class AffiliatesController extends Controller
 
         $sum = Auth::user()->getAgentAvailable();
 
-        if($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+        if ($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
 
         $service = new Service();
-        if(!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
 
         $payment = new Payment();
         $payment->sum = $sum;
@@ -181,8 +185,7 @@ class AffiliatesController extends Controller
 
         $result = [];
 
-        foreach ($agents as $agent)
-        {
+        foreach ($agents as $agent) {
             $item = [
                 'agent' => $agent,
                 'available' => $agent->getAgentAvailable(),
@@ -199,7 +202,7 @@ class AffiliatesController extends Controller
 
     public function commission(User $user, Request $request)
     {
-        if($user->role != 1) return redirect()->back()->withErrors(['User not agent']);
+        if ($user->role != 1) return redirect()->back()->withErrors(['User not agent']);
 
         $this->validate($request, [
             'commission' => 'required|numeric|min:0|max:100'

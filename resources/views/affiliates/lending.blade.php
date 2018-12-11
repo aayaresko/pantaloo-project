@@ -340,7 +340,7 @@
                                                 <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
                                             </div>
                                             <div class="form-group text-center">
-                                                <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                                <input type="checkbox" tabindex="3" class="" name="remember_me" id="remember">
                                                 <label for="remember"> Remember Me</label>
                                             </div>
                                             <div class="form-group">

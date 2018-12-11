@@ -14,13 +14,8 @@
 
 //sub-domain
 Route::group(['domain' => 'partner.test.test'], function () {
-    Route::get('/', function () {
-        return view('affiliates.lending');
-    });
-
-    //Route::get('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@login']);
+    Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
-
 });
 
 
@@ -178,7 +173,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'agent', 'middleware' => ['agent']], function (){
+    Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function (){
         Route::get('/', function (){
             return redirect()->route('agent.dashboard');
         });
