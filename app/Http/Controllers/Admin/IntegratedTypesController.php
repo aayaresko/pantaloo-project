@@ -7,6 +7,7 @@ use Validator;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
