@@ -17,11 +17,27 @@ class IntegratedSettingsController extends Controller
 {
 
     /**
+     * @var array
+     */
+    protected $fields;
+    /**
+     * @var array
+     */
+    protected $relatedFields;
+
+    /**
      * IntegratedSettingsController constructor.
      */
     public function __construct()
     {
-        //to do field
+        $this->fields = [
+            0 => 'id',
+            1 => 'code',
+            2 => 'name',
+            3 => 'value',
+            4 => 'created_at',
+            5 => 'updated_at'
+        ];
     }
 
     /**
@@ -39,13 +55,14 @@ class IntegratedSettingsController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
-        //to do validate image
         $configIntegratedGames = config('integratedGames.common');
         $definitionSettings = $configIntegratedGames['listSettings'];
-        dump(implode(',', array_keys($definitionSettings)));
-
         $this->validate($request, [
             'games' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
             'categories' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
@@ -55,14 +72,14 @@ class IntegratedSettingsController extends Controller
         DB::beginTransaction();
         try {
             if ($request->has('games')) {
-                GamesListSettings::where('code','games')->update(['valufde' => $request->games]);
+                GamesListSettings::where('code', 'games')->update(['value' => $request->games]);
             }
             if ($request->has('categories')) {
-                GamesListSettings::where('code','categories')->update(['value' => $request->categories]);
+                GamesListSettings::where('code', 'categories')->update(['value' => $request->categories]);
             }
 
             if ($request->has('types')) {
-                GamesListSettings::where('code','types')->update(['value' => $request->types]);
+                GamesListSettings::where('code', 'types')->update(['value' => $request->types]);
             }
         } catch (\Exception $e) {
             DB::rollBack();
