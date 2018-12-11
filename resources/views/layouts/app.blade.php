@@ -80,7 +80,7 @@
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
-                    @if(Auth::user()->role == 1) <li><a href="/agent">Admin</a></li> @endif
+                    @if(Auth::user()->role == 1) <li><a href="/affiliates">Admin</a></li> @endif
                     @if(Auth::user()->role == 2) <li><a href="/admin">Admin</a></li> @endif
                     @if(Auth::user()->free_spins > 0) <li><a href="/slots#free_spins">Free spins</a></li> @endif
                 @endif

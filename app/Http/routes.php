@@ -20,7 +20,7 @@ Route::group(['domain' => $partner], function () {
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
     //add registr and drop pass
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
-        Route::get('/logout', ['as' => 'affiliates.logout', 'uses' => 'AffiliatesController@logout']);
+        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'AffiliatesController@logout']);
     });
 });
 
