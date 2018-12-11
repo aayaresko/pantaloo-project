@@ -7,7 +7,6 @@ use Validator;
 use App\Models\GamesListSettings;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Class IntegratedSettingsController
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
  */
 class IntegratedSettingsController extends Controller
 {
-
     /**
      * @var array
      */
@@ -48,7 +46,7 @@ class IntegratedSettingsController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $definitionSettings = $configIntegratedGames['listSettings'];
-        $settings = GamesListSettings::all();
+        $settings = GamesListSettings::select($this->fields)->get();
         return view('admin.integrated_settings')->with([
             'definitionSettings' => $definitionSettings,
             'settings' => $settings,

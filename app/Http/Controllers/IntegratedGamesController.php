@@ -10,6 +10,7 @@ use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
 use App\Models\GamesCategory;
+use App\Models\GamesListSettings;
 use Illuminate\Support\Facades\View;
 
 /**
@@ -18,6 +19,20 @@ use Illuminate\Support\Facades\View;
  */
 class IntegratedGamesController extends Controller
 {
+
+    /**
+     * @var array
+     */
+    protected $params = [];
+
+    /**
+     * IntegratedGamesController constructor.
+     */
+    public function __construct()
+    {
+        $this->params['settings'] = ['id', 'code', 'value'];
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -27,16 +42,26 @@ class IntegratedGamesController extends Controller
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
         View::share('dummyPicture', $dummyPicture);
-
         $definitionSettings = $configIntegratedGames['listSettings'];
+        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
+
+        $orderType = ['rating', 'desc'];
+        if (isset($settings['types'])) {
+            $orderType = $definitionSettings[$settings['types']];
+        }
+
+        $orderCategoty = ['rating', 'desc'];
+        if (isset($settings['types'])) {
+            $orderCategoty = $definitionSettings[$settings['categories']];
+        }
 
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
-        ])->orderBy('rating', 'desc')->get();
+        ])->orderBy(...$orderType)->get();
 
         $gamesCategories = GamesCategory::where([
             ['active', '=', 1],
-        ])->orderBy('rating', 'desc')->get();
+        ])->orderBy(...$orderCategoty)->get();
 
         return view('integrated_games')->with([
             'gamesTypes' => $gamesTypes,
@@ -74,7 +99,14 @@ class IntegratedGamesController extends Controller
             array_push($whereGameList, ['type_id', '=', $request->typeId]);
         }
 
-        $gameList = GamesList::where($whereGameList)->orderBy('rating')->paginate($paginationCount);
+        $definitionSettings = $configIntegratedGames['listSettings'];
+        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
+        $orderGames = ['rating', 'asc'];
+        if (isset($settings['games'])) {
+            $orderGames = $definitionSettings[$settings['games']];
+        }
+
+        $gameList = GamesList::where($whereGameList)->orderBy(...$orderGames)->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
         $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);
@@ -98,7 +130,7 @@ class IntegratedGamesController extends Controller
         ];
 
         $providers = $configIntegratedGames['providers'];
-        $providerIds = array_map(function($key, $value) {
+        $providerIds = array_map(function ($key, $value) {
             return $key;
         }, array_keys($providers), $providers);
 
