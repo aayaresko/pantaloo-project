@@ -92,13 +92,15 @@ class IntegratedGamesController extends Controller
      */
     public function gameUpdate(Request $request)
     {
-        //to do validate image
+        $adminConfig = config('adminPanel');
+        $imageConfig = $adminConfig['image'];
+
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
-            'image' => 'image|max:1000|mimes:jpeg,png',//to do this to config file if will DRY
+            'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
         ]);
 
         DB::beginTransaction();
@@ -107,7 +109,7 @@ class IntegratedGamesController extends Controller
             $updatedGame = $request->toArray();
             if ($request->hasFile('image')) {
                 $image = $request->image;
-                $nameImage = $request->id . '.' . $image->getClientOriginalExtension();
+                $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
                 Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
                 $updatedGame['our_image'] = '/storage' . $pathImage;
