@@ -53,6 +53,12 @@ class IntegratedCategoriesController extends Controller
     public function edit(Request $request)
     {
         $fields = $this->fields;
+
+        $adminConfig = config('adminPanel');
+        $imageConfig = $adminConfig['image'];
+        View::share('maxSizeImage', $imageConfig['maxSize']);
+        View::share('typesImage', $imageConfig['mimes']);
+
         $type = GamesCategory::where('id', $request->id)->select($fields)->first();
         return view('admin.integrated_category')->with([
             'item' => $type,

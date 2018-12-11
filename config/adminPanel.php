@@ -4,7 +4,7 @@ return [
 
     'image' => [
         'maxSize' => 1000, //kBt
-        'mimes' => ['jpeg', 'png']
+        'mimes' => ['jpeg', 'png', 'jpg']
     ],
 
 ];

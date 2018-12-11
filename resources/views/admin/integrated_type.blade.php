@@ -5,6 +5,10 @@
 @endsection
 
 @section('preJs')
+    <script>
+        let maxSizeImage = "{{ $maxSizeImage }}";
+        let typesImage = {!! json_encode($typesImage) !!};
+    </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
 @endsection
 

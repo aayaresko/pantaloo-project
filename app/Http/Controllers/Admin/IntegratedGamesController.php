@@ -76,6 +76,11 @@ class IntegratedGamesController extends Controller
         $dummyPicture = $configIntegratedGames['dummyPicture'];
         View::share('dummyPicture', $dummyPicture);
 
+        $adminConfig = config('adminPanel');
+        $imageConfig = $adminConfig['image'];
+        View::share('maxSizeImage', $imageConfig['maxSize']);
+        View::share('typesImage', $imageConfig['mimes']);
+
         $types = GamesType::select(['id', 'code', 'name'])->get();
         $categories = GamesCategory::select(['id', 'code', 'name'])->get();
         $game = GamesList::where([['games_list.id', '=', $request->id]])->select($this->fields)->first();

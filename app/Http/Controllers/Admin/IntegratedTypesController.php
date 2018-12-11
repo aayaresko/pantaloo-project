@@ -51,6 +51,12 @@ class IntegratedTypesController extends Controller
     public function edit(Request $request)
     {
         $fields = $this->fields;
+
+        $adminConfig = config('adminPanel');
+        $imageConfig = $adminConfig['image'];
+        View::share('maxSizeImage', $imageConfig['maxSize']);
+        View::share('typesImage', $imageConfig['mimes']);
+
         $type = GamesType::where('id', $request->id)->select($fields)->first();
         return view('admin.integrated_type')->with([
             'item' => $type,
