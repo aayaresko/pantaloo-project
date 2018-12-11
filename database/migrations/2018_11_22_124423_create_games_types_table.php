@@ -18,7 +18,7 @@ class CreateGamesTypesTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->boolean('active')->default(1);
-            $table->string('rating')->default(0);
+            $table->integer('rating')->default(0);
             //$table->string('class')->default('slots');
             $table->timestamps();
         });

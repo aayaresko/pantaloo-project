@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
+use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -66,6 +67,7 @@ class IntegratedTypesController extends Controller
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
             'rating' => 'integer',
+            'ratingItems' => 'integer',
             'image' => 'image|max:1000|mimes:jpeg,png',//to do this to config file if will DRY
         ]);
 
@@ -87,6 +89,12 @@ class IntegratedTypesController extends Controller
             unset($updatedGame['_token']);
 
             GamesType::where('id', $request->id)->update($updatedGame);
+
+            if ($request->has('ratingItems')) {
+                if ($request->ratingItems != '') {
+                    GamesList::where('type_id', $request->id)->update(['rating' => $request->ratingItems]);
+                }
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);
