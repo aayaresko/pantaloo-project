@@ -11,13 +11,18 @@
 |
 */
 
+$foreignPages = config('app.foreignPages');
+$partner = parse_url($foreignPages['partner'])['host'];
 
 //sub-domain
-Route::group(['domain' => 'partner.test.test'], function () {
+Route::group(['domain' => $partner], function () {
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
+    //add registr and drop pass
+    Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+        Route::get('/logout', ['as' => 'affiliates.logout', 'uses' => 'AffiliatesController@logout']);
+    });
 });
-
 
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
@@ -87,7 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::get('/share/session', 'AuthController@share');
 
-    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function (){
+    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
         Route::get('/bonus/{user}', ['as' => 'admin.bonuses', 'uses' => 'BonusController@userBonuses']);
         Route::get('/bonus/{user}/{bonus}/activate', ['as' => 'admin.bonusActivate', 'uses' => 'BonusController@adminActivate']);
         Route::get('/bonus/{user}/cancel', ['as' => 'admin.bonusCancel', 'uses' => 'BonusController@adminCancel']);
@@ -173,8 +178,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
-    Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function (){
-        Route::get('/', function (){
+    Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+        Route::get('/', function () {
             return redirect()->route('agent.dashboard');
         });
 
@@ -197,7 +202,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     /* Pantallo Games */
-    Route::group(['prefix' => 'games/pantallo'], function (){
+    Route::group(['prefix' => 'games/pantallo'], function () {
         Route::get('/getGameList', ['as' => 'games.pantallo.getGameList', 'uses' => 'PantalloGamesController@getGameList']);
         Route::get('/loginPlayer', ['as' => 'games.pantallo.loginPlayer', 'uses' => 'PantalloGamesController@loginPlayer']);
         Route::get('/logoutPlayer', ['as' => 'games.pantallo.logoutPlayer', 'uses' => 'PantalloGamesController@logoutPlayer']);
@@ -214,7 +219,7 @@ Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'In
 
 
 /* Pantallo Games */
-Route::group(['prefix' => 'games'], function (){
+Route::group(['prefix' => 'games'], function () {
     Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
 });
 
