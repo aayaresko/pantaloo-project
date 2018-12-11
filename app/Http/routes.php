@@ -13,12 +13,13 @@
 
 
 //sub-domain
-Route::group(['domain' => 'partner.casinobit.io'], function () {
+Route::group(['domain' => 'partner.test.test'], function () {
     Route::get('/', function () {
-        return view('partner.lending');
+        return view('affiliates.lending');
     });
 
-    Route::post('/affiliates/login', ['as' => 'agent.login', 'uses' => 'Affiliates@enter']);
+    //Route::get('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@login']);
+    Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
 
 });
 
