@@ -86,15 +86,15 @@ class IntegratedTypesController extends Controller
             if (!is_null($active)) {
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             }
-            unset($updatedGame['_token']);
-
-            GamesType::where('id', $request->id)->update($updatedGame);
-
-            if ($request->has('ratingItems')) {
+            if (isset($request->ratingItems)) {
                 if ($request->ratingItems != '') {
                     GamesList::where('type_id', $request->id)->update(['rating' => $request->ratingItems]);
                 }
+                unset($updatedGame['ratingItems']);
             }
+
+            unset($updatedGame['_token']);
+            GamesType::where('id', $request->id)->update($updatedGame);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);
