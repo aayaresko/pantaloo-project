@@ -57,11 +57,11 @@ class IntegratedGamesController extends Controller
 
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
-        ])->orderBy(...$orderType)->get();
+        ])->orderBy($orderType[0], $orderType[1])->get();
 
         $gamesCategories = GamesCategory::where([
             ['active', '=', 1],
-        ])->orderBy(...$orderCategoty)->get();
+        ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         return view('integrated_games')->with([
             'gamesTypes' => $gamesTypes,
@@ -106,7 +106,7 @@ class IntegratedGamesController extends Controller
             $orderGames = $definitionSettings[$settings['games']];
         }
 
-        $gameList = GamesList::where($whereGameList)->orderBy(...$orderGames)->paginate($paginationCount);
+        $gameList = GamesList::where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
         $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);
