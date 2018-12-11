@@ -3097,8 +3097,8 @@ html.cropped {
 }
 /* line 1571, ../scss/_middle.scss */
 .video-popup .video-container .right-nav .exit-btn {
-  position: relative;
-  padding-left: 50px;
+  /* position: relative; */
+  /* padding-left: 50px; */
   font-size: 12px;
   color: #fff;
   letter-spacing: 6px;
@@ -3109,6 +3109,11 @@ html.cropped {
   -ms-transition: 0.2s linear;
   -o-transition: 0.2s linear;
   transition: 0.2s linear;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .video-popup .video-container .right-nav .exit-btn span {
   display: none;
@@ -3122,7 +3127,7 @@ html.cropped {
   width: 26px;
   height: 1px;
   background-color: #fff;
-  bottom: 0%;
+  /* bottom: 0%; */
   position: absolute;
 }
 /* line 1591, ../scss/_middle.scss */
