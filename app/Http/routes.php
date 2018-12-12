@@ -15,10 +15,16 @@ $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 
 //sub-domain
-Route::group(['domain' => $partner], function () {
+Route::group(['domain' => 'partner.test.test'], function () {
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
-    //add registr and drop pass
+    Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@register']);
+
+    Route::get('password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'AffiliatesController@showResetForm']);
+    Route::post('password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'AffiliatesController@sendResetLinkEmail']);
+    Route::post('password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'AffiliatesController@reset']);
+
+    //redefine routes
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
         Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'AffiliatesController@logout']);
     });

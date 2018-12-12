@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Validator;
 use App\Payment;
 use App\Tracker;
 use Carbon\Carbon;
@@ -52,6 +53,25 @@ class AffiliatesController extends Controller
 
         return redirect()->route('affiliates.index');
     }
+
+    public function register(Request $request)
+    {
+
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+        dd($request->toArray());
+        Validator::make($request->toArray(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+        dd(2);
+    }
+
+
 
     public function dashboard(Request $request)
     {

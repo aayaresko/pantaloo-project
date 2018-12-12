@@ -205,6 +205,11 @@
         </div>
     </div>
 </div>
+
+@php
+dump($errors);
+
+@endphp
 <!-- Commissions Section -->
 <div id="commissions" style="border-top: 1px dashed orange; padding-top: 50px;margin-bottom: 20px;">
     <div class="container">
@@ -391,9 +396,10 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form id="register-form" action="register/process" method="post" role="form" style="display: block;">
+                                        <form id="register-form" action="/affiliates/register" method="post" role="form" style="display: block;">
+                                            {{csrf_field()}}
                                             <div class="form-group">
-                                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                                <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
                                             </div>
                                             <div class="form-group">
                                                 <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="">
@@ -444,13 +450,14 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
-										<form id="register-form" action="some/action" method="post" role="form" style="display: block;">
+										<form  action="/affiliates/password/email" method="post" role="form" style="display: block;">
+                                            {{csrf_field()}}
 											<div class="form-group">
-												<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+												<input type="email" name="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
 											</div>
 											<div class="form-group">
 												<div class="row">
-														<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Send">
+														<input type="submit" name="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Send">
 												</div>
 											</div>
 										</form>
