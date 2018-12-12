@@ -76,19 +76,7 @@ function resetPassword() {
             url: '/password/email',
             data: $(this).serialize(),
             success: function (response) {
-                if (response['status'] === true) {
-                    window.location.replace(response['message']['redirect']);
-                } else {
-                    //show error
-                    $.each(response['message']['errors'], function (i, val) {
-                        $('.error-lists ul').append('<li>' + val + '</li>');
-                    });
-
-                    $("#reset-password-form + div.error-lists").show(500);
-                    setTimeout(function () {
-                        $("#reset-password-form + div.error-lists").hide();
-                    }, showError);
-                }
+                alert('Ok');
             }
         });
     });
