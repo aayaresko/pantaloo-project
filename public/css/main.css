@@ -7651,6 +7651,10 @@ html.cropped {
   animation-delay: 1.8s;
 }
 
+.not-allowed {
+  cursor: not-allowed;
+}
+
 @keyframes drop {
   10% {
     opacity: 0.5;
