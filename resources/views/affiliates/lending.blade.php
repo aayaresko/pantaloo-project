@@ -354,7 +354,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="text-center">
-                                                            <a href="#recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                            <a href="#recover" data-toggle="modal" data-target="#myModal3" data-dismiss="modal" tabindex="5" class="forgot-password">Forgot Password?</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -425,6 +425,69 @@
         </div>
     </div>
 </div>
+
+<!-- Modal 3. Forgot password -->
+<div class="modal fade" id="myModal3" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Forgot Your Password</h4>
+			</div>
+			<div class="modal-body">
+        <p>Don't worry. Resseting your password is easy, just tell us the email address.</p>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="panel panel-login">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<form id="register-form" action="some/action" method="post" role="form" style="display: block;">
+											<div class="form-group">
+												<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+											</div>
+											<div class="form-group">
+												<div class="row">
+														<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Send">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal 4. Forgot password. Status send -->
+<div class="modal fade" id="myModal4" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Status Window</h4>
+			</div>
+			<div class="modal-body">
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque cupiditate facilis veritatis tempora dicta, consectetur repellat, omnis nulla aliquid molestiae tempore incidunt nesciunt at maxime animi officiis unde numquam qui?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript" src="/partner/js/jquery.1.11.1.js"></script>
 <script type="text/javascript" src="/partner/js/bootstrap.js"></script>
 <script type="text/javascript" src="/partner/js/SmoothScroll.js"></script>
