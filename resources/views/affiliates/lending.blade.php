@@ -365,11 +365,11 @@ dump($errors);
                                                 </div>
                                             </div>
                                         </form>
-                                        <ul class="error-lists">
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
+                                        <div class="error-lists" style="display: none">
+                                            <p>Errors:</p>
+                                            <ul class="error-lists">
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -413,7 +413,7 @@ dump($errors);
                                                 <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
@@ -423,11 +423,11 @@ dump($errors);
                                                 </div>
                                             </div>
                                         </form>
-                                        <ul class="error-lists">
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
+                                        <div class="error-lists" style="display: none">
+                                            <p>Errors:</p>
+                                            <ul class="error-lists">
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -471,11 +471,11 @@ dump($errors);
 												</div>
 											</div>
 										</form>
-                                        <ul class="error-lists">
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
+                                        <div class="error-lists" style="display: none">
+                                            <p>Errors:</p>
+                                            <ul class="error-lists">
+                                            </ul>
+                                        </div>
 									</div>
 								</div>
 							</div>

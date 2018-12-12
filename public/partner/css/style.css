@@ -578,7 +578,11 @@ color: #777;
 	margin: 50px 0;
 }
 }
-.error-lists li{
+.error-lists{
 	color: #ff6963;
 	margin-bottom: 5px;
+}
+
+.error-lists li{
+	list-style-type: circle;
 }

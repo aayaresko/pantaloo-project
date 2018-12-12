@@ -6,10 +6,14 @@ use App\User;
 use Validator;
 use App\Payment;
 use App\Tracker;
+use App\Currency;
 use Carbon\Carbon;
 use App\Bitcoin\Service;
+use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class AffiliatesController extends Controller
 {
@@ -43,7 +47,12 @@ class AffiliatesController extends Controller
             $remember = false;
         }
 
-        $authData = ['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1];
+        $authData = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'role' => 1
+        ];
+
         if (Auth::attempt($authData, $remember)) {
             return response()->json([
                 'status' => true,
@@ -53,9 +62,8 @@ class AffiliatesController extends Controller
             ]);
         } else {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'message' => [
-                    'redirect' => '/affiliates',
                     'errors' => ['These credentials do not match our records.']
                 ]
             ]);
@@ -71,21 +79,83 @@ class AffiliatesController extends Controller
 
     public function register(Request $request)
     {
+        $data = $request->toArray();
+        $validator = Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
 
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+        $errors = [];
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+
+        }
+
+        $service = new Service();
+        $address = $service->getNewAddress('common');
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
-        dd($request->toArray());
-        Validator::make($request->toArray(), [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-        dd(2);
+
+        $user->bitcoin_address = $address;
+        $user->balance = 0;
+
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+            $user->ip = $ip;
+        }
+
+        $tracker_id = Cookie::get('tracker_id');
+
+        if ($tracker_id) {
+            $tracker = Tracker::find($tracker_id);
+
+            if ($tracker) {
+                $user->tracker()->associate($tracker);
+                $user->agent_id = $tracker->user_id;
+            }
+        }
+
+        $currency = Currency::find(1);
+
+        if ($currency) {
+            $user->currency_id = $currency->id;
+        }
+
+        $user->role = 1;
+
+        $user->save();
+
+        $this->dispatch(new SetUserCountry($user));
+
+        $authData = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'role' => 1
+        ];
+
+        if (Auth::attempt($authData, false)) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'redirect' => '/affiliates',
+                ]
+            ]);
+        }
     }
-
 
 
     public function dashboard(Request $request)
