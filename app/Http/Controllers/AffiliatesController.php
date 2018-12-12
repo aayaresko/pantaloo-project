@@ -31,7 +31,7 @@ class AffiliatesController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => [
-                        'redirect' => 'http://partner.test.test/affiliates/dashboard'
+                        'redirect' => '/affiliates/dashboard'
                     ]
                 ]);
             }
