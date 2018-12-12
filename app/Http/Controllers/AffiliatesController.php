@@ -21,7 +21,6 @@ class AffiliatesController extends Controller
                 return redirect()->route('agent.dashboard');
             }
         }
-
         return view('affiliates.lending');
     }
 
@@ -29,7 +28,12 @@ class AffiliatesController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->isAgent()) {
-                return redirect()->route('agent.dashboard');
+                return response()->json([
+                    'status' => true,
+                    'message' => [
+                        'redirect' => 'http://partner.test.test/affiliates/dashboard'
+                    ]
+                ]);
             }
         }
 
@@ -41,9 +45,20 @@ class AffiliatesController extends Controller
 
         $authData = ['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1];
         if (Auth::attempt($authData, $remember)) {
-            return redirect()->route('agent.dashboard');
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'redirect' => '/affiliates',
+                ]
+            ]);
         } else {
-            return redirect()->route('affiliates.index');
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'redirect' => '/affiliates',
+                    'errors' => ['These credentials do not match our records.']
+                ]
+            ]);
         }
     }
 

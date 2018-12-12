@@ -339,10 +339,10 @@ dump($errors);
                                         <form id="login-form" action="/affiliates/login" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
                                             <div class="form-group">
-                                                <input type="text" name="email"  tabindex="1" class="form-control" placeholder="Email" value="">
+                                                <input type="text" name="email"  tabindex="1" class="form-control" placeholder="Email" value="" required>
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
+                                                <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" required>
                                             </div>
                                             <div class="form-group text-center">
                                                 <input type="checkbox" tabindex="3" class="" name="remember_me" id="remember">
@@ -450,7 +450,7 @@ dump($errors);
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
-										<form  action="/affiliates/password/email" method="post" role="form" style="display: block;">
+										<form  id="reset-password-form" action="/affiliates/password/email" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
 											<div class="form-group">
 												<input type="email" name="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
@@ -502,5 +502,6 @@ dump($errors);
 <script type="text/javascript" src="/partner/js/jqBootstrapValidation.js"></script>
 {{--<script type="text/javascript" src="/partner/js/contact_me.js"></script>--}}
 <script type="text/javascript" src="/partner/js/main.js"></script>
+<script type="text/javascript" src="/partner/js/leanding.js?v={{time()}}"></script>
 </body>
 </html>
