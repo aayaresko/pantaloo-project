@@ -4,7 +4,7 @@ let showError = 5000;
 
 function login() {
     let login = $("#login-form");
-    login.submit(function( event ) {
+    login.submit(function (event) {
         clearErrorMsg('login-form');
         event.preventDefault();
         $.ajax({
@@ -22,7 +22,7 @@ function login() {
                     });
 
                     $("#login-form + div.error-lists").show(500);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#login-form + div.error-lists").hide();
                     }, showError);
                 }
@@ -37,8 +37,8 @@ function clearErrorMsg(classForm) {
 }
 
 function registr() {
-    let login = $("#register-form");
-    login.submit(function( event ) {
+    let register = $("#register-form");
+    register.submit(function (event) {
         clearErrorMsg('register-form');
         event.preventDefault();
         $.ajax({
@@ -56,7 +56,7 @@ function registr() {
                     });
 
                     $("#register-form + div.error-lists").show(500);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#register-form + div.error-lists").hide();
                     }, showError);
                 }
@@ -66,6 +66,32 @@ function registr() {
 }
 
 function resetPassword() {
+    let reset = $("#reset-password-form");
+    reset.submit(function (event) {
+        clearErrorMsg('reset-password-form');
+        event.preventDefault();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/password/email',
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response['status'] === true) {
+                    window.location.replace(response['message']['redirect']);
+                } else {
+                    //show error
+                    $.each(response['message']['errors'], function (i, val) {
+                        $('.error-lists ul').append('<li>' + val + '</li>');
+                    });
+
+                    $("#reset-password-form + div.error-lists").show(500);
+                    setTimeout(function () {
+                        $("#reset-password-form + div.error-lists").hide();
+                    }, showError);
+                }
+            }
+        });
+    });
 }
 
 $(function () {

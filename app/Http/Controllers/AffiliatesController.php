@@ -14,9 +14,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class AffiliatesController extends Controller
 {
+    use ResetsPasswords;
+
     public function index()
     {
         //test to two auth
