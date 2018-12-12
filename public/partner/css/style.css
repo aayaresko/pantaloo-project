@@ -586,3 +586,9 @@ color: #777;
 .error-lists li{
 	list-style-type: circle;
 }
+
+/* Reset pass */
+.reset_password {
+	margin-top: 90px;
+	min-height: calc(100vh - 90px - 90px)
+}
