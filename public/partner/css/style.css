@@ -578,3 +578,7 @@ color: #777;
 	margin: 50px 0;
 }
 }
+.error-lists li{
+	color: #ff6963;
+	margin-bottom: 5px;
+}

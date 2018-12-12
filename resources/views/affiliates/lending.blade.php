@@ -365,6 +365,11 @@ dump($errors);
                                                 </div>
                                             </div>
                                         </form>
+                                        <ul class="error-lists">
+                                            <li>1</li>
+                                            <li>2</li>
+                                            <li>3</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -418,6 +423,11 @@ dump($errors);
                                                 </div>
                                             </div>
                                         </form>
+                                        <ul class="error-lists">
+                                            <li>1</li>
+                                            <li>2</li>
+                                            <li>3</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -461,6 +471,11 @@ dump($errors);
 												</div>
 											</div>
 										</form>
+                                        <ul class="error-lists">
+                                            <li>1</li>
+                                            <li>2</li>
+                                            <li>3</li>
+                                        </ul>
 									</div>
 								</div>
 							</div>
