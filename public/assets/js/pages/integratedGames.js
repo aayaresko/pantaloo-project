@@ -15,6 +15,7 @@ let events = function () {
         e.preventDefault();
         if(auth) {
             let url = String(this.getAttribute('href'));
+            $('.expand-game').addClass('not-allowed');
             getGame(url);
         }
         else {
@@ -82,7 +83,7 @@ function getListGames() {
     });
 }
 
-
+var button = document.querySelector('.expand-game');
 function getGame(url) {
     //$('.preloaderCommon').show();
     $('.video-popup').addClass('popup-slot');
@@ -97,6 +98,8 @@ function getGame(url) {
             //clear
             //insert games link
             $('.video-popup .game-entry').html(html);
+            $('.expand-game').removeClass('not-allowed');
+            button.addEventListener('click', fullscreen);
             //$('.preloaderCommon').hide();
         }
     });
@@ -107,8 +110,8 @@ $(function () {
     getListGames();
 });
 
-var button = document.querySelector('.expand-game');
-button.addEventListener('click', fullscreen);
+
+
 // when you are in fullscreen, ESC and F11 may not be trigger by keydown listener. 
 // so don't use it to detect exit fullscreen
 document.addEventListener('keydown', function (e) {

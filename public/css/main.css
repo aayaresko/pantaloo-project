@@ -7652,7 +7652,7 @@ html.cropped {
 }
 
 .not-allowed {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 @keyframes drop {
