@@ -89,12 +89,26 @@ class PasswordController extends Controller
      */
     public function reset(Request $request)
     {
-        $this->validate(
+        $validator = $this->validateCustom(
             $request,
             $this->getResetValidationRules(),
             $this->getResetValidationMessages(),
             $this->getResetValidationCustomAttributes()
         );
+
+        $errors = [];
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+        }
 
         $credentials = $this->getResetCredentials($request);
 
@@ -135,5 +149,18 @@ class PasswordController extends Controller
 
         $email = $request->input('email');
         return view('affiliates.reset_password')->with(compact('token', 'email'));
+    }
+
+    /**
+     * @param Request $request
+     * @param array $rules
+     * @param array $messages
+     * @param array $customAttributes
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validateCustom(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
+        return $validator;
     }
 }
