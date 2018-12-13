@@ -51,7 +51,7 @@ Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
 Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
 Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
 
-Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
+//Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
 Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
 Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
 
@@ -221,6 +221,7 @@ Route::group(['middleware' => ['auth']], function () {
         ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
 
+Route::get('/slots', ['as' => 'slots', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
 
