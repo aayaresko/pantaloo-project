@@ -13,9 +13,9 @@
 
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
-
+//$partner = 'partner.test.test';
 //sub-domain
-Route::group(['domain' => 'partner.test.test'], function () {
+Route::group(['domain' => $partner], function () {
 
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);

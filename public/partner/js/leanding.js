@@ -76,6 +76,25 @@ function resetPassword() {
             url: '/affiliates/password/email',
             data: $(this).serialize(),
             success: function (response) {
+                console.log(response);
+                alert('Ok');
+            }
+        });
+    });
+}
+
+function resetPasswordFinish() {
+    let reset = $("#reset-password-finish-form");
+    reset.submit(function (event) {
+        clearErrorMsg('reset-password-finish-form');
+        event.preventDefault();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/password/reset',
+            data: $(this).serialize(),
+            success: function (response) {
+                console.log(response);
                 alert('Ok');
             }
         });
@@ -85,8 +104,8 @@ function resetPassword() {
 $(function () {
     login();
     registr();
-    //resetPassword();
-
+    resetPassword();
+    resetPasswordFinish();
 });
 
 $(document).ready(function () {
