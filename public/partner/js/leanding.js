@@ -68,12 +68,12 @@ function registr() {
 function resetPassword() {
     let reset = $("#reset-password-form");
     reset.submit(function (event) {
-        clearErrorMsg('reset-password-form');
         event.preventDefault();
+        clearErrorMsg('reset-password-form');
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'POST',
-            url: '/password/email',
+            url: '/affiliates/password/email',
             data: $(this).serialize(),
             success: function (response) {
                 alert('Ok');
@@ -85,7 +85,8 @@ function resetPassword() {
 $(function () {
     login();
     registr();
-    resetPassword();
+    //resetPassword();
+
 });
 
 $(document).ready(function () {

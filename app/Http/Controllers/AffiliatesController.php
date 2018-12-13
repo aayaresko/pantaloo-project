@@ -160,6 +160,15 @@ class AffiliatesController extends Controller
         }
     }
 
+    public function showResetForm(Request $request, $token = null)
+    {
+        if (is_null($token)) {
+            return redirect()->route('affiliates.index');
+        }
+
+        $email = $request->input('email');
+        return view('affiliates.reset_password')->with(compact('token', 'email'));
+    }
 
     public function dashboard(Request $request)
     {

@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CasinoBit Affiliates</title>
-    <title>@yield('title', 'CasinoBit Affiliates'))</title>
+    <title>CasinoBit Affiliates - @yield('title')</title>
     <meta name="description" content="@yield('description', '')">
     <meta name="keywords" content="@yield('keywords', '')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -158,16 +157,16 @@
                                         <form id="register-form" action="/affiliates/register" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
                                             <div class="form-group">
-                                                <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                                <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                                <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="" required>
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
+                                                <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
@@ -217,7 +216,7 @@
                                         <form  id="reset-password-form" action="/affiliates/password/email" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
                                             <div class="form-group">
-                                                <input type="email" name="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                                <input type="email" name="email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">

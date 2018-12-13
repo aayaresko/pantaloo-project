@@ -17,18 +17,13 @@ $partner = parse_url($foreignPages['partner'])['host'];
 //sub-domain
 Route::group(['domain' => 'partner.test.test'], function () {
 
-    Route::get('/2', ['as' => 'affiliates.index', function() {
-       return view('affiliates.reset_password');
-    }]);
-
-
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
     Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@register']);
 
-    Route::get('password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'AffiliatesController@showResetForm']);
-    Route::post('password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'AffiliatesController@sendResetLinkEmail']);
-    Route::post('password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'AffiliatesController@reset']);
+    Route::get('/affiliates/password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'AffiliatesController@showResetForm']);
+    Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'AffiliatesController@sendResetLinkEmail']);
+    Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'AffiliatesController@reset']);
 
     //redefine routes
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
