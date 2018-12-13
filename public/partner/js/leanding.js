@@ -99,6 +99,7 @@ function resetPasswordFinish() {
             success: function (response) {
                 if (response['status'] === true) {
                     alert('Ok');
+                    window.location.replace(response['message']['redirect']);
                 } else {
                     alert('Something is wrong');
                 }

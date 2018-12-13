@@ -124,6 +124,7 @@ class PasswordController extends Controller
                     'status' => true,
                     'message' => [
                         'response' => $response,
+                        'redirect' => '/affiliates/dashboard'
                     ]
                 ]);
             default:
