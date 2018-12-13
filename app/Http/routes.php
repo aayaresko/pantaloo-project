@@ -27,7 +27,7 @@ Route::group(['domain' => $partner], function () {
 
     //redefine routes
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
-        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\PasswordController@logout']);
+        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
     });
 });
 
