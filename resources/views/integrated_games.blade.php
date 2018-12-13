@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Integrated Games
+    Slots
 @endsection
 
 @section('content')
