@@ -76,8 +76,11 @@ function resetPassword() {
             url: '/affiliates/password/email',
             data: $(this).serialize(),
             success: function (response) {
-                console.log(response);
-                alert('Ok');
+                if (response['status'] === true) {
+                    alert('Ok');
+                } else {
+                    alert('Something is wrong');
+                }
             }
         });
     });
@@ -94,8 +97,11 @@ function resetPasswordFinish() {
             url: '/affiliates/password/reset',
             data: $(this).serialize(),
             success: function (response) {
-                console.log(response);
-                alert('Ok');
+                if (response['status'] === true) {
+                    alert('Ok');
+                } else {
+                    alert('Something is wrong');
+                }
             }
         });
     });

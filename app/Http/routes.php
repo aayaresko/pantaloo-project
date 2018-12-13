@@ -13,21 +13,21 @@
 
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
-//$partner = 'partner.test.test';
+$partner = 'partner.test.test';
 //sub-domain
 Route::group(['domain' => $partner], function () {
 
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
-    Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@enter']);
-    Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@register']);
+    Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
+    Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@register']);
 
-    Route::get('/affiliates/password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'AffiliatesController@showResetForm']);
-    Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'AffiliatesController@sendResetLinkEmail']);
-    Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'AffiliatesController@reset']);
+    Route::get('/affiliates/password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'Auth\Affiliates\PasswordController@showResetForm']);
+    Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'Auth\Affiliates\PasswordController@sendResetLinkEmail']);
+    Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
 
     //redefine routes
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
-        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'AffiliatesController@logout']);
+        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\PasswordController@logout']);
     });
 });
 

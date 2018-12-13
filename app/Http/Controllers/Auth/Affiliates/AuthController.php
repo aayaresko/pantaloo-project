@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
-use App\Bitcoin\Service;
-use App\Currency;
-use App\Jobs\SetUserCountry;
-use App\Tracker;
 use App\User;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
+use App\Tracker;
+use App\Currency;
+use App\Bitcoin\Service;
+use Illuminate\Http\Request;
+use App\Jobs\SetUserCountry;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -36,6 +38,7 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
     protected $loginPath = '/';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -47,74 +50,141 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function validator(array $data)
+    public function register(Request $request)
     {
-        return Validator::make($data, [
+        $data = $request->toArray();
+        $validator = Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
-    }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
+        $errors = [];
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+        }
+
         $service = new Service();
         $address = $service->getNewAddress('common');
 
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
         ]);
 
         $user->bitcoin_address = $address;
         $user->balance = 0;
 
-        if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
-        {
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
             $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
             $user->ip = $ip;
         }
 
         $tracker_id = Cookie::get('tracker_id');
 
-        if($tracker_id) {
+        if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
 
-            if($tracker)
-            {
+            if ($tracker) {
                 $user->tracker()->associate($tracker);
                 $user->agent_id = $tracker->user_id;
             }
         }
 
-        $currency = Currency::find($data['currency']);
+        $currency = Currency::find(1);
 
-        if($currency)
-        {
+        if ($currency) {
             $user->currency_id = $currency->id;
         }
+
+        $user->role = 1;
 
         $user->save();
 
         $this->dispatch(new SetUserCountry($user));
 
-        return $user;
+        $authData = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'role' => 1
+        ];
+
+        if (Auth::attempt($authData, false)) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'redirect' => '/affiliates',
+                ]
+            ]);
+        }
     }
 
-    public function share()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function enter(Request $request)
     {
+        if (Auth::check()) {
+            if (Auth::user()->isAgent()) {
+                return response()->json([
+                    'status' => true,
+                    'message' => [
+                        'redirect' => '/affiliates/dashboard'
+                    ]
+                ]);
+            }
+        }
 
+        if ($request->input('remember_me') == 'on') {
+            $remember = true;
+        } else {
+            $remember = false;
+        }
+
+        $authData = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'role' => 1
+        ];
+
+        if (Auth::attempt($authData, $remember)) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'redirect' => '/affiliates',
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['These credentials do not match our records.']
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('affiliates.index');
     }
 }

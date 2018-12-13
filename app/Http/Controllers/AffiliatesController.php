@@ -6,21 +6,17 @@ use App\User;
 use Validator;
 use App\Payment;
 use App\Tracker;
-use App\Currency;
 use Carbon\Carbon;
 use App\Bitcoin\Service;
-use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class AffiliatesController extends Controller
 {
-    use ResetsPasswords;
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index()
     {
         //test to two auth
@@ -32,224 +28,6 @@ class AffiliatesController extends Controller
         return view('affiliates.lending');
     }
 
-    public function enter(Request $request)
-    {
-        if (Auth::check()) {
-            if (Auth::user()->isAgent()) {
-                return response()->json([
-                    'status' => true,
-                    'message' => [
-                        'redirect' => '/affiliates/dashboard'
-                    ]
-                ]);
-            }
-        }
-
-        if ($request->input('remember_me') == 'on') {
-            $remember = true;
-        } else {
-            $remember = false;
-        }
-
-        $authData = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'role' => 1
-        ];
-
-        if (Auth::attempt($authData, $remember)) {
-            return response()->json([
-                'status' => true,
-                'message' => [
-                    'redirect' => '/affiliates',
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => ['These credentials do not match our records.']
-                ]
-            ]);
-        }
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-
-        return redirect()->route('affiliates.index');
-    }
-
-    public function register(Request $request)
-    {
-        $data = $request->toArray();
-        $validator = Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
-        $errors = [];
-        if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => $errors
-                ]
-            ]);
-        }
-
-        $service = new Service();
-        $address = $service->getNewAddress('common');
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-
-        $user->bitcoin_address = $address;
-        $user->balance = 0;
-
-        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-            $user->ip = $ip;
-        }
-
-        $tracker_id = Cookie::get('tracker_id');
-
-        if ($tracker_id) {
-            $tracker = Tracker::find($tracker_id);
-
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
-            }
-        }
-
-        $currency = Currency::find(1);
-
-        if ($currency) {
-            $user->currency_id = $currency->id;
-        }
-
-        $user->role = 1;
-
-        $user->save();
-
-        $this->dispatch(new SetUserCountry($user));
-
-        $authData = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'role' => 1
-        ];
-
-        if (Auth::attempt($authData, false)) {
-            return response()->json([
-                'status' => true,
-                'message' => [
-                    'redirect' => '/affiliates',
-                ]
-            ]);
-        }
-    }
-
-    public function sendResetLinkEmail(Request $request)
-    {
-        $validator = Validator::make($request->toArray(), [
-            'email' => 'required|email'
-        ]);
-        $errors = [];
-        if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => $errors
-                ]
-            ]);
-        }
-
-        $broker = $this->getBroker();
-
-        $response = Password::broker($broker)->sendResetLink(
-            $this->getSendResetLinkEmailCredentials($request),
-            $this->resetEmailBuilder()
-        );
-
-        switch ($response) {
-            case Password::RESET_LINK_SENT:
-                return response()->json([
-                    'status' => true,
-                    'message' => [
-                        'response' => $response,
-                    ]
-                ]);
-            case Password::INVALID_USER:
-            default:
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'response' => $response,
-                ]
-            ]);
-        }
-    }
-
-
-    public function reset(Request $request)
-    {
-        $this->validate(
-            $request,
-            $this->getResetValidationRules(),
-            $this->getResetValidationMessages(),
-            $this->getResetValidationCustomAttributes()
-        );
-
-        $credentials = $this->getResetCredentials($request);
-
-        $broker = $this->getBroker();
-
-        $response = Password::broker($broker)->reset($credentials, function ($user, $password) {
-            $this->resetPassword($user, $password);
-        });
-
-        switch ($response) {
-            case Password::PASSWORD_RESET:
-                return response()->json([
-                    'status' => true,
-                    'message' => [
-                        'response' => $response,
-                    ]
-                ]);
-            default:
-                return response()->json([
-                    'status' => false,
-                    'message' => [
-                        'response' => $response,
-                    ]
-                ]);
-        }
-    }
-
-    public function showResetForm(Request $request, $token = null)
-    {
-        if (is_null($token)) {
-            return redirect()->route('affiliates.index');
-        }
-
-        $email = $request->input('email');
-        return view('affiliates.reset_password')->with(compact('token', 'email'));
-    }
 
     public function dashboard(Request $request)
     {
