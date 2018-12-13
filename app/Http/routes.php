@@ -13,7 +13,7 @@
 
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
-$partner = 'partner.test.test';
+//$partner = 'partner.test.test';
 //sub-domain
 Route::group(['domain' => $partner], function () {
 
