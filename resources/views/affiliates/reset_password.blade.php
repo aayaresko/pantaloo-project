@@ -32,6 +32,10 @@
                             </div>
                         </div>
                     </form>
+                    <div class="error-lists" style="display: none">
+                        <ul class="error-lists">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

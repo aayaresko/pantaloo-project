@@ -32,7 +32,6 @@ function login() {
     });
 }
 
-
 function clearErrorMsg(classForm) {
     $(`#${classForm} + div.error-lists ul`).html('');
 }
@@ -78,8 +77,9 @@ function resetPassword() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    $("#myModal3").modal('hide');
+                    //insert text
                     $("#myModal4").modal('');
+                    $("#myModal3").modal('hide');
                 } else {
                     //show error
                     $.each(response['message']['errors'], function (i, val) {
@@ -108,10 +108,16 @@ function resetPasswordFinish() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    alert('Ok');
                     window.location.replace(response['message']['redirect']);
                 } else {
-                    alert('Something is wrong');
+                    $.each(response['message']['errors'], function (i, val) {
+                        $('.error-lists ul').append('<li>' + val + '</li>');
+                    });
+
+                    $("#register-form + div.error-lists").show(durationAnimation);
+                    setTimeout(function () {
+                        $("#register-form + div.error-lists").hide();
+                    }, showError);
                 }
             }
         });
