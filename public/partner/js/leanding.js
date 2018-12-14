@@ -36,6 +36,16 @@ function clearErrorMsg(classForm) {
     $(`#${classForm} + div.error-lists ul`).html('');
 }
 
+function clearNotificationMessage() {
+    $(`#notificationMessage h4`).empty();
+    $(`#notificationMessage .modal-body`).empty();
+}
+
+function fillotificationMessage(title = `Error`, body = `<p>Something is wrong</p>`) {
+    $(`#notificationMessage h4`).html(title);
+    $(`#notificationMessage .modal-body`).html(body);
+}
+
 function registr() {
     let register = $("#register-form");
     register.submit(function (event) {
@@ -77,8 +87,10 @@ function resetPassword() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    //insert text
-                    $("#myModal4").modal();
+                    clearNotificationMessage();
+                    //insert text and tittle
+                    fillotificationMessage(response['message']['title'], response['message']['body']);
+                    $("#notificationMessage").modal();
                     $("#myModal3").modal('hide');
                 } else {
                     //show error
@@ -124,11 +136,40 @@ function resetPasswordFinish() {
     });
 }
 
+
+function sendFormFeedBack() {
+    let contactForm = $("#contactForm");
+    contactForm.submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/feedback',
+            data: $(this).serialize(),
+            success: function (response) {
+                clearNotificationMessage();
+                if (response['status'] === true) {
+                    clearNotificationMessage();
+                    //insert text and tittle
+                    fillotificationMessage(response['message']['title'], response['message']['body']);
+                    $("#notificationMessage").modal();
+                } else {
+                    clearNotificationMessage();
+                    //insert text and tittle
+                    fillotificationMessage(response['message']['title'], response['message']['body']);
+                    $("#notificationMessage").modal();
+                }
+            }
+        });
+    });
+}
+
 $(function () {
     login();
     registr();
     resetPassword();
     resetPasswordFinish();
+    sendFormFeedBack();
 });
 
 $(document).ready(function () {

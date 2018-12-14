@@ -201,17 +201,17 @@
                         <h2>Get In Touch</h2>
                         <p>Please fill out the form below to send us an email and we will get back to you as soon as possible.</p>
                     </div>
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" id="name" class="form-control" placeholder="Name" required="required">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="email"  class="form-control" placeholder="Email" required="required">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>

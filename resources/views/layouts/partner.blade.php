@@ -241,7 +241,7 @@
 </div>
 
 <!-- Modal 4. Forgot password. Status send -->
-<div class="modal fade" id="myModal4" role="dialog">
+<div class="modal fade" id="notificationMessage" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->

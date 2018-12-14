@@ -13,11 +13,12 @@
 
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
-//$partner = 'partner.test.test';
+$partner = 'partner.test.test';
 //sub-domain
 Route::group(['domain' => $partner], function () {
 
     Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
+    Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@feedback']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
     Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@register']);
 

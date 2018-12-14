@@ -9,6 +9,7 @@ use App\Tracker;
 use Carbon\Carbon;
 use App\Bitcoin\Service;
 use Illuminate\Http\Request;
+use App\Models\Partners\Feedback;
 use Illuminate\Support\Facades\Auth;
 
 class AffiliatesController extends Controller
@@ -26,6 +27,43 @@ class AffiliatesController extends Controller
             }
         }
         return view('affiliates.lending');
+    }
+
+    public function feedback(Request $request)
+    {
+
+        $validator = Validator::make($request->toArray(), [
+            'name' => 'required|string|min:3|max:60',
+            'email' => 'required|email',
+            'message' => 'required|string',
+        ]);
+
+        $errors = [];
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors,
+                    'title' => 'Error',
+                    'body' => (string)view('affiliates.parts.body')->with(['data' => $errors])
+                ]
+            ]);
+        }
+
+        //might add try - catch and transaction
+        Feedback::create($request->toArray());
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'title' => 'Info',
+                'body' => (string)view('affiliates.parts.body')->with(['data' => 'We will contact you shortly'])
+            ]
+        ]);
     }
 
 

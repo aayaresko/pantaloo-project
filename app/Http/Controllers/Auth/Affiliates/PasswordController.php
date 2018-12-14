@@ -42,7 +42,7 @@ class PasswordController extends Controller
         $validator = Validator::make($request->toArray(), [
             'email' => 'required|email'
         ]);
-
+        $email = $request->email;
         $errors = [];
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
@@ -71,6 +71,8 @@ class PasswordController extends Controller
                     'status' => true,
                     'message' => [
                         'response' => $response,
+                        'title' => 'Reset Password',
+                        'body' => (string)view('affiliates.parts.reset_password')->with(['email' => $email])
                     ]
                 ]);
             case Password::INVALID_USER:
