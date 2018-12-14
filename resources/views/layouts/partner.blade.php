@@ -10,7 +10,7 @@
 
     <!-- Favicons
         ================================================== -->
-    <link rel="shortcut icon" href="/partner/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/partner/img/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="/partner/img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/partner/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/partner/img/apple-touch-icon-114x114.png">
@@ -263,7 +263,7 @@
 @section('js')
     <script type="text/javascript" src="/partner/js/jquery.1.11.1.js"></script>
     <script type="text/javascript" src="/partner/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/partner/js/SmoothScroll.js"></script>
+    {{--<script type="text/javascript" src="/partner/js/SmoothScroll.js"></script>--}}
     <script type="text/javascript" src="/partner/js/nivo-lightbox.js"></script>
     <script type="text/javascript" src="/partner/js/jqBootstrapValidation.js"></script>
     {{--<script type="text/javascript" src="/partner/js/contact_me.js"></script>--}}
