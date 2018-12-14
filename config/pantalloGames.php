@@ -3,11 +3,11 @@
 return [
 
     'forRequest' => [
-        'api_login' => 'casinobit_mc_s',
-        'api_password' => 'SPHhcXLHSZyg28OlpY',
-        'show_systems' => 0,
-        'currency' => 'USD',
-        'url' => 'https://stage.game-program.com/api/seamless/provider',
+        'api_login' => env('PANTALLO_LOGIN'),
+        'api_password' => env('PANTALLO_PASSWORD'),
+        'show_systems' => env('PANTALLO_SYSTEM_SHOW'),
+        'currency' => env('PANTALLO_CURRENCY'),
+        'url' => env('PANTALLO_URL'),
         'ssl' => '',
     ],
 
