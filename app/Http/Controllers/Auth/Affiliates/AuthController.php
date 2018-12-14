@@ -129,6 +129,13 @@ class AuthController extends Controller
                     'redirect' => '/affiliates',
                 ]
             ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['Something went wrong'],
+                ]
+            ]);
         }
     }
 
@@ -184,7 +191,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-
         return redirect()->route('affiliates.index');
     }
 }

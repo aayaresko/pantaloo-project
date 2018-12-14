@@ -1,6 +1,7 @@
 "use strict";
 
 let showError = 5000;
+let durationAnimation = 500;
 
 function login() {
     let login = $("#login-form");
@@ -21,7 +22,7 @@ function login() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#login-form + div.error-lists").show(500);
+                    $("#login-form + div.error-lists").show(durationAnimation);
                     setTimeout(function () {
                         $("#login-form + div.error-lists").hide();
                     }, showError);
@@ -55,7 +56,7 @@ function registr() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#register-form + div.error-lists").show(500);
+                    $("#register-form + div.error-lists").show(durationAnimation);
                     setTimeout(function () {
                         $("#register-form + div.error-lists").hide();
                     }, showError);
@@ -77,9 +78,18 @@ function resetPassword() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    alert('Ok');
+                    $("#myModal3").modal('hide');
+                    $("#myModal4").modal('');
                 } else {
-                    alert('Something is wrong');
+                    //show error
+                    $.each(response['message']['errors'], function (i, val) {
+                        $('.error-lists ul').append('<li>' + val + '</li>');
+                    });
+
+                    $("#register-form + div.error-lists").show(durationAnimation);
+                    setTimeout(function () {
+                        $("#register-form + div.error-lists").hide();
+                    }, showError);
                 }
             }
         });

@@ -33,7 +33,9 @@ class PantalloGames
             unset($params['url']);
             unset($params['ssl']);
             $body = $params;
-            $client = new Client(['verify' => false]);
+            //$clientParams = [];
+            $clientParams = ['verify' => false];
+            $client = new Client($clientParams);
             $response = $client->post($url, [
                 'form_params' => $body
             ]);

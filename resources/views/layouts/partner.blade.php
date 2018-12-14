@@ -119,7 +119,6 @@
                                             </div>
                                         </form>
                                         <div class="error-lists" style="display: none">
-                                            <p>Errors:</p>
                                             <ul class="error-lists">
                                             </ul>
                                         </div>
@@ -177,7 +176,6 @@
                                             </div>
                                         </form>
                                         <div class="error-lists" style="display: none">
-                                            <p>Errors:</p>
                                             <ul class="error-lists">
                                             </ul>
                                         </div>
@@ -225,7 +223,6 @@
                                             </div>
                                         </form>
                                         <div class="error-lists" style="display: none">
-                                            <p>Errors:</p>
                                             <ul class="error-lists">
                                             </ul>
                                         </div>

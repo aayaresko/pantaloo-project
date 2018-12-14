@@ -42,12 +42,14 @@ class PasswordController extends Controller
         $validator = Validator::make($request->toArray(), [
             'email' => 'required|email'
         ]);
+
         $errors = [];
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
                 array_push($errors, $item);
             });
+
             return response()->json([
                 'status' => false,
                 'message' => [
@@ -77,6 +79,7 @@ class PasswordController extends Controller
                     'status' => false,
                     'message' => [
                         'response' => $response,
+                        'errors' => ['User with such non-email exists']
                     ]
                 ]);
         }
@@ -132,6 +135,7 @@ class PasswordController extends Controller
                     'status' => false,
                     'message' => [
                         'response' => $response,
+                        'errors' => ['User with such non-email exists']
                     ]
                 ]);
         }
