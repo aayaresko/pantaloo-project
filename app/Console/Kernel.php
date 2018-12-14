@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
         Commands\BitcoinGetTransactions::class,
+        Commands\Games\PantalloLogOutPlayer::class,
         Commands\Games\PantalloGetGames::class,
         Commands\UpdateTransactions::class,
         Commands\BitcoinNewAddr::class,
@@ -29,14 +30,18 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //$schedule->command('inspire')->hourly();
 
         //$schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
+
+        //get games pantallo every our
+        //$schedule->command('games:PantalloGetGames')->hourly();
+        //close session for games
+        //$schedule->command('games:PantalloLogOutPlayer')->everyTenMinutes();
     }
 }
