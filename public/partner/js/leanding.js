@@ -78,7 +78,7 @@ function resetPassword() {
             success: function (response) {
                 if (response['status'] === true) {
                     //insert text
-                    $("#myModal4").modal('');
+                    $("#myModal4").modal();
                     $("#myModal3").modal('hide');
                 } else {
                     //show error
@@ -86,9 +86,9 @@ function resetPassword() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#register-form + div.error-lists").show(durationAnimation);
+                    $("#reset-password-form + div.error-lists").show(durationAnimation);
                     setTimeout(function () {
-                        $("#register-form + div.error-lists").hide();
+                        $("#reset-password-form + div.error-lists").hide();
                     }, showError);
                 }
             }
@@ -114,9 +114,9 @@ function resetPasswordFinish() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#register-form + div.error-lists").show(durationAnimation);
+                    $("#reset-password-finish-form + div.error-lists").show(durationAnimation);
                     setTimeout(function () {
-                        $("#register-form + div.error-lists").hide();
+                        $("#reset-password-finish-form + div.error-lists").hide();
                     }, showError);
                 }
             }

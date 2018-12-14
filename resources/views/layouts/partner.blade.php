@@ -248,10 +248,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Status Window</h4>
+                <h4 class="modal-title">Reset Your Password</h4>
             </div>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque cupiditate facilis veritatis tempora dicta, consectetur repellat, omnis nulla aliquid molestiae tempore incidunt nesciunt at maxime animi officiis unde numquam qui?</p>
+                <p>The message sent your our email</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
