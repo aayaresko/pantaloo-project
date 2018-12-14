@@ -204,14 +204,15 @@
                             <input type="password" class="pass-input red" placeholder="{{translate('Password')}}" name="password">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="block-thumbnail block-thumbnail-radio">
-                                <label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>
-                                <label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<div class="block-thumbnail block-thumbnail-radio">--}}
+                                {{--<label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>--}}
+                                {{--<label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
