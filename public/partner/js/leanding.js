@@ -2,6 +2,7 @@
 
 let showError = 5000;
 let durationAnimation = 500;
+let emailCurrent;
 
 function login() {
     let login = $("#login-form");
@@ -120,6 +121,7 @@ function resetPasswordFinish() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
+                    emailCurrent = response['message']['email'];
                     window.location.replace(response['message']['redirect']);
                 } else {
                     $.each(response['message']['errors'], function (i, val) {
@@ -164,12 +166,33 @@ function sendFormFeedBack() {
     });
 }
 
+function resendPassword() {
+    $("body").on("click", "#resendPassword", function () {
+        event.preventDefault();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/password/email',
+            data: {email: emailCurrent},
+            success: function (response) {
+                if (response['status'] === true) {
+                    console.log('Ok');
+                    //to do for front
+                } else {
+                    //to do for front
+                }
+            }
+        });
+    });
+}
+
 $(function () {
     login();
     registr();
     resetPassword();
     resetPasswordFinish();
     sendFormFeedBack();
+    resendPassword();
 });
 
 $(document).ready(function () {

@@ -71,6 +71,7 @@ class PasswordController extends Controller
                     'status' => true,
                     'message' => [
                         'response' => $response,
+                        'email' => $email,
                         'title' => 'Reset Password',
                         'body' => (string)view('affiliates.parts.reset_password')->with(['email' => $email])
                     ]
