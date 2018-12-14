@@ -90,6 +90,7 @@ function resetPassword() {
                 if (response['status'] === true) {
                     clearNotificationMessage();
                     //insert text and tittle
+                    emailCurrent = response['message']['email'];
                     fillotificationMessage(response['message']['title'], response['message']['body']);
                     $("#notificationMessage").modal();
                     $("#myModal3").modal('hide');
@@ -121,7 +122,6 @@ function resetPasswordFinish() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    emailCurrent = response['message']['email'];
                     window.location.replace(response['message']['redirect']);
                 } else {
                     $.each(response['message']['errors'], function (i, val) {
