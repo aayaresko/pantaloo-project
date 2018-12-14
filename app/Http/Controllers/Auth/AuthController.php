@@ -99,6 +99,8 @@ class AuthController extends Controller
             }
         }
 
+        //this temporary decision
+        $data['currency'] = 1;
         $currency = Currency::find($data['currency']);
 
         if($currency)
