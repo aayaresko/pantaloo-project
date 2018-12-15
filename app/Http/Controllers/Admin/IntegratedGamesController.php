@@ -44,6 +44,7 @@ class IntegratedGamesController extends Controller
             8 => 'games_list.mobile',
             9 => 'games_list.created_at',
             10 => 'games_list.our_image',
+            11 => 'games_list.our_name',
 
         ];
 
@@ -101,7 +102,7 @@ class IntegratedGamesController extends Controller
         $imageConfig = $adminConfig['image'];
 
         $this->validate($request, [
-            'name' => 'string|min:3|max:100',
+            'our_name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',

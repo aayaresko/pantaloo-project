@@ -42,6 +42,7 @@ class PantalloGetGames extends Command
     public function handle()
     {
         $this->info("Start ...");
+        Log::info('PantalloGetGames START');
         $unwantedCharacter = '_';
         try {
             $pantalloGames = new PantalloGames;
@@ -108,6 +109,7 @@ class PantalloGetGames extends Command
             dd($e->getMessage());
         }
         //get games and load or update
+        Log::info('PantalloGetGames END');
         $this->info("Games loaded or updated.");
     }
 }
