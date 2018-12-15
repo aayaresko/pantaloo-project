@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Games;
 
+use Log;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesCategory;
