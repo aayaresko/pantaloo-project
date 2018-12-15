@@ -20,7 +20,7 @@
                                 {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>
-                        <span class="games-block__name ng-binding">{{$game->our_name}}</span>
+                        <span class="games-block__name ng-binding">{{ $game->our_name }}</span>
                     </div>
                 </div>
             </div>
