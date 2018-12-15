@@ -108,8 +108,8 @@ var button = document.querySelector('.expand-game');
 function getGame(url) {
     //$('.preloaderCommon').show();
     let statusGameRoomLocal = statusGameRoom;
-    console.log(statusGameRoomLocal);
     statusGameRoom++;
+    console.log(statusGameRoom);
     $('.video-popup').addClass('popup-slot');
     $('.video-popup').addClass('active');
     $('header.header').addClass('active');
@@ -121,7 +121,8 @@ function getGame(url) {
         success: function (html) {
             //clear
             //insert games link
-            console.log(statusGameRoomLocal);
+            console.log(statusGameRoom);
+            console.log(statusGameRoomLocal + 1);
             if (statusGameRoom === (statusGameRoomLocal + 1)) {
                 $('.video-popup .game-entry').html(html);
                 $('.expand-game').removeClass('not-allowed');
