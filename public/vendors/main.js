@@ -67,6 +67,7 @@ function gamePopup(){
 		});
 		*/
 	}
+	/*
 	$('.video-popup .exit-btn').click(function(){
 		$(this).parents('.video-popup').removeClass('active');
 		$('header.header').removeClass('active');
@@ -85,7 +86,7 @@ function gamePopup(){
                 </div>`
 		);
 		return false;
-	});
+	});*/
 }
 
 function animationInit(){

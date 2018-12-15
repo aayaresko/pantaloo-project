@@ -7,9 +7,30 @@ let listGameParamsDefault = {
     page: 1
 };
 
+let statusGameRoom = 0;
+
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
 let events = function () {
+
+    $('.video-popup .exit-btn').click(function(){
+        $(this).parents('.video-popup').removeClass('active');
+        $('header.header').removeClass('active');
+        $('.video-popup .game-entry').html(
+            ` <div class="gameLoadingWrapper">
+                    <h1 class = "gameLoading">
+                        <span class="let1">l</span>
+                        <span class="let2">o</span>
+                        <span class="let3">a</span>
+                        <span class="let4">d</span>
+                        <span class="let5">i</span>
+                        <span class="let6">n</span>
+                        <span class="let7">g</span>
+                    </h1>
+                </div>`
+        );
+        return false;
+    });
 
     $('body').on('click', 'a.open_game', function (e) {
         e.preventDefault();
@@ -86,6 +107,9 @@ function getListGames() {
 var button = document.querySelector('.expand-game');
 function getGame(url) {
     //$('.preloaderCommon').show();
+    let statusGameRoomLocal = statusGameRoom;
+    console.log(statusGameRoomLocal);
+    statusGameRoom++;
     $('.video-popup').addClass('popup-slot');
     $('.video-popup').addClass('active');
     $('header.header').addClass('active');
@@ -97,10 +121,13 @@ function getGame(url) {
         success: function (html) {
             //clear
             //insert games link
-            $('.video-popup .game-entry').html(html);
-            $('.expand-game').removeClass('not-allowed');
-            button.addEventListener('click', fullscreen);
-            //$('.preloaderCommon').hide();
+            console.log(statusGameRoomLocal);
+            if (statusGameRoom === (statusGameRoomLocal + 1)) {
+                $('.video-popup .game-entry').html(html);
+                $('.expand-game').removeClass('not-allowed');
+                button.addEventListener('click', fullscreen);
+                //$('.preloaderCommon').hide();
+            }
         }
     });
 }
