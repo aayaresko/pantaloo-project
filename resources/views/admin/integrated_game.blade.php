@@ -28,7 +28,7 @@
                                         <td>Name</td>
                                         <td>
                                             <input type="text" name="our_name" class="form-control"
-                                                   value="{{ $game->our_name }}" required></td>
+                                                   value="{{ $game->name }}" required></td>
                                     </tr>
                                     <tr>
                                         <td>Type</td>

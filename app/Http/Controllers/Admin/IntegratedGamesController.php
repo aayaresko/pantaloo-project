@@ -34,7 +34,7 @@ class IntegratedGamesController extends Controller
     {
         $this->fields = [
             0 => 'games_list.id',
-            1 => 'games_list.our_name as name',
+            1 => 'games_list.our_name',
             2 => 'games_list.provider_id',
             3 => 'games_list.type_id',
             4 => 'games_list.category_id',
@@ -44,6 +44,7 @@ class IntegratedGamesController extends Controller
             8 => 'games_list.mobile',
             9 => 'games_list.created_at',
             10 => 'games_list.our_image',
+
         ];
 
         $this->relatedFields = $this->fields;
