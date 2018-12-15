@@ -103,10 +103,10 @@ class PantalloGamesSystem implements GamesSystem
     }
 
     /**
-     * @param $request
+     * @param $user
      * @return array|mixed
      */
-    public function logoutPlayer($request)
+    public function logoutPlayer($user)
     {
         DB::beginTransaction();
         try {
@@ -114,7 +114,6 @@ class PantalloGamesSystem implements GamesSystem
             $statusLogout = $configCommon['statusSession']['logout'];
             $statusLogin = $configCommon['statusSession']['login'];
             $pantalloGames = new PantalloGames;
-            $user = $request->user();
             $userId = $user->id;
             $logout = $pantalloGames->logoutPlayer([
                 'user_id' => $userId,
@@ -129,7 +128,6 @@ class PantalloGamesSystem implements GamesSystem
             $session->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             return [
                 'success' => false,
                 'message' => $e->getMessage()

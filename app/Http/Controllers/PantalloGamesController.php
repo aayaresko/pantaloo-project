@@ -62,7 +62,8 @@ class PantalloGamesController extends Controller
     public function logoutPlayer(Request $request)
     {
         $pantalloGamesSystem = new PantalloGamesSystem();
-        $response = $pantalloGamesSystem->logoutPlayer($request);
+        $user = $request->user();
+        $response = $pantalloGamesSystem->logoutPlayer($user);
         return response()->json($response);
     }
 }
