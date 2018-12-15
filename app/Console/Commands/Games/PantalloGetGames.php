@@ -90,21 +90,35 @@ class PantalloGetGames extends Command
                     $types = GamesType::all()->keyBy('code');
                 }
 
-                $gameDate = [
-                    'provider_id' => $providerId,
-                    'system_id' => $gameId,
-                    'name' => $game->name,
-                    'type_id' => $types[$gameType]->id,
-                    'category_id' => $categories[$gameCategory]->id,
-                    'details' => $game->details,
-                    'mobile' => (int)$game->mobile,
-                    'image' => $game->image,
-                    'image_preview' => $game->image_preview,
-                    'image_filled' => $game->image_filled,
-                    'image_background' => $game->image_background,
-                    'rating' => 1
-                ];
-                GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+                $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
+                if (is_null($currentGame)) {
+                    $gameDate = [
+                        'provider_id' => $providerId,
+                        'system_id' => $gameId,
+                        'name' => $game->name,
+                        'our_name' => $game->name,
+                        'type_id' => $types[$gameType]->id,
+                        'category_id' => $categories[$gameCategory]->id,
+                        'details' => $game->details,
+                        'mobile' => (int)$game->mobile,
+                        'image' => $game->image,
+                        'image_preview' => $game->image_preview,
+                        'image_filled' => $game->image_filled,
+                        'image_background' => $game->image_background,
+                        'rating' => 1
+                    ];
+                    GamesList::create($gameDate);
+                } else {
+                    $gameDate = [
+                        'details' => $game->details,
+                        'mobile' => (int)$game->mobile,
+                        'image' => $game->image,
+                        'image_preview' => $game->image_preview,
+                        'image_filled' => $game->image_filled,
+                        'image_background' => $game->image_background,
+                    ];
+                    GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+                }
             }
         } catch (\Exception $e) {
             dd($e->getMessage());
