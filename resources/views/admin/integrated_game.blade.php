@@ -27,15 +27,8 @@
                                     <tr>
                                         <td>Name</td>
                                         <td>
-                                            @php
-                                                if (!is_null($game->our_name)) {
-                                                    $name = $game->our_name;
-                                                } else {
-                                                    $name = $game->name;
-                                                }
-                                            @endphp
                                             <input type="text" name="our_name" class="form-control"
-                                                   value="{{ $name }}" required>
+                                                   value="{{ $game->name }}" required>
                                         </td>
                                     </tr>
                                     <tr>

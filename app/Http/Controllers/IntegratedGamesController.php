@@ -87,9 +87,6 @@ class IntegratedGamesController extends Controller
             ['active', '=', 1],
         ];
 
-        if ($request->search !== '') {
-            array_push($whereGameList, ['name', 'LIKE', '%' . $request->search . '%']);
-        }
 
         if ((int)$request->categoryId !== 0) {
             array_push($whereGameList, ['category_id', '=', $request->categoryId]);
@@ -99,6 +96,8 @@ class IntegratedGamesController extends Controller
             array_push($whereGameList, ['type_id', '=', $request->typeId]);
         }
 
+        $gameList = GamesList::where($whereGameList);
+
         $definitionSettings = $configIntegratedGames['listSettings'];
         $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
         $orderGames = ['rating', 'asc'];
@@ -106,7 +105,12 @@ class IntegratedGamesController extends Controller
             $orderGames = $definitionSettings[$settings['games']];
         }
 
-        $gameList = GamesList::where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
+        if ($request->search !== '') {
+            $gameList = $gameList->where('name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('our_name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $gameList = $gameList->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
         $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);

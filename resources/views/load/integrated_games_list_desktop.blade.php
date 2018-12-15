@@ -7,11 +7,6 @@
                         <span class="games-block__item ng-scope">
                             @php
                                 $image = is_null($game->our_image) ? $game->image_filled : $game->our_image;
-                                if (!is_null($game->our_name)) {
-                                    $name = $game->our_name;
-                                } else {
-                                    $name = $game->name;
-                                }
                             @endphp
                             <img class="games-block__image show-animated" src="{{ $image }}"
                                  onerror="handleImage(this);"/>
@@ -25,7 +20,7 @@
                                 {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>
-                        <span class="games-block__name ng-binding">{{ $name }}</span>
+                        <span class="games-block__name ng-binding">{{$game->name}}</span>
                     </div>
                 </div>
             </div>
