@@ -75,10 +75,10 @@
 $(document).ready(function () {
     //$('.selectpicker').selectpicker();
 
-    var user_id = getUrlParameter('user_id');
-
-    if(user_id)
-        $('select[name="user_id"]').val(user_id);
+    // var user_id = getUrlParameter('user_id');
+    //
+    // if(user_id)
+    //     $('select[name="user_id"]').val(user_id);
 
     var oTable = $('.datatable').dataTable( {
         "bProcessing": true,
