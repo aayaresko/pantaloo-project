@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['sum', 'type_id', 'user_id', 'round_id', 'comment'];
+    protected $fillable = ['sum', 'type', 'user_id', 'round_id', 'comment'];
 
     protected $dates = ['deleted_at'];
 

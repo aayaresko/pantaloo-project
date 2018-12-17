@@ -226,7 +226,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         $typeId = 1;
                         $transaction = Transaction::create([
-                            'typeId' => $typeId,
+                            'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
@@ -285,7 +285,7 @@ class PantalloGamesSystem implements GamesSystem
 //                        }
                         $typeId = 2;
                         $transaction = Transaction::create([
-                            'type_id' => $typeId,
+                            'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
@@ -371,7 +371,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         $typeId = ($currentOperation === 'debit') ? 2 : 1;
                         $transaction = Transaction::create([
-                            'typeId' => $typeId,
+                            'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
