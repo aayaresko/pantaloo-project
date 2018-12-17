@@ -38,4 +38,19 @@ return [
         3 => ['rating', 'asc'],
         4 => ['rating', 'desc'],
     ],
+
+    'typeTransaction' => [
+            -1 => 'Bet + Win',
+            0 => 'Transaction type / All',
+            1 => 'Bet',
+            2 => 'Win',
+            3 => 'Deposit',
+            4 => 'Withdraw',
+            5 => 'Bonus activation',
+            6 => 'Bonus cancellation',
+            7 => 'Bonus to real',
+            8 => 'Free spins add',
+            9 => 'Free Bet',
+            10 => 'Free Win'
+    ]
 ];

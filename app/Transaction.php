@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['sum', 'user_id', 'round_id', 'comment'];
+    protected $fillable = ['sum', 'type_id', 'user_id', 'round_id', 'comment'];
 
     protected $dates = ['deleted_at'];
 
@@ -55,19 +55,17 @@ class Transaction extends Model
 
     public function isConfirmed()
     {
-        if($this->confirmations > 5) return true;
+        if ($this->confirmations > 5) return true;
         else return false;
     }
 
     public function getStatus()
     {
-        if($this->type == 3) {
+        if ($this->type == 3) {
             if ($this->isConfirmed()) return 'Confirmed';
             else return 'Not confirmed';
-        }
-        elseif($this->type == 4)
-        {
-            if($this->withdraw_status == 1) return 'Success';
+        } elseif ($this->type == 4) {
+            if ($this->withdraw_status == 1) return 'Success';
             else return 'Your withdrawal is pending approval';
         }
 
@@ -76,14 +74,11 @@ class Transaction extends Model
 
     public function confirmStatus()
     {
-        if($this->type == 3)
-        {
-            if($this->isConfirmed()) return true;
+        if ($this->type == 3) {
+            if ($this->isConfirmed()) return true;
             else return false;
-        }
-        elseif($this->type == 4)
-        {
-            if($this->withdraw_status == 1) return true;
+        } elseif ($this->type == 4) {
+            if ($this->withdraw_status == 1) return true;
             else return false;
         }
 
@@ -94,20 +89,20 @@ class Transaction extends Model
     {
         $html = '';
 
-        if($this->confirmStatus()) $html = $html . '<span class="label label-success">CONFIRMED</span> ';
+        if ($this->confirmStatus()) $html = $html . '<span class="label label-success">CONFIRMED</span> ';
         else $html = $html . '<span class="label label-warning">PENDING</span> ';
 
 
-        if($this->type == 1) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-        elseif($this->type == 2) $html = $html . '<span class="label ' . $this->token->slot->category->css_class. '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-        elseif($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
-        elseif($this->type == 4) $html = $html . '<div class="pull-right">Withdraw</div>';
-        elseif($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
-        elseif($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
-        elseif($this->type == 7) $html = $html . '<div class="pull-right">Bonus to real</div>';
-        elseif($this->type == 8) $html = $html . '<div class="pull-right">Free spins add</div>';
-        elseif($this->type == 9) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span>  <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-        elseif($this->type == 10) $html = $html . '<span class="label ' . $this->token->slot->category->css_class. '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+        if ($this->type == 1) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+        elseif ($this->type == 2) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+        elseif ($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
+        elseif ($this->type == 4) $html = $html . '<div class="pull-right">Withdraw</div>';
+        elseif ($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
+        elseif ($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
+        elseif ($this->type == 7) $html = $html . '<div class="pull-right">Bonus to real</div>';
+        elseif ($this->type == 8) $html = $html . '<div class="pull-right">Free spins add</div>';
+        elseif ($this->type == 9) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span>  <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+        elseif ($this->type == 10) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
 
         return $html;
     }
@@ -116,7 +111,7 @@ class Transaction extends Model
     {
         $html = '';
 
-        if($this->sum > 0) $html = $html . '<span class="label label-success">';
+        if ($this->sum > 0) $html = $html . '<span class="label label-success">';
         else $html = $html . '<span class="label label-danger">';
 
         $html = $html . sprintf("%+.2f", round($this->sum, 2)) . ' mBtc</span>';
@@ -128,7 +123,7 @@ class Transaction extends Model
     {
         $html = '';
 
-        if($this->bonus_sum > 0) $html = $html . '<span class="label label-success">';
+        if ($this->bonus_sum > 0) $html = $html . '<span class="label label-success">';
         else $html = $html . '<span class="label label-danger">';
 
         $html = $html . sprintf("%+.2f", round($this->bonus_sum, 2)) . ' mBtc</span>';
@@ -140,23 +135,32 @@ class Transaction extends Model
     {
         $status = $this->getStatus();
 
-        if($this->type == 4 and $this->withdraw_status == 0) $status = 'Pending';
-        if($this->type == 4 and $this->withdraw_status == -1) $status = 'Frozen';
-        if($this->type == 4 and $this->withdraw_status == 2) $status = 'Sending';
-        if($this->type == 4 and $this->withdraw_status == -1) $status = 'Failed';
+        if ($this->type == 4 and $this->withdraw_status == 0) $status = 'Pending';
+        if ($this->type == 4 and $this->withdraw_status == -1) $status = 'Frozen';
+        if ($this->type == 4 and $this->withdraw_status == 2) $status = 'Sending';
+        if ($this->type == 4 and $this->withdraw_status == -1) $status = 'Failed';
 
         return $status;
     }
 
     public function getType()
     {
-        switch ($this->type)
-        {
-            case 1: return 'Win'; break;
-            case 2: return 'Lose'; break;
-            case 3: return 'Deposit'; break;
-            case 4: return 'Withdraw'; break;
-            default: return 'Unknown'; break;
+        switch ($this->type) {
+            case 1:
+                return 'Win';
+                break;
+            case 2:
+                return 'Lose';
+                break;
+            case 3:
+                return 'Deposit';
+                break;
+            case 4:
+                return 'Withdraw';
+                break;
+            default:
+                return 'Unknown';
+                break;
         }
     }
 

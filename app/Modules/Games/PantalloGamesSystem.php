@@ -224,7 +224,9 @@ class PantalloGamesSystem implements GamesSystem
                             throw new \Exception('Insufficient funds', 403);
                         }
 
+                        $typeId = 1;
                         $transaction = Transaction::create([
+                            'typeId' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
@@ -281,8 +283,9 @@ class PantalloGamesSystem implements GamesSystem
 //                        if ((float)$amount > $params['user']->balance) {
 //                            throw new \Exception('Insufficient funds', 403);
 //                        }
-
+                        $typeId = 2;
                         $transaction = Transaction::create([
+                            'type_id' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
@@ -357,13 +360,6 @@ class PantalloGamesSystem implements GamesSystem
                         //create and return value
                         $currentOperation = array_search($transactionHas->action_id, $typesActions);
 
-                        $transaction = Transaction::create([
-                            'comment' => 'Pantallo games',
-                            'sum' => $amount,
-                            'user_id' => $params['user']->id,
-                            'round_id' => $roundId
-                        ]);
-
                         //edit balance user
                         $currentOperation = ($currentOperation === 'debit') ? 'credit' : 'debit';
                         $balance = $typesOperation[$currentOperation]((float)$params['user']->balance, (float)$amount);
@@ -372,6 +368,15 @@ class PantalloGamesSystem implements GamesSystem
                         if ($balance < 0) {
                             throw new \Exception('Insufficient funds', 403);
                         }
+
+                        $typeId = ($currentOperation === 'debit') ? 2 : 1;
+                        $transaction = Transaction::create([
+                            'typeId' => $typeId,
+                            'comment' => 'Pantallo games',
+                            'sum' => $amount,
+                            'user_id' => $params['user']->id,
+                            'round_id' => $roundId
+                        ]);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
