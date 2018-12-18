@@ -360,13 +360,13 @@ class PantalloGamesSystem implements GamesSystem
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
-                    $diffBalance = bcsub((float)$transactionHas->balance_after,
-                        (float)$transactionHas->balance_before, $accuracyValues);
-                    $amount = GeneralHelper::formatAmount(abs($diffBalance));
-
                     if (is_null($transactionHas)) {
                         throw new \Exception('Does not have a transaction', 404);
                     }
+
+                    $diffBalance = bcsub((float)$transactionHas->balance_after,
+                        (float)$transactionHas->balance_before, $accuracyValues);
+                    $amount = GeneralHelper::formatAmount(abs($diffBalance));
 
                     $transaction = Transaction::leftJoin('games_pantallo_transactions',
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
