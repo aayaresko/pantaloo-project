@@ -7,6 +7,7 @@ use Log;
 use Validator;
 use App\RawLog;
 use App\User;
+use Helpers\GeneralHelper;
 use App\Transaction;
 use App\Models\GamesList;
 use Illuminate\Http\Request;
@@ -180,7 +181,17 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Session is not found');
             }
 
-            $params['user'] = User::where('id', $params['session']->user_id)->first();
+            $userFields = [
+                'users.id as id',
+                'users.balance as balance',
+                'affiliates.id as partner_id',
+                'affiliates.commission as partner_commission'
+            ];
+
+            $params['user'] = User::select($userFields)
+                ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+                ->where('users.id', $params['session']->user_id)->first();
+
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
             }
@@ -200,7 +211,7 @@ class PantalloGamesSystem implements GamesSystem
                     break;
                 case 'debit':
                     $caseAction = 'debit';
-                    $amount = (float)$requestParams['amount'];
+                    $amount = GeneralHelper::formatAmount($requestParams['amount']);
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
@@ -225,13 +236,19 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         $typeId = 1;
-                        $transaction = Transaction::create([
+                        $partnerId = $params['user']->partner_id;
+                        $partnerCommission = $params['user']->partner_commission;
+                        $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
-                            'round_id' => $roundId
-                        ]);
+                            'round_id' => $roundId,
+                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                        ];
+
+                        $transaction = Transaction::create($createParams);
 
                         //edit balance user
                         $balance = $typesOperation[$caseAction]((float)$params['user']->balance,
@@ -260,7 +277,7 @@ class PantalloGamesSystem implements GamesSystem
                     break;
                 case 'credit':
                     $caseAction = 'credit';
-                    $amount = (float)$requestParams['amount'];
+                    $amount = GeneralHelper::formatAmount($requestParams['amount']);
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
@@ -284,13 +301,19 @@ class PantalloGamesSystem implements GamesSystem
 //                            throw new \Exception('Insufficient funds', 403);
 //                        }
                         $typeId = 2;
-                        $transaction = Transaction::create([
+                        $partnerId = $params['user']->partner_id;
+                        $partnerCommission = $params['user']->partner_commission;
+                        $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
-                            'round_id' => $roundId
-                        ]);
+                            'round_id' => $roundId,
+                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                        ];
+
+                        $transaction = Transaction::create($createParams);
 
                         //edit balance user
                         $balance = $typesOperation[$caseAction]((float)$params['user']->balance,
@@ -339,7 +362,7 @@ class PantalloGamesSystem implements GamesSystem
 
                     $diffBalance = bcsub((float)$transactionHas->balance_after,
                         (float)$transactionHas->balance_before, $accuracyValues);
-                    $amount = abs($diffBalance);
+                    $amount = GeneralHelper::formatAmount(abs($diffBalance));
 
                     if (is_null($transactionHas)) {
                         throw new \Exception('Does not have a transaction', 404);
@@ -370,13 +393,19 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         $typeId = ($currentOperation === 'debit') ? 2 : 1;
-                        $transaction = Transaction::create([
+                        $partnerId = $params['user']->partner_id;
+                        $partnerCommission = $params['user']->partner_commission;
+                        $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
                             'sum' => $amount,
                             'user_id' => $params['user']->id,
-                            'round_id' => $roundId
-                        ]);
+                            'round_id' => $roundId,
+                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                        ];
+
+                        $transaction = Transaction::create($createParams);
 
                         User::where('id', $params['user']->id)->update([
                             //'balance' => DB::raw("balance+{$amount}")
