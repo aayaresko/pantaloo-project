@@ -408,7 +408,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $currentOperation = ($currentOperation === 'debit') ? 'credit' : 'debit';
-                        $balance = $typesOperation[$currentOperation]((float)$params['user']->balance, (float)$amount);
+                        $balance = $typesOperation[$currentOperation]((float)$params['user']->balance,
+                            (float)$amount, $accuracyValues);
 
                         //CHECK THIS = ASK MAX
                         if ($balance < 0) {
