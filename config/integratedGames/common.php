@@ -40,17 +40,65 @@ return [
     ],
 
     'typeTransaction' => [
-            -1 => 'Bet + Win',
-            0 => 'Transaction type / All',
-            1 => 'Bet',
-            2 => 'Win',
-            3 => 'Deposit',
-            4 => 'Withdraw',
-            5 => 'Bonus activation',
-            6 => 'Bonus cancellation',
-            7 => 'Bonus to real',
-            8 => 'Free spins add',
-            9 => 'Free Bet',
-            10 => 'Free Win'
+        [
+            'code' => 0,
+            'value' => 'Transaction type / All',
+            'filter' => 1
+        ],
+        [
+            'code' => -1,
+            'value' => 'Bet + Win',
+            'filter' => 1
+        ],
+        [
+            'code' => 1,
+            'value' => 'Bet',
+            'filter' => 1
+        ],
+        [
+            'code' => 2,
+            'value' => 'Win',
+            'filter' => 1
+        ],
+        [
+            'code' => 3,
+            'value' => 'Deposit',
+            'filter' => 1
+        ],
+        [
+            'code' => 4,
+            'value' => 'Withdraw',
+            'filter' => 1
+        ],
+        [
+            'code' => 5,
+            'value' => 'Bonus activation',
+            'filter' => 0
+        ],
+        [
+            'code' => 6,
+            'value' => 'Bonus cancellation',
+            'filter' => 0
+        ],
+        [
+            'code' => 7,
+            'value' => 'Bonus to real',
+            'filter' => 0
+        ],
+        [
+            'code' => 8,
+            'value' => 'Free spins add',
+            'filter' => 0
+        ],
+        [
+            'code' => 9,
+            'value' => 'Free Bet',
+            'filter' => 0
+        ],
+        [
+            'code' => 10,
+            'value' => 'Free Win',
+            'filter' => 0
+        ],
     ]
 ];

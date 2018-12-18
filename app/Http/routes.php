@@ -195,8 +195,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/dashboard', ['as' => 'agent.dashboard', 'uses' => 'AgentController@dashboard']);
 
-        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'TransactionController@index']);
-        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'TransactionController@filter']);
+//        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'TransactionController@index']);
+//        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'TransactionController@filter']);
+
+        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'AffiliatesController@transaction']);
+        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'AffiliatesController@transactionFilter']);
 
         Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
         Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);

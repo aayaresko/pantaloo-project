@@ -208,15 +208,15 @@
 <![endif]-->
 <script src="/assets/plugins/jquery-knob/jquery.knob.js"></script>
 
-<!--Morris Chart-->
-<script src="/assets/plugins/morris/morris.min.js"></script>
-<script src="/assets/plugins/raphael/raphael-min.js"></script>
+{{--<!--Morris Chart-->--}}
+{{--<script src="/assets/plugins/morris/morris.min.js"></script>--}}
+{{--<script src="/assets/plugins/raphael/raphael-min.js"></script>--}}
 
-<!-- Dashboard init -->
-<script src="/assets/pages/jquery.dashboard.js"></script>
+{{--<!-- Dashboard init -->--}}
+{{--<script src="/assets/pages/jquery.dashboard.js"></script>--}}
 
 <!-- App js -->
-<script src="/assets/js/jquery.core.js"></script>
+{{--<script src="/assets/js/jquery.core.js"></script>--}}
 <script src="/assets/js/jquery.app.js"></script>
 
 <script src="/assets/plugins/moment/moment.js"></script>

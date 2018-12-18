@@ -1,4 +1,4 @@
-@extends($is_admin ? 'layouts.admin':'layouts.agent')
+@extends('layouts.agent')
 
 @section('title')
     Transactions
@@ -14,18 +14,18 @@
                         <div class="card-box">
                             <div class="row">
                                 <div class="col-sm-4">
-                                <select name="user_id" class="selectpicker" data-live-search="true">
-                                    <option name="0">Users / All</option>
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->email}}</option>
-                                    @endforeach
-                                </select>
+                                    <select name="user_id" class="selectpicker" data-live-search="true">
+                                        <option value="0" selected>Users / All</option>
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->email}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <select name="category_id" class="selectpicker" data-live-search="true">
-                                        <option name="0">Providers / All</option>
-                                        @foreach(\App\Category::all() as $category)
+                                        <option value="0" selected>Providers / All</option>
+                                        @foreach($gamesCategories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
@@ -33,12 +33,15 @@
 
                                 <div class="col-sm-4">
                                     <select name="type_id" class="selectpicker" data-live-search="true">
-                                        <option value="0">Transaction type / All</option>
-                                        <option value="-1">Bet + Win</option>
-                                        <option value="1">Bet</option>
-                                        <option value="2">Win</option>
-                                        <option value="3">Deposit</option>
-                                        <option value="4">Withdraw</option>
+                                        @foreach($types as $key => $type)
+                                            @if($type->filter === 1)
+                                                @if ($key === 0)
+                                                    <option value="{{$type->code}}" selected>{{$type->value}}</option>
+                                                @else
+                                                    <option value="{{$type->code}}">{{$type->value}}</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -46,57 +49,43 @@
                             <div class="row">
                                 <br>
                                 <div class="col-sm-12">
-                                    <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
+                                    <table class="table table-striped table-bordered dataTable no-footer datatable"
+                                           role="/rid" aria-describedby="datatable_info">
                                         <thead>
                                         <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Date</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Description</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Amount</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                colspan="1">User
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                colspan="1">Date
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                colspan="1">Description
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                colspan="1">Amount
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                colspan="1">Bonus
+                                            </th>
                                         </tr>
                                         </thead>
-
                                         <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
 
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
-<script>
-$(document).ready(function () {
-    //$('.selectpicker').selectpicker();
-
-    var user_id = getUrlParameter('user_id');
-
-    if(user_id)
-        $('select[name="user_id"]').val(user_id);
-
-    var oTable = $('.datatable').dataTable( {
-        "bProcessing": true,
-        "bServerSide": true,
-        "searching": false,
-        "sAjaxSource": "@if($is_admin){{route('admin.filterTransactions')}}@else{{route('agent.filterTransactions')}}@endif",
-        "fnServerParams": function (aoData) {
-            aoData.push( {name: "user_id", value: $('select[name="user_id"]').val() } );
-            aoData.push( {name: "category_id", value: $('select[name="category_id"]').val() } );
-            aoData.push( {name: "type_id", value: $('select[name="type_id"]').val() } );
-        }
-    });
-
-    $('.selectpicker').change(function () {
-        oTable.fnDraw();
-    });
-});
-
-</script>
-
+    <script>
+        let transactionRoute = "{{route('agent.filterTransactions')}}";
+    </script>
+    <script src="/partnerPanel/js/page/transactionPartnerPanel.js?v={{ time() }}"></script>
 @endsection
