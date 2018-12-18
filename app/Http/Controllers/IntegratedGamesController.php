@@ -76,12 +76,6 @@ class IntegratedGamesController extends Controller
     public function getGames(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
-        //check this i use alien code
-        if (Casino::isMobile()) {
-            $paginationCount = $configIntegratedGames['listGames']['pagination']['mobile'];
-        } else {
-            $paginationCount = $configIntegratedGames['listGames']['pagination']['desktop'];
-        }
 
         $whereGameList = [
             ['active', '=', 1],
@@ -104,6 +98,15 @@ class IntegratedGamesController extends Controller
         $orderGames = ['rating', 'asc'];
         if (isset($settings['games'])) {
             $orderGames = $definitionSettings[$settings['games']];
+        }
+
+        //check this i use alien code
+        if (Casino::isMobile()) {
+            $paginationCount = $configIntegratedGames['listGames']['pagination']['mobile'];
+            array_push($whereGameList, ['mobile', '=', 1]);
+        } else {
+            $paginationCount = $configIntegratedGames['listGames']['pagination']['desktop'];
+            array_push($whereGameList, ['mobile', '=', 0]);
         }
 
         $gameList = GamesList::where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
