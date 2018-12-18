@@ -93,16 +93,29 @@ class Transaction extends Model
         else $html = $html . '<span class="label label-warning">PENDING</span> ';
 
 
-        if ($this->type == 1) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-        elseif ($this->type == 2) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+//        if ($this->type == 1) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+//        elseif ($this->type == 2) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+//        elseif ($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
+//        elseif ($this->type == 4) $html = $html . '<div class="pull-right">Withdraw</div>';
+//        elseif ($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
+//        elseif ($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
+//        elseif ($this->type == 7) $html = $html . '<div class="pull-right">Bonus to real</div>';
+//        elseif ($this->type == 8) $html = $html . '<div class="pull-right">Free spins add</div>';
+//        elseif ($this->type == 9) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span>  <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+//        elseif ($this->type == 10) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+
+
+
+        if ($this->type == 1) $html = $html . '<div class="pull-right">Bet</div>';
+        elseif ($this->type == 2) $html = $html . '<div class="pull-right">Win</div>';
         elseif ($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
-        elseif ($this->type == 4) $html = $html . '<div class="pull-right">Withdraw</div>';
+
         elseif ($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
         elseif ($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
         elseif ($this->type == 7) $html = $html . '<div class="pull-right">Bonus to real</div>';
         elseif ($this->type == 8) $html = $html . '<div class="pull-right">Free spins add</div>';
-        elseif ($this->type == 9) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span>  <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-        elseif ($this->type == 10) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <span class="label label-info">FREE</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
+        elseif ($this->type == 9) $html = $html . '<div class="pull-right">FREE Bet</div>';
+        elseif ($this->type == 10) $html = $html . '<div class="pull-right">FREE Win</div>';
 
         return $html;
     }
