@@ -172,7 +172,16 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Incorrect input date');
             }
             //end validation
+            //our valdiate
+            $validator = Validator::make($request->all(), [
+                'amount' => 'required|numeric|min:0',
+            ]);
 
+            if ($validator->fails()) {
+                $error = $validator->errors();
+                throw new \Exception($error->first(), 500);
+            }
+            //end our validate
             //action
 
             //get user for this session

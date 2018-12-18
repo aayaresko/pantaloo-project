@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\User;
+use Validator;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesCategory;
@@ -19,6 +20,18 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            $error = $validator->errors();
+            dd($error->first());
+            throw new \Exception('Insufficient funds', 500);
+        }
+
+
         $userFields = ['users.id as id',  'users.balance as balance', 'affiliates.id as partner_id', 'affiliates.commission as partner_commission'];
         $user = User::select($userFields)->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')->where('users.id', 136)->first();
         dd($user->toArray());
