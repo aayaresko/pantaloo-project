@@ -172,18 +172,8 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Incorrect input date');
             }
             //end validation
-            //our valdiate
-            $validator = Validator::make($request->all(), [
-                'amount' => 'required|numeric|min:0',
-            ]);
 
-            if ($validator->fails()) {
-                $error = $validator->errors();
-                throw new \Exception($error->first(), 500);
-            }
-            //end our validate
             //action
-
             //get user for this session
             $params['session'] = GamesPantalloSession::where('sessionid', $requestParams['session_id'])->first();
             if (is_null($params['session'])) {
@@ -220,6 +210,18 @@ class PantalloGamesSystem implements GamesSystem
                     break;
                 case 'debit':
                     $caseAction = 'debit';
+
+                    //our valdiate
+                    $validator = Validator::make($request->all(), [
+                        'amount' => 'required|numeric|min:0',
+                    ]);
+
+                    if ($validator->fails()) {
+                        $error = $validator->errors();
+                        throw new \Exception($error->first(), 500);
+                    }
+                    //end our validate
+
                     $amount = GeneralHelper::formatAmount($requestParams['amount']);
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
@@ -286,6 +288,18 @@ class PantalloGamesSystem implements GamesSystem
                     break;
                 case 'credit':
                     $caseAction = 'credit';
+
+                    //our valdiate
+                    $validator = Validator::make($request->all(), [
+                        'amount' => 'required|numeric|min:0',
+                    ]);
+
+                    if ($validator->fails()) {
+                        $error = $validator->errors();
+                        throw new \Exception($error->first(), 500);
+                    }
+                    //end our validate
+
                     $amount = GeneralHelper::formatAmount($requestParams['amount']);
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
