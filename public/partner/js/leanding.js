@@ -175,7 +175,7 @@ function resendPassword() {
             $self.addClass('blockToSend');
             setTimeout(function() {
               $self.removeClass('blockToSend')
-            }, 15000)
+            }, 10000)
             return
           }
 
