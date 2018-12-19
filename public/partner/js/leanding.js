@@ -169,6 +169,16 @@ function sendFormFeedBack() {
 function resendPassword() {
     $("body").on("click", "#resendPassword", function () {
         event.preventDefault();
+        var $self = $(this)
+
+        if ($self.hasClass('blockToSend') == false) {
+            $self.addClass('blockToSend');
+            setTimeout(function() {
+              $self.removeClass('blockToSend')
+            }, 15000)
+            return
+          }
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'POST',
