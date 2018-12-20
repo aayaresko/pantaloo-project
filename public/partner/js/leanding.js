@@ -171,13 +171,28 @@ function resendPassword() {
         event.preventDefault();
         var $self = $(this)
 
-        if ($self.hasClass('blockToSend') == false) {
-            $self.addClass('blockToSend');
-            setTimeout(function() {
-              $self.removeClass('blockToSend')
-            }, 10000)
-            return
+        // if ($self.hasClass('blockToSend') == false) {
+        //     $self.addClass('blockToSend');
+        //     setTimeout(function() {
+        //       $self.removeClass('blockToSend')
+        //     }, 10000)
+        //     return
+        //   }
+
+        $('.second-hide').hide();
+        $('.second-show').show();
+        var seconds = $('.seconds').text(),
+          int;
+        int = setInterval(function() {
+          if (seconds > 0) {
+            seconds--;
+            $('.seconds').text(seconds);
+          } else {
+            clearInterval(int);
+            $('.second-hide').show();
+            $('.second-show').hide();
           }
+        }, 1000);
 
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -188,8 +203,16 @@ function resendPassword() {
                 if (response['status'] === true) {
                     console.log('Ok');
                     //to do for front
+                    clearNotificationMessage()
+                    
+                    fillotificationMessage("Resent was success", "The message sent your our email");
+                    $("#notificationMessage").modal();
                 } else {
                     //to do for front
+                    clearNotificationMessage()
+                    
+                    fillotificationMessage("Error", "Try again later or contact support ");
+                    $("#notificationMessage").modal();
                 }
             }
         });
