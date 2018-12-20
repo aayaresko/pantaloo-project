@@ -23,7 +23,6 @@ class CreateGamesPantalloTransactionsTable extends Migration
                 ->on('transactions')->onDelete('cascade');
             $table->decimal('balance_before', 14, 5)->nullable();
             $table->decimal('balance_after', 14, 5);
-            $table->decimal('balance_after', 14, 5);
             $table->timestamps();
         });
     }
