@@ -513,6 +513,7 @@ class PantalloGamesSystem implements GamesSystem
         $responseLog['endDate'] = $endDate;
 
         RawLog::create([
+            'full_url' => $request->fullUrl(),
             'request' => json_encode($requestParams),
             'response' => json_encode($responseLog)
         ]);
