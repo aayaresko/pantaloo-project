@@ -485,20 +485,6 @@ class PantalloGamesSystem implements GamesSystem
                 default:
                     throw new \Exception('Action is not found');
             }
-            //create add database for pantallo games only
-            //time counter
-            $endTime = explode(" ", microtime());
-            $endDate = date("m-d-y H:i:s", $endTime[1]) . substr((string)$endTime[0], 1, 4);
-            $time = round(microtime(true) - $start, 4);
-            $responseLog = $response;
-            $responseLog['time'] = $time;
-            $responseLog['startDate'] = $startDate;
-            $responseLog['endDate'] = $endDate;
-
-            RawLog::create([
-                'request' => json_encode($requestParams),
-                'response' => json_encode($responseLog)
-            ]);
         } catch (\Exception $e) {
             //dd($e);
             $errorCode = $e->getCode();
@@ -516,6 +502,22 @@ class PantalloGamesSystem implements GamesSystem
             }
         }
         DB::commit();
+
+        //time counter and raw url
+        $endTime = explode(" ", microtime());
+        $endDate = date("m-d-y H:i:s", $endTime[1]) . substr((string)$endTime[0], 1, 4);
+        $time = round(microtime(true) - $start, 4);
+        $responseLog = $response;
+        $responseLog['time'] = $time;
+        $responseLog['startDate'] = $startDate;
+        $responseLog['endDate'] = $endDate;
+
+        RawLog::create([
+            'request' => json_encode($requestParams),
+            'response' => json_encode($responseLog)
+        ]);
+        //end time counter and raw url
+
         return $response;
     }
 }
