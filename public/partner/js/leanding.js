@@ -178,9 +178,12 @@ function resendPassword() {
         //     }, 10000)
         //     return
         //   }
-
+        
+        $('.error-reset').hide();
+        $('.success-reset').hide();
         $('.second-hide').hide();
         $('.second-show').show();
+
         var seconds = $('.seconds').text(),
           int;
         int = setInterval(function() {
@@ -203,16 +206,13 @@ function resendPassword() {
                 if (response['status'] === true) {
                     console.log('Ok');
                     //to do for front
-                    clearNotificationMessage()
-                    
-                    fillotificationMessage("Resent was success", "The message sent your our email");
-                    $("#notificationMessage").modal();
+                    $('.success-reset').show();
+                    $('.error-reset').hide();
                 } else {
                     //to do for front
-                    clearNotificationMessage()
-                    
-                    fillotificationMessage("Error", "Try again later or contact support ");
-                    $("#notificationMessage").modal();
+                    $('.error-reset').show();
+                    $('.success-reset').hide();
+
                 }
             }
         });
