@@ -21,6 +21,7 @@ class CreateGamesPantalloTransactionsTable extends Migration
             $table->integer('transaction_id')->unsigned()->index();
             $table->foreign('transaction_id')->references('id')
                 ->on('transactions')->onDelete('cascade');
+            $table->decimal('amount', 14, 5);
             $table->decimal('balance_before', 14, 5)->nullable();
             $table->decimal('balance_after', 14, 5);
             $table->timestamps();
