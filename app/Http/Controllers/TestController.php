@@ -20,6 +20,18 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $url = 'https://www.casinobit.io/games/endpoint?callerId=casinobit_mc_s&callerPassword=302e6543f24cfabc19a360deaa09096b8733f780&callerPrefix=z1am&action=debit&remote_id=969111&username=136&session_id=5bfc06cfd06f7&currency=USD&amount=0.15&provider=gs&game_id=2058&game_id_hash=gs_gs-african-sunset&transaction_id=gs-1954554737-545af1&round_id=-2055295972&gameplay_final=0&is_freeround_bet=0&jackpot_contribution_in_amount=0&gamesession_id=gs_a027a-79972660&key=d65da999c6e8b20337ee5ddf8311a1eb70c4a8a7';
+        //$url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
+        $clientParams = ['verify' => false];
+        $client = new Client($clientParams);
+        for ($i = 10; $i < 20; $i++) {
+            $response = $client->get("https://www.casinobit.io/games/endpoint?callerId=casinobit_mc_s&callerPassword=302e6543f24cfabc19a360deaa09096b8733f780&callerPrefix=z1am&action=debit&remote_id=969111&username=136&session_id=5bfc06cfd06f7&currency=USD&amount=1&provider=gs&game_id=2058&game_id_hash=gs_gs-african-sunset&transaction_id=gs-1954554737-545af1$i&round_id=-2055295972&gameplay_final=0&is_freeround_bet=0&jackpot_contribution_in_amount=0&gamesession_id=gs_a027a-79972660&key=d65da999c6e8b20337ee5ddf8311a1eb70c4a8a7");
+        }
+        dd('Ok');
+        $response = $client->get($url);
+        dd($response->getBody()->getContents());
+        dd($response);
         $am = 1000;
         User::where('id', 1)
             ->update([
@@ -27,7 +39,7 @@ class TestController extends Controller
             ]);
         dd(2);
 
-        $test = User::where('id',1)->update([
+        $test = User::where('id', 1)->update([
             'balance' => DB::raw("balance+$am")
         ]);
         dd(2);
@@ -44,7 +56,7 @@ class TestController extends Controller
 //        )->first();
 //        dd($update->toArray());
 //        $amount = 20;
-        $test = User::where('id',1)->update([
+        $test = User::where('id', 1)->update([
             'balance' => -1
         ]);
         dd($test);
@@ -60,7 +72,7 @@ class TestController extends Controller
         }
 
 
-        $userFields = ['users.id as id',  'users.balance as balance', 'affiliates.id as partner_id', 'affiliates.commission as partner_commission'];
+        $userFields = ['users.id as id', 'users.balance as balance', 'affiliates.id as partner_id', 'affiliates.commission as partner_commission'];
         $user = User::select($userFields)->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')->where('users.id', 136)->first();
         dd($user->toArray());
         //->leftJoin('posts', 'users.id', '=', 'posts.user_id')
@@ -171,7 +183,7 @@ class TestController extends Controller
             dump($idLogin);
             dump($getGame);
             GamesPantalloSessionGame::create(['session_id' => $idLogin,
-                    'gamesession_id' => $getGame->gamesession_id]);
+                'gamesession_id' => $getGame->gamesession_id]);
 
             return view('testtest', ['link' => $getGame]);
         } catch (\Exception $e) {
