@@ -20,7 +20,29 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $am = -22222;
+        $test = User::where('id',1)->update([
+            'balance' => DB::raw("balance+$am")
+        ]);
+        dd(2);
 
+        DB::enableQueryLog();
+        $data = User::updateOrCreate(['id' => 1], ['balance' => 212]);
+        dump($data->toArray());
+        dd(DB::getQueryLog());
+//        $update = User::where(
+//            [
+//                ['id', '=', 1],
+//                [DB::raw("balance"), '>',  1000]
+//            ]
+//        )->first();
+//        dd($update->toArray());
+//        $amount = 20;
+        $test = User::where('id',1)->update([
+            'balance' => -1
+        ]);
+        dd($test);
+        dd($request->fullUrl());
         $validator = Validator::make($request->all(), [
             'title' => 'required|numeric|min:0',
         ]);
