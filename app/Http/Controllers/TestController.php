@@ -20,7 +20,13 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $am = -22222;
+        $am = 1000;
+        User::where('id', 1)
+            ->update([
+                'balance' => DB::raw("balance+$am")
+            ]);
+        dd(2);
+
         $test = User::where('id',1)->update([
             'balance' => DB::raw("balance+$am")
         ]);

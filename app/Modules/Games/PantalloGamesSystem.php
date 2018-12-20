@@ -261,10 +261,11 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $userAfterUpdate = User::updateOrCreate(
-                            ['id' => $params['user']->id],
-                            ['balance' => DB::raw("balance+$amount")]
-                        );
+                        User::where('id', $params['user']->id)
+                            ->update([
+                                'balance' => DB::raw("balance+$amount")
+                            ]);
+                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
                         $pantalloTransaction = [
@@ -346,10 +347,11 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $userAfterUpdate = User::updateOrCreate(
-                            ['id' => $params['user']->id],
-                            ['balance' => DB::raw("balance+$amount")]
-                        );
+                        User::where('id', $params['user']->id)
+                            ->update([
+                                'balance' => DB::raw("balance+$amount")
+                            ]);
+                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
                         $pantalloTransaction = [
@@ -446,10 +448,11 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $userAfterUpdate = User::updateOrCreate(
-                            ['id' => $params['user']->id],
-                            ['balance' => DB::raw("balance+$amount")]
-                        );
+                        User::where('id', $params['user']->id)
+                            ->update([
+                                'balance' => DB::raw("balance+$amount")
+                            ]);
+                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
                         $pantalloTransaction = [
