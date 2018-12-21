@@ -7,9 +7,9 @@ use Log;
 use App\User;
 use Validator;
 use App\RawLog;
-use Helpers\GeneralHelper;
 use App\Transaction;
 use App\Models\GamesList;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
 use App\Models\Pantallo\GamesPantalloSession;
@@ -195,6 +195,12 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('User is not found');
             }
 
+            $params['game'] = GamesList::select(['id', 'system_id'])
+                ->where('system_id', $requestParams['game_id'])->first();
+            if (is_null($params['game'])) {
+                throw new \Exception('Game is not found');
+            }
+
             $balanceBefore = (float)$params['user']->balance;
             if ((float)$params['user']->balance < 0) {
                 throw new \Exception('Insufficient funds', 403);
@@ -274,7 +280,8 @@ class PantalloGamesSystem implements GamesSystem
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
                             'balance_before' => $params['user']->balance,
-                            'balance_after' => $balanceAfterTransaction
+                            'balance_after' => $balanceAfterTransaction,
+                            'game_id' => $params['game']->id
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
@@ -360,7 +367,8 @@ class PantalloGamesSystem implements GamesSystem
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
                             'balance_before' => $params['user']->balance,
-                            'balance_after' => $balanceAfterTransaction
+                            'balance_after' => $balanceAfterTransaction,
+                            'game_id' => $params['game']->id
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
@@ -398,6 +406,7 @@ class PantalloGamesSystem implements GamesSystem
                             'transactions.id',
                             'action_id',
                             'games_pantallo_transactions.amount as amount',
+                            'games_pantallo_transactions.game_id as game_id',
                             'games_pantallo_transactions.balance_after as balance_after'
                         ])->first();
 
@@ -461,7 +470,10 @@ class PantalloGamesSystem implements GamesSystem
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
                             'balance_before' => $params['user']->balance,
-                            'balance_after' => $balanceAfterTransaction
+                            'balance_after' => $balanceAfterTransaction,
+                            //check null for ald transaction
+                            'game_id' => !is_null($transactionHas->game_id)
+                                ? $transactionHas->game_id : null
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
