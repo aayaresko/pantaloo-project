@@ -56,12 +56,6 @@ class AffiliatesController extends Controller
 
     public function transactionFilter(Request $request)
     {
-        $prefix = $request->route()->getPrefix();
-
-        if ($prefix == '/admin') $is_admin = true;
-        else $is_admin = false;
-
-        if ($is_admin and !Auth::user()->isAdmin()) throw new \Exception('Error');
 
         if ($request->input('iDisplayStart')) $start = $request->input('iDisplayStart');
         else $start = 0;
@@ -69,11 +63,7 @@ class AffiliatesController extends Controller
         if ($request->input('iDisplayLength')) $length = $request->input('iDisplayLength');
         else $length = 10;
 
-        if ($is_admin) {
-            $transactions = Transaction::orderBy('id', 'DESC');
-        } else {
-            $transactions = Transaction::where('agent_id', Auth::user()->id);
-        }
+        $transactions = Transaction::where('agent_id', Auth::user()->id);
 
         $result = [
             'draw' => 0,
