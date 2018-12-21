@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Games;
 
+use DB;
 use Log;
 use App\Models\GamesType;
 use App\Models\GamesList;
@@ -45,6 +46,7 @@ class PantalloGetGames extends Command
         $this->info("Start ...");
         Log::info('PantalloGetGames START');
         $unwantedCharacter = '_';
+        DB::beginTransaction();
         try {
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
@@ -52,6 +54,13 @@ class PantalloGetGames extends Command
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
+
+            //don't active games
+            if (count($allGames->response) > 0) {
+                GamesList::where('provider_id', $providerId)->update([
+                    'active' => 0
+                ]);
+            }
 
             //get list types
             foreach ($allGames->response as $game) {
@@ -105,7 +114,8 @@ class PantalloGetGames extends Command
                         'image_preview' => $game->image_preview,
                         'image_filled' => $game->image_filled,
                         'image_background' => $game->image_background,
-                        'rating' => 1
+                        'rating' => 1,
+                        'active' => 1
                     ];
                     GamesList::create($gameDate);
                 } else {
@@ -116,13 +126,16 @@ class PantalloGetGames extends Command
                         'image_preview' => $game->image_preview,
                         'image_filled' => $game->image_filled,
                         'image_background' => $game->image_background,
+                        'active' => 1
                     ];
                     GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
                 }
             }
         } catch (\Exception $e) {
+            DB::rollBack();
             dd($e->getMessage());
         }
+        DB::commit();
         //get games and load or update
         Log::info('PantalloGetGames END');
         $this->info("Games loaded or updated.");
