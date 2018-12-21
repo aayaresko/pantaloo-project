@@ -126,7 +126,6 @@ class PantalloGetGames extends Command
                     ];
                     GamesListExtra::create($gameDateExtra);
                 } else {
-                    dd(222);
                     $gameDate = [
                         'details' => $game->details,
                         'mobile' => (int)$game->mobile,
