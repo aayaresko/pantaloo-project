@@ -12,8 +12,15 @@
         let typesImage = {!! json_encode($typesImage) !!};
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 @endsection
-
+<style>
+.toggle.btn {
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+</style>
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -22,6 +29,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
+                            <input data-input="our_name, type_id, image" data-on="Enabled" data-off="Disabled" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
