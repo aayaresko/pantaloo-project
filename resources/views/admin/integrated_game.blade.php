@@ -58,7 +58,7 @@
                                         <td>
                                             <select name="category_id" class="form-control">
                                                 @foreach($categories as $category)
-                                                    @if($game->categoty_id === $category->id)
+                                                    @if($game->category_id === $category->id)
                                                         <option value="{{ $category->id }}"
                                                                 selected>{{ $category->name }}</option>
                                                     @else

@@ -31,6 +31,10 @@ Route::group(['domain' => $partner], function () {
         Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
     });
 });
+//delete this after only ine panel partner
+Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+    Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
+});
 
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
