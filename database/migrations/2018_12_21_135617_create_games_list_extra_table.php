@@ -19,7 +19,7 @@ class CreateGamesListExtraTable extends Migration
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('games_types');
             $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('games_types');
+            $table->foreign('category_id')->references('id')->on('games_categories');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use Log;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesCategory;
+use App\Models\GamesListExtra;
 use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
 
@@ -117,8 +118,15 @@ class PantalloGetGames extends Command
                         'rating' => 1,
                         'active' => 1
                     ];
-                    GamesList::create($gameDate);
+                    $game = GamesList::create($gameDate);
+                    $gameDateExtra = [
+                        'game_id' => $game->id,
+                        'type_id' => $types[$gameType]->id,
+                        'category_id' => $categories[$gameCategory]->id,
+                    ];
+                    GamesListExtra::create($gameDateExtra);
                 } else {
+                    dd(222);
                     $gameDate = [
                         'details' => $game->details,
                         'mobile' => (int)$game->mobile,
@@ -128,7 +136,7 @@ class PantalloGetGames extends Command
                         'image_background' => $game->image_background,
                         'active' => 1
                     ];
-                    GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+                    $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
                 }
             }
         } catch (\Exception $e) {
