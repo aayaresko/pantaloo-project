@@ -52,7 +52,7 @@
 
     <link type="text/css" href="/assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 
-
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="/assets/js/modernizr.min.js"></script>
     <script>
         var getUrlParameter = function getUrlParameter(sParam) {
@@ -258,6 +258,7 @@
 <script src="/assets/js/jquery.nicescroll.js"></script>
 <script src="/assets/js/jquery.scrollTo.min.js"></script>
 
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- KNOB JS -->
 <!--[if IE]>
 <script type="text/javascript" src="/assets/plugins/jquery-knob/excanvas.js"></script>
