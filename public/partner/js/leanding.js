@@ -194,6 +194,7 @@ function resendPassword() {
             clearInterval(int);
             $('.second-hide').show();
             $('.second-show').hide();
+            $('.seconds').text('10');
           }
         }, 1000);
 
