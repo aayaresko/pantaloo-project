@@ -12,6 +12,7 @@
         let typesImage = {!! json_encode($typesImage) !!};
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+    <script src="/adminPanel/js/front.js?v={{time()}}"></script>
 @endsection
 <style>
 .toggle.btn {
@@ -27,7 +28,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            <input data-input="our_name, type_id, category_id, image" data-on="Enabled" data-off="Disabled" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
+                            <input data-input="our_name, type_id, category_id, image" data-on="Edit" data-off="Default" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
