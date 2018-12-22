@@ -76,7 +76,19 @@ class TransactionController extends Controller
         $param['conditions'] = [
             ['transactions.agent_id', '=', $param['user']->id]
         ];
-        /* COLUMNS */
+
+        if (isset($request->user_id) and $request->user_id != 0) {
+            array_push($param['conditions'], ['transactions.user_id', '=', $request->user_id]);
+        }
+
+        if (isset($request->category_id) and $request->category_id != 0) {
+            array_push($param['conditions'], ['games_list.category_id', '=', $request->category_id]);
+        }
+
+        if (isset($request->type_id) and $request->type_id != 0) {
+            array_push($param['conditions'], ['transactions.type', '=', $request->type_id]);
+        }
+         /* COLUMNS */
         return $param;
     }
 
@@ -126,7 +138,8 @@ class TransactionController extends Controller
         $param['typeTransaction'] = $configIntegratedGames['typeTransaction'];
 
         $data->map(function ($item, $key) use ($param) {
-            $item->description = $param['typeTransaction'][$item->type];
+            $keyDescription = array_search($item->type, array_column($param['typeTransaction'], 'code'));
+            $item->description = $param['typeTransaction'][$keyDescription]['value'];
             return $item;
         });
 

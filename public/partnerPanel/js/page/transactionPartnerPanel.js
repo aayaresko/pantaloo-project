@@ -11,7 +11,7 @@ $(document).ready(function () {
     }
 
     function initDataTable() {
-        $('#tableOrder').DataTable().destroy();
+        $('.datatable').DataTable().destroy();
         let table = $('.datatable').DataTable({
             "order": [[0, "asc"]],
             "processing": true,
@@ -48,15 +48,18 @@ $(document).ready(function () {
 
         function viewAmount(data) {
             let number = Number(data);
-            if (number > 0) {
-                let value = `<span class="label label-success">number</span>`;
+            let value;
+            if (number >= 0) {
+                value = `<span class="label label-success">${number}</span>`;
             } else {
-                let value = `<span class="label label-warning">number</span>`;
+                value = `<span class="label label-danger">${number}</span>`;
             }
+            return value;
         }
     }
 
     $(function () {
+        setOptions();
         initDataTable();
     });
 
