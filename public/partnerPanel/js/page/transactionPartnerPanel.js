@@ -15,6 +15,7 @@ $(document).ready(function () {
             "order": [[0, "asc"]],
             "processing": true,
             "serverSide": true,
+            "searching": false,
             "ajax": {
                 "url": transactionRoute,
                 "dataType": "json",
@@ -22,7 +23,7 @@ $(document).ready(function () {
                 "data": options,
             },
             "columns": [
-                {"data": "id"},
+                {"data": "email"},
                 {"data": "created_at"},
                 {"data": "description"},
                 {"data": "sum"},

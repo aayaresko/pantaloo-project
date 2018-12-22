@@ -29,14 +29,16 @@ class TransactionController extends Controller
     public function __construct()
     {
         $this->fields = [
-            0 => 'transactions.id',
+            0 => 'users.id',
             1 => 'transactions.created_at',
             2 => 'transactions.type',
             3 => 'transactions.sum',
             4 => 'transactions.bonus_sum',
+            5 => 'transactions.id',
         ];
 
         $this->relatedFields = $this->fields;
+        $this->relatedFields[0] = 'users.email as email';
     }
 
     /**
@@ -72,7 +74,7 @@ class TransactionController extends Controller
         $param['columnsAlias'] = $this->relatedFields;
         $param['user'] = $request->user();
         $param['conditions'] = [
-            ['agent_id', '=', $param['user']->id]
+            ['transactions.agent_id', '=', $param['user']->id]
         ];
         /* COLUMNS */
         return $param;
@@ -89,6 +91,7 @@ class TransactionController extends Controller
         $countSum = Transaction::select([DB::raw('COUNT(*) as `count`')])
             ->leftJoin('games_pantallo_transactions',
                 'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
+            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
             ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
@@ -103,48 +106,17 @@ class TransactionController extends Controller
         $order = $param['columns'][$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        if (empty($request->input('search.value'))) {
-            /* SORT */
-
-            $items = Transaction::leftJoin('games_pantallo_transactions',
-                'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
-                ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
-                ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
-                ->where($param['conditions'])
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
-        } else {
-            /* SEARCH */
-            $search = $request->input('search.value');
-
-            array_push($param['conditions'], [$param['columns'][0], 'LIKE', "%{$search}%"]);
-
-            $items = Transaction::leftJoin('games_pantallo_transactions',
-                'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
-                ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
-                ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
-                ->where($param['conditions'])
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
-
-            $countSum = Transaction::select(array(
-                DB::raw('COUNT(*) as `count`')))
-                ->leftJoin('games_pantallo_transactions',
-                    'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
-                ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
-                ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
-                ->where($param['conditions'])
-                ->get()->toArray();
-
-            $totalFiltered = $countSum[0]['count'];
-        }
+        $items = Transaction::leftJoin('games_pantallo_transactions',
+            'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
+            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
+            ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
+            ->where($param['conditions'])
+            ->offset($start)
+            ->limit($limit)
+            ->orderBy($order, $dir)
+            ->select($param['columnsAlias'])->get();
         /* END */
 
         /* TO VIEW */
