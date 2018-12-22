@@ -13,7 +13,8 @@ class LanguageSwitch extends CommonMiddleware
      * @var array
      */
     protected $except = [
-        '/games/endpoint'
+        '/games/endpoint',
+        '/games/pantallo/endpoint'
     ];
     /**
      * Handle an incoming request.
