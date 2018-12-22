@@ -17,8 +17,8 @@ $partner = parse_url($foreignPages['partner'])['host'];
 //sub-domain
 Route::group(['domain' => $partner], function () {
 
-    Route::get('/', ['as' => 'affiliates.index', 'uses' => 'AffiliatesController@index']);
-    Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'AffiliatesController@feedback']);
+    Route::get('/', ['as' => 'affiliates.index', 'uses' => 'Partner\AffiliatesController@index']);
+    Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'Partner\AffiliatesController@feedback']);
     Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
     Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@register']);
 
@@ -202,8 +202,8 @@ Route::group(['middleware' => ['auth']], function () {
 //        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'TransactionController@index']);
 //        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'TransactionController@filter']);
 
-        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'AffiliatesController@transaction']);
-        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'AffiliatesController@transactionFilter']);
+        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'Partner\TransactionController@index']);
+        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'Partner\TransactionController@getAll']);
 
         Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
         Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);

@@ -116,6 +116,8 @@ return [
         'partner' => 'http://partner.casinobit.io',
     ],
 
+    'currencyCode' => 'mBTC',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
