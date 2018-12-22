@@ -31,18 +31,6 @@
                                                    value="{{$item->name}}"></td>
                                     </tr>
                                     <tr>
-                                        <td>Active</td>
-                                        <td><input type="checkbox" name="active"
-                                                   @if($item->active == 1) checked @endif></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rating</td>
-                                        <td>
-                                            <input type="number" name="rating" value="{{ $item->rating }}" min="0">
-                                        </td>
-                                    </tr>
-
-                                    <tr>
                                         <td>Image</td>
                                         <td>
                                             @if(is_null($item->image))
@@ -59,11 +47,36 @@
                                     </tr>
 
                                     <tr>
+                                        <td>Rating</td>
+                                        <td>
+                                            <input type="number" name="rating" value="{{ $item->rating }}" min="0">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>
+                                            <input 
+                                                data-on="On" 
+                                                data-off="Off" 
+                                                type="checkbox" 
+                                                name="active" 
+                                                data-toggle="toggle" 
+                                                @if($item->active == 1) checked @endif>
+                                        <!-- <input type="checkbox" name="active"
+                                                   @if($item->active == 1) checked @endif> -->
+                                                   </td>
+                                    </tr>
+
+
+
+
+                                    <!-- <tr>
                                         <td>Rating for all items</td>
                                         <td>
                                             <input type="number" name="ratingItems" value="" min="0">
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>

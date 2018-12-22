@@ -194,6 +194,7 @@ function resendPassword() {
             clearInterval(int);
             $('.second-hide').show();
             $('.second-show').hide();
+            $('.seconds').text('10');
           }
         }, 1000);
 
@@ -207,6 +208,9 @@ function resendPassword() {
                     console.log('Ok');
                     //to do for front
                     $('.success-reset').show();
+                    setTimeout(function() {
+                        $('.success-reset').hide();    
+                    }, 5000)
                     $('.error-reset').hide();
                 } else {
                     //to do for front

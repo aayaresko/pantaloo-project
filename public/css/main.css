@@ -7677,3 +7677,10 @@ html.cropped {
     top: 6.94em
   }
 }
+
+.success-reset {
+  color: #4DB546;
+}
+.error-reset {
+  color: #EA4335;
+}
