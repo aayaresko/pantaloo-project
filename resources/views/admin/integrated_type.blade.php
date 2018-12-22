@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            <input data-input="name, image" data-on="Enabled" data-off="Disabled" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
+                            <input data-input="name, image" data-on="Edit" data-off="Default" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
