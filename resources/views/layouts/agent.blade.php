@@ -216,7 +216,7 @@
 {{--<script src="/assets/pages/jquery.dashboard.js"></script>--}}
 
 <!-- App js -->
-{{--<script src="/assets/js/jquery.core.js"></script>--}}
+<script src="/assets/js/jquery.core.js"></script>
 <script src="/assets/js/jquery.app.js"></script>
 
 <script src="/assets/plugins/moment/moment.js"></script>
