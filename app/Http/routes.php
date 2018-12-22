@@ -237,6 +237,7 @@ Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'In
 /* Pantallo Games */
 Route::group(['prefix' => 'games'], function () {
     Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+    Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
 });
 
 //testing
