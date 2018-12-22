@@ -14,12 +14,6 @@
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
     <script src="/adminPanel/js/front.js?v={{time()}}"></script>
 @endsection
-<style>
-.toggle.btn {
-  margin-bottom: 10px;
-  margin-left: auto;
-}
-</style>
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -87,8 +81,20 @@
                                         <td><input id="laodImage" type="file" name="image" class="form-control"></td>
                                     </tr>
                                     <tr>
-                                        <td>Active</td>
-                                        <td><input type="checkbox" name="active" @if($game->active == 1) checked @endif>
+                                        <td>Rating</td>
+                                        <td><input type="number" name="rating" value="{{ $game->rating }}" min="0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status</td>
+                                        <td>
+                                            <input 
+                                                data-on="On" 
+                                                data-off="Off" 
+                                                type="checkbox" 
+                                                name="active" 
+                                                data-toggle="toggle" 
+                                                @if($game->active == 1) checked @endif>
+                                        <!-- <input type="checkbox" name="active" @if($game->active == 1) checked @endif> -->
                                         </td>
                                     </tr>
                                     <tr>
@@ -96,10 +102,7 @@
                                         <td><input type="checkbox" name="mobile" @if($game->mobile == 1) checked @endif>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Rating</td>
-                                        <td><input type="number" name="rating" value="{{ $game->rating }}" min="0"></td>
-                                    </tr>
+
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>
                                         <td><a class="btn btn-primary" href="/admin/integratedGames"

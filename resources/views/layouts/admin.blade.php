@@ -38,6 +38,9 @@
 
     <link href="/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet">
 
+    <!-- front style -->
+    <link href="/adminPanel/css/front.css" rel="stylesheet">
+  
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
