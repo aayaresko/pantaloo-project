@@ -122,11 +122,11 @@ class TransactionController extends Controller
         /* TO VIEW */
         $data = $items;
         $param['currencyCode'] = config('app.currencyCode');
+        $configIntegratedGames = config('integratedGames.common');
+        $param['typeTransaction'] = $configIntegratedGames['typeTransaction'];
 
         $data->map(function ($item, $key) use ($param) {
-//            $item->image = view('admin.parts.imageTable', ['image' => $image])->render();
-//            $item->mobile = view('admin.parts.switch', ['switch' => $item->mobile])->render();
-//            $item->active = view('admin.parts.switch', ['switch' => $item->active])->render();
+            $item->description = $param['typeTransaction'][$item->type];
             return $item;
         });
 
