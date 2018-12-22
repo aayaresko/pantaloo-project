@@ -10,6 +10,7 @@
         let typesImage = {!! json_encode($typesImage) !!};
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+    <script src="/adminPanel/js/front.js?v={{time()}}"></script>
     
 @endsection
 
