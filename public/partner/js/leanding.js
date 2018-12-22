@@ -208,6 +208,9 @@ function resendPassword() {
                     console.log('Ok');
                     //to do for front
                     $('.success-reset').show();
+                    setTimeout(function() {
+                        $('.success-reset').hide();    
+                    }, 5000)
                     $('.error-reset').hide();
                 } else {
                     //to do for front
