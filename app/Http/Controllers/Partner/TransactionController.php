@@ -31,8 +31,9 @@ class TransactionController extends Controller
         $this->fields = [
             0 => 'transactions.id',
             1 => 'transactions.created_at',
-            2 => 'transactions.sum',
-            3 => 'transactions.bonus_sum',
+            2 => 'transactions.type',
+            3 => 'transactions.sum',
+            4 => 'transactions.bonus_sum',
         ];
 
         $this->relatedFields = $this->fields;
