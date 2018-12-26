@@ -7021,7 +7021,7 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    display: none;
+    /* display: none; */
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
@@ -7334,7 +7334,11 @@ html.cropped {
     padding-left: 0;
   }
 }
-
+@media (max-width: 360px) {
+  body .header .header-right-part .login-block span.text {
+    display: none
+  }
+}
 .games-block {
   position: relative;
   margin-bottom: 2px;
