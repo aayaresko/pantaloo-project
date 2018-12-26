@@ -5,10 +5,7 @@
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
-                            @php
-                                $image = is_null($game->our_image) ? $game->image_filled : $game->our_image;
-                            @endphp
-                            <img class="games-block__image show-animated" src="{{ $image }}"
+                            <img class="games-block__image show-animated" src="{{ $game->image }}"
                                  onerror="handleImage(this);"/>
                         </span>
                     </div>
@@ -20,7 +17,7 @@
                                 {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>
-                        <span class="games-block__name ng-binding">{{ $game->our_name }}</span>
+                        <span class="games-block__name ng-binding">{{ $game->name }}</span>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,6 @@
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script src="/adminPanel/js/front.js?v={{time()}}"></script>
 @endsection
 
 @section('content')
