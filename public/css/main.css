@@ -7158,7 +7158,7 @@ html.cropped {
     position: absolute;
     height: 274px;
     height: 100%;
-    top: -150px;
+    top: -100px;
     left: 0;
     width: 100%;
     background: url("../media/images/bg/welcome-mobile-bg.png") center no-repeat;
