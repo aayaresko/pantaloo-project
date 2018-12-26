@@ -17,7 +17,6 @@ class CreateGamesListTable extends Migration
             $table->integer('provider_id')->unsigned()->index();
             $table->integer('system_id')->unsigned()->unique();
             $table->string('name');
-            $table->string('our_name')->nullable();
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('games_types');
             $table->integer('category_id')->unsigned();
@@ -28,7 +27,6 @@ class CreateGamesListTable extends Migration
             $table->text('image_preview');
             $table->text('image_filled');
             $table->text('image_background');
-            $table->text('our_image')->nullable();
             $table->integer('rating')->unsigned();
             $table->boolean('active')->default(1);
             $table->timestamps();

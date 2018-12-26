@@ -14,12 +14,14 @@ class CreateGamesListExtraTable extends Migration
     {
         Schema::create('games_list_extra', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
             $table->integer('game_id')->unsigned();
             $table->foreign('game_id')->references('id')->on('games_list');
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('games_types');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('games_categories');
+            $table->text('image')->nullable();
             $table->timestamps();
         });
     }
