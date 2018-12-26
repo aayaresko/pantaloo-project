@@ -1,0 +1,10 @@
+@media screen and (max-width: 500px) {
+    .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+    select.selectpicker {
+        border: 1px solid;
+        margin-bottom: 5px
+    }
+}

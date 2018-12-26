@@ -4,15 +4,6 @@
     Transactions
 @endsection
 
-<style type="text/css">
-    @media screen and (max-width: 500px) {
-
-        .table-wrap {
-            width: 100%;
-            overflow-x: auto;
-        }
-    } 
-</style>
 @section('content')
     <div class="content-page">
         <!-- Start content -->
