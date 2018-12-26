@@ -49,29 +49,31 @@
                             <div class="row">
                                 <br>
                                 <div class="col-sm-12">
-                                    <table class="table table-striped table-bordered dataTable no-footer datatable"
-                                           role="/rid" aria-describedby="datatable_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                colspan="1">User
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                colspan="1">Date
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                colspan="1">Description
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                colspan="1">Amount
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                colspan="1">Bonus
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                                    <div class="table-wrap" style="width: 100%;overflow-x: auto;">
+                                        <table class="table table-striped table-bordered dataTable no-footer datatable"
+                                            role="/rid" aria-describedby="datatable_info">
+                                            <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">User
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">Date
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">Description
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">Amount
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">Bonus
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
