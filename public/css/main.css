@@ -1528,6 +1528,11 @@ html.cropped {
 .mobile-container .welcome-mob .games-listing li a.slots:before {
   background-position: 0 -126px;
 }
+.mobile-container .welcome-mob .games-listing li a.poker:before {
+  background-position: 135px -53px;
+  height: 32px;
+  width: 37px;
+}
 /* line 364, ../scss/_middle.scss */
 .mobile-container .welcome-mob .games-listing li a.bjack:before {
   background-position: -92px -126px;
