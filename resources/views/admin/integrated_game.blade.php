@@ -31,7 +31,6 @@
                                             <div style="display: inline">
                                                 <input
                                                         id="nameStatus"
-                                                        data-input="our_name"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
@@ -50,7 +49,6 @@
                                             <div style="display: inline">
                                                 <input
                                                         id="typeStatus"
-                                                        data-input="type_id"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
@@ -77,7 +75,6 @@
                                             <div style="display: inline">
                                                 <input
                                                         id="categoryStatus"
-                                                        data-input="category_id"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
@@ -104,7 +101,6 @@
                                             <div style="display: inline">
                                                 <input
                                                         id="imageStatus"
-                                                        data-input="image"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
@@ -123,7 +119,11 @@
                                     <tr>
                                         <td>New image
                                         </td>
-                                        <td><input id="laodImage" type="file" name="image" class="form-control"></td>
+                                        <td>
+                                            <input id="laodImage" type="file" name="image" class="form-control">
+                                            <input type="checkbox" name="default_provider_image" hidden>
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Rating</td>

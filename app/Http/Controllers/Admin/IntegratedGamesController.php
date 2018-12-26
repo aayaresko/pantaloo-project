@@ -103,9 +103,9 @@ class IntegratedGamesController extends Controller
     {
         $adminConfig = config('adminPanel');
         $imageConfig = $adminConfig['image'];
-        dd($request->toArray());
+
         $this->validate($request, [
-            'our_name' => 'string|min:3|max:100',
+            'name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
@@ -121,8 +121,7 @@ class IntegratedGamesController extends Controller
                 $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
                 Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['our_image'] = '/storage' . $pathImage;
-                unset($updatedGame['image']);
+                $updatedGame['image'] = '/storage' . $pathImage;
             }
 
             $active = $request->input('active');
@@ -130,21 +129,24 @@ class IntegratedGamesController extends Controller
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             }
 
-            $mobile = $request->input('mobile');
-            if (!is_null($active)) {
-                $updatedGame['mobile'] = ($mobile === 'on') ? 1 : 0;
-            }
-
             unset($updatedGame['_token']);
             $default_provider_image = $request->input('default_provider_image');
 
             if (!is_null($default_provider_image)) {
                 if ($default_provider_image === 'on') {
-                    $updatedGame['our_image'] = $game->image_filled;
+                    $updatedGame['image'] = $game->image_filled;
                     unset($updatedGame['default_provider_image']);
                 }
             }
-            GamesList::where('id', $request->id)->update($updatedGame);
+
+            GamesList::where('id', $request->id)->update([
+                'rating' => $updatedGame['rating'],
+                'active' => $updatedGame['active'],
+            ]);
+            unset($updatedGame['rating']);
+            unset($updatedGame['active']);
+
+            GamesListExtra::where('game_id', $request->id)->update($updatedGame);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);

@@ -74,11 +74,13 @@ function eventCheckBox() {
             input.attr('checked', true);
             $(".games-block__image").attr("src", game.image);
 
+            $(`input[name='default_provider_image']`).attr('checked', false);
             element.attr('disabled', false);
         } else {
             input.attr('checked', false);
             $(".games-block__image").attr("src", game.default_image);
 
+            $(`input[name='default_provider_image']`).attr('checked', 'checked');
             element.attr('disabled', true);
         }
     });
