@@ -5,15 +5,16 @@
 @endsection
 
 @section('preJs')
-
     <script>
         let dummy = "{{ $dummyPicture }}";
         let maxSizeImage = "{{ $maxSizeImage }}";
         let typesImage = {!! json_encode($typesImage) !!};
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="/adminPanel/js/front.js?v={{time()}}"></script>
 @endsection
+
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -22,17 +23,41 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            <input data-input="our_name, type_id, category_id, image" data-on="Edit" data-off="Default" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
-                                        <td>Name</td>
+                                        <td>Name
+                                            <div style="display: inline">
+                                                <input
+                                                        data-input="our_name"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        name="active"
+                                                        data-toggle="toggle"
+                                                        @if($game->active == 1)
+                                                        checked @endif>
+                                            </div>
+                                        </td>
                                         <td>
                                             <input type="text" name="our_name" class="form-control"
-                                                   value="{{ $game->our_name }}" required></td>
+                                                   value="{{ $game->our_name }}" required>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>Type</td>
+                                        <td>Type
+                                            <div style="display: inline">
+                                                <input
+                                                        data-input="type_id"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        name="active"
+                                                        data-toggle="toggle"
+                                                        @if($game->active == 1)
+                                                        checked @endif>
+                                            </div>
+                                        </td>
                                         <td>
                                             <select name="type_id" class="form-control">
                                                 @foreach($types as $type)
@@ -47,7 +72,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Categoty</td>
+                                        <td>Categoty
+                                            <div style="display: inline">
+                                                <input
+                                                        data-input="category_id"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        name="active"
+                                                        data-toggle="toggle"
+                                                        @if($game->active == 1)
+                                                        checked @endif>
+                                            </div>
+                                        </td>
                                         <td>
                                             <select name="category_id" class="form-control">
                                                 @foreach($categories as $category)
@@ -62,7 +99,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Image</td>
+                                        <td>Image
+                                        </td>
                                         <td>
                                             <img style="max-width: 350px;" class="games-block__image show-animated"
                                                  @if(is_null($game->our_image))
@@ -77,7 +115,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>New image</td>
+                                        <td>New image
+                                            <div style="display: inline">
+                                                <input
+                                                        data-input="image"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        name="active"
+                                                        data-toggle="toggle"
+                                                        @if($game->active == 1)
+                                                        checked @endif>
+                                            </div>
+                                        </td>
                                         <td><input id="laodImage" type="file" name="image" class="form-control"></td>
                                     </tr>
                                     <tr>
@@ -87,22 +137,15 @@
                                     <tr>
                                         <td>Status</td>
                                         <td>
-                                            <input 
-                                                data-on="On" 
-                                                data-off="Off" 
-                                                type="checkbox" 
-                                                name="active" 
-                                                data-toggle="toggle" 
-                                                @if($game->active == 1) checked @endif>
-                                        <!-- <input type="checkbox" name="active" @if($game->active == 1) checked @endif> -->
+                                            <input
+                                                    data-on="On"
+                                                    data-off="Off"
+                                                    type="checkbox"
+                                                    name="active"
+                                                    data-toggle="toggle"
+                                                    @if($game->active == 1) checked @endif>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Mobile</td>
-                                        <td><input type="checkbox" name="mobile" @if($game->mobile == 1) checked @endif>
-                                        </td>
-                                    </tr>
-
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>
                                         <td><a class="btn btn-primary" href="/admin/integratedGames"

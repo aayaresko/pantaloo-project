@@ -99,7 +99,7 @@ class IntegratedGamesController extends Controller
     {
         $adminConfig = config('adminPanel');
         $imageConfig = $adminConfig['image'];
-
+        dd($request->toArray());
         $this->validate($request, [
             'our_name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
