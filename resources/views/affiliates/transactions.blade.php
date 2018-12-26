@@ -4,6 +4,15 @@
     Transactions
 @endsection
 
+<style type="text/css">
+    @media screen and (max-width: 500px) {
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+    } 
+</style>
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -49,7 +58,7 @@
                             <div class="row">
                                 <br>
                                 <div class="col-sm-12">
-                                    <div class="table-wrap" style="width: 100%;overflow-x: auto;">
+                                    <div class="table-wrap">
                                         <table class="table table-striped table-bordered dataTable no-footer datatable"
                                             role="/rid" aria-describedby="datatable_info">
                                             <thead>
