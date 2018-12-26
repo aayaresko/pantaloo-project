@@ -106,7 +106,6 @@ class PantalloGetGames extends Command
                         'provider_id' => $providerId,
                         'system_id' => $gameId,
                         'name' => $game->name,
-                        'our_name' => $game->name,
                         'type_id' => $types[$gameType]->id,
                         'category_id' => $categories[$gameCategory]->id,
                         'details' => $game->details,
@@ -120,6 +119,8 @@ class PantalloGetGames extends Command
                     ];
                     $game = GamesList::create($gameDate);
                     $gameDateExtra = [
+                        'name' => $game->name,
+                        'image' => $game->image_filled,
                         'game_id' => $game->id,
                         'type_id' => $types[$gameType]->id,
                         'category_id' => $categories[$gameCategory]->id,

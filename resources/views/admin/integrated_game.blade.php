@@ -6,6 +6,7 @@
 
 @section('preJs')
     <script>
+        let game = {!! json_encode($game) !!};
         let dummy = "{{ $dummyPicture }}";
         let maxSizeImage = "{{ $maxSizeImage }}";
         let typesImage = {!! json_encode($typesImage) !!};
@@ -29,30 +30,30 @@
                                         <td>Name
                                             <div style="display: inline">
                                                 <input
+                                                        id="nameStatus"
                                                         data-input="our_name"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
-                                                        name="active"
                                                         data-toggle="toggle"
                                                         @if($game->active == 1)
                                                         checked @endif>
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="text" name="our_name" class="form-control"
-                                                   value="{{ $game->our_name }}" required>
+                                            <input type="text" name="name" class="form-control"
+                                                   value="{{ $game->name }}" required>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Type
                                             <div style="display: inline">
                                                 <input
+                                                        id="typeStatus"
                                                         data-input="type_id"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
-                                                        name="active"
                                                         data-toggle="toggle"
                                                         @if($game->active == 1)
                                                         checked @endif>
@@ -75,11 +76,11 @@
                                         <td>Categoty
                                             <div style="display: inline">
                                                 <input
+                                                        id="categoryStatus"
                                                         data-input="category_id"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
-                                                        name="active"
                                                         data-toggle="toggle"
                                                         @if($game->active == 1)
                                                         checked @endif>
@@ -100,33 +101,27 @@
                                     </tr>
                                     <tr>
                                         <td>Image
-                                        </td>
-                                        <td>
-                                            <img style="max-width: 350px;" class="games-block__image show-animated"
-                                                 @if(is_null($game->our_image))
-                                                 src="{{$game->image_filled}}"
-                                                 @else
-                                                 src="{{$game->our_image}}"
-                                                 @endif
-                                                 onerror="handleImage(this);"/>
-                                            <br>
-                                            <span>Use Default Provider Image</span>
-                                            <input type="checkbox" name="default_provider_image">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>New image
                                             <div style="display: inline">
                                                 <input
+                                                        id="imageStatus"
                                                         data-input="image"
                                                         data-on="Edit"
                                                         data-off="Default"
                                                         type="checkbox"
-                                                        name="active"
                                                         data-toggle="toggle"
                                                         @if($game->active == 1)
                                                         checked @endif>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <img style="max-width: 350px;" class="games-block__image show-animated"
+                                                 src="{{$game->image}}"
+                                                 onerror="handleImage(this);"/>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>New image
                                         </td>
                                         <td><input id="laodImage" type="file" name="image" class="form-control"></td>
                                     </tr>
