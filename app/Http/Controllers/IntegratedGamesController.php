@@ -23,6 +23,15 @@ class IntegratedGamesController extends Controller
     /**
      * @var array
      */
+    protected $fields;
+    /**
+     * @var array
+     */
+    protected $relatedFields;
+
+    /**
+     * @var array
+     */
     protected $params = [];
 
     /**
@@ -31,6 +40,26 @@ class IntegratedGamesController extends Controller
     public function __construct()
     {
         $this->params['settings'] = ['id', 'code', 'value'];
+
+        $this->fields = [
+            0 => 'games_list.id',
+            1 => 'games_list_extra.name',
+            2 => 'games_list.provider_id',
+            3 => 'games_list_extra.type_id',
+            4 => 'games_list_extra.category_id',
+            5 => 'games_list_extra.image',
+            6 => 'games_list.rating',
+            7 => 'games_list.active',
+            8 => 'games_list.mobile',
+            9 => 'games_list.created_at',
+        ];
+
+
+        $this->relatedFields = $this->fields;
+        $this->relatedFields[2] = 'games_list.provider_id as provider';
+        $this->relatedFields[3] = 'games_types.name as type';
+        $this->relatedFields[4] = 'games_categories.name as category';
+        $this->relatedFields[5] = 'games_list_extra.image as image';
     }
 
     /**
@@ -78,19 +107,19 @@ class IntegratedGamesController extends Controller
         $configIntegratedGames = config('integratedGames.common');
 
         $whereGameList = [
-            ['active', '=', 1],
+            ['games_list.active', '=', 1],
         ];
 
         if ((int)$request->categoryId !== 0) {
-            array_push($whereGameList, ['category_id', '=', $request->categoryId]);
+            array_push($whereGameList, ['games_list_extra.category_id', '=', $request->categoryId]);
         }
 
         if ((int)$request->typeId !== 0) {
-            array_push($whereGameList, ['type_id', '=', $request->typeId]);
+            array_push($whereGameList, ['games_list_extra.type_id', '=', $request->typeId]);
         }
 
         if ($request->search !== '') {
-            array_push($whereGameList, ['our_name', 'LIKE', '%' . $request->search . '%']);
+            array_push($whereGameList, ['games_list_extra.name', 'LIKE', '%' . $request->search . '%']);
         }
 
         $definitionSettings = $configIntegratedGames['listSettings'];
@@ -103,13 +132,17 @@ class IntegratedGamesController extends Controller
         //check this i use alien code
         if (Casino::isMobile()) {
             $paginationCount = $configIntegratedGames['listGames']['pagination']['mobile'];
-            array_push($whereGameList, ['mobile', '=', 1]);
+            array_push($whereGameList, ['games_list.mobile', '=', 1]);
         } else {
             $paginationCount = $configIntegratedGames['listGames']['pagination']['desktop'];
-            array_push($whereGameList, ['mobile', '=', 0]);
+            array_push($whereGameList, ['games_list.mobile', '=', 0]);
         }
 
-        $gameList = GamesList::where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
+        $gameList = GamesList::select($this->relatedFields)
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
         $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);

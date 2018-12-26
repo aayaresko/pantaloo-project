@@ -8,6 +8,7 @@ use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
 use App\Models\GamesCategory;
+use App\Models\GamesListExtra;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
@@ -34,24 +35,26 @@ class IntegratedGamesController extends Controller
     {
         $this->fields = [
             0 => 'games_list.id',
-            1 => 'games_list.our_name',
+            1 => 'games_list_extra.name',
             2 => 'games_list.provider_id',
-            3 => 'games_list.type_id',
-            4 => 'games_list.category_id',
-            5 => 'games_list.image_filled',
+            3 => 'games_list_extra.type_id',
+            4 => 'games_list_extra.category_id',
+            5 => 'games_list_extra.image',
             6 => 'games_list.rating',
             7 => 'games_list.active',
             8 => 'games_list.mobile',
             9 => 'games_list.created_at',
-            10 => 'games_list.our_image',
-
+            10 => 'games_list.name as default_name',
+            12 => 'games_list.type_id as default_type_id',
+            13 => 'games_list.category_id as default_category_id',
+            14 => 'games_list.image as default_image',
         ];
 
         $this->relatedFields = $this->fields;
         $this->relatedFields[2] = 'games_list.provider_id as provider';
         $this->relatedFields[3] = 'games_types.name as type';
         $this->relatedFields[4] = 'games_categories.name as category';
-        $this->relatedFields[5] = 'games_list.image_filled as image';
+        $this->relatedFields[5] = 'games_list_extra.image as image';
     }
 
     /**
@@ -83,7 +86,8 @@ class IntegratedGamesController extends Controller
 
         $types = GamesType::select(['id', 'code', 'name'])->get();
         $categories = GamesCategory::select(['id', 'code', 'name'])->get();
-        $game = GamesList::where([['games_list.id', '=', $request->id]])->select($this->fields)->first();
+        $game = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->where([['games_list.id', '=', $request->id]])->select($this->fields)->first();
         return view('admin.integrated_game')->with([
             'game' => $game,
             'types' => $types,
@@ -101,7 +105,7 @@ class IntegratedGamesController extends Controller
         $imageConfig = $adminConfig['image'];
 
         $this->validate($request, [
-            'our_name' => 'string|min:3|max:100',
+            'name' => 'string|min:3|max:100',
             'type_id' => 'integer|exists:games_types,id',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
@@ -117,8 +121,7 @@ class IntegratedGamesController extends Controller
                 $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
                 Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['our_image'] = '/storage' . $pathImage;
-                unset($updatedGame['image']);
+                $updatedGame['image'] = '/storage' . $pathImage;
             }
 
             $active = $request->input('active');
@@ -126,21 +129,24 @@ class IntegratedGamesController extends Controller
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             }
 
-            $mobile = $request->input('mobile');
-            if (!is_null($active)) {
-                $updatedGame['mobile'] = ($mobile === 'on') ? 1 : 0;
-            }
-
             unset($updatedGame['_token']);
             $default_provider_image = $request->input('default_provider_image');
 
             if (!is_null($default_provider_image)) {
                 if ($default_provider_image === 'on') {
-                    $updatedGame['our_image'] = $game->image_filled;
+                    $updatedGame['image'] = $game->image_filled;
                     unset($updatedGame['default_provider_image']);
                 }
             }
-            GamesList::where('id', $request->id)->update($updatedGame);
+
+            GamesList::where('id', $request->id)->update([
+                'rating' => $updatedGame['rating'],
+                'active' => $updatedGame['active'],
+            ]);
+            unset($updatedGame['rating']);
+            unset($updatedGame['active']);
+
+            GamesListExtra::where('game_id', $request->id)->update($updatedGame);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);
@@ -173,6 +179,9 @@ class IntegratedGamesController extends Controller
         /* ACT */
         $countSum = GamesList::select(array(
             DB::raw('COUNT(*) as `count`')))
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
             ->where([])->get()->toArray();
 
         $totalData = $countSum[0]['count'];
@@ -187,9 +196,9 @@ class IntegratedGamesController extends Controller
         if (empty($request->input('search.value'))) {
             /* SORT */
 
-            $items = GamesList::leftJoin('games_types',
-                'games_types.id', '=', 'games_list.type_id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list.category_id')
+            $items = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
                 ->where([])
                 ->offset($start)
                 ->limit($limit)
@@ -199,9 +208,9 @@ class IntegratedGamesController extends Controller
             /* SEARCH */
             $search = $request->input('search.value');
 
-            $items = GamesList::leftJoin('games_types',
-                'games_types.id', '=', 'games_list.type_id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list.category_id')
+            $items = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
                 ->where([
                     [$param['columns'][0], 'LIKE', "%{$search}%"],
                 ])
@@ -212,9 +221,9 @@ class IntegratedGamesController extends Controller
 
             $countSum = GamesList::select(array(
                 DB::raw('COUNT(*) as `count`')))
-                ->leftJoin('games_types',
-                    'games_types.id', '=', 'games_list.type_id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list.category_id')
+                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
                 ->where([
                     [$param['columns'][0], 'LIKE', "%{$search}%"],
                 ])
@@ -233,8 +242,7 @@ class IntegratedGamesController extends Controller
             $idProvider = $item->provider;
             $item->provider = $param['providers'][$idProvider]['code'];
             $item->edit = view('admin.parts.buttons', ['id' => $item->id])->render();
-            $image = is_null($item->our_image) ? $item->image : $item->our_image;
-            $item->image = view('admin.parts.imageTable', ['image' => $image])->render();
+            $item->image = view('admin.parts.imageTable', ['image' => $item->image])->render();
             $item->mobile = view('admin.parts.switch', ['switch' => $item->mobile])->render();
             $item->active = view('admin.parts.switch', ['switch' => $item->active])->render();
 

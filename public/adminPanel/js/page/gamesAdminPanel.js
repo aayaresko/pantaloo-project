@@ -30,7 +30,7 @@ function initDataTable() {
         },
         "columns": [
             {"data": "id"},
-            {"data": "our_name"},
+            {"data": "name"},
             {"data": "provider"},
             {"data": "type"},
             {"data": "category"},
