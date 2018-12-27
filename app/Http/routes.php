@@ -205,11 +205,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'Partner\TransactionController@index']);
         Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'Partner\TransactionController@getAll']);
 
-        Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
+//        Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
+        Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'Partner\AffiliatesController@trackers']);
+
         Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);
         Route::post('/tracker/{tracker}/update', ['as' => 'agent.updateTracker', 'uses' => 'AgentController@updateTracker']);
 
         Route::get('/banners', ['as' => 'agent.banners', 'uses' => 'BannerController@view']);
+
+        Route::get('/marketingMaterial/{id}',
+            ['as' => 'affiliates.marketingMaterial', 'uses' => 'Partner\AffiliatesController@marketingMaterial']);
+
         Route::get('/faq', ['as' => 'agent.faq', 'uses' => 'QuestionController@view']);
 
         Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);

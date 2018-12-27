@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Partner;
 
 use Validator;
+use App\Banner;
+use App\Tracker;
 use Illuminate\Http\Request;
 use App\Models\Partners\Feedback;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +28,50 @@ class AffiliatesController extends Controller
             }
         }
         return view('affiliates.lending');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function trackers(Request $request)
+    {
+        $user = $request->user();
+        $trackersFileds = ['id', 'ref', 'name'];
+        $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
+        return view('affiliates.trackers', ['trackers' => $trackers]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function marketingMaterial($id)
+    {
+        $params = [];
+        $configPartner = config('partner');
+        $bannersFileds = ['id', 'url'];
+        $banners = Banner::select($bannersFileds)->get();
+        $trackersFileds = ['id', 'ref', 'name'];
+        $tracker = Tracker::select($trackersFileds)->where('id', $id)->first();
+        $params['name'] = $tracker->name;
+        $params['link'] = sprintf("%s?%s=%s", url('/'), $configPartner['keyLink'], $tracker->ref);
+
+        $banners->map(function ($item, $key) use ($params) {
+            $item->link = $params['link'];
+
+            $item->html = view('affiliates.parts.banner_html', [
+                'link' => $params['link'],
+                'image' => $item->url,
+                'name' => $params['name']
+            ]);
+
+            return $item;
+        });
+
+        return view('affiliates.marketing_material')->with([
+            'banners' => $banners
+        ]);
     }
 
     /**
