@@ -54,7 +54,7 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-    $('#type_of_game').on('change', function (e) {
+    $('body').on('change', '#type_of_game', function (e) {
         e.preventDefault();
         listGameParams.typeId = Number($("#type_of_game").val());
         listGameParams.page = 1;
@@ -62,13 +62,13 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-    $('#filter_provider').on('change', function (e) {
+    $('body').on('change', '#filter_provider', function (e) {
         e.preventDefault();
         listGameParams.categoryId = Number($("#filter_provider").val());
         listGameParams.page = 1;
         getListGames();
         $('html,body').scrollTop(0);
-    });
+    }); 
 
     $(document).on('submit', '.block-filter form', function (e) {
         e.preventDefault();
