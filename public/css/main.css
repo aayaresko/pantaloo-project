@@ -7729,3 +7729,18 @@ html.cropped {
 .error-reset {
   color: #EA4335;
 }
+
+@media (max-height: 400px) {
+  body .mobile-container .welcome-mob {
+    padding-top: 150px;
+    padding-bottom: 50px;
+    background: url(../media/images/bg/welcome-mobile-bg.png) center 15% no-repeat;
+    background-size: cover;
+  }
+  body .mobile-container .welcome-mob .main-title-block {
+    margin-bottom: 50px;
+  }
+  body .mobile-container .welcome-mob .bitcoin-block {
+    margin-top: 70px;
+  }
+}
