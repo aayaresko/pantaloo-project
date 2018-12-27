@@ -11,20 +11,18 @@ function eventCheckBox() {
 
             input.attr('checked', true);
 
-            element.val(game.name);
+            element.val(item.name);
 
             element.removeClass('elementReadOnly');
         } else {
             input.attr('checked', false);
 
-            element.val(game.default_name);
+            element.val(item.default_name);
 
             element.addClass('elementReadOnly');
         }
     });
-
 }
-
 
 function laodImage() {
     $('#laodImage').change(checkFile);

@@ -66,6 +66,13 @@
                                     </tr>
 
                                     <tr>
+                                        <td>Rating for all items</td>
+                                        <td>
+                                            <input type="number" name="ratingItems" value="" min="0">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
                                         <td>Status</td>
                                         <td>
                                             <input 
@@ -80,15 +87,6 @@
                                                    </td>
                                     </tr>
 
-
-
-
-                                    <!-- <tr>
-                                        <td>Rating for all items</td>
-                                        <td>
-                                            <input type="number" name="ratingItems" value="" min="0">
-                                        </td>
-                                    </tr> -->
 
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>
