@@ -36,11 +36,7 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $item->link }}</td>
                                         <td>{{ $item->html }}</td>
-                                        <td>
-                                            <div style="max-height: 100px;">
-                                                {!! $item->html !!}
-                                            </div>
-                                        </td>
+                                        <td>{!! $item->htmlView !!}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

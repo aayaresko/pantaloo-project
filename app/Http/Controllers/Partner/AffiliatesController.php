@@ -63,7 +63,15 @@ class AffiliatesController extends Controller
             $item->html = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
                 'image' => $item->url,
-                'name' => $params['name']
+                'name' => $params['name'],
+                'style' => '',
+            ]);
+
+            $item->htmlView = view('affiliates.parts.banner_html', [
+                'link' => $params['link'],
+                'image' => $item->url,
+                'name' => $params['name'],
+                'style' => "style=max-height:100px",
             ]);
 
             return $item;
