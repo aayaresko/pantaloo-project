@@ -149,7 +149,7 @@
                 <div class="dots-block"></div>
             </div>
         </section>
-        <div class="games-block">
+        <!-- <div class="games-block">
             <div class="games-slider">
                 <div class="game-entry" style="background: url('media/images/bg/blackjack.jpg') center no-repeat; background-size: cover;">
                     <div class="main-title-block">
@@ -179,15 +179,15 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="free-games-block">
+        </div> -->
+        <!-- <div class="free-games-block">
 		<span class="top-text">
 			<span class="number-value">5</span>
             {{translate('free games')}}
 		</span>
             <span class="middle-text">{{translate('after registration')}}</span>
             <a href="#" class="registration-btn reg-btn"><span class="text">{{translate('Registration')}}</span></a>
-        </div>
+        </div> -->
     </div>
     <footer class="footer">
         <div class="msg-block">

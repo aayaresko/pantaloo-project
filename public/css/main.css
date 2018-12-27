@@ -7021,7 +7021,7 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    display: none;
+    /* display: none; */
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
@@ -7158,7 +7158,7 @@ html.cropped {
     position: absolute;
     height: 274px;
     height: 100%;
-    top: -150px;
+    top: -100px;
     left: 0;
     width: 100%;
     background: url("../media/images/bg/welcome-mobile-bg.png") center no-repeat;
@@ -7334,7 +7334,11 @@ html.cropped {
     padding-left: 0;
   }
 }
-
+@media (max-width: 360px) {
+  body .header .header-right-part .login-block span.text {
+    display: none
+  }
+}
 .games-block {
   position: relative;
   margin-bottom: 2px;
