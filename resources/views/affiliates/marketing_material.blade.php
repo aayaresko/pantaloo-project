@@ -25,7 +25,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
                                         Html
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 300px">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
                                         View
                                     </th>
                                 </tr>
@@ -36,7 +36,11 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $item->link }}</td>
                                         <td>{{ $item->html }}</td>
-                                        <td>{!! $item->html !!}</td>
+                                        <td>
+                                            <div style="max-height: 100px;">
+                                                {!! $item->html !!}
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
