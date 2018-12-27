@@ -7004,6 +7004,9 @@ html.cropped {
     margin-bottom: 40px;
   }
 }
+.login-block-reg {
+  display: none;
+}
 /* Landscape phones and down */
 @media (max-width: 480px) {
   /* line 2040, ../scss/_responsive.scss */
@@ -7021,7 +7024,17 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    /* display: none; */
+    display: none;
+  }
+  body .header .header-right-part .login-block.login-block-reg a:before {
+    display: none !important;
+  }
+  body .header .header-right-part .login-block.login-block-reg a {
+    padding-left: 15px !important;
+    margin-right: 10px !important;
+  }
+  .login-block-reg {
+    display: block !important;
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
@@ -7334,11 +7347,8 @@ html.cropped {
     padding-left: 0;
   }
 }
-@media (max-width: 360px) {
-  body .header .header-right-part .login-block span.text {
-    display: none
-  }
-}
+
+
 .games-block {
   position: relative;
   margin-bottom: 2px;
