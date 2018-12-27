@@ -55,6 +55,7 @@ let events = function () {
     });
 
     $('#type_of_game').on('change', function (e) {
+
         e.preventDefault();
         listGameParams.typeId = Number($("#type_of_game").val());
         listGameParams.page = 1;
@@ -63,6 +64,7 @@ let events = function () {
     });
 
     $('#filter_provider').on('change', function (e) {
+
         e.preventDefault();
         listGameParams.categoryId = Number($("#filter_provider").val());
         listGameParams.page = 1;
