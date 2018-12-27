@@ -34,8 +34,7 @@
                                                         data-off="Default"
                                                         type="checkbox"
                                                         data-toggle="toggle"
-                                                        @if($game->active == 1)
-                                                        checked @endif>
+                                                        checked>
                                             </div>
                                         </td>
                                         <td>
@@ -52,8 +51,7 @@
                                                         data-off="Default"
                                                         type="checkbox"
                                                         data-toggle="toggle"
-                                                        @if($game->active == 1)
-                                                        checked @endif>
+                                                        checked>
                                             </div>
                                         </td>
                                         <td>
@@ -78,8 +76,7 @@
                                                         data-off="Default"
                                                         type="checkbox"
                                                         data-toggle="toggle"
-                                                        @if($game->active == 1)
-                                                        checked @endif>
+                                                        checked>
                                             </div>
                                         </td>
                                         <td>
@@ -104,8 +101,7 @@
                                                         data-off="Default"
                                                         type="checkbox"
                                                         data-toggle="toggle"
-                                                        @if($game->active == 1)
-                                                        checked @endif>
+                                                        checked>
                                             </div>
                                         </td>
                                         <td>

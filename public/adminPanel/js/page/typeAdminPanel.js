@@ -8,17 +8,18 @@ function eventCheckBox() {
         let element = $(`input[name='name']`);
 
         if (checked === undefined) {
+
             input.attr('checked', true);
 
-            element.val(game.name);
+            element.val(item.name);
 
-            element.attr('disabled', false);
+            element.removeClass('elementReadOnly');
         } else {
             input.attr('checked', false);
 
-            element.val(game.default_name);
+            element.val(item.default_name);
 
-            element.attr('disabled', true);
+            element.addClass('elementReadOnly');
         }
     });
 

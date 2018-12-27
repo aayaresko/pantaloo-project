@@ -6,12 +6,13 @@
 
 @section('preJs')
     <script>
+        let item = {!! json_encode($item) !!};
         let maxSizeImage = "{{ $maxSizeImage }}";
         let typesImage = {!! json_encode($typesImage) !!};
     </script>
     <script src="/adminPanel/js/general.js?v={{time()}}"></script>
     <script src="/adminPanel/js/front.js?v={{time()}}"></script>
-    
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 @endsection
 
 @section('content')
@@ -22,13 +23,24 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            <input data-input="name, image" data-on="Edit" data-off="Default" type="checkbox" checked data-toggle="toggle" class="toggle-controll">
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
-                                        <td>Name</td>
-                                        <td><input type="text" name="name" class="form-control"
-                                                   value="{{$item->name}}"></td>
+                                        <td>Name
+                                            <div style="display: inline">
+                                                <input
+                                                        id="nameStatus"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        data-toggle="toggle"
+                                                        checked>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="name" class="form-control"
+                                                   value="{{$item->name}}">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Image</td>

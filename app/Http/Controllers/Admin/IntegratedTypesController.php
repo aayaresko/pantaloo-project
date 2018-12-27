@@ -31,7 +31,7 @@ class IntegratedTypesController extends Controller
      */
     public function __construct()
     {
-        $this->fields = ['id', 'code', 'name', 'image', 'active', 'rating', 'created_at', 'updated_at'];
+        $this->fields = ['id', 'code', 'name', 'default_name', 'image', 'active', 'rating', 'created_at', 'updated_at'];
     }
 
     /**

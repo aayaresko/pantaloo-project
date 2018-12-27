@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class GamesTag extends Model
 {
     protected $table = 'games_tags';
-    protected $fillable = ['code', 'name', 'image', 'rating', 'active'];
+    protected $fillable = ['code', 'name', 'default_name', 'image', 'rating', 'active'];
 }
