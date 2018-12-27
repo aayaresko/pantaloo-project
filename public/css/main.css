@@ -6689,6 +6689,11 @@ html.cropped {
   body .mobile-menu .popup-entry .games-listing li a.slots:before {
     background-position: 0 -59px;
   }
+  body .mobile-menu .popup-entry .games-listing li a.poker:before {
+    background-position: 135px -53px;
+    height: 32px;
+    width: 37px;
+  }
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {
     background-position: -55px -58px;
@@ -7004,6 +7009,9 @@ html.cropped {
     margin-bottom: 40px;
   }
 }
+.login-block-reg {
+  display: none;
+}
 /* Landscape phones and down */
 @media (max-width: 480px) {
   /* line 2040, ../scss/_responsive.scss */
@@ -7021,7 +7029,38 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    /* display: none; */
+    display: none;
+  }
+  body .header .header-right-part .login-block.login-block-reg a:before {
+    display: none !important;
+  }
+  body .header .header-right-part .login-block.login-block-reg a {
+    padding-left: 15px !important;
+    margin-right: 10px !important;
+  }
+  .login-block-reg .reg-btn{
+    display: block;
+    height: 32px;
+    padding: 8px 0;
+    padding-left: 46px;
+    position: relative;
+    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+    text-decoration: none;
+    height: 41px;
+    padding: 13px 0;
+    font-family: "MyriadPro-Cond", arial, sans-serif;
+    font-size: 16px;
+  }
+  .login-block-reg {
+    display: block !important;
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
@@ -7334,11 +7373,8 @@ html.cropped {
     padding-left: 0;
   }
 }
-@media (max-width: 360px) {
-  body .header .header-right-part .login-block span.text {
-    display: none
-  }
-}
+
+
 .games-block {
   position: relative;
   margin-bottom: 2px;
@@ -7692,4 +7728,19 @@ html.cropped {
 }
 .error-reset {
   color: #EA4335;
+}
+
+@media (max-height: 400px) {
+  body .mobile-container .welcome-mob {
+    padding-top: 150px;
+    padding-bottom: 50px;
+    background: url(../media/images/bg/welcome-mobile-bg.png) center 15% no-repeat;
+    background-size: cover;
+  }
+  body .mobile-container .welcome-mob .main-title-block {
+    margin-bottom: 50px;
+  }
+  body .mobile-container .welcome-mob .bitcoin-block {
+    margin-top: 70px;
+  }
 }
