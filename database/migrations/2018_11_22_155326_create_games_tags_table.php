@@ -16,6 +16,7 @@ class CreateGamesTagsTable extends Migration
             $table->increments('id');
             $table->string('code')->unique();
             $table->string('name');
+            $table->string('our_name');
             $table->string('image')->nullable();
             $table->boolean('active')->default(1);
             $table->integer('rating')->default(0);
