@@ -118,7 +118,7 @@
                                         </td>
                                         <td>
                                             <a href="{{route('affiliates.marketingMaterial', $tracker->id)}}"
-                                               class="btn btn-info">Marketing</a>
+                                               class="btn btn-info">Marketing material</a>
                                         </td>
                                     </tr>
                                 @endforeach
