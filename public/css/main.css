@@ -7033,6 +7033,27 @@ html.cropped {
     padding-left: 15px !important;
     margin-right: 10px !important;
   }
+  .login-block-reg .reg-btn{
+    display: block;
+    height: 32px;
+    padding: 8px 0;
+    padding-left: 46px;
+    position: relative;
+    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+    text-decoration: none;
+    height: 41px;
+    padding: 13px 0;
+    font-family: "MyriadPro-Cond", arial, sans-serif;
+    font-size: 16px;
+  }
   .login-block-reg {
     display: block !important;
   }

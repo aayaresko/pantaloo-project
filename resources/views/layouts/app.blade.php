@@ -101,7 +101,7 @@
             <a href="#" class="login-btn"><span class="text">SIGN IN</span></a>
         </div>
         <div class="login-block login-block-reg floated">
-            <a href="#" class="login-btn"><span class="text">SIGN UP</span></a>
+            <a href="#" class="reg-btn"><span class="text">SIGN UP</span></a>
         </div>
         <div class="registration-block floated">
             <a href="#" class="reg-btn"><span class="text">{{translate('Registration')}}</span></a>
