@@ -5,9 +5,12 @@
 @endsection
 
 @section('content')
+
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
+
+
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
@@ -32,10 +35,18 @@
                                 </thead>
                                 <tbody>
                                 @foreach($banners as $key => $item)
+                                    @php
+                                        $index = $key + 1;
+                                    @endphp
                                     <tr role="row">
-                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $index }}</td>
                                         <td>{{ $item->link }}</td>
-                                        <td>{{ $item->html }}</td>
+                                        <td>
+                                            <div class="copyHtml{{ $index }}">{{ $item->html }}</div>
+                                            <a href="#copy" class="btn btn-purple btn-xs copy-letter-button"
+                                               data-clipboard-action="copy"
+                                               data-clipboard-target=".copyHtml{{ $index }}">Copy</a>
+                                        </td>
                                         <td>{!! $item->htmlView !!}</td>
                                     </tr>
                                 @endforeach
@@ -50,10 +61,13 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('js')
     <script>
         $('.datatable').dataTable();
+
+        var clipboard = new Clipboard('.copy-letter-button');
     </script>
 @endsection
