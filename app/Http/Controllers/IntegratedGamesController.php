@@ -56,7 +56,7 @@ class IntegratedGamesController extends Controller
 
 
         $this->relatedFields = $this->fields;
-        $this->relatedFields[2] = 'games_list.provider_id as provider';
+        //$this->relatedFields[2] = 'games_list.provider_id as provider';
         $this->relatedFields[3] = 'games_types.name as type';
         $this->relatedFields[4] = 'games_categories.name as category';
         $this->relatedFields[5] = 'games_list_extra.image as image';
