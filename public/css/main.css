@@ -6689,6 +6689,11 @@ html.cropped {
   body .mobile-menu .popup-entry .games-listing li a.slots:before {
     background-position: 0 -59px;
   }
+  body .mobile-menu .popup-entry .games-listing li a.poker:before {
+    background-position: 135px -53px;
+    height: 32px;
+    width: 37px;
+  }
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {
     background-position: -55px -58px;
