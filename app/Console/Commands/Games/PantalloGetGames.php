@@ -84,6 +84,7 @@ class PantalloGetGames extends Command
                 $gameCategory = trim($gameCategory);
                 $gameType = trim($game->type);
 
+                $gameCategory = strtolower($gameCategory);
                 if (!isset($categories[$gameCategory])) {
                     GamesCategory::create([
                         'code' => $gameCategory,
@@ -94,6 +95,7 @@ class PantalloGetGames extends Command
                     $categories = GamesCategory::all()->keyBy('code');
                 }
 
+                $gameType = strtolower($gameType);
                 if (!isset($types[$gameType])) {
                     GamesType::create([
                         'code' => $gameType,
