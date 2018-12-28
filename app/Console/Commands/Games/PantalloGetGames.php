@@ -55,6 +55,9 @@ class PantalloGetGames extends Command
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
+            $arrayChuck = 10;
+            $activeTypes = [];
+            $activeCategories = [];
 
             //don't active games
             if (count($allGames->response) > 0) {
@@ -104,9 +107,7 @@ class PantalloGetGames extends Command
                     ]);
                     $categories = GamesCategory::all()->keyBy('code');
                 } else {
-                    GamesCategory::where('code', $gameCategory)->update([
-                        'active' => 1
-                    ]);
+                    array_push($activeCategories, $gameCategory);
                 }
 
                 $gameType = strtolower($gameType);
@@ -118,9 +119,7 @@ class PantalloGetGames extends Command
                     ]);
                     $types = GamesType::all()->keyBy('code');
                 } else {
-                    GamesType::where('code', $gameType)->update([
-                        'active' => 1
-                    ]);
+                    array_push($activeTypes, $gameType);
                 }
 
                 $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
@@ -162,6 +161,23 @@ class PantalloGetGames extends Command
                     $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
                 }
             }
+
+            $activeTypes = array_unique($activeTypes);
+            $activeCategories = array_unique($activeCategories);
+            $activeTypesChunk = array_chunk($activeTypes, $arrayChuck);
+            $activeCategoriesChunk = array_chunk($activeCategories, $arrayChuck);
+            foreach ($activeTypesChunk as $activeType) {
+                GamesType::whereIn('code', $activeType)->update([
+                    'active' => 1
+                ]);
+            }
+
+            foreach ($activeCategoriesChunk as $activeCategory) {
+                GamesCategory::whereIn('code', $activeCategory)->update([
+                    'active' => 1
+                ]);
+            }
+
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
