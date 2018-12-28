@@ -12,7 +12,7 @@ return [
     ],
 
     'additional' => [
-        'salt' => 'REnd48fg3',
+        'salt' => env('PANTALLO_SALT'),
         'action' => [
             'debit' => 1,
             'credit' => 2,
