@@ -150,6 +150,7 @@ class PantalloGetGames extends Command
                     GamesListExtra::create($gameDateExtra);
                 } else {
                     $gameDate = [
+                        'name' => $game->name,
                         'details' => $game->details,
                         'mobile' => (int)$game->mobile,
                         'image' => $game->image,
