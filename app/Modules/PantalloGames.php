@@ -34,7 +34,11 @@ class PantalloGames
             unset($params['ssl']);
             $body = $params;
             //$clientParams = [];
-            $clientParams = ['verify' => false];
+            $connectTimeout = $this->paramsDefault['connectTimeout'];
+            $clientParams = [
+                'verify' => false,
+                'connect_timeout' => $connectTimeout
+            ];
             $client = new Client($clientParams);
             $response = $client->post($url, [
                 'form_params' => $body
