@@ -159,6 +159,15 @@ class PantalloGetGames extends Command
                         'active' => 1
                     ];
                     $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+
+                    //full update
+//                    GamesListExtra::updateOrCreate(['game_id' => $game->id], [
+//                        'name' => $game->name,
+//                        'image' => $game->image_filled,
+//                        'game_id' => $game->id,
+//                        'type_id' => $types[$gameType]->id,
+//                        'category_id' => $categories[$gameCategory]->id,
+//                    ]);
                 }
             }
 
@@ -166,6 +175,7 @@ class PantalloGetGames extends Command
             $activeCategories = array_unique($activeCategories);
             $activeTypesChunk = array_chunk($activeTypes, $arrayChuck);
             $activeCategoriesChunk = array_chunk($activeCategories, $arrayChuck);
+
             foreach ($activeTypesChunk as $activeType) {
                 GamesType::whereIn('code', $activeType)->update([
                     'active' => 1
