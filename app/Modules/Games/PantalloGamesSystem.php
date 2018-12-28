@@ -87,6 +87,12 @@ class PantalloGamesSystem implements GamesSystem
 
         } catch (\Exception $e) {
             DB::rollBack();
+            dump($playerExists);
+            dump($player);
+            dump(3);
+            dump($login);
+            dump(2);
+            dump($getGame);
             dd($e);
             return [
                 'success' => false,
