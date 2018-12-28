@@ -46,13 +46,13 @@
         <div class="block-filter clearfix">
             <form action="#" method="post">
                 <div class="pull-left">
-                    <select class="js-example-basic-single" name="type_of_game" id="type_of_game">
+                    <select class="js-example-basic-single type_of_game" name="type_of_game">
                         <option value="0" selected>All</option>
                         @foreach($gamesTypes as $gamesType)
                             <option value="{{ $gamesType->id }}">{{ $gamesType->name }}</option>
                         @endforeach
                     </select>
-                    <select class="js-example-basic-single" name="filter_provider" id="filter_provider">
+                    <select class="js-example-basic-single filter_provider" name="filter_provider">
                         <option value="0" selected>All</option>
                         @foreach($gamesCategories as $gamesCategory)
                             <option value="{{ $gamesCategory->id }}">{{ $gamesCategory->name }}</option>
@@ -95,13 +95,13 @@
         <div class="block-filter clearfix">
             <form action="#" method="post">
                 <div class="pull-left">
-                    <select class="js-example-basic-single" name="type_of_game_mobile" id="type_of_game_mobile">
+                    <select class="js-example-basic-single type_of_game" name="type_of_game">
                         <option value="0" selected>All</option>
                         @foreach($gamesTypes as $gamesType)
                             <option value="{{ $gamesType->id }}">{{ $gamesType->name }}</option>
                         @endforeach
                     </select>
-                    <select class="js-example-basic-single" name="filter_provider_mobile" id="filter_provider_mobile">
+                    <select class="js-example-basic-single filter_provider" name="filter_provider">
                         <option value="0" selected>All</option>
                         @foreach($gamesCategories as $gamesCategory)
                             <option value="{{ $gamesCategory->id }}">{{ $gamesCategory->name }}</option>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="pull-right">
                     <div class="input-search">
-                        <input type="text" name="search_mobile" placeholder="Search game"/>
+                        <input type="text" name="search" placeholder="Search game"/>
                         <input type="submit" value=""/>
                     </div>
                 </div>
