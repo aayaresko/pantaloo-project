@@ -58,9 +58,19 @@ class PantalloGetGames extends Command
 
             //don't active games
             if (count($allGames->response) > 0) {
+
                 GamesList::where('provider_id', $providerId)->update([
                     'active' => 0
                 ]);
+                //FOR FIRST SCRIPT THIS
+                GamesType::where('id', '>', 0)->update([
+                    'active' => 0
+                ]);
+
+                GamesCategory::where('id', '>', 0)->update([
+                    'active' => 0
+                ]);
+
             }
 
             //get list types
@@ -93,6 +103,10 @@ class PantalloGetGames extends Command
 
                     ]);
                     $categories = GamesCategory::all()->keyBy('code');
+                } else {
+                    GamesCategory::where('code', $gameCategory)->update([
+                        'active' => 1
+                    ]);
                 }
 
                 $gameType = strtolower($gameType);
@@ -103,6 +117,10 @@ class PantalloGetGames extends Command
                         'default_name' => $gameType
                     ]);
                     $types = GamesType::all()->keyBy('code');
+                } else {
+                    GamesType::where('code', $gameType)->update([
+                        'active' => 1
+                    ]);
                 }
 
                 $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
