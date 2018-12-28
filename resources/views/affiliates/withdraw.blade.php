@@ -24,12 +24,14 @@
                             <h2>History</h2>
 
                             @if(count($payments) > 0)
-                                <table class="table table-hover">
-                                    <tr><th>Date</th><th>Sum, mBtc</th><th>Status</th></tr>
-                                    @foreach($payments as $payment)
-                                        <tr><td>{{$payment->created_at->format('d M Y H:i')}}</td><td>{{$payment->sum}}</td><td>{!! $payment->getStatus() !!}</td></tr>
-                                    @endforeach
-                                </table>
+                                <div class="table-wrap">
+                                    <table class="table table-hover">
+                                        <tr><th>Date</th><th>Sum, mBtc</th><th>Status</th></tr>
+                                        @foreach($payments as $payment)
+                                            <tr><td>{{$payment->created_at->format('d M Y H:i')}}</td><td>{{$payment->sum}}</td><td>{!! $payment->getStatus() !!}</td></tr>
+                                        @endforeach
+                                    </table>
+                                </div>
                             @else
                                 <i>Payments not found</i>
                             @endif

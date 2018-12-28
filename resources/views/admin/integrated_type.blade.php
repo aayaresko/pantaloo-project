@@ -26,8 +26,9 @@
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
-                                        <td>Name
-                                            <div style="display: inline">
+                                        <td>
+                                            <div class="table-toggle-inner">
+                                                <span>Name</span>
                                                 <input
                                                         id="nameStatus"
                                                         data-on="Edit"
