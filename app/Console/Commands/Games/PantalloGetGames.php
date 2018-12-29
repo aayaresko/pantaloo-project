@@ -44,6 +44,8 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
+        $maxExecutionTime = 300;
+        ini_set('max_execution_time', $maxExecutionTime);
         $this->info("Start ...");
         Log::info('PantalloGetGames START');
         $unwantedCharacter = '_';
