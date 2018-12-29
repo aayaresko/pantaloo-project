@@ -125,6 +125,9 @@ class PantalloGetGames extends Command
                 }
 
                 $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
+
+                $imageFilled = $this->saveImage($game);
+
                 if (is_null($currentGame)) {
                     $gameDate = [
                         'provider_id' => $providerId,
@@ -136,7 +139,7 @@ class PantalloGetGames extends Command
                         'mobile' => (int)$game->mobile,
                         'image' => $game->image,
                         'image_preview' => $game->image_preview,
-                        'image_filled' => $game->image_filled,
+                        'image_filled' => $imageFilled,
                         'image_background' => $game->image_background,
                         'rating' => 1,
                         'active' => 1
@@ -144,7 +147,7 @@ class PantalloGetGames extends Command
                     $game = GamesList::create($gameDate);
                     $gameDateExtra = [
                         'name' => $game->name,
-                        'image' => $game->image_filled,
+                        'image' => $imageFilled,
                         'game_id' => $game->id,
                         'type_id' => $types[$gameType]->id,
                         'category_id' => $categories[$gameCategory]->id,
@@ -157,7 +160,7 @@ class PantalloGetGames extends Command
                         'mobile' => (int)$game->mobile,
                         'image' => $game->image,
                         'image_preview' => $game->image_preview,
-                        'image_filled' => $game->image_filled,
+                        'image_filled' => $imageFilled,
                         'image_background' => $game->image_background,
                         'active' => 1
                     ];
@@ -166,7 +169,7 @@ class PantalloGetGames extends Command
                     //full update
 //                    GamesListExtra::updateOrCreate(['game_id' => $game->id], [
 //                        'name' => $game->name,
-//                        'image' => $game->image_filled,
+//                        'image' => $imageFilled,
 //                        'game_id' => $game->id,
 //                        'type_id' => $types[$gameType]->id,
 //                        'category_id' => $categories[$gameCategory]->id,
@@ -199,5 +202,19 @@ class PantalloGetGames extends Command
         //get games and load or update
         Log::info('PantalloGetGames END');
         $this->info("Games loaded or updated.");
+    }
+
+    /**
+     * @param $game
+     * @return string
+     */
+    private function saveImage($game)
+    {
+        $url = $game->image_filled;
+        $contents = file_get_contents($url);
+        $name = substr($url, strrpos($url, '/') + 1);
+        $pathImage = "/gamesPicturesDefault/{$name}";
+        Storage::put('public' . $pathImage, $contents);
+        return '/storage' . $pathImage;
     }
 }
