@@ -7,6 +7,7 @@ let listGameParamsDefault = {
     page: 1
 };
 
+
 let statusGameRoom = 0;
 
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
@@ -135,8 +136,26 @@ function getGame(url) {
     });
 }
 
+function setDefaultFilter() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var type_id = url.searchParams.get("type_id");
+    var category_id = url.searchParams.get("category_id");
+
+    if (type_id !== null) {
+        $('.type_of_game').val(type_id);
+        $('.type_of_game').trigger('change');
+    }
+
+    if (category_id !== null) {
+        $('.type_of_game').val(category_id);
+        $('.type_of_game').trigger('change');
+    }
+}
+
 $(function () {
     events();
+    setDefaultFilter();
     getListGames();
 });
 
