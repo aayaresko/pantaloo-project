@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('description')
-    Добро пожаловать в Casinobit, где Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме. Casinobit - большой мир игровых систем. Здесь Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме. Русское лото биткоин - это лотерея для всех кто хочет испытать удачу.
+    Добро пожаловать в Casinobit, где Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме.
+    Casinobit - большой мир игровых систем. Здесь Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме.
+    Русское лото биткоин - это лотерея для всех кто хочет испытать удачу.
 @endsection
 
 @section('keywords')
-    биткоин игры, лото биткоин
+    биткоин игры, лото, биткоин
 @endsection
 
 @section('content')
@@ -38,7 +40,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{route('casino')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
                 </div>
             </div>
         </section>
@@ -65,7 +67,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{route('blackjack')}}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 1]) }}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
                 </div>
             </div>
         </section>
@@ -92,7 +94,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{route('roulette')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 1]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
                 </div>
             </div>
         </section>
@@ -119,7 +121,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{route('slots')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 1]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
                 </div>
             </div>
         </section>
@@ -134,7 +136,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{route('casino')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
                 </div>
             </div>
             <div class="games-listing-block">
@@ -174,7 +176,7 @@
                         <span class="category-title">{{translate('Live Games')}}</span>
                         <h2 class="game-name word-split">{{translate('Slots')}}</h2>
                         <div class="main-btn-block">
-                            <a href="{{route('slots')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                            {{--<a href="{{route('slots')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>--}}
                         </div>
                     </div>
                 </div>

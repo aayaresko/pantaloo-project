@@ -235,7 +235,8 @@ Route::group(['middleware' => ['auth']], function () {
         ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
 
-Route::get('/slots', ['as' => 'slots', 'uses' => 'IntegratedGamesController@index']);
+Route::get('/games', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
+//Route::get('/games', ['as' => 'slots', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
 
