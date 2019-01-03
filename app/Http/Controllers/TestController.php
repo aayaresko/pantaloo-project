@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use Validator;
+use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesCategory;
@@ -20,7 +21,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
+        dd(GeneralHelper::fullRequest());
         $url = 'https://www.casinobit.io/games/endpoint?callerId=casinobit_mc_s&callerPassword=302e6543f24cfabc19a360deaa09096b8733f780&callerPrefix=z1am&action=debit&remote_id=969111&username=136&session_id=5bfc06cfd06f7&currency=USD&amount=0.15&provider=gs&game_id=2058&game_id_hash=gs_gs-african-sunset&transaction_id=gs-1954554737-545af1&round_id=-2055295972&gameplay_final=0&is_freeround_bet=0&jackpot_contribution_in_amount=0&gamesession_id=gs_a027a-79972660&key=d65da999c6e8b20337ee5ddf8311a1eb70c4a8a7';
         //$url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
         $clientParams = ['verify' => false];

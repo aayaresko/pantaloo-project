@@ -89,9 +89,9 @@ class PantalloGamesSystem implements GamesSystem
             DB::rollBack();
             dump($playerExists);
             dump($player);
-            dump(3);
+            dump('login');
             dump($login);
-            dump(2);
+            dump('getGame');
             dump($getGame);
             dd($e);
             return [
@@ -531,7 +531,7 @@ class PantalloGamesSystem implements GamesSystem
         $responseLog['endDate'] = $endDate;
 
         RawLog::create([
-            'full_url' => $request->fullUrl(),
+            'full_url' => GeneralHelper::fullRequest(),
             'request' => json_encode($requestParams),
             'response' => json_encode($responseLog)
         ]);

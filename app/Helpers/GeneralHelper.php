@@ -14,4 +14,12 @@ class GeneralHelper
         $accuracyValues = config('app.accuracyValues');
         return round($amount, $accuracyValues, PHP_ROUND_HALF_DOWN);
     }
+
+    /**
+     * @return string
+     */
+    static public function fullRequest(){
+        $request = url('/') . $_SERVER['REQUEST_URI'];
+        return $request;
+    }
 }
