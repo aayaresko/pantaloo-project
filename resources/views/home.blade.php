@@ -67,7 +67,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 1]) }}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 2]) }}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
                 </div>
             </div>
         </section>
@@ -94,7 +94,7 @@
                     <span class="descr">{!! translate('video live games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 1]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 3]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
                 </div>
             </div>
         </section>
