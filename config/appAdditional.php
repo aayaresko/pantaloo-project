@@ -2,7 +2,7 @@
 
 return [
 
-    $defaultTypes = [
+    'defaultTypes' => [
         [
             'id' => 1,
             'code' => 'slots',
@@ -38,5 +38,7 @@ return [
             'code' => 'poker',
             'name' => 'poker',
         ]
-    ]
+    ],
+
+    'defaultTitle' => 'games'
 ];

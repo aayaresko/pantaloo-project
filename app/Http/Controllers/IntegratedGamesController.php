@@ -69,10 +69,23 @@ class IntegratedGamesController extends Controller
     public function index(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
+        $appAdditional =  config('appAdditional');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
+        $defaultTypes = $appAdditional['defaultTypes'];
+        $defaultTitle = $appAdditional['defaultTitle'];
+
         View::share('dummyPicture', $dummyPicture);
         $definitionSettings = $configIntegratedGames['listSettings'];
         $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
+
+        $title = $defaultTitle;
+        if ($request->has('type_id')) {
+            foreach ($defaultTypes as $defaultType) {
+                if ($defaultType['id'] == $request->type_id) {
+                    $title = $defaultType['name'];
+                }
+            }
+        }
 
         $orderType = ['rating', 'desc'];
         if (isset($settings['types'])) {
@@ -93,6 +106,7 @@ class IntegratedGamesController extends Controller
         ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         return view('integrated_games')->with([
+            'title' => $title,
             'gamesTypes' => $gamesTypes,
             'gamesCategories' => $gamesCategories,
         ]);
