@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
 @section('title')
-    Slots
+    Games
 @endsection
 
 @section('content')
+
     <div class="video-popup">
         <div class="video-container">
             <div class="game-entry colorGame">
                 {{--<img src="media/images/logo.png" alt="game">--}}
                 <div class="gameLoadingWrapper">
-                    <h1 class = "gameLoading">
+                    <h1 class="gameLoading">
                         <span class="let1">l</span>
                         <span class="let2">o</span>
                         <span class="let3">a</span>
@@ -22,8 +23,8 @@
                 </div>
             </div>
             <div class="left-info">
-                <h2 class="region">Eastern Europe</h2>
-                <span class="game-name">BlackJack</span>
+                <h2 class="region"><span class = "tittlePage">{{ ucfirst($title) }}</span></h2>
+                <span class="game-name"><span class = "tittlePage">{{ ucfirst($title) }}</span></span>
             </div>
             <div class="right-nav">
                 <div class="expand-game"><img src="images/expand.png" alt=""></div>
@@ -36,10 +37,10 @@
     </div>
 
     <div class="slots-block desk top-shadow">
-        <div class="bg mainBackGround" ></div>
-        <span class="side-title">Slots</span>
+        <div class="bg mainBackGround"></div>
+        <span class="side-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
-            <h1 class="page-title">Slots</h1>
+            <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
             <span class="subtitle">What you want to live play?</span>
         </div>
 
@@ -77,7 +78,7 @@
         <div class="bg"
              style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
-            <h1 class="page-title">Slots</h1>
+            <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
             <span class="subtitle">What you want to live play?</span>
         </div>
         <div class="btn-block">
@@ -117,7 +118,7 @@
             </form>
         </div>
 
-        <div class = "insertGamesMobile">
+        <div class="insertGamesMobile">
 
         </div>
     </div>
