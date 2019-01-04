@@ -69,7 +69,9 @@ class PantalloGetGames extends Command
                     'active' => 0
                 ]);
                 //FOR FIRST SCRIPT THIS
-                GamesType::where('id', '>', 0)->update([
+                $typesDefault = config('appAdditional.defaultTypes');
+                $typesDefaultId = array_column($typesDefault, 'id');
+                GamesType::whereNotIn('id', $typesDefaultId)->update([
                     'active' => 0
                 ]);
 

@@ -123,6 +123,8 @@ class IntegratedGamesController extends Controller
 
         $whereGameList = [
             ['games_list.active', '=', 1],
+            ['games_types.active', '=', 1],
+            ['games_categories.active', '=', 1],
         ];
 
         if ((int)$request->categoryId !== 0) {
