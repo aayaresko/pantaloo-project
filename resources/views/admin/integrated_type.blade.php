@@ -50,7 +50,7 @@
                                                 Without Image
                                             @else
                                                 <img style="max-width: 350px;" class="games-block__image show-animated"
-                                                     src="{{ $item->image }}">
+                                                     src="{{ $item->image  . '?v=' . time()}}">
                                             @endif
                                         </td>
                                     </tr>
@@ -76,16 +76,16 @@
                                     <tr>
                                         <td>Status</td>
                                         <td>
-                                            <input 
-                                                data-on="On" 
-                                                data-off="Off" 
-                                                type="checkbox" 
-                                                name="active" 
-                                                data-toggle="toggle" 
-                                                @if($item->active == 1) checked @endif>
+                                            <input
+                                                    data-on="On"
+                                                    data-off="Off"
+                                                    type="checkbox"
+                                                    name="active"
+                                                    data-toggle="toggle"
+                                                    @if($item->active == 1) checked @endif>
                                         <!-- <input type="checkbox" name="active"
                                                    @if($item->active == 1) checked @endif> -->
-                                                   </td>
+                                        </td>
                                     </tr>
 
                                     <tr>
@@ -105,7 +105,7 @@
                                             <select name="toType_id" class="form-control">
                                                 <option value="0" selected>Do not change</option>
                                                 @foreach($defaultItems as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                 @endforeach
                                             </select>
                                         </td>

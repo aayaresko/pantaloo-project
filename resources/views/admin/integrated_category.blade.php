@@ -49,7 +49,7 @@
                                                 Without Image
                                             @else
                                                 <img style="max-width: 350px;" class="games-block__image show-animated"
-                                                     src="{{ $item->image }}">
+                                                     src="{{ $item->image . '?v=' . time() }}">
                                             @endif
                                         </td>
                                     </tr>

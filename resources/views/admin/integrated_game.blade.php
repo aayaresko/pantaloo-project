@@ -110,7 +110,7 @@
                                         </td>
                                         <td>
                                             <img style="max-width: 350px;" class="games-block__image show-animated"
-                                                 src="{{$game->image}}"
+                                                 src="{{$game->image . '?v=' . time()}}"
                                                  onerror="handleImage(this);"/>
                                             <br>
                                         </td>

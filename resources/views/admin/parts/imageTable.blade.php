@@ -1,1 +1,1 @@
-<img src="{{ $image }}" width="100" onerror="handleImage(this);">
+<img src="{{ $image . '?v=' . time()}}" width="100" onerror="handleImage(this);">

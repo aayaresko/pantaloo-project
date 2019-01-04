@@ -54,7 +54,7 @@
                                         @if(is_null($item->image))
                                             <td>Without Image</td>
                                         @else
-                                            <td><img src="{{ $item->image }}" width="100"></td>
+                                            <td><img src="{{ $item->image . '?v=' . time() }}" width="100"></td>
                                         @endif
                                         <td>@if($item->active == 1) <span class="label label-success">ON</span> @else
                                                 <span class="label label-danger">OFF</span> @endif </td>

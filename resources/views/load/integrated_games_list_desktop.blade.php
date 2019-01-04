@@ -5,7 +5,7 @@
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
-                            <img class="games-block__image show-animated" src="{{ $game->image }}"
+                            <img class="games-block__image show-animated" src="{{ $game->image . '?v=' . time() }}"
                                  onerror="handleImage(this);"/>
                         </span>
                     </div>

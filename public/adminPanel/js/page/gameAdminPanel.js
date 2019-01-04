@@ -77,7 +77,7 @@ function eventCheckBox() {
 
             input.attr('checked', true);
 
-            $(".games-block__image").attr("src", game.image);
+            $(".games-block__image").attr("src", game.image + '?v=' + new Date().getTime());
 
             $(`input[name='default_provider_image']`).attr('checked', false);
 
@@ -85,7 +85,7 @@ function eventCheckBox() {
         } else {
             input.attr('checked', false);
 
-            $(".games-block__image").attr("src", game.default_image);
+            $(".games-block__image").attr("src", game.default_image + '?v=' + new Date().getTime());
 
             $(`input[name='default_provider_image']`).attr('checked', 'checked');
 
