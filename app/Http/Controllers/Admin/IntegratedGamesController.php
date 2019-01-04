@@ -47,7 +47,7 @@ class IntegratedGamesController extends Controller
             10 => 'games_list.name as default_name',
             12 => 'games_list.type_id as default_type_id',
             13 => 'games_list.category_id as default_category_id',
-            14 => 'games_list.image as default_image',
+            14 => 'games_list.image_filled as default_image',
         ];
 
         $this->relatedFields = $this->fields;
