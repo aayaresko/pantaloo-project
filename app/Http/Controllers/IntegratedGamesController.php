@@ -109,6 +109,7 @@ class IntegratedGamesController extends Controller
             'title' => $title,
             'gamesTypes' => $gamesTypes,
             'gamesCategories' => $gamesCategories,
+            'titleDefault' => $appAdditional['defaultTitle'],
         ]);
     }
 

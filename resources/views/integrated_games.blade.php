@@ -135,6 +135,7 @@
 @section('js')
     <script>
         let dummy = "{{ $dummyPicture }}";
+        let defaultTitle = "{{ $titleDefault }}";
     </script>
     <script src="/assets/js/pages/integratedGames.js?v={{ time() }}"></script>
 @endsection
