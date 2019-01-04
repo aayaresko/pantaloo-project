@@ -118,7 +118,7 @@ class IntegratedGamesController extends Controller
             $updatedGame = $request->toArray();
             if ($request->hasFile('image')) {
                 $image = $request->image;
-                $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
+                $nameImage = $request->id . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
                 Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
                 $updatedGame['image'] = '/storage' . $pathImage;
