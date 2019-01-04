@@ -15,6 +15,9 @@ let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 let events = function () {
 
     $('.video-popup .exit-btn').click(function(){
+        //off insert new games
+        statusGameRoom = statusGameRoom + 1;
+
         $(this).parents('.video-popup').removeClass('active');
         $('header.header').removeClass('active');
         $('.video-popup .game-entry').html(
