@@ -216,6 +216,7 @@ class PantalloGetGames extends Command
 
         $url = $game->image_filled;
         try {
+            //to do replace old picture
             $contents = file_get_contents($url);
             $name = substr($url, strrpos($url, '/') + 1);
             $pathImage = "/gamesPicturesDefault/{$name}";

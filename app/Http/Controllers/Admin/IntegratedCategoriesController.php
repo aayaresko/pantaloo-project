@@ -95,6 +95,8 @@ class IntegratedCategoriesController extends Controller
             $active = $request->input('active');
             if (!is_null($active)) {
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
+            } else {
+                $updatedGame['active'] = 0;
             }
 
             if (isset($request->ratingItems)) {
