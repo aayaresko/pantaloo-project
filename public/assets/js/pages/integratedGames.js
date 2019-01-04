@@ -7,7 +7,6 @@ let listGameParamsDefault = {
     page: 1
 };
 
-
 let statusGameRoom = 0;
 let statusTypes = 0;
 
@@ -93,7 +92,6 @@ let events = function () {
 function handleImage(img) {
     $(img).attr("src", dummy);
 }
-
 
 function getListGames() {
     $('.preloaderCommon').show();
