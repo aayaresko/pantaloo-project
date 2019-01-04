@@ -10,6 +10,7 @@ use App\Models\GamesCategory;
 use App\Models\GamesListExtra;
 use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class PantalloGetGames extends Command
 {
@@ -44,7 +45,7 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
-        $maxExecutionTime = 300;
+        $maxExecutionTime = 1000;
         ini_set('max_execution_time', $maxExecutionTime);
         $this->info("Start ...");
         Log::info('PantalloGetGames START');
@@ -210,11 +211,20 @@ class PantalloGetGames extends Command
      */
     private function saveImage($game)
     {
+        $configIntegratedGames = config('integratedGames.common');
+        $dummyPicture = $configIntegratedGames['dummyPicture'];
+
         $url = $game->image_filled;
-        $contents = file_get_contents($url);
-        $name = substr($url, strrpos($url, '/') + 1);
-        $pathImage = "/gamesPicturesDefault/{$name}";
-        Storage::put('public' . $pathImage, $contents);
-        return '/storage' . $pathImage;
+        try {
+            $contents = file_get_contents($url);
+            $name = substr($url, strrpos($url, '/') + 1);
+            $pathImage = "/gamesPicturesDefault/{$name}";
+            $fullPathImage = '/storage' . $pathImage;
+            Storage::put('public' . $pathImage, $contents);
+        } catch (\Exception $e) {
+            $fullPathImage = $dummyPicture;
+        }
+
+        return $fullPathImage;
     }
 }

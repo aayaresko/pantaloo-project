@@ -88,6 +88,44 @@
                                                    </td>
                                     </tr>
 
+                                    <tr>
+                                        <td>
+                                            <div class="table-toggle-inner">
+                                                <span>To type games</span>
+                                                <input
+                                                        id="toTypeStatus"
+                                                        data-on="Edit"
+                                                        data-off="Default"
+                                                        type="checkbox"
+                                                        data-toggle="toggle"
+                                                        checked>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select name="toType_id" class="form-control">
+                                                <option value="0" selected>Do not change</option>
+                                                @foreach($defaultItems as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <p>SET ALL GAMES</p>
+                                            <p>DEFAULT TYPE (DEVELOP)</p>
+                                        </td>
+                                        <td>
+                                            <input
+                                                    data-on="On"
+                                                    data-off="Off"
+                                                    type="checkbox"
+                                                    name="defaultAll"
+                                                    data-toggle="toggle">
+                                        </td>
+                                    </tr>
+
 
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>

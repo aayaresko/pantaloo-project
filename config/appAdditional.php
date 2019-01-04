@@ -4,38 +4,39 @@ return [
 
     'defaultTypes' => [
         [
-            'id' => 1,
-            'code' => 'slots',
+            'id' => 10001,
+            'code' => 'our_slots',
             'name' => 'slots',
         ],
         [
-            'id' => 2,
-            'code' => 'blackjack',
+            'id' => 10002,
+            'code' => 'our_blackjack',
             'name' => 'blackjack',
+
         ],
         [
-            'id' => 3,
-            'code' => 'roulette',
+            'id' => 10003,
+            'code' => 'our_roulette',
             'name' => 'roulette',
         ],
         [
-            'id' => 4,
-            'code' => 'baccarat',
+            'id' => 10004,
+            'code' => 'our_baccarat',
             'name' => 'baccarat',
         ],
         [
-            'id' => 5,
-            'code' => 'bet_on_numbers',
+            'id' => 10005,
+            'code' => 'our_bet_on_numbers',
             'name' => 'bet on numbers',
         ],
         [
-            'id' => 6,
-            'code' => 'keno',
+            'id' => 10006,
+            'code' => 'our_keno',
             'name' => 'keno',
         ],
         [
-            'id' => 7,
-            'code' => 'poker',
+            'id' => 10007,
+            'code' => 'our_poker',
             'name' => 'poker',
         ]
     ],
