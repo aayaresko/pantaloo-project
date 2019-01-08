@@ -47,7 +47,7 @@
 
                                 <div class="col-sm-3">
                                     <select name="tracker_id" class="selectpicker" data-live-search="true">
-                                        <option value="0" selected>Providers / All</option>
+                                        <option value="0" selected>Campaign name / All</option>
                                         @foreach($trackers as $tracker)
                                             <option value="{{$tracker->id}}">{{$tracker->name}}</option>
                                         @endforeach
