@@ -138,6 +138,12 @@ function getGame(url) {
                 button.addEventListener('click', fullscreen);
                 //$('.preloaderCommon').hide();
             }
+        },
+        statusCode: {
+            500: function() {
+                let errorMessage = "<h3>Something went wrong. Try to refresh page. Thanks</h3>";
+                $('.video-popup .game-entry').html(errorMessage);
+            }
         }
     });
 }
