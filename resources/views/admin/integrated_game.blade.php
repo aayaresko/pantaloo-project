@@ -57,7 +57,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <select name="type_id" class="form-control">
+                                            <select name="types[]" class="js-example-basic-multiple" multiple="multiple">
                                                 @foreach($types as $type)
                                                     @if($game->type_id === $type->id)
                                                         <option value="{{ $type->id }}"
@@ -157,5 +157,8 @@
 @endsection
 
 @section('js')
+    <script>
+        $('.js-example-basic-multiple').select2();
+    </script>
     <script src="/adminPanel/js/page/gameAdminPanel.js?v={{time()}}"></script>
 @endsection

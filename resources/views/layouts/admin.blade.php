@@ -25,7 +25,7 @@
     <link href="/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-
+    <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet">
     <link href="/assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="/assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -295,6 +295,7 @@
 
 <script src="/assets/plugins/bootstrap-sweetalert/sweet-alert.js"></script>
 <script src="/assets/pages/jquery.sweet-alert.init.js"></script>
+<script src="/assets/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
 
 <!-- XEditable Plugin -->
