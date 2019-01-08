@@ -136,7 +136,7 @@
                         <a href="{{route('agent.transactions')}}" class="waves-effect"><i class="ti-package"></i> <span> Transactions </span> </a>
                     </li>
                     <li>
-                        <a href="{{route('agent.trackers')}}" class="waves-effect"><i class="ti-target"></i> <span> Trackers </span> </a>
+                        <a href="{{route('agent.trackers')}}" class="waves-effect"><i class="ti-target"></i> <span> Links </span> </a>
                     </li>
                     <li>
                         <a href="{{route('agent.banners')}}" class="waves-effect"><i class="ti-palette"></i> <span> Banners </span> </a>
@@ -239,8 +239,9 @@
 <script src="/assets/plugins/bootstrap-sweetalert/sweet-alert.js"></script>
 <script src="/assets/pages/jquery.sweet-alert.init.js"></script>
 
-@yield('js')
+@include('agent.errors')
 
+@yield('js')
 <script>
     sweetAlertInitialize();
     if(errors.length > 0) {
