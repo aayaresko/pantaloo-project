@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use DB;
 use App\User;
 use Validator;
+use App\Tracker;
 use App\Transaction;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
@@ -35,10 +36,12 @@ class TransactionController extends Controller
             3 => 'transactions.sum',
             4 => 'transactions.bonus_sum',
             5 => 'transactions.id',
+            6 => 'trackers.name',
         ];
 
         $this->relatedFields = $this->fields;
         $this->relatedFields[0] = 'users.email as email';
+        $this->relatedFields[6] = 'trackers.name as tracker_name';
     }
 
     /**
@@ -49,16 +52,21 @@ class TransactionController extends Controller
         $commonConfig = config('integratedGames.common');
         $typeTransactionsObject = $commonConfig['typeTransaction'];
         $typeTransactions = json_decode(json_encode($typeTransactionsObject), false);
-        $users = User::where('agent_id', Auth::user()->id)->get();
+        $currentUser = Auth::user();
+        $users = User::where('agent_id', $currentUser->id)->get();
         $gamesTypes = GamesType::select(['id', 'name', 'active', 'rating'])
             ->where([['active', '=', 1]])->orderBy('id')->get();
         $gamesCategories = GamesCategory::select(['id', 'name', 'active', 'rating'])
             ->where([['active', '=', 1]])->orderBy('id')->get();
+        $trackers = Tracker::select(['id', 'name'])
+            ->where('user_id', $currentUser->id)->get();
+
         return view('affiliates.transactions',
             [
                 'users' => $users,
                 'gamesTypes' => $gamesTypes,
                 'types' => $typeTransactions,
+                'trackers' => $trackers,
                 'gamesCategories' => $gamesCategories,
             ]);
     }
@@ -88,6 +96,11 @@ class TransactionController extends Controller
         if (isset($request->type_id) and $request->type_id != 0) {
             array_push($param['conditions'], ['transactions.type', '=', $request->type_id]);
         }
+
+        if (isset($request->tracker_id) and $request->tracker_id != 0) {
+            array_push($param['conditions'], ['trackers.id', '=', $request->tracker_id]);
+        }
+
          /* COLUMNS */
         return $param;
     }
@@ -104,6 +117,7 @@ class TransactionController extends Controller
             ->leftJoin('games_pantallo_transactions',
                 'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('trackers', 'users.tracker_id', '=', 'trackers.id')
             ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
             ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
@@ -121,6 +135,7 @@ class TransactionController extends Controller
         $items = Transaction::leftJoin('games_pantallo_transactions',
             'transactions.id', '=', 'games_pantallo_transactions.transaction_id')
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
+            ->leftJoin('trackers', 'users.tracker_id', '=', 'trackers.id')
             ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
             ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
