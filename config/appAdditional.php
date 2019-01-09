@@ -38,6 +38,11 @@ return [
             'id' => 10007,
             'code' => 'our_poker',
             'name' => 'poker',
+        ],
+        [
+            'id' => 10008,
+            'code' => 'our_others',
+            'name' => 'others',
         ]
     ],
 

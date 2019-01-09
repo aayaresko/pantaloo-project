@@ -51,7 +51,7 @@ class GamesTypesSeeder extends Seeder
             $type['created_at'] = $currentDate;
             $type['updated_at'] = $currentDate;
             $type['default_name'] = $type['name'];
-            $type['active'] = 0;
+            $type['active'] = 1;
         }
 
         return $this->types;

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamesListExtraTable extends Migration
+class CreateGamesTypesGamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class CreateGamesListExtraTable extends Migration
      */
     public function up()
     {
-        Schema::create('games_list_extra', function (Blueprint $table) {
+        Schema::create('games_types_games', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->integer('game_id')->unsigned();
+            $table->integer('game_id')->unsigned()->index();
             $table->foreign('game_id')->references('id')->on('games_list');
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('games_categories');
-            $table->text('image')->nullable();
+            $table->integer('type_id')->unsigned()->index();
+            $table->foreign('type_id')->references('id')->on('games_types');
+            $table->tinyInteger('extra')->default(0)->index();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateGamesListExtraTable extends Migration
      */
     public function down()
     {
-        Schema::drop('games_list_extra');
+        Schema::drop('games_types_games');
     }
 }

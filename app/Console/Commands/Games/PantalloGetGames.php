@@ -6,6 +6,7 @@ use DB;
 use Log;
 use App\Models\GamesType;
 use App\Models\GamesList;
+use App\Models\GamesTagGame;
 use App\Models\GamesCategory;
 use App\Models\GamesListExtra;
 use App\Modules\PantalloGames;
@@ -19,7 +20,7 @@ class PantalloGetGames extends Command
      *
      * @var string
      */
-    protected $signature = 'games:PantalloGetGames';
+    protected $signature = 'games:PantalloGetGames {getImage?}';
 
     /**
      * The console command description.
@@ -45,158 +46,143 @@ class PantalloGetGames extends Command
      */
     public function handle()
     {
-        $maxExecutionTime = 1000;
-        ini_set('max_execution_time', $maxExecutionTime);
+        //pre init
         $this->info("Start ...");
         Log::info('PantalloGetGames START');
+        $maxExecutionTime = 2000;
+        ini_set('max_execution_time', $maxExecutionTime);
         $unwantedCharacter = '_';
+        $providerId = 1;
+        $getImage = $this->argument('getImage');
+
         DB::beginTransaction();
         try {
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
-            $providerId = 1;
             //get list categories
             $types = GamesType::all()->keyBy('code');
             $categories = GamesCategory::all()->keyBy('code');
-            $arrayChuck = 10;
-            $activeTypes = [];
-            $activeCategories = [];
 
             //don't active games
             if (count($allGames->response) > 0) {
 
-                GamesList::where('provider_id', $providerId)->update([
-                    'active' => 0
-                ]);
-                //FOR FIRST SCRIPT THIS
-                $typesDefault = config('appAdditional.defaultTypes');
-                $typesDefaultId = array_column($typesDefault, 'id');
-                GamesType::whereNotIn('id', $typesDefaultId)->update([
-                    'active' => 0
-                ]);
-
-                GamesCategory::where('id', '>', 0)->update([
-                    'active' => 0
-                ]);
-
-            }
-
-            //get list types
-            foreach ($allGames->response as $game) {
-                //use trim and
-                $gameId = $game->id;
-                if ($game->category !== '') {
-                    $gameCategory = $game->category;
-                } else {
-                    if ($game->subcategory !== '') {
-                        $subcategory = $game->subcategory;
-                        if ($subcategory[0] === $unwantedCharacter) {
-                            $subcategory = ltrim($subcategory, $unwantedCharacter);
-                        }
-                        $gameCategory = $subcategory;
-                    } else {
-                        $gameCategory = 'empty';
+                //image
+                if (!is_null($getImage)) {
+                    //load image
+                    foreach ($allGames->response as $game) {
+                        $this->saveImage($game, true);
                     }
                 }
 
-                $gameCategory = trim($gameCategory);
-                $gameType = trim($game->type);
-
-                $gameCategory = strtolower($gameCategory);
-                if (!isset($categories[$gameCategory])) {
-                    GamesCategory::create([
-                        'code' => $gameCategory,
-                        'name' => $gameCategory,
-                        'default_name' => $gameCategory
-
-                    ]);
-                    $categories = GamesCategory::all()->keyBy('code');
-                } else {
-                    array_push($activeCategories, $gameCategory);
-                }
-
-                $gameType = strtolower($gameType);
-                if (!isset($types[$gameType])) {
-                    GamesType::create([
-                        'code' => $gameType,
-                        'name' => $gameType,
-                        'default_name' => $gameType
-                    ]);
-                    $types = GamesType::all()->keyBy('code');
-                } else {
-                    array_push($activeTypes, $gameType);
-                }
-
-                $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
-
-                $imageFilled = $this->saveImage($game);
-
-                if (is_null($currentGame)) {
-                    $gameDate = [
-                        'provider_id' => $providerId,
-                        'system_id' => $gameId,
-                        'name' => $game->name,
-                        'type_id' => $types[$gameType]->id,
-                        'category_id' => $categories[$gameCategory]->id,
-                        'details' => $game->details,
-                        'mobile' => (int)$game->mobile,
-                        'image' => $game->image,
-                        'image_preview' => $game->image_preview,
-                        'image_filled' => $imageFilled,
-                        'image_background' => $game->image_background,
-                        'rating' => 1,
-                        'active' => 1
-                    ];
-                    $game = GamesList::create($gameDate);
-                    $gameDateExtra = [
-                        'name' => $game->name,
-                        'image' => $imageFilled,
-                        'game_id' => $game->id,
-                        'type_id' => $types[$gameType]->id,
-                        'category_id' => $categories[$gameCategory]->id,
-                    ];
-                    GamesListExtra::create($gameDateExtra);
-                } else {
-                    $gameDate = [
-                        'name' => $game->name,
-                        'details' => $game->details,
-                        'mobile' => (int)$game->mobile,
-                        'image' => $game->image,
-                        'image_preview' => $game->image_preview,
-                        'image_filled' => $imageFilled,
-                        'image_background' => $game->image_background,
-                        'active' => 1
-                    ];
-                    $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
-
-                    //full update
-//                    GamesListExtra::updateOrCreate(['game_id' => $game->id], [
-//                        'name' => $game->name,
-//                        'image' => $imageFilled,
-//                        'game_id' => $game->id,
-//                        'type_id' => $types[$gameType]->id,
-//                        'category_id' => $categories[$gameCategory]->id,
-//                    ]);
-                }
-            }
-
-            $activeTypes = array_unique($activeTypes);
-            $activeCategories = array_unique($activeCategories);
-            $activeTypesChunk = array_chunk($activeTypes, $arrayChuck);
-            $activeCategoriesChunk = array_chunk($activeCategories, $arrayChuck);
-
-            foreach ($activeTypesChunk as $activeType) {
-                GamesType::whereIn('code', $activeType)->update([
-                    'active' => 1
+                //games
+                GamesList::where('provider_id', $providerId)->update([
+                    'active' => 0
                 ]);
-            }
 
-            foreach ($activeCategoriesChunk as $activeCategory) {
-                GamesCategory::whereIn('code', $activeCategory)->update([
-                    'active' => 1
-                ]);
-            }
+                //get list types
+                foreach ($allGames->response as $game) {
+                    //use trim and
+                    $gameId = $game->id;
+                    if ($game->category !== '') {
+                        $gameCategory = $game->category;
+                    } else {
+                        if ($game->subcategory !== '') {
+                            $subcategory = $game->subcategory;
+                            if ($subcategory[0] === $unwantedCharacter) {
+                                $subcategory = ltrim($subcategory, $unwantedCharacter);
+                            }
+                            $gameCategory = $subcategory;
+                        } else {
+                            $gameCategory = 'empty';
+                        }
+                    }
 
+                    $gameCategory = trim($gameCategory);
+                    $gameType = trim($game->type);
+
+                    $gameCategory = strtolower($gameCategory);
+                    if (!isset($categories[$gameCategory])) {
+                        GamesCategory::create([
+                            'code' => $gameCategory,
+                            'name' => $gameCategory,
+                            'default_name' => $gameCategory,
+                            'active' => 1
+
+                        ]);
+                        $categories = GamesCategory::all()->keyBy('code');
+                    }
+
+                    $gameType = strtolower($gameType);
+                    if (!isset($types[$gameType])) {
+                        GamesType::create([
+                            'code' => $gameType,
+                            'name' => $gameType,
+                            'default_name' => $gameType,
+                            'active' => 0
+                        ]);
+                        $types = GamesType::all()->keyBy('code');
+                    }
+
+                    $currentGame = GamesList::select(['id'])->where('system_id', $gameId)->first();
+
+                    $imageOur = $this->saveImage($game);
+
+                    if (is_null($currentGame)) {
+                        $gameDate = [
+                            'provider_id' => $providerId,
+                            'system_id' => $gameId,
+                            'name' => $game->name,
+                            'category_id' => $categories[$gameCategory]->id,
+                            'details' => $game->details,
+                            'mobile' => (int)$game->mobile,
+                            'our_image' => $imageOur,
+                            'image' => $game->image,
+                            'image_preview' => $game->image_preview,
+                            'image_filled' => $game->image_filled,
+                            'image_background' => $game->image_background,
+                            'rating' => 1,
+                            'active' => 1
+                        ];
+                        $game = GamesList::create($gameDate);
+
+                        $gameDateExtra = [
+                            'name' => $game->name,
+                            'image' => $imageOur,
+                            'game_id' => $game->id,
+                            'category_id' => $categories[$gameCategory]->id,
+                        ];
+
+                        GamesListExtra::create($gameDateExtra);
+
+                        GamesTagGame::create([
+                            'game_id' => $game->id,
+                            'type_id' => $types[$gameType]->id,
+                            'extra' => 0,
+                        ]);
+
+                        GamesTagGame::create([
+                            'game_id' => $game->id,
+                            'type_id' => $types[$gameType]->id,
+                            'extra' => 1,
+                        ]);
+                    } else {
+                        //to update category and types
+                        $gameDate = [
+                            'name' => $game->name,
+                            'details' => $game->details,
+                            'mobile' => (int)$game->mobile,
+                            'our_image' => $imageOur,
+                            'image' => $game->image,
+                            'image_preview' => $game->image_preview,
+                            'image_filled' => $game->image_filled,
+                            'image_background' => $game->image_background,
+//                            'active' => 1
+                        ];
+
+                        $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+                    }
+                }
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -209,25 +195,30 @@ class PantalloGetGames extends Command
 
     /**
      * @param $game
+     * @param bool $action
      * @return string
      */
-    private function saveImage($game)
+    private function saveImage($game, $action = false)
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
 
         $url = $game->image_filled;
-        try {
-            //to do replace old picture
-            $contents = file_get_contents($url);
+        if ($action) {
+            try {
+                //to do replace old picture
+                $contents = file_get_contents($url);
+                $name = substr($url, strrpos($url, '/') + 1);
+                $pathImage = "/gamesPicturesDefault/{$name}";
+                $fullPathImage = '/storage' . $pathImage;
+                Storage::put('public' . $pathImage, $contents);
+            } catch (\Exception $e) {
+                $fullPathImage = $dummyPicture;
+            }
+        } else {
             $name = substr($url, strrpos($url, '/') + 1);
-            $pathImage = "/gamesPicturesDefault/{$name}";
-            $fullPathImage = '/storage' . $pathImage;
-            Storage::put('public' . $pathImage, $contents);
-        } catch (\Exception $e) {
-            $fullPathImage = $dummyPicture;
+            $fullPathImage = "/storage/gamesPicturesDefault/{$name}";
         }
-
         return $fullPathImage;
     }
 }
