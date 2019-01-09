@@ -93,6 +93,7 @@
                 <li><a href="#" class="keno">Keno</a></li>
             </ul>
         </div>
+        
         <div class="block-filter clearfix">
             <form action="#" method="post">
                 <div class="pull-left">
