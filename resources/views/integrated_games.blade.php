@@ -41,7 +41,7 @@
         <span class="side-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
             <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
-            <span class="subtitle">What you want to live play?</span>
+            <span class="subtitle">Choose your game</span>
         </div>
 
         <div class="block-filter clearfix">
@@ -79,7 +79,7 @@
              style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
             <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
-            <span class="subtitle">What you want to live play?</span>
+            <span class="subtitle">Choose your game</span>
         </div>
         <div class="btn-block">
             <a href="#" class="live-btn">Live Games</a>
