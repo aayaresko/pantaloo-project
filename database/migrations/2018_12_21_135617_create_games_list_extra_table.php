@@ -15,9 +15,9 @@ class CreateGamesListExtraTable extends Migration
         Schema::create('games_list_extra', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->integer('game_id')->unsigned();
+            $table->integer('game_id')->unsigned()->index();
             $table->foreign('game_id')->references('id')->on('games_list');
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->index();
             $table->foreign('category_id')->references('id')->on('games_categories');
             $table->text('image')->nullable();
             $table->timestamps();

@@ -176,7 +176,7 @@ class PantalloGetGames extends Command
                             'image_preview' => $game->image_preview,
                             'image_filled' => $game->image_filled,
                             'image_background' => $game->image_background,
-//                            'active' => 1
+                            'active' => 1
                         ];
 
                         $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);

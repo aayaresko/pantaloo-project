@@ -45,7 +45,7 @@ class IntegratedGamesController extends Controller
             0 => 'games_list.id',
             1 => 'games_list_extra.name',
             2 => 'games_list.provider_id',
-            3 => 'games_list_extra.type_id',
+            3 => 'games_types_games.type_id',
             4 => 'games_list_extra.category_id',
             5 => 'games_list_extra.image',
             6 => 'games_list.rating',
@@ -122,6 +122,7 @@ class IntegratedGamesController extends Controller
         $configIntegratedGames = config('integratedGames.common');
 
         $whereGameList = [
+            ['games_types_games.extra', '=', 1],
             ['games_list.active', '=', 1],
             ['games_types.active', '=', 1],
             ['games_categories.active', '=', 1],
@@ -132,7 +133,7 @@ class IntegratedGamesController extends Controller
         }
 
         if ((int)$request->typeId !== 0) {
-            array_push($whereGameList, ['games_list_extra.type_id', '=', $request->typeId]);
+            array_push($whereGameList, ['games_types_games.type_id', '=', $request->typeId]);
         }
 
         if ($request->search !== '') {
@@ -141,8 +142,9 @@ class IntegratedGamesController extends Controller
 
         $definitionSettings = $configIntegratedGames['listSettings'];
         $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
-        $orderGames = ['rating', 'asc'];
+        $orderGames = ['games_list.rating', 'asc'];
         if (isset($settings['games'])) {
+            //to do current field
             $orderGames = $definitionSettings[$settings['games']];
         }
 
@@ -155,11 +157,15 @@ class IntegratedGamesController extends Controller
             array_push($whereGameList, ['games_list.mobile', '=', 0]);
         }
 
-        $gameList = GamesList::select($this->relatedFields)
+        //check this query
+        $gameList = DB::table('games_types_games')->select($this->relatedFields)
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-            ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-            ->where($whereGameList)->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
+            ->where($whereGameList)
+            ->groupBy('games_types_games.id')
+            ->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
         $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);

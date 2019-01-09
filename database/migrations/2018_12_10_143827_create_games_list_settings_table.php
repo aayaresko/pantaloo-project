@@ -14,9 +14,9 @@ class CreateGamesListSettingsTable extends Migration
     {
         Schema::create('games_list_settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code')->index();
             $table->string('name');
-            $table->tinyInteger('value');
+            $table->tinyInteger('value')->index();
             $table->timestamps();
         });
     }

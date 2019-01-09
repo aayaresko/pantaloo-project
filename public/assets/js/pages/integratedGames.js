@@ -157,15 +157,18 @@ function setDefaultFilter() {
 
     if (type_id !== null) {
         $('.type_of_game').val(type_id).trigger('change');
+    } else {
+        type_id = 0;
     }
 
     if (category_id !== null) {
         $('.type_of_game').val(category_id).trigger('change');
+    } else {
+        category_id = 0;
     }
 
     listGameParams.typeId = type_id;
     listGameParams.category_id = category_id;
-
 }
 
 function setDefaultTitle() {
