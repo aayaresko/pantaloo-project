@@ -1,7 +1,7 @@
 @extends('layouts.agent')
 
 @section('title')
-    Trackers
+    Links
 @endsection
 
 @section('content')
@@ -16,28 +16,33 @@
                                 <button type="button" class="close" onclick="Custombox.close();">
                                     <span>&times;</span><span class="sr-only">Close</span>
                                 </button>
-                                <h4 class="custom-modal-title">Create tracker</h4>
+                                <h4 class="custom-modal-title">Create link</h4>
                                 <div class="custom-modal-text">
                                     <form method="POST" action="{{route('agent.store_tracker')}}">
                                         {{csrf_field()}}
-                                        <h4>Name</h4>
+                                        <h4>Campaign Name</h4>
                                         <input type="text" class="form-control" name="name" value="">
-                                        <h4>Ref</h4>
-                                        <input type="text" class="form-control" name="ref" value="">
+                                        {{--<h4>Ref</h4>--}}
+                                        {{--<input type="text" class="form-control" name="ref" value="">--}}
                                         <br>
+                                        {{--<h4>Include campaign name</h4>--}}
+                                        {{--<input type="checkbox" name="include_name">--}}
+                                        {{--<br>--}}
+                                        {{--<hr>--}}
+
                                         <input type="submit" name="save" value="Create" class="btn btn-success">
                                     </form>
                                 </div>
                             </div>
                             <a href="#custom-modal" class="btn btn-primary waves-effect waves-light m-r-5 m-b-10"
                                data-animation="fadein" data-plugin="custommodal" data-overlayspeed="200"
-                               data-overlaycolor="#36404a">Create Tracker</a>
+                               data-overlaycolor="#36404a">Create Link</a>
                             <div class="table-wrap">
                                 <table class="table table-hover">
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
-                                            Name
+                                            Campaign Name
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
                                             URL

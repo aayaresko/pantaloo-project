@@ -193,7 +193,7 @@
     </div>
     <footer class="footer">
         <div class="msg-block">
-            <span class="msg">{{translate('What you want to play?')}}</span>
+            <span class="msg">{{translate('What do you want to play?')}}</span>
         </div>
         <div class="games-listing-block">
             <ul class="games-listing">

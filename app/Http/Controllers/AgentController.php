@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Transaction;
 use Carbon\Carbon;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Bitcoin\Service;
 
@@ -121,13 +122,23 @@ class AgentController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:50',
-            'ref' => 'required|max:50|alpha_num'
+//            'ref' => 'required|max:50|alpha_num'
         ]);
 
-        if (Tracker::where('ref', $request->input('ref'))->count() != 0) return redirect()->back()->withErrors(['Ref already exists']);
+        //get config
+        $hashLength = 12;
+        $ref = Str::random($hashLength);
+
+//        $includeName = $request->input('include_name');
+//        if (!is_null($includeName) and $includeName === 'on') {
+//            $ref = $ref . '&CampaignName=' . $request->name;
+//        }
+
+        if (Tracker::where('ref', $ref)->count() != 0) return redirect()->back()->withErrors(['Ref already exists']);
 
         $tracker = new Tracker();
-        $tracker->ref = $request->input('ref');
+//        $tracker->ref = $request->input('ref');
+        $tracker->ref = $ref;
         $tracker->name = $request->input('name');
         $tracker->user()->associate(Auth::user());
         $tracker->save();

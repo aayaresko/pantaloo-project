@@ -13,7 +13,7 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <select name="user_id" class="selectpicker" data-live-search="true">
                                         <option value="0" selected>Users / All</option>
                                         @foreach($users as $user)
@@ -22,7 +22,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <select name="category_id" class="selectpicker" data-live-search="true">
                                         <option value="0" selected>Providers / All</option>
                                         @foreach($gamesCategories as $category)
@@ -31,7 +31,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <select name="type_id" class="selectpicker" data-live-search="true">
                                         @foreach($types as $key => $type)
                                             @if($type->filter === 1)
@@ -41,6 +41,15 @@
                                                     <option value="{{$type->code}}">{{$type->value}}</option>
                                                 @endif
                                             @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <select name="tracker_id" class="selectpicker" data-live-search="true">
+                                        <option value="0" selected>Campaign name / All</option>
+                                        @foreach($trackers as $tracker)
+                                            <option value="{{$tracker->id}}">{{$tracker->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -68,6 +77,9 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
                                                     colspan="1">Bonus
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                    colspan="1">Campaign Name
                                                 </th>
                                             </tr>
                                             </thead>

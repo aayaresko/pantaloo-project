@@ -8,6 +8,7 @@ $(document).ready(function () {
         options.user_id = $('select[name="user_id"]').val();
         options.category_id = $('select[name="category_id"]').val();
         options.type_id = $('select[name="type_id"]').val();
+        options.tracker_id = $('select[name="tracker_id"]').val();
     }
 
     function initDataTable() {
@@ -43,6 +44,7 @@ $(document).ready(function () {
                 {"data": "description"},
                 {"data": "sum"},
                 {"data": "bonus_sum"},
+                {"data": "tracker_name"},
             ]
         });
 
