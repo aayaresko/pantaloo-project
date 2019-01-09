@@ -143,9 +143,11 @@ class IntegratedGamesController extends Controller
         $definitionSettings = $configIntegratedGames['listSettings'];
         $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
         $orderGames = ['games_list.rating', 'asc'];
+
         if (isset($settings['games'])) {
             //to do current field
             $orderGames = $definitionSettings[$settings['games']];
+            $orderGames[0] = 'games_list.' . $orderGames[0];
         }
 
         //check this i use alien code
