@@ -12,9 +12,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 intro-text">
-                            <h1>EARN UP TO <span>50%</span></h1>
-                            <p>With CasinoBit, <strong>YOU</strong> deliver traffic, <strong style="text-decoration: underline;">WE</strong> deliver results!</p>
-                            <a href="#about" class="btn btn-custom btn-lg page-scroll">Learn More</a> </div>
+                            <h1>EARN <span>50%</span> RIGHT NOW</h1>
+                            <p>
+                                <span>And Get Payed Out Every Week</span>
+                                <br>
+                                With CasinoBit,
+                                <strong>YOU</strong> deliver traffic,
+                                <strong style="text-decoration: underline;">WE</strong> deliver results!
+                            </p>
+                            <a href="#about" class="btn btn-custom btn-lg page-scroll">Learn More</a></div>
                     </div>
                 </div>
             </div>
@@ -24,11 +30,15 @@
     <div id="about">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-md-6"> <img src="/partner/img/about.jpg" class="img-responsive" alt=""> </div>
+                <div class="col-xs-12 col-md-6"><img src="/partner/img/about.jpg" class="img-responsive" alt=""></div>
                 <div class="col-xs-12 col-md-6">
                     <div class="about-text">
                         <h2>About Us</h2>
-                        <p>Casino is a way of life for us and online gambling is the way we want to show others how to benefit from it. Our main objective is to provide the most efficient tools to our affiliates to help bring them on top of the competition. There is no doubt that you will be able to offer your players a high level service as well as the most unforgettable gaming experience so they always will want to come back.</p>
+                        <p>Casino is a way of life for us and online gambling is the way we want to show others how to
+                            benefit from it. Our main objective is to provide the most efficient tools to our affiliates
+                            to help bring them on top of the competition. There is no doubt that you will be able to
+                            offer your players a high level service as well as the most unforgettable gaming experience
+                            so they always will want to come back.</p>
                         <h3>Why Choose Us?</h3>
                         <div class="list-style">
                             <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -61,19 +71,19 @@
                 <p>Discover our services.</p>
             </div>
             <div class="row">
-                <div class="col-md-4"> <i class="fa fa fa-mobile"></i>
+                <div class="col-md-4"><i class="fa fa fa-mobile"></i>
                     <div class="service-desc">
                         <h3>For Mobile and Tablet</h3>
                         <p>Boost your revenue With Mobile and Tablet layout.</p>
                     </div>
                 </div>
-                <div class="col-md-4"> <i class="fa fa fa-bullhorn"></i>
+                <div class="col-md-4"><i class="fa fa fa-bullhorn"></i>
                     <div class="service-desc">
                         <h3>Marketing Tools</h3>
                         <p>Optimize your marketing efforts with highest quality creatives.</p>
                     </div>
                 </div>
-                <div class="col-md-4"> <i class="fa fa-magic"></i>
+                <div class="col-md-4"><i class="fa fa-magic"></i>
                     <div class="service-desc">
                         <h3>Reporting</h3>
                         <p>Detailed reporting system accessible 24/7.</p>
@@ -91,55 +101,70 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fas fa-hand-holding-usd"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fas fa-hand-holding-usd"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">UP TO 50% COMMISSION</span></div>
-                            <p>"Our generous payout structure allows you to earn up to 45% commission on every player."</p>
+                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">UP TO 50% COMMISSION</span>
+                            </div>
+                            <p>"Our generous payout structure allows you to earn up to 45% commission on every
+                                player."</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fab fa-bitcoin"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fab fa-bitcoin"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">BITCOINS</span> </div>
-                            <p>"Get paid in Bitcoins, the digital currency that enabled you to retain complete anonymity."</p>
+                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">BITCOINS</span>
+                            </div>
+                            <p>"Get paid in Bitcoins, the digital currency that enabled you to retain complete
+                                anonymity."</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fas fa-bullhorn"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fas fa-bullhorn"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">MASSIVE PROMOTIONS</span> </div>
-                            <p>"Take advantage of our immense promotions and skilled VIP department to convert your traffic with the maximum rate."</p>
+                            <div class="testimonial-meta"><span
+                                        style="color: #333;font-size: 20px;">MASSIVE PROMOTIONS</span></div>
+                            <p>"Take advantage of our immense promotions and skilled VIP department to convert your
+                                traffic with the maximum rate."</p>
                         </div>
                     </div>
                 </div>
-                <div class="row"> </div>
+                <div class="row"></div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fas fa-desktop"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fas fa-desktop"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">INTUITIVE DASHBOARD</span> </div>
+                            <div class="testimonial-meta"><span
+                                        style="color: #333;font-size: 20px;">INTUITIVE DASHBOARD</span></div>
                             <p>"All stats in our Affiliate Dashboard are updated daily."</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fas fa-credit-card"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fas fa-credit-card"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">FAST PAYMENTS</span> </div>
+                            <div class="testimonial-meta"><span
+                                        style="color: #333;font-size: 20px;">FAST PAYMENTS</span></div>
                             <p>"Get your commission really fast with Bitcoin system."</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="testimonial">
-                        <div class="testimonial-image"> <i style="font-size: 60px; color: #005bfb;" class="fas fa-trophy"></i> </div>
+                        <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
+                                                          class="fas fa-trophy"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"> <span style="color: #333;font-size: 20px;">LEADING BRAND</span> </div>
+                            <div class="testimonial-meta"><span
+                                        style="color: #333;font-size: 20px;">LEADING BRAND</span></div>
                             <p>"Trafic that i send get better results with CasinoBit Affiliates. Thanks to them !"</p>
                         </div>
                     </div>
@@ -188,7 +213,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6"> <img src="/partner/img/commissions.png" class="img-responsive" alt=""> </div>
+                <div class="col-xs-12 col-md-6"><img src="/partner/img/commissions.png" class="img-responsive" alt="">
+                </div>
             </div>
         </div>
     </div>
@@ -199,13 +225,15 @@
                 <div class="row">
                     <div class="section-title">
                         <h2>Get In Touch</h2>
-                        <p>Please fill out the form below to send us an email and we will get back to you as soon as possible.</p>
+                        <p>Please fill out the form below to send us an email and we will get back to you as soon as
+                            possible.</p>
                     </div>
                     <form name="sentMessage" id="contactForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Name"
+                                           required>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -217,7 +245,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+                            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message"
+                                      required></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div id="success"></div>
