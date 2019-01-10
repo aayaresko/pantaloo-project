@@ -8,5 +8,5 @@ class RawLog extends Model
 {
     protected $table = 'raw_log';
 
-    protected $fillable = ['response', 'request', 'full_url'];
+    protected $fillable = ['response', 'request', 'type_id', 'extra'];
 }
