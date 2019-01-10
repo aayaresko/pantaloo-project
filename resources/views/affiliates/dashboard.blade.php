@@ -79,7 +79,7 @@
                                     <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
                                         <thead>
                                         <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User Id</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
@@ -94,7 +94,7 @@
                                         <tbody>
                                         @foreach($users as $stat)
                                             <tr role="row">
-                                                <td><span class="label label-default">{{$stat['user']->id}}</span></td>
+                                                <td><span class="label label-default">{{$stat['user']->email}}</span></td>
                                                 <td>{{$stat['deposits']}}</td>
                                                 <td>{{$stat['bets']}}</td>
                                                 <td>{{$stat['bet_count']}}</td>
