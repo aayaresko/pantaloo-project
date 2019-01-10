@@ -62,8 +62,10 @@ class IntegratedGamesController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
+        $types = GamesType::select(['id', 'code', 'name'])->get();
         View::share('dummyPicture', $dummyPicture);
-        return view('admin.integrated_games');
+        return view('admin.integrated_games')
+            ->with(['types' => $types]);
     }
 
     /**
@@ -224,10 +226,16 @@ class IntegratedGamesController extends Controller
      */
     protected function preparationParams(Request $request)
     {
-        /* COLUMNS */
         $param['columns'] = $this->fields;
         $param['columnsAlias'] = $this->relatedFields;
-        /* COLUMNS */
+        $param['whereCompare'] = [
+            ['games_types_games.extra', '=', 1],
+        ];
+
+        if ($request->has('type_id') and $request->type_id > 0) {
+            array_push($param['whereCompare'],
+                ['games_types_games.type_id', '=', $request->type_id]);
+        }
 
         return $param;
     }
@@ -240,9 +248,7 @@ class IntegratedGamesController extends Controller
     {
         $param = $this->preparationParams($request);
         /* ACT */
-        $whereCompare = [
-            ['games_types_games.extra', '=', 1],
-        ];
+        $whereCompare = $param['whereCompare'];
 
         $countSum = GamesTypeGame::select(['games_types_games.game_id', DB::raw('COUNT(*) as `count`')])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')

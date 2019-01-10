@@ -4,6 +4,10 @@ let globalTable;
 let optionsDefault = {};
 let options = JSON.parse(JSON.stringify(optionsDefault));
 
+function setOptions() {
+    options.type_id = $('select[name="type_id"]').val();
+}
+
 function initDataTable() {
     //destroy
     $('#tableOrder').DataTable().destroy();
@@ -49,6 +53,11 @@ $(function () {
     initDataTable();
 });
 
+
+$('.selectpicker').change(function () {
+    setOptions();
+    initDataTable();
+});
 $(document).ready(function () {
     //something
 });

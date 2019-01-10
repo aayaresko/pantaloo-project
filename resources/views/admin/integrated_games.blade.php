@@ -19,6 +19,24 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <select name="type_id" class="selectpicker" data-live-search="true">
+                                        <option value="0" selected>Type / All</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-3">
+
+                                </div>
+                            </div>
+
+                            <br>
+
                             <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable" role="grid" aria-describedby="datatable_info">
                                 <thead>
                                 <tr role="row">
