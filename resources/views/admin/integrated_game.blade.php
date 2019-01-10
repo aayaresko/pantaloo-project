@@ -7,7 +7,6 @@
 @section('preJs')
     <script>
         let game = {!! json_encode($game) !!};
-        console.log(game);
         let dummy = "{{ $dummyPicture }}";
         let maxSizeImage = "{{ $maxSizeImage }}";
         let typesImage = {!! json_encode($typesImage) !!};

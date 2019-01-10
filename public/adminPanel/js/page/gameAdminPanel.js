@@ -27,21 +27,27 @@ function eventCheckBox() {
     $('#typeStatus').change(function () {
         let input = $(this);
         let checked = input.attr('checked');
-        let element = $(`select[name='type_id']`);
+        let element = $('.js-example-basic-multiple');
+        //let element = $(`select[name='type_id']`);
 
         if (checked === undefined) {
 
             input.attr('checked', true);
 
-            element.val(game.type_id);
+            $('.js-example-basic-multiple').val(game.type_id).trigger('change');
 
-            element.removeClass('elementReadOnly');
+            //element.val(game.type_id);
+            //element.removeClass('elementReadOnly');
+
+            element.removeAttr("readonly", "readonly");
         } else {
             input.attr('checked', false);
 
-            element.val(game.default_type_id);
+            $('.js-example-basic-multiple').val(game.default_type_id).trigger('change');
 
-            element.addClass('elementReadOnly');
+            //element.val(game.default_type_id);
+            //element.addClass('elementReadOnly');
+            element.attr("readonly", "readonly");
         }
     });
 

@@ -100,7 +100,7 @@ class IntegratedGamesController extends Controller
             14 => 'games_list.our_image as default_image',
             3 => DB::raw("group_concat(games_types_games.type_id) as type"),
         ];
-        $fields = array_merge_recursive ($addFields, $this->fields);
+        $fields = array_merge_recursive($addFields, $this->fields);
 
         //to do optimize this ! sometimes
         $game = GamesTypeGame::select($fields)
@@ -194,12 +194,12 @@ class IntegratedGamesController extends Controller
                 foreach ($typeIds as $typeId) {
 
                     array_push($relationType, [
-                            'extra' => 1,
-                            'game_id' => $request->id,
-                            'type_id' => $typeId,
-                            'created_at' => $date,
-                            'updated_at' => $date,
-                        ]);
+                        'extra' => 1,
+                        'game_id' => $request->id,
+                        'type_id' => $typeId,
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                    ]);
                 }
 
                 GamesTypeGame::where([
