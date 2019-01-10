@@ -34,6 +34,9 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function loginPlayer($request)
     {
+        $debugGame = new DebugGame();
+        $debugGame->start();
+
         DB::beginTransaction();
         try {
             $game = GamesList::where('id', $request->gameId)->first();
@@ -94,7 +97,7 @@ class PantalloGamesSystem implements GamesSystem
             dump($login);
             dump('getGame');
             dump($getGame);
-            dd($e);
+            dump($e);
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -102,12 +105,24 @@ class PantalloGamesSystem implements GamesSystem
         }
 
         DB::commit();
-        return [
+
+        //finish debug
+        $response = [
             'success' => true,
             'message' => [
                 'gameLink' => $getGame->response
             ]
         ];
+        $debugGameResult = $debugGame->end();
+
+        RawLog::create([
+            'type_id' => 1,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => json_encode($response),
+            'extra' => $debugGameResult
+        ]);
+
+        return $response;
     }
 
     /**
@@ -162,7 +177,6 @@ class PantalloGamesSystem implements GamesSystem
         try {
             //validation
             $params = [];
-            $requestParams = $request->query();
             Log::info($requestParams);
 
             $configPantalloGames = config('pantalloGames');
@@ -522,19 +536,15 @@ class PantalloGamesSystem implements GamesSystem
         }
         DB::commit();
 
-
+        //finish debug
         $debugGameResult = $debugGame->end();
-        $responseLog = $response;
-        $responseLog['time'] = $debugGameResult['time'];
-        $responseLog['startDate'] = $debugGameResult['startDate'];
-        $responseLog['endDate'] = $debugGameResult['endDate'];
 
         RawLog::create([
-            'full_url' => GeneralHelper::fullRequest(),
-            'request' => json_encode($requestParams),
-            'response' => json_encode($responseLog)
+            'type_id' => 2,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => json_encode($response),
+            'extra' => $debugGameResult
         ]);
-        //end time counter and raw url
 
         return $response;
     }
