@@ -12,6 +12,7 @@ use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
+use App\Modules\Others\DebugGame;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloTransaction;
 use App\Models\Pantallo\GamesPantalloSessionGame;
@@ -153,9 +154,9 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function callback($request)
     {
-        $start = microtime(true);
-        $startTime = explode(" ", microtime());
-        $startDate = date("m-d-y H:i:s", $startTime[1]) . substr((string)$startTime[0], 1, 4);
+
+        $debugGame = new DebugGame();
+        $debugGame->start();
 
         DB::beginTransaction();
         try {
@@ -521,14 +522,12 @@ class PantalloGamesSystem implements GamesSystem
         }
         DB::commit();
 
-        //time counter and raw url
-        $endTime = explode(" ", microtime());
-        $endDate = date("m-d-y H:i:s", $endTime[1]) . substr((string)$endTime[0], 1, 4);
-        $time = round(microtime(true) - $start, 4);
+
+        $debugGameResult = $debugGame->end();
         $responseLog = $response;
-        $responseLog['time'] = $time;
-        $responseLog['startDate'] = $startDate;
-        $responseLog['endDate'] = $endDate;
+        $responseLog['time'] = $debugGameResult['time'];
+        $responseLog['startDate'] = $debugGameResult['startDate'];
+        $responseLog['endDate'] = $debugGameResult['endDate'];
 
         RawLog::create([
             'full_url' => GeneralHelper::fullRequest(),

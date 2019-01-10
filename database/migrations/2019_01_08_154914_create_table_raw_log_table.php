@@ -14,9 +14,10 @@ class CreateTableRawLogTable extends Migration
     {
         Schema::create('raw_log', function (Blueprint $table) {
             $table->increments('id');
+            $table->tinyInteger('type_id')->nullable()->index();
             $table->text('request');
             $table->text('response');
-            $table->text('full_url');
+            $table->text('extra');
             $table->timestamps();
         });
     }
