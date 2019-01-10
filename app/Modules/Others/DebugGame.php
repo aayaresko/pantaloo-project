@@ -12,10 +12,7 @@ class DebugGame
      * @var
      */
     protected $start;
-    /**
-     * @var
-     */
-    protected $startTime;
+
     /**
      * @var
      */
@@ -39,7 +36,6 @@ class DebugGame
             substr((string)$startTime[0], 1, 4);
 
         $this->start = $start;
-        $this->startTime = $startTime;
         $this->startDate = $startDate;
 
         return true;
@@ -51,7 +47,7 @@ class DebugGame
     public function end()
     {
         $start = $this->start;
-        $startDate = $this->startTime;
+        $startDate = $this->startDate;
         $endTime = explode(" ", microtime());
         $endDate = date("m-d-y H:i:s", $endTime[1]) .
             substr((string)$endTime[0], 1, 4);
