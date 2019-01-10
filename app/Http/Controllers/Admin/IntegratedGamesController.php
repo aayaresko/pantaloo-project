@@ -95,10 +95,10 @@ class IntegratedGamesController extends Controller
         ];
 
         $addFields = [
-            3 => DB::raw("group_concat(games_types_games.type_id) as type"),
             10 => 'games_list.name as default_name',
             13 => 'games_list.category_id as default_category_id',
             14 => 'games_list.our_image as default_image',
+            3 => DB::raw("group_concat(games_types_games.type_id) as type"),
         ];
         $fields = array_merge_recursive ($addFields, $this->fields);
 
@@ -117,7 +117,6 @@ class IntegratedGamesController extends Controller
             ->groupBy('games_types_games.game_id')
             ->first();
 
-
         $game->default_type_id = $gameDefault->type;
         $game->type_id = explode(',', $game->type);
         $game->default_type_id = explode(',', $game->default_type_id);
@@ -135,14 +134,15 @@ class IntegratedGamesController extends Controller
      */
     public function gameUpdate(Request $request)
     {
+        //dd($request->toArray());
         $adminConfig = config('adminPanel');
         $imageConfig = $adminConfig['image'];
         $date = new \DateTime();
 
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
-            'type_ids' => 'array',
-            'type_ids.*' => 'exists:games_types,id', // check each item in the array
+            'type_id' => 'array',
+            'type_id.*' => 'exists:games_types,id', // check each item in the array
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
@@ -172,7 +172,7 @@ class IntegratedGamesController extends Controller
 
             if (!is_null($default_provider_image)) {
                 if ($default_provider_image === 'on') {
-                    $updatedGame['image'] = $game->image_filled;
+                    $updatedGame['image'] = $game->our_image;
                     unset($updatedGame['default_provider_image']);
                 }
             }
@@ -183,13 +183,13 @@ class IntegratedGamesController extends Controller
             ]);
             unset($updatedGame['rating']);
             unset($updatedGame['active']);
-            unset($updatedGame['type_ids']);
+            unset($updatedGame['type_id']);
 
             GamesListExtra::where('game_id', $request->id)->update($updatedGame);
 
             //update type
-            if ($request->has('type_ids')) {
-                $typeIds = $request->type_ids;
+            if ($request->has('type_id')) {
+                $typeIds = $request->type_id;
                 $relationType = [];
                 foreach ($typeIds as $typeId) {
 

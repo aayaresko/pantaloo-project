@@ -7,6 +7,7 @@
 @section('preJs')
     <script>
         let game = {!! json_encode($game) !!};
+        console.log(game);
         let dummy = "{{ $dummyPicture }}";
         let maxSizeImage = "{{ $maxSizeImage }}";
         let typesImage = {!! json_encode($typesImage) !!};
@@ -57,7 +58,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <select name="type_ids[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="type_id[]" class="js-example-basic-multiple" multiple="multiple">
                                                 @foreach($types as $type)
                                                     @if(in_array($type->id, $game->type_id))
                                                         <option value="{{ $type->id }}"
