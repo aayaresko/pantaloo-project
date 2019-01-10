@@ -47,24 +47,6 @@ class IntegratedGamesController extends Controller
             9 => 'games_list.created_at',
         ];
 
-
-//        $this->fields = [
-//            0 => 'games_list.id',
-//            1 => 'games_list_extra.name',
-//            2 => 'games_list.provider_id',
-////
-//            4 => 'games_list_extra.category_id',
-//            5 => 'games_list_extra.image',
-//            6 => 'games_list.rating',
-//            7 => 'games_list.active',
-//            8 => 'games_list.mobile',
-//            9 => 'games_list.created_at',
-//            10 => 'games_list.name as default_name',
-//            12 => 'games_list.type_id as default_type_id',//DB::raw("group_concat(games_list.name) as type");
-//            13 => 'games_list.category_id as default_category_id',
-//            14 => 'games_list.our_image as default_image',
-//        ];
-
         $this->relatedFields = $this->fields;
         $this->relatedFields[2] = 'games_list.provider_id as provider';
         $this->relatedFields[3] = DB::raw("group_concat(games_types.name) as type");
@@ -101,8 +83,45 @@ class IntegratedGamesController extends Controller
 
         $types = GamesType::select(['id', 'code', 'name'])->get();
         $categories = GamesCategory::select(['id', 'code', 'name'])->get();
-        $game = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-            ->where([['games_list.id', '=', $request->id]])->select($this->fields)->first();
+        //to do check this in one query - i don't have time
+        $whereCompare = [
+            ['games_list.id', '=', $request->id],
+            ['games_types_games.extra', '=', 1]
+        ];
+
+        $whereCompareDefault = [
+            ['games_list.id', '=', $request->id],
+            ['games_types_games.extra', '=', 0]
+        ];
+
+        $addFields = [
+            3 => DB::raw("group_concat(games_types_games.type_id) as type"),
+            10 => 'games_list.name as default_name',
+            13 => 'games_list.category_id as default_category_id',
+            14 => 'games_list.our_image as default_image',
+        ];
+        $fields = array_merge_recursive ($addFields, $this->fields);
+
+        //to do optimize this ! sometimes
+        $game = GamesTypeGame::select($fields)
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->where($whereCompare)
+            ->groupBy('games_types_games.game_id')
+            ->first();
+
+        $gameDefault = GamesTypeGame::select([$fields[3]])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->where($whereCompareDefault)
+            ->groupBy('games_types_games.game_id')
+            ->first();
+
+
+        $game->default_type_id = $gameDefault->type;
+        $game->type_id = explode(',', $game->type);
+        $game->default_type_id = explode(',', $game->default_type_id);
+
         return view('admin.integrated_game')->with([
             'game' => $game,
             'types' => $types,
@@ -118,10 +137,12 @@ class IntegratedGamesController extends Controller
     {
         $adminConfig = config('adminPanel');
         $imageConfig = $adminConfig['image'];
+        $date = new \DateTime();
 
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
-            'type_id' => 'integer|exists:games_types,id',
+            'type_ids' => 'array',
+            'type_ids.*' => 'exists:games_types,id', // check each item in the array
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
@@ -162,8 +183,33 @@ class IntegratedGamesController extends Controller
             ]);
             unset($updatedGame['rating']);
             unset($updatedGame['active']);
+            unset($updatedGame['type_ids']);
 
             GamesListExtra::where('game_id', $request->id)->update($updatedGame);
+
+            //update type
+            if ($request->has('type_ids')) {
+                $typeIds = $request->type_ids;
+                $relationType = [];
+                foreach ($typeIds as $typeId) {
+
+                    array_push($relationType, [
+                            'extra' => 1,
+                            'game_id' => $request->id,
+                            'type_id' => $typeId,
+                            'created_at' => $date,
+                            'updated_at' => $date,
+                        ]);
+                }
+
+                GamesTypeGame::where([
+                    ['extra', '=', 1],
+                    ['game_id', '=', $request->id]
+                ])->delete();
+
+                GamesTypeGame::insert($relationType);
+            }
+
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);

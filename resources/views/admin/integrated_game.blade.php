@@ -57,9 +57,9 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <select name="types[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="type_ids[]" class="js-example-basic-multiple" multiple="multiple">
                                                 @foreach($types as $type)
-                                                    @if($game->type_id === $type->id)
+                                                    @if(in_array($type->id, $game->type_id))
                                                         <option value="{{ $type->id }}"
                                                                 selected>{{ $type->name }}</option>
                                                     @else
