@@ -7,6 +7,7 @@ use Validator;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
+use App\Models\GamesTypeGame;
 use App\Models\GamesCategory;
 use App\Models\GamesListExtra;
 use App\Http\Controllers\Controller;
@@ -37,22 +38,36 @@ class IntegratedGamesController extends Controller
             0 => 'games_list.id',
             1 => 'games_list_extra.name',
             2 => 'games_list.provider_id',
-            3 => 'games_list_extra.type_id',
+
             4 => 'games_list_extra.category_id',
             5 => 'games_list_extra.image',
             6 => 'games_list.rating',
             7 => 'games_list.active',
             8 => 'games_list.mobile',
             9 => 'games_list.created_at',
-            10 => 'games_list.name as default_name',
-            12 => 'games_list.type_id as default_type_id',
-            13 => 'games_list.category_id as default_category_id',
-            14 => 'games_list.image_filled as default_image',
         ];
+
+
+//        $this->fields = [
+//            0 => 'games_list.id',
+//            1 => 'games_list_extra.name',
+//            2 => 'games_list.provider_id',
+////
+//            4 => 'games_list_extra.category_id',
+//            5 => 'games_list_extra.image',
+//            6 => 'games_list.rating',
+//            7 => 'games_list.active',
+//            8 => 'games_list.mobile',
+//            9 => 'games_list.created_at',
+//            10 => 'games_list.name as default_name',
+//            12 => 'games_list.type_id as default_type_id',//DB::raw("group_concat(games_list.name) as type");
+//            13 => 'games_list.category_id as default_category_id',
+//            14 => 'games_list.our_image as default_image',
+//        ];
 
         $this->relatedFields = $this->fields;
         $this->relatedFields[2] = 'games_list.provider_id as provider';
-        $this->relatedFields[3] = 'games_types.name as type';
+        $this->relatedFields[3] = DB::raw("group_concat(games_types.name) as type");
         $this->relatedFields[4] = 'games_categories.name as category';
         $this->relatedFields[5] = 'games_list_extra.image as image';
     }
@@ -179,14 +194,20 @@ class IntegratedGamesController extends Controller
     {
         $param = $this->preparationParams($request);
         /* ACT */
-        $countSum = GamesList::select(array(
-            DB::raw('COUNT(*) as `count`')))
-            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-            ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
-            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-            ->where([])->get()->toArray();
+        $whereCompare = [
+            ['games_types_games.extra', '=', 1],
+        ];
 
-        $totalData = $countSum[0]['count'];
+        $countSum = GamesTypeGame::select(['games_types_games.game_id', DB::raw('COUNT(*) as `count`')])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where($whereCompare)
+            ->groupBy('games_types_games.game_id')
+            ->get()->toArray();
+
+        $totalData = count($countSum);
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -197,11 +218,13 @@ class IntegratedGamesController extends Controller
 
         if (empty($request->input('search.value'))) {
             /* SORT */
-
-            $items = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+            $items = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
+                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->where([])
+                ->where($whereCompare)
+                ->groupBy('games_types_games.game_id')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -210,25 +233,27 @@ class IntegratedGamesController extends Controller
             /* SEARCH */
             $search = $request->input('search.value');
 
-            $items = GamesList::leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+            array_push($whereCompare, [$param['columns'][0], 'LIKE', "%{$search}%"]);
+
+            $items = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
+                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->where([
-                    [$param['columns'][0], 'LIKE', "%{$search}%"],
-                ])
+                ->where($whereCompare)
+                ->groupBy('games_types_games.game_id')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->select($param['columnsAlias'])->get();
 
-            $countSum = GamesList::select(array(
-                DB::raw('COUNT(*) as `count`')))
+            $countSum = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
+                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                 ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types.id', '=', 'games_list_extra.type_id')
+                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->where([
-                    [$param['columns'][0], 'LIKE', "%{$search}%"],
-                ])
+                ->where($whereCompare)
+                ->groupBy('games_types_games.game_id')
                 ->get()->toArray();
 
             $totalFiltered = $countSum[0]['count'];

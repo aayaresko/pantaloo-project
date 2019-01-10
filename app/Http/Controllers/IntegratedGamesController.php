@@ -160,13 +160,14 @@ class IntegratedGamesController extends Controller
         }
 
         //check this query
+
         $gameList = DB::table('games_types_games')->select($this->relatedFields)
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
             ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
             ->where($whereGameList)
-            ->groupBy('games_types_games.id')
+            ->groupBy('games_types_games.game_id')
             ->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
         $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);

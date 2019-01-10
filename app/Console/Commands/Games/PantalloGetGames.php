@@ -6,7 +6,7 @@ use DB;
 use Log;
 use App\Models\GamesType;
 use App\Models\GamesList;
-use App\Models\GamesTagGame;
+use App\Models\GamesTypeGame;
 use App\Models\GamesCategory;
 use App\Models\GamesListExtra;
 use App\Modules\PantalloGames;
@@ -154,13 +154,13 @@ class PantalloGetGames extends Command
 
                         GamesListExtra::create($gameDateExtra);
 
-                        GamesTagGame::create([
+                        GamesTypeGame::create([
                             'game_id' => $game->id,
                             'type_id' => $types[$gameType]->id,
                             'extra' => 0,
                         ]);
 
-                        GamesTagGame::create([
+                        GamesTypeGame::create([
                             'game_id' => $game->id,
                             'type_id' => $types[$gameType]->id,
                             'extra' => 1,

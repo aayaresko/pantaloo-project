@@ -13,6 +13,7 @@ function initDataTable() {
         "order": [[0, "asc"]],
         "columnDefs": [
             {"orderable": false, "targets": 9},
+            {"orderable": false, "targets": 3},
         ],
         "processing": true,
         "serverSide": true,
