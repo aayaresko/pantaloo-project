@@ -39,7 +39,16 @@ class AffiliatesController extends Controller
         $user = $request->user();
         $trackersFileds = ['id', 'ref', 'name'];
         $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
-        return view('affiliates.trackers', ['trackers' => $trackers]);
+
+        $configPartner = config('partner');
+        $necessaryAddress = config('app.foreignPages.main');
+        $params['link'] = sprintf("%s?%s=", $necessaryAddress,
+            $configPartner['keyLink']);
+
+        return view('affiliates.trackers', [
+            'trackers' => $trackers,
+            'params' => $params
+        ]);
     }
 
     /**
@@ -55,7 +64,10 @@ class AffiliatesController extends Controller
         $trackersFileds = ['id', 'ref', 'name'];
         $tracker = Tracker::select($trackersFileds)->where('id', $id)->first();
         $params['name'] = $tracker->name;
-        $params['link'] = sprintf("%s?%s=%s", url('/'), $configPartner['keyLink'], $tracker->ref);
+
+        $necessaryAddress = config('app.foreignPages.main');
+        $params['link'] = sprintf("%s?%s=%s", $necessaryAddress,
+            $configPartner['keyLink'], $tracker->ref);
 
         $banners->map(function ($item, $key) use ($params) {
             $item->link = $params['link'];
