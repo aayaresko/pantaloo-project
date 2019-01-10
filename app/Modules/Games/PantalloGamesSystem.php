@@ -177,6 +177,7 @@ class PantalloGamesSystem implements GamesSystem
         try {
             //validation
             $params = [];
+            $requestParams = $request->query();
             Log::info($requestParams);
 
             $configPantalloGames = config('pantalloGames');
