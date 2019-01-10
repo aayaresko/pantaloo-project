@@ -26,7 +26,7 @@
                             <form method="POST" enctype="multipart/form-data">
                                 <table class="table table-hover">
                                     <tr>
-                                        <td> 
+                                        <td>
                                             <div class="table-toggle-inner">
                                                 <span>Name</span>
                                                 <input

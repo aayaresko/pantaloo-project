@@ -279,7 +279,11 @@ class IntegratedGamesController extends Controller
             /* SEARCH */
             $search = $request->input('search.value');
 
-            array_push($whereCompare, [$param['columns'][0], 'LIKE', "%{$search}%"]);
+            if (is_numeric($search)) {
+                array_push($whereCompare, [$param['columns'][0], 'LIKE', "%{$search}%"]);
+            } else {
+                array_push($whereCompare, [$param['columns'][1], 'LIKE', "%{$search}%"]);
+            }
 
             $items = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
                 ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
