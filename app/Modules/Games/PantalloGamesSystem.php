@@ -119,7 +119,7 @@ class PantalloGamesSystem implements GamesSystem
             'type_id' => 1,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
-            'extra' => $debugGameResult
+            'extra' => json_encode($debugGameResult)
         ]);
 
         return $response;
@@ -544,7 +544,7 @@ class PantalloGamesSystem implements GamesSystem
             'type_id' => 2,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
-            'extra' => $debugGameResult
+            'extra' => json_encode($debugGameResult)
         ]);
 
         return $response;
