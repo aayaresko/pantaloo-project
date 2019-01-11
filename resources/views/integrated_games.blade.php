@@ -8,7 +8,7 @@
 
     <div class="video-popup">
         <div class="video-container">
-            <div class="game-entry colorGame">
+            <div class="game-entry colorGame" id="fs_section_img">
                 {{--<img src="media/images/logo.png" alt="game">--}}
                 <div class="gameLoadingWrapper">
                     <h1 class="gameLoading">

@@ -10,6 +10,7 @@ function onFullScreenExit() {
 
 function enterFullscreen(id) {
   onFullScreenEnter(id);
+  // document.getElementById('test').style.display = 'none'
   var el =  document.getElementById(id);
   var onfullscreenchange =  function(e){
     var fullscreenElement = document.fullscreenElement || document.mozFullscreenElement || document.webkitFullscreenElement;
@@ -33,6 +34,7 @@ function enterFullscreen(id) {
 
 function exitFullscreen(id) {
   onFullScreenExit(id);
+  document.getElementById('test').style.display = 'block'
   document.cancelFullScreen();
   document.querySelector('#'+id + ' button').onclick = function(){
     enterFullscreen(id);
