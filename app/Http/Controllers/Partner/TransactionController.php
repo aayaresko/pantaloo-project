@@ -119,8 +119,6 @@ class TransactionController extends Controller
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('trackers', 'users.tracker_id', '=', 'trackers.id')
             ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
-            ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
-            ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
             ->where($param['conditions'])->get()->toArray();
 
         $totalData = $countSum[0]['count'];
@@ -137,8 +135,6 @@ class TransactionController extends Controller
             ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->leftJoin('trackers', 'users.tracker_id', '=', 'trackers.id')
             ->leftJoin('games_list', 'games_pantallo_transactions.game_id', '=', 'games_list.id')
-            ->leftJoin('games_types', 'games_list.type_id', '=', 'games_types.id')
-            ->leftJoin('games_categories', 'games_list.category_id', '=', 'games_categories.id')
             ->where($param['conditions'])
             ->offset($start)
             ->limit($limit)
