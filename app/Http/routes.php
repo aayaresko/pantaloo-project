@@ -38,6 +38,8 @@ Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () 
 
 Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
+Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController@setLanguage']);
+
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@home']);
 
 Route::auth();

@@ -18,8 +18,20 @@ class GeneralHelper
     /**
      * @return string
      */
-    static public function fullRequest(){
+    static public function fullRequest()
+    {
         $request = url('/') . $_SERVER['REQUEST_URI'];
         return $request;
+    }
+
+    /**
+     * @return array
+     */
+    static public function getListLanguage()
+    {
+        $dir = '../resources/lang';
+        $languagesIndex = array_diff(scandir($dir), array('..', '.'));
+        $languages = array_values($languagesIndex);
+        return $languages;
     }
 }

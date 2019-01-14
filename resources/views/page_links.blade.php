@@ -1,5 +1,5 @@
 @php
-
+//this code is very badly
 $pages = \App\Page::orderBy('id');
 
 if($is_main) $pages = $pages->where('is_main', 1);
@@ -20,7 +20,7 @@ $pages = $pages->get();
     <li><a href="{{route('page', $page->url)}}">{{$page->short_name}}</a></li>
 @endforeach
 
-<li><a href="{{route('support')}}">{{translate('Support')}}</a></li>
-<li><a href="{{route('bonus.promo')}}">{{translate('Bonuses')}}</a></li>
-<li><a href="{{$partnerPage}}" target="_blank">AFFILIATES</a></li>
+<li><a href="{{route('support')}}">{{ trans('casino.support') }}</a></li>
+<li><a href="{{route('bonus.promo')}}">{{ trans('casino.bonuses') }}</a></li>
+<li><a href="{{$partnerPage}}" target="_blank">{{ trans('casino.affiliates') }}</a></li>
 

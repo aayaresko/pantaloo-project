@@ -46,5 +46,7 @@ return [
         ]
     ],
 
-    'defaultTitle' => 'games'
+    'defaultTitle' => 'games',
+
+    'keepLanguage' => 60 * 24 * 30,//min
 ];

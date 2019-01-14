@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
+use App;
+use Cookie;
 use Closure;
+use App\User;
+use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\View;
 
 class LanguageSwitch extends CommonMiddleware
 {
@@ -29,6 +32,24 @@ class LanguageSwitch extends CommonMiddleware
         if ($shouldPassThrough) {
             return $next($request);
         }
+
+        $languages = GeneralHelper::getListLanguage();
+        $lang =  Cookie::get('lang');
+
+        //pass variable
+        View::share('languages', $languages);
+        View::share('currentLang', $lang);
+
+        if (!is_null($lang)) {
+            App::setlocale($lang);
+        } else {
+            //check ip address and check language
+            //if difference then ask message with gow language select
+            //and set language above
+            //App::setlocale($lang);
+            //if we don't have this language we use en
+        }
+
 
         if($request->has('session_id'))
         {
