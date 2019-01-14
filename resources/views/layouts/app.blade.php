@@ -167,7 +167,7 @@
             <span class="subtitle">Casinobit</span>
             <h2 class="title">Games</h2>
         </div>
-        <div class="games-listing-block">{{ translate('ER IS A FAMILY OF GAMBLING CARD GAMES') }}
+        <div class="games-listing-block">{{ trans('casino.gambling_card_games') }}
             <br>
             <br>
             <ul class="games-listing">

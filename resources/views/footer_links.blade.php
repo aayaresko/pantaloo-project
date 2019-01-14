@@ -1,8 +1,7 @@
-{{--<li><a href="{{route('slots')}}" class="slots">{{translate('Slots')}}</a></li>--}}
-<li><a href="{{  route('games', ['type_id' => 10001]) }}" class="slots">{{translate('Slots')}}</a></li>
-<li><a href="{{  route('games', ['type_id' => 10002]) }}" class="bjack">{{translate('BlackJack')}}</a></li>
-<li><a href="{{  route('games', ['type_id' => 10003]) }}" class="roulette">{{translate('Roulette')}}</a></li>
-<li><a href="{{ route('games', ['type_id' => 10004]) }}" class="baccarat">{{translate('Baccarat')}}</a></li>
-<li><a href="{{ route('games', ['type_id' => 10005]) }}" class="bonumbers">{{translate('Bet On Numbers')}}</a></li>
-<li><a href="{{ route('games', ['type_id' => 10006]) }}" class="keno">{{translate('Keno')}}</a></li>
-<li><a href="{{  route('games', ['type_id' => 10007]) }}" class="poker">{{translate('Poker')}}</a></li>
+<li><a href="{{  route('games', ['type_id' => 10001]) }}" class="slots">{{ trans('casino.type_slot') }}</a></li>
+<li><a href="{{  route('games', ['type_id' => 10002]) }}" class="bjack">{{ trans('casino.type_blackjack') }}</a></li>
+<li><a href="{{  route('games', ['type_id' => 10003]) }}" class="roulette">{{ trans('casino.type_roulette') }}</a></li>
+<li><a href="{{ route('games', ['type_id' => 10004]) }}" class="baccarat">{{ trans('casino.type_baccarat') }}</a></li>
+<li><a href="{{ route('games', ['type_id' => 10005]) }}" class="bonumbers">{{ trans('casino.type_bet_on_numbers')}}</a></li>
+<li><a href="{{ route('games', ['type_id' => 10006]) }}" class="keno">{{ trans('casino.type_keno') }}</a></li>
+<li><a href="{{  route('games', ['type_id' => 10007]) }}" class="poker">{{ trans('casino.type_poker') }}</a></li>
