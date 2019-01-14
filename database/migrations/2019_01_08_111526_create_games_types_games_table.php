@@ -20,6 +20,8 @@ class CreateGamesTypesGamesTable extends Migration
             $table->foreign('type_id')->references('id')->on('games_types');
             $table->tinyInteger('extra')->default(0)->index();
             $table->timestamps();
+
+            //$table->unique(['game_id', 'type_id', 'extra']);
         });
     }
 
