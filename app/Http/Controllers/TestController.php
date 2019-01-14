@@ -22,7 +22,13 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        dd(222);
+        GamesTypeGame::where([
+            'type_id' => 10002,
+            'extra' => 1,
+        ])->delete();
+
+        dd(55);
         $gameList = DB::table('games_types_games')->select(['games_list.id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
