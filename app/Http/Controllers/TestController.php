@@ -14,6 +14,7 @@ use GuzzleHttp\Client;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
+use App\Models\GamesTypeGame;
 
 class TestController extends Controller
 {
@@ -21,6 +22,156 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $gameList = DB::table('games_types_games')->select(['games_list.id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_types_games.type_id', '=', 1]
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+        //dd($gameList);
+        foreach ($gameList as $game) {
+            GamesTypeGame::create([
+                'game_id' => $game->id,
+                'type_id' => 10001,
+                'extra' => 1,
+            ]);
+        }
+
+
+        dd(2345354356436);
+        $aa = [
+            300
+            , 639
+            , 640
+            , 642
+            , 643
+            , 644
+            , 645
+            , 646
+            , 647
+            , 648
+            , 653
+            , 654
+            , 655
+            , 656
+            , 657
+            , 658
+            , 659
+            , 660
+            , 661
+            , 662
+            , 663
+            , 664
+            , 665
+            , 666
+            , 667
+            , 668
+            , 669
+            , 670
+            , 671
+            , 672
+            , 673
+            , 674
+            , 680
+            , 681
+            , 682
+            , 683
+            , 686
+            , 687
+            , 688
+            , 689
+            , 690
+            , 693
+            , 696
+            , 695
+            , 694
+            , 697
+            , 698
+            , 699
+            , 700
+            , 701
+            , 942
+            , 943
+            , 944
+            , 945
+            , 946
+            , 947
+            , 948
+            , 949
+            , 950
+            , 951
+            , 952
+            , 953
+            , 954
+            , 955
+            , 956
+            , 957
+            , 958
+            , 959
+            , 960
+            , 961
+            , 962
+            , 963
+            , 964
+            , 965
+            , 966
+            , 967
+            , 968
+            , 969
+            , 970
+            , 971
+            , 972
+            , 973
+            , 974
+            , 975
+            , 976
+            , 977
+            , 978
+            , 979
+            , 980
+            , 981
+            , 982
+            , 983
+        ];
+
+        foreach ($aa as $id) {
+            GamesTypeGame::where([
+                'game_id' => $id,
+                'type_id' => 10003,
+                'extra' => 1,
+            ])->delete();
+        }
+
+        dd(111);
+        $gameList = DB::table('games_types_games')->select(['games_list.id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_types_games.type_id', '=', 5]
+            ])
+            ->whereNotIn('games_list.id', [
+
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+        dd($gameList);
+        foreach ($gameList as $game) {
+            GamesTypeGame::create([
+                'game_id' => $game->id,
+                'type_id' => 10002,
+                'extra' => 1,
+            ]);
+        }
+
+
+        dd(2222234455555566666);
         $a = file_get_contents('https://www.casinobit.ioa/');
         dd($a);
         dd(GeneralHelper::fullRequest());

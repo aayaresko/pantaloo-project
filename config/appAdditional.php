@@ -43,6 +43,21 @@ return [
             'id' => 10008,
             'code' => 'our_others',
             'name' => 'others',
+        ],
+        [
+            'id' => 10009,
+            'code' => 'our_dice',
+            'name' => 'dice',
+        ],
+        [
+            'id' => 10010,
+            'code' => 'our_live_casino',
+            'name' => 'live casino',
+        ],
+        [
+            'id' => 10011,
+            'code' => 'our_live_table_games',
+            'name' => 'live table games',
         ]
     ],
 
