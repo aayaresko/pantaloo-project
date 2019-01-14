@@ -75,72 +75,74 @@
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade active in" id="home1">
-
-                                    <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User ID</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Wins</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        @foreach($users as $stat)
+                                    <div class="table-wrap">
+                                        <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
+                                            <thead>
                                             <tr role="row">
-                                                <td><span class="label label-default">{{$stat['user']->id}}</span></td>
-                                                <td>{{$stat['deposits']}}</td>
-                                                <td>{{$stat['bets']}}</td>
-                                                <td>{{$stat['bet_count']}}</td>
-                                                <td>{{$stat['avg_bet']}}</td>
-                                                <td>{{$stat['wins']}}</td>
-                                                <td>{{$stat['revenue']}}</td>
-                                                <td>{{$stat['bonus']}}</td>
-                                                <td>{{$stat['profit']}}</td>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User ID</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
+                                                <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Wins</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
 
+                                            <tbody>
+                                            @foreach($users as $stat)
+                                                <tr role="row">
+                                                    <td><span class="label label-default">{{$stat['user']->id}}</span></td>
+                                                    <td>{{$stat['deposits']}}</td>
+                                                    <td>{{$stat['bets']}}</td>
+                                                    <td>{{$stat['bet_count']}}</td>
+                                                    <td>{{$stat['avg_bet']}}</td>
+                                                    <td>{{$stat['wins']}}</td>
+                                                    <td>{{$stat['revenue']}}</td>
+                                                    <td>{{$stat['bonus']}}</td>
+                                                    <td>{{$stat['profit']}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="profile1">
-                                    <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Tracker</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Wins</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        @foreach($trackers as $stat)
+                                    <div class="table-wrap">
+                                        <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
+                                            <thead>
                                             <tr role="row">
-                                                <td><span class="label label-default">{{$stat['tracker']}}</span></td>
-                                                <td>{{$stat['deposits']}}</td>
-                                                <td>{{$stat['bets']}}</td>
-                                                <td>{{$stat['bet_count']}}</td>
-                                                <td>{{$stat['avg_bet']}}</td>
-                                                <td>{{$stat['wins']}}</td>
-                                                <td>{{$stat['revenue']}}</td>
-                                                <td>{{$stat['bonus']}}</td>
-                                                <td>{{$stat['profit']}}</td>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Tracker</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
+                                                <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Wins</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+
+                                            <tbody>
+                                            @foreach($trackers as $stat)
+                                                <tr role="row">
+                                                    <td><span class="label label-default">{{$stat['tracker']}}</span></td>
+                                                    <td>{{$stat['deposits']}}</td>
+                                                    <td>{{$stat['bets']}}</td>
+                                                    <td>{{$stat['bet_count']}}</td>
+                                                    <td>{{$stat['avg_bet']}}</td>
+                                                    <td>{{$stat['wins']}}</td>
+                                                    <td>{{$stat['revenue']}}</td>
+                                                    <td>{{$stat['bonus']}}</td>
+                                                    <td>{{$stat['profit']}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

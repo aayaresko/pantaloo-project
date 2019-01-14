@@ -1,142 +1,140 @@
 @extends('layouts.app')
 
 @section('description')
-    Добро пожаловать в Casinobit, где Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме.
-    Casinobit - большой мир игровых систем. Здесь Вы найдете лучшие игры биткоин и сможете сыграть в онлайн режиме.
-    Русское лото биткоин - это лотерея для всех кто хочет испытать удачу.
+    trans('casino.home_description')
 @endsection
 
 @section('keywords')
-    биткоин игры, лото, биткоин
+    trans('casino.home_keywords')
 @endsection
 
 @section('content')
     <ul class="sections-nav">
-        <li data-menuanchor="block-2" class="active"><a href="#block-2">{{translate('Blackjack')}}</a></li>
-        <li data-menuanchor="block-3"><a href="#block-3">{{translate('Roulette')}}</a></li>
-        <li data-menuanchor="block-4"><a href="#block-4">{{translate('Slots')}}</a></li>
+        <li data-menuanchor="block-2" class="active"><a href="#block-2">{{ trans('casino.blackjack') }}</a></li>
+        <li data-menuanchor="block-3"><a href="#block-3">{{ trans('casino.roulette') }}</a></li>
+        <li data-menuanchor="block-4"><a href="#block-4">{{ trans('casino.slots') }}</a></li>
     </ul>
     <div class="sections-container">
         <section class="section with-shadow welcome" style="background: url('media/images/bg/wellcome.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{translate('We work only with bitcoin')}}</span>
+                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
             <div class="msg-popup">
 			<span class="top-text">
 				<span class="number-value">200%</span>
-                {{translate('bonus')}}
+                {{ trans('casino.bonus') }}
             </span>
-                <span class="middle-text">{!! translate('after first deposit') !!}</span>
-                <a href="#" class="registration-btn reg-btn">{{translate('Registration')}}</a>
+                <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
+                <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
             </div>
             @endif
-            <span class="side-name">{{translate('Welcome')}}</span>
+            <span class="side-name">{{ trans('casino.welcome') }}</span>
             <div class="main-title-block">
-                <span class="category-title">{{translate('Welcome')}}</span>
-                <h1 class="game-name word-split">{{translate('Casinobit')}}</h1>
+                <span class="category-title">{{ trans('casino.welcome') }}</span>
+                <h1 class="game-name word-split">{{ trans('casino.casinobit') }}</h1>
                 <div class="descr-block">
-                    <span class="descr">{!! translate('video live games') !!}</span>
+                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
         <section class="section with-shadow blackjack" style="background: url('media/images/bg/blackjack.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{translate('We work only with bitcoin')}}</span>
+                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
 				<span class="number-value">200%</span>
-                {{translate('bonus')}}
+                {{ trans('casino.bonus') }}
             </span>
-                    <span class="middle-text">{!! translate('after first deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{translate('Registration')}}</a>
+                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
+                    <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
                 </div>
             @endif
-            <span class="side-name">{{translate('BlackJack')}}</span>
+            <span class="side-name">{{ trans('casino.blackjack') }}</span>
             <div class="main-title-block">
-                <span class="category-title">{{translate('Live Games')}}</span>
-                <h1 class="game-name word-split">{{translate('BlackJack')}}</h1>
+                <span class="category-title">{{ trans('casino.live_games_second') }}</span>
+                <h1 class="game-name word-split">{{ trans('casino.blackjack') }}</h1>
                 <div class="descr-block">
-                    <span class="descr">{!! translate('video live games') !!}</span>
+                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10002]) }}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10002]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
                 </div>
             </div>
         </section>
         <section class="section with-shadow roulette" style="background: url('media/images/bg/roulette.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{translate('We work only with bitcoin')}}</span>
+                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
 				<span class="number-value">200%</span>
-                {{translate('bonus')}}
+                {{ trans('casino.bonus') }}
             </span>
-                    <span class="middle-text">{!! translate('after first deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{translate('Registration')}}</a>
+                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
+                    <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
                 </div>
             @endif
-            <span class="side-name">{{translate('Roulette')}}</span>
+            <span class="side-name">{{ trans('casino.roulette') }}</span>
             <div class="main-title-block">
-                <span class="category-title">{{translate('Live Games')}}</span>
-                <h1 class="game-name word-split">{{translate('Roulette')}}</h1>
+                <span class="category-title">{{ trans('casino.live_games_second') }}</span>
+                <h1 class="game-name word-split">{{ trans('casino.roulette') }}</h1>
                 <div class="descr-block">
-                    <span class="descr">{!! translate('video live games') !!}</span>
+                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10003]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10003]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
         <section class="section with-shadow slots" style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{translate('We work only with bitcoin')}}</span>
+                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
 				<span class="number-value">200%</span>
-                {{translate('bonus')}}
+                {{ trans('casino.bonus') }}
             </span>
-                    <span class="middle-text">{!! translate('after first deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{translate('Registration')}}</a>
+                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
+                    <a href="#" class="registration-btn reg-btn">{{trans('casino.registration')}}</a>
                 </div>
             @endif
-            <span class="side-name">{{translate('Slots')}}</span>
+            <span class="side-name">{{ trans('casino.slots') }}</span>
             <div class="main-title-block">
-                <span class="category-title">{{translate('Live Games')}}</span>
-                <h1 class="game-name word-split">{{translate('Slots')}}</h1>
+                <span class="category-title">{{ trans('casino.live_games_second') }}</span>
+                <h1 class="game-name word-split">{{ trans('casino.slots') }}</h1>
                 <div class="descr-block">
-                    <span class="descr">{!! translate('video live games') !!}</span>
+                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10001]) }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10001]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
     </div>
     <div class="mobile-container">
         <section class="welcome-mob">
-            <span class="side-name">{{translate('Welcome')}}</span>
+            <span class="side-name">{{ trans('casino.welcome') }}</span>
             <div class="main-title-block">
-                <span class="category-title">{{translate('Welcome')}}</span>
-                <h1 class="game-name word-split">{{translate('Casinobit')}} </h1>
+                <span class="category-title">{{ trans('casino.welcome') }}</span>
+                <h1 class="game-name word-split">{{ trans('casino.casinobit') }} </h1>
                 <div class="descr-block">
-                    <span class="descr">{!! translate('video live games') !!}</span>
+                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
             <div class="games-listing-block">
@@ -145,7 +143,7 @@
                 </ul>
             </div>
             <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{translate('We work only with bitcoin')}}</span>
+                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             <div class="nav-block">
                 <div class="dots-block"></div>
@@ -193,7 +191,7 @@
     </div>
     <footer class="footer">
         <div class="msg-block">
-            <span class="msg">{{translate('What do you want to play?')}}</span>
+            <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
         </div>
         <div class="games-listing-block">
             <ul class="games-listing">

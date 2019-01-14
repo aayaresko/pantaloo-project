@@ -15,7 +15,7 @@
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
-            <div class="container">
+            <div class="container game-list">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">

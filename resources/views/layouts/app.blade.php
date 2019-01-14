@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', translate('Casinobit | bitcoin casino'))</title>
+    <title>@yield('title', trans('casino.title'))</title>
 
     <meta name="description" content="@yield('description', '')">
     <meta name="keywords" content="@yield('keywords', '')">
@@ -27,14 +27,15 @@
     <link rel="icon" href="/favicon.png">
 </head>
 <body>
+
 <div id="preloader" class="preloader-block"><span class="spin"></span></div>
 <div class="preloaderCommon" style="display: none"></div>
 <script>
 
     var CasinoTranslate = {
         buttons : {
-            play : "{{ translate('Play') }}",
-            demo : "{{ translate('Free demo') }}"
+            play : "{{ trans('casino.play') }}",
+            demo : "{{ trans('casino.free_demo') }}"
         }
     };
 
@@ -69,19 +70,25 @@
         <a href="/"><img src="/media/images/logo.png" alt="logo"></a>
     </div>
     <div class="navigation-container">
-        <!-- <div class="language-block floated">
+
+        <div class="language-block floated">
             <ul class="language-listing">
-                <li>
-                    <a href="{{$change_url}}">{{strtoupper($change_lang)}}</a>
-                </li>
+                @foreach ($languages as $language)
+                    @if($currentLang != $language)
+                        <li>
+                            <a href="{{ url("/language/$language") }}">{{strtoupper($language)}}</a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
-        </div> -->
+        </div>
+
         <nav class="navigation hidden-xs floated">
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
-                    @if(Auth::user()->role == 1) <li><a href="/affiliates">Admin</a></li> @endif
-                    @if(Auth::user()->role == 2) <li><a href="/admin">Admin</a></li> @endif
+                    @if(Auth::user()->role == 1) <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li> @endif
+                    @if(Auth::user()->role == 2) <li><a href="/admin">{{ trans('casino.admin') }}</a></li> @endif
                     @if(Auth::user()->free_spins > 0) <li><a href="/slots#free_spins">Free spins</a></li> @endif
                 @endif
             </ul>
@@ -89,13 +96,13 @@
 
         @if(Auth::check())
             <div class="promo-actions-block floated">
-                <a href="{{route('deposit')}}" class="promo-action-btn">{{translate('Deposit')}}</a>
+                <a href="{{route('deposit')}}" class="promo-action-btn">{{ trans('casino.deposit') }}</a>
             </div>
         @endif
     </div>
     <div class="header-right-part">
         <div class="login-block floated">
-            <a href="#" class="login-btn"><span class="text">{{translate('Login')}}</span></a>
+            <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
         </div>
         <div class="login-block login-block-reg floated">
             <a href="#" class="login-btn"><span class="text">SIGN IN</span></a>
@@ -104,12 +111,12 @@
             <a href="#" class="reg-btn"><span class="text">SIGN UP</span></a>
         </div>
         <div class="registration-block floated">
-            <a href="#" class="reg-btn"><span class="text">{{translate('Registration')}}</span></a>
+            <a href="#" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
         </div>
         @if(Auth::check())
             <div class="usr-block">
                 <div class="wlc-usr">
-                    <span class="welcome-msg">{{translate('Balance')}}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>
+                    <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>
                     <a href="{{route('deposit')}}" class="usr-name">{{Auth::user()->email}}</a>
                 </div>
                 
@@ -135,24 +142,24 @@
         @if(Auth::guest())
         <div class="auth-block-mobile">
             <div class="login-block floated">
-                <a href="{{url('/login')}}" class="login-btn"><span class="text">{{translate('Login')}}</span></a>
+                <a href="{{url('/login')}}" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
             </div>
             <div class="registration-block floated">
-                <a href="{{url('/registr')}}" class="reg-btn"><span class="text">{{translate('Registration')}}</span></a>
+                <a href="{{url('/registr')}}" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
             </div>
         </div>
         @endif
 
         @if(Auth::check())
         <div class="block-heading">
-            <h2 class="title">{{translate('Menu')}}</h2>
+            <h2 class="title">{{ trans('casino.menu') }}</h2>
         </div>
         <nav class="navigation">
             <ul class="navigation-list">
-                <li><a href="{{route('deposit')}}" class="deposite">{{translate('Deposit')}}</a></li>
-                <li><a href="{{route('withdraw')}}" class="withdraw">{{translate('Withdraw')}}</a></li>
-                <li><a href="{{route('bonus')}}" class="bonus">{{translate('Get Bonus')}}</a></li>
-                <li><a href="{{route('settings')}}" class="setting">{{translate('Settings')}}</a></li>
+                <li><a href="{{route('deposit')}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
+                <li><a href="{{route('withdraw')}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
+                <li><a href="{{route('bonus')}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
+                <li><a href="{{route('settings')}}" class="setting">{{ trans('casino.settings') }}</a></li>
             </ul>
         </nav>
         @endif
@@ -160,7 +167,7 @@
             <span class="subtitle">Casinobit</span>
             <h2 class="title">Games</h2>
         </div>
-        <div class="games-listing-block">{{translate('ER IS A FAMILY OF GAMBLING CARD GAMES')}}
+        <div class="games-listing-block">{{ translate('ER IS A FAMILY OF GAMBLING CARD GAMES') }}
             <br>
             <br>
             <ul class="games-listing">
@@ -168,7 +175,7 @@
             </ul>
         </div>
         <div class="block-heading">
-            <h2 class="title">{{translate('Info')}}</h2>
+            <h2 class="title">{{ trans('casino.info') }}</h2>
         </div>
         <nav class="navigation">
             <ul class="navigation-list">
@@ -178,11 +185,11 @@
 
         @if(Auth::check())
             <div class="block-heading">
-                <h2 class="title">{{translate('Exit')}}</h2>
+                <h2 class="title">{{ trans('casino.exit') }}</h2>
             </div>
             <nav class="navigation">
                 <ul class="navigation-list">
-                    <li><a href="{{url('/logout')}}" class="deposite">{{translate('Logout')}}</a></li>
+                    <li><a href="{{url('/logout')}}" class="deposite">{{ trans('logout') }}</a></li>
                 </ul>
             </nav>
         @endif
@@ -192,8 +199,8 @@
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{translate('Live games')}}</span>
-                <h2 class="popup-title word-split">{{translate('Registration')}}</h2>
+                <span class="subtitle">{{ trans('casino.live_games') }}</span>
+                <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
             </div>
             <div class="popup-form">
                 <form id="registr" action="/register" method="POST">
@@ -202,12 +209,12 @@
                     <input type="hidden" name="name" value="no_name">
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="email" class="email-input red" placeholder="{{translate('E-mail address')}}" name="email">
+                            <input type="email" class="email-input red" placeholder="{{ trans('casino.email_address') }}" name="email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="password" class="pass-input red" placeholder="{{translate('Password')}}" name="password">
+                            <input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">
                         </div>
                     </div>
                     <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
@@ -222,14 +229,14 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">{{translate('I accept the terms & conditions')}}</label>
+                                <label for="agree"><input type="checkbox" name="agree" id="agree">{{ trans('casino.accept_the_terms') }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn"><span class="btn-entry">{{translate('Registration')}}</span></button>
+                                <button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>
                             </div>
                         </div>
                     </div>
@@ -242,29 +249,29 @@
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{translate('Live games')}}</span>
-                <h2 class="popup-title word-split">{{translate('Login')}}</h2>
+                <span class="subtitle">{{ trans('casino.live_games') }}</span>
+                <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
             </div>
             <div class="popup-form">
                 <form id="login" action="/login" method="POST">
                     {{csrf_field()}}
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="email" name="email" class="email-input blue" placeholder="{{translate('E-mail address')}}">
+                            <input type="email" name="email" class="email-input blue" placeholder="{{ trans('casino.email_address') }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="password" name="password" class="pass-input blue" placeholder="{{translate('Password')}}">
-                            <a href="{{url('/password/reset')}}" class="forget-link">{{translate('i am forget')}}</a>
+                            <input type="password" name="password" class="pass-input blue" placeholder="{{ trans('casino.password') }}">
+                            <a href="{{url('/password/reset')}}" class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
-                                <label for="remember"><input type="checkbox" name="remember" id="remember">{{translate('Remember me')}}</label>
+                                <label for="remember"><input type="checkbox" name="remember" id="remember">{{ trans('casino.remember_me') }}</label>
                                 <div class="btn-block">
-                                    <a href="{{ url('/register') }}" class="account-btn">{{translate('i don\'t have account')}}</a>
+                                    <a href="{{ url('/register') }}" class="account-btn">{{ trans('casino.have_not_account') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -272,7 +279,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn"><span class="btn-entry">{{translate('Enter Now')}}</span></button>
+                                <button class="send-btn"><span class="btn-entry">{{trans('casino.enter_now')}}</span></button>
                             </div>
                         </div>
                     </div>
