@@ -4,6 +4,7 @@ namespace App\Console\Commands\Games;
 
 use DB;
 use Log;
+use App\CustomField;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesTypeGame;
@@ -181,6 +182,14 @@ class PantalloGetGames extends Command
 
                         $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
                     }
+                }
+
+                $firstLoad = CustomField::where('code', 'get_games')->first();
+                if (is_null($firstLoad)) {
+                    CustomField::create([
+                        'code' => 'get_games',
+                        'value' => 'get_games'
+                    ]);
                 }
             }
         } catch (\Exception $e) {
