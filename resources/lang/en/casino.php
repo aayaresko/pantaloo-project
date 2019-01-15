@@ -61,7 +61,6 @@ return [
     'type_keno' => 'keno',
     'type_poker' => 'poker',
     'type_others' => 'others',
-    'type_video_slots' => 'others',
     'type_dice' => 'dice',
     'type_live_casino' => 'live casino',
     'type_live_table_games' => 'live table games',
