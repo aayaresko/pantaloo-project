@@ -22,7 +22,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(222);
+        dd($current_user = trim(shell_exec('whoami')));
         GamesTypeGame::where([
             'type_id' => 10002,
             'extra' => 1,
