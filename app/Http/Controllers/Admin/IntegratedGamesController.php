@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
+use App\CustomField;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
@@ -232,9 +233,19 @@ class IntegratedGamesController extends Controller
             ['games_types_games.extra', '=', 1],
         ];
 
-        if ($request->has('type_id') and $request->type_id > 0) {
-            array_push($param['whereCompare'],
-                ['games_types_games.type_id', '=', $request->type_id]);
+        if ($request->has('type_id')) {
+            if ($request->type_id > 0) {
+                array_push($param['whereCompare'],
+                    ['games_types_games.type_id', '=', $request->type_id]);
+            }
+
+            if ($request->type_id == -1) {
+                $firstLoad = CustomField::where('code', 'get_games')->first();
+                if (!is_null($firstLoad)) {
+                    array_push($param['whereCompare'],
+                        ['games_list.created_at', '>', $firstLoad->created_at]);
+                }
+            }
         }
 
         return $param;

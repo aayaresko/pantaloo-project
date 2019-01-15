@@ -28,5 +28,5 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 }
 
 .game-list .dropdown-menu {
-    height: 300px;
+    height: 100px;
 }
