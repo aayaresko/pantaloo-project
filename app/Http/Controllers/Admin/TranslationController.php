@@ -44,6 +44,7 @@ class TranslationController extends Controller
         $defaultLang = $this->params['defaultLang'];
         $translationsCurrent = $this->getTranslation($lang);
         $translationsDefault = $this->getTranslation($defaultLang);
+
         return view('admin.translation_lang', [
             'defaultLang' => $defaultLang,
             'translationsCurrent' => $translationsCurrent,
@@ -72,6 +73,8 @@ class TranslationController extends Controller
             if (!isset($currentTranslation[$keyChangeValue])) {
                 throw new \Exception('Translation not found');
             }
+            $currentTranslation[$keyChangeValue] = $request->value;
+            $this->changeFileTranslation($currentLanguage, $currentTranslation);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -90,5 +93,12 @@ class TranslationController extends Controller
     {
         $translations = File::getRequire(base_path() . "/resources/lang/{$code}/casino.php");
         return $translations;
+    }
+
+    private function changeFileTranslation($code, $data)
+    {
+        file_put_contents(base_path() . "/resources/lang/{$code}/casino.php",
+            '<?php' . PHP_EOL . 'return ' . var_export($data, true) . PHP_EOL . '?>');
+        return true;
     }
 }
