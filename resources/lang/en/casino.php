@@ -57,7 +57,7 @@ return [
     'type_blackjack' => 'blackjack',
     'type_roulette' => 'roulette',
     'type_baccarat' => 'baccarat',
-    'type_bet_on_numbers' => 'bet_on_numbers',
+    'type_bet_on_numbers' => 'bet on numbers',
     'type_keno' => 'keno',
     'type_poker' => 'poker',
 ];
