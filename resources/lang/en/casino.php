@@ -13,7 +13,7 @@ return [
     'title' => 'Casinobit | bitcoin casino',
     'play' => 'Play',
     'free_demo' => 'Free demo',
-    'admin' => 'Панель Управления',
+    'admin' => 'Admin',
     'deposit' => 'Deposit',
     'balance' => 'Balance',
     'login' => 'Login',

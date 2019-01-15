@@ -111,9 +111,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bonus/{user}/{bonus}/activate', ['as' => 'admin.bonusActivate', 'uses' => 'BonusController@adminActivate']);
         Route::get('/bonus/{user}/cancel', ['as' => 'admin.bonusCancel', 'uses' => 'BonusController@adminCancel']);
 
-        Route::get('/translations', ['as' => 'translations', 'uses' => 'TranslationController@index']);
-        Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'TranslationController@save']);
-        Route::post('/translations/delete', ['as' => 'translations.delete', 'uses' => 'TranslationController@delete']);
+//        Route::get('/translations', ['as' => 'translations', 'uses' => 'TranslationController@index']);
+//        Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'TranslationController@save']);
+//        Route::post('/translations/delete', ['as' => 'translations.delete', 'uses' => 'TranslationController@delete']);
+
+        Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
+        Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
+        Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
+
 
         Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
 
