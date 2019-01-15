@@ -61,5 +61,6 @@ return [
     'type_keno' => 'кено',
     'type_poker' => 'покер',
     'search_game' => 'Поиск игры',
-    'all' => 'Все'
+    'all' => 'Все',
+    'choose_your_game' => 'Выбери свою игру'
 ];

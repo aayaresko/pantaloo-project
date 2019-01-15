@@ -60,6 +60,12 @@ return [
     'type_bet_on_numbers' => 'bet on numbers ',
     'type_keno' => 'keno',
     'type_poker' => 'poker',
+    'type_others' => 'others',
+    'type_video_slots' => 'others',
+    'type_dice' => 'dice',
+    'type_live_casino' => 'live casino',
+    'type_live_table_games' => 'live table games',
     'search_game' => 'Search game',
-    'all' => 'All'
+    'all' => 'All',
+    'choose_your_game' => 'Choose your game'
 ];

@@ -41,7 +41,7 @@
         <span class="side-title"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
             <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
-            <span class="subtitle">Choose your game</span>
+            <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
         </div>
 
         <div class="block-filter clearfix">
@@ -56,7 +56,7 @@
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
                         <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesCategories as $gamesCategory)
-                            <option value="{{ $gamesCategory->id }}">{{ $gamesCategory->name }}</option>
+                            <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -79,7 +79,7 @@
              style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
             <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
-            <span class="subtitle">Choose your game</span>
+            <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
         </div>
         <div class="btn-block">
             <a href="#" class="live-btn">Live Games</a>
