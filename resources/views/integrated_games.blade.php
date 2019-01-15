@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="left-info">
-                <h2 class="region"><span class = "tittlePage">{{ ucfirst($title) }}</span></h2>
-                <span class="game-name"><span class = "tittlePage">{{ ucfirst($title) }}</span></span>
+                <h2 class="region"><span class="tittlePage">{{ ucfirst($title) }}</span></h2>
+                <span class="game-name"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
             </div>
             <div class="right-nav">
                 <div class="expand-game"><img src="images/expand.png" alt=""></div>
@@ -38,9 +38,9 @@
 
     <div class="slots-block desk top-shadow">
         <div class="bg mainBackGround"></div>
-        <span class="side-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></span>
+        <span class="side-title"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
-            <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
+            <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
             <span class="subtitle">Choose your game</span>
         </div>
 
@@ -48,13 +48,13 @@
             <form action="#" method="post">
                 <div class="pull-left">
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
-                        <option value="0" selected>All</option>
+                        <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesTypes as $gamesType)
-                            <option value="{{ $gamesType->id }}">{{ $gamesType->name }}</option>
+                            <option value="{{ $gamesType->id }}">{{ mb_convert_case(trans('casino.type_' . str_replace(' ', '_', $gamesType->name)), MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
-                        <option value="0" selected>All</option>
+                        <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesCategories as $gamesCategory)
                             <option value="{{ $gamesCategory->id }}">{{ $gamesCategory->name }}</option>
                         @endforeach
@@ -62,7 +62,7 @@
                 </div>
                 <div class="pull-right">
                     <div class="input-search">
-                        <input type="text" name="search" placeholder="Search game"/>
+                        <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
                         <input type="submit" value=""/>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
         <div class="bg"
              style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
-            <h1 class="page-title"><span class = "tittlePage">{{ ucfirst($title) }}</span></h1>
+            <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
             <span class="subtitle">Choose your game</span>
         </div>
         <div class="btn-block">
@@ -93,7 +93,7 @@
                 <li><a href="#" class="keno">Keno</a></li>
             </ul>
         </div>
-        
+
         <div class="block-filter clearfix">
             <form action="#" method="post">
                 <div class="pull-left">

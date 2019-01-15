@@ -53,11 +53,13 @@ return [
     'do_you_want_to_play' => 'What do you want to play?',
     'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
     'bet_on_numbers' => 'Bet on numbers',
-    'type_slot' => 'slots',
+    'type_slots' => 'slots',
     'type_blackjack' => 'blackjack',
     'type_roulette' => 'roulette',
     'type_baccarat' => 'baccarat',
     'type_bet_on_numbers' => 'bet on numbers ',
     'type_keno' => 'keno',
     'type_poker' => 'poker',
+    'search_game' => 'Search game',
+    'all' => 'All'
 ];

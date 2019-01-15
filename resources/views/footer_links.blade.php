@@ -1,4 +1,4 @@
-<li><a href="{{  route('games', ['type_id' => 10001]) }}" class="slots">{{ trans('casino.type_slot') }}</a></li>
+<li><a href="{{  route('games', ['type_id' => 10001]) }}" class="slots">{{ trans('casino.type_slots') }}</a></li>
 <li><a href="{{  route('games', ['type_id' => 10002]) }}" class="bjack">{{ trans('casino.type_blackjack') }}</a></li>
 <li><a href="{{  route('games', ['type_id' => 10003]) }}" class="roulette">{{ trans('casino.type_roulette') }}</a></li>
 <li><a href="{{ route('games', ['type_id' => 10004]) }}" class="baccarat">{{ trans('casino.type_baccarat') }}</a></li>

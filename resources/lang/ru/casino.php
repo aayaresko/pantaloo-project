@@ -53,11 +53,13 @@ return [
     'do_you_want_to_play' => 'Во что ты хочешь поиграть?',
     'gambling_card_games' => 'ЭР - СЕМЬЯ ИГРОВЫХ КАРТОЧНЫХ ИГР',
     'bet_on_numbers' => 'Числа',
-    'type_slot' => 'слоты',
+    'type_slots' => 'слоты',
     'type_blackjack' => 'блэкджек',
     'type_roulette' => 'рулетка',
     'type_baccarat' => 'баккарат',
     'type_bet_on_numbers' => 'числа',
     'type_keno' => 'кено',
     'type_poker' => 'покер',
+    'search_game' => 'Поиск игры',
+    'all' => 'Все'
 ];
