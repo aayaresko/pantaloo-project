@@ -30,7 +30,7 @@ class GeneralHelper
     static public function getListLanguage()
     {
         $dir = '../resources/lang';
-        $languagesIndex = array_diff(scandir($dir), ['..', '.', '.gitignore']);
+        $languagesIndex = array_diff(scandir($dir), ['..', '.', '.gitignore', 'example']);
         $languages = array_values($languagesIndex);
         return $languages;
     }
