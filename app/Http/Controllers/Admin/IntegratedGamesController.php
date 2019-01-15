@@ -244,6 +244,9 @@ class IntegratedGamesController extends Controller
                 if (!is_null($firstLoad)) {
                     array_push($param['whereCompare'],
                         ['games_list.created_at', '>', $firstLoad->created_at]);
+
+                    array_push($param['whereCompare'],
+                        ['games_list.created_at', '=', DB::raw('games_list.updated_at')]);
                 }
             }
         }
