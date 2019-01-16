@@ -6,6 +6,7 @@ use App\User;
 use Validator;
 use App\Tracker;
 use App\Currency;
+use App\UserActivation;
 use App\Bitcoin\Service;
 use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
@@ -196,5 +197,79 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('affiliates.index');
+    }
+
+    public function confirmEmail(Request $request)
+    {
+        $user = Auth::user();
+
+        if($user->isConfirmed()) return redirect()->back()->withErrors(['E-mail already confirmed']);
+
+        $date = Carbon::now();
+        $date->modify('-1 minutes');
+
+        $activation = UserActivation::where('updated_at', '>=', $date)->where('user_id', $user->id)->first();
+
+        if($activation)
+            return redirect()->back()->withErrors(['Mail already sent. You can try in 15 minutes.']);
+
+        $lang = Config::get('lang');
+
+        $template = 'emails.' . $lang . '.confirm';
+
+        $domain = Domain::where('lang', $lang)->first();
+
+        if(!$domain) $domain = 'www.casinobit.co';
+
+        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+
+        $link = 'https://' . $domain->domain . '/activate/' . $token;
+
+        $activation = UserActivation::where('user_id', $user->id)->first();
+
+        if(!$activation) $activation = new UserActivation();
+
+        $activation->user()->associate($user);
+        $activation->token = $token;
+        $activation->activated = 0;
+
+        $activation->save();
+
+        Mail::queue($template, ['link' => $link], function ($m) use ($user) {
+            $m->to($user->email, $user->name)->subject('Confirm email');
+        });
+
+        return redirect()->back()->with('popup', [
+            'E-mail confirmation',
+            'Success',
+            'We sent you confirmation link. Check your mail please.',
+        ]);
+    }
+
+    public function activate($token)
+    {
+        $date = Carbon::now();
+        $date->modify('-1 day');
+
+        $user = Auth::user();
+
+        if($user->isConfirmed()) return redirect('/')->withErrors(['Email already confirmed']);
+
+        $activation = UserActivation::where('user_id', $user->id)->where('token', $token)->where('updated_at', '>=', $date)->first();
+
+        if($activation)
+        {
+            $activation->activated = 1;
+            $activation->save();
+
+            $user->email_confirmed = 1;
+            $user->save();
+
+            return redirect('/')->with('popup', ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
+        }
+        else
+        {
+            return redirect('/')->withErrors(['Email wasn\'t confirmed. Invalid link.']);
+        }
     }
 }

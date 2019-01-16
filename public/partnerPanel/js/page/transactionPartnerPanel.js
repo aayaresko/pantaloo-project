@@ -39,7 +39,7 @@ $(document).ready(function () {
                 "data": options,
             },
             "columns": [
-                {"data": "email"},
+                {"data": "user_id"},
                 {"data": "created_at"},
                 {"data": "description"},
                 {"data": "sum"},

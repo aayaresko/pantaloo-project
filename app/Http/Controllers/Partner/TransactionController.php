@@ -40,7 +40,7 @@ class TransactionController extends Controller
         ];
 
         $this->relatedFields = $this->fields;
-        $this->relatedFields[0] = 'users.email as email';
+            $this->relatedFields[0] = 'users.id as user_id';
         $this->relatedFields[6] = 'trackers.name as tracker_name';
     }
 

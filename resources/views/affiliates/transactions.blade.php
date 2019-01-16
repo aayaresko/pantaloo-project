@@ -64,7 +64,7 @@
                                             <thead>
                                             <tr role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                    colspan="1">User
+                                                    colspan="1">User ID
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
                                                     colspan="1">Date
