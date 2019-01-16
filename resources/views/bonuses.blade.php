@@ -22,7 +22,7 @@
                             <br>
                             @if(Auth::check())
                                 <a href="{{ route('deposit') }}" class="btn-play-action">
-                                    <span>{{ chunk_split(trans('casino.deposit_space'), 1, ' ') }}</span>
+                                    <span>{{ trans('casino.deposit_space') }}</span>
                                 </a>
                             @else
                                 <a href="#"
@@ -63,7 +63,7 @@
                             <div class="btn-play-wrap">
                                 @if(Auth::check())
                                     <a href="{{ route('deposit') }}"
-                                       class="btn-play-action"><span>{{ chunk_split(trans('casino.deposit_space'), 1, ' ') }}</span></a>
+                                       class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
                                 @else
                                     <a href="#"
                                        class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
@@ -94,7 +94,7 @@
                             <div class="btn-play-wrap">
                                 @if(Auth::check())
                                     <a href="{{ route('deposit') }}"
-                                       class="btn-play-action"><span>{{ chunk_split(trans('casino.deposit_space'), 1, ' ') }}</span></a>
+                                       class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
                                 @else
                                     <a href="#"
                                        class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>

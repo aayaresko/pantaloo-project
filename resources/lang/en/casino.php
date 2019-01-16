@@ -553,5 +553,32 @@ return [
             </div>
 EOT
     ,
-    'deposit_space' => 'D e p o s i t'
+    'deposit_space' => 'D e p o s i t',
+    'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
+    'open_bonus' => 'Open Bonuses',
+    'credits' => 'credits',
+    'add_credits' => 'Add Credits',
+    'minimum_deposit' => 'Minimum deposit is 1 mBTC',
+    'send_your_bitcoins' => 'Send your Bitcoins to this address:',
+    'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
+    'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
+    'your_bitcoin_address' => 'Your Bitcoin address',
+    'enter_here' => 'Enter here',
+    'amount_mbtc' => 'Amount mBTC',
+    'open_history' => 'Open History',
+    'your_withdraws' => 'Your Withdraws',
+    'cancel' => 'Cancel',
+    'activate' => 'Activate',
+    'change_password' => 'Change Password',
+    'confirm_email' => 'Confirm email',
+    'old_password' => 'Old password',
+    'new_password' => 'New password',
+    'confirm_password' => 'Confirm password',
+    'confirmation' => 'Confirmation',
+    'update' => 'update',
+    'email_confirmation' => 'Email confirmation',
+    'email' => 'Email',
+    'send_mail' => 'Send MAIL'
+
+
 ];
