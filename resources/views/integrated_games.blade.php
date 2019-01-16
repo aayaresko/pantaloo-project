@@ -48,9 +48,20 @@
             <form action="#" method="post">
                 <div class="pull-left">
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
+
                         <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesTypes as $gamesType)
-                            <option value="{{ $gamesType->id }}">{{ mb_convert_case(trans('casino.type_' . str_replace(' ', '_', $gamesType->code)), MB_CASE_TITLE) }}</option>
+                            @php
+                                $codeLangType = 'casino.type_' . str_replace(' ', '_', $gamesType->name);
+                                if (Lang::has($codeLangType)) {
+                                    $nameType = trans($codeLangType);
+                                } else {
+                                    dump($gamesType->name);
+                                    $nameType = $gamesType->name;
+                                }
+                            $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
+                            @endphp
+                            <option value="{{ $gamesType->id }}">{{ $nameType }}</option>
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
