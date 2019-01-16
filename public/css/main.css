@@ -4337,7 +4337,7 @@ html.cropped {
   left: 0;
   width: 100%;
   z-index: 9999;
-  padding-bottom: 65px;
+  padding-bottom: 110px;
 }
 /* line 16, ../scss/_footer.scss */
 .footer.dark {
