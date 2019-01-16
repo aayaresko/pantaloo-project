@@ -164,10 +164,10 @@
         </nav>
         @endif
         <div class="block-heading">
-            <span class="subtitle">Casinobit</span>
-            <h2 class="title">Games</h2>
+            <span class="subtitle">{{ trans('casino.casinobit') }}</span>
+            <h2 class="title">{{ trans('casino.games') }}</h2>
         </div>
-        <div class="games-listing-block">{{ trans('casino.gambling_card_games') }}
+        <div class="games-listing-block">{{--{{ trans('casino.gambling_card_games') }}--}}
             <br>
             <br>
             <ul class="games-listing">
