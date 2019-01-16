@@ -64,6 +64,7 @@ return [
     'type_dice' => 'dice',
     'type_live_casino' => 'live casino',
     'type_live_table_games' => 'live table games',
+    'type_live_roulette' => 'live roulette',
     'search_game' => 'Search game',
     'all' => 'All',
     'choose_your_game' => 'Choose your game',

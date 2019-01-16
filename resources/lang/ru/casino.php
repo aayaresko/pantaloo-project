@@ -54,6 +54,7 @@ return array (
     'type_dice' => 'dice',
     'type_live_casino' => 'live casino',
     'type_live_table_games' => 'live table games',
+    'type_live_roulette' => 'live roulette',
     'search_game' => 'Поиск игры',
     'all' => 'Все',
     'choose_your_game' => 'Выбери свою игру',
