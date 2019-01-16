@@ -326,7 +326,7 @@ class IntegratedGamesController extends Controller
                 ->groupBy('games_types_games.game_id')
                 ->get()->toArray();
 
-            $totalFiltered = $countSum[0]['count'];
+            $totalFiltered = count($countSum);
         }
         /* END */
 
