@@ -57,6 +57,28 @@ return array (
     'search_game' => 'Поиск игры',
     'all' => 'Все',
     'choose_your_game' => 'Выбери свою игру',
+    'support.create_account' => 'How do I create my account?',
+    'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields.' .
+        ' After correct filling of the forms we will email you with the confirmation link to verify your email address.' .
+        ' Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
+
+    'support.forgotten_password' => 'What should I do if I have forgotten the password?',
+    'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link.'.
+        ' You will be automatically sent an email with the recover link where you will be advised to enter new password.'.
+        ' Otherwise, you can report us through livechat. We are happy to help.',
+
+    'support.buy_bitcoins' => 'Where can I buy bitcoins?',
+    'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay.'.
+        ' For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
+
+    'support.games_fair' => 'Are the games fair?',
+    'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget.'.
+        ' All games are regulated under the license of Curacao.',
+
+    'terms' => 'terms',
+    'free' => 'free',
+    'spins' => 'spins',
+    'welcome_bonus' => 'welcome bonus',
     'bonus.term' => <<<EOT
             <div id="uls">
                 <h3>БОНУСНЫЕ ПРАВИЛА И УСЛОВИЯ</h3>
@@ -438,5 +460,32 @@ return array (
                 </ul>
             </div>
 EOT
+    ,
+    'deposit_space' => 'D e p o s i t',
+    'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
+    'open_bonus' => 'Open Bonuses',
+    'credits' => 'credits',
+    'add_credits' => 'Add Credits',
+    'minimum_deposit' => 'Minimum deposit is 1 mBTC',
+    'send_your_bitcoins' => 'Send your Bitcoins to this address:',
+    'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
+    'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
+    'your_bitcoin_address' => 'Your Bitcoin address',
+    'enter_here' => 'Enter here',
+    'amount_mbtc' => 'Amount mBTC',
+    'open_history' => 'Open History',
+    'your_withdraws' => 'Your Withdraws',
+    'cancel' => 'Cancel',
+    'activate' => 'Activate',
+    'change_password' => 'Change Password',
+    'confirm_email' => 'Confirm email',
+    'old_password' => 'Old password',
+    'new_password' => 'New password',
+    'confirm_password' => 'Confirm password',
+    'confirmation' => 'Confirmation',
+    'update' => 'update',
+    'email_confirmation' => 'Email confirmation',
+    'email' => 'Email',
+    'send_mail' => 'Send MAIL'
 )
 ?>
