@@ -183,6 +183,15 @@ class AuthController extends Controller
             ->where('email', $authData['email'])->first();
 
         //check user confirm
+        if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['User is not found']
+                ]
+            ]);
+        }
+
         if ($user->email_confirmed != 1) {
             return response()->json([
                 'status' => false,
@@ -263,7 +272,7 @@ class AuthController extends Controller
 
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
 
-        $link = url('/') . '?confirm=' . $token;
+        $link = url('/') . '?confirm=' . $token . '&email=' . $user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
@@ -288,16 +297,28 @@ class AuthController extends Controller
 
     /**
      * @param $token
+     * @param $email
      * @return array
      */
-    public function activate($token)
+    public function activate($token, $email)
     {
         $linkActiveConfirm = config('appAdditional.linkActiveConfirm');
+
+        $user = User::where('email', $email)->first();
+        if (is_null($user)) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'User is not found'
+                ]
+            ];
+        }
 
         $date = Carbon::now();
         $date->modify("-$linkActiveConfirm day");
 
         $activation = UserActivation::where([
+            ['user_id', '=', $user->id],
             ['token', '=', $token],
             ['updated_at', '>=', $date],
         ])->first();
@@ -310,18 +331,7 @@ class AuthController extends Controller
                 ]
             ];
         }
-
-        $user = User::where('id', $activation->user_id)->first();
-
-        if (is_null($user)) {
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => 'User is not found'
-                ]
-            ];
-        }
-
+        
         if ($user->email_confirmed == 1) {
             return [
                 'status' => false,

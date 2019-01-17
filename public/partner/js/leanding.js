@@ -294,12 +294,13 @@ function activeMail() {
     //check url
     var url = new URL(window.location.href);
     var confirm = url.searchParams.get('confirm');
+    var email = url.searchParams.get('email');
     if (confirm !== null) {
         //send request
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'POST',
-            url: '/affiliates/activate/' + confirm,
+            url: '/affiliates/activate/' + confirm + '/email/' + email,
             data: {},
             success: function (response) {
                 let body;
