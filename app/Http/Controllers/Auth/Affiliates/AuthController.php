@@ -331,7 +331,7 @@ class AuthController extends Controller
                 ]
             ];
         }
-        
+
         if ($user->email_confirmed == 1) {
             return [
                 'status' => false,
