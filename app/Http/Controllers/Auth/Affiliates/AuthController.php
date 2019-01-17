@@ -6,10 +6,12 @@ use App\User;
 use Validator;
 use App\Tracker;
 use App\Currency;
+use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
 use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
@@ -127,6 +129,9 @@ class AuthController extends Controller
             'role' => 1
         ];
 
+        //send email confirmation
+        $this->confirmEmail($user);
+
         if (Auth::attempt($authData, false)) {
             return response()->json([
                 'status' => true,
@@ -199,51 +204,62 @@ class AuthController extends Controller
         return redirect()->route('affiliates.index');
     }
 
-    public function confirmEmail(Request $request)
+    public function confirmEmail($user)
     {
-        $user = Auth::user();
+        if ($user->email_confirmed == 1) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'Something went wrong.'
+                ]
+            ];
+        }
 
-        if($user->isConfirmed()) return redirect()->back()->withErrors(['E-mail already confirmed']);
+        $resendMailTime = config('appAdditional.resendMailTime');
 
         $date = Carbon::now();
-        $date->modify('-1 minutes');
+        $date->modify("-$resendMailTime second");
 
         $activation = UserActivation::where('updated_at', '>=', $date)->where('user_id', $user->id)->first();
 
-        if($activation)
-            return redirect()->back()->withErrors(['Mail already sent. You can try in 15 minutes.']);
-
-        $lang = Config::get('lang');
-
-        $template = 'emails.' . $lang . '.confirm';
-
-        $domain = Domain::where('lang', $lang)->first();
-
-        if(!$domain) $domain = 'www.casinobit.co';
+        if ($activation) {
+            $resendMailTimeMin = $resendMailTime / 60;
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => "Mail already sent. You can try in {$resendMailTimeMin} minutes."
+                ]
+            ];
+        }
 
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
 
-        $link = 'https://' . $domain->domain . '/activate/' . $token;
+        $link = url('/') . '/affiliates/activate/' . $token;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if(!$activation) $activation = new UserActivation();
+        if (!$activation) {
+            $activation = new UserActivation();
+        }
 
         $activation->user()->associate($user);
         $activation->token = $token;
         $activation->activated = 0;
-
         $activation->save();
 
-        Mail::queue($template, ['link' => $link], function ($m) use ($user) {
+        Mail::queue('email.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');
         });
 
-        return redirect()->back()->with('popup', [
-            'E-mail confirmation',
-            'Success',
-            'We sent you confirmation link. Check your mail please.',
-        ]);
+        return [
+            'status' => true,
+            'message' => [
+                'E-mail confirmation',
+                'Success',
+                'We sent you confirmation link. Check your mail please.',
+            ]
+        ];
+
     }
 
     public function activate($token)
@@ -252,13 +268,12 @@ class AuthController extends Controller
         $date->modify('-1 day');
 
         $user = Auth::user();
-
-        if($user->isConfirmed()) return redirect('/')->withErrors(['Email already confirmed']);
+        $linkActiveConfirm = config('appAdditional.linkActiveConfirm');
+        if ($user->isConfirmed()) return redirect('/')->withErrors(['Email already confirmed']);
 
         $activation = UserActivation::where('user_id', $user->id)->where('token', $token)->where('updated_at', '>=', $date)->first();
 
-        if($activation)
-        {
+        if ($activation) {
             $activation->activated = 1;
             $activation->save();
 
@@ -266,9 +281,7 @@ class AuthController extends Controller
             $user->save();
 
             return redirect('/')->with('popup', ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
-        }
-        else
-        {
+        } else {
             return redirect('/')->withErrors(['Email wasn\'t confirmed. Invalid link.']);
         }
     }
