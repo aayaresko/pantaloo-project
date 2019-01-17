@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -42,8 +43,21 @@ class PasswordController extends Controller
         $validator = Validator::make($request->toArray(), [
             'email' => 'required|email'
         ]);
+
         $email = $request->email;
         $errors = [];
+
+        $user = User::where('email', $email)->first();
+
+        if (!is_null($user) and $user->email_confirmed != 1) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['The email has not confirmed.']
+                ]
+            ]);
+        }
+
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
