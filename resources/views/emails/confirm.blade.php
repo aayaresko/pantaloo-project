@@ -1,0 +1,1 @@
+Confirm your email: <a href="{{$link}}">{{$link}}</a>
