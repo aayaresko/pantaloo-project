@@ -65,7 +65,7 @@ return [
     'defaultTitle' => 'games',
 
     'keepLanguage' => 60 * 24 * 30,//min
-    'resendMailTime' => 60 * 15,
+    'resendMailTime' => 10,
     'linkActiveConfirm' => 60 * 60 * 24,
 
 

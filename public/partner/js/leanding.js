@@ -59,7 +59,15 @@ function registr() {
             data: $(this).serialize(),
             success: function (response) {
                 if (response['status'] === true) {
-                    window.location.replace(response['message']['redirect']);
+                    //window.location.replace(response['message']['redirect']);
+                    //show popup
+                    clearNotificationMessage();
+                    //insert text and tittle
+                    emailCurrent = response['message']['email'];
+                    fillotificationMessage(response['message']['title'], response['message']['body']);
+                    $("#myModal2").modal('hide');
+                    $("#notificationMessage").modal();
+
                 } else {
                     //show error
                     $.each(response['message']['errors'], function (i, val) {
@@ -178,24 +186,24 @@ function resendPassword() {
         //     }, 10000)
         //     return
         //   }
-        
+
         $('.error-reset').hide();
         $('.success-reset').hide();
         $('.second-hide').hide();
         $('.second-show').show();
 
         var seconds = $('.seconds').text(),
-          int;
-        int = setInterval(function() {
-          if (seconds > 0) {
-            seconds--;
-            $('.seconds').text(seconds);
-          } else {
-            clearInterval(int);
-            $('.second-hide').show();
-            $('.second-show').hide();
-            $('.seconds').text('10');
-          }
+            int;
+        int = setInterval(function () {
+            if (seconds > 0) {
+                seconds--;
+                $('.seconds').text(seconds);
+            } else {
+                clearInterval(int);
+                $('.second-hide').show();
+                $('.second-show').hide();
+                $('.seconds').text('10');
+            }
         }, 1000);
 
         $.ajax({
@@ -208,9 +216,9 @@ function resendPassword() {
                     console.log('Ok');
                     //to do for front
                     $('.success-reset').show();
-                    setTimeout(function() {
-                        $('.success-reset').hide();    
-                    }, 5000)
+                    setTimeout(function () {
+                        $('.success-reset').hide();
+                    }, showError)
                     $('.error-reset').hide();
                 } else {
                     //to do for front
@@ -223,6 +231,102 @@ function resendPassword() {
     });
 }
 
+
+function reconfirmPassword() {
+    $("body").on("click", "#reconfirmPassword", function () {
+        event.preventDefault();
+        var $self = $(this)
+
+        // if ($self.hasClass('blockToSend') == false) {
+        //     $self.addClass('blockToSend');
+        //     setTimeout(function() {
+        //       $self.removeClass('blockToSend')
+        //     }, 10000)
+        //     return
+        //   }
+
+        $('.error-reset').hide();
+        $('.success-reset').hide();
+        $('.second-hide').hide();
+        $('.second-show').show();
+
+        var seconds = $('.seconds').text(),
+            int;
+        int = setInterval(function () {
+            if (seconds > 0) {
+                seconds--;
+                $('.seconds').text(seconds);
+            } else {
+                clearInterval(int);
+                $('.second-hide').show();
+                $('.second-show').hide();
+                $('.seconds').text('10');
+            }
+        }, 1000);
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/sendToken/' + emailCurrent,
+            data: {userEmail: emailCurrent},
+            success: function (response) {
+                if (response['status'] === true) {
+                    console.log('Ok');
+                    //to do for front
+                    $('.success-reset').show();
+                    setTimeout(function () {
+                        $('.success-reset').hide();
+                    }, showError)
+                    $('.error-reset').hide();
+                } else {
+                    //to do for front
+                    $('.error-reset').show();
+                    $('.success-reset').hide();
+
+                }
+            }
+        });
+    });
+}
+
+
+function activeMail() {
+    //check url
+    var url = new URL(window.location.href);
+    var confirm = url.searchParams.get('confirm');
+    if (confirm !== null) {
+        //send request
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/activate/' + confirm,
+            data: {},
+            success: function (response) {
+                let body;
+                if (response['status'] === true) {
+                    clearNotificationMessage();
+                    fillotificationMessage('Info', response['message']['messages']);
+                    $("#notificationMessage").modal();
+                } else {
+                    clearNotificationMessage();
+                    fillotificationMessage('Info', response['message']['errors']);
+                    $("#notificationMessage").modal();
+                }
+            }
+        });
+    }
+
+    function generateUl(array) {
+        var html = '<ul>';
+        console.log(array);
+        array.forEach(function (element) {
+            html += `<li>${element}</li>`;
+        });
+        html += '</ul>';
+        return html;
+    }
+}
+
 $(function () {
     login();
     registr();
@@ -230,6 +334,8 @@ $(function () {
     resetPasswordFinish();
     sendFormFeedBack();
     resendPassword();
+    reconfirmPassword();
+    activeMail();
 });
 
 $(document).ready(function () {

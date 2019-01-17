@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use Hash;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -130,23 +131,21 @@ class AuthController extends Controller
         ];
 
         //send email confirmation
-        $this->confirmEmail($user);
+        $email = $user->email;
+        $confirmEmail = $this->confirmEmail($email);
 
-        if (Auth::attempt($authData, false)) {
-            return response()->json([
-                'status' => true,
-                'message' => [
-                    'redirect' => '/affiliates',
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => ['Something went wrong'],
-                ]
-            ]);
+        if ($confirmEmail['status'] === false) {
+            return response()->json($confirmEmail);
         }
+
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'email' => $email,
+                'title' => 'Confirm Email',
+                'body' => (string)view('affiliates.parts.confirm_email')->with(['email' => $email])
+            ]
+        ]);
     }
 
     /**
@@ -155,8 +154,9 @@ class AuthController extends Controller
      */
     public function enter(Request $request)
     {
+        $user = Auth::user();
         if (Auth::check()) {
-            if (Auth::user()->isAgent()) {
+            if ($user->isAgent()) {
                 return response()->json([
                     'status' => true,
                     'message' => [
@@ -165,6 +165,7 @@ class AuthController extends Controller
                 ]);
             }
         }
+
 
         if ($request->input('remember_me') == 'on') {
             $remember = true;
@@ -177,6 +178,19 @@ class AuthController extends Controller
             'password' => $request->input('password'),
             'role' => 1
         ];
+
+        $user = User::select(['id', 'email_confirmed'])
+            ->where('email', $authData['email'])->first();
+
+        //check user confirm
+        if ($user->email_confirmed != 1) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['The email has not confirmed.']
+                ]
+            ]);
+        }
 
         if (Auth::attempt($authData, $remember)) {
             return response()->json([
@@ -204,8 +218,23 @@ class AuthController extends Controller
         return redirect()->route('affiliates.index');
     }
 
-    public function confirmEmail($user)
+    /**
+     * @param $userEmail
+     * @return array
+     */
+    protected function confirmEmail($userEmail)
     {
+        $user = User::where('email', $userEmail)->first();
+
+        if (is_null($user)) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'User is not found.'
+                ]
+            ];
+        }
+
         if ($user->email_confirmed == 1) {
             return [
                 'status' => false,
@@ -215,26 +244,26 @@ class AuthController extends Controller
             ];
         }
 
-        $resendMailTime = config('appAdditional.resendMailTime');
-
-        $date = Carbon::now();
-        $date->modify("-$resendMailTime second");
-
-        $activation = UserActivation::where('updated_at', '>=', $date)->where('user_id', $user->id)->first();
-
-        if ($activation) {
-            $resendMailTimeMin = $resendMailTime / 60;
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => "Mail already sent. You can try in {$resendMailTimeMin} minutes."
-                ]
-            ];
-        }
+//        $resendMailTime = config('appAdditional.resendMailTime');
+//
+//        $date = Carbon::now();
+//        $date->modify("-$resendMailTime second");
+//
+//        $activation = UserActivation::where('updated_at', '>=', $date)->where('user_id', $user->id)->first();
+//
+//        if ($activation) {
+//            $resendMailTimeMin = $resendMailTime / 60;
+//            return [
+//                'status' => false,
+//                'message' => [
+//                    'errors' => "Mail already sent. You can try in {$resendMailTimeMin} minutes."
+//                ]
+//            ];
+//        }
 
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
 
-        $link = url('/') . '/affiliates/activate/' . $token;
+        $link = url('/') . '?confirm=' . $token;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
@@ -247,31 +276,60 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        Mail::queue('email.confirm', ['link' => $link], function ($m) use ($user) {
+        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');
         });
 
         return [
             'status' => true,
-            'message' => [
-                'E-mail confirmation',
-                'Success',
-                'We sent you confirmation link. Check your mail please.',
-            ]
+            'message' => []
         ];
-
     }
 
+    /**
+     * @param $token
+     * @return array
+     */
     public function activate($token)
     {
-        $date = Carbon::now();
-        $date->modify('-1 day');
-
-        $user = Auth::user();
         $linkActiveConfirm = config('appAdditional.linkActiveConfirm');
-        if ($user->isConfirmed()) return redirect('/')->withErrors(['Email already confirmed']);
 
-        $activation = UserActivation::where('user_id', $user->id)->where('token', $token)->where('updated_at', '>=', $date)->first();
+        $date = Carbon::now();
+        $date->modify("-$linkActiveConfirm day");
+
+        $activation = UserActivation::where([
+            ['token', '=', $token],
+            ['updated_at', '>=', $date],
+        ])->first();
+
+        if (is_null($activation)) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'Invalid token'
+                ]
+            ];
+        }
+
+        $user = User::where('id', $activation->user_id)->first();
+
+        if (is_null($user)) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'User is not found'
+                ]
+            ];
+        }
+
+        if ($user->email_confirmed == 1) {
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'Email already confirmed'
+                ]
+            ];
+        }
 
         if ($activation) {
             $activation->activated = 1;
@@ -280,9 +338,23 @@ class AuthController extends Controller
             $user->email_confirmed = 1;
             $user->save();
 
-            return redirect('/')->with('popup', ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
+            Mail::queue('emails.congratulations', [], function ($m) use ($user) {
+                $m->to($user->email, $user->name)->subject('Email is now validated');
+            });
+
+            return [
+                'status' => true,
+                'message' => [
+                    'messages' => 'Congratulations! E-mail was confirmed!',
+                ]
+            ];
         } else {
-            return redirect('/')->withErrors(['Email wasn\'t confirmed. Invalid link.']);
+            return [
+                'status' => false,
+                'message' => [
+                    'errors' => 'Email wasn\'t confirmed. Invalid link.'
+                ]
+            ];
         }
     }
 }
