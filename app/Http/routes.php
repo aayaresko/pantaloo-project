@@ -26,6 +26,7 @@ Route::group(['domain' => $partner], function () {
     Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'Auth\Affiliates\PasswordController@sendResetLinkEmail']);
     Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
     Route::get('affiliates/activate/{token}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@register']);
+    Route::get('affiliates/test/test', ['as' => 'affiliates.test.test', 'uses' => 'Auth\Affiliates\AuthController@confirmEmail']);
 
     //redefine routesaffiliates
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
