@@ -183,16 +183,7 @@ class AuthController extends Controller
             ->where('email', $authData['email'])->first();
 
         //check user confirm
-        if (is_null($user)) {
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => ['User is not found']
-                ]
-            ]);
-        }
-
-        if ($user->email_confirmed != 1) {
+        if (!is_null($user) and $user->email_confirmed != 1) {
             return response()->json([
                 'status' => false,
                 'message' => [
@@ -331,7 +322,7 @@ class AuthController extends Controller
                 ]
             ];
         }
-
+        
         if ($user->email_confirmed == 1) {
             return [
                 'status' => false,
