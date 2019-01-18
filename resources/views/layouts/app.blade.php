@@ -87,9 +87,17 @@
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
-                    @if(Auth::user()->role == 1) <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li> @endif
-                    @if(Auth::user()->role == 2) <li><a href="/admin">{{ trans('casino.admin') }}</a></li> @endif
-                    @if(Auth::user()->free_spins > 0) <li><a href="/slots#free_spins">Free spins</a></li> @endif
+                    @if(Auth::user()->role == 1)
+                        <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li>
+                    @endif
+
+                    @can('accessUserAdminPublic')
+                        <li><a href="/admin">{{ trans('casino.admin') }}</a></li>
+                    @endcan
+
+                    @if(Auth::user()->free_spins > 0)
+                            <li><a href="/slots#free_spins">Free spins</a></li>
+                    @endif
                 @endif
             </ul>
         </nav>

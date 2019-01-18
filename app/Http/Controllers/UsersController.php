@@ -7,7 +7,7 @@ use App\Jobs\SetUserCountry;
 use App\UserActivation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,11 @@ class UsersController extends Controller
     {
         $users = User::orderBy('created_at', 'DESC')->get();
 
-        return view('admin.users', ['users' => $users]);
+        if (Gate::allows('accessUserAdmin')) {
+            return view('admin.users', ['users' => $users]);
+        } else {
+            return redirect('admin/translations');
+        }
     }
 
     public function settings()
