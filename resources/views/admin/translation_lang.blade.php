@@ -68,7 +68,14 @@
                     name: '{{ $currentLang }}',
                     pk: $(this).data('pk'),
                     url: '{{ route('translations.save') }}',
-                    title: 'Enter translation'
+                    title: 'Enter translation',
+                    success: function (data) {
+                        if(data.success == true) {
+                            alert('Ok');
+                        } else {
+                            alert('False');
+                        }
+                    },
                 });
             }
         });

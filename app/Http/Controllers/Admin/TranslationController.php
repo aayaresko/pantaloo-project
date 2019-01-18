@@ -78,7 +78,7 @@ class TranslationController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withErrors([$e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
 
         DB::commit();
