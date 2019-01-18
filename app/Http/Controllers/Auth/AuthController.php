@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
 use Illuminate\Support\Facades\Mail;
 use Helpers\GeneralHelper;
+use App\UserActivation;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -110,12 +111,25 @@ class AuthController extends Controller
 
         $user->save();
 
-
-        $link = GeneralHelper::generateTokenConfirmPlayer();
         //send email
+        //to do check this
+        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $link = url('/') . '/activate/' . $token;
+
+        $activation = UserActivation::where('user_id', $user->id)->first();
+
+        if(!$activation) $activation = new UserActivation();
+
+        $activation->user()->associate($user);
+        $activation->token = $token;
+        $activation->activated = 0;
+
+        $activation->save();
+
         Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');
         });
+        //to do check this
 
         $this->dispatch(new SetUserCountry($user));
 
