@@ -9,6 +9,7 @@ use App\Tracker;
 use App\User;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
+use Illuminate\Support\Facades\Mail;
 use Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
