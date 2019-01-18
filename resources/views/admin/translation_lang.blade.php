@@ -71,9 +71,10 @@
                     title: 'Enter translation',
                     success: function (data) {
                         if(data.success == true) {
-                            alert('Ok');
+                            //alert('Ok');
                         } else {
-                            alert('False');
+                            //alert('False');
+                            return 'Something went wrong';
                         }
                     },
                 });
