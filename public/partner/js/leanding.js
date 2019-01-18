@@ -303,6 +303,8 @@ function activeMail() {
             url: '/affiliates/activate/' + confirm + '/email/' + email,
             data: {},
             success: function (response) {
+                //clear url
+                window.history.pushState({}, document.title, "/");
                 let body;
                 if (response['status'] === true) {
                     clearNotificationMessage();
