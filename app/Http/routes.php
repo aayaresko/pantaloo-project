@@ -110,96 +110,100 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::get('/share/session', 'AuthController@share');
 
-    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
-        Route::get('/bonus/{user}', ['as' => 'admin.bonuses', 'uses' => 'BonusController@userBonuses']);
-        Route::get('/bonus/{user}/{bonus}/activate', ['as' => 'admin.bonusActivate', 'uses' => 'BonusController@adminActivate']);
-        Route::get('/bonus/{user}/cancel', ['as' => 'admin.bonusCancel', 'uses' => 'BonusController@adminCancel']);
+    Route::group(['prefix' => 'admin', 'middleware' => ['can:accessUserAdminPublic']], function () {
+
+        Route::group(['middleware' => ['can:accessUserAdmin']], function () {
+            Route::get('/bonus/{user}', ['as' => 'admin.bonuses', 'uses' => 'BonusController@userBonuses']);
+            Route::get('/bonus/{user}/{bonus}/activate', ['as' => 'admin.bonusActivate', 'uses' => 'BonusController@adminActivate']);
+            Route::get('/bonus/{user}/cancel', ['as' => 'admin.bonusCancel', 'uses' => 'BonusController@adminCancel']);
 
 //        Route::get('/translations', ['as' => 'translations', 'uses' => 'TranslationController@index']);
 //        Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'TranslationController@save']);
 //        Route::post('/translations/delete', ['as' => 'translations.delete', 'uses' => 'TranslationController@delete']);
 
+
+            Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
+
+            Route::get('/', 'UsersController@index');
+            Route::get('/users', ['as' => 'users', 'uses' => 'UsersController@index']);
+            Route::post('/user/{user}', ['as' => 'user.update', 'uses' => 'UsersController@update']);
+            Route::get('/slots', ['as' => 'admin.slots', 'uses' => 'SlotController@adminSlots']);
+            Route::get('/slot/{slot}', ['as' => 'admin.slot', 'uses' => 'SlotController@edit']);
+            Route::post('/slot/{slot}', ['uses' => 'SlotController@update']);
+
+            //admin for integrated games
+            //games
+            Route::get('/integratedGames', ['as' => 'admin.integratedGames', 'uses' => 'Admin\IntegratedGamesController@index']);
+            Route::get('/integratedGame', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@getAll']);
+            Route::get('/integratedGame/{id}', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@game']);
+            Route::post('/integratedGame/{id}', ['as' => 'admin.integratedGameUpdate', 'uses' => 'Admin\IntegratedGamesController@gameUpdate']);
+            //type
+            Route::get('/integratedTypes', ['as' => 'admin.integratedTypes', 'uses' => 'Admin\IntegratedTypesController@index']);
+            Route::get('/integratedType/{id}', ['as' => 'admin.integratedType', 'uses' => 'Admin\IntegratedTypesController@edit']);
+            Route::post('/integratedType/{id}', ['as' => 'admin.integratedTypeUpdate', 'uses' => 'Admin\IntegratedTypesController@update']);
+            //category
+            Route::get('/integratedCategories', ['as' => 'admin.integratedCategories', 'uses' => 'Admin\IntegratedCategoriesController@index']);
+            Route::get('/integratedCategory/{id}', ['as' => 'admin.integratedCategory', 'uses' => 'Admin\IntegratedCategoriesController@edit']);
+            Route::post('/integratedCategory/{id}', ['as' => 'admin.integratedCategoryUpdate', 'uses' => 'Admin\IntegratedCategoriesController@update']);
+            //Settings
+            Route::get('/integratedSettings', ['as' => 'admin.integratedSettings', 'uses' => 'Admin\IntegratedSettingsController@index']);
+            Route::post('/integratedSettings', ['as' => 'admin.integratedSettingsUpdate', 'uses' => 'Admin\IntegratedSettingsController@update']);
+            //end
+
+            Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);
+            Route::post('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@sendBitcoins']);
+
+            Route::get('/transfers', ['as' => 'admin.transfers', 'uses' => 'MoneyController@transfers']);
+            Route::post('/transfers', ['as' => 'admin.transfers', 'uses' => 'MoneyController@transfers']);
+
+            Route::get('/pages', ['as' => 'pages', 'uses' => 'PageController@index']);
+
+            Route::get('/pages/new', ['as' => 'pages.new', 'uses' => 'PageController@create']);
+            Route::post('/pages/new', ['as' => 'pages.new', 'uses' => 'PageController@store']);
+
+            Route::get('/page/{page}/edit', ['as' => 'pages.edit', 'uses' => 'PageController@edit']);
+            Route::post('/page/{page}/edit', ['as' => 'pages.edit', 'uses' => 'PageController@update']);
+            Route::get('/page/{page}/delete', ['as' => 'pages.delete', 'uses' => 'PageController@delete']);
+
+            Route::get('/stat', ['as' => 'stat', 'uses' => 'MoneyController@stat']);
+
+            Route::get('/pending', ['as' => 'pending', 'uses' => 'MoneyController@pending']);
+
+            Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@aprove']);
+            Route::get('/transaction/{transaction}/freeze', ['as' => 'freeze', 'uses' => 'MoneyController@freeze']);
+            Route::get('/transaction/{transaction}/unfreeze', ['as' => 'unfreeze', 'uses' => 'MoneyController@unfreeze']);
+            Route::get('/transaction/{transaction}/cancel', ['as' => 'cancel', 'uses' => 'MoneyController@cancel']);
+
+            Route::get('/banners', ['as' => 'admin.banners', 'uses' => 'BannerController@index']);
+            Route::get('/banners/create', ['as' => 'banners.create', 'uses' => 'BannerController@create']);
+            Route::post('/banners/create', ['as' => 'banners.store', 'uses' => 'BannerController@store']);
+            Route::get('/banners/{banner}/delete', ['as' => 'banners.delete', 'uses' => 'BannerController@delete']);
+
+            Route::get('/faq/create', ['as' => 'faqCreate', 'uses' => 'QuestionController@create']);
+            Route::get('/faq', ['as' => 'admin.faq', 'uses' => 'QuestionController@index']);
+            Route::post('/faq/store', ['as' => 'faqStore', 'uses' => 'QuestionController@store']);
+
+            Route::get('/faq/{question}/edit', ['as' => 'faqEdit', 'uses' => 'QuestionController@edit']);
+            Route::post('/faq/{question}/update', ['as' => 'faqUpdate', 'uses' => 'QuestionController@update']);
+            Route::get('/faq/{question}/delete', ['as' => 'faqDelete', 'uses' => 'QuestionController@delete']);
+
+            Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
+            Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
+
+            Route::get('/agent/payments', ['as' => 'admin.agentPayments', 'uses' => 'AgentController@payments']);
+
+            Route::get('/transactions', ['as' => 'admin.transactions', 'uses' => 'TransactionController@index']);
+            Route::get('/transactions/filter', ['as' => 'admin.filterTransactions', 'uses' => 'TransactionController@filter']);
+
+            Route::get('/balance', ['as' => 'admin.balance', 'uses' => 'AdminController@balance']);
+        });
+
+
         Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
         Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
         Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
-
-
-        Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
-
-        Route::get('/', 'UsersController@index');
-        Route::get('/users', ['as' => 'users', 'uses' => 'UsersController@index']);
-        Route::post('/user/{user}', ['as' => 'user.update', 'uses' => 'UsersController@update']);
-        Route::get('/slots', ['as' => 'admin.slots', 'uses' => 'SlotController@adminSlots']);
-        Route::get('/slot/{slot}', ['as' => 'admin.slot', 'uses' => 'SlotController@edit']);
-        Route::post('/slot/{slot}', ['uses' => 'SlotController@update']);
-
-        //admin for integrated games
-        //games
-        Route::get('/integratedGames', ['as' => 'admin.integratedGames', 'uses' => 'Admin\IntegratedGamesController@index']);
-        Route::get('/integratedGame', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@getAll']);
-        Route::get('/integratedGame/{id}', ['as' => 'admin.integratedGame', 'uses' => 'Admin\IntegratedGamesController@game']);
-        Route::post('/integratedGame/{id}', ['as' => 'admin.integratedGameUpdate', 'uses' => 'Admin\IntegratedGamesController@gameUpdate']);
-        //type
-        Route::get('/integratedTypes', ['as' => 'admin.integratedTypes', 'uses' => 'Admin\IntegratedTypesController@index']);
-        Route::get('/integratedType/{id}', ['as' => 'admin.integratedType', 'uses' => 'Admin\IntegratedTypesController@edit']);
-        Route::post('/integratedType/{id}', ['as' => 'admin.integratedTypeUpdate', 'uses' => 'Admin\IntegratedTypesController@update']);
-        //category
-        Route::get('/integratedCategories', ['as' => 'admin.integratedCategories', 'uses' => 'Admin\IntegratedCategoriesController@index']);
-        Route::get('/integratedCategory/{id}', ['as' => 'admin.integratedCategory', 'uses' => 'Admin\IntegratedCategoriesController@edit']);
-        Route::post('/integratedCategory/{id}', ['as' => 'admin.integratedCategoryUpdate', 'uses' => 'Admin\IntegratedCategoriesController@update']);
-        //Settings
-        Route::get('/integratedSettings', ['as' => 'admin.integratedSettings', 'uses' => 'Admin\IntegratedSettingsController@index']);
-        Route::post('/integratedSettings', ['as' => 'admin.integratedSettingsUpdate', 'uses' => 'Admin\IntegratedSettingsController@update']);
-        //end
-
-        Route::get('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@bitcoin']);
-        Route::post('/bitcoin', ['as' => 'admin.bitcoin', 'uses' => 'MoneyController@sendBitcoins']);
-
-        Route::get('/transfers', ['as' => 'admin.transfers', 'uses' => 'MoneyController@transfers']);
-        Route::post('/transfers', ['as' => 'admin.transfers', 'uses' => 'MoneyController@transfers']);
-
-        Route::get('/pages', ['as' => 'pages', 'uses' => 'PageController@index']);
-
-        Route::get('/pages/new', ['as' => 'pages.new', 'uses' => 'PageController@create']);
-        Route::post('/pages/new', ['as' => 'pages.new', 'uses' => 'PageController@store']);
-
-        Route::get('/page/{page}/edit', ['as' => 'pages.edit', 'uses' => 'PageController@edit']);
-        Route::post('/page/{page}/edit', ['as' => 'pages.edit', 'uses' => 'PageController@update']);
-        Route::get('/page/{page}/delete', ['as' => 'pages.delete', 'uses' => 'PageController@delete']);
-
-        Route::get('/stat', ['as' => 'stat', 'uses' => 'MoneyController@stat']);
-
-        Route::get('/pending', ['as' => 'pending', 'uses' => 'MoneyController@pending']);
-
-        Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@aprove']);
-        Route::get('/transaction/{transaction}/freeze', ['as' => 'freeze', 'uses' => 'MoneyController@freeze']);
-        Route::get('/transaction/{transaction}/unfreeze', ['as' => 'unfreeze', 'uses' => 'MoneyController@unfreeze']);
-        Route::get('/transaction/{transaction}/cancel', ['as' => 'cancel', 'uses' => 'MoneyController@cancel']);
-
-        Route::get('/banners', ['as' => 'admin.banners', 'uses' => 'BannerController@index']);
-        Route::get('/banners/create', ['as' => 'banners.create', 'uses' => 'BannerController@create']);
-        Route::post('/banners/create', ['as' => 'banners.store', 'uses' => 'BannerController@store']);
-        Route::get('/banners/{banner}/delete', ['as' => 'banners.delete', 'uses' => 'BannerController@delete']);
-
-        Route::get('/faq/create', ['as' => 'faqCreate', 'uses' => 'QuestionController@create']);
-        Route::get('/faq', ['as' => 'admin.faq', 'uses' => 'QuestionController@index']);
-        Route::post('/faq/store', ['as' => 'faqStore', 'uses' => 'QuestionController@store']);
-
-        Route::get('/faq/{question}/edit', ['as' => 'faqEdit', 'uses' => 'QuestionController@edit']);
-        Route::post('/faq/{question}/update', ['as' => 'faqUpdate', 'uses' => 'QuestionController@update']);
-        Route::get('/faq/{question}/delete', ['as' => 'faqDelete', 'uses' => 'QuestionController@delete']);
-
-        Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
-        Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
-
-        Route::get('/agent/payments', ['as' => 'admin.agentPayments', 'uses' => 'AgentController@payments']);
-
-        Route::get('/transactions', ['as' => 'admin.transactions', 'uses' => 'TransactionController@index']);
-        Route::get('/transactions/filter', ['as' => 'admin.filterTransactions', 'uses' => 'TransactionController@filter']);
-
-        Route::get('/balance', ['as' => 'admin.balance', 'uses' => 'AdminController@balance']);
-
     });
+
 
     Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
         Route::get('/', function () {

@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\User;
+use App\Policies\AdminPanelPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,7 +28,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
-
         //
+
+        Gate::define('accessUserAdmin', AdminPanelPolicy::class . '@accessUserAdmin');
+        Gate::define('accessUserTranslator', AdminPanelPolicy::class . '@accessUserTranslator');
+        Gate::define('accessUserAdminPublic', AdminPanelPolicy::class . '@accessUserAdminPublic');
     }
 }

@@ -40,7 +40,7 @@
 
     <!-- front style -->
     <link href="/adminPanel/css/front.css" rel="stylesheet">
-  
+
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -127,86 +127,91 @@
                 <ul>
                     <li class="text-muted menu-title">Navigation</li>
 
-                    <li>
-                        <a href="{{route('dashboard')}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
-                    </li>
+                    @can('accessUserAdmin')
+                        <li>
+                            <a href="{{route('dashboard')}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-btc"></i> <span> Finance </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('admin.balance')}}">Balance</a></li>
-                            <li><a href="{{route('admin.transactions')}}">Transactions</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-btc"></i> <span> Finance </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.balance')}}">Balance</a></li>
+                                <li><a href="{{route('admin.transactions')}}">Transactions</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Users </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('users')}}">Accounts</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Users </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('users')}}">Accounts</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Agent </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('admin.agents')}}">Accounts</a></li>
-                            <li><a href="{{route('admin.agentPayments')}}">Withdraws</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Agent </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.agents')}}">Accounts</a></li>
+                                <li><a href="{{route('admin.agentPayments')}}">Withdraws</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Slots </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('admin.slots')}}">List</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Slots </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.slots')}}">List</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Games </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('admin.integratedGames')}}">List</a></li>
-                            <li><a href="{{route('admin.integratedTypes')}}">Types</a></li>
-                            <li><a href="{{route('admin.integratedCategories')}}">Categories</a></li>
-                            <li><a href="{{route('admin.integratedSettings')}}">Settings</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-tablet"></i> <span> Games </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.integratedGames')}}">List</a></li>
+                                <li><a href="{{route('admin.integratedTypes')}}">Types</a></li>
+                                <li><a href="{{route('admin.integratedCategories')}}">Categories</a></li>
+                                <li><a href="{{route('admin.integratedSettings')}}">Settings</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span> Pages </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('pages')}}">List</a></li>
-                            <li><a href="{{route('pages.new')}}">Create</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span> Pages </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('pages')}}">List</a></li>
+                                <li><a href="{{route('pages.new')}}">Create</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-bank"></i> <span> Payments </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('admin.bitcoin')}}">Bitcoin</a></li>
-                            <li><a href="{{route('admin.transfers')}}">Transfers</a></li>
-                            <li><a href="{{route('pending')}}">Withdraws</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-bank"></i> <span> Payments </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.bitcoin')}}">Bitcoin</a></li>
+                                <li><a href="{{route('admin.transfers')}}">Transfers</a></li>
+                                <li><a href="{{route('pending')}}">Withdraws</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-paint-brush"></i> <span> Banners </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('banners.create')}}">Create</a></li>
-                            <li><a href="{{route('admin.banners')}}">List</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-paint-brush"></i> <span> Banners </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('banners.create')}}">Create</a></li>
+                                <li><a href="{{route('admin.banners')}}">List</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="ti-help-alt"></i> <span> FAQ </span> <span class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="{{route('faqCreate')}}">Create</a></li>
-                            <li><a href="{{route('admin.faq')}}">List</a></li>
-                        </ul>
-                    </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-help-alt"></i> <span> FAQ </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('faqCreate')}}">Create</a></li>
+                                <li><a href="{{route('admin.faq')}}">List</a></li>
+                            </ul>
+                        </li>
+                    @endcan
+
 
                     <li>
                         <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                     </li>
+
+
                 </ul>
                 <div class="clearfix"></div>
             </div>
