@@ -9,6 +9,7 @@ use App\Tracker;
 use App\User;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
+use Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -36,6 +37,7 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
     protected $loginPath = '/';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -49,7 +51,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -64,7 +66,7 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -81,19 +83,17 @@ class AuthController extends Controller
         $user->bitcoin_address = $address;
         $user->balance = 0;
 
-        if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
-        {
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
             $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
             $user->ip = $ip;
         }
 
         $tracker_id = Cookie::get('tracker_id');
 
-        if($tracker_id) {
+        if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
 
-            if($tracker)
-            {
+            if ($tracker) {
                 $user->tracker()->associate($tracker);
                 $user->agent_id = $tracker->user_id;
             }
@@ -103,12 +103,18 @@ class AuthController extends Controller
         $data['currency'] = 1;
         $currency = Currency::find($data['currency']);
 
-        if($currency)
-        {
+        if ($currency) {
             $user->currency_id = $currency->id;
         }
 
         $user->save();
+
+
+        $link = GeneralHelper::generateTokenConfirm();
+        //send email
+        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
+            $m->to($user->email, $user->name)->subject('Confirm email');
+        });
 
         $this->dispatch(new SetUserCountry($user));
 

@@ -34,4 +34,14 @@ class GeneralHelper
         $languages = array_values($languagesIndex);
         return $languages;
     }
+
+    /**
+     * @return string
+     */
+    static public function generateTokenConfirm()
+    {
+        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $link = url('/') . '/activate/' . $token;
+        return $link;
+    }
 }
