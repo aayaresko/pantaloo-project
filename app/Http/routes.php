@@ -122,8 +122,6 @@ Route::group(['middleware' => ['auth']], function () {
 //        Route::post('/translations/delete', ['as' => 'translations.delete', 'uses' => 'TranslationController@delete']);
 
 
-            Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
-
             Route::get('/', 'UsersController@index');
             Route::get('/users', ['as' => 'users', 'uses' => 'UsersController@index']);
             Route::post('/user/{user}', ['as' => 'user.update', 'uses' => 'UsersController@update']);
@@ -198,6 +196,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/balance', ['as' => 'admin.balance', 'uses' => 'AdminController@balance']);
         });
 
+        Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
 
         Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
         Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);

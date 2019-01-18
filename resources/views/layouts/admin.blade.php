@@ -127,10 +127,12 @@
                 <ul>
                     <li class="text-muted menu-title">Navigation</li>
 
+                    <li>
+                        <a href="{{route('dashboard')}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                    </li>
+
+
                     @can('accessUserAdmin')
-                        <li>
-                            <a href="{{route('dashboard')}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
-                        </li>
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-btc"></i> <span> Finance </span> <span class="menu-arrow"></span></a>
