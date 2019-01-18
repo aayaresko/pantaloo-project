@@ -110,7 +110,7 @@ class AuthController extends Controller
         $user->save();
 
 
-        $link = GeneralHelper::generateTokenConfirm();
+        $link = GeneralHelper::generateTokenConfirmPlayer();
         //send email
         Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');

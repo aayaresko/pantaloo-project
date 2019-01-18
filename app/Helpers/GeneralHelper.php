@@ -38,7 +38,7 @@ class GeneralHelper
     /**
      * @return string
      */
-    static public function generateTokenConfirm()
+    static public function generateTokenConfirmPlayer()
     {
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
         $link = url('/') . '/activate/' . $token;
