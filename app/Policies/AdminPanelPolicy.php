@@ -19,7 +19,6 @@ class AdminPanelPolicy
         //
     }
 
-
     public function accessUserTranslator(User $user)
     {
         return $user->role == 10;

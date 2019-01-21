@@ -126,11 +126,7 @@
             <div id="sidebar-menu">
                 <ul>
                     <li class="text-muted menu-title">Navigation</li>
-
-
-
                     @can('accessUserAdmin')
-
                         <li>
                             <a href="{{route('dashboard')}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
                         </li>
@@ -209,11 +205,9 @@
                         </li>
                     @endcan
 
-
                     <li>
                         <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                     </li>
-
 
                 </ul>
                 <div class="clearfix"></div>
@@ -253,8 +247,6 @@
 
 </div>
 <!-- END wrapper -->
-
-
 
 <script>
     var resizefunc = [];
@@ -339,8 +331,6 @@
         swal({title: "Success", text: success_msg, html: true, type: "success"});
     }
 </script>
-
-
 
 </body>
 </html>
