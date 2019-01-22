@@ -202,7 +202,7 @@
 
                                                                                 <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="font-size:6px;line-height:10px;padding:30px 20px 10px 20px;" valign="top" align="center">
+                                                                                        <td style="font-size:6px;line-height:10px;padding:30px 20px 30px 20px;" valign="top" align="center">
                                                                                             <img class="max-width" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;" src="https://marketing-image-production.s3.amazonaws.com/uploads/18c640a2ad33eb6f5b3d2ea213f2b073cd1175c66da8310248a6ed8093b833fff0f18c572ed1e83e7ce5c16fc1a51a21cf0c1f1c4752d8ebd23ed4d059eebb55.png" alt="" data-proportionally-constrained="true" width="40" height="40">
                                                                                         </td>
                                                                                     </tr>
