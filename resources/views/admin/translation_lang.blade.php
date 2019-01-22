@@ -4,6 +4,11 @@
     Translations
 @endsection
 
+@section('preCss')
+    <link href="/adminPanel/css/general.css" rel="stylesheet" type="text/css" />
+    <link href="/adminPanel/lib/bootstrap-wysihtml/css/bootstrap-wysihtml5-0.0.3.css" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="content-page">
         <!-- Start content -->
@@ -36,10 +41,12 @@
                                     <tr role="row" id="row_{{ $key }}">
                                         <td>{{ ++$index }}</td>
                                         @if ($defaultLang <> $currentLang)
-                                            <td>{{ $translationsDefault[$key]}}</td>
+                                            <td>{!! $translationsDefault[$key] !!}</td>
                                         @endif
-                                        <td><a href="#" class="editable"
-                                               data-pk="{{ $key }}">{{ $translationCurrent }}</a></td>
+                                        <td>
+                                            <a href="#" class="editable"
+                                               data-pk="{{ $key }}">{!! $translationCurrent !!}</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -48,27 +55,36 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
+
 @endsection
 
 @section('js')
-    <script>
 
+    <script src="/adminPanel/lib/bootstrap-wysihtml/js/wysihtml5-0.3.0.min.js"></script>
+    <script src="/adminPanel/lib/bootstrap-wysihtml/js/bootstrap-wysihtml5-0.0.3.min.js"></script>
+    <script src="/adminPanel/lib/bootstrap-wysihtml/js/wysihtml5-0.0.3.js"></script>
+
+    <script>
         $.fn.editable.defaults.params = function (params) {
             params._token = '{{ csrf_token() }}';
             return params;
         };
+        $.fn.editable.defaults.mode = 'inline';
 
         var dataTable = $('.datatable').DataTable({
             "fnDrawCallback": function (oSettings) {
-
                 $('.editable').editable({
-                    type: 'text',
+                    type: 'wysihtml5',
                     name: '{{ $currentLang }}',
                     pk: $(this).data('pk'),
                     url: '{{ route('translations.save') }}',
                     title: 'Enter translation',
+                    inputclass: 'editableStyle',
+                    placement: 'bottom',
                     success: function (data) {
                         if(data.success == true) {
                             //alert('Ok');
@@ -76,10 +92,9 @@
                             //alert('False');
                             return 'Something went wrong';
                         }
-                    },
+                    }
                 });
             }
         });
-
     </script>
 @endsection

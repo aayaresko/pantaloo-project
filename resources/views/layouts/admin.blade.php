@@ -55,7 +55,11 @@
 
     <link type="text/css" href="/assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+
+    @yield('preCss')
+
     <script src="/assets/js/modernizr.min.js"></script>
     <script>
         var getUrlParameter = function getUrlParameter(sParam) {
