@@ -1,103 +1,81 @@
 <?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Casino
-    |--------------------------------------------------------------------------
-    |
-    | Casino
-    */
-
-    'title' => 'Casinobit | bitcoin casino',
-    'play' => 'Play',
-    'free_demo' => 'Free demo',
-    'admin' => 'Admin',
-    'deposit' => 'Deposit',
-    'balance' => 'Balance',
-    'login' => 'Login',
-    'registration' => 'Registration',
-    'menu' => 'Menu',
-    'withdraw' => 'Withdraw',
-    'get_bonus' => 'Get Bonus',
-    'settings' => 'Settings',
-    'support' => 'Support',
-    'bonuses' => 'Bonuses',
-    'affiliates' => 'Affiliates',
-    'info' => 'Info',
-    'exit' => 'Exit',
-    'live_games' => 'Live games',
-    'password' => 'Password',
-    'accept_the_terms' => 'I accept the terms & conditions',
-    'email_address' => 'E-mail address',
-    'i_am_forget' => 'i am forget',
-    'remember_me' => 'Remember me',
-    'have_not_account' => 'i don\'t have account',
-    'enter_now' => 'Enter Now',
-    'home_description' => 'Welcome to Casinobit where you will find the best bitcoin games and will be able to play online.
+return array (
+  'title' => 'Casinobit | bitcoin casino',
+  'play' => 'Play',
+  'free_demo' => 'Free demo',
+  'admin' => 'Admin',
+  'deposit' => 'Deposit',
+  'balance' => 'Balance',
+  'login' => 'Login',
+  'registration' => 'Registration',
+  'menu' => 'Menu',
+  'withdraw' => 'Withdraw',
+  'get_bonus' => 'Get Bonus',
+  'settings' => 'Settings',
+  'support' => 'Support',
+  'bonuses' => 'Bonuses',
+  'affiliates' => 'Affiliates',
+  'info' => 'Info',
+  'exit' => 'Exit',
+  'live_games' => 'Live games',
+  'password' => 'Password',
+  'accept_the_terms' => 'I accept the terms & conditions',
+  'email_address' => 'E-mail address',
+  'i_am_forget' => 'i am forget',
+  'remember_me' => 'Remember me',
+  'have_not_account' => 'i don\'t have account',
+  'enter_now' => 'Enter Now',
+  'home_description' => 'Welcome to Casinobit where you will find the best bitcoin games and will be able to play online.
      Casinobit is the big world of gaming systems. Here you will find the best Bitcoin games and you can play online.',
-    'home_keywords' => 'bitcoin games, lotto, bitcoin',
-    'blackjack' => 'Blackjack',
-    'roulette' => 'Roulette',
-    'slots' => 'Slots',
-    'work_bitcoin' => 'We work only with bitcoin',
-    'bonus' => 'bonus',
-    'after_first_deposit' => 'after first deposit',
-    'welcome' => 'Welcome',
-    'casinobit' => 'Casinobit',
-    'video_live_games' => 'video live games',
-    'games' => 'Games',
-    'live_games_second' => 'Live Games',
-    'play_now' => 'Play Now',
-    'do_you_want_to_play' => 'What do you want to play?',
-    'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
-    'bet_on_numbers' => 'Bet on numbers',
-    'type_slots' => 'slots',
-    'type_blackjack' => 'blackjack',
-    'type_live_blackjack' => 'live blackjack',
-    'type_live_poker' => 'live poker',
-    'type_roulette' => 'roulette',
-    'type_baccarat' => 'baccarat',
-    'type_live_baccarat' => 'live baccarat',
-    'type_bet_on_numbers' => 'bet on numbers ',
-    'type_live_bet_on_numbers' => 'live bet on numbers',
-    'type_keno' => 'keno',
-    'type_poker' => 'poker',
-    'type_others' => 'others',
-    'type_dice' => 'dice',
-    'type_live_dice' => 'live dice',
-    'type_live_casino' => 'live casino',
-    'type_live_table_games' => 'live table games',
-    'type_live_roulette' => 'live roulette',
-    'search_game' => 'Search game',
-    'all' => 'All',
-    'choose_your_game' => 'Choose your game',
-    //support
-    'support.create_account' => 'How do I create my account?',
-    'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields.' .
-        ' After correct filling of the forms we will email you with the confirmation link to verify your email address.' .
-        ' Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
-
-    'support.forgotten_password' => 'What should I do if I have forgotten the password?',
-    'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link.'.
-        ' You will be automatically sent an email with the recover link where you will be advised to enter new password.'.
-        ' Otherwise, you can report us through livechat. We are happy to help.',
-
-    'support.buy_bitcoins' => 'Where can I buy bitcoins?',
-    'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay.'.
-        ' For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
-
-    'support.games_fair' => 'Are the games fair?',
-    'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget.'.
-        ' All games are regulated under the license of Curacao.',
-
-    'terms' => 'terms',
-    'free' => 'free',
-    'spins' => 'spins',
-    'welcome_bonus' => 'welcome bonus',
-    'bonus.term' => <<<EOT
-            <div id="uls">
+  'home_keywords' => 'bitcoin games, lotto, bitcoin',
+  'blackjack' => 'Blackjack',
+  'roulette' => 'Roulette',
+  'slots' => 'Slots',
+  'work_bitcoin' => 'We work only with bitcoin',
+  'bonus' => 'bonus',
+  'after_first_deposit' => 'after first deposit',
+  'welcome' => 'Welcome',
+  'casinobit' => 'Casinobit',
+  'video_live_games' => 'video live games',
+  'games' => 'Games',
+  'live_games_second' => 'Live Games',
+  'play_now' => 'Play Now',
+  'do_you_want_to_play' => 'What do you want to play?',
+  'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
+  'bet_on_numbers' => 'Bet on numbers',
+  'type_slots' => 'slots',
+  'type_blackjack' => 'blackjack',
+  'type_live_blackjack' => 'live blackjack',
+  'type_live_poker' => 'live poker',
+  'type_roulette' => 'roulette',
+  'type_baccarat' => 'baccarat',
+  'type_live_baccarat' => 'live baccarat',
+  'type_bet_on_numbers' => 'bet on numbers ',
+  'type_live_bet_on_numbers' => 'live bet on numbers',
+  'type_keno' => 'keno',
+  'type_poker' => 'poker',
+  'type_others' => 'others',
+  'type_dice' => 'dice',
+  'type_live_dice' => 'live dice',
+  'type_live_casino' => 'live casino',
+  'type_live_table_games' => 'live table games',
+  'type_live_roulette' => 'live roulette',
+  'search_game' => 'Search game',
+  'all' => 'All',
+  'choose_your_game' => 'Choose your game',
+  'support.create_account' => 'How do I create my account?',
+  'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields. After correct filling of the forms we will email you with the confirmation link to verify your email address. Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
+  'support.forgotten_password' => 'What should I do if I have forgotten the password?',
+  'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link. You will be automatically sent an email with the recover link where you will be advised to enter new password. Otherwise, you can report us through livechat. We are happy to help.',
+  'support.buy_bitcoins' => 'Where can I buy bitcoins?',
+  'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay. For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
+  'support.games_fair' => 'Are the games fair?',
+  'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget. All games are regulated under the license of Curacao.',
+  'terms' => 'terms',
+  'free' => 'free',
+  'spins' => 'spins',
+  'welcome_bonus' => 'welcome bonus',
+  'bonus.term' => '            <div id="uls">
                 <h3>BONUS TERMS AND CONDITIONS</h3>
                 <ul class="parent-list">
 
@@ -132,7 +110,7 @@ return [
 
                                 <p>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding
                                     the KYC (Know Your Customer), the following documents may be needed for
-                                    verification: One government approved identity card (ID card, passport and driver's
+                                    verification: One government approved identity card (ID card, passport and driver\'s
                                     license) with a picture, as well as proof of residency such as a utility bill (which
                                     is not older than 2 months). If your deposit method was via a credit card we will
                                     require a scanned copy of the credit card (front and back) which you used.</p>
@@ -177,7 +155,7 @@ return [
                                     Comoros (KM)
                                     Croatia (HR)
                                     Czech Republic (CZ)
-                                    Côte d'Ivoire (CI)
+                                    Côte d\'Ivoire (CI)
                                     Djibouti (DJ)
                                     Egypt (EG)
                                     Equatorial Guinea (GQ)
@@ -403,7 +381,7 @@ return [
                                     Muse: Wild Inspiration, Victorious, Victorious touch, Ghost Pirates, Johnny the
                                     Octopus and Mega Gems contribute at a 50% rate. Jackpot 6000, Mega Joker, Gypsy
                                     Rose, Good Girl Bad Girl and Safari contribute at a 75% rate.</p>
-                                <p>Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil's Delight, The Wish Master
+                                <p>Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil\'s Delight, The Wish Master
                                     and Jackpot Games are not able to be played with bonus money. </p>
                             </li>
                             <li>
@@ -473,7 +451,7 @@ return [
                                 <p>If, upon such a review, it appears that a Player(s) are participating in strategies,
                                     taking advantage of any software or system bug or failure, or participating in any
                                     form of activity that Casinobit, in its sole and complete discretion, deems to be
-                                    abusive ('Promotion Abuse'), Casinobit reserves the right to revoke the entitlement
+                                    abusive (\'Promotion Abuse\'), Casinobit reserves the right to revoke the entitlement
                                     of such a Player to receive or benefit from the promotion (and/or withhold the pay
                                     out of the proceeds of such abuse to the Player/s in question). Only fully settled
                                     bets (i.e. bets that result in a win or loss) will be counted towards wagering.</p>
@@ -504,9 +482,9 @@ return [
                             <li>
                                 <span>21.</span>
 
-                                <p>If it's discovered that a group players are using the same betting patterns and are
+                                <p>If it\'s discovered that a group players are using the same betting patterns and are
                                     connected via (but not limited to) location, banking pattern or IP, Casinobit
-                                    management will at it's own discretion have the mandate to confiscate bonus winnings
+                                    management will at it\'s own discretion have the mandate to confiscate bonus winnings
                                     and/or deposit. </p>
                             </li>
                             <li>
@@ -556,35 +534,32 @@ return [
                     </li>
                 </ul>
 
-            </div>
-EOT
-    ,
-    'deposit_space' => 'D e p o s i t',
-    'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
-    'open_bonus' => 'Open Bonuses',
-    'credits' => 'credits',
-    'add_credits' => 'Add Credits',
-    'minimum_deposit' => 'Minimum deposit is 1 mBTC',
-    'send_your_bitcoins' => 'Send your Bitcoins to this address:',
-    'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
-    'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
-    'your_bitcoin_address' => 'Your Bitcoin address',
-    'enter_here' => 'Enter here',
-    'amount_mbtc' => 'Amount mBTC',
-    'open_history' => 'Open History',
-    'your_withdraws' => 'Your Withdraws',
-    'cancel' => 'Cancel',
-    'activate' => 'Activate',
-    'change_password' => 'Change Password',
-    'confirm_email' => 'Confirm email',
-    'old_password' => 'Old password',
-    'new_password' => 'New password',
-    'confirm_password' => 'Confirm password',
-    'confirmation' => 'Confirmation',
-    'update' => 'update',
-    'email_confirmation' => 'Email confirmation',
-    'email' => 'Email',
-    'send_mail' => 'Send MAIL'
-
-
-];
+            </div>',
+  'deposit_space' => 'D e p o s i t',
+  'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
+  'open_bonus' => 'Open Bonuses',
+  'credits' => 'credits',
+  'add_credits' => 'Add Credits',
+  'minimum_deposit' => 'Minimum deposit is 1 mBTC',
+  'send_your_bitcoins' => 'Send your Bitcoins to this address:',
+  'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
+  'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
+  'your_bitcoin_address' => 'Your Bitcoin address',
+  'enter_here' => 'Enter here',
+  'amount_mbtc' => 'Amount mBTC',
+  'open_history' => 'Open History',
+  'your_withdraws' => 'Your Withdraws',
+  'cancel' => 'Cancel',
+  'activate' => 'Activate',
+  'change_password' => 'Change Password',
+  'confirm_email' => 'Confirm email',
+  'old_password' => 'Old password',
+  'new_password' => 'New password',
+  'confirm_password' => 'Confirm password',
+  'confirmation' => 'Confirmation',
+  'update' => 'update',
+  'email_confirmation' => 'Email confirmation',
+  'email' => 'Email',
+  'send_mail' => 'Send MAIL',
+)
+?>
