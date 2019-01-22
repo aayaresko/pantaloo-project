@@ -1,6 +1,6 @@
 <?php
 return array (
-  'title' => 'Casinobit | bitcoin casino',
+  'title' => 'Casinobit | bitcoin casino1',
   'play' => 'Play',
   'free_demo' => 'Free demo',
   'admin' => 'Admin',
