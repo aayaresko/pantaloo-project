@@ -242,7 +242,7 @@
 
                                                                                             <div style="text-align: center;">&nbsp;</div>
                                                                                             @php
-                                                                                                $linkArray = str_split($str, 30);
+                                                                                                $linkArray = str_split($link, 30);
                                                                                             @endphp
                                                                                             <div style="text-align: center;">
                                                                                                 <span style="font-size:12px;">
