@@ -248,11 +248,9 @@
                                                                                                 <span style="font-size:12px;">
                                                                                                     <span style="color:#FFFFFF;">
                                                                                                         <a href="{{ $link }}">
-                                                                                                           @foreach($linkArray as $item)
-                                                                                                                {{ $item }}
-                                                                                                               <br>
-                                                                                                           @endforeach
-                                                                                                        </a>&nbsp;</span>
+                                                                                                            <div style="width:250px; height:100%; word-wrap: break-word;">{{ $link }}</div>
+                                                                                                        </a>&nbsp;
+                                                                                                    </span>
                                                                                                 </span>
                                                                                             </div>
                                                                                         </td>

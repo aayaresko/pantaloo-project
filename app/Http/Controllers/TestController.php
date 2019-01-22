@@ -22,6 +22,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        return view('emails.confirm')->with(['link' => 'https://www.casinobit.io/activate/be532c9328437e9a9a24b83bf70b349f4914217a2ae8e8fe9822d017000f77d4']);
         dd($current_user = trim(shell_exec('whoami')));
         GamesTypeGame::where([
             'type_id' => 10002,
