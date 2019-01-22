@@ -276,7 +276,7 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
+        Mail::queue('emails.partner.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');
         });
 
@@ -322,7 +322,7 @@ class AuthController extends Controller
                 ]
             ];
         }
-        
+
         if ($user->email_confirmed == 1) {
             return [
                 'status' => false,
@@ -339,7 +339,7 @@ class AuthController extends Controller
             $user->email_confirmed = 1;
             $user->save();
 
-            Mail::queue('emails.congratulations', [], function ($m) use ($user) {
+            Mail::queue('emails.partner.congratulations', ['email' => $user->email], function ($m) use ($user) {
                 $m->to($user->email, $user->name)->subject('Email is now validated');
             });
 

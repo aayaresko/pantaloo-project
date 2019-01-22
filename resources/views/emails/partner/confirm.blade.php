@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -126,14 +127,14 @@
                                                                style="display: none !important; mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">
                                                             <tr>
                                                                 <td role="module-content">
-                                                                    <p></p>
+                                                                    <p>partner.CasinoBit.io</p>
                                                                 </td>
                                                             </tr>
                                                         </table>
 
                                                         <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                             <tr>
-                                                                <td style="font-size:6px;line-height:10px;padding:0px 0px 5px 0px;" valign="top" align="center">
+                                                                <td style="font-size:6px;line-height:10px;padding:0px 0px 10px 0px;" valign="top" align="center">
                                                                     <img class="max-width" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;max-width:100% !important;width:100%;height:auto !important;" src="https://marketing-image-production.s3.amazonaws.com/uploads/5680becce97aa4dae71b498f663fd407cad3d03015e6d9ad5661dd610fbc7aefda92d84e36471fc8aa14deabf1ddbef763b3df2bd82a945fcba72afbd024a2fc.png" alt="" width="600">
                                                                 </td>
                                                             </tr>
@@ -141,12 +142,11 @@
 
                                                         <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                             <tr>
-                                                                <td style="padding:5px 10px 2px 10px;line-height:15px;text-align:inherit;"
+                                                                <td style="padding:10px 10px 2px 10px;line-height:15px;text-align:inherit;"
                                                                     height="100%"
                                                                     valign="top"
                                                                     bgcolor="">
-                                                                    <div style="text-align: center;"><span style="font-size:20px;"><span style="color:#FFFFFF;">Dear {{ $email }},</span></span></div>
-
+                                                                    <div style="text-align: center;"><span style="font-size:20px;"><span style="color:#FFFFFF;">Welcome To <a href="https://partner.casinobit.io/">partner.CasinoBit.io</a></span></span></div>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -157,8 +157,7 @@
                                                                     height="100%"
                                                                     valign="top"
                                                                     bgcolor="">
-                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;">Thank you for opening an account with us &ndash; we are delighted to welcome you to <a href="https://www.casinobit.io/">Casinobit.io </a></span></span></div>
-
+                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;">Congratulations! Your account has been created successfully.</span></span></div>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -171,8 +170,8 @@
                                                                 role="module"
                                                                 data-type="columns"
                                                                 data-version="2"
-                                                                style="background-color:#1E103D;padding:10px 10px 10px 10px;"
-                                                                bgcolor="#1E103D">
+                                                                style="padding:10px 20px 10px 20px;background-color:#1e103d;box-sizing:border-box;"
+                                                                bgcolor="#1e103d">
                                                             <tr role='module-content'>
                                                                 <td height="100%" valign="top">
                                                                     <!--[if (gte mso 9)|(IE)]>
@@ -182,16 +181,16 @@
                                                                     <![endif]-->
 
                                                                     <!--[if (gte mso 9)|(IE)]>
-                                                                    <td width="180.000px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
+                                                                    <td width="186.667px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
                                                                     <![endif]-->
 
-                                                                    <table  width="180.000"
-                                                                            style="width:180.000px;border-spacing:0;border-collapse:collapse;margin:0px 10px 0px 0px;"
+                                                                    <table  width="186.667"
+                                                                            style="width:186.667px;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 0px;"
                                                                             cellpadding="0"
                                                                             cellspacing="0"
                                                                             align="left"
                                                                             border="0"
-                                                                            bgcolor="#1E103D"
+                                                                            bgcolor="#1e103d"
                                                                             class="column column-0 of-3
                   empty"
                                                                     >
@@ -200,8 +199,8 @@
 
                                                                                 <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="font-size:6px;line-height:10px;padding:15px 10px 10px 20px;" valign="top" align="center">
-                                                                                            <img class="max-width" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;" width="45" height="50" src="https://marketing-image-production.s3.amazonaws.com/uploads/9bb6b9e331a5d0dadc7dc27046174d689ee62a4d159d897ed95c6121d50907db87deaaa32545e2ccf89e6e00d7341bd0d481219ce8055044254d1a8859ce2c80.png" alt="">
+                                                                                        <td style="font-size:6px;line-height:10px;padding:15px 20px 10px 20px;" valign="top" align="center">
+                                                                                            <img width="40" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;" height="40" src="https://marketing-image-production.s3.amazonaws.com/uploads/327cc6096db70131280ae91e97066efd20cbbbad7a69837bc0d990487963297a7350fb162f6b1027070b897c61392a5a63a289e5a80ae9984be4dabfb98b4365.png" alt="" data-proportionally-constrained="true" class="max-width">
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -214,16 +213,16 @@
                                                                     </td>
                                                                     <![endif]-->
                                                                     <!--[if (gte mso 9)|(IE)]>
-                                                                    <td width="180.000px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
+                                                                    <td width="186.667px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
                                                                     <![endif]-->
 
-                                                                    <table  width="180.000"
-                                                                            style="width:180.000px;border-spacing:0;border-collapse:collapse;margin:0px 10px 0px 10px;"
+                                                                    <table  width="186.667"
+                                                                            style="width:186.667px;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 0px;"
                                                                             cellpadding="0"
                                                                             cellspacing="0"
                                                                             align="left"
                                                                             border="0"
-                                                                            bgcolor="#1E103D"
+                                                                            bgcolor="#1e103d"
                                                                             class="column column-1 of-3
                   empty"
                                                                     >
@@ -232,14 +231,11 @@
 
                                                                                 <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="padding:15px 5px 5px 5px;line-height:15px;text-align:center;"
+                                                                                        <td style="padding:10px 10px 10px 10px;line-height:15px;text-align:inherit;"
                                                                                             height="100%"
                                                                                             valign="top"
                                                                                             bgcolor="">
-                                                                                            <div>
-                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Your account details are as follows:&nbsp;</span></span></div>
-                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Login: {{ $email }}&nbsp;</span></span></div>
-                                                                                            </div>
+                                                                                            <div width="120px"><span style="font-size:12px;"><span style="color:#FFFFFF;">To verify your e-mail address and login to your account, please click on the button</span></span></div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -252,22 +248,22 @@
                                                                     </td>
                                                                     <![endif]-->
                                                                     <!--[if (gte mso 9)|(IE)]>
-                                                                    <td width="180.000px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
+                                                                    <td width="186.667px" valign="top" style="padding: 0px 0px 0px 0px;border-collapse: collapse;" >
                                                                     <![endif]-->
 
-                                                                    <table  width="180.000"
-                                                                            style="width:180.000px;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 10px;"
+                                                                    <table  width="186.667"
+                                                                            style="width:186.667px;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 0px;"
                                                                             cellpadding="0"
                                                                             cellspacing="0"
                                                                             align="left"
                                                                             border="0"
-                                                                            bgcolor="#1E103D"
+                                                                            bgcolor="#1e103d"
                                                                             class="column column-2 of-3
                   empty"
                                                                     >
                                                                         <tr>
                                                                             <td style="padding:0px;margin:0px;border-spacing:0;">
-                                                                                <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:20px 0px 10px 0px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:right"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb);width:" href="https://partner.casinobit.io/" target="_blank">LOG IN AND PLAY NOW</a></td></tr></tbody></table></td></tr></tbody></table>
+                                                                                <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:15px 10px 10px 10px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:center"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb)" href="{{ $link }}" target="_blank">VERIFY NOW</a></td></tr></tbody></table></td></tr></tbody></table>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -286,61 +282,29 @@
 
                                                         <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                             <tr>
-                                                                <td style="padding:10px 10px 10px 10px;line-height:15px;text-align:inherit;"
+                                                                <td style="padding:18px 10px 18px 10px;line-height:20px;text-align:inherit;"
                                                                     height="100%"
                                                                     valign="top"
                                                                     bgcolor="">
-                                                                    <div><span style="font-size:12px;"><span style="color:#ae94cd;">If you encounter any problems activating or logging in to your account,<br />
-please contact us by emailing&nbsp;<a href="mailto:support@casinobit.io">support@casinobit.io.</a>&nbsp;<a href="https://www.casinobit.io/"> </a></span></span></div>
-
+                                                                    <div><span style="font-size:12px;"><span style="color:#ae94cd;">Enjoy,</span><br>
+<a href="https://partner.casinobit.io/"><span style="color:#FFFFFF;">Partner.CasinoBit.io</span></a><br>
+<span style="color:#ae94cd;">Affiliates Support Team</span></span></div>
                                                                 </td>
                                                             </tr>
                                                         </table>
-
-                                                        <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
-                                                            <tr>
-                                                                <td style="padding:5px 10px 10px 10px;line-height:15px;text-align:inherit;"
-                                                                    height="100%"
-                                                                    valign="top"
-                                                                    bgcolor="">
-                                                                    <div style="text-align: center;"><span style="font-size:15px;"><span style="color:#FFFFFF;">Welcome to CasinoBit!</span></span></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-
-                                                        <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
-                                                            <tr>
-                                                                <td style="padding:10px 10px 10px 10px;line-height:22px;text-align:inherit;"
-                                                                    height="100%"
-                                                                    valign="top"
-                                                                    bgcolor="">
-                                                                    <div>
-                                                                        <div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial; font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(15, 5, 37);"><span style="font-size: 12px;"><span style="font-size: 12px; color: rgb(174, 148, 205);">Enjoy and have fun,<br />
-Support Team</span></span></div>
-
-                                                                        <div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial; font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(15, 5, 37);"><a href="http://www.casinobit.io" style="font-size: 14px;"><span style="font-size: 14px; color: rgb(255, 255, 255);">casinobit.io</span></a></div>
-                                                                    </div>
-
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-
+                                                        <!--[if mso]>
+                                                        </td></tr></table>
+                                                        </center>
+                                                        <![endif]-->
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <!--[if mso]>
-                                            </td></tr></table>
-                                            </center>
-                                            <![endif]-->
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-        </table>
     </div>
 </center>
 </body>

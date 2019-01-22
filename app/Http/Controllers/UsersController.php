@@ -70,7 +70,7 @@ class UsersController extends Controller
 
         $activation->save();
 
-        Mail::queue($template, ['link' => $link], function ($m) use ($user) {
+        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('Confirm email');
         });
 
@@ -99,6 +99,10 @@ class UsersController extends Controller
 
             $user->email_confirmed = 1;
             $user->save();
+
+            Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
+                $m->to($user->email, $user->name)->subject('Email is now validated');
+            });
 
             return redirect('/')->with('popup', ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
         }
