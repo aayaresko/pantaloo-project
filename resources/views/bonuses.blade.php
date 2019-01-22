@@ -4,6 +4,7 @@
     {{translate('Bonus')}}
 @endsection
 
+
 @section('content')
     <div class="cabinet-block act"
          style="background: #000 url('media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
