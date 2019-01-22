@@ -241,8 +241,20 @@
                                                                                             <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#FFFFFF;">Alternatively, you can copy and paste the following URL in your browser:</span></span></div>
 
                                                                                             <div style="text-align: center;">&nbsp;</div>
-
-                                                                                            <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#FFFFFF;"><a href="{{ $link }}">{{ $link }}</a>&nbsp;</span></span></div>
+                                                                                            @php
+                                                                                                $linkArray = str_split($str, 30);
+                                                                                            @endphp
+                                                                                            <div style="text-align: center;">
+                                                                                                <span style="font-size:12px;">
+                                                                                                    <span style="color:#FFFFFF;">
+                                                                                                        <a href="{{ $link }}">
+                                                                                                           @foreach($linkArray as $item)
+                                                                                                                {{ $item }}
+                                                                                                               <br>
+                                                                                                           @endforeach
+                                                                                                        </a>&nbsp;</span>
+                                                                                                </span>
+                                                                                            </div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
