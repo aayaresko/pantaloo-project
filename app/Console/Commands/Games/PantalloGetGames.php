@@ -181,6 +181,7 @@ class PantalloGetGames extends Command
                         ];
 
                         $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
+                        //$game = GamesList::where('system_id', $gameId)->update($gameDate);
                     }
                 }
 
