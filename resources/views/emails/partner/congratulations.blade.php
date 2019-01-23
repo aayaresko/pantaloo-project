@@ -198,7 +198,7 @@
 
                                                                                 <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="font-size:6px;line-height:10px;padding:15px 10px 10px 20px;" valign="top" align="center">
+                                                                                        <td style="font-size:6px;line-height:10px;padding:20px 10px 10px 20px;" valign="top" align="center">
                                                                                             <img class="max-width" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;" width="45" height="50" src="https://marketing-image-production.s3.amazonaws.com/uploads/9bb6b9e331a5d0dadc7dc27046174d689ee62a4d159d897ed95c6121d50907db87deaaa32545e2ccf89e6e00d7341bd0d481219ce8055044254d1a8859ce2c80.png" alt="">
                                                                                         </td>
                                                                                     </tr>
@@ -230,12 +230,12 @@
 
                                                                                 <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="padding:15px 10px 5px 10px;line-height:15px;text-align:center;"
+                                                                                        <td style="padding:15px 10px 10px 10px;line-height:15px;text-align:center;"
                                                                                             height="100%"
                                                                                             valign="top"
                                                                                             bgcolor="">
                                                                                             <div>
-                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Login URL: <a href="https://partner.casinobit.io/">https://partner.casinobit.io</a></span></span></div>
+                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Login URL: <a href="https://partner.casinobit.io/">partner.casinobit.io</a></span></span></div>
 
                                                                                                 <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Login: {{ $email }}&nbsp;</span></span></div>
                                                                                             </div>
@@ -267,7 +267,7 @@
                                                                     >
                                                                         <tr>
                                                                             <td style="padding:0px;margin:0px;border-spacing:0;">
-                                                                                <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:20px 10px 10px 10px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:right"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb)" href="https://partner.casinobit.io/" target="_blank">LOG IN</a></td></tr></tbody></table></td></tr></tbody></table>
+                                                                                <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:25px 10px 10px 10px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:right"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb)" href="https://partner.casinobit.io/" target="_blank">LOG IN</a></td></tr></tbody></table></td></tr></tbody></table>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
