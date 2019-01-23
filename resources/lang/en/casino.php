@@ -97,7 +97,6 @@ return [
     'spins' => 'spins',
     'welcome_bonus' => 'welcome bonus',
     'bonus.term' => <<<EOT
-            <div id="uls">
                 <h3>BONUS TERMS AND CONDITIONS</h3>
                 <ul class="parent-list">
 
@@ -555,8 +554,6 @@ return [
                         </ul>
                     </li>
                 </ul>
-
-            </div>
 EOT
     ,
     'deposit_space' => 'D e p o s i t',

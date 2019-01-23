@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{translate('Bonus')}}
+    {{ trans('casino.bonuses') }}
 @endsection
 
 
@@ -82,11 +82,10 @@
                                 </div>
 
                                 <div class="number-block">
-                                    {!! translate('
                                     <span class="number">2</span>
                                     <span class="lett">nd</span>
                                     <span class="descr">Deposit</span>
-                                    <div class="desc-bonus">Bonus</div>') !!}
+                                    <div class="desc-bonus">Bonus</div>
                                 </div>
 
 
@@ -112,7 +111,9 @@
     </div>
 
     <div class="hidden">
-        {!! trans('casino.bonus.term') !!}
+        <div id="uls">
+            {!! trans('casino.bonus.term') !!}
+        </div>
     </div>
 
 @endsection

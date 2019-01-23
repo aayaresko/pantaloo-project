@@ -70,8 +70,7 @@ return array (
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',
-  'bonus.term' => '<div>
-                <h3>БОНУСНЫЕ ПРАВИЛА И УСЛОВИЯ</h3>
+  'bonus.term' => '<h3>БОНУСНЫЕ ПРАВИЛА И УСЛОВИЯ</h3>
                 <ul>
                     <li>
                         ПРАВИЛА И УСЛОВИЯ ПО БЕЗДЕПОЗИТНЫМ БОНУСАМ
@@ -447,8 +446,7 @@ return array (
 
                         </ul>
                     </li>
-                </ul>
-            </div>',
+                </ul>',
   'deposit_space' => 'D e p o s i t',
   'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
   'open_bonus' => 'Open Bonuses',

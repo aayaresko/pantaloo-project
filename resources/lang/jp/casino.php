@@ -75,8 +75,7 @@ return array (
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',
-  'bonus.term' => '            <div id="uls">
-                <h3>BONUS TERMS AND CONDITIONS</h3>
+  'bonus.term' => '<h3>BONUS TERMS AND CONDITIONS</h3>
                 <ul class="parent-list">
 
                     <li>
@@ -532,9 +531,7 @@ return array (
 
                         </ul>
                     </li>
-                </ul>
-
-            </div>',
+                </ul>',
   'deposit_space' => 'D e p o s i t',
   'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
   'open_bonus' => 'Open Bonuses',
