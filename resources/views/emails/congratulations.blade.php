@@ -200,7 +200,7 @@
 
                                                                                 <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="font-size:6px;line-height:10px;padding:15px 10px 10px 20px;" valign="top" align="center">
+                                                                                        <td style="font-size:6px;line-height:10px;padding:20px 10px 10px 20px;" valign="top" align="center">
                                                                                             <img class="max-width" border="0" style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;" width="45" height="50" src="https://marketing-image-production.s3.amazonaws.com/uploads/9bb6b9e331a5d0dadc7dc27046174d689ee62a4d159d897ed95c6121d50907db87deaaa32545e2ccf89e6e00d7341bd0d481219ce8055044254d1a8859ce2c80.png" alt="">
                                                                                         </td>
                                                                                     </tr>
@@ -232,7 +232,7 @@
 
                                                                                 <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
                                                                                     <tr>
-                                                                                        <td style="padding:15px 5px 5px 5px;line-height:15px;text-align:center;"
+                                                                                        <td style="padding:15px 5px 10px 5px;line-height:15px;text-align:center;"
                                                                                             height="100%"
                                                                                             valign="top"
                                                                                             bgcolor="">
