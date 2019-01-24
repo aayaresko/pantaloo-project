@@ -6,7 +6,7 @@
 .header .header-left .logo-block {
     position: static;
     display: inline-block;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
     vertical-align: middle;
 }
 .langbox {
@@ -15,6 +15,7 @@
     display: inline-block;
     vertical-align: middle;
     width: 85px;
+    margin-right: 32px;
 }
 .langbox li {
     margin: 0 0 0 0;
