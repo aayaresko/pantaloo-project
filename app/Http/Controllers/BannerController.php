@@ -39,7 +39,7 @@ class BannerController extends Controller
         $domains = Domain::all();
 
         $file_name = uniqid() . '.' . $extension;
-        $path = storage_path('public/promo/');
+        $path = storage_path('app/public/promo/');
 
         $url = 'http://' . $domains[0]->domain . '/promo/' . $file_name;
 
