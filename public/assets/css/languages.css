@@ -1,0 +1,87 @@
+/* langbox */
+.header .header-left {
+    position: absolute;
+    text-align: left;
+}
+.header .header-left .logo-block {
+    position: static;
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.langbox {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 85px;
+}
+.langbox li {
+    margin: 0 0 0 0;
+    border-radius: 40px;
+    cursor: pointer;
+    background: #481d66 !important;
+    display: block;
+}
+.langbox > li {
+    background: #381351 !important;
+}
+.langbox li a {
+    position: relative;
+    padding: 6px 35px 6px 10px;
+    text-decoration: none;
+    color: inherit;
+}
+.langbox > li > a:after {
+    content: '';
+    background: url(../images/languages/carpet.png) no-repeat scroll 0 0 transparent;
+    width: 10px;
+    height: 6px;
+    display: inline-block;
+    position: absolute;
+    top: 13px;
+    right: 17px;
+}
+.langbox > li > a.is-open:after {
+    background-position: left bottom;
+}
+.langbox li:last-child {
+    margin-right: 0; }
+.langbox li a {
+    display: block; }
+.langbox li img {
+    display: inline-block;
+    /* vertical-align: middle; */
+    width: 20px;
+    margin-right: 5px;
+}
+.langbox .langbox-dropdown {
+    display: none;
+    background: #481d66;
+    border-radius: 5px;
+    overflow: hidden;
+    position: absolute;
+    top: 51px;
+    width: 85px;
+    padding-left: 0;
+}
+.langbox .langbox-dropdown.is-open {
+    display: block;
+}
+.langbox .langbox-dropdown li a {
+    padding: 7px 10px 7px 10px;
+    display: block;
+}
+.langbox li span {
+    vertical-align: top;
+    text-transform: uppercase;
+    margin-top: 1px;
+    display: inline-block;
+}
+.langbox li a.active, .langbox .langbox-dropdown li a:hover {
+    -webkit-box-shadow: 0 0 0 2px #f6cc1a;
+    -moz-box-shadow: 0 0 0 2px #f6cc1a;
+    box-shadow: 0 0 0 2px #f6cc1a;
+    box-shadow: none !important;
+    background: #381351;
+}
