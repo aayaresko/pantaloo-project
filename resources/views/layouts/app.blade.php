@@ -20,6 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/assets/css/languages.css" rel="stylesheet">
     <link href="/css/new.css" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -66,22 +67,36 @@
 
 <!-- header start -->
 <header class="header @if(Auth::check()) usr @endif">
-    <div class="logo-block">
-        <a href="/"><img src="/media/images/logo.png" alt="logo"></a>
+    <div class="header-left">
+        <ul class="langbox">
+            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+            <ul class="langbox-dropdown">
+                @foreach ($languages as $language)
+                    <li>
+                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                            <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </ul>
+        <div class="logo-block">
+            <a href="/"><img src="/media/images/logo.png" alt="logo"></a>
+        </div>
     </div>
     <div class="navigation-container">
 
-        <div class="language-block floated">
-            <ul class="language-listing">
-                @foreach ($languages as $language)
-                    @if($currentLang != $language)
-                        <li>
-                            <a href="{{ url("/language/$language") }}">{{strtoupper($language)}}</a>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
-        </div>
+        {{--<div class="language-block floated">--}}
+            {{--<ul class="language-listing">--}}
+                {{--@foreach ($languages as $language)--}}
+                    {{--@if($currentLang != $language)--}}
+                        {{--<li>--}}
+                            {{--<a href="{{ url("/language/$language") }}">{{strtoupper($language)}}</a>--}}
+                        {{--</li>--}}
+                    {{--@endif--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--</div>--}}
 
         <nav class="navigation hidden-xs floated">
             <ul class="navigation-list">
@@ -345,6 +360,19 @@
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $('.langbox > li').on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $('.langbox-dropdown').toggleClass('is-open');
+        $('a', this).toggleClass('is-open');
+    });
+    $(document).click(function(e) {
+        $('.langbox')
+            .not($('.langbox').has($(e.target)))
+            .find('.langbox-dropdown, a')
+            .removeClass('is-open');
     });
 
     var auth = @if(Auth::check()) true @else false @endif;
