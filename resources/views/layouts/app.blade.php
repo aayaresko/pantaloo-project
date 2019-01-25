@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.3" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.4" rel="stylesheet">
     <link href="/css/new.css" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
