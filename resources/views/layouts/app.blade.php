@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.4" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.5" rel="stylesheet">
     <link href="/css/new.css" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -161,6 +161,18 @@
     <div class="popup-entry">
         <a href="#" class="close-icon"></a>
         <div class="logo-container">
+            <ul class="langbox floated">
+                <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+                <ul class="langbox-dropdown">
+                    @foreach ($languages as $language)
+                        <li>
+                            <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </ul>
             <a href="/" class="logo"><img src="/media/images/logo.png" alt="logo"></a>
         </div>
         @if(Auth::guest())

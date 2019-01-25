@@ -17,6 +17,7 @@
     width: 85px;
     margin-right: 80px;
     margin-top: 7px;
+    position: relative;
 }
 .langbox li {
     margin: 0 0 0 0;
@@ -87,4 +88,28 @@
     box-shadow: 0 0 0 2px #f6cc1a;
     box-shadow: none !important;
     background: #381351;
+}
+
+@media (max-width: 1080px) {
+    body .mobile-menu .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 850px) {
+    body .mobile-menu .popup-entry .langbox {
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 767px) {
+    body .mobile-menu .popup-entry .logo-container {
+        width: 240px;
+        max-width: 240px !important;
+    }
+    body .mobile-menu .popup-entry .langbox {
+        min-width: 85px;
+    }
 }
