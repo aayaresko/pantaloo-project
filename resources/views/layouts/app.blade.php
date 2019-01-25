@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.2" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.3" rel="stylesheet">
     <link href="/css/new.css" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -74,6 +74,19 @@
     </div>
     <div class="navigation-container">
 
+        <ul class="langbox floated">
+            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+            <ul class="langbox-dropdown">
+                @foreach ($languages as $language)
+                    <li>
+                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                            <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </ul>
+
         {{--<div class="language-block floated">--}}
             {{--<ul class="language-listing">--}}
                 {{--@foreach ($languages as $language)--}}
@@ -112,18 +125,6 @@
         @endif
     </div>
     <div class="header-right-part">
-        <ul class="langbox floated">
-            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
-            <ul class="langbox-dropdown">
-                @foreach ($languages as $language)
-                    <li>
-                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
-                            <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </ul>
         <div class="login-block floated">
             <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
         </div>
