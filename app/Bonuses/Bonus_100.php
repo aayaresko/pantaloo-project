@@ -10,7 +10,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 1;
     protected $procent = 200;
-    protected $min_sum = 0;
+    protected $min_sum = 0;//300
     protected $max_sum = 600;
     protected $deposits_count = 0;
     protected $play_factor = 40;
