@@ -213,6 +213,10 @@
                         <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                     </li>
 
+                    <li>
+                        <a href="{{ url('/') }}" class="waves-effect"><i class="ti-close"></i><span> To site </span></a>
+                    </li>
+
                 </ul>
                 <div class="clearfix"></div>
             </div>
