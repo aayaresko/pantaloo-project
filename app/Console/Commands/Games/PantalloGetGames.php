@@ -199,16 +199,17 @@ class PantalloGetGames extends Command
                 }
             }
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::emergency([
                 'error' => $e->getMessage(),
                 'line' => $e->getLine()
             ]);
-            DB::rollBack();
-            //dd($e->getMessage());
+            //$this->info("PantalloGetGames Error");
+            dd($e->getMessage());
         }
         DB::commit();
         //get games and load or update
-        Log::info('PantalloGetGames END');
+        Log::info('PantalloGetGames success');
         $this->info("Games loaded or updated.");
     }
 
