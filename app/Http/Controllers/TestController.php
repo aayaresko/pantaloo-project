@@ -22,8 +22,18 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
-        dd(2);
+        dd(2222);
+        $pantalloGames = new PantalloGames;
+        $allGames = $pantalloGames->getGameList([], true);
+        $cat = [];
+        $subcat = [];
+        foreach ($allGames->response as $item) {
+            dd($item);
+            $subcat[$item->subcategory] = $item->subcategory;
+            $cat[$item->category] = $item->category;
+        }
+        dump($cat);
+        dd($subcat);
         GamesList::where('id', 1)
             ->update([
                 'name' => 'Zdffd',
