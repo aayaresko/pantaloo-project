@@ -93,9 +93,13 @@
 
 @media (max-width: 1080px) {
     body .mobile-menu .logo-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        position: relative;
+    }
+
+    body .mobile-menu .langbox {
+        position: absolute;
+        left: 0;
+        top: 55px;
     }
 }
 
@@ -107,10 +111,17 @@
 
 @media (max-width: 767px) {
     body .mobile-menu .popup-entry .logo-container {
-        width: 240px;
-        max-width: 240px !important;
+        width: 100%;
+        max-width: 100% !important;
+    }
+    body .mobile-menu .popup-entry .logo-container img {
+        max-width: 200px;
     }
     body .mobile-menu .popup-entry .langbox {
         min-width: 85px;
+        top: 8px;
+    }
+    body .mobile-menu .popup-entry .close-icon {
+        z-index: 9999;
     }
 }
