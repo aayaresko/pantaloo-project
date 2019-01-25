@@ -70,6 +70,7 @@ class PantalloGetGames extends Command
                 //image
                 if (!is_null($getImage)) {
                     //load image
+                    Log::info('PantalloGetGames GET ALL IMAGES');
                     foreach ($allGames->response as $game) {
                         $this->saveImage($game, true);
                     }
@@ -198,8 +199,12 @@ class PantalloGetGames extends Command
                 }
             }
         } catch (\Exception $e) {
+            Log::emergency([
+                'error' => $e->getMessage(),
+                'line' => $e->getLine()
+            ]);
             DB::rollBack();
-            dd($e->getMessage());
+            //dd($e->getMessage());
         }
         DB::commit();
         //get games and load or update

@@ -37,11 +37,11 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
 
-        //$schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
+        $schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
 
-        //get games pantallo every our
-        //$schedule->command('games:PantalloGetGames')->hourly();
-        //close session for games
-        //$schedule->command('games:PantalloLogOutPlayer')->everyTenMinutes();
+        //get games pantallo
+        $schedule->command('games:PantalloGetGames')->hourly();
+        //get games pantallo with image
+        $schedule->command('games:PantalloGetGames getImage')->dailyAt('00:30');
     }
 }
