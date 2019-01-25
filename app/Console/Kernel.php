@@ -43,5 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('games:PantalloGetGames')->hourly();
         //get games pantallo with image
         $schedule->command('games:PantalloGetGames getImage')->dailyAt('00:30');
+
+        $schedule->command('bonus:jobs')->everyMinute();
     }
 }

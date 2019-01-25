@@ -8,7 +8,7 @@ class Bonus_200 extends Bonus_100
     public static $id = 2;
     protected $procent = 150;
     protected $play_factor = 50;
-    protected $min_sum = 150;
+    protected $min_sum = 0;
     protected $max_sum = 300;
     protected $deposits_count = 1;
 
