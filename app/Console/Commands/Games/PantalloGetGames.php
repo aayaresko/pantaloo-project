@@ -76,8 +76,11 @@ class PantalloGetGames extends Command
                 }
 
                 //games
+                //note
+                //no update for find new game - new game this is game was not updated
                 GamesList::where('provider_id', $providerId)->update([
-                    'active' => 0
+                    'active' => 0,
+                    'updated_at' => DB::raw('updated_at')
                 ]);
 
                 //get list types
