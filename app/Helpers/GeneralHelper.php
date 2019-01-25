@@ -35,4 +35,13 @@ class GeneralHelper
         return $languages;
     }
 
+    /**
+     * @return string
+     */
+    static public function generateToken()
+    {
+        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        return $token;
+    }
+
 }

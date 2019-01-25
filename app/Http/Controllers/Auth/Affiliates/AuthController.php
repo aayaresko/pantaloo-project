@@ -10,6 +10,7 @@ use App\Currency;
 use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
 use Illuminate\Support\Facades\Mail;
@@ -124,12 +125,6 @@ class AuthController extends Controller
 
         $this->dispatch(new SetUserCountry($user));
 
-        $authData = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'role' => 1
-        ];
-
         //send email confirmation
         $email = $user->email;
         $confirmEmail = $this->confirmEmail($email);
@@ -165,7 +160,6 @@ class AuthController extends Controller
                 ]);
             }
         }
-
 
         if ($request->input('remember_me') == 'on') {
             $remember = true;
@@ -261,7 +255,7 @@ class AuthController extends Controller
 //            ];
 //        }
 
-        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $token = GeneralHelper::generateToken();
 
         $link = url('/') . '?confirm=' . $token . '&email=' . $user->email;
 
