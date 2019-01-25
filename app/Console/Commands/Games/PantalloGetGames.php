@@ -180,8 +180,9 @@ class PantalloGetGames extends Command
                             'active' => 1
                         ];
 
-                        $game = GamesList::updateOrCreate(['system_id' => $gameId], $gameDate);
-                        //$game = GamesList::where('system_id', $gameId)->update($gameDate);
+                        //no update for find new game - new game this is game was not updated
+                        $gameDate['updated_at'] = DB::raw('updated_at');
+                        $game = GamesList::where('system_id', $gameId)->update($gameDate);
                     }
                 }
 
