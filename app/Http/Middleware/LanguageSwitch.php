@@ -19,11 +19,12 @@ class LanguageSwitch extends CommonMiddleware
         '/games/endpoint',
         '/games/pantallo/endpoint'
     ];
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -34,7 +35,7 @@ class LanguageSwitch extends CommonMiddleware
         }
 
         $languages = GeneralHelper::getListLanguage();
-        $lang =  Cookie::get('lang');
+        $lang = Cookie::get('lang');
 
         //pass variable
         View::share('languages', $languages);
@@ -51,14 +52,13 @@ class LanguageSwitch extends CommonMiddleware
         }
 
 
-        if($request->has('session_id'))
-        {
+        if ($request->has('session_id')) {
             $data = json_decode(decrypt($request->input('session_id')), true);
 
-            $user = User::where('id', $data['id'])->where('email', $data['email'])->where('password', $data['password'])->first();
+            $user = User::where('id', $data['id'])
+                ->where('email', $data['email'])->where('password', $data['password'])->first();
 
-            if($user)
-            {
+            if ($user) {
                 Auth::login($user);
             }
 
