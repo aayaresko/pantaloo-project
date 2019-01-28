@@ -162,7 +162,8 @@ class AffiliatesController extends Controller
 
         $transactions = collect();
 
-        $users = User::where('agent_id', Auth::user()->id)->get();
+        $currentUser = Auth::user();
+        $users = User::where('agent_id', $currentUser->id)->get();
 
         $result = collect();
 
@@ -178,15 +179,22 @@ class AffiliatesController extends Controller
         }
 
         $trackers = collect();
-        $user = $request->user();
-
-        $trackerAll = Tracker::where('user_id', $user->id)
+        dd(2);
+        $statisticalData = StatisticalData::select([
+            'id'
+        ])->where([
+            ['created_at', '>=', $from],
+            ['created_at', '<=', $to],
+        ])->get();
+        dd($statisticalData);
+        $trackerAll = Tracker::where('user_id', $currentUser->id)
             ->withCount('users')->get();
 
         foreach ($trackerAll as $tracker) {
             $stat = $tracker->stat($from, $to);
 
             $stat['tracker'] = $tracker->name;
+
             $stat['enters'] = $tracker->link_clicks;
             $stat['registrations'] = $tracker->users_count;
 

@@ -25,14 +25,18 @@ class UserToAgent
                 $ref = $request->input('ref');
                 $tracker = Tracker::where('ref', $ref)->first();
                 if ($tracker) {
+
                     //set count for this enters
                     $appAdditional = config('appAdditional');
                     $eventStatistic = $appAdditional['eventStatistic'];
+
                     StatisticalData::create([
                         'event_id' => $eventStatistic['enter'],
-                        'value' => 'enter'
+                        'value' => 'enter',
+                        'tracker_id' => $tracker->id
                     ]);
                     //set count for this enters
+
                     Cookie::queue('tracker_id', $tracker->id, 60 * 24 * 30);
                 }
             }

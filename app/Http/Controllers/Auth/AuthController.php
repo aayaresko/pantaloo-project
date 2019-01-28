@@ -84,15 +84,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password'])
         ]);
 
-        //set count for this registration
-        $appAdditional = config('appAdditional');
-        $eventStatistic = $appAdditional['eventStatistic'];
-        StatisticalData::create([
-            'event_id' => $eventStatistic['register'],
-            'value' => 'register'
-        ]);
-        //set count for this registration
-
         $user->bitcoin_address = $address;
         $user->balance = 0;
 
@@ -109,6 +100,16 @@ class AuthController extends Controller
             if ($tracker) {
                 $user->tracker()->associate($tracker);
                 $user->agent_id = $tracker->user_id;
+
+                //set count for this registration
+                $appAdditional = config('appAdditional');
+                $eventStatistic = $appAdditional['eventStatistic'];
+                StatisticalData::create([
+                    'event_id' => $eventStatistic['register'],
+                    'value' => 'register',
+                    'tracker_id' => $tracker->id
+                ]);
+                //set count for this registration
             }
         }
 

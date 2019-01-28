@@ -16,6 +16,9 @@ class CreateStatisticalDataTable extends Migration
             $table->increments('id');
             $table->integer('event_id')->unsigned()->index();
             $table->string('value');
+
+            $table->integer('tracker_id')->unsigned();
+            $table->foreign('tracker_id')->references('id')->on('trackers');
             $table->timestamps();
         });
     }
