@@ -51,8 +51,8 @@ return [
         ],
         [
             'id' => 10010,
-            'code' => 'our_live_table_games',
-            'name' => 'live table games',
+            'code' => 'our_live_games',
+            'name' => 'live games',
         ],
         [
             'id' => 10011,
