@@ -188,9 +188,9 @@ class AffiliatesController extends Controller
 
         $trackerAll = Tracker::select([
             '*',
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and" .
+            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and" .
+            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
         ])->get();
 
