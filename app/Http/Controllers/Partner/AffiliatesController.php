@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Partner;
 
+use DB;
 use App\User;
 use Validator;
 use App\Banner;
@@ -179,24 +180,27 @@ class AffiliatesController extends Controller
         }
 
         $trackers = collect();
-        dd(2);
-        $statisticalData = StatisticalData::select([
-            'id'
-        ])->where([
-            ['created_at', '>=', $from],
-            ['created_at', '<=', $to],
+
+        $appAdditional = config('appAdditional');
+        $eventStatistic = $appAdditional['eventStatistic'];
+        $eventEnterId = $eventStatistic['enter'];
+        $eventRegistrId = $eventStatistic['register'];
+
+        $trackerAll = Tracker::select([
+            '*',
+            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and" .
+                "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
+            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and" .
+                "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
         ])->get();
-        dd($statisticalData);
-        $trackerAll = Tracker::where('user_id', $currentUser->id)
-            ->withCount('users')->get();
 
         foreach ($trackerAll as $tracker) {
             $stat = $tracker->stat($from, $to);
 
             $stat['tracker'] = $tracker->name;
 
-            $stat['enters'] = $tracker->link_clicks;
-            $stat['registrations'] = $tracker->users_count;
+            $stat['enters'] = $tracker->enter;
+            $stat['registrations'] = $tracker->register;
 
             $trackers->push($stat);
         }
