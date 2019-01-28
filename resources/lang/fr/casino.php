@@ -581,7 +581,7 @@ EOT
     'update' => 'update',
     'email_confirmation' => 'Email confirmation',
     'email' => 'Email',
-    'send_mail' => 'Send MAIL'
-
+    'send_mail' => 'Send MAIL',
+	'language' => 'Language'
 
 ];
