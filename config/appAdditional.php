@@ -59,7 +59,36 @@ return [
             'code' => 'our_others',
             'name' => 'others',
         ],
-
+        [
+            'id' => 10012,
+            'code' => 'our_table_games',
+            'name' => 'table games',
+        ],
+        [
+            'id' => 10013,
+            'code' => 'our_video_poker',
+            'name' => 'video poker',
+        ],
+        [
+            'id' => 10014,
+            'code' => 'our_virtual_games',
+            'name' => 'virtual games',
+        ],
+        [
+            'id' => 10015,
+            'code' => 'our_virtual_sports',
+            'name' => 'virtual sports',
+        ],
+        [
+            'id' => 10016,
+            'code' => 'our_scratch_cards',
+            'name' => 'scratch cards',
+        ],
+        [
+            'id' => 10017,
+            'code' => 'our_bingo',
+            'name' => 'bingo',
+        ],
     ],
 
     'defaultTitle' => 'games',
