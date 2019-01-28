@@ -177,7 +177,10 @@ class AffiliatesController extends Controller
         }
 
         $trackers = collect();
-        $trackerAll = Tracker::withCount('users')->get();
+        $user = $request->user();
+
+        $trackerAll = Tracker::where('user_id', $user->id)
+            ->withCount('users')->get();
 
         foreach ($trackerAll as $tracker) {
             $stat = $tracker->stat($from, $to);
