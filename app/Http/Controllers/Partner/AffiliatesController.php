@@ -192,7 +192,7 @@ class AffiliatesController extends Controller
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
             DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
-        ])->get();
+        ])->where('user_id', $currentUser->id)->get();
 
         foreach ($trackerAll as $tracker) {
             $stat = $tracker->stat($from, $to);
