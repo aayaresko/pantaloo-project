@@ -56,7 +56,6 @@
                                 if (Lang::has($codeLangType)) {
                                     $nameType = trans($codeLangType);
                                 } else {
-                                    dump($gamesType->name);
                                     $nameType = $gamesType->name;
                                 }
                             $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
