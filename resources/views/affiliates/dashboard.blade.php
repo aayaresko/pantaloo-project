@@ -114,11 +114,9 @@
                                         <thead>
                                         <tr role="row">
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Tracker</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Enters</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Registrations</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Wins</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
@@ -129,11 +127,9 @@
                                         @foreach($trackers as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['tracker']}}</span></td>
+                                                <td>{{$stat['enters']}}</td>
+                                                <td>{{$stat['registrations']}}</td>
                                                 <td>{{$stat['deposits']}}</td>
-                                                <td>{{$stat['bets']}}</td>
-                                                <td>{{$stat['bet_count']}}</td>
-                                                <td>{{$stat['avg_bet']}}</td>
-                                                <td>{{$stat['wins']}}</td>
                                                 <td>{{$stat['revenue']}}</td>
                                                 <td>{{$stat['bonus']}}</td>
                                                 <td>{{$stat['profit']}}</td>

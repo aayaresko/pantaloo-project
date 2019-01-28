@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\User;
 use Validator;
 use App\Banner;
 use App\Tracker;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Partners\Feedback;
 use Illuminate\Support\Facades\Auth;
@@ -132,5 +134,70 @@ class AffiliatesController extends Controller
                 'body' => (string)view('affiliates.parts.body')->with(['data' => 'We will contact you shortly'])
             ]
         ]);
+    }
+
+    /**
+     *
+     * in future - will need rewrite this method
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function dashboard(Request $request)
+    {
+        try {
+            $from = Carbon::createFromFormat("Y-m-d", $request->input('start'));
+        } catch (\Exception $e) {
+            $from = Carbon::now();
+        }
+
+        try {
+            $to = Carbon::createFromFormat("Y-m-d", $request->input('end'));
+        } catch (\Exception $e) {
+            $to = Carbon::now();
+        }
+
+        $to->setTime(23, 59, 59);
+        $from->setTime(0, 0, 0);
+
+        $transactions = collect();
+
+        $users = User::where('agent_id', Auth::user()->id)->get();
+
+        $result = collect();
+
+        foreach ($users as $user) {
+            $stat = $user->stat($from, $to);
+
+            foreach ($stat as $key => $value)
+                $stat[$key] = round($value, 2);
+
+            $stat['user'] = $user;
+
+            $result->push($stat);
+        }
+
+        $trackers = collect();
+        $trackerAll = Tracker::withCount('users')->get();
+
+        foreach ($trackerAll as $tracker) {
+            $stat = $tracker->stat($from, $to);
+
+            $stat['tracker'] = $tracker->name;
+            $stat['enters'] = $tracker->link_clicks;
+            $stat['registrations'] = $tracker->users_count;
+
+            $trackers->push($stat);
+        }
+
+        $data = [
+            'users' => $result,
+            'trackers' => $trackers,
+            'deposit_total' => $result->sum('deposits'),
+            'bonus_total' => $result->sum('bonus'),
+            'revenue_total' => $result->sum('revenue'),
+            'profit_total' => $result->sum('profit')
+        ];
+
+        return view('affiliates.dashboard', $data);
     }
 }
