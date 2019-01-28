@@ -67,7 +67,9 @@ return [
     'keepLanguage' => 60 * 24 * 30,//min
     'resendMailTime' => 10,
     'linkActiveConfirm' => 60 * 60 * 24,
-
-
+    'eventStatistic' => [
+        'enter' => 1,
+        'register' => 2
+    ]
 
 ];

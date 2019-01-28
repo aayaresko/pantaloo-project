@@ -9,6 +9,7 @@ use App\Tracker;
 use App\User;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
+use App\Models\StatisticalData;
 use Illuminate\Support\Facades\Mail;
 use Helpers\GeneralHelper;
 use App\UserActivation;
@@ -82,6 +83,15 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+
+        //set count for this registration
+        $appAdditional = config('appAdditional');
+        $eventStatistic = $appAdditional['eventStatistic'];
+        StatisticalData::create([
+            'event_id' => $eventStatistic['register'],
+            'value' => 'register'
+        ]);
+        //set count for this registration
 
         $user->bitcoin_address = $address;
         $user->balance = 0;

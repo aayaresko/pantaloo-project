@@ -8,6 +8,7 @@ use App\Banner;
 use App\Tracker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;

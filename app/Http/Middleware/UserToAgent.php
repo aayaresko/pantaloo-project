@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use DB;
 use Closure;
 use App\Tracker;
+use App\Models\StatisticalData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
@@ -24,8 +25,12 @@ class UserToAgent
                 $ref = $request->input('ref');
                 $tracker = Tracker::where('ref', $ref)->first();
                 if ($tracker) {
-                    Tracker::where('ref', $ref)->update([
-                        'link_clicks' => DB::raw('link_clicks + 1')
+                    //set count for this enters
+                    $appAdditional = config('appAdditional');
+                    $eventStatistic = $appAdditional['eventStatistic'];
+                    StatisticalData::create([
+                        'event_id' => $eventStatistic['enter'],
+                        'value' => 'enter'
                     ]);
                     //set count for this enters
                     Cookie::queue('tracker_id', $tracker->id, 60 * 24 * 30);
