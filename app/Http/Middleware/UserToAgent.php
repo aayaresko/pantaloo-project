@@ -23,7 +23,6 @@ class UserToAgent
             if ($request->has('ref')) {
                 $ref = $request->input('ref');
                 $tracker = Tracker::where('ref', $ref)->first();
-
                 if ($tracker) {
                     Tracker::where('ref', $ref)->update([
                         'link_clicks' => DB::raw('link_clicks + 1')
