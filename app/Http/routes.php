@@ -213,7 +213,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/logout', ['as' => 'agent.logout', 'uses' => 'AgentController@logout']);
 
-        Route::get('/dashboard', ['as' => 'agent.dashboard', 'uses' => 'AgentController@dashboard']);
+        Route::get('/dashboard', ['as' => 'agent.dashboard', 'uses' => 'Partner\AffiliatesController@dashboard']);
 
 //        Route::get('/transactions', ['as' => 'agent.transactions', 'uses' => 'TransactionController@index']);
 //        Route::get('/transactions/filter', ['as' => 'agent.filterTransactions', 'uses' => 'TransactionController@filter']);
