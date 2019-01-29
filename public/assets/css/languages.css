@@ -91,21 +91,20 @@
     background: #381351;
 }
 
-@media (max-width: 1080px) {
-    body .mobile-menu .logo-container {
-        position: relative;
-    }
+body .mobile-menu .popup-entry .language-nav img {
+    max-width: 60px;
+    vertical-align: top;
+}
 
-    body .mobile-menu .langbox {
-        position: absolute;
-        left: 0;
-        top: 55px;
+@media (max-width: 1080px) {
+    body .mobile-menu .popup-entry .block-heading .title {
+        letter-spacing: 70px;
     }
 }
 
-@media (max-width: 850px) {
-    body .mobile-menu .popup-entry .langbox {
-        margin-right: 50px;
+@media (max-width: 991px) {
+    body .mobile-menu .popup-entry .language-nav img {
+        max-width: 30px;
     }
 }
 
@@ -117,11 +116,10 @@
     body .mobile-menu .popup-entry .logo-container img {
         max-width: 200px;
     }
-    body .mobile-menu .popup-entry .langbox {
-        min-width: 85px;
-        top: 8px;
-    }
     body .mobile-menu .popup-entry .close-icon {
         z-index: 9999;
+    }
+    body .mobile-menu .popup-entry .language-nav img {
+        max-width: 20px;
     }
 }

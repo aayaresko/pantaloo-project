@@ -558,5 +558,6 @@ return array (
   'email_confirmation' => 'Email confirmation',
   'email' => 'Email',
   'send_mail' => 'Send MAIL',
+  'language' => 'Language'
 )
 ?>
