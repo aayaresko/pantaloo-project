@@ -573,7 +573,7 @@ class PantalloGamesSystem implements GamesSystem
         //login request
         $freeRounds = $pantalloGames->addFreeRounds([
             'playerids' => $player->id,
-            'gameids' => 9121,
+            'gameids' => 10497,
             'available' => 3,
             'validTo' => '2019-05-11'
         ], true);
