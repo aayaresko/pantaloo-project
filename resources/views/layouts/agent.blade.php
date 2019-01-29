@@ -148,7 +148,7 @@
                         <a href="{{route('agent.faq')}}" class="waves-effect"><i class="ti-help-alt"></i> <span> FAQ </span> </a>
                     </li>
                     <li>
-                        <a href="{{route('affiliates.logoutMain')}}" class="waves-effect"><i class="ti-close"></i><span> Exit </span></a>
+                        <a href="{{route('affiliates.logoutMain')}}" class="waves-effect"><i class="ti-close"></i><span> Logout </span></a>
                     </li>
                 </ul>
                 <div class="clearfix"></div>
