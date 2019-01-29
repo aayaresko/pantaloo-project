@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{translate('Bonus')}}
+    {{ trans('casino.bonus') }}
 @endsection
 
 @section('content')
