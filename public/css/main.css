@@ -7029,7 +7029,7 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    display: none;
+    display: none !important;
   }
   body .header .header-right-part .login-block.login-block-reg a:before {
     display: none !important;
