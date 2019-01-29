@@ -8,7 +8,7 @@ class GamesList extends Model
 {
     protected $table = 'games_list';
     protected $fillable = ['system_id', 'name', 'our_name', 'type_id', 'category_id', 'details', 'mobile', 'image', 'our_image', 'image_preview',
-        'image_filled', 'image_background', 'rating', 'provider_id', 'active'];
+        'image_filled', 'image_background', 'rating', 'provider_id', 'active', 'free_round'];
 
 
     public function types()

@@ -264,6 +264,8 @@ Route::group(['prefix' => 'games'], function () {
     Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
 });
 
+Route::get('/test/freespin', ['as' => 'test.freespin', 'uses' => 'PantalloGamesController@freeRound']);
+
 //testing
 Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
 Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestController@testTypes']);

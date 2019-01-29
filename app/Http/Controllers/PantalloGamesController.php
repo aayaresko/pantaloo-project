@@ -66,4 +66,11 @@ class PantalloGamesController extends Controller
         $response = $pantalloGamesSystem->logoutPlayer($user);
         return response()->json($response);
     }
+
+    public function freeRound(Request $request)
+    {
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $response = $pantalloGamesSystem->freeRound($request);
+        return response()->json($response);
+    }
 }

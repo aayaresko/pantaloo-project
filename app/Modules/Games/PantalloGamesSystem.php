@@ -549,4 +549,34 @@ class PantalloGamesSystem implements GamesSystem
 
         return $response;
     }
+
+    public function freeRound($request)
+    {
+        DB::beginTransaction();
+        try {
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        $user = $request->user();
+        $pantalloGames = new PantalloGames;
+        $playerExists = $pantalloGames->playerExists([
+            'user_username' => $user->id,
+        ], true);
+
+        //active player request
+        if ($playerExists->response === false) {
+            //throw error
+        }
+        $player = $playerExists->response;
+        //login request
+        $freeRounds = $pantalloGames->addFreeRounds([
+            'playerids' => $player->id,
+            'gameids' => 9121,
+            'available' => 3,
+            'validTo' => '2019-05-11'
+        ], true);
+        dd($freeRounds);
+    }
 }
