@@ -212,6 +212,7 @@
         <nav class="navigation language-nav">
             <ul class="navigation-list">
                 @foreach ($languages as $language)
+                    @if(app()->getLocale() == $language) @continue @endif
                     <li>
                         <a href="{{ url("/language/$language") }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
