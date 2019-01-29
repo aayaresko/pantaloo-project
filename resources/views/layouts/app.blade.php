@@ -78,6 +78,7 @@
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
+                    @if(app()->getLocale() == $language) @continue @endif
                     <li>
                         <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
