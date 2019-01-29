@@ -55,7 +55,6 @@ let events = function () {
         let page = Number(url.searchParams.get('page'));
         listGameParams.page = page;
         getListGames();
-        $('html,body').scrollTop(0);
     });
 
 
@@ -105,6 +104,7 @@ function getListGames() {
             //$(".insertGames").empty();
             //$(".insertGamesMobile").empty();
             //insert
+            $('html,body').scrollTop(0);
             $(".insertGames").html(response.desktop);
             $(".insertGamesMobile").html(response.mobile);
             $('.preloaderCommon').hide();
