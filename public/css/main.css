@@ -7372,6 +7372,12 @@ html.cropped {
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry {
     padding-left: 0;
   }
+  body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg {
+    display: block;
+  }
+  body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon {
+    left: 15px;
+  }
 }
 
 

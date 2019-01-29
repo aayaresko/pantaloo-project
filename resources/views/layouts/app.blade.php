@@ -78,6 +78,7 @@
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
+                    @if(app()->getLocale() == $language) @continue @endif
                     <li>
                         <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
@@ -128,12 +129,14 @@
         <div class="login-block floated">
             <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
         </div>
+        @if(!Auth::check())
         <div class="login-block login-block-reg floated">
             <a href="#" class="login-btn"><span class="text">SIGN IN</span></a>
         </div>
         <div class="login-block login-block-reg floated">
             <a href="#" class="reg-btn"><span class="text">SIGN UP</span></a>
         </div>
+        @endif
         <div class="registration-block floated">
             <a href="#" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
         </div>
