@@ -22,6 +22,7 @@ class PantalloGames
     /**
      * @param $params
      * @return string
+     * @throws \Exception
      */
     protected function client($params)
     {
@@ -44,7 +45,9 @@ class PantalloGames
                 'form_params' => $body
             ]);
         } catch (\Exception $e) {
-            dd($e);
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
+            throw new \Exception($errorMessage . '.' . $errorLine);
         }
         $responseBody = $response->getBody()->getContents();
         return $responseBody;
@@ -53,7 +56,8 @@ class PantalloGames
     /**
      * @param $name
      * @param $arguments
-     * @return string
+     * @return mixed|string
+     * @throws \Exception
      */
     public function __call($name, $arguments)
     {

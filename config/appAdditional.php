@@ -99,6 +99,10 @@ return [
     'eventStatistic' => [
         'enter' => 1,
         'register' => 2
-    ]
+    ],
 
+    'freeRounds' => [
+        'available' => 50,
+        'timeFreeRound' => 1209600
+    ]
 ];

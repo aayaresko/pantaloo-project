@@ -85,6 +85,10 @@ class PantalloGamesController extends Controller
             ]);
         }
 
+        $configFreeRounds = config('appAdditional.freeRounds');
+        $request->merge(['available' => $configFreeRounds['available']]);
+        $request->merge(['timeFreeRound' => $configFreeRounds['timeFreeRound']]);
+
         $pantalloGamesSystem = new PantalloGamesSystem();
         $response = $pantalloGamesSystem->freeRound($request);
         return response()->json($response);
