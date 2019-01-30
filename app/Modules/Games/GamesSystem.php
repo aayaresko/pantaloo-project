@@ -20,4 +20,15 @@ interface GamesSystem
      */
     public function logoutPlayer($request);
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function callback($request);
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function freeRound($request);
 }

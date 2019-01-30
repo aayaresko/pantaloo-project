@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
 use App\Modules\Others\DebugGame;
 use App\Models\Pantallo\GamesPantalloSession;
+use App\Models\Pantallo\GamesPantalloFreeRounds;
 use App\Models\Pantallo\GamesPantalloTransaction;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -183,8 +184,7 @@ class PantalloGamesSystem implements GamesSystem
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
             $typesActions = $configPantalloGames['additional']['action'];
-            $typesOperation = $configPantalloGames['additional']['operation'];
-            $accuracyValues = config('app.accuracyValues');
+
             $validationDate = $requestParams;
             $key = $validationDate['key'];
             unset($validationDate['key']);
@@ -550,33 +550,78 @@ class PantalloGamesSystem implements GamesSystem
         return $response;
     }
 
+    /**
+     * @param $request
+     * @return array|mixed
+     */
     public function freeRound($request)
     {
+        //get gameids
+        //$gameids
+        //available
+        //validTo
+        $debugGame = new DebugGame();
+        $debugGame->start();
+
         DB::beginTransaction();
         try {
+            $user = $request->user();
+            $pantalloGames = new PantalloGames;
+            $playerExists = $pantalloGames->playerExists([
+                'user_username' => $user->id,
+            ], true);
 
+            //active player request
+            if ($playerExists->response === false) {
+                throw new \Exception('User is not found');
+            }
+            $player = $playerExists->response;
+
+            //free rounds
+            $freeRounds = $pantalloGames->addFreeRounds([
+                'playerids' => $player->id,
+                'gameids' => 10497,
+                'available' => 1,
+                'validTo' => '2019-05-11'
+            ], true);
+            $freeRoundsResponse = json_decode($freeRounds->response);
+
+            $freeRoundsId = $freeRoundsResponse->freeround_id;
+            $freeRoundCreated = $freeRoundsResponse->created;
+
+            GamesPantalloFreeRounds::create([
+                'user_id' => $user->id,
+                'game_id' => $game->id,
+                'available' => 2,
+                'valid_to' => 'hfgh',
+                'created' => $freeRoundCreated,
+                'free_round_id' => $freeRoundsId
+            ]);
+
+            $response = [
+                'success' => true,
+                'freeRoundId' => $freeRoundsId
+            ];
         } catch (\Exception $e) {
             DB::rollBack();
-        }
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
 
-        $user = $request->user();
-        $pantalloGames = new PantalloGames;
-        $playerExists = $pantalloGames->playerExists([
-            'user_username' => $user->id,
-        ], true);
-
-        //active player request
-        if ($playerExists->response === false) {
-            //throw error
+            $response = [
+                'success' => false,
+                'message' => $errorMessage . ' Line:' . $errorLine
+            ];
         }
-        $player = $playerExists->response;
-        //login request
-        $freeRounds = $pantalloGames->addFreeRounds([
-            'playerids' => $player->id,
-            'gameids' => 10497,
-            'available' => 3,
-            'validTo' => '2019-05-11'
-        ], true);
-        dd($freeRounds);
+        DB::commit();
+
+        $debugGameResult = $debugGame->end();
+        RawLog::create([
+            'type_id' => 4,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => json_encode($response),
+            'extra' => json_encode($debugGameResult)
+        ]);
+
+        return $response;
     }
 }
