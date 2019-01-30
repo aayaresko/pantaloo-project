@@ -119,6 +119,7 @@ class IntegratedGamesController extends Controller
      */
     public function getGames(Request $request)
     {
+        $start = microtime(true);
         $configIntegratedGames = config('integratedGames.common');
 
         $whereGameList = [
@@ -175,7 +176,8 @@ class IntegratedGamesController extends Controller
 
         return response()->json([
             'mobile' => $viewMobile,
-            'desktop' => $viewDesktop
+            'desktop' => $viewDesktop,
+            'time' => round(microtime(true) - $start, 4)
         ]);
     }
 
