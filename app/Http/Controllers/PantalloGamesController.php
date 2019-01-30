@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
 use App\Modules\Games\PantalloGamesSystem;
@@ -67,8 +68,23 @@ class PantalloGamesController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function freeRound(Request $request)
     {
+        $validator = Validator::make($request->toArray(), [
+            'gameId' => 'required|numeric|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ]);
+        }
+
         $pantalloGamesSystem = new PantalloGamesSystem();
         $response = $pantalloGamesSystem->freeRound($request);
         return response()->json($response);

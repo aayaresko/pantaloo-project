@@ -556,10 +556,12 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function freeRound($request)
     {
-        //get gameids
-        //$gameids
-        //available
-        //validTo
+        //input
+        $available = $request->available;
+        $timeFreeRound = $request->timeFreeRound;
+        $game = GamesList::where('id', $request->gameId)->first();
+        $gameId = $game->system_id;
+
         $debugGame = new DebugGame();
         $debugGame->start();
 
@@ -577,12 +579,14 @@ class PantalloGamesSystem implements GamesSystem
             }
             $player = $playerExists->response;
 
-            //free rounds
+            $validTo = new \DateTime();
+            $validTo->modify("+$timeFreeRound second");
+
             $freeRounds = $pantalloGames->addFreeRounds([
                 'playerids' => $player->id,
-                'gameids' => 10497,
-                'available' => 1,
-                'validTo' => '2019-05-11'
+                'gameids' => $gameId,
+                'available' => $available,
+                'validTo' => $validTo
             ], true);
             $freeRoundsResponse = json_decode($freeRounds->response);
 
@@ -592,8 +596,8 @@ class PantalloGamesSystem implements GamesSystem
             GamesPantalloFreeRounds::create([
                 'user_id' => $user->id,
                 'game_id' => $game->id,
-                'available' => 2,
-                'valid_to' => 'hfgh',
+                'available' => $available,
+                'valid_to' => $validTo,
                 'created' => $freeRoundCreated,
                 'free_round_id' => $freeRoundsId
             ]);
