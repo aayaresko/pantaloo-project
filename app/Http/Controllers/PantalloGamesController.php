@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use App\Models\GamesList;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
 use App\Modules\Games\PantalloGamesSystem;
@@ -86,10 +87,17 @@ class PantalloGamesController extends Controller
         }
 
         $configFreeRounds = config('appAdditional.freeRounds');
+        $freeRoundGames = GamesList::select(['id', 'system_id'])->where('free_round', 1)->get()->toArray();
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item['system_id'];
+        }, $freeRoundGames));
+
+        $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => $configFreeRounds['available']]);
         $request->merge(['timeFreeRound' => $configFreeRounds['timeFreeRound']]);
 
         $pantalloGamesSystem = new PantalloGamesSystem();
+
         $response = $pantalloGamesSystem->freeRound($request);
         return response()->json($response);
     }
