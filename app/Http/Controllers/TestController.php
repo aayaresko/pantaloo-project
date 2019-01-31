@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use Validator;
+use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
@@ -22,7 +23,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2222);
+        dd(22);
+        $service = new Service();
+
+        $data = $service->info();
+        dd($data);
         $pantalloGames = new PantalloGames;
         $allGames = $pantalloGames->getGameList([], true);
         $cat = [];

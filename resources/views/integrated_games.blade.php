@@ -59,6 +59,7 @@
                                     $nameType = $gamesType->name;
                                 }
                             $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
+                            $gamesType->nameType = $nameType;
                             @endphp
                             <option value="{{ $gamesType->id }}">{{ $nameType }}</option>
                         @endforeach
@@ -110,13 +111,13 @@
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
                         <option value="0" selected>All</option>
                         @foreach($gamesTypes as $gamesType)
-                            <option value="{{ $gamesType->id }}">{{ $gamesType->name }}</option>
+                            <option value="{{ $gamesType->id }}">{{ $gamesType->nameType }}</option>
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
-                        <option value="0" selected>All</option>
+                        <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesCategories as $gamesCategory)
-                            <option value="{{ $gamesCategory->id }}">{{ $gamesCategory->name }}</option>
+                            <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
                 </div>
