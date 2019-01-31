@@ -7378,6 +7378,18 @@ html.cropped {
   body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon {
     left: 15px;
   }
+  body .slots-block.mobile {
+    padding-bottom: 0;
+  }
+  body .slots-block.mobile .block-heading {
+    margin-top: 100px;
+  }
+  body .slots-block.mobile .btn-block {
+    display: none;
+  }
+  body .slots-block.mobile .block-filter {
+    margin: 15px 0;
+  }
 }
 
 
