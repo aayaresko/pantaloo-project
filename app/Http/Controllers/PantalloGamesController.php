@@ -76,7 +76,7 @@ class PantalloGamesController extends Controller
     public function freeRound(Request $request)
     {
         $validator = Validator::make($request->toArray(), [
-            'gameId' => 'required|numeric|min:1',
+            'gameId' => 'numeric|min:1',
         ]);
 
         if ($validator->fails()) {
@@ -87,10 +87,14 @@ class PantalloGamesController extends Controller
         }
 
         $configFreeRounds = config('appAdditional.freeRounds');
-        $freeRoundGames = GamesList::select(['id', 'system_id'])->where('free_round', 1)->get()->toArray();
-        $gamesIds = implode(',', array_map(function ($item) {
-            return $item['system_id'];
-        }, $freeRoundGames));
+        if ($request->has('gameId')) {
+            $gamesIds = $request->gameId;
+        } else {
+            $freeRoundGames = GamesList::select(['id', 'system_id'])->where('free_round', 1)->get()->toArray();
+            $gamesIds = implode(',', array_map(function ($item) {
+                return $item['system_id'];
+            }, $freeRoundGames));
+        }
 
         $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => $configFreeRounds['available']]);
