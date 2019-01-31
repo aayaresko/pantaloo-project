@@ -4629,6 +4629,41 @@ html.cropped {
   border:2px solid #7766dc;
 }
 
+.log-popup .close-icon {
+    position: absolute;
+    right: 113px;
+    top: 89px;
+    height: 47px;
+    width: 47px;
+}
+
+.log-popup .close-icon:after, .log-popup .close-icon:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    background-color: #fff;
+    margin-top: -3px;
+}
+
+.log-popup .close-icon:before {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+}
+
+.log-popup .close-icon:after {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
 @media (max-width: 1634px) {
@@ -7395,6 +7430,12 @@ html.cropped {
   }
   body .mobile-container .welcome-mob:before {
       top: 0;
+  }
+  body .log-popup .close-icon {
+      top: 15px;
+      right: 15px;
+      height: 27px;
+      width: 27px;
   }
 }
 
