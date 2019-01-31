@@ -608,12 +608,11 @@ class PantalloGamesSystem implements GamesSystem
         } catch (\Exception $e) {
             DB::rollBack();
             //rollback free rounds
-            if (isset($player)) {
-                $test = $pantalloGames->removeFreeRounds([
+            if (isset($freeRoundsId)) {
+                $pantalloGames->removeFreeRounds([
                     'playerids' => $player->id,
                     'freeround_id' => $freeRoundsId
                 ], true);
-                dump($test);
             }
 
             $errorMessage = $e->getMessage();
