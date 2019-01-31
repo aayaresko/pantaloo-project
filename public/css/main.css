@@ -7390,6 +7390,12 @@ html.cropped {
   body .slots-block.mobile .block-filter {
     margin: 15px 0;
   }
+  body .mobile-container .welcome-mob {
+    padding-bottom: 60px;
+  }
+  body .mobile-container .welcome-mob:before {
+      top: 0;
+  }
 }
 
 
