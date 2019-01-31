@@ -7029,10 +7029,10 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    display: none;
+    display: block;
   }
   body .header .header-right-part .login-block.login-block-reg a:before {
-    display: none !important;
+    display: block !important;
   }
   body .header .header-right-part .login-block.login-block-reg a {
     padding-left: 15px !important;
@@ -7060,7 +7060,7 @@ html.cropped {
     font-size: 16px;
   }
   .login-block-reg {
-    display: block !important;
+    display: none !important;
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
