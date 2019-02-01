@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use App\Domain;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -36,14 +36,12 @@ class BannerController extends Controller
         $parts = explode('/', $request->file('image')->getMimeType());
         $extension = $parts[1];
 
-        $domains = Domain::all();
-
         $file_name = uniqid() . '.' . $extension;
-        $path = public_path() . '/promo/';
+        $path = storage_path() . '/app/public/promo/';
 
-        $url = 'http://' . $domains[0]->domain . '/promo/' . $file_name;
-
-        $request->file('image')->move($path, $file_name);
+        $url = url('/') . '/storage/promo/' . $file_name;
+        $image = request()->image;
+        Storage::put('public/promo/' . $file_name, file_get_contents($image->getRealPath()));
 
         $size = getimagesize($path . $file_name);
 
