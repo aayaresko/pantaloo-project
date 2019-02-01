@@ -4629,6 +4629,41 @@ html.cropped {
   border:2px solid #7766dc;
 }
 
+.log-popup .close-icon {
+    position: absolute;
+    right: 113px;
+    top: 89px;
+    height: 47px;
+    width: 47px;
+}
+
+.log-popup .close-icon:after, .log-popup .close-icon:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    background-color: #fff;
+    margin-top: -3px;
+}
+
+.log-popup .close-icon:before {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+}
+
+.log-popup .close-icon:after {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
 @media (max-width: 1634px) {
@@ -7029,10 +7064,10 @@ html.cropped {
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    display: none;
+    display: block;
   }
   body .header .header-right-part .login-block.login-block-reg a:before {
-    display: none !important;
+    display: block !important;
   }
   body .header .header-right-part .login-block.login-block-reg a {
     padding-left: 15px !important;
@@ -7060,7 +7095,7 @@ html.cropped {
     font-size: 16px;
   }
   .login-block-reg {
-    display: block !important;
+    display: none !important;
   }
   /* line 2054, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
@@ -7377,6 +7412,30 @@ html.cropped {
   }
   body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon {
     left: 15px;
+  }
+  body .slots-block.mobile {
+    padding-bottom: 0;
+  }
+  body .slots-block.mobile .block-heading {
+    margin-top: 100px;
+  }
+  body .slots-block.mobile .btn-block {
+    display: none;
+  }
+  body .slots-block.mobile .block-filter {
+    margin: 15px 0;
+  }
+  body .mobile-container .welcome-mob {
+    padding-bottom: 60px;
+  }
+  body .mobile-container .welcome-mob:before {
+      top: 0;
+  }
+  body .log-popup .close-icon {
+      top: 15px;
+      right: 15px;
+      height: 27px;
+      width: 27px;
   }
 }
 
