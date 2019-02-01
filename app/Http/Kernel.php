@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Middleware\AgentCheck;
 use App\Http\Middleware\EmailConfirmation;
+use App\Http\Middleware\GeneralMiddleware;
 use App\Http\Middleware\IpCheck;
 use App\Http\Middleware\LanguageGet;
 use App\Http\Middleware\LanguageSet;
@@ -41,10 +42,11 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\UsersOnline::class,
             UserToAgent::class,
             //LanguageGet::class
+            //LanguageSet::class,
             LanguageSwitch::class,
-            LanguageSet::class,
             SetCountryCode::class,
-            EmailConfirmation::class
+            EmailConfirmation::class,
+            GeneralMiddleware::class
         ],
 
         'api' => [

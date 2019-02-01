@@ -51,7 +51,6 @@ class LanguageSwitch extends CommonMiddleware
             //if we don't have this language we use en
         }
 
-
         if ($request->has('session_id')) {
             $data = json_decode(decrypt($request->input('session_id')), true);
 

@@ -51,8 +51,6 @@ class LanguageSet
 
         View::share('change_url', $change_url);
         View::share('change_lang', $domain->lang);
-        $partnerPage = config('app.foreignPages.partner');
-        View::share('partnerPage', $partnerPage);
 
         return $next($request);
     }
