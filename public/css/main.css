@@ -7439,6 +7439,11 @@ html.cropped {
   }
 }
 
+@media (max-width: 350px) {
+  body .header .header-right-part .login-block .login-btn:before {
+    display: none;
+  }
+}
 
 .games-block {
   position: relative;
