@@ -17,3 +17,7 @@
     width: 130px;
     height: 40px;
 }
+
+#wrapper.forced .logo-image {
+    display: none;
+}
