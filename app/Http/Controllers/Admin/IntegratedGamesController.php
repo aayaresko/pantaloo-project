@@ -260,6 +260,7 @@ class IntegratedGamesController extends Controller
      */
     public function getAll(Request $request)
     {
+        $start1 = microtime(true);
         $param = $this->preparationParams($request);
         /* ACT */
         $whereCompare = $param['whereCompare'];
@@ -351,6 +352,7 @@ class IntegratedGamesController extends Controller
             "recordsTotal" => intval($totalData),
             "recordsFiltered" => intval($totalFiltered),
             "data" => $data,
+            'time' => round(microtime(true) - $start1, 4)
         );
 
         return response()->json($jsonData);
