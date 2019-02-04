@@ -66,7 +66,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="{{route('agent.dashboard')}}" class="logo"><img src="/assets/images/logo/logo-partner.png" height="42" width="42"><i class="zmdi zmdi-layers"></i></a>
+            <a href="{{route('agent.dashboard')}}" class="logo"><img class="logo-image" src="/assets/images/logo/logo-partner.png"><i class="zmdi zmdi-layers"></i></a>
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
