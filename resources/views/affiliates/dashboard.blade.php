@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-
+                <span class="counter">1,234,567</span>
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
@@ -35,7 +35,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-warning" data-plugin="counterup">{{$bonus_total}} mBtc</h2>
+                                <h2 class="text-warning" data-plugin="counterup1">{{$bonus_total}} mBtc</h2>
                                 <h5>BONUS COST</h5>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-info" data-plugin="counterup">{{$revenue_total}} mBtc</h2>
+                                <h2 class="text-info" data-plugin="counterup1">{{$revenue_total}} mBtc</h2>
                                 <h5>REVENUE</h5>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-success" data-plugin="counterup">{{$profit_total}} mBtc</h2>
+                                <h2 class="text-success">{{$profit_total}} mBtc</h2>
                                 <h5>PROFIT</h5>
                             </div>
                         </div>
@@ -153,11 +153,25 @@
         </footer>
 
     </div>
+
+
 @endsection
 
 @section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <script src = "http://bfintal.github.io/Counter-Up/jquery.counterup.min.js"></script>
     <script>
         $('.datatable').dataTable();
+
+        <script>
+        jQuery(document).ready(function($) {
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+        });
+
+
     </script>
 
     <script type="text/javascript">
