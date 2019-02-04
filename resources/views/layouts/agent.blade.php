@@ -43,7 +43,7 @@
     <![endif]-->
 
     <!-- front style -->
-    <link href="/partnerPanel/css/front.css" rel="stylesheet">
+    <link href="/partnerPanel/css/front.css?v={{ time() }}" rel="stylesheet">
     <!-- <script src="/partnerPanel/js/front.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.13/clipboard.min.js"></script>
