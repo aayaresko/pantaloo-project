@@ -1013,6 +1013,13 @@ header.header.active .promo-actions-block .promo-action-btn {
 .mobile-menu .games-listing li a.keno:before {
   background-position: -428px -40px;
 }
+.mobile-menu .games-listing li a.poker:before {
+  background-position: 135px -49px;
+  width: 32px;
+  height: 37px;
+  left: 15px;
+  top: 68%;
+}
 /* line 704, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a:hover {
   opacity: .8;
