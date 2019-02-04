@@ -6,7 +6,7 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
 
-    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
 
     <title>@yield('title')</title>
 
@@ -66,7 +66,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="{{route('agent.dashboard')}}" class="logo"><span>Casino<span>Bit</span></span><i class="zmdi zmdi-layers"></i></a>
+            <a href="{{route('agent.dashboard')}}" class="logo"><img src="/assets/images/logo/logo-partner.png"><i class="zmdi zmdi-layers"></i></a>
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
