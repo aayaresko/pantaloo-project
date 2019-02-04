@@ -24,7 +24,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-custom" data-plugin="counterup">{{$deposit_total}} mBtc</h2>
+                                <h2 class="text-custom">{{$deposit_total}} mBtc</h2>
                                 <h5>DEPOSITS</h5>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-warning" data-plugin="counterup">{{$bonus_total}} mBtc</h2>
+                                <h2 class="text-warning">{{$bonus_total}} mBtc</h2>
                                 <h5>BONUS COST</h5>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-info" data-plugin="counterup">{{$revenue_total}} mBtc</h2>
+                                <h2 class="text-info">{{$revenue_total}} mBtc</h2>
                                 <h5>REVENUE</h5>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
-                                <h2 class="text-success" data-plugin="counterup">{{$profit_total}} mBtc</h2>
+                                <h2 class="text-success">{{$profit_total}} mBtc</h2>
                                 <h5>PROFIT</h5>
                             </div>
                         </div>
