@@ -155,9 +155,9 @@
                                     <div class="col-lg-12">
                                         <form id="register-form" action="/affiliates/register" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
-                                            <div class="form-group">
-                                                <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
-                                            </div>
+                                            {{--<div class="form-group">--}}
+                                                {{--<input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>--}}
+                                            {{--</div>--}}
                                             <div class="form-group">
                                                 <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="" required>
                                             </div>

@@ -364,6 +364,6 @@ return array (
   'email_confirmation' => 'Xác nhận thư điện tử',
   'email' => 'E-mail',
   'send_mail' => 'Gửi thư',
-  'language' => 'Language'
+  'language' => 'Language',
 )
 ?>

@@ -84,6 +84,10 @@
                     url: '{{ route('translations.save') }}',
                     title: 'Enter translation',
                     inputclass: 'editableStyle',
+                    wysihtml5: {
+                        html: true,
+                        image: false,
+                    },
                     placement: 'bottom',
                     success: function (data) {
                         if(data.success == true) {

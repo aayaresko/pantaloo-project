@@ -66,7 +66,7 @@ class AuthController extends Controller
     {
         $data = $request->toArray();
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'string|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -88,8 +88,14 @@ class AuthController extends Controller
         $service = new Service();
         $address = $service->getNewAddress('common');
 
+        if (isset($data['name'])) {
+            $name = $data['name'];
+        } else {
+            $name = 'no_name';
+        }
+
         $user = User::create([
-            'name' => $data['name'],
+            'name' => $name,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

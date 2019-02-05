@@ -25,8 +25,8 @@ return [
 
     'listGames' => [
         'pagination' => [
-            'desktop' => 30,
-            'mobile' => 6
+            'desktop' => 20,
+            'mobile' => 20
         ]
     ],
 
