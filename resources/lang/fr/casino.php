@@ -1,96 +1,80 @@
 <?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Casino
-    |--------------------------------------------------------------------------
-    |
-    | Casino
-    */
-
-    'title' => 'Casinobit | bitcoin casino',
-    'play' => 'Jouer',
-    'free_demo' => 'Démo gratuite',
-    'admin' => 'Administrateur',
-    'deposit' => 'Dépôt',
-    'balance' => 'Solde',
-    'login' => 'S\'identifier',
-    'registration' => 'Régistration',
-    'menu' => 'Menu',
-    'withdraw' => 'Retrait',
-    'get_bonus' => 'Recevez des bonus',
-    'settings' => 'Réglages',
-    'support' => 'Assistance',
-    'bonuses' => 'Bonus',
-    'affiliates' => 'Affiliés',
-    'info' => 'Info/Information',
-    'exit' => 'Sortie',
-    'live_games' => 'Jeux en direct',
-    'password' => 'Mot de passe',
-    'accept_the_terms' => 'J\'accepte les termes & conditions',
-    'email_address' => 'Adresse email',
-    'i_am_forget' => 'J\'ai oublié',
-    'remember_me' => 'Rappelez-moi',
-    'have_not_account' => 'Je n\'ai pas de compte',
-    'enter_now' => 'Entrez maintenant',
-    'home_description' => 'Bienvenue chez Casinobit où vous allez trouver les meilleurs jeux Bitcoin et pourrez y jouer en ligne. Casinobit est le plus grand au monde des système de jeu.',
-    'home_keywords' => 'Jeux Bitcoin, lotto, bitcoin',
-    'blackjack' => 'Blackjack',
-    'roulette' => 'Roulette',
-    'slots' => 'Machines à sous',
-    'work_bitcoin' => 'Nous ne travaillons qu\'avec Bitcoin',
-    'bonus' => 'bonus',
-    'after_first_deposit' => 'Après le premier dépôt',
-    'welcome' => 'Bienvenue',
-    'casinobit' => 'Casinobit',
-    'video_live_games' => 'Jeux de vidéo en direct',
-    'games' => 'Jeux',
-    'live_games_second' => 'Jeux en direct',
-    'play_now' => 'Jouez maintenant',
-    'do_you_want_to_play' => 'À quoi désirez-vous jouer ?',
-    'gambling_card_games' => 'ER EST UNE FAMILLE DE JEUX D\'ARGENT ET DE CARTES',
-    'bet_on_numbers' => 'Parier sur des chiffres',
-    'type_slots' => 'machines à sous',
-    'type_blackjack' => 'blackjack',
-    'type_live_blackjack' => 'blackjack en direct',
-    'type_live_poker' => 'poker en direct',
-    'type_roulette' => 'roulette',
-    'type_baccarat' => 'baccarat',
-    'type_live_baccarat' => 'baccarat en direct',
-    'type_bet_on_numbers' => 'parier sur des chiffres',
-    'type_live_bet_on_numbers' => 'parier sur des chiffres en direct',
-    'type_keno' => 'keno',
-    'type_poker' => 'poker',
-    'type_others' => 'autres',
-    'type_dice' => 'dés',
-    'type_live_dice' => 'dés en direct',
-    'type_live_casino' => 'casino en direct',
-    'type_live_table_games' => 'tables de jeu en direct',
-    'type_live_roulette' => 'roulette en direct',
-    'search_game' => 'Cherchez un jeu',
-    'all' => 'Tous',
-    'choose_your_game' => 'Choisissez votre jeu',
-    //support
-    'support.create_account' => 'Comment puis-je créer mon compte?',
-    'support.create_account_value' => 'S\'il-vous-plait cliquez sur le bouton d\'inscription en haut dans le coin droit et remplissez tous les champs obligatoires. Après avoir remplis les formulaires correctement nous vous enverrons un lien de confirmation afin de vérifier votre adresse email. Une fois celle-ci confirmée, votre compte sera créé et activé avec succès. Vous pourrez tout de suite commencer à jouer sur nos beaux jeux.',
-
-    'support.forgotten_password' => 'Que dois-je faire si j\'ai oublié mon mot de passe ?',
-    'support.forgotten_password_value' => 'La meilleure façon est de cliquer sur le bouton "J\'ai oublié mon mot de passe" et de suivre le lien. Vous recevrez automatiquement un email avec un lien de récupération qui vous invitera à choisir un nouveau mot de passe. Autrement vous pouvez nous le signaler via le chat en direct. Nous sommes toujours heureux de vous aider.',
-
-    'support.buy_bitcoins' => 'Où puis-je acheter des Bitcoins ?',
-    'support.buy_bitcoins_value' => 'Il existe plusieurs sercvices de Bitcoins. Parmi ceux-ci bitstamp, coinbase et spicepay. Pour plus d\'informations détaillées prière de consulter notre page sur "Qu\'est-ce que le Bitcoin" ou de nous contacter par le chat en direct pour obtenir des conseils.',
-
-    'support.games_fair' => 'Les jeux sont-ils équitables ?',
-    'support.games_fair_value' => 'Nos jeux sont 100% équitables. À titre de preuve, chaque joueur peut consulter notre widget d\'équité et de fiabilité. Tous les jeux sont réglementés d\'après la licence de Curaçao.',
-
-    'terms' => 'termes',
-    'free' => 'gratuit',
-    'spins' => 'tours',
-    'welcome_bonus' => 'bonus de bienvenue',
-    'bonus.term' => <<<EOT
-                <h3>BONUS TERMS AND CONDITIONS</h3>
+return array (
+  'title' => 'Casinobit | bitcoin casino',
+  'play' => 'Jouer',
+  'free_demo' => 'Démo gratuite',
+  'admin' => 'Administrateur',
+  'deposit' => 'Dépôt',
+  'balance' => 'Solde',
+  'login' => 'S\'identifier',
+  'registration' => 'S\'INSCRIRE',
+  'menu' => 'Menu',
+  'withdraw' => 'Retrait',
+  'get_bonus' => 'Recevez des bonus',
+  'settings' => 'Réglages',
+  'support' => 'Assistance',
+  'bonuses' => 'Bonus',
+  'affiliates' => 'Affiliés',
+  'info' => 'Info/Information',
+  'exit' => 'Sortie',
+  'live_games' => 'Jeux en direct',
+  'password' => 'Mot de passe',
+  'accept_the_terms' => 'J\'accepte les termes & conditions',
+  'email_address' => 'Adresse email',
+  'i_am_forget' => 'J\'ai oublié',
+  'remember_me' => 'Se souvenir de moi<br>',
+  'have_not_account' => 'Je n\'ai pas de compte',
+  'enter_now' => 'Connexion',
+  'home_description' => 'Bienvenue chez Casinobit où vous allez trouver les meilleurs jeux Bitcoin et pourrez y jouer en ligne. Casinobit est le plus grand au monde des système de jeu.',
+  'home_keywords' => 'Jeux Bitcoin, lotto, bitcoin',
+  'blackjack' => 'Blackjack',
+  'roulette' => 'Roulette',
+  'slots' => 'Machines à sous',
+  'work_bitcoin' => 'Nous ne travaillons qu\'avec Bitcoin',
+  'bonus' => 'bonus',
+  'after_first_deposit' => 'Après le premier dépôt',
+  'welcome' => 'Bienvenue',
+  'casinobit' => 'Casinobit',
+  'video_live_games' => 'Jeux de vidéo en direct',
+  'games' => 'Jeux',
+  'live_games_second' => 'Jeux en direct',
+  'play_now' => 'Jouez maintenant',
+  'do_you_want_to_play' => 'À quoi désirez-vous jouer ?',
+  'gambling_card_games' => 'ER EST UNE FAMILLE DE JEUX D\'ARGENT ET DE CARTES',
+  'bet_on_numbers' => 'Parier sur des chiffres',
+  'type_slots' => 'machines à sous',
+  'type_blackjack' => 'blackjack',
+  'type_live_blackjack' => 'blackjack en direct',
+  'type_live_poker' => 'poker en direct',
+  'type_roulette' => 'roulette',
+  'type_baccarat' => 'baccarat',
+  'type_live_baccarat' => 'baccarat en direct',
+  'type_bet_on_numbers' => 'parier sur des chiffres',
+  'type_live_bet_on_numbers' => 'parier sur des chiffres en direct',
+  'type_keno' => 'keno',
+  'type_poker' => 'poker',
+  'type_others' => 'autres',
+  'type_dice' => 'dés',
+  'type_live_dice' => 'dés en direct',
+  'type_live_casino' => 'casino en direct',
+  'type_live_table_games' => 'tables de jeu en direct',
+  'type_live_roulette' => 'roulette en direct',
+  'search_game' => 'Cherchez un jeu',
+  'all' => 'Tous',
+  'choose_your_game' => 'Choisissez votre jeu',
+  'support.create_account' => 'Comment puis-je créer mon compte?',
+  'support.create_account_value' => 'S\'il-vous-plait cliquez sur le bouton d\'inscription en haut dans le coin droit et remplissez tous les champs obligatoires. Après avoir remplis les formulaires correctement nous vous enverrons un lien de confirmation afin de vérifier votre adresse email. Une fois celle-ci confirmée, votre compte sera créé et activé avec succès. Vous pourrez tout de suite commencer à jouer sur nos beaux jeux.',
+  'support.forgotten_password' => 'Que dois-je faire si j\'ai oublié mon mot de passe ?',
+  'support.forgotten_password_value' => 'La meilleure façon est de cliquer sur le bouton "J\'ai oublié mon mot de passe" et de suivre le lien. Vous recevrez automatiquement un email avec un lien de récupération qui vous invitera à choisir un nouveau mot de passe. Autrement vous pouvez nous le signaler via le chat en direct. Nous sommes toujours heureux de vous aider.',
+  'support.buy_bitcoins' => 'Où puis-je acheter des Bitcoins ?',
+  'support.buy_bitcoins_value' => 'Il existe plusieurs sercvices de Bitcoins. Parmi ceux-ci bitstamp, coinbase et spicepay. Pour plus d\'informations détaillées prière de consulter notre page sur "Qu\'est-ce que le Bitcoin" ou de nous contacter par le chat en direct pour obtenir des conseils.',
+  'support.games_fair' => 'Les jeux sont-ils équitables ?',
+  'support.games_fair_value' => 'Nos jeux sont 100% équitables. À titre de preuve, chaque joueur peut consulter notre widget d\'équité et de fiabilité. Tous les jeux sont réglementés d\'après la licence de Curaçao.',
+  'terms' => 'termes',
+  'free' => 'gratuit',
+  'spins' => 'tours',
+  'welcome_bonus' => 'bonus de bienvenue',
+  'bonus.term' => '                <h3>BONUS TERMS AND CONDITIONS</h3>
                 <ul class="parent-list">
 
                     <li>
@@ -124,7 +108,7 @@ return [
 
                                 <p>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding
                                     the KYC (Know Your Customer), the following documents may be needed for
-                                    verification: One government approved identity card (ID card, passport and driver's
+                                    verification: One government approved identity card (ID card, passport and driver\'s
                                     license) with a picture, as well as proof of residency such as a utility bill (which
                                     is not older than 2 months). If your deposit method was via a credit card we will
                                     require a scanned copy of the credit card (front and back) which you used.</p>
@@ -169,7 +153,7 @@ return [
                                     Comoros (KM)
                                     Croatia (HR)
                                     Czech Republic (CZ)
-                                    Côte d'Ivoire (CI)
+                                    Côte d\'Ivoire (CI)
                                     Djibouti (DJ)
                                     Egypt (EG)
                                     Equatorial Guinea (GQ)
@@ -395,7 +379,7 @@ return [
                                     Muse: Wild Inspiration, Victorious, Victorious touch, Ghost Pirates, Johnny the
                                     Octopus and Mega Gems contribute at a 50% rate. Jackpot 6000, Mega Joker, Gypsy
                                     Rose, Good Girl Bad Girl and Safari contribute at a 75% rate.</p>
-                                <p>Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil's Delight, The Wish Master
+                                <p>Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil\'s Delight, The Wish Master
                                     and Jackpot Games are not able to be played with bonus money. </p>
                             </li>
                             <li>
@@ -465,7 +449,7 @@ return [
                                 <p>If, upon such a review, it appears that a Player(s) are participating in strategies,
                                     taking advantage of any software or system bug or failure, or participating in any
                                     form of activity that Casinobit, in its sole and complete discretion, deems to be
-                                    abusive ('Promotion Abuse'), Casinobit reserves the right to revoke the entitlement
+                                    abusive (\'Promotion Abuse\'), Casinobit reserves the right to revoke the entitlement
                                     of such a Player to receive or benefit from the promotion (and/or withhold the pay
                                     out of the proceeds of such abuse to the Player/s in question). Only fully settled
                                     bets (i.e. bets that result in a win or loss) will be counted towards wagering.</p>
@@ -496,9 +480,9 @@ return [
                             <li>
                                 <span>21.</span>
 
-                                <p>If it's discovered that a group players are using the same betting patterns and are
+                                <p>If it\'s discovered that a group players are using the same betting patterns and are
                                     connected via (but not limited to) location, banking pattern or IP, Casinobit
-                                    management will at it's own discretion have the mandate to confiscate bonus winnings
+                                    management will at it\'s own discretion have the mandate to confiscate bonus winnings
                                     and/or deposit. </p>
                             </li>
                             <li>
@@ -546,35 +530,33 @@ return [
 
                         </ul>
                     </li>
-                </ul>
-EOT
-    ,
-    'deposit_space' => 'D é p ô t',
-    'bonus_deposit' => 'Aimeriez-vous recevoir un BONUS sur votre prochain dépôt ?',
-    'open_bonus' => 'Bonus ouverts',
-    'credits' => 'Crédits',
-    'add_credits' => 'Ajouter des crédits',
-    'minimum_deposit' => 'Le dépôt minimal est de 1 mBTC',
-    'send_your_bitcoins' => 'Envoyez vos Bitcoins à cette adresse:',
-    'transfer_wallet_address' => 'Transférez les bitcoins à votre adresse de portefeuille',
-    'have_millibitcoins' => 'Vous avez %s Milibitcoins (mBTC) de disponibles',
-    'your_bitcoin_address' => 'Votre adresse Bitcoin',
-    'enter_here' => 'Entrez ici',
-    'amount_mbtc' => 'Montant mBTC',
-    'open_history' => 'Ouvrez l\'historique',
-    'your_withdraws' => 'Vos retraits',
-    'cancel' => 'Annuler',
-    'activate' => 'Activer',
-    'change_password' => 'Changer de mot de passe',
-    'confirm_email' => 'Confirmer l\'adresse email',
-    'old_password' => 'Vieux mot de passe',
-    'new_password' => 'Nouveau mot de passe',
-    'confirm_password' => 'Confirmez le mot de passe',
-    'confirmation' => 'Confirmation',
-    'update' => 'Mise à jour',
-    'email_confirmation' => 'Confirmation de l\'adresse email',
-    'email' => 'Adresse email',
-    'send_mail' => 'Adresse email',
-	'language' => 'La langue'
-
-];
+                </ul>',
+  'deposit_space' => 'D é p ô t',
+  'bonus_deposit' => 'Aimeriez-vous recevoir un BONUS sur votre prochain dépôt ?',
+  'open_bonus' => 'Bonus ouverts',
+  'credits' => 'Crédits',
+  'add_credits' => 'Ajouter des crédits',
+  'minimum_deposit' => 'Le dépôt minimal est de 1 mBTC',
+  'send_your_bitcoins' => 'Envoyez vos Bitcoins à cette adresse:',
+  'transfer_wallet_address' => 'Transférez les bitcoins à votre adresse de portefeuille',
+  'have_millibitcoins' => 'Vous avez %s Milibitcoins (mBTC) de disponibles',
+  'your_bitcoin_address' => 'Votre adresse Bitcoin',
+  'enter_here' => 'Entrez ici',
+  'amount_mbtc' => 'Montant mBTC',
+  'open_history' => 'Ouvrez l\'historique',
+  'your_withdraws' => 'Vos retraits',
+  'cancel' => 'Annuler',
+  'activate' => 'Activer',
+  'change_password' => 'Changer de mot de passe',
+  'confirm_email' => 'Confirmer l\'adresse email',
+  'old_password' => 'Vieux mot de passe',
+  'new_password' => 'Nouveau mot de passe',
+  'confirm_password' => 'Confirmez le mot de passe',
+  'confirmation' => 'Confirmation',
+  'update' => 'Mise à jour',
+  'email_confirmation' => 'Confirmation de l\'adresse email',
+  'email' => 'Adresse email',
+  'send_mail' => 'Adresse email',
+  'language' => 'La langue',
+)
+?>
