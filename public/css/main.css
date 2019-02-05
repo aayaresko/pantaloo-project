@@ -1014,10 +1014,10 @@ header.header.active .promo-actions-block .promo-action-btn {
   background-position: -428px -40px;
 }
 .mobile-menu .games-listing li a.poker:before {
-  background-position: 135px -49px;
-  width: 32px;
+  background-position: -362px -53px;
+  width: 37px;
   height: 37px;
-  left: 15px;
+  left: 10px;
   top: 68%;
 }
 /* line 704, ../scss/_navigation.scss */
