@@ -88,8 +88,14 @@ class AuthController extends Controller
         $service = new Service();
         $address = $service->getNewAddress('common');
 
+        if (isset($data['name'])) {
+            $name = $data['name'];
+        } else {
+            $name = 'no_name';
+        }
+
         $user = User::create([
-            'name' => $data['name'],
+            'name' => $name,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
