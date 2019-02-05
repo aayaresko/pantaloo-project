@@ -20,9 +20,8 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'DESC')->get();
-
         if (Gate::allows('accessUserAdmin')) {
+            $users = User::orderBy('created_at', 'DESC')->get();
             return view('admin.users', ['users' => $users]);
         } else {
             return redirect('admin/translations');
