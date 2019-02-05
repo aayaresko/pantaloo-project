@@ -95,7 +95,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="{{route('dashboard')}}" class="logo"><span>Casino<span>Bit</span></span><i class="zmdi zmdi-layers"></i></a>
+            <a href="/admin" class="logo"><span>Casino<span>Bit</span></span><i class="zmdi zmdi-layers"></i></a>
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
