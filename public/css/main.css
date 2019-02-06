@@ -4636,7 +4636,7 @@ html.cropped {
   border:2px solid #7766dc;
 }
 
-.log-popup .close-icon {
+.log-popup .close-icon, .reg-popup .close-icon {
     position: absolute;
     right: 113px;
     top: 89px;
@@ -4644,7 +4644,7 @@ html.cropped {
     width: 47px;
 }
 
-.log-popup .close-icon:after, .log-popup .close-icon:before {
+.log-popup .close-icon:after, .log-popup .close-icon:before, .reg-popup .close-icon:after, .reg-popup .close-icon:before {
     content: '';
     position: absolute;
     left: 0;
@@ -4655,7 +4655,7 @@ html.cropped {
     margin-top: -3px;
 }
 
-.log-popup .close-icon:before {
+.log-popup .close-icon:before, .reg-popup .close-icon:before {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
@@ -4663,7 +4663,7 @@ html.cropped {
     -ms-transform: rotate(-45deg);
 }
 
-.log-popup .close-icon:after {
+.log-popup .close-icon:after, .reg-popup .close-icon:after {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
@@ -7438,7 +7438,7 @@ html.cropped {
   body .mobile-container .welcome-mob:before {
       top: 0;
   }
-  body .log-popup .close-icon {
+  body .log-popup .close-icon, body .reg-popup .close-icon {
       top: 15px;
       right: 15px;
       height: 27px;

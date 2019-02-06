@@ -238,6 +238,7 @@
     </div>
 </div>
 <div class="reg-popup">
+    <a href="#" class="close-icon"></a>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
