@@ -205,6 +205,7 @@ class PantalloGamesSystem implements GamesSystem
             $userFields = [
                 'users.id as id',
                 'users.balance as balance',
+                'users.bonus_balance as bonus_balance',
                 'affiliates.id as partner_id',
                 'affiliates.commission as partner_commission'
             ];
@@ -547,6 +548,31 @@ class PantalloGamesSystem implements GamesSystem
             'extra' => json_encode($debugGameResult)
         ]);
 
+        return $response;
+    }
+
+
+    public function balance($params)
+    {
+        $response = [];
+        return $response;
+    }
+
+    public function debit($params)
+    {
+        $response = [];
+        return $response;
+    }
+
+    public function credit($params)
+    {
+        $response = [];
+        return $response;
+    }
+
+    public function rollback($params)
+    {
+        $response = [];
         return $response;
     }
 
