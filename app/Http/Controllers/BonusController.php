@@ -13,37 +13,40 @@ class BonusController extends Controller
 {
     public function index()
     {
+        //to do if bounus be actived for this user
         $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
 
         $active_bonus = Auth::user()->bonuses()->first();
 
-        if($active_bonus)
-        {
+        if ($active_bonus) {
             $class = $active_bonus->bonus->getClass();
             $bonus_obj = new $class(Auth::user());
+        } else {
+            $bonus_obj = false;
         }
-        else $bonus_obj = false;
 
-        return view('bonus', ['bonuses' => $bonuses, 'active_bonus' => $active_bonus, 'bonus_obj' => $bonus_obj]);
+        return view('bonus', [
+            'bonuses' => $bonuses,
+            'active_bonus' => $active_bonus,
+            'bonus_obj' => $bonus_obj
+        ]);
     }
 
     public function activate(Bonus $bonus)
     {
-        if(!$bonus->public) return redirect()->back()->withErrors(['No access']);
+        if (!$bonus->public) {
+            return redirect()->back()->withErrors(['No access']);
+        }
 
-        $errors = [];
         $user = Auth::user();
 
         $class = $bonus->getClass();
 
-        $bonus_obj = new $class(Auth::user());
+        $bonus_obj = new $class($user);
 
-        try
-        {
+        try {
             $bonus_obj->activate();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
@@ -54,15 +57,15 @@ class BonusController extends Controller
     {
         $user_bonus = Auth::user()->bonuses()->first();
 
-        if(!$user_bonus) return redirect()->back();
+        if (!$user_bonus) {
+            return redirect()->back();
+        }
         $class = $user_bonus->bonus->getClass();
         $bonus_obj = new $class(Auth::user());
 
         try {
             $bonus_obj->cancel('Closed by user');
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
@@ -75,12 +78,12 @@ class BonusController extends Controller
 
         $active_bonus = $user->bonuses()->first();
 
-        if($active_bonus)
-        {
+        if ($active_bonus) {
             $class = $active_bonus->bonus->getClass();
             $bonus_obj = new $class($user);
+        } else {
+            $bonus_obj = false;
         }
-        else $bonus_obj = false;
 
         return view('admin.userBonuses', ['user' => $user, 'bonuses' => $bonuses, 'active_bonus' => $active_bonus, 'bonus_obj' => $bonus_obj]);
     }
@@ -90,12 +93,9 @@ class BonusController extends Controller
         $class = $bonus->getClass();
         $bonus_obj = new $class($user);
 
-        try
-        {
+        try {
             $bonus_obj->activate();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
@@ -106,15 +106,15 @@ class BonusController extends Controller
     {
         $user_bonus = $user->bonuses()->first();
 
-        if(!$user_bonus) return redirect()->back();
+        if (!$user_bonus) {
+            return redirect()->back();
+        }
         $class = $user_bonus->bonus->getClass();
         $bonus_obj = new $class($user);
 
         try {
             $bonus_obj->cancel('Closed by admin');
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
