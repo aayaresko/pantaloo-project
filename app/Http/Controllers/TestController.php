@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+
 use DB;
 use App\User;
 use Validator;
@@ -23,7 +25,47 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(22);
+        dd(2);
+        $client = new Client([
+            'verify' => false,
+        ]);
+        //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
+        $response = $client->post('https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'response_type' => 'token',
+                'username' => 'api_casinobit',
+                'password' => 'BfRN18uA'
+            ]
+        ]);
+        $json = $response->getBody()->getContents();
+        $json = json_decode($json);
+
+        try {
+            $response = $client->get('https://api-int.qtplatform.com/v1/games', [
+                'headers' =>[
+                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Accept'     => 'application/json',
+                ]
+            ]);
+        }
+        catch (\Exception $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+            dd($responseBodyAsString);
+        }
+
+        $game = $response->getBody()->getContents();
+        $game = json_decode($game);
+        foreach ($game->items as $game) {
+            foreach ($game->currencies as $currency) {
+                if ($currency == 'MBTC') {
+                    dump($game);
+                }
+            }
+        }
+        dd(2);
         $service = new Service();
 
         $data = $service->info();
