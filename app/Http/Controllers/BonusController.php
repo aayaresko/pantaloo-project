@@ -50,7 +50,8 @@ class BonusController extends Controller
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
-        return redirect()->back()->with('popup', ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
+        return redirect()->back()->with('popup',
+            ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
     }
 
     public function cancel()
@@ -85,7 +86,12 @@ class BonusController extends Controller
             $bonus_obj = false;
         }
 
-        return view('admin.userBonuses', ['user' => $user, 'bonuses' => $bonuses, 'active_bonus' => $active_bonus, 'bonus_obj' => $bonus_obj]);
+        return view('admin.userBonuses', [
+            'user' => $user,
+            'bonuses' => $bonuses,
+            'active_bonus' => $active_bonus,
+            'bonus_obj' => $bonus_obj
+        ]);
     }
 
     public function adminActivate(User $user, Bonus $bonus)
