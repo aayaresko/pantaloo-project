@@ -554,7 +554,11 @@ class PantalloGamesSystem implements GamesSystem
 
     public function balance($params)
     {
-        $response = [];
+        //app accuracyValues
+        $response = [
+            'status' => 200,
+            'balance' => bcadd($params['user']->balance, $params['user']->balance, 5)
+        ];
         return $response;
     }
 

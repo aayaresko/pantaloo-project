@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Bonuses;
 
 # Second deposit
@@ -16,7 +17,10 @@ class Bonus_200 extends Bonus_100
     {
         $deposits = $this->user->transactions()->deposits()->orderBy('id')->limit(2)->get();
 
-        if(count($deposits) == 2) return $deposits[1];
-        else return false;
+        if (count($deposits) == 2) {
+            return $deposits[1];
+        } else {
+            return false;
+        }
     }
 }

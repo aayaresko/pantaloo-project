@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Bonuses;
 
 use App\User;
@@ -26,13 +27,18 @@ abstract class Bonus
 
         $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
 
-        if(!$transaction) return false;
-        else return true;
+        if (!$transaction) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function cancel($reason = false)
     {
-        if($this->hasBonusTransactions()) throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+        if ($this->hasBonusTransactions()) {
+            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+        }
 
         $transaction = new Transaction();
         $transaction->bonus_sum = -1 * $this->user->bonus_balance;
@@ -43,20 +49,26 @@ abstract class Bonus
 
         $this->user->changeBalance($transaction);
 
-        if($this->user->bonus_balance == 0)
+        if ($this->user->bonus_balance == 0)
             $this->active_bonus->delete();
     }
 
     public function close()
     {
-        if($this->hasBonusTransactions()) return false;
+        if ($this->hasBonusTransactions()) {
+            return false;
+        }
 
         $now = Carbon::now();
 
-        if($this->active_bonus->expires_at->format('U') < $now->format('U')) $this->cancel('Expired');
-        if($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0 and $this->user->free_spins == 0) $this->cancel('No bonus funds');
+        if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
+            $this->cancel('Expired');
+        }
+        if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0 and $this->user->free_spins == 0) {
+            $this->cancel('No bonus funds');
+        }
 
-        if($this->active_bonus->activated == 1) {
+        if ($this->active_bonus->activated == 1) {
             if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
                 $transaction = new Transaction();
                 $transaction->bonus_sum = -1 * $this->user->bonus_balance;
@@ -79,13 +91,18 @@ abstract class Bonus
     {
         $data = $this->active_bonus->data;
 
-        if(isset($data[$var])) return $data[$var];
-        else throw new \Exception('Var not found');
+        if (isset($data[$var])) {
+            return $data[$var];
+        } else {
+            throw new \Exception('Var not found');
+        }
     }
 
     public function set($var, $value)
     {
-        if(!$this->active_bonus) throw new \Exception('Activate_bonus not found');
+        if (!$this->active_bonus) {
+            throw new \Exception('Activate_bonus not found');
+        }
 
         $data = $this->active_bonus->data;
         $data[$var] = $value;
@@ -97,8 +114,12 @@ abstract class Bonus
     }
 
     abstract public function getStatus();
+
     abstract public function activate();
+
     abstract public function realActivation();
+
     abstract public function getPercent();
+
     abstract public function getPlayedSum();
 }
