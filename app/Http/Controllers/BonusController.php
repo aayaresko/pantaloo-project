@@ -13,7 +13,7 @@ class BonusController extends Controller
 {
     public function index()
     {
-        $bonuses = Bonus::where('public', 1)->get();
+        $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
 
         $active_bonus = Auth::user()->bonuses()->first();
 
