@@ -1,163 +1,141 @@
 <?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Casino
-    |--------------------------------------------------------------------------
-    |
-    | Casino
-    */
-
-    'title' => 'Casinobit | bitcoin casino',
-    'play' => 'Play',
-    'free_demo' => 'Free demo',
-    'admin' => 'Admin',
-    'deposit' => 'Deposit',
-    'balance' => 'Balance',
-    'login' => 'Login',
-    'registration' => 'Registration',
-    'menu' => 'Menu',
-    'withdraw' => 'Withdraw',
-    'get_bonus' => 'Get Bonus',
-    'settings' => 'Settings',
-    'support' => 'Support',
-    'bonuses' => 'Bonuses',
-    'affiliates' => 'Affiliates',
-    'info' => 'Info',
-    'exit' => 'Exit',
-    'live_games' => 'Live games',
-    'password' => 'Password',
-    'accept_the_terms' => 'I accept the terms & conditions',
-    'email_address' => 'E-mail address',
-    'i_am_forget' => 'i am forget',
-    'remember_me' => 'Remember me',
-    'have_not_account' => 'i don\'t have account',
-    'enter_now' => 'Enter Now',
-    'home_description' => 'Welcome to Casinobit where you will find the best bitcoin games and will be able to play online.
+return array (
+  'title' => 'Casinobit | bitcoin casino',
+  'play' => 'Play',
+  'free_demo' => 'Free demo',
+  'admin' => 'Admin',
+  'deposit' => 'Deposit',
+  'balance' => 'Balance',
+  'login' => 'Login',
+  'registration' => 'Registration',
+  'menu' => 'Menu',
+  'withdraw' => 'Withdraw',
+  'get_bonus' => 'Get Bonus',
+  'settings' => 'Settings',
+  'support' => 'Support',
+  'bonuses' => 'Bonuses',
+  'affiliates' => 'Affiliates',
+  'info' => 'Info',
+  'exit' => 'Exit',
+  'live_games' => 'Live games',
+  'password' => 'Password',
+  'accept_the_terms' => 'I accept the terms & conditions',
+  'email_address' => 'E-mail address',
+  'i_am_forget' => 'i am forget',
+  'remember_me' => 'Remember me',
+  'have_not_account' => 'i don\'t have account',
+  'enter_now' => 'Enter Now',
+  'home_description' => 'Welcome to Casinobit where you will find the best bitcoin games and will be able to play online.
      Casinobit is the big world of gaming systems. Here you will find the best Bitcoin games and you can play online.',
-    'home_keywords' => 'bitcoin games, lotto, bitcoin',
-    'blackjack' => 'Blackjack',
-    'roulette' => 'Roulette',
-    'slots' => 'Slots',
-    'work_bitcoin' => 'We work only with bitcoin',
-    'bonus' => 'bonus',
-    'after_first_deposit' => 'after first deposit',
-    'welcome' => 'Welcome',
-    'casinobit' => 'Casinobit',
-    'video_live_games' => 'video live games',
-    'games' => 'Games',
-    'live_games_second' => 'Live Games',
-    'play_now' => 'Play Now',
-    'do_you_want_to_play' => 'What do you want to play?',
-    'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
-    'bet_on_numbers' => 'Bet on numbers',
-    'type_slots' => 'slots',
-    'type_blackjack' => 'blackjack',
-    'type_live_blackjack' => 'live blackjack',
-    'type_live_poker' => 'live poker',
-    'type_roulette' => 'roulette',
-    'type_baccarat' => 'baccarat',
-    'type_live_baccarat' => 'live baccarat',
-    'type_bet_on_numbers' => 'bet on numbers ',
-    'type_live_bet_on_numbers' => 'live bet on numbers',
-    'type_keno' => 'keno',
-    'type_poker' => 'poker',
-    'type_others' => 'others',
-    'type_dice' => 'dice',
-    'type_live_dice' => 'live dice',
-    'type_live_casino' => 'live casino',
-    'type_live_table_games' => 'live table games',
-    'type_live_roulette' => 'live roulette',
-    'search_game' => 'Search game',
-    'all' => 'All',
-    'choose_your_game' => 'Choose your game',
-    //support
-    'support.create_account' => 'How do I create my account?',
-    'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields.' .
-        ' After correct filling of the forms we will email you with the confirmation link to verify your email address.' .
-        ' Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
-
-    'support.forgotten_password' => 'What should I do if I have forgotten the password?',
-    'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link.'.
-        ' You will be automatically sent an email with the recover link where you will be advised to enter new password.'.
-        ' Otherwise, you can report us through livechat. We are happy to help.',
-
-    'support.buy_bitcoins' => 'Where can I buy bitcoins?',
-    'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay.'.
-        ' For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
-
-    'support.games_fair' => 'Are the games fair?',
-    'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget.'.
-        ' All games are regulated under the license of Curacao.',
-
-    'terms' => 'terms',
-    'free' => 'free',
-    'spins' => 'spins',
-    'welcome_bonus' => 'welcome bonus',
-    'bonus.term' => <<<EOT
-                <h3>BONUS TERMS AND CONDITIONS</h3>
-                <ul class="parent-list">
+  'home_keywords' => 'bitcoin games, lotto, bitcoin',
+  'blackjack' => 'Blackjack',
+  'roulette' => 'Roulette',
+  'slots' => 'Slots',
+  'work_bitcoin' => 'We work only with bitcoin',
+  'bonus' => 'bonus',
+  'after_first_deposit' => 'after first deposit',
+  'welcome' => 'Welcome',
+  'casinobit' => 'Casinobit',
+  'video_live_games' => 'video live games',
+  'games' => 'Games',
+  'live_games_second' => 'Live Games',
+  'play_now' => 'Play Now',
+  'do_you_want_to_play' => 'What do you want to play?',
+  'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
+  'bet_on_numbers' => 'Bet on numbers',
+  'type_slots' => 'slots',
+  'type_blackjack' => 'blackjack',
+  'type_live_blackjack' => 'live blackjack',
+  'type_live_poker' => 'live poker',
+  'type_roulette' => 'roulette',
+  'type_baccarat' => 'baccarat',
+  'type_live_baccarat' => 'live baccarat',
+  'type_bet_on_numbers' => 'bet on numbers ',
+  'type_live_bet_on_numbers' => 'live bet on numbers',
+  'type_keno' => 'keno',
+  'type_poker' => 'poker',
+  'type_others' => 'others',
+  'type_dice' => 'dice',
+  'type_live_dice' => 'live dice',
+  'type_live_casino' => 'live casino',
+  'type_live_table_games' => 'live table games',
+  'type_live_roulette' => 'live roulette',
+  'search_game' => 'Search game',
+  'all' => 'All',
+  'choose_your_game' => 'Choose your game',
+  'support.create_account' => 'How do I create my account?',
+  'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields. After correct filling of the forms we will email you with the confirmation link to verify your email address. Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
+  'support.forgotten_password' => 'What should I do if I have forgotten the password?',
+  'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link. You will be automatically sent an email with the recover link where you will be advised to enter new password. Otherwise, you can report us through livechat. We are happy to help.',
+  'support.buy_bitcoins' => 'Where can I buy bitcoins?',
+  'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay. For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
+  'support.games_fair' => 'Are the games fair?',
+  'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget. All games are regulated under the license of Curacao.',
+  'terms' => 'terms',
+  'free' => 'free',
+  'spins' => 'spins',
+  'welcome_bonus' => 'welcome bonus',
+  'bonus.term' => '<h3>BONUS TERMS AND CONDITIONS</h3>
+                <ul>
 
                     <li>
-                        <h4>NO DEPOSIT BONUSES TERMS AND CONDITIONS</h4>
+                        NO DEPOSIT BONUSES TERMS AND CONDITIONS
                         <ul>
                             <li>
-                                <span>1a.</span>
+                                1a.
 
-                                <p>The maximum winnings that will be paid out resulting from a free bonus or free spins
+                                The maximum winnings that will be paid out resulting from a free bonus or free spins
                                     without deposit (eg. the 20 free spins upon registration, Wednesday Free Spins
                                     Drops, Second Chance Spins) will be 100 EUR/USD/CAD/AUD, 1,000 SEK/NOK or 6 000 RUB.
                                     Max winnings for GBP is £50 (even if the amount of winnings accrued by you utilizing
                                     this bonus is in excess of this amount). In regards to BTC players, the maximum
                                     winnings that will be paid out resulting from a free bonus or free spins without
-                                    deposit will be 100 mBTC. Any winnings exceeding this amount will be forfeited.</p>
+                                    deposit will be 100 mBTC. Any winnings exceeding this amount will be forfeited.
                             </li>
                             <li>
-                                <span>1b.</span>
+                                1b.
 
-                                <p>The Wagering Requirements for Free and Registration bonuses are forty (40) times the
+                                The Wagering Requirements for Free and Registration bonuses are forty (40) times the
                                     Bonus sum awarded to you, unless stated otherwise in the supplemental Terms and
                                     Conditions. (For Registration bonuses, extra spins, free spins and free bonuses
                                     which require NO deposit, note that no winnings at all may be withdrawn/transferred
                                     until you have transferred at least 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,000 RUB
                                     or 0.05 BTC (or currency equivalent) into your Player Account. In addition, no
                                     winnings accrued in connection with any Free Bonus may be withdrawn/transferred
-                                    until the wagering requirements have been met.)</p>
+                                    until the wagering requirements have been met.)
                             </li>
                             <li>
-                                <span>2a.</span>
+                                2a.
 
-                                <p>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding
+                                For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding
                                     the KYC (Know Your Customer), the following documents may be needed for
-                                    verification: One government approved identity card (ID card, passport and driver's
+                                    verification: One government approved identity card (ID card, passport and driver\'s
                                     license) with a picture, as well as proof of residency such as a utility bill (which
                                     is not older than 2 months). If your deposit method was via a credit card we will
-                                    require a scanned copy of the credit card (front and back) which you used.</p>
+                                    require a scanned copy of the credit card (front and back) which you used.
                             </li>
                             <li>
-                                <span>2b.</span>
+                                2b.
 
-                                <p>General bonus terms and conditions apply.</p>
+                                General bonus terms and conditions apply.
                             </li>
                             <li>
-                                <span>3.</span>
+                                3.
 
-                                <p>Players requesting a withdrawal of money won with a no deposit bonus cannot do so via
-                                    bank transfer.</p>
+                                Players requesting a withdrawal of money won with a no deposit bonus cannot do so via
+                                    bank transfer.
                             </li>
                             <li>
-                                <span>4.</span>
+                                4.
 
-                                <p>Players with disposable email addresses are not eligible for any free spins without
+                                Players with disposable email addresses are not eligible for any free spins without
                                     deposit. If a player despite this would receive free spins without a deposit being
-                                    made, all winnings from the spins will be confiscated.</p>
+                                    made, all winnings from the spins will be confiscated.
                             </li>
                             <li>
-                                <span>5a.</span>
+                                5a.
 
-                                <p>Players from the following countries are not eligible for the no deposit free spins:
+                                Players from the following countries are not eligible for the no deposit free spins:
                                     Albania (AL)
                                     Algeria (DZ)
                                     Angola (AO)
@@ -176,7 +154,7 @@ return [
                                     Comoros (KM)
                                     Croatia (HR)
                                     Czech Republic (CZ)
-                                    Côte d'Ivoire (CI)
+                                    Côte d\'Ivoire (CI)
                                     Djibouti (DJ)
                                     Egypt (EG)
                                     Equatorial Guinea (GQ)
@@ -247,81 +225,81 @@ return [
                                     Vietnam (VN)
                                     Yemen (YE)
                                     Zambia (ZM) and
-                                    Zimbabwe (ZW)</p>
+                                    Zimbabwe (ZW)
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <h4>FREE SPINS TERMS AND CONDITIONS</h4>
+                        FREE SPINS TERMS AND CONDITIONS
                         <ul>
                             <li>
-                                <span>1.</span>
+                                1.
 
-                                <p>When it comes to the 180 additional Free Spins that are a part of the welcome
+                                When it comes to the 180 additional Free Spins that are a part of the welcome
                                     package. A minimum of 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,250 RUB or 0.05 BTC is
-                                    required to receive the free spins. You also need to wager the amount once.</p>
+                                    required to receive the free spins. You also need to wager the amount once.
                             </li>
                             <li>
-                                <span>2.</span>
+                                2.
 
-                                <p>You do not have to enter a bonus code to qualify for free spins.</p>
+                                You do not have to enter a bonus code to qualify for free spins.
                             </li>
                             <li>
-                                <span>3.</span>
+                                3.
 
-                                <p>Any winnings generated from free spins will be awarded with a wagering requirement of
-                                    40 (forty).</p>
+                                Any winnings generated from free spins will be awarded with a wagering requirement of
+                                    40 (forty).
                             </li>
                             <li>
-                                <span>4.</span>
+                                4.
 
-                                <p>To activate your free spins you must access and open the game within 3 days of them
-                                    being credited, otherwise they will expire.</p>
+                                To activate your free spins you must access and open the game within 3 days of them
+                                    being credited, otherwise they will expire.
                             </li>
                             <li>
-                                <span>5.</span>
+                                5.
 
-                                <p>Once your free spins have been activated you must complete all game rounds within 1
-                                    days otherwise they will expire.</p>
+                                Once your free spins have been activated you must complete all game rounds within 1
+                                    days otherwise they will expire.
                             </li>
                             <li>
-                                <span>6.</span>
+                                6.
 
-                                <p>Casinobit reserves the right to cancel or amend these terms &amp; conditions at any
-                                    point without any prior notice.</p>
+                                Casinobit reserves the right to cancel or amend these terms &amp; conditions at any
+                                    point without any prior notice.
                             </li>
                             <li>
-                                <span>7.</span>
+                                7.
 
-                                <p>The 180 Free Spins that are being credited as a part of our welcome package will be
+                                The 180 Free Spins that are being credited as a part of our welcome package will be
                                     credited in increments of 20 per day for 9 days straight (as long as the player
                                     qualifies and meet all the requirements for the promotion). The first 20 Free Spins
                                     will be credited 23 hours after your first deposit and then in 24 hour increments
-                                    following the first crediting.</p>
+                                    following the first crediting.
                             </li>
                             <li>
-                                <span>8.</span>
+                                8.
 
-                                <p>Where Starburst is available, free spins will be credited on that game as a part of
+                                Where Starburst is available, free spins will be credited on that game as a part of
                                     the welcome package. If Starburst is not available due to currency or country
-                                    restriction, free spins will be given on Fruit Zen or Boomanji.</p>
+                                    restriction, free spins will be given on Fruit Zen or Boomanji.
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <h4>GENERAL BONUS TERMS AND CONDITIONS</h4>
+                        GENERAL BONUS TERMS AND CONDITIONS
                         <ul>
                             <li>
-                                <span>1.</span>
+                                1.
 
-                                <p>All customer offers are limited to one per person, family, household address, email
+                                All customer offers are limited to one per person, family, household address, email
                                     address, telephone number, same payment account number (e.g. debit or credit card,
-                                    NETeller etc), IP, and shared computer, e.g. public library or workplace.</p>
+                                    NETeller etc), IP, and shared computer, e.g. public library or workplace.
                             </li>
                             <li>
-                                <span>2.a</span>
+                                2.a
 
-                                <p>Players who are solely making deposits when there is a bonus available will risk of
+                                <span>Players who are solely making deposits when there is a bonus available will risk of
                                     having their winnings from the bonus confiscated and being left with the initial
                                     deposited amount of the bonus in question. Players who make 5 deposits in a row
                                     (excluding welcome package) to the casino and trigger a bonus on all of those will
@@ -333,255 +311,253 @@ return [
                                     bonus.<br><br>
 
                                     Decision if to confiscate funds will be made by the Casinobit Management and the
-                                    decision made will be final.</p>
+                                    decision made will be final.</span>
                             </li>
                             <li>
-                                <span>2b.</span>
+                                2b.
 
-                                <p>We reserve the right to not pay players using disposable email addresses</p>
+                                We reserve the right to not pay players using disposable email addresses
                             </li>
                             <li>
-                                <span>2c.</span>
-                                <p>Players from the following countries are not eligible for any promotional offer:
+                                2c.
+                                Players from the following countries are not eligible for any promotional offer:
                                     Greece (GR), Hungary (HU), Mauritius (MU), Slovenia (SI), Croatia (HR), Bosnia and
                                     Herzegovina (BA), Macedonia, Republic of (MK), Austria (AT) Montenegro (ME) and
-                                    Serbia (RS)</p>
+                                    Serbia (RS)
 
                             </li>
                             <li>
-                                <span>2d.</span>
+                                2d.
 
-                                <p>We reserve the right to lower the percentage of the Monday Reload bonus to a 25%
+                                We reserve the right to lower the percentage of the Monday Reload bonus to a 25%
                                     bonus for players who we deem have received an un-proportionate level of bonuses
-                                    based on their bonus release to deposit ratio.</p>
+                                    based on their bonus release to deposit ratio.
                             </li>
 
                             <li>
-                                <span>3.</span>
+                                3.
 
-                                <p>To claim the deposit welcome bonus or any deposit bonus (excluding free spins), the
+                                To claim the deposit welcome bonus or any deposit bonus (excluding free spins), the
                                     user must make a minimum deposit of 20 EUR/GBP/USD/CAD, 200 SEK/NOK, 1,250 RUB or 50
                                     mBTC. For example, the player will automatically receive their first bonus after
                                     depositing an initial 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,250 RUB or 0.05 BTC.
                                     The second deposit bonus will be triggered once the player makes a second deposit of
                                     20 EUR/GBP/USD/CAD, 200 SEK/NOK, 1,250 RUB or 50 mBTC or more at Casinobit. The same
-                                    rule applies for the third and the fourth deposit bonus.</p>
+                                    rule applies for the third and the fourth deposit bonus.
                             </li>
                             <li>
-                                <span>4.</span>
+                                4.
 
-                                <p>Once the first step of the welcome package is activated, the customer can then switch
+                                Once the first step of the welcome package is activated, the customer can then switch
                                     currency as follows, i.e. if a player deposits €20 and activates the first step of
-                                    welcome package, he can then claim the second step by depositing in bitcoins.</p>
+                                    welcome package, he can then claim the second step by depositing in bitcoins.
                             </li>
                             <li>
-                                <span>5.</span>
+                                5.
 
-                                <p>All bonuses (unless otherwise specified) need to be wagered 40 (forty) times before
-                                    the funds can be withdrawn.</p>
+                                All bonuses (unless otherwise specified) need to be wagered 40 (forty) times before
+                                    the funds can be withdrawn.
                             </li>
                             <li>
-                                <span>6.</span>
+                                6.
 
-                                <p>Please note that different games contribute to a different percentage towards the
+                                Please note that different games contribute to a different percentage towards the
                                     wagering requirements. Slots contribute 100% (aside from excluded ones and classic
                                     slots, see below), while all table games and video poker contribute 5% (live games
-                                    do not contribute).</p>
+                                    do not contribute).
                             </li>
                             <li>
-                                <span>7.</span>
+                                7.
 
-                                <p>The following games do not contribute towards the completion of the wagering
+                                The following games do not contribute towards the completion of the wagering
                                     requirement of a bonus: Immortal Romance, Aliens, Mega Moolah, Dead or Alive,
                                     Ragnarok, Pocket Dice, Lucky Angler, Eggomatic, Big Bang, The Dark Knight,
                                     Peek-A-Boo, Tomb Raider, The Dark Knight Rises, Forsaken Kingdom, Scrooge, Secret of
                                     the Stones, Champion of the Track, Robin Hood, Tomb Raider 2, Queen of Gold and
-                                    Castle Builder. </p>
-                                <p>Bloodsuckers, Bloodsuckers touch, Kings of Chicago, Simsalabim, Zombies, Jack Hammer
+                                    Castle Builder. 
+                                Bloodsuckers, Bloodsuckers touch, Kings of Chicago, Simsalabim, Zombies, Jack Hammer
                                     2, Jack Hammer 2 touch, Demolition Squad, Steam Tower, Reel Rush, Reel Rush touch,
                                     Muse: Wild Inspiration, Victorious, Victorious touch, Ghost Pirates, Johnny the
                                     Octopus and Mega Gems contribute at a 50% rate. Jackpot 6000, Mega Joker, Gypsy
-                                    Rose, Good Girl Bad Girl and Safari contribute at a 75% rate.</p>
-                                <p>Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil's Delight, The Wish Master
-                                    and Jackpot Games are not able to be played with bonus money. </p>
+                                    Rose, Good Girl Bad Girl and Safari contribute at a 75% rate.
+                                Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil\'s Delight, The Wish Master
+                                    and Jackpot Games are not able to be played with bonus money. 
                             </li>
                             <li>
-                                <span>8.</span>
+                                8.
 
-                                <p>Players can request a withdrawal of their deposited amount prior to meeting the
+                                Players can request a withdrawal of their deposited amount prior to meeting the
                                     wagering requirements. However, the bonus amount and winnings will be forfeited as a
                                     result. Please note that when playing with a bonus, real money gets exhausted
-                                    first.</p>
+                                    first.
                             </li>
                             <li>
-                                <span>9.</span>
+                                9.
 
-                                <p>All deposit and free cash bonuses will expire after 30 days, unless otherwise
-                                    stated.</p>
+                                All deposit and free cash bonuses will expire after 30 days, unless otherwise
+                                    stated.
                             </li>
                             <li>
-                                <span>10.</span>
+                                10.
 
-                                <p>Bonus funds and winnings will be forfeited upon expiry of the bonus.</p>
+                                Bonus funds and winnings will be forfeited upon expiry of the bonus.
                             </li>
                             <li>
-                                <span>11.</span>
+                                11.
 
-                                <p>When betting, placed bets are deducted from the player’s cash balance. However, if no
+                                When betting, placed bets are deducted from the player’s cash balance. However, if no
                                     cash balance is available the bet placed will be deducted from the player’s bonus
-                                    balance.</p>
+                                    balance.
                             </li>
                             <li>
-                                <span>12.</span>
+                                12.
 
-                                <p>Until the play through requirements have been met, the maximum bet that can be placed
+                                Until the play through requirements have been met, the maximum bet that can be placed
                                     is 5 EUR/GBP/USD/CAD/AUD, 50 SEK/NOK or 300 RUB. When it comes to Bitcoin players
                                     the maximum bet is 25 mBTC (0.025 BTC). This includes double up wagers after the
                                     game round has been completed, for example, wagering winnings from X game round on
-                                    red/black.</p>
+                                    red/black.
                             </li>
                             <li>
-                                <span>13.</span>
+                                13.
 
-                                <p>Any bonus can be removed prior to any wagering conditions being met. Please contact
-                                    Casinobit support to learn more or use the forfeit button under ’Bonuses’.</p>
+                                Any bonus can be removed prior to any wagering conditions being met. Please contact
+                                    Casinobit support to learn more or use the forfeit button under ’Bonuses’.
                             </li>
                             <li>
-                                <span>14.</span>
+                                14.
 
-                                <p>Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked".
+                                Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked".
                                     Casinobit.com management reserve the right to void any bonuses and/or winnings
-                                    obtained by fraudulent behavior.</p>
+                                    obtained by fraudulent behavior.
                             </li>
                             <li>
-                                <span>15.</span>
+                                15.
 
-                                <p>Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has
-                                    been wagered, lost or forfeited shall be removed.</p>
+                                Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has
+                                    been wagered, lost or forfeited shall be removed.
                             </li>
                             <li>
-                                <span>16.</span>
+                                16.
 
-                                <p>All withdrawals will be subject to an internal audit before being processed.
+                                All withdrawals will be subject to an internal audit before being processed.
                                     Casinobit reserves all rights to void Bonuses or any winnings for failed audits.
-                                    Player hereby consents in advance to same.</p>
+                                    Player hereby consents in advance to same.
                             </li>
                             <li>
-                                <span>17.</span>
+                                17.
 
-                                <p>If, upon such a review, it appears that a Player(s) are participating in strategies,
+                                If, upon such a review, it appears that a Player(s) are participating in strategies,
                                     taking advantage of any software or system bug or failure, or participating in any
                                     form of activity that Casinobit, in its sole and complete discretion, deems to be
-                                    abusive ('Promotion Abuse'), Casinobit reserves the right to revoke the entitlement
+                                    abusive (\'Promotion Abuse\'), Casinobit reserves the right to revoke the entitlement
                                     of such a Player to receive or benefit from the promotion (and/or withhold the pay
                                     out of the proceeds of such abuse to the Player/s in question). Only fully settled
-                                    bets (i.e. bets that result in a win or loss) will be counted towards wagering.</p>
+                                    bets (i.e. bets that result in a win or loss) will be counted towards wagering.
                             </li>
                             <li>
-                                <span>18.</span>
+                                18.
 
-                                <p>Multiple accounts are not permitted. Creating more than one accounts with Casinobit
+                                Multiple accounts are not permitted. Creating more than one accounts with Casinobit
                                     in order to claim any bonuses is deemed as bonus abuse and may result in confiscated
-                                    funds.</p>
+                                    funds.
                             </li>
                             <li>
-                                <span>19.</span>
+                                19.
 
-                                <p>Bonus round and free spins do not qualify for the jackpot bonuses pursuant to casino
-                                    software provider rules. Only real money rounds qualify for the jackpot bonuses.</p>
+                                Bonus round and free spins do not qualify for the jackpot bonuses pursuant to casino
+                                    software provider rules. Only real money rounds qualify for the jackpot bonuses.
                             </li>
                             <li>
-                                <span>20.</span>
+                                20.
 
-                                <p>Minimal risk bets on any games (i.e. betting in proportions on different outcomes in
+                                Minimal risk bets on any games (i.e. betting in proportions on different outcomes in
                                     the same hand to create "action" with minimal risk) do not qualify for completing
                                     the wagering requirement. Examples of minimal risk bets include betting on red and
                                     black simultaneously in Roulette, and betting player and banker simultaneously in
                                     Baccarat. Players who are found to be adopting these practices risk of having their
-                                    bonus and winnings confiscated. </p>
+                                    bonus and winnings confiscated. 
                             </li>
                             <li>
-                                <span>21.</span>
+                                21.
 
-                                <p>If it's discovered that a group players are using the same betting patterns and are
+                                If it\'s discovered that a group players are using the same betting patterns and are
                                     connected via (but not limited to) location, banking pattern or IP, Casinobit
-                                    management will at it's own discretion have the mandate to confiscate bonus winnings
-                                    and/or deposit. </p>
+                                    management will at it\'s own discretion have the mandate to confiscate bonus winnings
+                                    and/or deposit. 
                             </li>
                             <li>
-                                <span>22.</span>
+                                22.
 
-                                <p>If not stated otherwise, bonus money derived from free spins given on Softswiss games
-                                    can only be wagered on other Softswiss games. </p>
+                                If not stated otherwise, bonus money derived from free spins given on Softswiss games
+                                    can only be wagered on other Softswiss games. 
                             </li>
 
 
                             <li>
-                                <span>23.</span>
+                                23.
 
-                                <p>If, while playing at Casinobit Casino, you win a sum regarded by Casinobit Management
+                                If, while playing at Casinobit Casino, you win a sum regarded by Casinobit Management
                                     as worthy of publicity, you agree to make yourself available for any event of such
                                     nature arranged by Casinobit. While Casinobit protects all personal data entrusted
                                     to us, we reserve the right to use first names and the first initial of the last
                                     name in any Casinobit announcement about promotion results or on the website or
-                                    lobby.</p>
+                                    lobby.
                             </li>
                             <li>
-                                <span>24.</span>
+                                24.
 
-                                <p>Regarding the bonuses and promotions, all times and dates are stated in CET.</p>
+                                Regarding the bonuses and promotions, all times and dates are stated in CET.
                             </li>
 
                             <li>
-                                <span>25.</span>
+                                25.
 
-                                <p>In the event of any dispute, the decision of Casinobit will be final.</p>
+                                In the event of any dispute, the decision of Casinobit will be final.
                             </li>
                             <li>
-                                <span>26.</span>
+                                26.
 
-                                <p>The Casinobit and Conditions as published on the Website (and updated from time to
+                                The Casinobit and Conditions as published on the Website (and updated from time to
                                     time) are in English and it is the English version of these Terms and Conditions
                                     that form the basis of these Terms and Conditions only. Translations into other
                                     languages may be made as a service and are made in good faith. However, in the event
                                     of differences between the English version and a translation, the English version
-                                    has priority over any translation.</p>
+                                    has priority over any translation.
                             </li>
                             <li>
-                                <p>Last updated: Mar 3rd, 2017</p>
+                                Last updated: Mar 3rd, 2017
                             </li>
 
                         </ul>
                     </li>
-                </ul>
-EOT
-    ,
-    'deposit_space' => 'D e p o s i t',
-    'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
-    'open_bonus' => 'Open Bonuses',
-    'credits' => 'credits',
-    'add_credits' => 'Add Credits',
-    'minimum_deposit' => 'Minimum deposit is 1 mBTC',
-    'send_your_bitcoins' => 'Send your Bitcoins to this address:',
-    'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
-    'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
-    'your_bitcoin_address' => 'Your Bitcoin address',
-    'enter_here' => 'Enter here',
-    'amount_mbtc' => 'Amount mBTC',
-    'open_history' => 'Open History',
-    'your_withdraws' => 'Your Withdraws',
-    'cancel' => 'Cancel',
-    'activate' => 'Activate',
-    'change_password' => 'Change Password',
-    'confirm_email' => 'Confirm email',
-    'old_password' => 'Old password',
-    'new_password' => 'New password',
-    'confirm_password' => 'Confirm password',
-    'confirmation' => 'Confirmation',
-    'update' => 'update',
-    'email_confirmation' => 'Email confirmation',
-    'email' => 'Email',
-    'send_mail' => 'Send MAIL',
-	'language' => 'Language'
-
-];
+                </ul>',
+  'deposit_space' => 'D e p o s i t',
+  'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
+  'open_bonus' => 'Open Bonuses',
+  'credits' => 'credits',
+  'add_credits' => 'Add Credits',
+  'minimum_deposit' => 'Minimum deposit is 1 mBTC',
+  'send_your_bitcoins' => 'Send your Bitcoins to this address:',
+  'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
+  'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
+  'your_bitcoin_address' => 'Your Bitcoin address',
+  'enter_here' => 'Enter here',
+  'amount_mbtc' => 'Amount mBTC',
+  'open_history' => 'Open History',
+  'your_withdraws' => 'Your Withdraws',
+  'cancel' => 'Cancel',
+  'activate' => 'Activate',
+  'change_password' => 'Change Password',
+  'confirm_email' => 'Confirm email',
+  'old_password' => 'Old password',
+  'new_password' => 'New password',
+  'confirm_password' => 'Confirm password',
+  'confirmation' => 'Confirmation',
+  'update' => 'update',
+  'email_confirmation' => 'Email confirmation',
+  'email' => 'Email',
+  'send_mail' => 'Send MAIL',
+  'language' => 'Language',
+)
+?>

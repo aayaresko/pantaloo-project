@@ -52,7 +52,7 @@ class BannerController extends Controller
         $banner->size = $size[0] . ' x ' . $size[1];
         $banner->save();
 
-        return redirect()->route('admin.banners')->with('msg', 'Banner was created!');
+        return redirect()->route('banners.create')->with('msg', 'Banner was created!');
     }
 
     public function delete(Banner $banner)
