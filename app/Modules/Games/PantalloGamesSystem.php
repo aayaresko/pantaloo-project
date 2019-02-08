@@ -315,7 +315,9 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
-                        if ($balanceAfterTransaction < 0) {
+                        if ($userAfterUpdate->bonus_balance < 0
+                            or $userAfterUpdate->balance < 0
+                            or $balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
                         }
 
@@ -409,7 +411,9 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
-                        if ($balanceAfterTransaction < 0) {
+                        if ($userAfterUpdate->bonus_balance < 0
+                            or $userAfterUpdate->balance < 0
+                            or $balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
                         }
 
@@ -518,7 +522,9 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
-                        if ($balanceAfterTransaction < 0) {
+                        if ($userAfterUpdate->bonus_balance < 0
+                            or $userAfterUpdate->balance < 0
+                            or $balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
                         }
 
