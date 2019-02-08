@@ -6060,7 +6060,10 @@ html.cropped {
   /* line 1190, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob {
     padding-top: 629px;
-    padding-bottom: 287px;
+    padding-bottom: 60px;
+  }
+  .mobile-container .welcome-mob .bitcoin-block {
+    margin-top: 70px;
   }
   /* line 1193, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .side-name {
