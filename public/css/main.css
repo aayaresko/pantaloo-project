@@ -1014,11 +1014,11 @@ header.header.active .promo-actions-block .promo-action-btn {
   background-position: -428px -40px;
 }
 .mobile-menu .games-listing li a.poker:before {
-  background-position: -362px -53px;
+  background-position: 135px -53px;
   width: 37px;
   height: 37px;
-  left: 10px;
   top: 68%;
+  left: 10px;
 }
 /* line 704, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a:hover {
@@ -6735,6 +6735,7 @@ html.cropped {
     background-position: 135px -53px;
     height: 32px;
     width: 37px;
+    left: 0;
   }
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {
