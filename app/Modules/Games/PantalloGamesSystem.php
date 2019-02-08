@@ -5,6 +5,7 @@ namespace App\Modules\Games;
 use DB;
 use Log;
 use App\User;
+use Symfony\Component\Console\Helper\Helper;
 use Validator;
 use App\RawLog;
 use App\Transaction;
@@ -170,13 +171,13 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function callback($request)
     {
-
         $debugGame = new DebugGame();
         $debugGame->start();
 
         DB::beginTransaction();
         try {
             //validation
+            $modePlay = 0; //play real money
             $params = [];
             $requestParams = $request->query();
             Log::info($requestParams);
@@ -206,8 +207,9 @@ class PantalloGamesSystem implements GamesSystem
                 'users.id as id',
                 'users.balance as balance',
                 'users.bonus_balance as bonus_balance',
+                DB::raw('(users.balance + users.bonus_balance) as full_balance'),
                 'affiliates.id as partner_id',
-                'affiliates.commission as partner_commission'
+                'affiliates.commission as partner_commission',
             ];
 
             $params['user'] = User::select($userFields)
@@ -224,9 +226,14 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Game is not found');
             }
 
-            $balanceBefore = (float)$params['user']->balance;
+            $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
+            }
+
+            if (!is_null($params['user']->bonus) and (float)$params['user']->balance < 0) {
+                $modePlay = 1;//mode play bonus money
             }
             $action = $requestParams['action'];
 
@@ -234,7 +241,7 @@ class PantalloGamesSystem implements GamesSystem
                 case 'balance':
                     $response = [
                         'status' => 200,
-                        'balance' => (float)$params['user']->balance
+                        'balance' => $balanceBefore
                     ];
                     break;
                 case 'debit':
@@ -270,7 +277,7 @@ class PantalloGamesSystem implements GamesSystem
 
                     if (is_null($transaction)) {
                         //create and return value
-                        if (abs($amount) > $params['user']->balance) {
+                        if (abs($amount) > $balanceBefore) {
                             throw new \Exception('Insufficient funds', 403);
                         }
 
@@ -280,22 +287,33 @@ class PantalloGamesSystem implements GamesSystem
                         $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
-                            'sum' => $amount,
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
                             'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
                             'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
+                        if ($modePlay === 0) {
+                            $createParams['sum'] = $amount;
+                        } else {
+                            $createParams['bonus_sum'] = $amount;
+                        }
+
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
+                        $updateBalance = [];
+                        if ($modePlay === 0) {
+                            $updateUser['balance'] = DB::raw("balance+$amount");
+                        } else {
+                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
+                        }
+
                         User::where('id', $params['user']->id)
-                            ->update([
-                                'balance' => DB::raw("balance+$amount")
-                            ]);
-                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = (float)$userAfterUpdate->balance;
+                            ->update($updateBalance);
+
+                        $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
+                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
                         if ($balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
@@ -306,10 +324,11 @@ class PantalloGamesSystem implements GamesSystem
                             'transaction_id' => $transaction->id,
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
-                            'balance_before' => $params['user']->balance,
+                            'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             'game_id' => $params['game']->id
                         ];
+
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
                     } else {
@@ -362,22 +381,33 @@ class PantalloGamesSystem implements GamesSystem
                         $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
-                            'sum' => $amount,
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
                             'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
                             'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
+                        if ($modePlay === 0) {
+                            $createParams['sum'] = $amount;
+                        } else {
+                            $createParams['bonus_sum'] = $amount;
+                        }
+
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
+                        $updateBalance = [];
+                        if ($modePlay === 0) {
+                            $updateUser['balance'] = DB::raw("balance+$amount");
+                        } else {
+                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
+                        }
+
                         User::where('id', $params['user']->id)
-                            ->update([
-                                'balance' => DB::raw("balance+$amount")
-                            ]);
-                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = (float)$userAfterUpdate->balance;
+                            ->update($updateBalance);
+
+                        $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
+                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
                         if ($balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
@@ -388,7 +418,7 @@ class PantalloGamesSystem implements GamesSystem
                             'transaction_id' => $transaction->id,
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
-                            'balance_before' => $params['user']->balance,
+                            'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             'game_id' => $params['game']->id
                         ];
@@ -431,7 +461,7 @@ class PantalloGamesSystem implements GamesSystem
                         $amountTransaction = (float)$transactionHas->amount;
                     } else {
                         //CHECK THIS = ASK MAX
-                        if ((float)$transactionHas->amount > $params['user']->balance) {
+                        if ((float)$transactionHas->amount > $balanceBefore) {
                             throw new \Exception('Insufficient funds', 403);
                         }
                         $amountTransaction = (-1) * (float)$transactionHas->amount;
@@ -460,22 +490,33 @@ class PantalloGamesSystem implements GamesSystem
                         $createParams = [
                             'type' => $typeId,
                             'comment' => 'Pantallo games',
-                            'sum' => $amount,
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
                             'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
                             'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
+                        if ($modePlay === 0) {
+                            $createParams['sum'] = $amount;
+                        } else {
+                            $createParams['bonus_sum'] = $amount;
+                        }
+
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
+                        $updateBalance = [];
+                        if ($modePlay === 0) {
+                            $updateUser['balance'] = DB::raw("balance+$amount");
+                        } else {
+                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
+                        }
+
                         User::where('id', $params['user']->id)
-                            ->update([
-                                'balance' => DB::raw("balance+$amount")
-                            ]);
-                        $userAfterUpdate = User::where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = (float)$userAfterUpdate->balance;
+                            ->update($updateBalance);
+
+                        $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
+                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
                         if ($balanceAfterTransaction < 0) {
                             throw new \Exception('Insufficient funds', 403);
@@ -486,7 +527,7 @@ class PantalloGamesSystem implements GamesSystem
                             'transaction_id' => $transaction->id,
                             'action_id' => $typesActions[$caseAction],
                             'amount' => $amount,
-                            'balance_before' => $params['user']->balance,
+                            'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             //check null for ald transaction
                             'game_id' => !is_null($transactionHas->game_id)
@@ -501,15 +542,6 @@ class PantalloGamesSystem implements GamesSystem
                         'status' => 200,
                         'balance' => (float)$balance
                     ];
-                    if (isset($balanceAfterTransaction)) {
-                        if ($balanceAfterTransaction < 0) {
-                            DB::rollBack();
-                            $response = [
-                                'status' => 403,
-                                'msg' => 'Insufficient funds'
-                            ];
-                        }
-                    }
                     break;
                 default:
                     throw new \Exception('Action is not found');

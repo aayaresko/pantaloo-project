@@ -32,7 +32,8 @@ class TestController extends Controller
             'users.bonus_balance as bonus_balance',
             'affiliates.id as partner_id',
             'affiliates.commission as partner_commission',
-            DB::raw('(select user_bonuses.id from `user_bonuses` where `user_id` = users.id and `activated` = 0) as bonus')
+            DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+            DB::raw('(select user_bonuses.id from `user_bonuses` where `user_id` = users.id and `activated` = 1) as bonus')
 
         ];
 
