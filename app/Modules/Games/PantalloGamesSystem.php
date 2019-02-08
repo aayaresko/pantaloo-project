@@ -225,7 +225,7 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $balanceBefore = (float)$params['user']->balance;
-            if ((float)$params['user']->balance < 0) {
+            if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
             $action = $requestParams['action'];
@@ -297,6 +297,10 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
+                        if ($balanceAfterTransaction < 0) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
                         $pantalloTransaction = [
                             'system_id' => $externalTransactionId,
                             'transaction_id' => $transaction->id,
@@ -315,15 +319,6 @@ class PantalloGamesSystem implements GamesSystem
                         'status' => 200,
                         'balance' => (float)$balance
                     ];
-                    if (isset($balanceAfterTransaction)) {
-                        if ($balanceAfterTransaction < 0) {
-                            DB::rollBack();
-                            $response = [
-                                'status' => 403,
-                                'msg' => 'Insufficient funds'
-                            ];
-                        }
-                    }
                     break;
                 case 'credit':
                     $caseAction = 'credit';
@@ -384,6 +379,10 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
+                        if ($balanceAfterTransaction < 0) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
                         $pantalloTransaction = [
                             'system_id' => $externalTransactionId,
                             'transaction_id' => $transaction->id,
@@ -402,15 +401,6 @@ class PantalloGamesSystem implements GamesSystem
                         'status' => 200,
                         'balance' => (float)$balance
                     ];
-                    if (isset($balanceAfterTransaction)) {
-                        if ($balanceAfterTransaction < 0) {
-                            DB::rollBack();
-                            $response = [
-                                'status' => 403,
-                                'msg' => 'Insufficient funds'
-                            ];
-                        }
-                    }
                     break;
                 case 'rollback':
                     $caseAction = 'rollback';
@@ -487,6 +477,10 @@ class PantalloGamesSystem implements GamesSystem
                         $userAfterUpdate = User::where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = (float)$userAfterUpdate->balance;
 
+                        if ($balanceAfterTransaction < 0) {
+                            throw new \Exception('Insufficient funds', 403);
+                        }
+
                         $pantalloTransaction = [
                             'system_id' => $externalTransactionId,
                             'transaction_id' => $transaction->id,
@@ -533,7 +527,7 @@ class PantalloGamesSystem implements GamesSystem
 
             if ($errorCode) {
                 $response['status'] = $errorCode;
-                $response['balance'] = $balanceBefore;
+                $response['balance'] = isset($balanceBefore) ? $balanceBefore : null;
             }
         }
         DB::commit();

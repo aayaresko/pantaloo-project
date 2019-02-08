@@ -25,6 +25,21 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $userFields = [
+            'users.id as id',
+            'users.balance as balance',
+            'users.bonus_balance as bonus_balance',
+            'affiliates.id as partner_id',
+            'affiliates.commission as partner_commission',
+            DB::raw('(select user_bonuses.id from `user_bonuses` where `user_id` = users.id and `activated` = 0) as bonus')
+
+        ];
+
+        $user = User::select($userFields)
+            ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+            ->where('users.id', 136)->first()->toArray();
+        dd($user);
         dd(2);
         $client = new Client([
             'verify' => false,
