@@ -10,7 +10,8 @@
 
 @section('js')
     <script>
-        $(".showImage").on("click", function() {
+        $(".showImage").on("click", function(e) {
+            e.preventDefault();
             let imageSrc = $(this).children().attr('src');
             $('#imagepreview').attr('src', imageSrc);
             $('#imagemodal').modal('show');
