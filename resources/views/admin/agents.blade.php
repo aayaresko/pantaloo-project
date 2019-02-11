@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Agents
+    Affiliates
 @endsection
 
 @section('content')
@@ -43,7 +43,7 @@
                                                     <table class="table table-striped m-0">
                                                         <form method="POST" action="{{route('admin.agentCommission', $agent['agent'])}}">
                                                             {{csrf_field()}}
-                                                            <h4>Agent</h4>
+                                                            <h4>Affiliate</h4>
                                                             {{$agent['agent']->email}}
                                                             <h4>Commission</h4>
                                                             <input type="text" name="commission" value="{{$agent['agent']->commission}}" class="form-control" style="text-align: center;">
