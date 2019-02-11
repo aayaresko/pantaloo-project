@@ -16,7 +16,7 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">#</th>
-                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Agent</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Affiliate</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Users</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Procent</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Next payment</th>
