@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
-
+use Carbon\Carbon;
 use DB;
 use App\User;
 use Validator;
@@ -25,6 +24,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $now = Carbon::now();
+        dd($now);
+        dd($now->format('U'));
+
         dd(2);
         $client = new Client([
             'verify' => false,
