@@ -2,8 +2,8 @@
 
 namespace App\Bonuses;
 
-use App\UserBonus;
 use Carbon\Carbon;
+use App\UserBonus;
 
 class FreeSpins extends \App\Bonuses\Bonus
 {
@@ -19,15 +19,17 @@ class FreeSpins extends \App\Bonuses\Bonus
             $played_sum = $this->getPlayedSum();
 
             return floor($played_sum / $this->get('wagered_sum') * 100);
-        } else return 0;
+        } else {
+            return 0;
+        }
     }
 
     public function getPlayedSum()
     {
         if ($this->active_bonus->activated == 1) {
-            return -1 * $this->user->transactions()->where('id', '>', $this->get('transaction_id'))->where('type', 1)->sum('bonus_sum');
+            return -1 * $this->user->transactions()
+                    ->where('id', '>', $this->get('transaction_id'))->where('type', 1)->sum('bonus_sum');
         }
-
         return 0;
     }
 
@@ -42,7 +44,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $configBonus = config('bonus.freeSpins');
         $timeActiveBonusSeconds = $configBonus['afterRegistrationActive'];
         $createdUser = $user->created_at;
-        $allowedDate  = $createdUser->modify("+$timeActiveBonusSeconds second");
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSeconds second");
         $currentDate = new Carbon();
 
         if ($this->active_bonus) {
@@ -87,16 +89,22 @@ class FreeSpins extends \App\Bonuses\Bonus
         if ($this->active_bonus->activated == 1) return true;
 
         if ($this->user->free_spins == 0) {
-            $transaction = $this->user->transactions()->whereIn('type', [9, 10])->orderBy('id', 'DESC')->first();
+
+            $transaction = $this->user->transactions()
+                ->whereIn('type', [9, 10])->orderBy('id', 'DESC')->first();
 
             $now = Carbon::now();
 
             if ($now->format('U') - $transaction->created_at->format('U') > 60) {
-                if (!$transaction) throw new \Exception('Transaction not found');
+                if (!$transaction) {
+                    throw new \Exception('Transaction not found');
+                }
 
                 $free_spin_win = $this->user->transactions()->where('type', 10)->sum('bonus_sum');
 
-                if ($free_spin_win < 1) $free_spin_win = 1;
+                if ($free_spin_win < 1) {
+                    $free_spin_win = 1;
+                }
 
                 $this->set('free_spin_win', $free_spin_win);
                 $this->set('wagered_sum', $free_spin_win * $this->play_factor);
@@ -117,7 +125,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $configBonus = config('bonus.freeSpins');
         $timeActiveBonusSeconds = $configBonus['afterRegistrationActive'];
         $createdUser = $user->created_at;
-        $allowedDate  = $createdUser->modify("+$timeActiveBonusSeconds second");
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSeconds second");
         $currentDate = new Carbon();
 
         if ($allowedDate > $currentDate) {
