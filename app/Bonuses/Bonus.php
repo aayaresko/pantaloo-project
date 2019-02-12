@@ -122,4 +122,6 @@ abstract class Bonus
     abstract public function getPercent();
 
     abstract public function getPlayedSum();
+
+    abstract public function bonusAvailable();
 }

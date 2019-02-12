@@ -23,4 +23,12 @@ class Bonus_200 extends Bonus_100
             return false;
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function bonusAvailable()
+    {
+        return true;
+    }
 }
