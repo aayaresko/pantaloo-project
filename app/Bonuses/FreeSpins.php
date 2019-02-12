@@ -132,6 +132,10 @@ class FreeSpins extends \App\Bonuses\Bonus
             return false;
         }
 
+        if ($this->user->bonuses()->withTrashed()->count() > 0) {
+            return false;
+        }
+
         return true;
     }
 }
