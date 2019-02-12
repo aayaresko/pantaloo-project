@@ -17,12 +17,12 @@ class BonusController extends Controller
         $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
 
         //check bonus
-//        $bonuses = $bonuses->filter(function ($item) {
-//            $bonusClass = $item->getClass();
-//            $bonusObject = new $bonusClass(Auth::user());
-//            //check
-//            return $bonusObject->bonusAvailable();
-//        });
+        $bonuses = $bonuses->filter(function ($item) {
+            $bonusClass = $item->getClass();
+            $bonusObject = new $bonusClass(Auth::user());
+            //check
+            return $bonusObject->bonusAvailable();
+        });
 
         $active_bonus = Auth::user()->bonuses()->first();
 
