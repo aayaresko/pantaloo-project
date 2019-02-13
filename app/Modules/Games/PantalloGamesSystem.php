@@ -212,7 +212,13 @@ class PantalloGamesSystem implements GamesSystem
                 'affiliates.commission as partner_commission',
             ];
 
-            $params['user'] = User::select($userFields)
+            //add additional fields
+            $additionalFieldsUser = [
+                'affiliates.id as partner_id',
+                'affiliates.commission as partner_commission',
+            ];
+
+            $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
                 ->where('users.id', $params['session']->user_id)->first();
 
