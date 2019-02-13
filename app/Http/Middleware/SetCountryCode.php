@@ -18,6 +18,8 @@ class SetCountryCode
     {
         try
         {
+            //$exceptions = ['127.0.0.1'];
+
             if(!$request->session()->has('iso_code'))
             {
                 if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))
@@ -29,6 +31,7 @@ class SetCountryCode
                     $ip = $request->server('REMOTE_ADDR');
                 }
 
+                //to do this job edit session way
                 $ip = geoip($ip);
 
                 session(['iso_code' => $ip['iso_code']]);
