@@ -1,8 +1,0 @@
-{"apiversion":"1.0.0","loginname":"6","password":"00000","request":"result","device":"desktop","accountid":"6","gamemodel":"5reels","gamesessionid":"581329a6c53e41088354206-368f3d332b131bd30500bc0f8733ca9d","gamestatus":"completed","gametype":"slots","gpgameid":"bookofra","gpid":"50","nogsgameid":"50","product":"casino","result":"0.0","roundid":"14096590","transactionid":"47074555","signature":""}
-
-<?xml version="1.0" encoding="UTF-8" ?>
-<RSP request="result" rc="0">
-<ACCOUNTTRANSACTIONID>357</ACCOUNTTRANSACTIONID>
-<BALANCE>2042.61201</BALANCE>
-<APIVERSION>1.2</APIVERSION>
-</RSP>
