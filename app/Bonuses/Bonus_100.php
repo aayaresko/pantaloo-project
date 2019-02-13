@@ -110,4 +110,12 @@ class Bonus_100 extends \App\Bonuses\Bonus
             }
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function bonusAvailable()
+    {
+        return true;
+    }
 }

@@ -1014,11 +1014,11 @@ header.header.active .promo-actions-block .promo-action-btn {
   background-position: -428px -40px;
 }
 .mobile-menu .games-listing li a.poker:before {
-  background-position: -362px -53px;
+  background-position: 135px -53px;
   width: 37px;
   height: 37px;
-  left: 10px;
   top: 68%;
+  left: 10px;
 }
 /* line 704, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a:hover {
@@ -6060,7 +6060,10 @@ html.cropped {
   /* line 1190, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob {
     padding-top: 629px;
-    padding-bottom: 287px;
+    padding-bottom: 60px;
+  }
+  .mobile-container .welcome-mob .bitcoin-block {
+    margin-top: 70px;
   }
   /* line 1193, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .side-name {
@@ -6072,7 +6075,7 @@ html.cropped {
   /* line 1199, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block {
     max-width: 600px;
-    margin-bottom: 440px;
+    margin-bottom: 210px;
   }
   /* line 1202, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .category-title {
@@ -6735,6 +6738,7 @@ html.cropped {
     background-position: 135px -53px;
     height: 32px;
     width: 37px;
+    left: 0;
   }
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {

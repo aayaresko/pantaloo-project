@@ -151,7 +151,7 @@
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Agent </span> <span class="menu-arrow"></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliate </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="{{route('admin.agents')}}">Accounts</a></li>
                                 <li><a href="{{route('admin.agentPayments')}}">Withdraws</a></li>

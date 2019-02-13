@@ -49,8 +49,9 @@ abstract class Bonus
 
         $this->user->changeBalance($transaction);
 
-        if ($this->user->bonus_balance == 0)
+        if ($this->user->bonus_balance == 0) {
             $this->active_bonus->delete();
+        }
     }
 
     public function close()
@@ -122,4 +123,6 @@ abstract class Bonus
     abstract public function getPercent();
 
     abstract public function getPlayedSum();
+
+    abstract public function bonusAvailable();
 }

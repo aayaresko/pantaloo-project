@@ -70,7 +70,7 @@
                                     <a href="#home1" role="tab" data-toggle="tab" aria-expanded="false">Users</a>
                                 </li>
                                 <li role="presentation" class="">
-                                    <a href="#profile1" role="tab" data-toggle="tab" aria-expanded="true">Trackers</a>
+                                    <a href="#profile1" role="tab" data-toggle="tab" aria-expanded="true">Links</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -113,8 +113,8 @@
                                     <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
                                         <thead>
                                         <tr role="row">
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Tracker</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Enters</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Campaign Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Clicks</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Registrations</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>

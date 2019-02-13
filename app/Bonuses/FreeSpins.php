@@ -1,35 +1,35 @@
 <?php
+
 namespace App\Bonuses;
 
-use App\UserBonus;
 use Carbon\Carbon;
+use App\UserBonus;
 
 class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 3;
     protected $max_sum = 100;
     protected $play_factor = 40;
-    protected $expire_days = 14;
+    protected $expire_days = 1;
     protected $free_spins = 50;
 
     public function getPercent()
     {
-        if($this->active_bonus->activated == 1)
-        {
+        if ($this->active_bonus->activated == 1) {
             $played_sum = $this->getPlayedSum();
 
-            return floor($played_sum/$this->get('wagered_sum')*100);
+            return floor($played_sum / $this->get('wagered_sum') * 100);
+        } else {
+            return 0;
         }
-        else return 0;
     }
 
     public function getPlayedSum()
     {
-        if($this->active_bonus->activated == 1)
-        {
-            return -1 * $this->user->transactions()->where('id', '>', $this->get('transaction_id'))->where('type', 1)->sum('bonus_sum');
+        if ($this->active_bonus->activated == 1) {
+            return -1 * $this->user->transactions()
+                    ->where('id', '>', $this->get('transaction_id'))->where('type', 1)->sum('bonus_sum');
         }
-
         return 0;
     }
 
@@ -40,9 +40,32 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     public function activate()
     {
-        if($this->active_bonus) throw new \Exception('You already use bonus');
-        if($this->user->transactions()->deposits()->count() > 0) throw new \Exception('This bonus available only before deposit');
-        if($this->user->bonuses()->withTrashed()->count() > 0) throw new \Exception('You can\'t use this bonus');
+        $user = $this->user;
+        $configBonus = config('bonus.freeSpins');
+        $timeActiveBonusSeconds = $configBonus['afterRegistrationActive'];
+        $createdUser = $user->created_at;
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSeconds second");
+        $currentDate = new Carbon();
+
+        if ($this->active_bonus) {
+            throw new \Exception('You already use bonus');
+        }
+
+        if ($this->user->transactions()->deposits()->count() > 0) {
+            throw new \Exception('This bonus available only before deposit');
+        }
+
+        if ($this->user->bonuses()->withTrashed()->count() > 0) {
+            throw new \Exception('You can\'t use this bonus');
+        }
+
+        if ((int)$user->email_confirmed === 0) {
+            throw new \Exception('Your email is not confirm');
+        }
+
+        if ($allowedDate > $currentDate) {
+            throw new \Exception('You can\'t use this bonus. Read terms.');
+        }
 
         $date = Carbon::now();
         $date->modify('+' . $this->expire_days . 'days');
@@ -62,20 +85,27 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     public function realActivation()
     {
-        if($this->active_bonus->activated == 1) return true;
+        if ($this->active_bonus->activated == 1) {
+            return true;
+        }
 
-        if($this->user->free_spins == 0)
-        {
-            $transaction = $this->user->transactions()->whereIn('type', [9, 10])->orderBy('id', 'DESC')->first();
+        if ($this->user->free_spins == 0) {
+            //to do check transaction on win or on free - identife this transaction
+            $transaction = $this->user->transactions()
+                ->whereIn('type', [9, 10])->orderBy('id', 'DESC')->first();
 
             $now = Carbon::now();
 
-            if($now->format('U') - $transaction->created_at->format('U') > 60) {
-                if (!$transaction) throw new \Exception('Transaction not found');
+            if ($now->format('U') - $transaction->created_at->format('U') > 60) {
+                if (!$transaction) {
+                    throw new \Exception('Transaction not found');
+                }
 
                 $free_spin_win = $this->user->transactions()->where('type', 10)->sum('bonus_sum');
 
-                if($free_spin_win < 1) $free_spin_win = 1;
+                if ($free_spin_win < 1) {
+                    $free_spin_win = 1;
+                }
 
                 $this->set('free_spin_win', $free_spin_win);
                 $this->set('wagered_sum', $free_spin_win * $this->play_factor);
@@ -85,5 +115,53 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $this->active_bonus->save();
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function bonusAvailable()
+    {
+        return true;
+        $user = $this->user;
+        $configBonus = config('bonus.freeSpins');
+        $timeActiveBonusSeconds = $configBonus['afterRegistrationActive'];
+        $createdUser = $user->created_at;
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSeconds second");
+        $currentDate = new Carbon();
+
+        if ($allowedDate > $currentDate) {
+            return false;
+        }
+
+        if ($this->user->bonuses()->withTrashed()->count() > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function cancel($reason = false)
+    {
+        if ($this->hasBonusTransactions()) {
+            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+        }
+
+        $transaction = new Transaction();
+        $transaction->bonus_sum = -1 * $this->user->bonus_balance;
+        $transaction->sum = 0;
+        $transaction->comment = $reason;
+        $transaction->type = 6;
+        $transaction->user()->associate($this->user);
+
+        $this->user->changeBalance($transaction);
+
+        if ($this->user->bonus_balance == 0) {
+            $this->active_bonus->delete();
+        }
+
+        //to do cancel
+        //to write to db
     }
 }

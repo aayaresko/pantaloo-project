@@ -16,6 +16,14 @@ class BonusController extends Controller
         //to do if bounus be actived for this user
         $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
 
+        //check bonus
+        $bonuses = $bonuses->filter(function ($item) {
+            $bonusClass = $item->getClass();
+            $bonusObject = new $bonusClass(Auth::user());
+            //check
+            return $bonusObject->bonusAvailable();
+        });
+
         $active_bonus = Auth::user()->bonuses()->first();
 
         if ($active_bonus) {
@@ -34,6 +42,7 @@ class BonusController extends Controller
 
     public function activate(Bonus $bonus)
     {
+        //to do - check this - and edit this way
         if (!$bonus->public) {
             return redirect()->back()->withErrors(['No access']);
         }

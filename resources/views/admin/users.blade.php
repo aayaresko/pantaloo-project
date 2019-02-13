@@ -38,7 +38,7 @@
                                                 @if($user->role == 0)
                                                     <span class="label label-primary">User</span>
                                                 @elseif($user->role == 1)
-                                                    <span class="label label-warning">Agent</span>
+                                                    <span class="label label-warning">Affiliate</span>
                                                 @else
                                                     <span class="label label-danger">Admin</span>
                                                 @endif
