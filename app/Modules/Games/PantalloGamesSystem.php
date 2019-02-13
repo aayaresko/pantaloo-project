@@ -208,8 +208,6 @@ class PantalloGamesSystem implements GamesSystem
                 'users.balance as balance',
                 'users.bonus_balance as bonus_balance',
                 DB::raw('(users.balance + users.bonus_balance) as full_balance'),
-                'affiliates.id as partner_id',
-                'affiliates.commission as partner_commission',
             ];
 
             //add additional fields
@@ -308,7 +306,7 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $updateBalance = [];
+                        $updateUser = [];
                         if ($modePlay === 0) {
                             $updateUser['balance'] = DB::raw("balance+$amount");
                         } else {
@@ -316,7 +314,7 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         User::where('id', $params['user']->id)
-                            ->update($updateBalance);
+                            ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
@@ -344,7 +342,7 @@ class PantalloGamesSystem implements GamesSystem
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => (float)$balance
+                        'balance' => (float)$balance,
                     ];
                     break;
                 case 'credit':
@@ -404,7 +402,7 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $updateBalance = [];
+                        $updateUser = [];
                         if ($modePlay === 0) {
                             $updateUser['balance'] = DB::raw("balance+$amount");
                         } else {
@@ -412,7 +410,7 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         User::where('id', $params['user']->id)
-                            ->update($updateBalance);
+                            ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
@@ -515,7 +513,7 @@ class PantalloGamesSystem implements GamesSystem
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
-                        $updateBalance = [];
+                        $updateUser = [];
                         if ($modePlay === 0) {
                             $updateUser['balance'] = DB::raw("balance+$amount");
                         } else {
@@ -523,7 +521,7 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         User::where('id', $params['user']->id)
-                            ->update($updateBalance);
+                            ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
                         $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
