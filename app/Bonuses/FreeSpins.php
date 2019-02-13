@@ -10,7 +10,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     public static $id = 3;
     protected $max_sum = 100;
     protected $play_factor = 40;
-    protected $expire_days = 14;
+    protected $expire_days = 1;
     protected $free_spins = 50;
 
     public function getPercent()
@@ -67,7 +67,6 @@ class FreeSpins extends \App\Bonuses\Bonus
             throw new \Exception('You can\'t use this bonus. Read terms.');
         }
 
-
         $date = Carbon::now();
         $date->modify('+' . $this->expire_days . 'days');
 
@@ -91,7 +90,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         if ($this->user->free_spins == 0) {
-
+            //to do check transaction on win or on free - identife this transaction
             $transaction = $this->user->transactions()
                 ->whereIn('type', [9, 10])->orderBy('id', 'DESC')->first();
 
