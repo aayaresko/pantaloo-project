@@ -24,7 +24,6 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
         $now = Carbon::now();
         dd($now);
         dd($now->format('U'));
