@@ -242,11 +242,17 @@ function resizeIframe()
     var
         w = $(window).width(),
         h = $(window).height(),
-        iframe = $('.video-popup .game-entry iframe');
+        gameContainer = $('.video-popup .game-entry'),
+        iframe = $('iframe', gameContainer);
 
     if(iframe.length && w <= 812 && w > h)
     {
+        gameContainer.addClass('is-mobile');
         iframe.css({width: w, height: h});
+    }
+    else
+    {
+        gameContainer.removeClass('is-mobile');
     }
 }
 

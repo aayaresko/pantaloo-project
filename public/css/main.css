@@ -6546,7 +6546,7 @@ html.cropped {
     display: none;
   }
 
-  .video-popup.popup-slot .video-container .game-entry {
+  .video-popup.popup-slot .video-container .game-entry.is-mobile {
     z-index: 999;
   }
 }
