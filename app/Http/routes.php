@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 use Helpers\GeneralHelper;
 
 //for optimization add array keep all language in config
@@ -52,9 +53,10 @@ Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController
 
 Route::get('/', function () {
     //find to lang
-    //save parameters
     $lang = config('currentLang');
-    return redirect()->route('main', ['lang' => $lang]);
+    //save parameters
+    $url = url("/$lang") . $_SERVER['REQUEST_URI'];
+    return redirect($url);
 })->middleware('language.switch');
 
 Route::auth();
