@@ -17,10 +17,10 @@ $pages = $pages->get();
 @endphp
 
 @foreach($pages as $page)
-    <li><a href="{{route('page', $page->url)}}">{{$page->short_name}}</a></li>
+    <li><a href="{{route('page', ['page_url' => $page->url, 'lang' => $currentLang])}}">{{$page->short_name}}</a></li>
 @endforeach
 
-<li><a href="{{route('support')}}">{{ trans('casino.support') }}</a></li>
-<li><a href="{{route('bonus.promo')}}">{{ trans('casino.bonuses') }}</a></li>
+<li><a href="{{route('support', ['lang' => $currentLang])}}">{{ trans('casino.support') }}</a></li>
+<li><a href="{{route('bonus.promo', ['lang' => $currentLang])}}">{{ trans('casino.bonuses') }}</a></li>
 <li><a href="{{$partnerPage}}" target="_blank">{{ trans('casino.affiliates') }}</a></li>
 

@@ -38,7 +38,7 @@
                     <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
@@ -65,7 +65,7 @@
                     <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10002]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10002, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
                 </div>
             </div>
         </section>
@@ -92,7 +92,7 @@
                     <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10003]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10003, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
@@ -119,7 +119,7 @@
                     <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10001]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['type_id' => 10001, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
@@ -134,7 +134,7 @@
                     <span class="descr">{!! trans('casino.video_live_games') !!}</span>
                 </div>
                 <div class="main-btn-block">
-                    <a href="{{ route('games') }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
             <div class="games-listing-block">
@@ -156,7 +156,7 @@
                         <span class="category-title">{{translate('Live Games')}}</span>
                         <h2 class="game-name word-split">{{translate('BlackJack')}}</h2>
                         <div class="main-btn-block">
-                            <a href="{{route('casino')}}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>
+                            {{--<a href="{{route('casino', [])}}" class="play-btn"><span class="btn-entry">{{translate('Play Now')}}</span></a>--}}
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                         <span class="category-title">{{translate('Live Games')}}</span>
                         <h2 class="game-name word-split">{{translate('Roulette')}}</h2>
                         <div class="main-btn-block">
-                            <a href="{{route('casino')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>
+                            {{--<a href="{{route('casino')}}" class="play-btn"><span class="btn-entry">{{translate('Games')}}</span></a>--}}
                         </div>
                     </div>
                 </div>
