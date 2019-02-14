@@ -97,14 +97,23 @@ Route::group([
 //Route::post('/contribution/callback', ['as' => 'usd.callback', 'uses' => 'MoneyController@depositCallback'])->middleware(['ip.check']);
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], function () use ($languages) {
+
+    Route::group([
+        'prefix' => '{lang}',
+        'where' => ['lang' => '(' . implode("|", $languages) . ')'],
+        'middleware' => 'language.switch'
+    ], function () {
+        Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
+
+        Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
+        Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
+        Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
+        Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
+
+    });
+
     Route::get('/activate/{token}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
-
-    Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
-    Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
-    Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
-    Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
-
     Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
     Route::post('/contribution', ['as' => 'usd.depositDo', 'uses' => 'MoneyController@depositUsdDo']);
     Route::get('/contribution/success', ['as' => 'usd.success', 'uses' => 'MoneyController@depositSuccess']);
@@ -115,7 +124,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/password', ['as' => 'password', 'uses' => 'UsersController@password']);
     Route::post('/email/confirm', ['as' => 'email.confirm', 'uses' => 'UsersController@confirmEmail']);
 
-    Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
     Route::get('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
     Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);

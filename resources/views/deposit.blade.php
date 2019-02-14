@@ -4,16 +4,15 @@
     {{translate('Deposit')}}
 @endsection
 
-
 @section('content')
     <div class="cabinet-block"
-         style="background: #000 url('media/images/bg/deposit-bg.png') center no-repeat; background-size: cover;">
+         style="background: #000 url('/media/images/bg/deposit-bg.png') center no-repeat; background-size: cover;">
         <div class="cabinet-entry">
             <div class="main-content">
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.deposit'), MB_CASE_UPPER) }}</h1>
                     <span class="sub-text">{{ trans('casino.bonus_deposit') }}</span>
-                    <a href="{{route('bonus')}}" class="bonuses-btn">{{ trans('casino.open_bonus') }}</a>
+                    <a href="{{ route('bonus', ['lang' => $currentLang]) }}" class="bonuses-btn">{{ trans('casino.open_bonus') }}</a>
                 </div>
                 <div class="main-content-entry">
                     <div class="deposit-entry">
@@ -22,7 +21,7 @@
                             <span class="balance">
                                 <span class="value">{{Auth::user()->getBalance()}}</span> {{ trans('casino.credits') }}
                             </span>
-                            <a class="add-credits-btn" href="{{route('deposit')}}"><span
+                            <a class="add-credits-btn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
                                         class="text">{{ trans('casino.add_credits') }}</span></a>
                         </div>
                         <div class="left-content">

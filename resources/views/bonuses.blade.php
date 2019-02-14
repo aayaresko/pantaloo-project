@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="cabinet-block act"
-         style="background: #000 url('media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
+         style="background: #000 url('/media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
         <div class="actions">
             <div class="container">
                 <div class="row">
@@ -22,7 +22,7 @@
                             <br>
                             <br>
                             @if(Auth::check())
-                                <a href="{{ route('deposit') }}" class="btn-play-action">
+                                <a href="{{ route('deposit', ['lang' => $currentLang]) }}" class="btn-play-action">
                                     <span>{{ trans('casino.deposit_space') }}</span>
                                 </a>
                             @else
@@ -63,7 +63,7 @@
 
                             <div class="btn-play-wrap">
                                 @if(Auth::check())
-                                    <a href="{{ route('deposit') }}"
+                                    <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
                                        class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
                                 @else
                                     <a href="#"
@@ -93,7 +93,7 @@
 
                             <div class="btn-play-wrap">
                                 @if(Auth::check())
-                                    <a href="{{ route('deposit') }}"
+                                    <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
                                        class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
                                 @else
                                     <a href="#"
