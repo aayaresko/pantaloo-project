@@ -247,16 +247,3 @@ function blockFilter() {
 // }
 //
 // preloader();
-
-function resizeIframe()
-{
-	var
-		w = $(window).width(),
-		h = $(window).height(),
-		iframe = $('.video-popup .game-entry iframe');
-
-	if(iframe.length && w <= 812 && w > h)
-	{
-        iframe.css({width: w, height: h});
-	}
-}

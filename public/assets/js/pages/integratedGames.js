@@ -108,6 +108,7 @@ function getListGames() {
             $(".insertGames").html(response.desktop);
             $(".insertGamesMobile").html(response.mobile);
             $('.preloaderCommon').hide();
+            resizeIframe();
         }
     });
 }
@@ -235,6 +236,21 @@ function fullscreenChange() {
     var iframe = document.querySelector('iframe');
     iframe.src = iframe.src;
 }
+
+function resizeIframe()
+{
+    var
+        w = $(window).width(),
+        h = $(window).height(),
+        iframe = $('.video-popup .game-entry iframe');
+
+    if(iframe.length && w <= 812 && w > h)
+    {
+        iframe.css({width: w, height: h});
+    }
+}
+
+$(window).on('resize', resizeIframe);
 
 $('body').ready(function () {
 
