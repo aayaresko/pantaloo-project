@@ -1392,7 +1392,7 @@ html.cropped {
 /* line 263, ../scss/_middle.scss */
 .mobile-container .welcome-mob {
   padding-top: 729px;
-  padding-bottom: 207px;
+  padding-bottom: 137px;
   background: url("../media/images/bg/welcome-mobile-bg.png") center no-repeat;
   background-size: cover;
   position: relative;
@@ -1423,7 +1423,7 @@ html.cropped {
 .mobile-container .welcome-mob .main-title-block {
   bottom: auto;
   max-width: 775px;
-  margin-bottom: 640px;
+  margin-bottom: 300px;
 }
 /* line 293, ../scss/_middle.scss */
 .mobile-container .welcome-mob .main-title-block .category-title {
@@ -1568,7 +1568,7 @@ html.cropped {
 .mobile-container .welcome-mob .bitcoin-block {
   display: block;
   position: relative;
-  margin-top: 210px;
+  margin-top: 140px;
   left: auto;
   top: auto;
   text-align: center;
@@ -3176,7 +3176,7 @@ html.cropped {
 .video-popup .video-container .right-nav .expand-game img{
   width: 100%
 }
-  /* line 1610, ../scss/_middle.scss */
+/* line 1610, ../scss/_middle.scss */
 .video-popup .video-container .bottom-nav {
   position: absolute;
   bottom: -35px;
@@ -4637,38 +4637,38 @@ html.cropped {
 }
 
 .log-popup .close-icon, .reg-popup .close-icon {
-    position: absolute;
-    right: 113px;
-    top: 89px;
-    height: 47px;
-    width: 47px;
+  position: absolute;
+  right: 113px;
+  top: 89px;
+  height: 47px;
+  width: 47px;
 }
 
 .log-popup .close-icon:after, .log-popup .close-icon:before, .reg-popup .close-icon:after, .reg-popup .close-icon:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 4px;
-    background-color: #fff;
-    margin-top: -3px;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 4px;
+  background-color: #fff;
+  margin-top: -3px;
 }
 
 .log-popup .close-icon:before, .reg-popup .close-icon:before {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
 }
 
 .log-popup .close-icon:after, .reg-popup .close-icon:after {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
 }
 
 /*=====================RESPONSIVE======================*/
@@ -7440,13 +7440,13 @@ html.cropped {
     padding-bottom: 60px;
   }
   body .mobile-container .welcome-mob:before {
-      top: 0;
+    top: 0;
   }
   body .log-popup .close-icon, body .reg-popup .close-icon {
-      top: 15px;
-      right: 15px;
-      height: 27px;
-      width: 27px;
+    top: 15px;
+    right: 15px;
+    height: 27px;
+    width: 27px;
   }
 }
 
@@ -7674,24 +7674,24 @@ html.cropped {
 }
 
 .preloaderCommon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url("/media/images/preloader/preloader3.svg?v=2.1");
-    background-repeat: no-repeat;
-    background-size: 7%;
-    background-color: rgba(0, 0, 0, 0.2);
-    background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url("/media/images/preloader/preloader3.svg?v=2.1");
+  background-repeat: no-repeat;
+  background-size: 7%;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-position: center;
 }
 
 .preloaderPictureGame {
-    background: url('/media/images/preloader/preloader3.svg?v=2.1');
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.2);
-    background-position: center;
+  background: url('/media/images/preloader/preloader3.svg?v=2.1');
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-position: center;
 }
 
 
