@@ -6545,6 +6545,10 @@ html.cropped {
   .slots-block.mobile .pagination>.disabled:first-child, .slots-block.mobile .pagination>.disabled:last-child, .slots-block.mobile .pagination>li:first-child, .slots-block.mobile .pagination>li:last-child {
     display: none;
   }
+
+  .video-popup.popup-slot .video-container .game-entry {
+    z-index: 999;
+  }
 }
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
