@@ -5,13 +5,13 @@
 @endsection
 
 @section('content')
-<div class="cabinet-block" style="background: #000 url('media/images/bg/deposit-bg.png') center no-repeat; background-size: cover;">
+<div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg.png') center no-repeat; background-size: cover;">
     <div class="cabinet-entry">
         <div class="main-content">
             <div class="credits-block">
                 <i class="bitcoin-icon"></i>
                 <span class="balance"><span class="value">{{Auth::user()->getBalance()}}</span> {{ trans('casino.credits') }}</span>
-                <a class="add-credits-btn" href="{{ route('deposit') }}"><span class="text">{{ trans('casino.add_credits') }}</span></a>
+                <a class="add-credits-btn" href="{{ route('deposit', ['lang' => $currentLang]) }}"><span class="text">{{ trans('casino.add_credits') }}</span></a>
             </div>
             <div class="page-heading unbordered">
                 <h1 class="page-title">{{ trans('casino.settings') }}</h1>

@@ -16,9 +16,17 @@ class TranslationController extends Controller
      */
     public function setLanguage(Request $request, $lang)
     {
-        $timeKeepLang = config('appAdditional.keepLanguage');
-        Cookie::queue('lang', $lang, $timeKeepLang);
-        return redirect()->back();
+        //validate
+        $getListLanguage = config('getListLanguage');
+        if (!in_array($lang, $getListLanguage)) {
+            return redirect('/');
+        }
+
+        $previousUrl = url()->previous();
+        $arrayPreviousUrl = explode('/', $previousUrl);
+        $arrayPreviousUrl[3] = $lang;
+        $urlWithLang = implode("/", $arrayPreviousUrl);
+        return redirect($urlWithLang);
     }
 
     public function index()

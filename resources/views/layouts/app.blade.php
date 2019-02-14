@@ -121,7 +121,7 @@
 
         @if(Auth::check())
             <div class="promo-actions-block floated">
-                <a href="{{route('deposit')}}" class="promo-action-btn">{{ trans('casino.deposit') }}</a>
+                <a href="{{route('deposit', ['lang' => $currentLang])}}" class="promo-action-btn">{{ trans('casino.deposit') }}</a>
             </div>
         @endif
     </div>
@@ -144,7 +144,7 @@
             <div class="usr-block">
                 <div class="wlc-usr">
                     <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>
-                    <a href="{{route('deposit')}}" class="usr-name">{{Auth::user()->email}}</a>
+                    <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{Auth::user()->email}}</a>
                 </div>
                 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
@@ -183,10 +183,10 @@
         </div>
         <nav class="navigation">
             <ul class="navigation-list">
-                <li><a href="{{route('deposit')}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
-                <li><a href="{{route('withdraw')}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
-                <li><a href="{{route('bonus')}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
-                <li><a href="{{route('settings')}}" class="setting">{{ trans('casino.settings') }}</a></li>
+                <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
+                <li><a href="{{route('withdraw', ['lang' => $currentLang])}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
+                <li><a href="{{route('bonus', ['lang' => $currentLang])}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
+                <li><a href="{{route('settings', ['lang' => $currentLang])}}" class="setting">{{ trans('casino.settings') }}</a></li>
             </ul>
         </nav>
         @endif
