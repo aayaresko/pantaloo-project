@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Request;
 use App;
 use Cookie;
 use Closure;
@@ -34,7 +35,9 @@ class LanguageSwitch extends CommonMiddleware
             return $next($request);
         }
 
+        //dd($request->route()->parameter('lang'));
         $languages = GeneralHelper::getListLanguage();
+        //Config::set('listLanguage', $languages);
         $lang = Cookie::get('lang');
 
         //pass variable

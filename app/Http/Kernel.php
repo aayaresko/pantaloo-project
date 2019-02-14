@@ -43,7 +43,6 @@ class Kernel extends HttpKernel
             UserToAgent::class,
             //LanguageGet::class
             //LanguageSet::class,
-            LanguageSwitch::class,
             SetCountryCode::class,
             EmailConfirmation::class,
             GeneralMiddleware::class
@@ -70,6 +69,7 @@ class Kernel extends HttpKernel
         'agent' => AgentCheck::class,
         'admin' => AdminCheck::class,
         'email.confirm' => EmailConfirmation::class,
-        'ip.check' => IpCheck::class
+        'ip.check' => IpCheck::class,
+        'language.switch' =>  LanguageSwitch::class
     ];
 }

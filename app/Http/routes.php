@@ -10,7 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use Helpers\GeneralHelper;
 
+$languages = Config::get('listLanguage');
+$languages = GeneralHelper::getListLanguage();
+$lang = Cookie::get('lang');
+//dd($languages);
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 //$partner = 'partner.test.test';
@@ -35,46 +40,58 @@ Route::group(['domain' => $partner], function () {
         Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
     });
 });
+
 //delete this after only ine panel partner
 Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
     Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
 });
 
-Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
 
 Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController@setLanguage']);
 
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@home']);
+
+Route::get('/', function() use ($lang) {
+    dd(route('main', ['prefix' => $lang]));
+    return redirect()->route('main', ['lang' => $lang]);
+});
 
 Route::auth();
 
-Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);
-Route::any('/api/callback', ['as' => 'slots.api', 'uses' => 'ApiController@callback']);
-Route::any('/api/demo', ['as' => 'slots.free', 'uses' => 'FreeSpinsController@callback']);
+Route::group([
+    'prefix' => '{lang}',
+    'where' => ['lang' => '(' . implode("|", $languages). ')'],
+    'middleware' => 'language.switch'
+], function () {
 
-Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
+    Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
+//    Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
+//    Route::get('/dice', ['as' => 'dice', 'uses' => 'SlotController@dice']);
+//    Route::get('/blackjack', ['as' => 'blackjack', 'uses' => 'SlotController@blackjack']);
+//    Route::get('/roulette', ['as' => 'roulette', 'uses' => 'SlotController@roulette']);
+//    Route::get('/baccarat', ['as' => 'baccarat', 'uses' => 'SlotController@baccarat']);
+//    Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
+//    Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
+//    Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
+//
+////Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
+//    Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
+//    Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
+//
+//    Route::get('/page/{page_url}', ['as' => 'page', 'uses' => 'PageController@get']);
+//
+//    Route::get('/support', ['as' => 'support', 'uses' => 'ChatController@index']);
+//
+//    Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
+//
+//    Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
 
-Route::get('/dice', ['as' => 'dice', 'uses' => 'SlotController@dice']);
-Route::get('/blackjack', ['as' => 'blackjack', 'uses' => 'SlotController@blackjack']);
-Route::get('/roulette', ['as' => 'roulette', 'uses' => 'SlotController@roulette']);
-Route::get('/baccarat', ['as' => 'baccarat', 'uses' => 'SlotController@baccarat']);
-Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
-Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
-Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
+});
 
-//Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
-Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
-Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
+//Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);
+//Route::any('/api/callback', ['as' => 'slots.api', 'uses' => 'ApiController@callback']);
+//Route::any('/api/demo', ['as' => 'slots.free', 'uses' => 'FreeSpinsController@callback']);
+//Route::post('/contribution/callback', ['as' => 'usd.callback', 'uses' => 'MoneyController@depositCallback'])->middleware(['ip.check']);
 
-Route::get('/page/{page_url}', ['as' => 'page', 'uses' => 'PageController@get']);
-
-Route::get('/support', ['as' => 'support', 'uses' => 'ChatController@index']);
-
-Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
-
-Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
-
-Route::post('/contribution/callback', ['as' => 'usd.callback', 'uses' => 'MoneyController@depositCallback'])->middleware(['ip.check']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/activate/{token}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
