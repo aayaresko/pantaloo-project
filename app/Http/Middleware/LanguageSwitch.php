@@ -61,7 +61,8 @@ class LanguageSwitch extends CommonMiddleware
         //pass variable
         View::share('languages', $languages);
         View::share('currentLang', $lang);
-        Config::set('currentLang', $lang, $timeKeepLang);
+        Config::set('currentLang', $lang);
+        Cookie::queue('lang', $lang, $timeKeepLang);
 
         if ($request->has('session_id')) {
             $data = json_decode(decrypt($request->input('session_id')), true);
