@@ -27,7 +27,7 @@
                 <span class="game-name"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
             </div>
             <div class="right-nav">
-                <div class="expand-game"><img src="images/expand.png" alt=""></div>
+                <div class="expand-game"><img src="/images/expand.png" alt=""></div>
                 <a href="" class="exit-btn"><span class="text">Exit</span></a>
             </div>
             <div class="bottom-nav">
