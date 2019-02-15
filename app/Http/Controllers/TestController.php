@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
 use App\User;
@@ -24,7 +25,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
+        Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
         dd(url('/'));
 
         $now = Carbon::now();
