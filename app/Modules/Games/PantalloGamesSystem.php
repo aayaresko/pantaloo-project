@@ -185,6 +185,7 @@ class PantalloGamesSystem implements GamesSystem
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
             $typesActions = $configPantalloGames['additional']['action'];
+            $accuracyValues = GeneralHelper::getAccuracyValues();
 
             $validationDate = $requestParams;
             $key = $validationDate['key'];
@@ -236,10 +237,12 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Insufficient funds', 403);
             }
 
-            if (!is_null($params['user']->bonus) and (float)$params['user']->balance < 0) {
-                $modePlay = 1;//mode play bonus money
+            if (!is_null($params['user']->bonus)) {
+                $modePlay = 1;
             }
+
             $action = $requestParams['action'];
+            $gamesSessionId = $requestParams['games_session_id'];
 
             switch ($action) {
                 case 'balance':
@@ -299,8 +302,16 @@ class PantalloGamesSystem implements GamesSystem
 
                         if ($modePlay === 0) {
                             $createParams['sum'] = $amount;
+                            $createParams['bonus_sum'] = 0;
                         } else {
-                            $createParams['bonus_sum'] = $amount;
+                            if ((float)$params['user']->balance < abs($amount)) {
+                                $createParams['sum'] = -1 * $params['user']->balance;
+                                $createParams['bonus_sum'] = -1 * (bcsub(abs($amount),
+                                        -1 * $createParams['sum'], $accuracyValues));
+                            } else {
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = $amount;
+                            }
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -309,8 +320,11 @@ class PantalloGamesSystem implements GamesSystem
                         $updateUser = [];
                         if ($modePlay === 0) {
                             $updateUser['balance'] = DB::raw("balance+$amount");
-                        } else {
+                        } elseif ($modePlay === 1) {
                             $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
+                        } else {
+                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
                         }
 
                         User::where('id', $params['user']->id)
@@ -332,7 +346,8 @@ class PantalloGamesSystem implements GamesSystem
                             'amount' => $amount,
                             'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
-                            'game_id' => $params['game']->id
+                            'game_id' => $params['game']->id,
+                            'games_session_id' => $gamesSessionId
                         ];
 
                         GamesPantalloTransaction::create($pantalloTransaction);
@@ -395,8 +410,41 @@ class PantalloGamesSystem implements GamesSystem
 
                         if ($modePlay === 0) {
                             $createParams['sum'] = $amount;
-                        } else {
+                            $createParams['bonus_sum'] = 0;
+                        } elseif ($modePlay === 1) {
+                            $createParams['sum'] = 0;
                             $createParams['bonus_sum'] = $amount;
+                        } else {
+                            //find last credit transaction and make count
+                            $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
+                                'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                                ->where([
+                                    ['games_pantallo_transactions.action_id', '<>', 1],
+                                    ['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
+                                ])->where(function ($query) {
+                                    $query->where('transactions.sum', '<>', 0)
+                                        ->orWhere('transactions.bonus_sum', '<>', 0);
+                                })
+                                ->select([
+                                    'transactions.id',
+                                    'action_id',
+                                    'transactions.sum',
+                                    'transactions.bonus_sum',
+                                    'games_pantallo_transactions.amount as amount',
+                                    'games_pantallo_transactions.game_id as game_id',
+                                    'games_pantallo_transactions.balance_after as balance_after'
+                                ])->orderBy('id', 'DESC')->first();
+
+                            if ($lastTransaction->bonus_sum != 0) {
+                                $createParams['sum'] = bcmul($amount, ((-1) *
+                                    bcdiv($lastTransaction->sum,
+                                        (bcadd((-1) * $lastTransaction->sum,
+                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
+                                $createParams['bonus_sum'] = bcmul($amount, ((-1) *
+                                    bcdiv($lastTransaction->bonus_sum,
+                                        (bcadd((-1) * $lastTransaction->sum,
+                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
+                            }
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -405,8 +453,11 @@ class PantalloGamesSystem implements GamesSystem
                         $updateUser = [];
                         if ($modePlay === 0) {
                             $updateUser['balance'] = DB::raw("balance+$amount");
-                        } else {
+                        } elseif ($modePlay === 1) {
                             $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
+                        } else {
+                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
                         }
 
                         User::where('id', $params['user']->id)
@@ -428,7 +479,8 @@ class PantalloGamesSystem implements GamesSystem
                             'amount' => $amount,
                             'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
-                            'game_id' => $params['game']->id
+                            'game_id' => $params['game']->id,
+                            'games_session_id' => $gamesSessionId
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
@@ -541,7 +593,8 @@ class PantalloGamesSystem implements GamesSystem
                             'balance_after' => $balanceAfterTransaction,
                             //check null for ald transaction
                             'game_id' => !is_null($transactionHas->game_id)
-                                ? $transactionHas->game_id : null
+                                ? $transactionHas->game_id : null,
+                            'games_session_id' => $gamesSessionId
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;

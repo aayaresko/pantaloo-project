@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
+use App\Transaction;
 use App\User;
 use Validator;
 use App\Bitcoin\Service;
@@ -25,6 +26,10 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $wager_transaction = Transaction::where('type', 1)->orderBy('id', 'DESC')->where(function ($query) {
+            $query->where('sum', '<>', 0)->orWhere('bonus_sum', '<>', 0);
+        })->first();
+        dd($wager_transaction);
         Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });

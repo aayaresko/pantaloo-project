@@ -16,6 +16,15 @@ class GeneralHelper
     }
 
     /**
+     * @return mixed
+     */
+    static public function getAccuracyValues()
+    {
+        $accuracyValues = config('app.accuracyValues');
+        return $accuracyValues;
+    }
+
+    /**
      * @return string
      */
     static public function fullRequest()
