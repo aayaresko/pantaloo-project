@@ -12,6 +12,8 @@ $(document).ready(function(){
 	bonusSlider();
 	controlsInit();
 	blockFilter();
+    resizeIframe();
+    $(window).on('resize', resizeIframe);
 	// preloader();
 });
 
