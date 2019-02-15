@@ -215,11 +215,18 @@ class PantalloGamesSystem implements GamesSystem
             $additionalFieldsUser = [
                 'affiliates.id as partner_id',
                 'affiliates.commission as partner_commission',
+                'user_bonuses.id as bonus',
             ];
 
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
-                ->where('users.id', $params['session']->user_id)->first();
+                ->leftJoin('user_bonuses', function($join){
+                    $join->on('users.id', '=', 'user_bonuses.user_id')
+                        ->where('user_bonuses.activated', '=', 1);
+                })
+                ->where([
+                    ['users.id', '=', $params['session']->user_id],
+                ])->first();
 
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
@@ -242,7 +249,19 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $action = $requestParams['action'];
-            $gamesSessionId = $requestParams['games_session_id'];
+            if ($action !== 'balance') {
+                $gamesSessionIdThem = $requestParams['gamesession_id'];
+                $gamesSession = GamesPantalloSessionGame::where([
+                    'session_id' => $params['session']->system_id,
+                    'gamesession_id' => $gamesSessionIdThem,
+                ])->first();
+
+                if (is_null($gamesSession)) {
+                    throw new \Exception('Games session is not found', 500);
+                }
+
+                $gamesSessionId = $gamesSession->id;
+            }
 
             switch ($action) {
                 case 'balance':
@@ -305,6 +324,7 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['bonus_sum'] = 0;
                         } else {
                             if ((float)$params['user']->balance < abs($amount)) {
+                                $modePlay = 2;
                                 $createParams['sum'] = -1 * $params['user']->balance;
                                 $createParams['bonus_sum'] = -1 * (bcsub(abs($amount),
                                         -1 * $createParams['sum'], $accuracyValues));
@@ -411,15 +431,12 @@ class PantalloGamesSystem implements GamesSystem
                         if ($modePlay === 0) {
                             $createParams['sum'] = $amount;
                             $createParams['bonus_sum'] = 0;
-                        } elseif ($modePlay === 1) {
-                            $createParams['sum'] = 0;
-                            $createParams['bonus_sum'] = $amount;
                         } else {
                             //find last credit transaction and make count
                             $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
                                 'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                                 ->where([
-                                    ['games_pantallo_transactions.action_id', '<>', 1],
+                                    ['games_pantallo_transactions.action_id', '=', 1],
                                     ['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
                                 ])->where(function ($query) {
                                     $query->where('transactions.sum', '<>', 0)
@@ -435,7 +452,10 @@ class PantalloGamesSystem implements GamesSystem
                                     'games_pantallo_transactions.balance_after as balance_after'
                                 ])->orderBy('id', 'DESC')->first();
 
-                            if ($lastTransaction->bonus_sum != 0) {
+                            //to do throw exception
+
+                            if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
+                                $modePlay = 2;
                                 $createParams['sum'] = bcmul($amount, ((-1) *
                                     bcdiv($lastTransaction->sum,
                                         (bcadd((-1) * $lastTransaction->sum,
@@ -444,6 +464,9 @@ class PantalloGamesSystem implements GamesSystem
                                     bcdiv($lastTransaction->bonus_sum,
                                         (bcadd((-1) * $lastTransaction->sum,
                                             (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
+                            } else {
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = $amount;
                             }
                         }
 
