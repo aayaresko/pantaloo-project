@@ -7058,6 +7058,9 @@ html.cropped {
     margin: 0 auto;
     margin-bottom: 40px;
   }
+  .video-popup.popup-slot .video-container .game-entry {
+    z-index: 999;
+  }
 }
 .login-block-reg {
   display: none;
