@@ -215,11 +215,18 @@ class PantalloGamesSystem implements GamesSystem
             $additionalFieldsUser = [
                 'affiliates.id as partner_id',
                 'affiliates.commission as partner_commission',
+                'user_bonuses.id as bonus',
             ];
 
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
-                ->where('users.id', $params['session']->user_id)->first();
+                ->leftJoin('user_bonuses', function($join){
+                    $join->on('users.id', '=', 'user_bonuses.user_id')
+                        ->where('user_bonuses.activated', '=', 1);
+                })
+                ->where([
+                    ['users.id', '=', $params['session']->user_id],
+                ])->first();
 
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
@@ -232,17 +239,30 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+            if (!is_null($params['user']->bonus)) {
+                $modePlay = 1;
+            } else {
+                $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
+            }
 
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
 
-            if (!is_null($params['user']->bonus)) {
-                $modePlay = 1;
-            }
-
             $action = $requestParams['action'];
-            $gamesSessionId = $requestParams['games_session_id'];
+            if ($action !== 'balance') {
+                $gamesSessionIdThem = $requestParams['gamesession_id'];
+                $gamesSession = GamesPantalloSessionGame::where([
+                    'session_id' => $params['session']->system_id,
+                    'gamesession_id' => $gamesSessionIdThem,
+                ])->first();
+
+                if (is_null($gamesSession)) {
+                    throw new \Exception('Games session is not found', 500);
+                }
+
+                $gamesSessionId = $gamesSession->id;
+            }
 
             switch ($action) {
                 case 'balance':
@@ -306,11 +326,15 @@ class PantalloGamesSystem implements GamesSystem
                         } else {
                             if ((float)$params['user']->balance < abs($amount)) {
                                 $createParams['sum'] = -1 * $params['user']->balance;
-                                $createParams['bonus_sum'] = -1 * (bcsub(abs($amount),
-                                        -1 * $createParams['sum'], $accuracyValues));
-                            } else {
+                                $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
+                                    abs($amount) - abs($createParams['sum']));
+
+                            } elseif ((float)$params['user']->balance < 0) {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
@@ -318,14 +342,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } elseif ($modePlay === 1) {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        } else {
-                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
@@ -347,7 +365,8 @@ class PantalloGamesSystem implements GamesSystem
                             'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             'game_id' => $params['game']->id,
-                            'games_session_id' => $gamesSessionId
+                            'games_session_id' => $gamesSessionId,
+                            'real_action_id' => 1,
                         ];
 
                         GamesPantalloTransaction::create($pantalloTransaction);
@@ -375,6 +394,11 @@ class PantalloGamesSystem implements GamesSystem
                     //end our validate
 
                     $amount = GeneralHelper::formatAmount($requestParams['amount']);
+
+                    if ($amount < 0) {
+                        throw new \Exception('For this operation. Amount should will be bigger zero');
+                    }
+
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
@@ -411,15 +435,12 @@ class PantalloGamesSystem implements GamesSystem
                         if ($modePlay === 0) {
                             $createParams['sum'] = $amount;
                             $createParams['bonus_sum'] = 0;
-                        } elseif ($modePlay === 1) {
-                            $createParams['sum'] = 0;
-                            $createParams['bonus_sum'] = $amount;
                         } else {
                             //find last credit transaction and make count
                             $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
                                 'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                                 ->where([
-                                    ['games_pantallo_transactions.action_id', '<>', 1],
+                                    ['games_pantallo_transactions.action_id', '=', 1],
                                     ['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
                                 ])->where(function ($query) {
                                     $query->where('transactions.sum', '<>', 0)
@@ -435,15 +456,22 @@ class PantalloGamesSystem implements GamesSystem
                                     'games_pantallo_transactions.balance_after as balance_after'
                                 ])->orderBy('id', 'DESC')->first();
 
-                            if ($lastTransaction->bonus_sum != 0) {
-                                $createParams['sum'] = bcmul($amount, ((-1) *
-                                    bcdiv($lastTransaction->sum,
-                                        (bcadd((-1) * $lastTransaction->sum,
-                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
-                                $createParams['bonus_sum'] = bcmul($amount, ((-1) *
-                                    bcdiv($lastTransaction->bonus_sum,
-                                        (bcadd((-1) * $lastTransaction->sum,
-                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
+                            //to do throw exception
+
+                            if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
+                                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                                $percentageSum = abs($lastTransaction->sum)/$totalSum;
+                                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+                                $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
+                                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+                            } elseif ((float)$params['user']->balance < 0) {
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
@@ -451,14 +479,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } elseif ($modePlay === 1) {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        } else {
-                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
@@ -480,7 +502,8 @@ class PantalloGamesSystem implements GamesSystem
                             'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             'game_id' => $params['game']->id,
-                            'games_session_id' => $gamesSessionId
+                            'games_session_id' => $gamesSessionId,
+                            'real_action_id' => 2,
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;
@@ -507,6 +530,8 @@ class PantalloGamesSystem implements GamesSystem
                             ['games_pantallo_transactions.action_id', '<>', $typesActions[$caseAction]]
                         ])->select([
                             'transactions.id',
+                            'transactions.sum',
+                            'transactions.bonus_sum',
                             'action_id',
                             'games_pantallo_transactions.amount as amount',
                             'games_pantallo_transactions.game_id as game_id',
@@ -517,16 +542,14 @@ class PantalloGamesSystem implements GamesSystem
                         throw new \Exception('Does not have a transaction', 404);
                     }
 
-                    if ($transactionHas->action_id === 1) {
-                        $amountTransaction = (float)$transactionHas->amount;
-                    } else {
+                    if ($transactionHas->action_id === 2) {
                         //CHECK THIS = ASK MAX
+                        //without abs because only action 2
                         if ((float)$transactionHas->amount > $balanceBefore) {
                             throw new \Exception('Insufficient funds', 403);
                         }
-                        $amountTransaction = (-1) * (float)$transactionHas->amount;
                     }
-                    $amount = GeneralHelper::formatAmount($amountTransaction);
+                    $amount = -1* $transactionHas->amount;
 
                     $transaction = Transaction::leftJoin('games_pantallo_transactions',
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
@@ -558,19 +581,26 @@ class PantalloGamesSystem implements GamesSystem
 
                         if ($modePlay === 0) {
                             $createParams['sum'] = $amount;
+                            $createParams['bonus_sum'] = 0;
                         } else {
-                            $createParams['bonus_sum'] = $amount;
+                            if ((float)$transactionHas->bonus_sum !== 0 and (float)$transactionHas->sum !== 0) {
+                                $createParams['sum'] = (-1) * $transactionHas->sum;
+                                $createParams['bonus_sum'] = (-1) *$transactionHas->bonus_sum;
+                            }  elseif ((float)$params['user']->balance < 0) {
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
+                            }
                         }
 
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } else {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
@@ -594,7 +624,8 @@ class PantalloGamesSystem implements GamesSystem
                             //check null for ald transaction
                             'game_id' => !is_null($transactionHas->game_id)
                                 ? $transactionHas->game_id : null,
-                            'games_session_id' => $gamesSessionId
+                            'games_session_id' => $gamesSessionId,
+                            'real_action_id' => 3,
                         ];
                         GamesPantalloTransaction::create($pantalloTransaction);
                         $balance = $balanceAfterTransaction;

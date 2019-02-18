@@ -22,8 +22,8 @@ class CreateGamesPantalloTransactionsTable extends Migration
             $table->foreign('transaction_id')->references('id')
                 ->on('transactions')->onDelete('cascade');
 
-            $table->integer('games_session_id')->nullable()->unsigned();
-            $table->foreign('games_session_id')->references('id')->on('games_pantallo_session_game');
+//            $table->integer('games_session_id')->nullable()->unsigned();
+//            $table->foreign('games_session_id')->references('id')->on('games_pantallo_session_game');
 
             $table->decimal('amount', 14, 5);
             $table->decimal('balance_before', 14, 5)->nullable();
