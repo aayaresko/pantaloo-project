@@ -327,8 +327,9 @@ class PantalloGamesSystem implements GamesSystem
                             if ((float)$params['user']->balance < abs($amount)) {
                                 $modePlay = 2;
                                 $createParams['sum'] = -1 * $params['user']->balance;
-                                $createParams['bonus_sum'] = -1 * (bcsub(abs($amount),
-                                        -1 * $createParams['sum'], $accuracyValues));
+                                $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
+                                    abs($amount) - abs($createParams['sum']));
+
                             } else {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
@@ -397,6 +398,11 @@ class PantalloGamesSystem implements GamesSystem
                     //end our validate
 
                     $amount = GeneralHelper::formatAmount($requestParams['amount']);
+
+                    if ($amount < 0) {
+                        throw new \Exception('For this operation. Amount should will be bigger zero');
+                    }
+
                     $externalTransactionId = $requestParams['transaction_id'];
                     $roundId = isset($requestParams['round_id']) ? $requestParams['round_id'] : null;
                     //if existing two transaction then return response how respond docs
@@ -458,14 +464,13 @@ class PantalloGamesSystem implements GamesSystem
 
                             if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
                                 $modePlay = 2;
-                                $createParams['sum'] = bcmul($amount, ((-1) *
-                                    bcdiv($lastTransaction->sum,
-                                        (bcadd((-1) * $lastTransaction->sum,
-                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
-                                $createParams['bonus_sum'] = bcmul($amount, ((-1) *
-                                    bcdiv($lastTransaction->bonus_sum,
-                                        (bcadd((-1) * $lastTransaction->sum,
-                                            (-1) * $lastTransaction->bonus_sum, $accuracyValues)), $accuracyValues)), $accuracyValues);
+                                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                                $percentageSum = abs($lastTransaction->sum)/$totalSum;
+                                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+                                $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
+                                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
                             } else {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
