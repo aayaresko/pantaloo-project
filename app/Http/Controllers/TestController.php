@@ -19,6 +19,7 @@ use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
+use App\Modules\Games\PantalloGamesSystem;
 
 class TestController extends Controller
 {
@@ -26,6 +27,17 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        User::where('id',136)->update(['balance' => 138]);
+        dd(2);
+        $configFreeRounds = config('appAdditional.freeRounds');
+        $request->merge(['gamesIds' => '12545,2057']);
+        $request->merge(['available' => 4]);
+        $request->merge(['timeFreeRound' => $configFreeRounds['timeFreeRound']]);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+
+        $response = $pantalloGamesSystem->freeRound($request);
+        dd($response);
         $wager_transaction = Transaction::where('type', 1)->orderBy('id', 'DESC')->where(function ($query) {
             $query->where('sum', '<>', 0)->orWhere('bonus_sum', '<>', 0);
         })->first();

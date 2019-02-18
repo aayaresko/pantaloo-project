@@ -458,20 +458,26 @@ class PantalloGamesSystem implements GamesSystem
 
                             //to do throw exception
 
-                            if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
-                                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+                            //if is null - this after bonus money
+                            if (!is_null($lastTransaction)) {
+                                if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
+                                    $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
-                                $percentageSum = abs($lastTransaction->sum)/$totalSum;
-                                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+                                    $percentageSum = abs($lastTransaction->sum)/$totalSum;
+                                    $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
 
-                                $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
-                                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
-                            } elseif ((float)$params['user']->balance < 0) {
+                                    $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
+                                    $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+                                } elseif ((float)$params['user']->balance < 0) {
+                                    $createParams['sum'] = 0;
+                                    $createParams['bonus_sum'] = $amount;
+                                } else {
+                                    $createParams['sum'] = $amount;
+                                    $createParams['bonus_sum'] = 0;
+                                }
+                            } else {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
-                            } else {
-                                $createParams['sum'] = $amount;
-                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
