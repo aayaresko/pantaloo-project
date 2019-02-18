@@ -255,11 +255,11 @@
                 </div>
             </div>
             <div class="col-md-3 col-md-offset-1 contact-info">
-                {{--<div class="contact-item">--}}
-                    {{--<h3>Contact Info</h3>--}}
+                <div class="contact-item">
+                    <h3>Contact Info</h3>
                     {{--<p><span><i class="fa fa-map-marker"></i> Address</span>4321 California St,<br>--}}
                         {{--San Francisco, CA 12345</p>--}}
-                {{--</div>--}}
+                </div>
                 {{--<div class="contact-item">--}}
                     {{--<p><span><i class="fa fa-phone"></i> Phone</span> +1 123 456 1234</p>--}}
                 {{--</div>--}}
