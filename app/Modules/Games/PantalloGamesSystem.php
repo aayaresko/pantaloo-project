@@ -239,9 +239,9 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
-
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
+            } else {
                 $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
             }
 
@@ -325,14 +325,16 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['bonus_sum'] = 0;
                         } else {
                             if ((float)$params['user']->balance < abs($amount)) {
-                                $modePlay = 2;
                                 $createParams['sum'] = -1 * $params['user']->balance;
                                 $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
                                     abs($amount) - abs($createParams['sum']));
 
-                            } else {
+                            } elseif ((float)$params['user']->balance < 0) {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
@@ -340,14 +342,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } elseif ($modePlay === 1) {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        } else {
-                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
@@ -463,7 +459,6 @@ class PantalloGamesSystem implements GamesSystem
                             //to do throw exception
 
                             if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
-                                $modePlay = 2;
                                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
                                 $percentageSum = abs($lastTransaction->sum)/$totalSum;
@@ -471,9 +466,12 @@ class PantalloGamesSystem implements GamesSystem
 
                                 $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
                                 $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
-                            } else {
+                            } elseif ((float)$params['user']->balance < 0) {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
@@ -481,14 +479,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } elseif ($modePlay === 1) {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        } else {
-                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
@@ -592,12 +584,14 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['bonus_sum'] = 0;
                         } else {
                             if ((float)$transactionHas->bonus_sum !== 0 and (float)$transactionHas->sum !== 0) {
-                                $modePlay = 2;
                                 $createParams['sum'] = (-1) * $transactionHas->sum;
                                 $createParams['bonus_sum'] = (-1) *$transactionHas->bonus_sum;
-                            } else {
+                            }  elseif ((float)$params['user']->balance < 0) {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
+                            } else {
+                                $createParams['sum'] = $amount;
+                                $createParams['bonus_sum'] = 0;
                             }
                         }
 
@@ -605,14 +599,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //edit balance user
                         $updateUser = [];
-                        if ($modePlay === 0) {
-                            $updateUser['balance'] = DB::raw("balance+$amount");
-                        } elseif ($modePlay === 1) {
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+$amount");
-                        } else {
-                            $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
-                            $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
-                        }
+                        $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
+                        $updateUser['bonus_balance'] = DB::raw("bonus_balance+{$createParams['bonus_sum']}");
 
                         User::where('id', $params['user']->id)
                             ->update($updateUser);
