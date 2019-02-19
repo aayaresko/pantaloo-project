@@ -9,101 +9,103 @@
     <div class="cabinet-block act"
          style="background: #000 url('/media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
         <div class="actions">
-            <div class="container">
-                <div class="row">
-
-                    <section class="bookof">
-                        <div class="info-spin">
-                            <span class="numb">50</span>
-                            <span class="info-sub-text">
-                                <span class="free">{{ mb_convert_case(trans('casino.free'), MB_CASE_TITLE) }}</span>
-                                <span class="sub-text">{{ mb_convert_case(trans('casino.spins'), MB_CASE_TITLE) }}</span>
-                            </span>
-                            <br>
-                            <br>
-                            @if(Auth::check())
-                                <a href="{{ route('deposit', ['lang' => $currentLang]) }}" class="btn-play-action">
-                                    <span>{{ trans('casino.deposit_space') }}</span>
-                                </a>
-                            @else
-                                <a href="#"
-                                   class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
-                            @endif
-                            <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
-                        </div>
-
-                        <div class="bonus bonus-{{ app()->getLocale() }}">
-                            <div class="text">{{ mb_convert_case(trans('casino.welcome_bonus'), MB_CASE_UPPER) }}</div>
-                        </div>
-                    </section>
-
-                </div>
-            </div>
 
             <div class="container">
                 <div class="row">
-
-                    <div class="col-md-6 npl ac-wrap">
+                    <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus1 clearfix">
-                            <div class="info-block clearfix">
 
-                                <div class="block-money">
-                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span class="big">200%</span>
+                            <div class="block-bonus-left">
+                                <div class="block-bonus-image">
+                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt="" />
                                 </div>
-
-                                <div class="number-block">
-                                    <span class="number">1</span>
-                                    <span class="lett">st</span>
-                                    <span class="descr">Deposit</span>
-                                    <div class="desc-bonus">Bonus</div>
-                                </div>
-
                             </div>
 
-                            <div class="btn-play-wrap">
-                                @if(Auth::check())
-                                    <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                       class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
-                                @else
-                                    <a href="#"
-                                       class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
-                                @endif
+                            <div class="block-bonus-right">
+                                <div class="block-bonus-buttons">
+                                    @if(Auth::check())
+                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
+                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                    @else
+                                        <a href="#"
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                    @endif
+                                    <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                </div>
                             </div>
-                            <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+
                         </section>
                     </div>
-                    <div class="col-md-6 npr ac-wrap">
+
+                    <div class="col-md-6 col-sm-6 npr ac-wrap">
                         <section class="block-bonus block-bonus2 clearfix">
-                            <div class="info-block info-block2 clearfix">
-
-                                <div class="block-money">
-                                    <span class="big">100%</span>
+                            <div class="block-bonus-left">
+                                <div class="block-bonus-image">
+                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-2-box.jpg') }}" alt="" />
                                 </div>
-
-                                <div class="number-block">
-                                    <span class="number">2</span>
-                                    <span class="lett">nd</span>
-                                    <span class="descr">Deposit</span>
-                                    <div class="desc-bonus">Bonus</div>
-                                </div>
-
-
                             </div>
 
-                            <div class="btn-play-wrap">
-                                @if(Auth::check())
-                                    <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                       class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
-                                @else
-                                    <a href="#"
-                                       class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
-                                @endif
+                            <div class="block-bonus-right">
+                                <div class="block-bonus-buttons">
+                                    @if(Auth::check())
+                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
+                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                    @else
+                                        <a href="#"
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                    @endif
+                                    <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                </div>
                             </div>
-                            <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
                         </section>
                     </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 npl ac-wrap">
+                        <section class="block-bonus block-bonus3 clearfix">
+                            <div class="block-bonus-left">
+                                <div class="block-bonus-image">
+                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-3-box.jpg') }}" alt="" />
+                                </div>
+                            </div>
+
+                            <div class="block-bonus-right">
+                                <div class="block-bonus-buttons">
+                                    @if(Auth::check())
+                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
+                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                    @else
+                                        <a href="#"
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                    @endif
+                                    <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-6 col-sm-6 npr ac-wrap">
+                        <section class="block-bonus block-bonus4 clearfix">
+                            <div class="block-bonus-left">
+                                <div class="block-bonus-image">
+                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-4-box.jpg') }}" alt="" />
+                                </div>
+                            </div>
+
+                            <div class="block-bonus-right">
+                                <div class="block-bonus-buttons">
+                                    @if(Auth::check())
+                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
+                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                    @else
+                                        <a href="#"
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                    @endif
+                                    <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
 
