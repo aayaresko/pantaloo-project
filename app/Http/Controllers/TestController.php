@@ -8,6 +8,7 @@ use DB;
 use App\Transaction;
 use App\User;
 use Validator;
+use App\UserBonus;
 use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
@@ -27,8 +28,24 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        User::where('id',136)->update(['balance' => 138]);
-        dd(2);
+
+        $bonuses = UserBonus::all();
+
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            $bonus_obj->realActivation();
+            $bonus_obj->close();
+        }
+
+        dd(1);
+        $transaction = $request->user()->transactions()->where([
+            ['type', '=', 10],
+        ])->orderBy('id', 'DESC')->first();
+        dd($transaction);
+        //User::where('id',136)->update(['balance' => 138]);
+        //dd(2);
         $configFreeRounds = config('appAdditional.freeRounds');
         $request->merge(['gamesIds' => '12545,2057']);
         $request->merge(['available' => 4]);

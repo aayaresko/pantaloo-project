@@ -221,8 +221,8 @@ class PantalloGamesSystem implements GamesSystem
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
                 ->leftJoin('user_bonuses', function($join){
-                    $join->on('users.id', '=', 'user_bonuses.user_id')
-                        ->where('user_bonuses.activated', '=', 1);
+                    $join->on('users.id', '=', 'user_bonuses.user_id');
+                        //->where('user_bonuses.activated', '=', 1);
                 })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
@@ -239,6 +239,7 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
             } else {
@@ -476,6 +477,10 @@ class PantalloGamesSystem implements GamesSystem
                                     $createParams['bonus_sum'] = 0;
                                 }
                             } else {
+                                if (isset($requestParams['is_freeround_win']) and $requestParams['is_freeround_win'] == 1) {
+                                    $createParams['type'] = 10;
+                                }
+
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
                             }
@@ -743,7 +748,7 @@ class PantalloGamesSystem implements GamesSystem
                 'available' => $available,
                 'validTo' => $validTo->format('Y-m-d')
             ], true);
-
+            
             $freeRoundsResponse = json_decode($freeRounds->response);
 
             $freeRoundsId = $freeRoundsResponse->freeround_id;
