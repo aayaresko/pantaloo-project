@@ -72,6 +72,8 @@ class AuthController extends Controller
         ]);
 
         $errors = [];
+        $partnerCommission = config('appAdditional.partnerCommission');
+
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
@@ -98,6 +100,7 @@ class AuthController extends Controller
             'name' => $name,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'commission' => $partnerCommission
         ]);
 
         $user->bitcoin_address = $address;
