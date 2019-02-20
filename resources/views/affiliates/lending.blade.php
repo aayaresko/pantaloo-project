@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 intro-text">
-                            <h1>EARN <span>50%</span> RIGHT NOW</h1>
+                            <h1>EARN <span>45%</span> RIGHT NOW</h1>
                             <p>
                                 <span>And Get Payed Out Every Week</span>
                                 <br>
