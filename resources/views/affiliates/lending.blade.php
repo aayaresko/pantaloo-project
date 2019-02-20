@@ -104,7 +104,7 @@
                         <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
                                                           class="fas fa-hand-holding-usd"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">UP TO 50% COMMISSION</span>
+                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">UP TO 45% COMMISSION</span>
                             </div>
                             <p>"Our generous payout structure allows you to earn up to 45% commission on every
                                 player."</p>
@@ -196,7 +196,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <h3 style="font-size: 50px;">50%</h3>
+                        <h3 style="font-size: 50px;">45%</h3>
                         <div class="list-style">
                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                 <ul>
