@@ -91,6 +91,9 @@ class PantalloGamesSystem implements GamesSystem
             GamesPantalloSessionGame::create(['session_id' => $idLogin,
                 'gamesession_id' => $getGame->gamesession_id]);
 
+
+            DB::commit();
+
         } catch (\Exception $e) {
             DB::rollBack();
             dump($playerExists);
@@ -105,8 +108,6 @@ class PantalloGamesSystem implements GamesSystem
                 'message' => $e->getMessage()
             ];
         }
-
-        DB::commit();
 
         //finish debug
         $response = [
@@ -151,6 +152,8 @@ class PantalloGamesSystem implements GamesSystem
             ])->first();
             $session->status = 1;
             $session->save();
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return [
@@ -159,7 +162,6 @@ class PantalloGamesSystem implements GamesSystem
             ];
         }
 
-        DB::commit();
         return [
             'success' => true
         ];
@@ -651,6 +653,7 @@ class PantalloGamesSystem implements GamesSystem
                 default:
                     throw new \Exception('Action is not found');
             }
+            DB::commit();
         } catch (\Exception $e) {
             //dd($e);
             $errorCode = $e->getCode();
@@ -667,7 +670,6 @@ class PantalloGamesSystem implements GamesSystem
                 $response['balance'] = isset($balanceBefore) ? $balanceBefore : null;
             }
         }
-        DB::commit();
 
         //finish debug
         $debugGameResult = $debugGame->end();
@@ -748,7 +750,7 @@ class PantalloGamesSystem implements GamesSystem
                 'available' => $available,
                 'validTo' => $validTo->format('Y-m-d')
             ], true);
-            
+
             $freeRoundsResponse = json_decode($freeRounds->response);
 
             $freeRoundsId = $freeRoundsResponse->freeround_id;
@@ -766,6 +768,9 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => true,
                 'freeRoundId' => $freeRoundsId
             ];
+
+            DB::commit();
+
         } catch (\Exception $e) {
             DB::rollBack();
             //rollback free rounds
@@ -784,11 +789,74 @@ class PantalloGamesSystem implements GamesSystem
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
         }
-        DB::commit();
 
         $debugGameResult = $debugGame->end();
         RawLog::create([
             'type_id' => 4,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => json_encode($response),
+            'extra' => json_encode($debugGameResult)
+        ]);
+
+        return $response;
+    }
+
+
+    public function removeFreeRounds($request)
+    {
+        $debugGame = new DebugGame();
+        $debugGame->start();
+        DB::beginTransaction();
+        try {
+            $user = $request->user();
+            $pantalloGames = new PantalloGames;
+
+            $playerExists = $pantalloGames->playerExists([
+                'user_username' => $user->id,
+            ], true);
+
+            //active player request
+            if ($playerExists->response === false) {
+                throw new \Exception('User is not found');
+            }
+            $player = $playerExists->response;
+
+            $getFreeRounds = GamesPantalloFreeRounds::where([
+                'user_id' => $user->id
+            ])->orderBy('id', 'DESC')->first();
+
+            if (is_null($getFreeRounds)) {
+                throw new \Exception('Free Rounds did not found');
+            }
+
+            $removeFreeRounds = $pantalloGames->removeFreeRounds([
+                'playerids' => $player->id,
+                'freeround_id' => $getFreeRounds->free_round_id
+            ], true);
+            dd($removeFreeRounds);
+            if ((int)$removeFreeRounds->error > 0) {
+                throw new \Exception('removeFreeRounds method was worked');
+            }
+
+            $response = [
+                'success' => true,
+            ];
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
+
+            $response = [
+                'success' => false,
+                'message' => $errorMessage . ' Line:' . $errorLine
+            ];
+        }
+
+        $debugGameResult = $debugGame->end();
+        RawLog::create([
+            'type_id' => 5,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)

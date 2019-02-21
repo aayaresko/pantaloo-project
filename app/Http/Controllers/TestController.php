@@ -22,40 +22,55 @@ use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
 use App\Modules\Games\PantalloGamesSystem;
 
+
 class TestController extends Controller
 {
     const PASSWORD = 'rf3js1Q';
 
     public function test(Request $request)
     {
-        //GamesTypeGame
-        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
-            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-            ->whereIn('games_types_games.type_id', [10001])
-            ->where([
-                ['games_types_games.extra', '=', 1],
-                ['games_list.active', '=', 1],
-                ['games_types.active', '=', 1],
-                ['games_categories.active', '=', 1],
-            ])
-            ->groupBy('games_types_games.game_id')->get();
+        $user = User::where('id', 136)->first();
 
-        $gamesIds = implode(',', array_map(function ($item) {
-            return $item->system_id;
-        }, $freeRoundGames));
-        dd($gamesIds);
-
-        $request->merge(['gamesIds' => '12545']);
-        $request->merge(['available' => 1]);
-        $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
-
-        $pantalloGamesSystem = new PantalloGamesSystem();
-        $freeRound = $pantalloGamesSystem->freeRound($request);
-
+        DB::beginTransaction();
+        try {
+            $user->bonus_balance = 0.50;
+            $user->save();
+            throw new \Exception('gfdgdgdgd');
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        DB::commit();
         dd(2);
+//        $a = UserBonus::withTrashed()->where('user_id', 75)->first();
+//        dd($a->data);
+//        //GamesTypeGame
+//        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+//            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+//            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+//            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+//            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+//            ->whereIn('games_types_games.type_id', [10001])
+//            ->where([
+//                ['games_types_games.extra', '=', 1],
+//                ['games_list.active', '=', 1],
+//                ['games_types.active', '=', 1],
+//                ['games_categories.active', '=', 1],
+//            ])
+//            ->groupBy('games_types_games.game_id')->get();
+//
+//        $gamesIds = implode(',', array_map(function ($item) {
+//            return $item->system_id;
+//        }, $freeRoundGames));
+//        dd($gamesIds);
+//
+//        $request->merge(['gamesIds' => '12545']);
+//        $request->merge(['available' => 1]);
+//        $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
+//
+//        $pantalloGamesSystem = new PantalloGamesSystem();
+//        $freeRound = $pantalloGamesSystem->freeRound($request);
+//
+//        dd(2);
         $bonuses = UserBonus::all();
 
         foreach ($bonuses as $bonus)
@@ -63,7 +78,7 @@ class TestController extends Controller
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
             $bonus_obj->realActivation();
-            $bonus_obj->close();
+            //$bonus_obj->close();
         }
 
         dd(1);

@@ -3,6 +3,7 @@
 namespace App\Bonuses;
 
 use DB;
+use App\User;
 use App\BonusLog;
 use Carbon\Carbon;
 use App\UserBonus;
@@ -46,17 +47,21 @@ class FreeSpins extends \App\Bonuses\Bonus
     }
 
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function activate()
     {
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
+        $user = $this->user;
+        $configBonus = config('bonus');
+
         DB::beginTransaction();
         try {
-            $response = [
-                'success' => true,
-                'message' => 'Done'
-            ];
-            $user = $this->user;
-            $configBonus = config('bonus');
-
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
@@ -77,6 +82,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('You can\'t use this bonus. Read terms.');
             }
 
+            $currentDate = Carbon::now();
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
@@ -87,26 +93,39 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => $bonus->id,
+                'data' => ['dateStart' => $currentDate->format('Y-m-d H:i:s')]
             ]);
 
             //get all games for free
             $request = new Request;
 
+            //add user for request - for lib
             $request->merge(['user' => $user]);
             $request->setUserResolver(function () use ($user) {
                 return $user;
             });
 
-            $freeRoundGames = GamesList::select(['id', 'system_id'])->where([
-                ['free_round', '=', 1]
-            ])->get()->toArray();
+            //get games for free spins
+            $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                ->whereIn('games_types_games.type_id', [$this->typeGames])
+                ->where([
+                    ['games_types_games.extra', '=', 1],
+                    ['games_list.active', '=', 1],
+                    ['games_types.active', '=', 1],
+                    ['games_categories.active', '=', 1],
+                ])
+                ->groupBy('games_types_games.game_id')->get();
 
             $gamesIds = implode(',', array_map(function ($item) {
-                return $item['system_id'];
+                return $item->system_id;
             }, $freeRoundGames));
 
-            $request->merge(['gamesIds' => '12545']);
-            $request->merge(['available' => 1]);
+            $request->merge(['gamesIds' => $gamesIds]);
+            $request->merge(['available' => 10]);
             $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
 
             $pantalloGamesSystem = new PantalloGamesSystem();
@@ -129,7 +148,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
-
+            //dd($errorMessage);
             throw new \Exception($errorMessage);
         }
         DB::commit();
@@ -137,23 +156,30 @@ class FreeSpins extends \App\Bonuses\Bonus
         return true;
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function realActivation()
     {
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+        $error = 0;
+        $errorMessage = 0;
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
         DB::beginTransaction();
         try {
-            $response = [
-                'success' => true,
-                'message' => 'Done'
-            ];
-            $configBonus = config('bonus');
-            $activeBonus = $this->active_bonus;
-
             if ($activeBonus->activated == 1) {
                 throw new \Exception('Bonus is already activated');
             }
 
             //to define start transaction wagered
+            $dateStartBonus = $activeBonus->data['dateStart'];
             $transaction = $this->user->transactions()->where([
+                ['created_at', '>', $dateStartBonus],
                 ['type', '=', 10],
             ])->orderBy('id', 'DESC')->first();
 
@@ -163,19 +189,30 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             $now = Carbon::now();
 
-            if ($now->format('U') - $transaction->created_at->format('U') > 60) {
+            //180 time when we realy get all transaction
+            if ($now->format('U') - $transaction->created_at->format('U') > 180) {
 
-                $free_spin_win = $this->user->transactions()->where('type', 10)->sum('bonus_sum');
+                $freeSpinWin = $this->user->transactions()->where([
+                    ['created_at', '>', $dateStartBonus],
+                    ['type', '=', 10]
+                ])->sum('bonus_sum');
 
-                $this->set('free_spin_win', $free_spin_win);
-                $this->set('wagered_sum', $free_spin_win * $this->playFactor);
-                $this->set('transaction_id', $transaction->id);
+                UserBonus::where('id', $activeBonus->id)->update([
+                    'activated' => 1,
+                    'data' => json_encode([
+                        'free_spin_win' => $freeSpinWin,
+                        'wagered_sum' => $freeSpinWin * $this->playFactor,
+                        'transaction_id' => $transaction->id,
+                        'dateStart' => $dateStartBonus
+                    ])
+                ]);
 
-                $this->active_bonus->activated = 1;
-                $this->active_bonus->save();
+            } else {
+                throw new \Exception('All transactions not yet received.');
             }
         } catch (\Exception $e) {
             DB::rollBack();
+            $error = 1;
             $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
@@ -189,7 +226,160 @@ class FreeSpins extends \App\Bonuses\Bonus
         BonusLog::updateOrCreate(
             [
                 'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['active']
+                'operation_id' => $configBonus['operation']['realActivation']
+            ],
+            ['status' => json_encode($response)]
+        );
+
+        if ($error === 1) {
+            throw new \Exception($errorMessage);
+        }
+
+        return true;
+    }
+
+    public function close()
+    {
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+        $error = 0;
+        $errorMessage = 0;
+        DB::beginTransaction();
+        try {
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            }
+
+            $now = Carbon::now();
+            $user = $this->user;
+
+            if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
+                $this->cancel('Expired');
+            }
+            if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0) {
+                $this->cancel('No bonus funds');
+            }
+
+            if ($this->active_bonus->activated == 1) {
+                if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
+                    $transaction = new Transaction();
+                    $winAmount = $user->bonus_balance;
+                    if ((float)$winAmount > $this->maxAmount) {
+                        $winAmount = $this->maxAmount;
+                    }
+                    $transaction->bonus_sum = -1 * $user->bonus_balance;
+                    $transaction->sum = $winAmount;
+                    $transaction->comment = 'Bonus to real transfer';
+                    $transaction->type = 7;
+                    $transaction->user()->associate($this->user);
+
+
+                    $this->user->changeBalance($transaction);
+
+                    $this->active_bonus->delete();
+
+                    $this->user->bonus_balance = 0;
+                    $this->user->save();
+                }
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $error = 1;
+            $errorCode = $e->getCode();
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+        }
+        DB::commit();
+
+    }
+
+    /**
+     * @param bool $reason
+     * @return bool
+     * @throws \Exception
+     */
+    public function cancel($reason = false)
+    {
+        $configBonus = config('bonus');
+        $user = $this->user;
+        $activeBonus = $this->active_bonus;
+        DB::beginTransaction();
+        try {
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            }
+
+            $bonusAmount  = -1 * $user->bonus_balance;
+            $transaction = new Transaction();
+            $transaction->bonus_sum = -$bonusAmount;
+            $transaction->sum = 0;
+            $transaction->comment = $reason;
+            $transaction->type = 6;
+            $transaction->user()->associate($user);
+            $transaction->save();
+
+            User::where('id', $user->id)->update([
+                'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+            ]);
+
+            $updateUser = User::where('id', $user->id)->first();
+
+            if ((float)$updateUser->bonus_balance === (float)0) {
+                $activeBonus->delete();
+            }
+
+            $request = new Request;
+            //add user for request - for lib
+            $request->merge(['user' => $user]);
+            $request->setUserResolver(function () use ($user) {
+                return $user;
+            });
+
+            if ((int)$activeBonus->activated === 0) {
+                $pantalloGamesSystem = new PantalloGamesSystem();
+                $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
+                if ($freeRound['success'] === false) {
+                    throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
+                }
+            }
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+
+            BonusLog::updateOrCreate(
+                [
+                    'bonus_id' => $activeBonus->id,
+                    'operation_id' => $configBonus['operation']['cancel']
+                ],
+                ['status' => json_encode($response)]
+            );
+
+            throw new \Exception($errorMessage);
+        }
+
+        DB::commit();
+
+        BonusLog::updateOrCreate(
+            [
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['cancel']
             ],
             ['status' => json_encode($response)]
         );
@@ -197,71 +387,14 @@ class FreeSpins extends \App\Bonuses\Bonus
         return true;
     }
 
-    public function close()
-    {
-        if ($this->hasBonusTransactions()) {
-            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-        }
 
-        $now = Carbon::now();
-        $user = $this->user;
-
-        if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
-            $this->cancel('Expired');
-        }
-        if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0) {
-            $this->cancel('No bonus funds');
-        }
-
-        if ($this->active_bonus->activated == 1) {
-            if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
-                $transaction = new Transaction();
-                $winAmount = $user->bonus_balance;
-                if ((float)$winAmount > $this->maxAmount) {
-                    $winAmount = $this->maxAmount;
-                }
-                $transaction->bonus_sum = -1 * $user->bonus_balance;
-                $transaction->sum = $winAmount;
-                $transaction->comment = 'Bonus to real transfer';
-                $transaction->type = 7;
-                $transaction->user()->associate($this->user);
-
-
-                $this->user->changeBalance($transaction);
-
-                $this->active_bonus->delete();
-
-                $this->user->bonus_balance = 0;
-                $this->user->save();
-            }
-        }
-    }
-
-    public function cancel($reason = false)
-    {
-        if ($this->hasBonusTransactions()) {
-            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-        }
-
-        $transaction = new Transaction();
-        $transaction->bonus_sum = -1 * $this->user->bonus_balance;
-        $transaction->sum = 0;
-        $transaction->comment = $reason;
-        $transaction->type = 6;
-        $transaction->user()->associate($this->user);
-
-        $this->user->changeBalance($transaction);
-
-        if ($this->user->bonus_balance == 0) {
-            $this->active_bonus->delete();
-        }
-
-
-        //to do cancel
-        //to write to db
-    }
-
-
+    /**
+     *
+     * check if someone is playing now
+     *
+     * @param int $minutes
+     * @return bool
+     */
     public function hasBonusTransactions($minutes = 1)
     {
         $date = Carbon::now();
@@ -276,13 +409,30 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
     }
 
+    /**
+     * @return float|int
+     */
     public function getPlayedSum()
     {
         if ($this->active_bonus->activated == 1) {
-            return -1 * $this->user->transactions()
+            $playedSum = -1 * $this->user->transactions()
                     ->where('id', '>', $this->get('transaction_id'))
                     ->where('type', 1)
                     ->sum('bonus_sum');
+            return $playedSum;
+        }
+        return 0;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getPercent()
+    {
+        if ($this->active_bonus->activated == 1) {
+            $played_sum = $this->getPlayedSum();
+            $percent = floor($played_sum / $this->get('wagered_sum') * 100);
+            return $percent;
         }
         return 0;
     }
@@ -290,16 +440,5 @@ class FreeSpins extends \App\Bonuses\Bonus
     public function getStatus()
     {
 
-    }
-
-    public function getPercent()
-    {
-        if ($this->active_bonus->activated == 1) {
-            $played_sum = $this->getPlayedSum();
-
-            return floor($played_sum / $this->get('wagered_sum') * 100);
-        } else {
-            return 0;
-        }
     }
 }

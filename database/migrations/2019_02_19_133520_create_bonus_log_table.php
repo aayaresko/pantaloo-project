@@ -15,7 +15,7 @@ class CreateBonusLogTable extends Migration
         Schema::create('bonus_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('bonus_id')->nullable()->unsigned()->index();
-            $table->foreign('bonus_id')->references('id')->on('user_bonuses');
+            $table->foreign('bonus_id')->references('id')->on('user_bonuses')->onDelete('cascade');
             $table->tinyInteger('operation_id')->index();
             $table->text('status');
             $table->timestamps();

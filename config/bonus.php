@@ -9,8 +9,9 @@ return [
 
     'operation' => [
         'active' => 1,
-        'realActive' => 2,
-        'close' => 3
+        'realActivation' => 2,
+        'close' => 3,
+        'cancel' => 4
     ]
 
 ];
