@@ -341,6 +341,13 @@ class PantalloGamesSystem implements GamesSystem
                             }
                         }
 
+                        //if free spins transactions
+                        if (isset($requestParams['is_freeround_bet']) and $requestParams['is_freeround_bet'] == 1) {
+                            $createParams['type'] = 9;
+                            $createParams['sum'] = 0;
+                            $createParams['bonus_sum'] = 0;
+                        }
+
                         $transaction = Transaction::create($createParams);
 
                         //edit balance user
@@ -479,13 +486,15 @@ class PantalloGamesSystem implements GamesSystem
                                     $createParams['bonus_sum'] = 0;
                                 }
                             } else {
-                                if (isset($requestParams['is_freeround_win']) and $requestParams['is_freeround_win'] == 1) {
-                                    $createParams['type'] = 10;
-                                }
-
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
                             }
+                        }
+
+                        if (isset($requestParams['is_freeround_win']) and $requestParams['is_freeround_win'] == 1) {
+                            $createParams['type'] = 10;
+                            $createParams['sum'] = 0;
+                            $createParams['bonus_sum'] = $amount;
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -833,9 +842,13 @@ class PantalloGamesSystem implements GamesSystem
                 'playerids' => $player->id,
                 'freeround_id' => $getFreeRounds->free_round_id
             ], true);
-            dd($removeFreeRounds);
+
             if ((int)$removeFreeRounds->error > 0) {
                 throw new \Exception('removeFreeRounds method was worked');
+            }
+
+            if (empty($removeFreeRounds->response->successfull_removals)) {
+                throw new \Exception('Free rounds was not removed. Provider error');
             }
 
             $response = [

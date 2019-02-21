@@ -29,18 +29,19 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $user = User::where('id', 136)->first();
 
-        DB::beginTransaction();
-        try {
-            $user->bonus_balance = 0.50;
-            $user->save();
-            throw new \Exception('gfdgdgdgd');
-        } catch (\Exception $e) {
-            DB::rollBack();
+        $bonuses = UserBonus::all();
+
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            //$bonus_obj->realActivation();
+            $bonus_obj->close();
         }
-        DB::commit();
-        dd(2);
+
+        dd(1);
+
 //        $a = UserBonus::withTrashed()->where('user_id', 75)->first();
 //        dd($a->data);
 //        //GamesTypeGame
