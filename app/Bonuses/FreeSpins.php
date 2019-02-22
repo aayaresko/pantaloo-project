@@ -260,24 +260,15 @@ class FreeSpins extends \App\Bonuses\Bonus
         $activeBonus = $this->active_bonus;
         $response = [
             'success' => true,
-            'message' => 'Done'
+            'message' => 'Bonus to real transfer'
         ];
-        
+
         DB::beginTransaction();
         try {
             if ($this->hasBonusTransactions()) {
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
-
-            $now = Carbon::now();
-
-            if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
-                $this->cancel('Expired');
-            }
-            if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0) {
-                $this->cancel('No bonus funds');
-            }
-
+            
             if ($this->active_bonus->activated == 1) {
                 if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
                     $transaction = new Transaction();
@@ -299,7 +290,15 @@ class FreeSpins extends \App\Bonuses\Bonus
                         'bonus_balance' => 0
                     ]);
 
-                    $activeBonus->delete();
+                    $now = Carbon::now();
+
+                    if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
+                        $activeBonus->delete();
+                        $response = [
+                            'success' => true,
+                            'message' => 'Done. Close'
+                        ];
+                    }
                 }
             }
             DB::commit();
@@ -319,7 +318,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         BonusLog::updateOrCreate(
             [
                 'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['realActivation']
+                'operation_id' => $configBonus['operation']['close']
             ],
             ['status' => json_encode($response)]
         );
@@ -343,6 +342,8 @@ class FreeSpins extends \App\Bonuses\Bonus
         $activeBonus = $this->active_bonus;
         DB::beginTransaction();
         try {
+            //check to enters to games
+
 //            if ($this->hasBonusTransactions()) {
 //                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
 //            }

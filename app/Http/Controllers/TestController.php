@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
+use Log;
 use App\Transaction;
 use App\User;
 use Validator;
@@ -36,11 +37,18 @@ class TestController extends Controller
         {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
-            //$bonus_obj->realActivation();
-            $bonus_obj->close();
+            try {
+                $bonus_obj->realActivation();
+                $bonus_obj->close();
+            } catch (\Exception $e) {
+                Log::alert([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
 
-        dd(1);
+        dd(2);
 
 //        $a = UserBonus::withTrashed()->where('user_id', 75)->first();
 //        dd($a->data);

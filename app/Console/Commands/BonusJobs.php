@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Log;
 use App\UserBonus;
 use Illuminate\Console\Command;
 
@@ -40,11 +41,20 @@ class BonusJobs extends Command
     {
         $bonuses = UserBonus::all();
 
-        foreach ($bonuses as $bonus) {
+        foreach ($bonuses as $bonus)
+        {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
-            $bonus_obj->realActivation();
-            $bonus_obj->close();
+            try {
+                $bonus_obj->realActivation();
+                $bonus_obj->close();
+            } catch (\Exception $e) {
+                Log::alert([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
+        
     }
 }
