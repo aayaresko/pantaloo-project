@@ -27,8 +27,10 @@
                                         <div class="single-bonus">
                                             <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
                                             <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
-                                            <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
-                                            <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
+                                            @if ($active_bonus->bonus_id != 3)
+                                                <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
+                                                <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
+                                            @endif
                                             <a href="{{route('bonus.cancel')}}" class="push-button">{{ trans('casino.cancel') }}</a>
                                         </div>
                                     </div>

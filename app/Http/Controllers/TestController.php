@@ -30,9 +30,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
         $bonuses = UserBonus::all();
-
         foreach ($bonuses as $bonus)
         {
             $class = $bonus->bonus->getClass();
@@ -48,7 +46,7 @@ class TestController extends Controller
             }
         }
 
-        dd(2);
+        dd(23);
 
 //        $a = UserBonus::withTrashed()->where('user_id', 75)->first();
 //        dd($a->data);

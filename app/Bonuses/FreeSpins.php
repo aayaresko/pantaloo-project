@@ -12,6 +12,7 @@ use App\Models\GamesList;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
 use App\Modules\Games\PantalloGamesSystem;
+use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class FreeSpins extends \App\Bonuses\Bonus
 {
@@ -45,7 +46,6 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         return true;
     }
-
 
     /**
      * @return bool
@@ -258,26 +258,33 @@ class FreeSpins extends \App\Bonuses\Bonus
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
-        $response = [
-            'success' => true,
-            'message' => 'Bonus to real transfer'
-        ];
 
         DB::beginTransaction();
         try {
             if ($this->hasBonusTransactions()) {
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
-            
+
+            $response = [
+                'success' => true,
+                'message' => 'The condition is not satisfied'
+            ];
+
             if ($this->active_bonus->activated == 1) {
                 if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
+
+                    $response = [
+                        'success' => true,
+                        'message' => 'Bonus to real transfer'
+                    ];
+
                     $transaction = new Transaction();
                     $winAmount = $user->bonus_balance;
                     if ((float)$winAmount > $this->maxAmount) {
                         $winAmount = $this->maxAmount;
                     }
 
-                    $bonusAmount  = -1 * $user->bonus_balance;
+                    $bonusAmount = -1 * $user->bonus_balance;
                     $transaction->bonus_sum = $bonusAmount;
                     $transaction->sum = $winAmount;
                     $transaction->comment = 'Bonus to real transfer';
@@ -347,8 +354,21 @@ class FreeSpins extends \App\Bonuses\Bonus
 //            if ($this->hasBonusTransactions()) {
 //                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
 //            }
+            $dateStartBonus = $activeBonus->data['dateStart'];
+            //and add only slots games for this
+            $openGames = GamesPantalloSessionGame::leftJoin('games_pantallo_session',
+                'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                ->where([
+                    ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
+                    ['games_pantallo_session.user_id', '=', $user->id],
+                ])->first();
 
-            $bonusAmount  = -1 * $user->bonus_balance;
+            if (!is_null($openGames)) {
+                throw new \Exception('Free rounds are already active. We cannot deactivate them.');
+            }
+
+            //to do all sum last transaction if multi bonuses
+            $bonusAmount = -1 * $user->bonus_balance;
             $transaction = new Transaction();
             $transaction->bonus_sum = $bonusAmount;
             $transaction->sum = 0;
