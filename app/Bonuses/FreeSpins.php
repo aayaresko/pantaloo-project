@@ -31,7 +31,8 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $createdUser = $user->created_at;
-        $timeActiveBonusSec = strtotime("$this->expireDays day", 0);
+        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+
         $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
         $currentDate = new Carbon();
 
