@@ -91,7 +91,7 @@ class Service
         }
     }
 
-    static function getResponse(Response $response)
+    static function getResponse($response)
     {
         $result = json_decode($response->getBody()->getContents(), true);
 

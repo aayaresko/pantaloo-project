@@ -25,6 +25,10 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $service = new Service();
+        //dd($service);
+        $address = $service->info();
+        dd($address);
         Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
