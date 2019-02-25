@@ -29,7 +29,7 @@ class GeneralHelper
      */
     static public function getListLanguage()
     {
-        $dir = '../resources/lang';
+        $dir = base_path() . '/resources/lang';
         $languagesIndex = array_diff(scandir($dir), ['..', '.']);
         $languages = array_values($languagesIndex);
         return $languages;
