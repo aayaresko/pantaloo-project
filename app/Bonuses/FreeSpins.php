@@ -31,14 +31,14 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $createdUser = $user->created_at;
-        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
-
-        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
-        $currentDate = new Carbon();
-
-        if ($allowedDate < $currentDate) {
-            return false;
-        }
+//        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+//
+//        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
+//        $currentDate = new Carbon();
+//
+//        if ($allowedDate < $currentDate) {
+//            return false;
+//        }
 
         $countBonuses = $this->user->bonuses()->withTrashed()->count();
         if ($countBonuses > 0) {
@@ -78,7 +78,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             if ((int)$user->email_confirmed === 0) {
                 throw new \Exception('Your email is not confirm.');
             }
-
+            
             if ($allowedDate < $currentDate) {
                 throw new \Exception('You can\'t use this bonus. Read terms.');
             }

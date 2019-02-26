@@ -24,7 +24,7 @@ class CreateUserBonusesTable extends Migration
             $table->text('data');
             $table->timestamp('expires_at');
             $table->timestamps();
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
 use Log;
+use App\Bitcoin\Service;
 use App\Transaction;
 use App\User;
 use Validator;
 use App\UserBonus;
-use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
@@ -30,6 +30,14 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(url('/'));
+        $service = new Service();
+        dd($service);
+        $address = $service->getNewAddress('common');
+        dd(2);
         $bonuses = UserBonus::all();
         foreach ($bonuses as $bonus)
         {
