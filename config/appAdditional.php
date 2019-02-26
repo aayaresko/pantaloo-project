@@ -101,6 +101,8 @@ return [
         'register' => 2
     ],
 
+    'partnerCommission' => 45,
+
     'freeRounds' => [
         'available' => 50,
         'timeFreeRound' => 1209600

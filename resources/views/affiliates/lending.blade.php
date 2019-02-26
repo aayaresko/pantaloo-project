@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 intro-text">
-                            <h1>EARN <span>50%</span> RIGHT NOW</h1>
+                            <h1>EARN <span>45%</span> RIGHT NOW</h1>
                             <p>
                                 <span>And Get Payed Out Every Week</span>
                                 <br>
@@ -104,7 +104,7 @@
                         <div class="testimonial-image"><i style="font-size: 60px; color: #005bfb;"
                                                           class="fas fa-hand-holding-usd"></i></div>
                         <div class="testimonial-content">
-                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">UP TO 50% COMMISSION</span>
+                            <div class="testimonial-meta"><span style="color: #333;font-size: 20px;">UP TO 45% COMMISSION</span>
                             </div>
                             <p>"Our generous payout structure allows you to earn up to 45% commission on every
                                 player."</p>
@@ -196,7 +196,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <h3 style="font-size: 50px;">50%</h3>
+                        <h3 style="font-size: 50px;">45%</h3>
                         <div class="list-style">
                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                 <ul>
@@ -257,12 +257,12 @@
             <div class="col-md-3 col-md-offset-1 contact-info">
                 <div class="contact-item">
                     <h3>Contact Info</h3>
-                    <p><span><i class="fa fa-map-marker"></i> Address</span>4321 California St,<br>
-                        San Francisco, CA 12345</p>
+                    {{--<p><span><i class="fa fa-map-marker"></i> Address</span>4321 California St,<br>--}}
+                        {{--San Francisco, CA 12345</p>--}}
                 </div>
-                <div class="contact-item">
-                    <p><span><i class="fa fa-phone"></i> Phone</span> +1 123 456 1234</p>
-                </div>
+                {{--<div class="contact-item">--}}
+                    {{--<p><span><i class="fa fa-phone"></i> Phone</span> +1 123 456 1234</p>--}}
+                {{--</div>--}}
                 <div class="contact-item">
                     <p><span><i class="fa fa-envelope-o"></i> Email</span> affiliates@casinobit.io</p>
                 </div>
