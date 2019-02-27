@@ -52,7 +52,12 @@ class MoneyController extends Controller
         }
         else $sum = false;
 
-        return response()->json(['balance' => $user->getBalance(), 'deposit' => $sum, 'free_spins' => $user->free_spins]);
+        return response()->json([
+            'realBalance' => $user->balance,
+            'balance' => $user->getBalance(),
+            'deposit' => $sum,
+            'free_spins' => $user->free_spins
+        ]);
     }
 
     public function bitcoin()
