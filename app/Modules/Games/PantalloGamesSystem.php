@@ -307,7 +307,7 @@ class PantalloGamesSystem implements GamesSystem
                 $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
             }
             //finish get games
-            
+
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
