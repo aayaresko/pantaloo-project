@@ -88,9 +88,11 @@ class PantalloGamesSystem implements GamesSystem
                 'homeurl' => url(''),
             ], true);
 
-            GamesPantalloSessionGame::create(['session_id' => $idLogin,
-                'gamesession_id' => $getGame->gamesession_id]);
-
+            GamesPantalloSessionGame::create([
+                'session_id' => $idLogin,
+                'gamesession_id' => $getGame->gamesession_id,
+                'game_id' => $game->id
+            ]);
 
             DB::commit();
 
