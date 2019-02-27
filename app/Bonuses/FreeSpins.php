@@ -21,7 +21,6 @@ class FreeSpins extends \App\Bonuses\Bonus
     protected $playFactor = 33;
     protected $expireDays = 1;
     protected $freeSpins = 50;
-    protected $typeGames = [10001];
     protected $timeActiveBonusDays = 5;
 
     /**
@@ -60,6 +59,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         ];
         $user = $this->user;
         $configBonus = config('bonus');
+        $slotTypeId = config('appAdditional.slotTypeId');
 
         DB::beginTransaction();
         try {
@@ -112,7 +112,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                 ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->whereIn('games_types_games.type_id', [$this->typeGames])
+                ->whereIn('games_types_games.type_id', [$slotTypeId])
                 ->where([
                     ['games_types_games.extra', '=', 1],
                     ['games_list.active', '=', 1],
@@ -348,6 +348,8 @@ class FreeSpins extends \App\Bonuses\Bonus
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $slotTypeId = config('appAdditional.slotTypeId');
+
         DB::beginTransaction();
         try {
             //check to enters to games
@@ -363,7 +365,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                 ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->whereIn('games_types_games.type_id', [$this->typeGames])
+                ->whereIn('games_types_games.type_id', [$slotTypeId])
                 ->where([
                     ['games_types_games.extra', '=', 1],
                     ['games_list.active', '=', 1],

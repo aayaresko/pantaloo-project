@@ -30,6 +30,21 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $slotTypeId = config('appAdditional.slotTypeId');
+        $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [$slotTypeId])
+            ->where([
+                ['games_list.system_id', '=', 12545],
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])->groupBy('games_types_games.game_id')->first();
+        dd($slotsGame);
         $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')

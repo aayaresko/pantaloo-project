@@ -91,6 +91,8 @@ return [
         ],
     ],
 
+    'slotTypeId' => 10001,
+
     'defaultTitle' => 'games',
 
     'keepLanguage' => 60 * 24 * 30,//min

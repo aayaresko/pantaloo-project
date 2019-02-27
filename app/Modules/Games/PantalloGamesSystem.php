@@ -182,7 +182,9 @@ class PantalloGamesSystem implements GamesSystem
         try {
             //validation
             $modePlay = 0; //play real money
+            $typeGame = 0;
             $params = [];
+            $slotTypeId = config('appAdditional.slotTypeId');
             $requestParams = $request->query();
             Log::info($requestParams);
 
@@ -242,18 +244,73 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Game is not found');
             }
 
-            $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+            $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
 
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
-            } else {
-                $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
             }
 
+            //get type games
+            //mode if isset ids games
+            $gameIdRequest = isset($requestParams['game_id']) ? $requestParams['game_id'] : null;
+
+            if (!is_null($gameIdRequest)) {
+                $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->where([
+                        ['games_list.system_id', '=', $gameIdRequest],
+                        ['games_types_games.extra', '=', 1],
+                        ['games_list.active', '=', 1],
+                        ['games_types.active', '=', 1],
+                        ['games_categories.active', '=', 1],
+                    ])->groupBy('games_types_games.game_id')->first();
+
+                $typeOpenGame = $slotsGame;
+            } else {
+                $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->where([
+                        ['games_types_games.extra', '=', 1],
+                        ['games_list.active', '=', 1],
+                        ['games_types.active', '=', 1],
+                        ['games_categories.active', '=', 1],
+                    ])
+                    ->groupBy('games_types_games.game_id')->get();
+
+                $slotsGameIds = array_map(function ($item) {
+                    return $item->id;
+                }, $slotsGames);
+
+                $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
+                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                    ->whereIn('game_id', $slotsGameIds)
+                    ->where([
+                        ['games_pantallo_session.user_id', '=', $params['user']->id],
+                    ])
+                    ->selelct([
+                        'games_pantallo_session_game.id',
+                    ])
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
+
+            if (!is_null($typeOpenGame)) {
+                $typeGame = 1;
+                $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+            }
+            //finish get games
+            
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
-
             $action = $requestParams['action'];
             if ($action !== 'balance') {
                 $gamesSessionIdThem = $requestParams['gamesession_id'];
@@ -261,11 +318,10 @@ class PantalloGamesSystem implements GamesSystem
                     'session_id' => $params['session']->system_id,
                     'gamesession_id' => $gamesSessionIdThem,
                 ])->first();
-
                 if (is_null($gamesSession)) {
-                    throw new \Exception('Games session is not found', 500);
+                    throw new \Exception('Games session is not found.'.
+                        ' This user is not playing currently.', 500);
                 }
-
                 $gamesSessionId = $gamesSession->id;
             }
 
