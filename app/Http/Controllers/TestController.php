@@ -30,6 +30,32 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $freeRoundGames = array_map(function ($item) {
+            return $item->id;
+        }, $freeRoundGames);
+
+        $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
+            'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+            ->whereIn('games_pantallo_session_game.game_id', $freeRoundGames)
+            ->where([
+                ['games_pantallo_session.user_id', '=', 136],
+            ])->first();
+        dd($openGames);
+
         $service = new Service();
         //dd($service);
         $address = $service->info();

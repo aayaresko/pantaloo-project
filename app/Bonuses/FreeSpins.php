@@ -78,7 +78,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             if ((int)$user->email_confirmed === 0) {
                 throw new \Exception('Your email is not confirm.');
             }
-            
+
             if ($allowedDate < $currentDate) {
                 throw new \Exception('You can\'t use this bonus. Read terms.');
             }
@@ -356,9 +356,29 @@ class FreeSpins extends \App\Bonuses\Bonus
 //                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
 //            }
             $dateStartBonus = $activeBonus->data['dateStart'];
-            //and add only slots games for this
-            $openGames = GamesPantalloSessionGame::leftJoin('games_pantallo_session',
+            //and add only slots games for this to do
+            //get only slots games
+            $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                ->whereIn('games_types_games.type_id', [$this->typeGames])
+                ->where([
+                    ['games_types_games.extra', '=', 1],
+                    ['games_list.active', '=', 1],
+                    ['games_types.active', '=', 1],
+                    ['games_categories.active', '=', 1],
+                ])
+                ->groupBy('games_types_games.game_id')->get();
+
+            $freeRoundGames = array_map(function ($item) {
+                return $item->id;
+            }, $freeRoundGames);
+
+            $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
                 'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                ->whereIn('game_id', $freeRoundGames)
                 ->where([
                     ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
                     ['games_pantallo_session.user_id', '=', $user->id],
