@@ -179,7 +179,7 @@ class MoneyController extends Controller
             return redirect()->back()->withErrors(['Not enoug funds']);
         }
 
-        //$this->dispatch(new Withdraw($transaction));
+        $this->dispatch(new Withdraw($transaction));
 
         return redirect()->route('withdraw')->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
