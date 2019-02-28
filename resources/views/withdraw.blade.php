@@ -19,7 +19,7 @@
                 <div class="page-heading">
                     <h1 class="page-title">{{ trans('casino.withdraw') }}</h1>
                     <p class="sub-text">{{ trans('casino.transfer_wallet_address') }}</p>
-                    <p class="sub-text">{{ trans('casino.have_millibitcoins', [Auth::user()->getRealBalance()]) }}</p>
+                    <p class="sub-text">{{ trans('casino.have_millibitcoins', ['availableBalance' => Auth::user()->getRealBalance()]) }}</p>
                 </div>
                 <div class="main-content-entry">
                     <div class="withdraw-entry">
