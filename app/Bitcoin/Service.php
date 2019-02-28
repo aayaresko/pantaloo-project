@@ -64,6 +64,13 @@ class Service
         return static::getResponse($response);
     }
 
+    public function getWalletInfo()
+    {
+        $response = $this->client->sendCommand(new Command('getwalletinfo'));
+
+        return static::getResponse($response);
+    }
+
     public function getNewAddress()
     {
         $response = $this->client->sendCommand(new Command('getnewaddress', uniqid()));

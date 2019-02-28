@@ -64,7 +64,7 @@ class MoneyController extends Controller
     {
         $service = new Service();
 
-        $data = $service->info();
+        $data = $service->getWalletInfo();
 
         return view('admin.bitcoin', ['balance' => $data['balance']]);
     }

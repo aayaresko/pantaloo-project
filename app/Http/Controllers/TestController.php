@@ -26,6 +26,10 @@ class TestController extends Controller
     public function test(Request $request)
     {
         $service = new Service();
+
+        $data = $service->getWalletInfo();
+        dd(2);
+        $service = new Service();
         //dd($service);
         $address = $service->info();
         dd($address);
