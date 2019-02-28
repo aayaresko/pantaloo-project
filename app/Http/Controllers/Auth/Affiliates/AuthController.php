@@ -317,14 +317,14 @@ class AuthController extends Controller
             ['updated_at', '>=', $date],
         ])->first();
 
-        if (is_null($activation)) {
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => 'Invalid token'
-                ]
-            ];
-        }
+//        if (is_null($activation)) {
+//            return [
+//                'status' => false,
+//                'message' => [
+//                    'errors' => 'Invalid token'
+//                ]
+//            ];
+//        }
 
         if ($user->email_confirmed == 1) {
             return [

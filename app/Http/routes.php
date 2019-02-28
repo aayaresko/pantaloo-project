@@ -113,7 +113,6 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
 
     });
 
-    Route::get('/activate/{token}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
     Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
     Route::post('/contribution', ['as' => 'usd.depositDo', 'uses' => 'MoneyController@depositUsdDo']);
     Route::get('/contribution/success', ['as' => 'usd.success', 'uses' => 'MoneyController@depositSuccess']);
@@ -279,6 +278,8 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
     Route::get('/integratedGameLink/provider/{providerId}/game/{gameId}',
         ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
+
+Route::get('/activate/{token}/email/{email}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
 
 //Route::get('/games', ['as' => 'slots', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
