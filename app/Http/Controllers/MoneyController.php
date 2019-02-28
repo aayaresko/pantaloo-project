@@ -181,7 +181,9 @@ class MoneyController extends Controller
 
         //$this->dispatch(new Withdraw($transaction));
 
-        return redirect()->route('withdraw')->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
+        $lang = config('currentLang');
+
+        return redirect()->route('withdraw', ['lang' => $lang])->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
 
     public function transfers(Request $request)
