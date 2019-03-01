@@ -88,8 +88,13 @@ class PantalloGamesSystem implements GamesSystem
                 'homeurl' => url(''),
             ], true);
 
-            GamesPantalloSessionGame::create(['session_id' => $idLogin,
-                'gamesession_id' => $getGame->gamesession_id]);
+            GamesPantalloSessionGame::create([
+                'session_id' => $idLogin,
+                'gamesession_id' => $getGame->gamesession_id,
+                'game_id' => $game->id
+            ]);
+
+            DB::commit();
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -105,8 +110,6 @@ class PantalloGamesSystem implements GamesSystem
                 'message' => $e->getMessage()
             ];
         }
-
-        DB::commit();
 
         //finish debug
         $response = [
@@ -151,6 +154,8 @@ class PantalloGamesSystem implements GamesSystem
             ])->first();
             $session->status = 1;
             $session->save();
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return [
@@ -159,7 +164,6 @@ class PantalloGamesSystem implements GamesSystem
             ];
         }
 
-        DB::commit();
         return [
             'success' => true
         ];
@@ -178,7 +182,9 @@ class PantalloGamesSystem implements GamesSystem
         try {
             //validation
             $modePlay = 0; //play real money
+            $typeGame = 0;
             $params = [];
+            $slotTypeId = config('appAdditional.slotTypeId');
             $requestParams = $request->query();
             Log::info($requestParams);
 
@@ -221,8 +227,8 @@ class PantalloGamesSystem implements GamesSystem
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
                 ->leftJoin('user_bonuses', function($join){
-                    $join->on('users.id', '=', 'user_bonuses.user_id')
-                        ->where('user_bonuses.activated', '=', 1);
+                    $join->on('users.id', '=', 'user_bonuses.user_id');
+                        //->where('user_bonuses.activated', '=', 1);
                 })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
@@ -238,17 +244,73 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('Game is not found');
             }
 
-            $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+            $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
+
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
-            } else {
-                $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
             }
+
+            //get type games
+            //mode if isset ids games
+            $gameIdRequest = isset($requestParams['game_id']) ? $requestParams['game_id'] : null;
+
+            if (!is_null($gameIdRequest)) {
+                $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->where([
+                        ['games_list.system_id', '=', $gameIdRequest],
+                        ['games_types_games.extra', '=', 1],
+                        ['games_list.active', '=', 1],
+                        ['games_types.active', '=', 1],
+                        ['games_categories.active', '=', 1],
+                    ])->groupBy('games_types_games.game_id')->first();
+
+                $typeOpenGame = $slotsGame;
+            } else {
+                $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->where([
+                        ['games_types_games.extra', '=', 1],
+                        ['games_list.active', '=', 1],
+                        ['games_types.active', '=', 1],
+                        ['games_categories.active', '=', 1],
+                    ])
+                    ->groupBy('games_types_games.game_id')->get();
+
+                $slotsGameIds = array_map(function ($item) {
+                    return $item->id;
+                }, $slotsGames);
+
+                $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
+                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                    ->whereIn('game_id', $slotsGameIds)
+                    ->where([
+                        ['games_pantallo_session.user_id', '=', $params['user']->id],
+                    ])
+                    ->selelct([
+                        'games_pantallo_session_game.id',
+                    ])
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
+
+            if (!is_null($typeOpenGame)) {
+                $typeGame = 1;
+                $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
+            }
+            //finish get games
 
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
-
             $action = $requestParams['action'];
             if ($action !== 'balance') {
                 $gamesSessionIdThem = $requestParams['gamesession_id'];
@@ -256,11 +318,10 @@ class PantalloGamesSystem implements GamesSystem
                     'session_id' => $params['session']->system_id,
                     'gamesession_id' => $gamesSessionIdThem,
                 ])->first();
-
                 if (is_null($gamesSession)) {
-                    throw new \Exception('Games session is not found', 500);
+                    throw new \Exception('Games session is not found.'.
+                        ' This user is not playing currently.', 500);
                 }
-
                 $gamesSessionId = $gamesSession->id;
             }
 
@@ -336,6 +397,13 @@ class PantalloGamesSystem implements GamesSystem
                                 $createParams['sum'] = $amount;
                                 $createParams['bonus_sum'] = 0;
                             }
+                        }
+
+                        //if free spins transactions
+                        if (isset($requestParams['is_freeround_bet']) and $requestParams['is_freeround_bet'] == 1) {
+                            $createParams['type'] = 9;
+                            $createParams['sum'] = 0;
+                            $createParams['bonus_sum'] = 0;
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -458,21 +526,33 @@ class PantalloGamesSystem implements GamesSystem
 
                             //to do throw exception
 
-                            if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
-                                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+                            //if is null - this after bonus money
+                            if (!is_null($lastTransaction)) {
+                                if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
+                                    $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
-                                $percentageSum = abs($lastTransaction->sum)/$totalSum;
-                                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+                                    $percentageSum = abs($lastTransaction->sum)/$totalSum;
+                                    $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
 
-                                $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
-                                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
-                            } elseif ((float)$params['user']->balance < 0) {
+                                    $percentageBonusSum = abs($lastTransaction->bonus_sum)/$totalSum;
+                                    $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+                                } elseif ((float)$params['user']->balance < 0) {
+                                    $createParams['sum'] = 0;
+                                    $createParams['bonus_sum'] = $amount;
+                                } else {
+                                    $createParams['sum'] = $amount;
+                                    $createParams['bonus_sum'] = 0;
+                                }
+                            } else {
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
-                            } else {
-                                $createParams['sum'] = $amount;
-                                $createParams['bonus_sum'] = 0;
                             }
+                        }
+
+                        if (isset($requestParams['is_freeround_win']) and $requestParams['is_freeround_win'] == 1) {
+                            $createParams['type'] = 10;
+                            $createParams['sum'] = 0;
+                            $createParams['bonus_sum'] = $amount;
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -640,6 +720,7 @@ class PantalloGamesSystem implements GamesSystem
                 default:
                     throw new \Exception('Action is not found');
             }
+            DB::commit();
         } catch (\Exception $e) {
             //dd($e);
             $errorCode = $e->getCode();
@@ -656,7 +737,6 @@ class PantalloGamesSystem implements GamesSystem
                 $response['balance'] = isset($balanceBefore) ? $balanceBefore : null;
             }
         }
-        DB::commit();
 
         //finish debug
         $debugGameResult = $debugGame->end();
@@ -755,16 +835,12 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => true,
                 'freeRoundId' => $freeRoundsId
             ];
+
+            DB::commit();
+
         } catch (\Exception $e) {
             DB::rollBack();
             //rollback free rounds
-            if (isset($freeRoundsId)) {
-                $pantalloGames->removeFreeRounds([
-                    'playerids' => $player->id,
-                    'freeround_id' => $freeRoundsId
-                ], true);
-            }
-
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
 
@@ -772,12 +848,92 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
+
+            if (isset($freeRoundsId)) {
+                $removeFreeRounds = $pantalloGames->removeFreeRounds([
+                    'playerids' => $player->id,
+                    'freeround_id' => $freeRoundsId
+                ], true);
+                $response['removeFreeRounds'] = $removeFreeRounds;
+                $response['freeRoundsResponse'] = $freeRoundsResponse;
+            }
         }
-        DB::commit();
 
         $debugGameResult = $debugGame->end();
         RawLog::create([
             'type_id' => 4,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => json_encode($response),
+            'extra' => json_encode($debugGameResult)
+        ]);
+
+        return $response;
+    }
+
+
+    public function removeFreeRounds($request)
+    {
+        $debugGame = new DebugGame();
+        $debugGame->start();
+        DB::beginTransaction();
+        try {
+            $user = $request->user();
+            $pantalloGames = new PantalloGames;
+
+            $playerExists = $pantalloGames->playerExists([
+                'user_username' => $user->id,
+            ], true);
+
+            //active player request
+            if ($playerExists->response === false) {
+                throw new \Exception('User is not found');
+            }
+            $player = $playerExists->response;
+
+            $getFreeRounds = GamesPantalloFreeRounds::where([
+                'user_id' => $user->id
+            ])->orderBy('id', 'DESC')->first();
+
+            if (is_null($getFreeRounds)) {
+                throw new \Exception('Free Rounds did not found');
+            }
+
+            $removeFreeRounds = $pantalloGames->removeFreeRounds([
+                'playerids' => $player->id,
+                'freeround_id' => $getFreeRounds->free_round_id
+            ], true);
+
+            if ((int)$removeFreeRounds->error > 0) {
+                throw new \Exception('removeFreeRounds method was worked');
+            }
+
+            if (empty($removeFreeRounds->response->successfull_removals)) {
+                throw new \Exception('Free rounds was not removed. Provider error');
+            }
+
+            $response = [
+                'success' => true,
+            ];
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
+
+            if (isset($removeFreeRounds)) {
+                $response['removeFreeRounds'] = $removeFreeRounds;
+            }
+
+            $response = [
+                'success' => false,
+                'message' => $errorMessage . ' Line:' . $errorLine
+            ];
+        }
+
+        $debugGameResult = $debugGame->end();
+        RawLog::create([
+            'type_id' => 5,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)

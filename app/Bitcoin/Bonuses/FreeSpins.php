@@ -149,6 +149,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
+            //dd($errorMessage);
             throw new \Exception($errorMessage);
         }
         DB::commit();
@@ -263,11 +264,6 @@ class FreeSpins extends \App\Bonuses\Bonus
         try {
             if ($this->hasBonusTransactions()) {
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
-
-            $now = Carbon::now();
-            if ($activeBonus->expires_at->format('U') < $now->format('U')) {
-                $this->cancel('Expired');
             }
 
             $response = [

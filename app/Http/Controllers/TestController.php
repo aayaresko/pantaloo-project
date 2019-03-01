@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
+use Log;
+use App\Bitcoin\Service;
 use App\Transaction;
 use App\User;
 use Validator;
-use App\Bitcoin\Service;
+use App\UserBonus;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
@@ -19,6 +21,8 @@ use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
+use App\Modules\Games\PantalloGamesSystem;
+
 
 class TestController extends Controller
 {
@@ -26,6 +30,133 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $slotTypeId = config('appAdditional.slotTypeId');
+        $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [$slotTypeId])
+            ->where([
+                ['games_list.system_id', '=', 12545],
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])->groupBy('games_types_games.game_id')->first();
+        dd($slotsGame);
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $freeRoundGames = array_map(function ($item) {
+            return $item->id;
+        }, $freeRoundGames);
+
+        $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
+            'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+            ->whereIn('games_pantallo_session_game.game_id', $freeRoundGames)
+            ->where([
+                ['games_pantallo_session.user_id', '=', 136],
+            ])->first();
+        dd($openGames);
+
+        $service = new Service();
+        //dd($service);
+        $address = $service->info();
+        dd($address);
+        Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(url('/'));
+        $service = new Service();
+        dd($service);
+        $address = $service->getNewAddress('common');
+        dd(2);
+        $bonuses = UserBonus::all();
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            try {
+                $bonus_obj->realActivation();
+                $bonus_obj->close();
+            } catch (\Exception $e) {
+                Log::alert([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        dd(23);
+
+//        $a = UserBonus::withTrashed()->where('user_id', 75)->first();
+//        dd($a->data);
+//        //GamesTypeGame
+//        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+//            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+//            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+//            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+//            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+//            ->whereIn('games_types_games.type_id', [10001])
+//            ->where([
+//                ['games_types_games.extra', '=', 1],
+//                ['games_list.active', '=', 1],
+//                ['games_types.active', '=', 1],
+//                ['games_categories.active', '=', 1],
+//            ])
+//            ->groupBy('games_types_games.game_id')->get();
+//
+//        $gamesIds = implode(',', array_map(function ($item) {
+//            return $item->system_id;
+//        }, $freeRoundGames));
+//        dd($gamesIds);
+//
+//        $request->merge(['gamesIds' => '12545']);
+//        $request->merge(['available' => 1]);
+//        $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
+//
+//        $pantalloGamesSystem = new PantalloGamesSystem();
+//        $freeRound = $pantalloGamesSystem->freeRound($request);
+//
+//        dd(2);
+        $bonuses = UserBonus::all();
+
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            $bonus_obj->realActivation();
+            //$bonus_obj->close();
+        }
+
+        dd(1);
+        $transaction = $request->user()->transactions()->where([
+            ['type', '=', 10],
+        ])->orderBy('id', 'DESC')->first();
+        dd($transaction);
+        //User::where('id',136)->update(['balance' => 138]);
+        //dd(2);
+        $configFreeRounds = config('appAdditional.freeRounds');
+        $request->merge(['gamesIds' => '12545,2057']);
+        $request->merge(['available' => 4]);
+        $request->merge(['timeFreeRound' => $configFreeRounds['timeFreeRound']]);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+
+        $response = $pantalloGamesSystem->freeRound($request);
+        dd($response);
         $wager_transaction = Transaction::where('type', 1)->orderBy('id', 'DESC')->where(function ($query) {
             $query->where('sum', '<>', 0)->orWhere('bonus_sum', '<>', 0);
         })->first();

@@ -113,8 +113,8 @@ return [
     'accuracyValues' => 5,
 
     'foreignPages' => [
-        'main' => 'https://casinobit.io',
-        'partner' => 'https://partner.casinobit.io',
+        'main' => env('MAIN_ADDRESS'),
+        'partner' => env('PARTNER_ADDRESS'),
     ],
 
     'currencyCode' => 'mBTC',

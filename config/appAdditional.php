@@ -91,6 +91,8 @@ return [
         ],
     ],
 
+    'slotTypeId' => 10001,
+
     'defaultTitle' => 'games',
 
     'keepLanguage' => 60 * 24 * 30,//min
@@ -100,6 +102,8 @@ return [
         'enter' => 1,
         'register' => 2
     ],
+
+    'partnerCommission' => 45,
 
     'freeRounds' => [
         'available' => 50,
