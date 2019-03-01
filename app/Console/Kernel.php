@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
 
         //$schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
 
-        //$schedule->command('bonus:jobs')->everyMinute();
+        $schedule->command('bonus:jobs')->everyMinute();
 
         //get games pantallo
         $schedule->command('games:PantalloGetGames')->hourly();

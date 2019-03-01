@@ -841,13 +841,6 @@ class PantalloGamesSystem implements GamesSystem
         } catch (\Exception $e) {
             DB::rollBack();
             //rollback free rounds
-            if (isset($freeRoundsId)) {
-                $pantalloGames->removeFreeRounds([
-                    'playerids' => $player->id,
-                    'freeround_id' => $freeRoundsId
-                ], true);
-            }
-
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
 
@@ -855,6 +848,15 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
+
+            if (isset($freeRoundsId)) {
+                $removeFreeRounds = $pantalloGames->removeFreeRounds([
+                    'playerids' => $player->id,
+                    'freeround_id' => $freeRoundsId
+                ], true);
+                $response['removeFreeRounds'] = $removeFreeRounds;
+                $response['freeRoundsResponse'] = $freeRoundsResponse;
+            }
         }
 
         $debugGameResult = $debugGame->end();
@@ -918,6 +920,10 @@ class PantalloGamesSystem implements GamesSystem
             DB::rollBack();
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
+
+            if (isset($removeFreeRounds)) {
+                $response['removeFreeRounds'] = $removeFreeRounds;
+            }
 
             $response = [
                 'success' => false,

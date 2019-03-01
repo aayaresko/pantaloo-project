@@ -15,6 +15,7 @@ class Bonus extends Model
     {
         $classes = [
             'App\Bonuses\Bonus_100',
+            'App\Bonuses\Bonus_150',
             'App\Bonuses\Bonus_200',
             'App\Bonuses\FreeSpins'
         ];
