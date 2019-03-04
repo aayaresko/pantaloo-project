@@ -47,7 +47,7 @@ class Withdraw extends Job implements ShouldQueue
             $transaction->ext_id = $id;
             $transaction->save();
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
             $transaction->comment = $e->getMessage();
             $transaction->withdraw_status = -2;

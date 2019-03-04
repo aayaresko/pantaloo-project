@@ -53,7 +53,7 @@ class UsersController extends Controller
 
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
 
-        $link = url('/') . '/activate/' . $token;
+        $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
@@ -76,12 +76,19 @@ class UsersController extends Controller
         ]);
     }
 
-    public function activate($token)
+    public function activate($token, $email)
     {
-        $date = Carbon::now();
-        $date->modify('-1 day');
+        $linkActiveConfirm = config('appAdditional.linkActiveConfirm');
 
-        $user = Auth::user();
+        $date = Carbon::now();
+        $date->modify("-$linkActiveConfirm day");
+
+        $user = User::where('email', $email)->first();
+
+        if (is_null($user)) {
+            return redirect('/')->withErrors(
+                ['Email wasn\'t confirmed. Invalid email.']);
+        }
 
         if ($user->isConfirmed()) {
             return redirect('/')->withErrors(['Email already confirmed']);

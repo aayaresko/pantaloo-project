@@ -53,10 +53,23 @@ Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController
 
 Route::get('/', function () {
     //find to lang
+    $sessionFlashAll = session('flash');
+    $sessionFlash = $sessionFlashAll['old'];
     $lang = config('currentLang');
     //save parameters
     $url = url("/$lang") . $_SERVER['REQUEST_URI'];
-    return redirect($url);
+    if (!empty($sessionFlash)) {
+        if (!in_array('errors', $sessionFlash)) {
+            $sessionFlashKey = $sessionFlash[0];
+            $sessionFlashArray = session($sessionFlashKey);
+            return redirect($url)->with($sessionFlashKey, $sessionFlashArray);
+        } else {
+            $sessionFlashArray = session('errors')->all();
+            return redirect($url)->withErrors($sessionFlashArray);
+        }
+    } else {
+        return redirect($url);
+    }
 })->middleware('language.switch');
 
 Route::auth();
@@ -113,7 +126,6 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
 
     });
 
-    Route::get('/activate/{token}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
     Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
     Route::post('/contribution', ['as' => 'usd.depositDo', 'uses' => 'MoneyController@depositUsdDo']);
     Route::get('/contribution/success', ['as' => 'usd.success', 'uses' => 'MoneyController@depositSuccess']);
@@ -279,6 +291,8 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
     Route::get('/integratedGameLink/provider/{providerId}/game/{gameId}',
         ['as' => 'integratedGameJson', 'uses' => 'IntegratedGamesController@getGameLink']);
 });
+
+Route::get('/activate/{token}/email/{email}', ['as' => 'email.activate', 'uses' => 'UsersController@activate']);
 
 //Route::get('/games', ['as' => 'slots', 'uses' => 'IntegratedGamesController@index']);
 Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
