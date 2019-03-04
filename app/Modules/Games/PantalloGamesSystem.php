@@ -417,7 +417,12 @@ class PantalloGamesSystem implements GamesSystem
                             ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
+
+                        if (!is_null($typeOpenGame)) {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
+                        } else {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
+                        }
 
                         if ($userAfterUpdate->bonus_balance < 0
                             or $userAfterUpdate->balance < 0
@@ -566,7 +571,12 @@ class PantalloGamesSystem implements GamesSystem
                             ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
+
+                        if (!is_null($typeOpenGame)) {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
+                        } else {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
+                        }
 
                         if ($userAfterUpdate->bonus_balance < 0
                             or $userAfterUpdate->balance < 0
@@ -686,8 +696,13 @@ class PantalloGamesSystem implements GamesSystem
                             ->update($updateUser);
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
-                        $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
 
+                        if (!is_null($typeOpenGame)) {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
+                        } else {
+                            $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
+                        }
+                        
                         if ($userAfterUpdate->bonus_balance < 0
                             or $userAfterUpdate->balance < 0
                             or $balanceAfterTransaction < 0) {
