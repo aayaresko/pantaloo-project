@@ -9,7 +9,6 @@ use App\Transaction;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Helpers\PayTrio;
@@ -50,7 +49,9 @@ class MoneyController extends Controller
             $transaction->notification = 1;
             $transaction->save();
         }
-        else $sum = false;
+        else {
+            $sum = false;
+        }
 
         return response()->json([
             'realBalance' => $user->balance,
