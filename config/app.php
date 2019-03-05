@@ -166,7 +166,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         browner12\helpers\HelperServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class
+        \Torann\GeoIP\GeoIPServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
     ],
 
     /*
@@ -214,5 +215,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 ];

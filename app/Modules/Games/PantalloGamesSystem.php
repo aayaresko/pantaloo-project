@@ -702,7 +702,7 @@ class PantalloGamesSystem implements GamesSystem
                         } else {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
                         }
-                        
+
                         if ($userAfterUpdate->bonus_balance < 0
                             or $userAfterUpdate->balance < 0
                             or $balanceAfterTransaction < 0) {
@@ -812,15 +812,22 @@ class PantalloGamesSystem implements GamesSystem
         DB::beginTransaction();
         try {
             $user = $request->user();
+            $userId = $user->id;
             $pantalloGames = new PantalloGames;
             $playerExists = $pantalloGames->playerExists([
                 'user_username' => $user->id,
             ], true);
 
-            //active player request
             if ($playerExists->response === false) {
-                throw new \Exception('User is not found');
+                $playerResponse = $pantalloGames->createPlayer([
+                    'user_id' => $userId,
+                    'user_username' => $userId,
+                    'password' => self::PASSWORD
+                ], true);
+            } else {
+                $playerResponse = $playerExists;
             }
+
             $player = $playerExists->response;
 
             $validTo = new \DateTime();
@@ -875,11 +882,16 @@ class PantalloGamesSystem implements GamesSystem
         }
 
         $debugGameResult = $debugGame->end();
-        RawLog::create([
+
+        //logs to any connection to db
+        $date = new \DateTime();
+        DB::connection('logs')->table('raw_log')->insert([
             'type_id' => 4,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
+            'created_at' => $date,
+            'updated_at' => $date
         ]);
 
         return $response;
@@ -947,11 +959,16 @@ class PantalloGamesSystem implements GamesSystem
         }
 
         $debugGameResult = $debugGame->end();
-        RawLog::create([
+        
+        //logs to any connection to db
+        $date = new \DateTime();
+        DB::connection('logs')->table('raw_log')->insert([
             'type_id' => 5,
             'request' => GeneralHelper::fullRequest(),
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
+            'created_at' => $date,
+            'updated_at' => $date
         ]);
 
         return $response;

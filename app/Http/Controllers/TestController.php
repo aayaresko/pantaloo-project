@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\RawLog;
 use DB;
 use Log;
 use App\Bitcoin\Service;
@@ -30,6 +31,41 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        DB::beginTransaction();
+        RawLog::create([
+            'type_id' => 4,
+            'request' => 4,
+            'response' => 4,
+            'extra' => 4
+        ]);
+
+        if (1) {
+
+            DB::beginTransaction();
+            RawLog::create([
+                'type_id' => 1,
+                'request' => 1,
+                'response' => 1,
+                'extra' => 1
+            ]);
+            DB::commit();
+        }
+        DB::commit();
+
+
+        dd(2);
+
+
+
+
+        RawLog::create([
+            'type_id' => 1,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => 2,
+            'extra' => 2
+        ]);
+        dd(2);
         $slotTypeId = config('appAdditional.slotTypeId');
         $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
