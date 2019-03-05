@@ -2,46 +2,350 @@
 
 namespace App\Bonuses;
 
+use DB;
+use App\User;
 use App\Bonus;
+use App\BonusLog;
 use App\UserBonus;
 use Carbon\Carbon;
 use App\Transaction;
+use App\Models\GamesList;
+use Helpers\GeneralHelper;
+use App\Modules\Games\PantalloGamesSystem;
+use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
-    protected $procent = 200;
-    protected $min_sum = 0;//300
-    protected $max_sum = 600;
-    protected $deposits_count = 0;
-    protected $play_factor = 40;
-    protected $expire_days = 14;
+    protected $percent = 100;
+    protected $minSum = 3;
+    protected $maxSum = 0;
+    protected $depositsCount = 3;
+    protected $playFactor = 33;
+    protected $expireDays = 30;
 
+    /**
+     * @return bool
+     */
+    public function bonusAvailable()
+    {
+        $user = $this->user;
+        $createdUser = $user->created_at;
+//        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+//
+//        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
+//        $currentDate = new Carbon();
+//
+//        if ($allowedDate < $currentDate) {
+//            return false;
+//        }
+
+        $countBonuses = $this->user->bonuses()
+            ->where('bonus_id', static::$id)->withTrashed()->count();
+
+        if ($countBonuses > 0) {
+            return false;
+        }
+
+        return true;
+    }
 
     public function activate()
     {
-        if ($this->active_bonus) {
-            throw new \Exception('You already use bonus');
-        }
-        if ($this->user->transactions()->deposits()->count() != $this->deposits_count) {
-            throw new \Exception('You can\'t use this bonus');
-        }
-        if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
-            throw new \Exception('You already used this bonus');
-        }
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
 
-        $date = Carbon::now();
-        $date->modify('+' . $this->expire_days . 'days');
+        $user = $this->user;
+        $configBonus = config('bonus');
 
-        $bonus = new UserBonus();
-        $bonus->user()->associate($this->user);
-        $bonus->activated = 0;
-        $bonus->expires_at = $date;
-        $bonus->bonus()->associate(Bonus::findOrFail(static::$id));
-        $bonus->save();
+        DB::beginTransaction();
+        try {
+            if ($this->active_bonus) {
+                throw new \Exception('You already use bonus');
+            }
 
-        $this->active_bonus = $bonus;
+            if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+                throw new \Exception('You can\'t use this bonus');
+            }
+
+            if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
+                throw new \Exception('You already used this bonus');
+            }
+
+            $date = Carbon::now();
+            $date->modify('+' . $this->expireDays . 'days');
+
+            $bonus = new UserBonus();
+            $bonus->user()->associate($user);
+            $bonus->activated = 0;
+            $bonus->expires_at = $date;
+            $bonus->bonus()->associate(Bonus::findOrFail(static::$id));
+            $bonus->save();
+
+
+            BonusLog::updateOrCreate(
+                [
+                    'bonus_id' => $bonus->id,
+                    'operation_id' => $configBonus['operation']['active']
+                ],
+                ['status' => json_encode($response)]
+            );
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorCode = $e->getCode();
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            throw new \Exception($errorMessage);
+        }
+        DB::commit();
+
+        return true;
     }
+
+    public function realActivation()
+    {
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+        $error = 0;
+        $user = $this->user;
+        $errorMessage = 0;
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
+        DB::beginTransaction();
+        try {
+            if ($this->active_bonus->activated != 1) {
+
+                $deposit = $this->getBonusDeposit();
+                $dateStartBonus = $activeBonus->data['dateStart'];
+
+                if ($deposit) {
+                    if ($deposit->sum < $this->minSum) {
+                        $this->cancel('Invalid deposit sum');
+                    } else {
+                        $transaction = new Transaction();
+                        $transaction->sum = 0;
+                        $transaction->bonus_sum = $deposit->sum * ($this->percent / 100);
+                        $transaction->type = 5;
+                        $transaction->comment = 'Bonus activation';
+                        $transaction->user()->associate($user);
+                        $transaction->save();
+
+                        //TO DO round
+                        $bonusSum = GeneralHelper::formatAmount($transaction->bonus_sum);
+                        User::where('id', $user->id)->update([
+                            'bonus_balance' => DB::raw("bonus_balance+$bonusSum"),
+                        ]);
+
+                        $this->set('transaction_id', $transaction->id);
+                        $this->set('dateStart', $dateStartBonus);
+                        $this->set('wagered_sum', $this->playFactor * $deposit->sum);
+                        $this->set('wagered_sum', $this->playFactor * $deposit->sum);
+
+                        $activeBonus->activated = 1;
+                        $activeBonus->save();
+                    }
+                } else {
+                    $response = [
+                        'success' => false,
+                        'message' => 'No deposits'
+                    ];
+                }
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $error = 1;
+            $errorCode = $e->getCode();
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine .
+                    '.Message:' . $errorMessage .
+                    '.ErrorCode' . $errorCode
+            ];
+        }
+        DB::commit();
+
+        BonusLog::updateOrCreate(
+            [
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['realActivation']
+            ],
+            ['status' => json_encode($response)]
+        );
+
+        if ($error === 1) {
+            throw new \Exception($errorMessage);
+        }
+
+        return true;
+    }
+
+
+//    public function close()
+//    {
+//        $error = 0;
+//        $errorMessage = 0;
+//        $user = $this->user;
+//        $configBonus = config('bonus');
+//        $activeBonus = $this->active_bonus;
+//
+//        DB::beginTransaction();
+//        try {
+//            if ($this->hasBonusTransactions()) {
+//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+//            }
+//
+//            $now = Carbon::now();
+//
+//            if ($activeBonus->expires_at->format('U') < $now->format('U')) {
+//                $this->cancel('Expired');
+//                throw new \Exception('Expired');
+//            }
+//            if ($activeBonus->activated == 1 and $user->bonus_balance == 0) {
+//                $this->cancel('No bonus funds');
+//                throw new \Exception('No bonus funds');
+//            }
+//
+//            $response = [
+//                'success' => true,
+//                'message' => 'The condition is not satisfied'
+//            ];
+//
+//            if ($activeBonus->activated == 1) {
+//                if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
+//                    $transaction = new Transaction();
+//                    $transaction->bonus_sum = -1 * $user->bonus_balance;
+//                    $transaction->sum = $user->bonus_balance;
+//                    $transaction->comment = 'Bonus to real transfer';
+//                    $transaction->type = 7;
+//                    $transaction->user()->associate($user);
+//                    $transaction->save();
+//
+//                    $winAmount = $user->bonus_balance;
+//                    User::where('id', $user->id)->update([
+//                        'balance' => DB::raw("balance+$winAmount"),
+//                        'bonus_balance' => 0
+//                    ]);
+//
+//                    $this->active_bonus->delete();
+//
+//                    $this->user->bonus_balance = 0;
+//                    $this->user->save();
+//
+//                    $response = [
+//                        'success' => true,
+//                        'message' => 'Done. Close'
+//                    ];
+//                }
+//            }
+//            DB::commit();
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//            $error = 1;
+//            $errorCode = $e->getCode();
+//            $errorLine = $e->getLine();
+//            $errorMessage = $e->getMessage();
+//            $response = [
+//                'success' => false,
+//                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+//            ];
+//
+//        }
+//
+//        BonusLog::updateOrCreate(
+//            [
+//                'bonus_id' => $activeBonus->id,
+//                'operation_id' => $configBonus['operation']['close']
+//            ],
+//            ['status' => json_encode($response)]
+//        );
+//
+//        if ($error === 1) {
+//            throw new \Exception($errorMessage);
+//        }
+//
+//        return true;
+//    }
+
+
+    public function cancel($reason = false)
+    {
+        $user = $this->user;
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+
+        DB::beginTransaction();
+        try {
+            //check to enters to games
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            }
+
+            //to do all sum last transaction if multi bonuses
+            $bonusAmount = -1 * $user->bonus_balance;
+            $transaction = new Transaction();
+            $transaction->bonus_sum = $bonusAmount;
+            $transaction->sum = 0;
+            $transaction->comment = $reason;
+            $transaction->type = 6;
+            $transaction->user()->associate($user);
+            $transaction->save();
+
+            User::where('id', $user->id)->update([
+                'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+            ]);
+
+            $updateUser = User::where('id', $user->id)->first();
+
+            if ((float)$updateUser->bonus_balance === (float)0) {
+                $activeBonus->delete();
+            }
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+
+            BonusLog::updateOrCreate(
+                [
+                    'bonus_id' => $activeBonus->id,
+                    'operation_id' => $configBonus['operation']['cancel']
+                ],
+                ['status' => json_encode($response)]
+            );
+
+            throw new \Exception($errorMessage);
+        }
+
+        DB::commit();
+
+        BonusLog::updateOrCreate(
+            [
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['cancel']
+            ],
+            ['status' => json_encode($response)]
+        );
+
+        return true;
+    }
+
 
     public function getStatus()
     {
@@ -54,6 +358,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function getPlayedSum()
     {
+        //TO DO - ADD to where date
         if ($this->active_bonus->activated == 1) {
             $sum = -1 * $this->user->transactions()
                     ->where('id', '>', $this->get('transaction_id'))
@@ -76,46 +381,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function getBonusDeposit()
     {
-        $deposit = $this->user->transactions()->deposits()->orderBy('id')->first();
+        $depositsCount = $this->depositsCount;
+        $deposits = $this->user->transactions()->deposits()->orderBy('id')->limit($depositsCount)->get();
 
-        return $deposit;
-    }
-
-    public function realActivation()
-    {
-        if ($this->active_bonus->activated == 1) {
-            return true;
+        if (count($deposits) == $depositsCount) {
+            return $deposits[$depositsCount - 1];
+        } else {
+            return false;
         }
-
-        $deposit = $this->getBonusDeposit();
-
-        if ($deposit) {
-            if ($deposit->sum > $this->max_sum or $deposit->sum < $this->min_sum) {
-                $this->cancel('Invalid deposit sum');
-            } else {
-                $transaction = new Transaction();
-                $transaction->sum = 0;
-                $transaction->bonus_sum = $deposit->sum * ($this->procent / 100);
-                $transaction->type = 5;
-                $transaction->comment = 'Bonus activation';
-                $transaction->user()->associate($this->user);
-
-                $transaction = $this->user->changeBalance($transaction);
-
-                $this->set('transaction_id', $transaction->id);
-                $this->set('wagered_sum', $this->play_factor * $deposit->sum);
-
-                $this->active_bonus->activated = 1;
-                $this->active_bonus->save();
-            }
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function bonusAvailable()
-    {
-        return true;
     }
 }

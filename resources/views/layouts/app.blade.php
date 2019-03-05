@@ -490,7 +490,7 @@
                     //alert('We got deposit from you ' + data.deposit);
                 }
 
-                setTimeout(setBalance, 1000);
+                setTimeout(setBalance, 2000);
             },
             error: function (data) {
                 //alert(data);
