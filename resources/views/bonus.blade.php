@@ -27,7 +27,7 @@
                                         <div class="single-bonus">
                                             <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
                                             <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
-                                            @if ($active_bonus->bonus_id != 3)
+                                            @if ($active_bonus->bonus_id != 1)
                                                 <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
                                                 <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
                                             @endif

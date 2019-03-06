@@ -31,6 +31,38 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $params = [];
+        $userFields = [
+            'users.id as id',
+            'users.balance as balance',
+            'users.bonus_balance as bonus_balance',
+            DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+        ];
+
+        //add additional fields
+        $additionalFieldsUser = [
+            'affiliates.id as partner_id',
+            'affiliates.commission as partner_commission',
+            'user_bonuses.id as bonus',
+            'user_bonuses.bonus_id as bonus_id',
+            'user_bonuses.data as data',
+        ];
+
+        $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+            ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+            ->leftJoin('user_bonuses', function($join){
+                $join->on('users.id', '=', 'user_bonuses.user_id')
+                ->where('user_bonuses.activated', '=', 1)
+                ->whereNull('user_bonuses.deleted_at');
+            })
+            ->where([
+                ['users.id', '=', 155],
+            ])->first();
+
+        dd($params['user']);
+        dd(json_decode($params['user']->data));
+        dd(2);
+
         $pantalloGamesSystem = new PantalloGamesSystem();
         $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
         dd($freeRound);

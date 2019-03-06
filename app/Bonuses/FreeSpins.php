@@ -90,7 +90,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
             $bonusUser = UserBonus::create([
-                'activated' => 0,
+                'activated' => 1,
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => $bonus->id,
@@ -213,7 +213,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 UserBonus::where('id', $activeBonus->id)->update([
-                    'activated' => 1,
+                    //'activated' => 1,
                     'data' => json_encode([
                         'free_spin_win' => $freeSpinWin,
                         'wagered_sum' => $freeSpinWin * $this->playFactor,
@@ -471,6 +471,7 @@ class FreeSpins extends \App\Bonuses\Bonus
      */
     public function hasBonusTransactions($minutes = 1)
     {
+        //only bonus transaction
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
 

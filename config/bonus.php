@@ -12,6 +12,14 @@ return [
         'realActivation' => 2,
         'close' => 3,
         'cancel' => 4
+    ],
+
+    'classes' => [
+        1 => 'App\Bonuses\FreeSpins',
+        2 => 'App\Bonuses\Bonus_200',
+        3 => 'App\Bonuses\Bonus_150',
+        4 => 'App\Bonuses\Bonus_100',
+
     ]
 
 ];
