@@ -60,4 +60,9 @@ class PasswordController extends Controller
 
         return view('auth.reset')->with(compact('token', 'email'));
     }
+
+    protected function getSendResetLinkEmailSuccessResponse($response)
+    {
+        return redirect()->back()->with('popup', trans($response));
+    }
 }
