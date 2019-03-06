@@ -63,6 +63,6 @@ class PasswordController extends Controller
 
     protected function getSendResetLinkEmailSuccessResponse($response)
     {
-        return redirect()->back()->with('popup', trans($response));
+        return redirect()->back()->with('popup', ['Reset', 'Password reset', $response]);
     }
 }
