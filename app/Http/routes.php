@@ -117,7 +117,7 @@ Route::group([
     Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
 
     //auth
-    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    Route::get('/password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 
 });
 
