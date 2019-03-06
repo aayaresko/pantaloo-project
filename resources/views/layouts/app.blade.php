@@ -307,7 +307,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="password" name="password" class="pass-input blue" placeholder="{{ trans('casino.password') }}">
-                            <a href="{{url('/password/reset')}}" class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                            <a href="{{ url("/{$currentLang}/password/reset") }}" class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                         </div>
                     </div>
                     <div class="row">
