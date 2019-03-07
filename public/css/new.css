@@ -2,6 +2,18 @@
   .actions .container {
     width: 1240px !important;
   }
+  .page-bonuses .actions .container {
+    width: 1068px !important;
+  }
+  .actions .block-bonus {
+    min-height: 280px !important;
+  }
+  .actions .block-bonus .block-bonus-left {
+    top: 70px !important;
+  }
+  .actions .block-bonus .block-bonus-right {
+    bottom: 30px !important;
+  }
 }
 
 
