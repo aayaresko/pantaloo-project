@@ -43,8 +43,8 @@ class Kernel extends HttpKernel
             UserToAgent::class,
             //LanguageGet::class
             //LanguageSet::class,
+            //EmailConfirmation::class,
             SetCountryCode::class,
-            EmailConfirmation::class,
             GeneralMiddleware::class
         ],
 

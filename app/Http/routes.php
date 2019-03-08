@@ -311,4 +311,4 @@ Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestContro
 Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);
 
 Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
-Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
+Route::post('/agent/login', ['as' => 'agent.login.post', 'uses' => 'AgentController@enter']);

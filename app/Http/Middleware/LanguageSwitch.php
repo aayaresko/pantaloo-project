@@ -64,6 +64,7 @@ class LanguageSwitch extends CommonMiddleware
         Config::set('currentLang', $lang);
         Cookie::queue('lang', $lang, $timeKeepLang);
 
+        /*
         if ($request->has('session_id')) {
             $data = json_decode(decrypt($request->input('session_id')), true);
 
@@ -76,6 +77,7 @@ class LanguageSwitch extends CommonMiddleware
 
             return redirect(url($request->path()));
         }
+        */
 
         return $next($request);
     }
