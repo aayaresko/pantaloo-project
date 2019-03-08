@@ -72,7 +72,7 @@ class PasswordController extends Controller
             ]);
         }
 
-        config(['auth.passwords.users.email' => 'emails.partner.passwords']);
+        config(['auth.passwords.users.email' => 'emails.partner.password']);
 
         $broker = $this->getBroker();
 
