@@ -63,7 +63,7 @@ Route::post('register', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+//Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 Route::post('password/reset', 'Auth\PasswordController@reset');
 //auth
 
@@ -97,6 +97,7 @@ Route::group([
 
     //auth
     Route::get('/password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 
 });
 
