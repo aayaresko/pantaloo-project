@@ -11,10 +11,8 @@
 |
 */
 
-use Helpers\GeneralHelper;
-
 //for optimization add array keep all language in config
-$languages = GeneralHelper::getListLanguage();
+$languages = Helpers\GeneralHelper::getListLanguage();
 Config::set('getListLanguage', $languages);
 
 $foreignPages = config('app.foreignPages');
@@ -48,29 +46,10 @@ Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () 
 });
 
 
-Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController@setLanguage']);
+Route::get('/language/{lang}', ['as' => 'setLanguage', 'uses' => 'TranslationController@setLanguage']);
 
 
-Route::get('/', function () {
-    //find to lang
-    $sessionFlashAll = session('flash');
-    $sessionFlash = $sessionFlashAll['old'];
-    $lang = config('currentLang');
-    //save parameters
-    $url = url("/$lang") . $_SERVER['REQUEST_URI'];
-    if (!empty($sessionFlash)) {
-        if (!in_array('errors', $sessionFlash)) {
-            $sessionFlashKey = $sessionFlash[0];
-            $sessionFlashArray = session($sessionFlashKey);
-            return redirect($url)->with($sessionFlashKey, $sessionFlashArray);
-        } else {
-            $sessionFlashArray = session('errors')->all();
-            return redirect($url)->withErrors($sessionFlashArray);
-        }
-    } else {
-        return redirect($url);
-    }
-})->middleware('language.switch');
+Route::get('/', 'HomeController@multiLang')->middleware('language.switch');
 
 //auth
 // Authentication Routes...

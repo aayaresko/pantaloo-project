@@ -21,6 +21,8 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    protected $redirectPath = '/';
+
     /**
      * Create a new password controller instance.
      *
@@ -63,6 +65,6 @@ class PasswordController extends Controller
 
     protected function getSendResetLinkEmailSuccessResponse($response)
     {
-        return redirect()->back()->with('popup', ['Reset', 'Password reset', $response]);
+        return redirect()->back()->with('popup', ['Reset', 'Password reset', trans($response)]);
     }
 }
