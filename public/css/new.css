@@ -2,6 +2,18 @@
   .actions .container {
     width: 1240px !important;
   }
+  .page-bonuses .actions .container {
+    width: 1068px !important;
+  }
+  .actions .block-bonus {
+    min-height: 280px !important;
+  }
+  .actions .block-bonus .block-bonus-left {
+    top: 70px !important;
+  }
+  .actions .block-bonus .block-bonus-right {
+    bottom: 30px !important;
+  }
 }
 
 
@@ -635,6 +647,21 @@
     bottom: 0px;
     left: 3px;
   }
+
+    body .cabinet-block.act {
+        padding: 120px 5px 0;
+    }
+    .actions .block-bonus {
+        background-position: 61% center;
+        min-height: 195px;
+        background-size: 120%;
+    }
+    .actions .block-bonus-image {
+        width: 95px;
+    }
+    .actions .block-bonus2 {
+        background-image: url(../assets/images/bonuses/promo-2-bg-mirror-min.png);
+    }
 }
 @media (max-width: 380px) {
   .actions .block-bonus .number-block {
@@ -665,6 +692,9 @@
   #uls {
     padding: 50px 10px;
   }
+}
+@media (max-width: 320px) {
+
 }
 .usl-link:focus{
   outline: none;
