@@ -319,10 +319,9 @@ Route::group(['middleware' => ['web']], function () {
     });
 });
 
-Route::group(['middleware' => ['ajax']], function () {
+Route::group(['middleware' => ['ajax', 'session.reflash']], function () {
     Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
-
 
 Route::group(['middleware' => ['api']], function () {
     Route::post('/api/getToken', ['uses' => 'Api\ApiController@authenticate']);
