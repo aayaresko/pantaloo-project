@@ -140,11 +140,14 @@
         <div class="registration-block floated">
             <a href="#" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
         </div>
+        @php
+            $user = Auth::user();
+        @endphp
         @if(Auth::check())
             <div class="usr-block">
                 <div class="wlc-usr">
-                    <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>
-                    <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{Auth::user()->email}}</a>
+                    <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{$user->getBalance()}}</span></b> m{{$user->currency->title}} <span class="free_spins_balance" @if($user->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{$user->free_spins}}</b> spins</span></span>
+                    <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{$user->email}}</a>
                 </div>
                 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
@@ -459,12 +462,31 @@
     if(auth)
     {
         setBalance();
+        userActive();
+    }
+
+    function userActive() {
+        let timeOut = 1000 * 60 * 10;
+        $.ajax({
+            type: "GET",
+            url: `/ajax/userActive`,
+            dateType: 'json',
+            success: function(data)
+            {
+                setTimeout(userActive, timeOut);
+            },
+            error: function (data) {
+                //alert(data);
+            }
+        });
     }
 
     function setBalance() {
+        let email = '{{ $user->email }}';
+
         $.ajax({
             type: "GET",
-            url: '/ajax/balance', // serializes the form's elements.
+            url: `/ajax/balance/${email}`, // serializes the form's elements.
             dateType: 'json',
             success: function(data)
             {
@@ -490,7 +512,7 @@
                     //alert('We got deposit from you ' + data.deposit);
                 }
 
-                setTimeout(setBalance, 2000);
+                setTimeout(setBalance, 1000);
             },
             error: function (data) {
                 //alert(data);
@@ -601,13 +623,13 @@
 </script>
 
 <!--Start of Zendesk Chat Script-->
-<script type="text/javascript">
+<!--<script type="text/javascript">
     window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
             d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
     _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
         $.src="https://v2.zopim.com/?3Uz7HY4kPnZEl6HFfOFTTG4WJyFhF6c9";z.t=+new Date;$.
                 type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
-</script>
+</script>-->
 <!--End of Zendesk Chat Script-->
 
 @yield('js')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Bitcoin\Service;
 use App\Invoice;
 use App\Jobs\Withdraw;
@@ -37,11 +38,43 @@ class MoneyController extends Controller
         return response()->json(['stop' => $stop]);
     }
 
-    public function balance()
+    public function balance(Request $request, $email)
     {
-        $user = Auth::user();
+        $validator = Validator::make(['email' => $email], [
+            'email' => 'required|email',
+        ]);
 
-        $transaction = $user->transactions()->where('type', 3)->where('notification', 0)->first();
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'messages' => $validator->errors(),
+            ]);
+        }
+
+        $user = User::where('email', $email)->first();
+
+        if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User is not found'],
+            ]);
+        }
+
+        $sessionLeftTime = config('session.lifetime');
+        $sessionLeftTimeSecond = $sessionLeftTime * 60;
+        $nowTimeStamp = Carbon::now()->timestamp;
+        $lastActivityTimeStamp = $user->last_activity->timestamp;
+        $diffTime = $nowTimeStamp - $lastActivityTimeStamp;
+
+        if ($diffTime > $sessionLeftTimeSecond) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['Session is not found']
+            ]);
+        }
+
+        $transaction = $user->transactions()
+            ->where('type', 3)->where('notification', 0)->first();
 
         if($transaction)
         {
@@ -58,6 +91,17 @@ class MoneyController extends Controller
             'balance' => $user->getBalance(),
             'deposit' => $sum,
             'free_spins' => $user->free_spins
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function userActive(Request $request)
+    {
+        return response()->json([
+            'status' => true,
         ]);
     }
 

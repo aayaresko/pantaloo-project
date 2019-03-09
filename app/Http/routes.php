@@ -317,13 +317,14 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
     Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
+
+    Route::group(['middleware' => ['auth']], function (){
+        Route::get('/ajax/userActive', ['as' => 'ajax.userActive', 'uses' => 'MoneyController@userActive']);
+    });
 });
 
 Route::group(['middleware' => ['ajax']], function () {
-
-    Route::group(['middleware' => ['auth']], function (){
-        Route::get('/ajax/balance', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
-    });
+    Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
 
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\RawLog;
 use DB;
+use Auth;
 use Log;
 use App\Bitcoin\Service;
 use App\Transaction;
@@ -31,6 +32,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(Auth::user());
+        dd(20);
         $params = [];
         $userFields = [
             'users.id as id',
