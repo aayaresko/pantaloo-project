@@ -126,11 +126,11 @@ class AuthController extends Controller
         //send email
         //to do check this
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
-        $link = url('/') . '/activate/' . $token;
+        $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if(!$activation) $activation = new UserActivation();
+        if (!$activation) $activation = new UserActivation();
 
         $activation->user()->associate($user);
         $activation->token = $token;

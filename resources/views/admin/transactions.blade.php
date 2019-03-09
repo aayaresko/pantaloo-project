@@ -48,11 +48,11 @@
                 <td>
                     @if($transaction->withdraw_status == 0)
                         <div class="btn-group dropdown">
-                            <a type="button" class="btn btn-success waves-effect waves-light btn-xs" href="{{route('aprove', $transaction)}}">Aprove</a>
+                            <a type="button" class="btn btn-success waves-effect waves-light btn-xs actTransaction" data-transaction = "{{ $transaction->id }}" data-act = "Approve" href="{{route('aprove', $transaction)}}">Approve</a>
                             <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light btn-xs" data-toggle="dropdown" aria-expanded="false"><i class="caret"></i></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{route('aprove', $transaction)}}">Aprove</a></li>
-                                <li><a href="{{route('freeze', $transaction)}}">Freeze</a></li>
+                                <li><a href="{{route('aprove', $transaction)}}" class = "actTransaction" data-transaction = "{{ $transaction->id }}" data-act = "Approve">Aprove</a></li>
+                                <li><a href="{{route('freeze', $transaction)}}" class = "actTransaction" data-transaction = "{{ $transaction->id }}" data-act = "Freeze">Freeze</a></li>
                             </ul>
                         </div>
                     @elseif($transaction->withdraw_status == -2)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\RawLog;
 use DB;
 use Log;
 use App\Bitcoin\Service;
@@ -30,6 +31,103 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $params = [];
+        $userFields = [
+            'users.id as id',
+            'users.balance as balance',
+            'users.bonus_balance as bonus_balance',
+            DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+        ];
+
+        //add additional fields
+        $additionalFieldsUser = [
+            'affiliates.id as partner_id',
+            'affiliates.commission as partner_commission',
+            'user_bonuses.id as bonus',
+            'user_bonuses.bonus_id as bonus_id',
+            'user_bonuses.data as data',
+        ];
+
+        $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+            ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+            ->leftJoin('user_bonuses', function($join){
+                $join->on('users.id', '=', 'user_bonuses.user_id')
+                ->where('user_bonuses.activated', '=', 1)
+                ->whereNull('user_bonuses.deleted_at');
+            })
+            ->where([
+                ['users.id', '=', 155],
+            ])->first();
+
+        dd($params['user']);
+        dd(json_decode($params['user']->data));
+        dd(2);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
+        dd($freeRound);
+
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item->system_id;
+        }, $freeRoundGames));
+
+        $request->merge(['gamesIds' => $gamesIds]);
+        $request->merge(['available' => 1]);
+        $request->merge(['timeFreeRound' => strtotime("1 day", 0)]);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->freeRound($request);
+        dd($freeRound);
+        dd(2);
+
+        DB::beginTransaction();
+        RawLog::create([
+            'type_id' => 4,
+            'request' => 4,
+            'response' => 4,
+            'extra' => 4
+        ]);
+
+        if (1) {
+
+            DB::beginTransaction();
+            RawLog::create([
+                'type_id' => 1,
+                'request' => 1,
+                'response' => 1,
+                'extra' => 1
+            ]);
+            DB::commit();
+        }
+        DB::commit();
+
+
+        dd(2);
+
+
+
+
+        RawLog::create([
+            'type_id' => 1,
+            'request' => GeneralHelper::fullRequest(),
+            'response' => 2,
+            'extra' => 2
+        ]);
+        dd(2);
         $slotTypeId = config('appAdditional.slotTypeId');
         $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
@@ -71,6 +169,10 @@ class TestController extends Controller
             ])->first();
         dd($openGames);
 
+        $service = new Service();
+
+        $data = $service->getWalletInfo();
+        dd(2);
         $service = new Service();
         //dd($service);
         $address = $service->info();

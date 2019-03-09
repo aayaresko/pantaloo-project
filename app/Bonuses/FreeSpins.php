@@ -39,7 +39,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 //            return false;
 //        }
 
-        $countBonuses = $this->user->bonuses()->withTrashed()->count();
+        $countBonuses = $this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count();
         if ($countBonuses > 0) {
             return false;
         }
@@ -71,7 +71,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('You already use bonus.');
             }
 
-            if ($this->user->bonuses()->withTrashed()->count() > 0) {
+            if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
                 throw new \Exception('You can\'t use this bonus. Can only be used once.');
             }
 
@@ -90,7 +90,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
             $bonusUser = UserBonus::create([
-                'activated' => 0,
+                'activated' => 1,
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => $bonus->id,
@@ -149,6 +149,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
+            //dd($errorMessage);
             throw new \Exception($errorMessage);
         }
         DB::commit();
@@ -197,6 +198,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ['user_id', '=', $user->id]
                 ])->first();
 
+                //to do check to sum
                 if (!is_null($transactionToReal)) {
                     //get only transaction after
                     $freeSpinWin = $this->user->transactions()->where([
@@ -211,7 +213,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 UserBonus::where('id', $activeBonus->id)->update([
-                    'activated' => 1,
+                    //'activated' => 1,
                     'data' => json_encode([
                         'free_spin_win' => $freeSpinWin,
                         'wagered_sum' => $freeSpinWin * $this->playFactor,
@@ -265,11 +267,6 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
-            $now = Carbon::now();
-            if ($activeBonus->expires_at->format('U') < $now->format('U')) {
-                $this->cancel('Expired');
-            }
-
             $response = [
                 'success' => true,
                 'message' => 'The condition is not satisfied'
@@ -285,9 +282,6 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                     $transaction = new Transaction();
                     $winAmount = $user->bonus_balance;
-                    if ((float)$winAmount > $this->maxAmount) {
-                        $winAmount = $this->maxAmount;
-                    }
 
                     $bonusAmount = -1 * $user->bonus_balance;
                     $transaction->bonus_sum = $bonusAmount;
@@ -357,10 +351,10 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //check to enters to games
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            }
 
-//            if ($this->hasBonusTransactions()) {
-//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-//            }
             $dateStartBonus = $activeBonus->data['dateStart'];
             //and add only slots games for this to do
             //get only slots games
@@ -468,7 +462,6 @@ class FreeSpins extends \App\Bonuses\Bonus
         return true;
     }
 
-
     /**
      *
      * check if someone is playing now
@@ -478,6 +471,7 @@ class FreeSpins extends \App\Bonuses\Bonus
      */
     public function hasBonusTransactions($minutes = 1)
     {
+        //only bonus transaction
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
 
