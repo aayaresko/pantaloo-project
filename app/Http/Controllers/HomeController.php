@@ -37,7 +37,7 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function multiLang()
+    public function multiLang(Request $request)
     {
         //find to lang
         $sessionFlashAll = session('flash');
@@ -45,17 +45,6 @@ class HomeController extends Controller
         $lang = config('currentLang');
         //save parameters
         $url = url("/$lang") . $_SERVER['REQUEST_URI'];
-        if (!empty($sessionFlash)) {
-            if (!in_array('errors', $sessionFlash)) {
-                $sessionFlashKey = $sessionFlash[0];
-                $sessionFlashArray = session($sessionFlashKey);
-                return redirect($url)->with($sessionFlashKey, $sessionFlashArray);
-            } else {
-                $sessionFlashArray = session('errors')->all();
-                return redirect($url)->withErrors($sessionFlashArray);
-            }
-        } else {
-            return redirect($url);
-        }
+        return redirect($url);
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Middleware\GeneralMiddleware;
 use App\Http\Middleware\IpCheck;
 use App\Http\Middleware\LanguageGet;
 use App\Http\Middleware\LanguageSet;
+use App\Http\Middleware\SessionReflash;
 use App\Http\Middleware\LanguageSwitch;
 use App\Http\Middleware\SetCountryCode;
 use App\Http\Middleware\UserToAgent;
@@ -70,6 +71,7 @@ class Kernel extends HttpKernel
         'admin' => AdminCheck::class,
         'email.confirm' => EmailConfirmation::class,
         'ip.check' => IpCheck::class,
-        'language.switch' =>  LanguageSwitch::class
+        'language.switch' =>  LanguageSwitch::class,
+        'session.reflash' =>  SessionReflash::class
     ];
 }

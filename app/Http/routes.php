@@ -49,7 +49,7 @@ Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () 
 Route::get('/language/{lang}', ['as' => 'setLanguage', 'uses' => 'TranslationController@setLanguage']);
 
 
-Route::get('/', 'HomeController@multiLang')->middleware('language.switch');
+Route::get('/', 'HomeController@multiLang')->middleware(['session.reflash', 'language.switch']);
 
 //auth
 // Authentication Routes...

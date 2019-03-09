@@ -26,8 +26,8 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
-        dd(20);
-        return redirect('/en')->with('popup_fixed', 'true');
+
+        return redirect('/')->with('popup_fixed', 'true');
         $service = new Service();
 
         $data = $service->getWalletInfo();
