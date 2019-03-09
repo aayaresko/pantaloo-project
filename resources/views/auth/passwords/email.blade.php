@@ -18,7 +18,7 @@
                         <div class="setting-tabs">
                             <div id="tabs-1" class="ui-tabs-panel">
 
-                                <form method="POST" action="{{ url('/password/email') }}">
+                                <form method="POST" action="{{ url("/{$currentLang}/password/email") }}">
                                     {{csrf_field()}}
                                     <div class="row">
                                         <div class="col-sm-12">

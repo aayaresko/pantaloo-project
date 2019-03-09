@@ -39,7 +39,7 @@ class BannerController extends Controller
         $file_name = uniqid() . '.' . $extension;
         $path = storage_path() . '/app/public/promo/';
 
-        $url = url('/') . '/storage/promo/' . $file_name;
+        $url = '/storage/promo/' . $file_name;
         $image = request()->image;
         Storage::put('public/promo/' . $file_name, file_get_contents($image->getRealPath()));
 

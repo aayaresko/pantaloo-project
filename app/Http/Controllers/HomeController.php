@@ -33,4 +33,18 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function multiLang(Request $request)
+    {
+        //find to lang
+        $sessionFlashAll = session('flash');
+        $sessionFlash = $sessionFlashAll['old'];
+        $lang = config('currentLang');
+        //save parameters
+        $url = url("/$lang") . $_SERVER['REQUEST_URI'];
+        return redirect($url);
+    }
 }

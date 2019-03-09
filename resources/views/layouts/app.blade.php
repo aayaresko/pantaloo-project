@@ -19,9 +19,9 @@
     <link href="/vendors/animate/animate.css" rel="stylesheet">
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
-    <link href="/vendors/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
     <link href="/assets/css/languages.css?v=0.0.8" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.0" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.3" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -310,7 +310,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="password" name="password" class="pass-input blue" placeholder="{{ trans('casino.password') }}">
-                            <a href="{{url('/password/reset')}}" class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                            <a href="{{ url("/{$currentLang}/password/reset") }}" class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                         </div>
                     </div>
                     <div class="row">

@@ -73,19 +73,21 @@ class AffiliatesController extends Controller
         $params['link'] = sprintf("%s?%s=%s", $necessaryAddress,
             $configPartner['keyLink'], $tracker->ref);
 
+        $url = url('/');
+        $params['url'] = $url;
         $banners->map(function ($item, $key) use ($params) {
             $item->link = $params['link'];
 
             $item->html = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $item->url,
+                'image' => $params['url'] . $item->url,
                 'name' => $params['name'],
                 'style' => '',
             ]);
 
             $item->htmlView = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $item->url,
+                'image' => $params['url'] . $item->url,
                 'name' => $params['name'],
                 'style' => "style=max-height:100px",
             ]);

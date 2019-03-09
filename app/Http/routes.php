@@ -11,11 +11,9 @@
 |
 */
 
-use Helpers\GeneralHelper;
-
 Route::group(['middleware' => ['web']], function () {
 //for optimization add array keep all language in config
-    $languages = GeneralHelper::getListLanguage();
+    $languages = Helpers\GeneralHelper::getListLanguage();
     Config::set('getListLanguage', $languages);
 
     $foreignPages = config('app.foreignPages');
@@ -49,32 +47,26 @@ Route::group(['middleware' => ['web']], function () {
     });
 
 
-    Route::get('/language/{lang}', ['as' => 'main', 'uses' => 'TranslationController@setLanguage']);
+    Route::get('/language/{lang}', ['as' => 'setLanguage', 'uses' => 'TranslationController@setLanguage']);
 
+    Route::get('/', 'HomeController@multiLang')->middleware(['session.reflash', 'language.switch']);
 
-    Route::get('/', function () {
-        //find to lang
-        $sessionFlashAll = session('flash');
-        $sessionFlash = $sessionFlashAll['old'];
-        $lang = config('currentLang');
-        //save parameters
-        $url = url("/$lang") . $_SERVER['REQUEST_URI'];
-        //to do multi and this to controller
-        if (!empty($sessionFlash)) {
-            if (!in_array('errors', $sessionFlash)) {
-                $sessionFlashKey = $sessionFlash[0];
-                $sessionFlashArray = session($sessionFlashKey);
-                return redirect($url)->with($sessionFlashKey, $sessionFlashArray);
-            } else {
-                $sessionFlashArray = session('errors')->all();
-                return redirect($url)->withErrors($sessionFlashArray);
-            }
-        } else {
-            return redirect($url);
-        }
-    })->middleware('language.switch');
+    //auth
+    // Authentication Routes...
+    Route::get('login', 'Auth\AuthController@showLoginForm');
+    Route::post('login', 'Auth\AuthController@login');
+    Route::get('logout', 'Auth\AuthController@logout');
 
-    Route::auth();
+    // Registration Routes...
+    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    Route::post('register', 'Auth\AuthController@register');
+
+    // Password Reset Routes...
+    //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    //Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Auth\PasswordController@reset');
+    //auth
+
 
     Route::group([
         'prefix' => '{lang}',
@@ -103,6 +95,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
 
         Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
+
+        //auth
+        Route::get('/password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+        Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 
     });
 
@@ -316,9 +312,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);
 
     Route::get('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@login']);
-    Route::post('/agent/login', ['as' => 'agent.login', 'uses' => 'AgentController@enter']);
+    Route::post('/agent/login', ['as' => 'agent.login.post', 'uses' => 'AgentController@enter']);
 
-    Route::group(['middleware' => ['auth']], function (){
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/ajax/userActive', ['as' => 'ajax.userActive', 'uses' => 'MoneyController@userActive']);
     });
 });

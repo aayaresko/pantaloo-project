@@ -32,6 +32,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
         dd(Auth::user());
         dd(20);
         $params = [];
@@ -171,6 +172,9 @@ class TestController extends Controller
                 ['games_pantallo_session.user_id', '=', 136],
             ])->first();
         dd($openGames);
+
+        dd('old');
+        return redirect('/')->with('popup_fixed', 'true');
 
         $service = new Service();
 
