@@ -142,6 +142,10 @@
         </div>
         @php
             $user = Auth::user();
+            $emailUser = null;
+            if (isset($user->email)) {
+                $emailUser = $user->email;
+            }
         @endphp
         @if(Auth::check())
             <div class="usr-block">
@@ -482,7 +486,7 @@
     }
 
     function setBalance() {
-        let email = '{{ $user->email }}';
+        let email = '{{ $emailUser }}';
 
         $.ajax({
             type: "GET",

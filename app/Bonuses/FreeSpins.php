@@ -83,18 +83,15 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('You can\'t use this bonus. Read terms.');
             }
 
-            $currentDate = Carbon::now();
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
             $bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
             $bonusUser = UserBonus::create([
-                'activated' => 1,
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => $bonus->id,
-                'data' => ['dateStart' => $currentDate->format('Y-m-d H:i:s')]
             ]);
 
             //get all games for free
@@ -175,7 +172,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //to define start transaction wagered
-            $dateStartBonus = $activeBonus->data['dateStart'];
+            $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
                 ['created_at', '>', $dateStartBonus],
                 ['type', '=', 10],
@@ -355,7 +352,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
-            $dateStartBonus = $activeBonus->data['dateStart'];
+            $dateStartBonus = $activeBonus->created_at;
             //and add only slots games for this to do
             //get only slots games
             $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])

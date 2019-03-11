@@ -225,6 +225,9 @@ class PantalloGamesSystem implements GamesSystem
                 'user_bonuses.id as bonus',
                 'user_bonuses.bonus_id as bonus_id',
                 'user_bonuses.created_at as start_bonus',
+                'bonus_not_active.id as bonus_n_active',
+                'bonus_not_active.bonus_id as bonus_n_active_id',
+                'bonus_not_active.created_at as start_bonus_n_active',
             ];
 
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
@@ -233,6 +236,11 @@ class PantalloGamesSystem implements GamesSystem
                     $join->on('users.id', '=', 'user_bonuses.user_id')
                         ->where('user_bonuses.activated', '=', 1)
                         ->whereNull('user_bonuses.deleted_at');
+                })
+                ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
+                    $join->on('users.id', '=', 'bonus_n_active.user_id')
+                        ->where('bonus_n_active.activated', '=', 0)
+                        ->whereNull('bonus_n_active.deleted_at');
                 })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
@@ -250,11 +258,15 @@ class PantalloGamesSystem implements GamesSystem
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
 
-            if (!is_null($params['user']->bonus)) {
-                $modePlay = 1;
-                $typeBonus = $params['user']->bonus_id;
+            if (!is_null($params['user']->bonus_n_active)) {
+                $typeBonus = $params['user']->bonus_n_active_id;
                 $bonusClass = config('bonus.classes')[$typeBonus];
                 $bonusLimit = $bonusClass::$maxAmount;
+                //get bonus and set limit bonus
+            }
+
+            if (!is_null($params['user']->bonus)) {
+                $modePlay = 1;
                 //get bonus and set limit bonus
             }
 

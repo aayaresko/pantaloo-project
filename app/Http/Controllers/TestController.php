@@ -32,6 +32,41 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $userFields = [
+            'users.id as id',
+            'users.balance as balance',
+            'users.bonus_balance as bonus_balance',
+            DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+        ];
+
+        //add additional fields
+        $additionalFieldsUser = [
+            'affiliates.id as partner_id',
+            'affiliates.commission as partner_commission',
+            'user_bonuses.id as bonus',
+            'user_bonuses.bonus_id as bonus_id',
+            'user_bonuses.created_at as start_bonus',
+            'bonus_not_active.id as bonus_n_active',
+            'bonus_not_active.bonus_id as bonus_n_active_id',
+            'bonus_not_active.created_at as start_bonus_n_active',
+        ];
+
+        $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+            ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+            ->leftJoin('user_bonuses', function ($join) {
+                $join->on('users.id', '=', 'user_bonuses.user_id')
+                    ->where('user_bonuses.activated', '=', 1)
+                    ->whereNull('user_bonuses.deleted_at');
+            })
+            ->leftJoin('user_bonuses as bonus_not_active', function ($join) {
+                $join->on('users.id', '=', 'bonus_not_active.user_id')
+                    ->where('bonus_not_active.activated', '=', 0);
+                    //->whereNull('user_bonuses.deleted_at');
+            })
+            ->where([
+                ['users.id', '=', 136],
+            ])->first();
+        dd($params);
 
         dd(Auth::user());
         dd(20);
