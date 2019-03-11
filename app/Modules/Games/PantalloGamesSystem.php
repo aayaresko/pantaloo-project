@@ -178,6 +178,11 @@ class PantalloGamesSystem implements GamesSystem
         $debugGame = new DebugGame();
         $debugGame->start();
 
+        $rawLog = RawLog::create([
+            'type_id' => 2,
+            'request' => GeneralHelper::fullRequest(),
+        ]);
+
         DB::beginTransaction();
         try {
             //validation
@@ -225,9 +230,9 @@ class PantalloGamesSystem implements GamesSystem
                 'user_bonuses.id as bonus',
                 'user_bonuses.bonus_id as bonus_id',
                 'user_bonuses.created_at as start_bonus',
-                'bonus_not_active.id as bonus_n_active',
-                'bonus_not_active.bonus_id as bonus_n_active_id',
-                'bonus_not_active.created_at as start_bonus_n_active',
+                'bonus_n_active.id as bonus_n_active',
+                'bonus_n_active.bonus_id as bonus_n_active_id',
+                'bonus_n_active.created_at as start_bonus_n_active',
             ];
 
             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
@@ -239,7 +244,6 @@ class PantalloGamesSystem implements GamesSystem
                 })
                 ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
                     $join->on('users.id', '=', 'bonus_n_active.user_id')
-                        ->where('bonus_n_active.activated', '=', 0)
                         ->whereNull('bonus_n_active.deleted_at');
                 })
                 ->where([
@@ -579,8 +583,11 @@ class PantalloGamesSystem implements GamesSystem
                             //this sum for win only free spins
                             //this mean for bonus active
                             $amountFreeSpins = $amount;
+
+                            $startDateBonus = $params['user']->start_bonus_n_active;
+
                             $transactionSumBonus = Transaction::where([
-                                ['created_at', '>', $params['user']->start_bonus],
+                                ['created_at', '>', $startDateBonus],
                                 ['type', '=', 10],
                                 ['user_id', '=', $params['user']->id]
                             ])->sum('bonus_sum');
@@ -589,6 +596,9 @@ class PantalloGamesSystem implements GamesSystem
                                 $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
                                 if ($allowedBonusFunds <= $amount) {
                                     $amountFreeSpins = $allowedBonusFunds;
+                                    if ($amountFreeSpins < 0) {
+                                        $amountFreeSpins = 0;
+                                    }
                                 }
                             }
 
@@ -793,9 +803,7 @@ class PantalloGamesSystem implements GamesSystem
         //finish debug
         $debugGameResult = $debugGame->end();
 
-        RawLog::create([
-            'type_id' => 2,
-            'request' => GeneralHelper::fullRequest(),
+        RawLog::where('id', $rawLog->id)->update([
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);

@@ -17,7 +17,7 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
-    protected $maxAmount = 60;
+    public static $maxAmount = 60;
     protected $playFactor = 33;
     protected $expireDays = 1;
     protected $freeSpins = 50;
@@ -210,7 +210,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 UserBonus::where('id', $activeBonus->id)->update([
-                    //'activated' => 1,
+                    'activated' => 1,
                     'data' => json_encode([
                         'free_spin_win' => $freeSpinWin,
                         'wagered_sum' => $freeSpinWin * $this->playFactor,

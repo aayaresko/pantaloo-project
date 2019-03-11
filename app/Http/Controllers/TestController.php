@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\RawLog;
@@ -32,6 +33,33 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $bonuses = UserBonus::all();
+
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            try {
+                $bonus_obj->realActivation();
+                $bonus_obj->close();
+            } catch (\Exception $e) {
+                Log::alert([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+dd(2);
+        try {
+            $typeBonus = 1;
+            $bonusClass = null;
+            $bonusLimit = $bonusClass::$maxAmount;
+        } catch (\Exception $x) {
+            dd(1);
+        }
+
+
         $userFields = [
             'users.id as id',
             'users.balance as balance',
