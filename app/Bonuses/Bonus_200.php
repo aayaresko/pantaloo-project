@@ -7,6 +7,7 @@ namespace App\Bonuses;
 class Bonus_200 extends Bonus_100
 {
     public static $id = 2;
+    public static $maxAmount = 1000;
     protected $percent = 200;
     protected $minSum = 3;
     protected $maxSum = 0;

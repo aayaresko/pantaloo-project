@@ -17,6 +17,7 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
+    public static $maxAmount = 1000;
     protected $percent = 100;
     protected $minSum = 3;
     protected $maxSum = 0;
@@ -121,7 +122,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
             if ($this->active_bonus->activated != 1) {
 
                 $deposit = $this->getBonusDeposit();
-                $dateStartBonus = $activeBonus->data['dateStart'];
 
                 if ($deposit) {
                     if ($deposit->sum < $this->minSum) {
@@ -142,8 +142,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
                         ]);
 
                         $this->set('transaction_id', $transaction->id);
-                        $this->set('dateStart', $dateStartBonus);
-                        $this->set('wagered_sum', $this->playFactor * $deposit->sum);
                         $this->set('wagered_sum', $this->playFactor * $deposit->sum);
 
                         $activeBonus->activated = 1;

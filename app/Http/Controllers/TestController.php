@@ -34,6 +34,7 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
+        dd(2);
         $bonuses = UserBonus::all();
 
         foreach ($bonuses as $bonus)
@@ -42,7 +43,7 @@ class TestController extends Controller
             $bonus_obj = new $class($bonus->user);
             try {
                 $bonus_obj->realActivation();
-                $bonus_obj->close();
+                //$bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
                     'id' => $bonus->id,
@@ -50,7 +51,7 @@ class TestController extends Controller
                 ]);
             }
         }
-dd(2);
+        dd(2);
         try {
             $typeBonus = 1;
             $bonusClass = null;

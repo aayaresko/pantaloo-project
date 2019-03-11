@@ -26,7 +26,7 @@ abstract class Bonus
         $date->modify('-' . $minutes . ' minutes');
 
         $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
-
+        
         if (!$transaction) {
             return false;
         } else {
