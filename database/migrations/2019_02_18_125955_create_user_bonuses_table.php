@@ -22,7 +22,7 @@ class CreateUserBonusesTable extends Migration
 
             $table->tinyInteger('activated')->index();
             $table->text('data');
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
