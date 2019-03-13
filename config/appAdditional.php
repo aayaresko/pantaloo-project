@@ -106,5 +106,7 @@ return [
     'freeRounds' => [
         'available' => 50,
         'timeFreeRound' => 1209600
-    ]
+    ],
+
+
 ];

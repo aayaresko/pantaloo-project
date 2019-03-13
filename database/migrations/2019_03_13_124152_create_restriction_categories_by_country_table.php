@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamesRestrictionByCountryTable extends Migration
+class CreateRestrictionCategoriesByCountryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateGamesRestrictionByCountryTable extends Migration
      */
     public function up()
     {
-        Schema::create('restriction_games_by_country', function (Blueprint $table) {
+        Schema::create('restriction_categories_by_country', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('game_id')->unsigned()->index();
-            $table->foreign('game_id')->references('id')->on('games_list');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('games_categories');
             $table->string('code_country')->index();
             $table->tinyInteger('mark')->default(0)->index();
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateGamesRestrictionByCountryTable extends Migration
      */
     public function down()
     {
-        Schema::drop('restriction_games_by_country');
+        Schema::drop('restriction_categories_by_country');
     }
 }
