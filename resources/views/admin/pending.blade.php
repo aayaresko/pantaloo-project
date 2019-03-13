@@ -73,8 +73,10 @@
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center;">
+                        <h4>Are you sure to <span class = 'insertActLow'></span> withdrawal ?</h4>
+                        <br>
                         <a class="btn btn-success finalApproveTransaction"><span class = 'insertAct'></span></a>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -107,6 +109,7 @@
             let transactionId = $(this).attr('data-transaction');
             $('#approveTransaction .insertId').text(transactionId);
             $('#approveTransaction .insertAct').text(act);
+            $('#approveTransaction .insertActLow').text(act.toLowerCase());
             $('.finalApproveTransaction').attr('href', link);
             //show
             $('#approveTransaction').modal('show');
