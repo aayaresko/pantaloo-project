@@ -25,7 +25,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
+        $games = GamesList::where('details', null)->get();
+        dd($games);
 
         return redirect('/')->with('popup_fixed', 'true');
         $service = new Service();

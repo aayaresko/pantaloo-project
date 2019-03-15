@@ -108,5 +108,10 @@ return [
         'timeFreeRound' => 1209600
     ],
 
+    'restrictionMark' => [
+        'disable' => 0,
+        'enable' => 1
+    ]
+
 
 ];
