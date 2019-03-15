@@ -111,7 +111,7 @@ return [
     'restrictionMark' => [
         'disable' => 0,
         'enable' => 1
-    ]
+    ],
 
-
+    'getCountries' => 'https://api.printful.com/countries'
 ];

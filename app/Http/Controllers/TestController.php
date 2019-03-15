@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use DB;
+use App\Country;
 use App\User;
 use Validator;
 use App\Bitcoin\Service;
@@ -25,6 +26,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(Country::all());
         $games = GamesList::where('details', null)->get();
         dd($games);
 
