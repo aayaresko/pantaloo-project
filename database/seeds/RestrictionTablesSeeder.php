@@ -5,9 +5,11 @@ use Illuminate\Database\Seeder;
 class RestrictionTablesSeeder extends Seeder
 {
     /**
+     *
      * Run the database seeds.
      *
-     * @return void
+     *
+     * @throws Exception
      */
     public function run()
     {
@@ -43,6 +45,7 @@ class RestrictionTablesSeeder extends Seeder
 
     /**
      * @return array
+     * @throws Exception
      */
     protected function getParams()
     {
