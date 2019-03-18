@@ -244,6 +244,10 @@ class IntegratedGamesController extends Controller
             //ALLOW
             if ($request->has('allowCountryGames_codes')) {
                 $restrictionAllowItems = [];
+
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['enable'])->delete();
+
                 foreach ($request['allowCountryGames_codes'] as $allowCode) {
                     array_push($restrictionAllowItems, [
                         'game_id' => $gameId,
@@ -263,6 +267,10 @@ class IntegratedGamesController extends Controller
             //BAN
             if ($request->has('banCountryGames_codes')) {
                 $restrictionBanItems = [];
+
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['disable'])->delete();
+
                 foreach ($request['banCountryGames_codes'] as $banCode) {
                     array_push($restrictionBanItems, [
                         'game_id' => $gameId,
