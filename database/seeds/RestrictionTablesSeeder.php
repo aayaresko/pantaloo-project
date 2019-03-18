@@ -52,22 +52,22 @@ class RestrictionTablesSeeder extends Seeder
         $currentDate = new DateTime();
         return [
             'games' => [
-                [
-                    'game_id' => 3,
-                    'code_country' => 'UA',
-                    'mark' => 0,
-                    'created_at' => $currentDate,
-                    'updated_at' => $currentDate,
-                ]
+//                [
+//                    'game_id' => 3,
+//                    'code_country' => 'UA',
+//                    'mark' => 0,
+//                    'created_at' => $currentDate,
+//                    'updated_at' => $currentDate,
+//                ]
             ],
             'categories' => [
-                [
-                    'category_id' => 2,
-                    'code_country' => 'UA',
-                    'mark' => 0,
-                    'created_at' => $currentDate,
-                    'updated_at' => $currentDate,
-                ]
+//                [
+//                    'category_id' => 2,
+//                    'code_country' => 'UA',
+//                    'mark' => 0,
+//                    'created_at' => $currentDate,
+//                    'updated_at' => $currentDate,
+//                ]
             ],
         ];
     }
