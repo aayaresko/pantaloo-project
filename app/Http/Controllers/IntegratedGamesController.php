@@ -184,12 +184,12 @@ class IntegratedGamesController extends Controller
                     ->where('rg.mark', '=', 1);
             })
             ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
-                $join->on('rc_n.category_id', '=', 'games_list.category_id')
+                $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
                     ->where('rc_n.code_country', '=', $codeCountry)
                     ->where('rc_n.mark', '=', 0);
             })
             ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
-                $join->on('rc.category_id', '=', 'games_list.category_id')
+                $join->on('rc.category_id', '=', 'games_list_extra.category_id')
                     ->where('rc.code_country', '=', $codeCountry)
                     ->where('rc.mark', '=', 1);
             })
