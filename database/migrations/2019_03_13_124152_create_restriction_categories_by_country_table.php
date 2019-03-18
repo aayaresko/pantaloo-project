@@ -14,7 +14,7 @@ class CreateRestrictionCategoriesByCountryTable extends Migration
     {
         Schema::create('restriction_categories_by_country', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->index();
             $table->foreign('category_id')->references('id')->on('games_categories');
             $table->string('code_country')->index();
             $table->tinyInteger('mark')->default(0)->index();
