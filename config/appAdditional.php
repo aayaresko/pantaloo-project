@@ -113,5 +113,5 @@ return [
         'enable' => 1
     ],
 
-    'getCountries' => 'https://api.printful.com/countries'
+    'getCountries' => 'https://restcountries.eu/rest/v2/all'
 ];

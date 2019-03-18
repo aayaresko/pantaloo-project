@@ -56,14 +56,11 @@ class CountryTableSeeder extends Seeder
             ]);
 
             $responseJson = json_decode($response->getBody()->getContents());
-            if ((int)$responseJson->code !== 200) {
-                throw new Exception('some is wrong');
-            }
 
             $currentDate = new DateTime();
-            foreach ($responseJson->result as $country) {
+            foreach ($responseJson as $country) {
                 $counties[] = [
-                    'code' => $country->code,
+                    'code' => $country->alpha2Code,
                     'name' => $country->name,
                     'created_at' => $currentDate,
                     'updated_at' => $currentDate,
