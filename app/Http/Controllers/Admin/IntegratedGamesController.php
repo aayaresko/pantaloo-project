@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
+use App\Country;
 use App\CustomField;
 use App\Models\GamesList;
 use App\Models\GamesType;
@@ -123,10 +124,15 @@ class IntegratedGamesController extends Controller
         $game->default_type_id = $gameDefault->type;
         $game->type_id = explode(',', $game->type);
         $game->default_type_id = explode(',', $game->default_type_id);
+        $countries = Country::all();
+        $gameCountries = [];
+        //$restrictionGameCountry =
+
 
         return view('admin.integrated_game')->with([
             'game' => $game,
             'types' => $types,
+            'countries' => $countries,
             'categories' => $categories,
         ]);
     }

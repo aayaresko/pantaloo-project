@@ -141,6 +141,38 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Allowed in countries</td>
+                                        <td>
+                                            <select name="country_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    {{--@if(in_array($type->id, $game->type_id))--}}
+                                                        {{--<option value="{{ $type->id }}"--}}
+                                                                {{--selected>{{ $type->name }}</option>--}}
+                                                    {{--@else--}}
+                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    {{--@endif--}}
+                                                @endforeach
+                                            </select>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Banned in countries</td>
+                                        <td>
+                                            <select name="country_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    {{--@if(in_array($country->id, $game->type_id))--}}
+                                                    {{--<option value="{{ $type->id }}"--}}
+                                                    {{--selected>{{ $type->name }}</option>--}}
+                                                    {{--@else--}}
+                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    {{--@endif--}}
+                                                @endforeach
+                                            </select>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>
                                         <td><a class="btn btn-primary" href="/admin/integratedGames"
                                                role="button">Back</a></td>
