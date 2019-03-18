@@ -8,6 +8,7 @@ use Validator;
 use App\Slots\Casino;
 use App\Models\GamesList;
 use App\Models\GamesType;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\GamesCategory;
 use App\Models\GamesListSettings;
@@ -161,7 +162,8 @@ class IntegratedGamesController extends Controller
         }
 
         //check this query
-        $codeCountry = session('iso_code');
+        $ipVisitor = GeneralHelper::visitorIpCloudFire();
+        $codeCountry = geoip($ipVisitor)['iso_code'];
         //for test
         //$codeCountry = 'UA';
 
