@@ -12,6 +12,8 @@ use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
+use App\Models\GamesListExtra;
+
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
@@ -26,7 +28,14 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(Country::all());
+        //ini_set('max_execution_time', 600);
+        $games = GamesList::all();
+        foreach ($games as $game) {
+            GamesListExtra::where('game_id', $game->id)->update([
+                'category_id' => $game->category_id
+            ]);
+        }
+        dd('Ok');
         $games = GamesList::where('details', null)->get();
         dd($games);
 
