@@ -57,7 +57,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <select name="type_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="type_id[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
                                                 @foreach($types as $type)
                                                     @if(in_array($type->id, $game->type_id))
                                                         <option value="{{ $type->id }}"
@@ -143,14 +144,15 @@
                                     <tr>
                                         <td>Allowed in countries</td>
                                         <td>
-                                            <select name="country_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="allowCountryGames_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
                                                 @foreach($countries as $country)
-                                                    {{--@if(in_array($type->id, $game->type_id))--}}
-                                                        {{--<option value="{{ $type->id }}"--}}
-                                                                {{--selected>{{ $type->name }}</option>--}}
-                                                    {{--@else--}}
-                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                    {{--@endif--}}
+                                                    @if(in_array($country->code, $gameCountries['allow']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </td>
@@ -159,14 +161,15 @@
                                     <tr>
                                         <td>Banned in countries</td>
                                         <td>
-                                            <select name="country_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="banCountryGames_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
                                                 @foreach($countries as $country)
-                                                    {{--@if(in_array($country->id, $game->type_id))--}}
-                                                    {{--<option value="{{ $type->id }}"--}}
-                                                    {{--selected>{{ $type->name }}</option>--}}
-                                                    {{--@else--}}
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                    {{--@endif--}}
+                                                    @if(in_array($country->code, $gameCountries['ban']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </td>
