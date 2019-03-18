@@ -195,7 +195,8 @@ class IntegratedGamesController extends Controller
             })
             ->where($whereGameList)
             ->whereRaw('(rg.id > 0 OR rg.id is null) AND (rg_n.id is null)')
-            ->whereRaw('(rc.id > 0 OR rc.id is null) AND (rc_n.id is null)')
+            ->whereRaw('(rc.id > 0 OR rc.id is null) AND (IF(rg.id > 0, null, rc_n.id) is null)')
+            //->whereRaw('(rc.id > 0 OR rc.id is null) AND (rc_n.id is null)')
             ->groupBy('games_types_games.game_id')
             ->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
