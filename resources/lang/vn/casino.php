@@ -346,7 +346,7 @@ return array (
   'minimum_deposit' => 'Tiền gửi tối thiểu là 1 mBTC',
   'send_your_bitcoins' => 'Gửi Bitcoin của bạn đến địa chỉ này:',
   'transfer_wallet_address' => 'Chuyển bitcoin đến địa chỉ ví của bạn.',
-  'have_millibitcoins' => 'Bạn có% s MilliBitCoin (mBTC).',
+  'have_millibitcoins' => 'Bạn có :availableBalance MilliBitCoin (mBTC).',
   'your_bitcoin_address' => 'Địa chỉ Bitcoin của bạn',
   'enter_here' => 'Nhập vào đây',
   'amount_mbtc' => 'Số tiền mBTC',
