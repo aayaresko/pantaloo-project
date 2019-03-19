@@ -167,8 +167,8 @@ class IntegratedGamesController extends Controller
         //for test
         //$codeCountry = 'UA';
 
-        array_push($this->relatedFields, 'rg.id as rg', 'rc.id as rc');
         array_push($this->relatedFields, 'rg_n.id as rg_n', 'rc_n.id as rc_n');
+        array_push($this->relatedFields, 'rg.id as rg', 'rc.id as rc');
 
         $gameList = DB::table('games_types_games')->select($this->relatedFields)
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
@@ -180,14 +180,14 @@ class IntegratedGamesController extends Controller
                     ->where('rg_n.code_country', '=', $codeCountry)
                     ->where('rg_n.mark', '=', 0);
             })
-            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
-                $join->on('rg.game_id', '=', 'games_list.id')
-                    ->where('rg.mark', '=', 1);
-            })
             ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
                 $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
                     ->where('rc_n.code_country', '=', $codeCountry)
                     ->where('rc_n.mark', '=', 0);
+            })
+            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
+                $join->on('rg.game_id', '=', 'games_list.id')
+                    ->where('rg.mark', '=', 1);
             })
             ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
                 $join->on('rc.category_id', '=', 'games_list_extra.category_id')
