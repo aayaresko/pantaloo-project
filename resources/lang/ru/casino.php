@@ -455,7 +455,7 @@ return array (
   'minimum_deposit' => 'Minimum deposit is 1 mBTC',
   'send_your_bitcoins' => 'Send your Bitcoins to this address:',
   'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
-  'have_millibitcoins' => 'You have %s MilliBitCoins (mBTC) available.',
+  'have_millibitcoins' => 'You have :availableBalance MilliBitCoins (mBTC) available.',
   'your_bitcoin_address' => 'Your Bitcoin address',
   'enter_here' => 'Enter here',
   'amount_mbtc' => 'Amount mBTC',

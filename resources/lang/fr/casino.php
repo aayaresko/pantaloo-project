@@ -364,7 +364,7 @@ return array (
   'minimum_deposit' => 'Le dépôt minimal est de 1 mBTC',
   'send_your_bitcoins' => 'Envoyez vos Bitcoins à cette adresse:',
   'transfer_wallet_address' => 'Transférez les bitcoins à votre adresse de portefeuille',
-  'have_millibitcoins' => 'Vous avez %s Milibitcoins (mBTC) de disponibles',
+  'have_millibitcoins' => 'Vous avez :availableBalance Milibitcoins (mBTC) de disponibles',
   'your_bitcoin_address' => 'Votre adresse Bitcoin',
   'enter_here' => 'Entrez ici',
   'amount_mbtc' => 'Montant mBTC',

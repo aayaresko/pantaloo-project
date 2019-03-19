@@ -430,7 +430,7 @@ Bitte beachten Sie, dass Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil\'s Delight, The
   'minimum_deposit' => 'Die Mindesteinzahlung beträgt 1 mBTC ',
   'send_your_bitcoins' => 'Senden Sie Ihre Bitcoins an diese Adresse:',
   'transfer_wallet_address' => 'Transferieren Sie Ihre Bitcoins zu der folgenden Wallet-Adresse',
-  'have_millibitcoins' => 'Sie haben % MilliBitCoins (mBTC) verfügbar.',
+  'have_millibitcoins' => 'Sie haben :availableBalance MilliBitCoins (mBTC) verfügbar.',
   'your_bitcoin_address' => 'Ihre Bitcoin-Adresse',
   'enter_here' => 'Hier eingeben',
   'amount_mbtc' => 'mBTC Betrag',
