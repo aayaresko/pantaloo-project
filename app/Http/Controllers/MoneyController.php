@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Validator;
 use App\Bitcoin\Service;
 use App\Invoice;
@@ -23,14 +24,12 @@ class MoneyController extends Controller
 
         $stop = false;
 
-        if($user->free_spins == 0)
-        {
+        if ($user->free_spins == 0) {
             $transaction = $user->transactions()->where('type', 9)->orderBy('id', 'DESC')->first();
 
-            if(!$transaction) throw new \Exception('Transaction not found');
+            if (!$transaction) throw new \Exception('Transaction not found');
 
-            if($user->transactions()->where('type', 10)->where('id', '>', $transaction->id)->count() > 0)
-            {
+            if ($user->transactions()->where('type', 10)->where('id', '>', $transaction->id)->count() > 0) {
                 $stop = true;
             }
         }
@@ -40,49 +39,31 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
-        $validator = Validator::make(['email' => $email], [
-            'email' => 'required|email',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'messages' => $validator->errors(),
-            ]);
-        }
-
-        $user = User::where('email', $email)->first();
-
-        if (is_null($user)) {
-            return response()->json([
-                'status' => false,
-                'messages' => ['User is not found'],
-            ]);
-        }
-
+        $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $nowTimeStamp = Carbon::now()->timestamp;
-        $lastActivityTimeStamp = $user->last_activity->timestamp;
-        $diffTime = $nowTimeStamp - $lastActivityTimeStamp;
+        $user = User::where('email', $email)->first();
 
-        if ($diffTime > $sessionLeftTimeSecond) {
+        $sessionUser = DB::table('sessions')->where('user_id', $user->id)
+            ->where('id', $sessionId)
+            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+            ->first();
+
+        if (is_null($sessionUser)) {
             return response()->json([
                 'status' => false,
-                'messages' => ['Session is not found']
+                'messages' => ['User or session is not found'],
             ]);
         }
 
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 
-        if($transaction)
-        {
+        if ($transaction) {
             $sum = $transaction->sum;
             $transaction->notification = 1;
             $transaction->save();
-        }
-        else {
+        } else {
             $sum = false;
         }
 
@@ -120,9 +101,7 @@ class MoneyController extends Controller
 
         try {
             $data = $service->send($request->input('bitcoin_address'), $request->input('sum'));
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
 
@@ -135,7 +114,7 @@ class MoneyController extends Controller
 
         $transactions = Auth::user()->transactions()->where('type', 3)->where('id', '>', $transaction_id)->orderBy('id', 'Desc')->get();
 
-        return response()->json($transactions->map(function ($item){
+        return response()->json($transactions->map(function ($item) {
             return [
                 'date' => $item->created_at->format('d M Y H:i'),
                 'id' => $item->id,
@@ -151,7 +130,7 @@ class MoneyController extends Controller
 
         $transactions = Auth::user()->transactions()->where('type', 3)->orderBy('id', 'Desc')->limit(10)->get();
 
-        return response()->json($transactions->map(function ($item){
+        return response()->json($transactions->map(function ($item) {
             return [
                 'date' => $item->created_at->format('d M Y H:i'),
                 'id' => $item->id,
@@ -187,11 +166,11 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
-        if(Auth::user()->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
+        if (Auth::user()->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
 
-        if(Auth::user()->transactions()->deposits()->where('confirmations', '<', 6)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        if (Auth::user()->transactions()->deposits()->where('confirmations', '<', 6)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
 
-        if(Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
+        if (Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
         $this->validate($request, [
             'address' => 'required',
@@ -200,9 +179,9 @@ class MoneyController extends Controller
 
         $service = new Service();
 
-        if($request->input('sum') < 1) return redirect()->back()->withErrors(['Minimum sum is 1']);
+        if ($request->input('sum') < 1) return redirect()->back()->withErrors(['Minimum sum is 1']);
 
-        if(!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
 
         $sum = $request->input('sum');
         $sum = round($sum, 5, PHP_ROUND_HALF_DOWN);
@@ -218,9 +197,7 @@ class MoneyController extends Controller
 
         try {
             Auth::user()->changeBalance($transaction);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['Not enoug funds']);
         }
 
@@ -233,23 +210,17 @@ class MoneyController extends Controller
 
     public function transfers(Request $request)
     {
-        try
-        {
+        try {
             $start = Carbon::createFromFormat("Y-m-d", $request->input('start'));
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $start = Carbon::now();
         }
 
         $start->setTime(0, 0, 0);
 
-        try
-        {
+        try {
             $end = Carbon::createFromFormat("Y-m-d", $request->input('end'));
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $end = Carbon::now();
         }
 
@@ -260,15 +231,13 @@ class MoneyController extends Controller
         $deposits = Transaction::deposits();
         $withdraws = Transaction::withdraws();
 
-        if($start)
-        {
+        if ($start) {
             $transfers = $transfers->where('created_at', '>=', $start);
             $deposits = $deposits->where('created_at', '>=', $start);
             $withdraws = $withdraws->where('created_at', '>=', $start);
         }
 
-        if($end)
-        {
+        if ($end) {
             $transfers = $transfers->where('created_at', '<=', $end);
             $deposits = $deposits->where('created_at', '<=', $end);
             $withdraws = $withdraws->where('created_at', '<=', $end);
@@ -290,7 +259,7 @@ class MoneyController extends Controller
 
     public function aprove(Transaction $transaction)
     {
-        if($transaction->type == 4 and $transaction->withdraw_status == 0) {
+        if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
 
             $transaction->withdraw_status = 3;
             $transaction->save();
@@ -298,41 +267,37 @@ class MoneyController extends Controller
             $this->dispatch(new Withdraw($transaction));
 
             return redirect()->route('pending')->with('msg', 'Transfer was complete!');
-        }
-        else return redirect()->back()->withErrors(['Invalid type and status']);
+        } else return redirect()->back()->withErrors(['Invalid type and status']);
     }
 
     public function freeze(Transaction $transaction)
     {
-        if($transaction->type == 4 and $transaction->withdraw_status == 0) {
+        if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
             $transaction->withdraw_status = -1;
             $transaction->save();
 
             return redirect()->route('pending')->with('msg', 'Transaction was frozen');
-        }
-        else return redirect()->back()->withErrors(['Invalid type']);
+        } else return redirect()->back()->withErrors(['Invalid type']);
     }
 
     public function unfreeze(Transaction $transaction)
     {
-        if($transaction->type == 4 and $transaction->withdraw_status == -1) {
+        if ($transaction->type == 4 and $transaction->withdraw_status == -1) {
             $transaction->withdraw_status = 0;
             $transaction->save();
 
             return redirect()->route('pending')->with('msg', 'Transaction was unfrozen');
-        }
-        else return redirect()->back()->withErrors(['Invalid type']);
+        } else return redirect()->back()->withErrors(['Invalid type']);
     }
 
     public function cancel(Transaction $transaction)
     {
-        if($transaction->type == 4 and $transaction->withdraw_status == 3) {
+        if ($transaction->type == 4 and $transaction->withdraw_status == 3) {
             $transaction->withdraw_status = 0;
             $transaction->save();
 
             return redirect()->route('pending')->with('msg', 'Transaction was canceled');
-        }
-        else return redirect()->back()->withErrors(['Invalid type']);
+        } else return redirect()->back()->withErrors(['Invalid type']);
     }
 
     public function pending()
@@ -410,40 +375,30 @@ class MoneyController extends Controller
 
         $invoice = Invoice::where(['id' => $data['invoice_id'], 'amount' => $data['amount'], 'sign' => $data['sign']])->first();
 
-        if($invoice && $invoice->status != 3)
-        {
+        if ($invoice && $invoice->status != 3) {
             $invoice->status = $request->input('status');
             $invoice->save();
 
-            if($invoice->status == 3)
-            {
+            if ($invoice->status == 3) {
                 $user = User::find($invoice->user_id);
 
-                if($user)
-                {
+                if ($user) {
                     $user->balance = $user->balance + $data['amount'];
                     $user->save();
 
                     $status = true;
-                }
-                else
-                {
+                } else {
                     $invoice->status = 0;
                     $invoice->save();
                 }
-            }
-            else
-            {
+            } else {
                 $status = true;
             }
         }
 
-        if($status)
-        {
+        if ($status) {
             echo 'OK';
-        }
-        else
-        {
+        } else {
             throw new \Exception("Something went wrong");
         }
     }
