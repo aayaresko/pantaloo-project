@@ -207,6 +207,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                         ['created_at', '>', $dateStartBonus],
                         ['type', '=', 10]
                     ])->sum('bonus_sum');
+                    if (is_null($freeSpinWin)) {
+                        $freeSpinWin = 0;
+                    }
                 }
 
                 UserBonus::where('id', $activeBonus->id)->update([
@@ -270,7 +273,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             ];
 
             if ($this->active_bonus->activated == 1) {
-                if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
+                $wageredSum = $this->get('wagered_sum');
+                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
 
                     $response = [
                         'success' => true,

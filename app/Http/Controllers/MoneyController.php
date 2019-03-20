@@ -39,6 +39,7 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
+        //to do universal way define user to DO
         $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;

@@ -33,6 +33,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $freeSpinWin =DB::table('transactions')->where('user_id', 157)->where([
+            ['created_at', '>', '2019-03-05 16:49:03'],
+            ['type', '=', 10]
+        ])->get();
+        dd($freeSpinWin);
         dump($_SERVER['REMOTE_ADDR']);
         dd($request->server('REMOTE_ADDR'));
         $client = new Client([
