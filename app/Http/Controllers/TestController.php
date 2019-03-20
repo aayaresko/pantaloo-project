@@ -33,6 +33,49 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dump($_SERVER['REMOTE_ADDR']);
+        dd($request->server('REMOTE_ADDR'));
+        $client = new Client([
+            'verify' => false,
+        ]);
+
+        //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
+        $response = $client->post('https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'response_type' => 'token',
+                'username' => 'api_casinobit',
+                'password' => 'BfRN18uA'
+            ]
+        ]);
+        $json = $response->getBody()->getContents();
+        $json = json_decode($json);
+        dd(2);
+        try {
+            $response = $client->get('https://api-int.qtplatform.com/v1/games', [
+                'headers' =>[
+                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Accept'     => 'application/json',
+                ]
+            ]);
+        }
+        catch (\Exception $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+            dd($responseBodyAsString);
+        }
+
+        $game = $response->getBody()->getContents();
+        $game = json_decode($game);
+        foreach ($game->items as $game) {
+            foreach ($game->currencies as $currency) {
+                if ($currency == 'MBTC') {
+                    dump($game);
+                }
+            }
+        }
+        dd(2);
 //        DB::enableQueryLog();
 //        $bonuses = UserBonus::where('id', 1114)->update(['activated' => 0]);
 //        dd(DB::getQueryLog());

@@ -135,6 +135,10 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 if ($deposit) {
                     if ($deposit->sum < $this->minSum) {
                         $this->cancel('Invalid deposit sum');
+                        $response = [
+                            'success' => false,
+                            'message' => 'Close.Invalid deposit sum'
+                        ];
                     } else {
                         $transaction = new Transaction();
                         $transaction->sum = 0;
@@ -209,11 +213,15 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         DB::beginTransaction();
         try {
+            if ($activeBonus->activated == 0) {
+                throw new \Exception('Bonus is not activated');
+            }
+
             if ($this->hasBonusTransactions()) {
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
-            $now = Carbon::now();
 
+            $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
                 $conditions = 1;
                 $this->cancel('Expired');
@@ -222,7 +230,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     'message' => 'Expired'
                 ];
             }
-            if ($activeBonus->activated == 1 and $user->bonus_balance == 0) {
+
+            if ($user->bonus_balance == 0) {
                 $conditions = 1;
                 $this->cancel('No bonus funds');
                 $response = [
@@ -271,7 +280,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'success' => false,
                 'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
             ];
-
         }
 
         BonusLog::updateOrCreate(
