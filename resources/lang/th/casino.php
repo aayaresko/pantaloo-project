@@ -1,563 +1,106 @@
 <?php
 return array (
-  'title' => 'Casinobit | bitcoin casino',
-  'play' => 'Play',
-  'free_demo' => 'Free demo',
-  'admin' => 'Admin',
-  'deposit' => 'Deposit',
-  'balance' => 'Balance',
-  'login' => 'Login',
-  'registration' => 'Registration',
-  'menu' => 'Menu',
-  'withdraw' => 'Withdraw',
-  'get_bonus' => 'Get Bonus',
-  'settings' => 'Settings',
-  'support' => 'Support',
-  'bonuses' => 'Bonuses',
-  'affiliates' => 'Affiliates',
-  'info' => 'Info',
-  'exit' => 'Exit',
-  'live_games' => 'Live games',
-  'password' => 'Password',
-  'accept_the_terms' => 'I accept the terms & conditions',
-  'email_address' => 'E-mail address',
-  'i_am_forget' => 'i am forget',
-  'remember_me' => 'Remember me',
-  'have_not_account' => 'i don\'t have account',
-  'enter_now' => 'Enter Now',
-  'home_description' => 'Welcome to Casinobit where you will find the best bitcoin games and will be able to play online.
-     Casinobit is the big world of gaming systems. Here you will find the best Bitcoin games and you can play online.',
-  'home_keywords' => 'bitcoin games, lotto, bitcoin',
-  'blackjack' => 'Blackjack',
-  'roulette' => 'Roulette',
-  'slots' => 'Slots',
-  'work_bitcoin' => 'We work only with bitcoin',
-  'bonus' => 'bonus',
-  'after_first_deposit' => 'after first deposit',
-  'welcome' => 'Welcome',
+  'title' => 'Casinobit | คาสิโน bitcoin',
+  'play' => 'เล่น',
+  'free_demo' => 'การสาธิตฟรี',
+  'admin' => 'ผู้ดูแลระบบ',
+  'deposit' => 'เงินฝาก',
+  'balance' => 'ยอดเงินคงเหลือ',
+  'login' => 'เข้าสู่ระบบ',
+  'registration' => 'การลงทะเบียน',
+  'menu' => 'เมนู',
+  'withdraw' => 'ถอน',
+  'get_bonus' => 'รับโบนัส',
+  'settings' => 'การตั้งค่า',
+  'support' => 'สนับสนุน',
+  'bonuses' => 'โบนัส',
+  'affiliates' => 'พันธมิตร',
+  'info' => 'ข้อมูล',
+  'exit' => 'ทางออก',
+  'live_games' => 'เกมถ่ายทอดสด',
+  'password' => 'รหัสผ่าน',
+  'accept_the_terms' => 'ฉันยอมรับข้อกำหนดและเงื่อนไข',
+  'email_address' => 'ที่อยู่อีเมล',
+  'i_am_forget' => 'ฉันลืม',
+  'remember_me' => 'จำฉัน',
+  'have_not_account' => 'ฉันไม่มีบัญชี',
+  'enter_now' => 'กดปุ่มตกลง',
+  'home_description' => 'ยินดีต้อนรับสู่ Casinobit ที่ซึ่งคุณจะได้พบกับเกม Bitcoin ที่ดีที่สุดที่สามารถเล่นออนไลน์ได้ นอกจากนี้ Casinobit ยังเป็นระบบเกมที่ใหญ่ที่สุดในโลก',
+  'home_keywords' => 'เกม บิทคอยน์, ล็อตโต้, บิทคอยน์',
+  'blackjack' => 'แบล็คแจ็ค',
+  'roulette' => 'รูเล็ต',
+  'slots' => 'สล็อต',
+  'work_bitcoin' => 'เราร่วมงานกับ bitcoin เท่านั้น',
+  'bonus' => 'โบนัส',
+  'after_first_deposit' => 'หลังจากฝากครั้งแรก',
+  'welcome' => 'ยินดีต้อนรับ',
   'casinobit' => 'Casinobit',
-  'video_live_games' => 'video live games',
-  'games' => 'Games',
-  'live_games_second' => 'Live Games',
-  'play_now' => 'Play Now',
-  'do_you_want_to_play' => 'What do you want to play?',
-  'gambling_card_games' => 'ER IS A FAMILY OF GAMBLING CARD GAMES',
-  'bet_on_numbers' => 'Bet on numbers',
-  'type_slots' => 'slots',
-  'type_blackjack' => 'blackjack',
-  'type_live_blackjack' => 'live blackjack',
-  'type_live_poker' => 'live poker',
-  'type_roulette' => 'roulette',
-  'type_baccarat' => 'baccarat',
-  'type_live_baccarat' => 'live baccarat',
-  'type_bet_on_numbers' => 'bet on numbers ',
-  'type_live_bet_on_numbers' => 'live bet on numbers',
-  'type_keno' => 'keno',
-  'type_poker' => 'poker',
-  'type_others' => 'others',
-  'type_dice' => 'dice',
-  'type_live_dice' => 'live dice',
-  'type_live_casino' => 'live casino',
-  'type_live_table_games' => 'live table games',
-  'type_live_roulette' => 'live roulette',
-  'search_game' => 'Search game',
-  'all' => 'All',
-  'choose_your_game' => 'Choose your game',
-  'support.create_account' => 'How do I create my account?',
-  'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields. After correct filling of the forms we will email you with the confirmation link to verify your email address. Once your email is confirmed, the account will be successfully created and active. So, you can start playing our beautiful games.',
-  'support.forgotten_password' => 'What should I do if I have forgotten the password?',
-  'support.forgotten_password_value' => 'The best way is to click “forgot the password” button and follow the link. You will be automatically sent an email with the recover link where you will be advised to enter new password. Otherwise, you can report us through livechat. We are happy to help.',
-  'support.buy_bitcoins' => 'Where can I buy bitcoins?',
-  'support.buy_bitcoins_value' => 'There are numbers of bitcoins’ services. For example, bitstamp, coinbase, and spicepay. For more detailed information please visit our “what is bitcoin” page or contact our livechat for advice.',
-  'support.games_fair' => 'Are the games fair?',
-  'support.games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget. All games are regulated under the license of Curacao.',
-  'terms' => 'terms',
-  'free' => 'free',
-  'spins' => 'spins',
-  'welcome_bonus' => 'welcome bonus',
-  'bonus.term' => '<h3>BONUS TERMS AND CONDITIONS</h3>
-                <ul>
-
-                    <li>
-                        NO DEPOSIT BONUSES TERMS AND CONDITIONS
-                        <ul>
-                            <li>
-                                1a.
-
-                                The maximum winnings that will be paid out resulting from a free bonus or free spins
-                                    without deposit (eg. the 20 free spins upon registration, Wednesday Free Spins
-                                    Drops, Second Chance Spins) will be 100 EUR/USD/CAD/AUD, 1,000 SEK/NOK or 6 000 RUB.
-                                    Max winnings for GBP is £50 (even if the amount of winnings accrued by you utilizing
-                                    this bonus is in excess of this amount). In regards to BTC players, the maximum
-                                    winnings that will be paid out resulting from a free bonus or free spins without
-                                    deposit will be 100 mBTC. Any winnings exceeding this amount will be forfeited.
-                            </li>
-                            <li>
-                                1b.
-
-                                The Wagering Requirements for Free and Registration bonuses are forty (40) times the
-                                    Bonus sum awarded to you, unless stated otherwise in the supplemental Terms and
-                                    Conditions. (For Registration bonuses, extra spins, free spins and free bonuses
-                                    which require NO deposit, note that no winnings at all may be withdrawn/transferred
-                                    until you have transferred at least 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,000 RUB
-                                    or 0.05 BTC (or currency equivalent) into your Player Account. In addition, no
-                                    winnings accrued in connection with any Free Bonus may be withdrawn/transferred
-                                    until the wagering requirements have been met.)
-                            </li>
-                            <li>
-                                2a.
-
-                                For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding
-                                    the KYC (Know Your Customer), the following documents may be needed for
-                                    verification: One government approved identity card (ID card, passport and driver\'s
-                                    license) with a picture, as well as proof of residency such as a utility bill (which
-                                    is not older than 2 months). If your deposit method was via a credit card we will
-                                    require a scanned copy of the credit card (front and back) which you used.
-                            </li>
-                            <li>
-                                2b.
-
-                                General bonus terms and conditions apply.
-                            </li>
-                            <li>
-                                3.
-
-                                Players requesting a withdrawal of money won with a no deposit bonus cannot do so via
-                                    bank transfer.
-                            </li>
-                            <li>
-                                4.
-
-                                Players with disposable email addresses are not eligible for any free spins without
-                                    deposit. If a player despite this would receive free spins without a deposit being
-                                    made, all winnings from the spins will be confiscated.
-                            </li>
-                            <li>
-                                5a.
-
-                                Players from the following countries are not eligible for the no deposit free spins:
-                                    Albania (AL)
-                                    Algeria (DZ)
-                                    Angola (AO)
-                                    Austria (AT)
-                                    Bahrain (BH)
-                                    Bangladesh (BD)
-                                    Belarus (BY)
-                                    Benin (BJ)
-                                    Bosnia and Herzegovina (BA)
-                                    Botswana (BW)
-                                    Bulgaria (BG)
-                                    Burundi (BI)
-                                    Cameroon (CM)
-                                    Cape Verde (CV)
-                                    Chad (TD)
-                                    Comoros (KM)
-                                    Croatia (HR)
-                                    Czech Republic (CZ)
-                                    Côte d\'Ivoire (CI)
-                                    Djibouti (DJ)
-                                    Egypt (EG)
-                                    Equatorial Guinea (GQ)
-                                    Eritrea (ER)
-                                    Ethiopia (ET)
-                                    Gabon (GA)
-                                    Gambia (GM)
-                                    Georgia (GE)
-                                    Ghana (GH)
-                                    Greece (GR)
-                                    Guinea (GN)
-                                    Guinea-Bissau (GW)
-                                    Hungary (HU)
-                                    India (IN)
-                                    Indonesia (ID)
-                                    Iran (IR)
-                                    Iraq (IQ)
-                                    Islamic Republic of (IR)
-                                    Jordan (JO)
-                                    Kazakhstan (KZ)
-                                    Kenya (KE)
-                                    Kuwait (KW)
-                                    Lebanon (LB)
-                                    Lesotho (LS)
-                                    Liberia (LR)
-                                    Macedonia Republic of (MK)
-                                    Madagascar (MG)
-                                    Malawi (MW)
-                                    Malaysia (MY)
-                                    Mali (ML)
-                                    Mauritania (MR)
-                                    Mauritius (MU)
-                                    Moldova Republic of (MD)
-                                    Mongolia (MN)
-                                    Montenegro (ME)
-                                    Morocco (MA)
-                                    Mozambique (MZ)
-                                    Namibia (NA)
-                                    Nepal (NP)
-                                    Niger (NE)
-                                    Nigeria (NG)
-                                    Oman (OM)
-                                    Pakistan (PK)
-                                    Palestine State of (PS)
-                                    Philippines (PH)
-                                    Poland (PL)
-                                    Portugal (PT)
-                                    Romania (RO)
-                                    Rwanda (RW)
-                                    Sao Tome and Principe (ST)
-                                    Senegal (SN)
-                                    Serbia (RS)
-                                    Seychelles (SC)
-                                    Sierra Leone (SL)
-                                    Slovakia (SK)
-                                    Slovenia (SI)
-                                    Somalia (SO)
-                                    South Sudan (SS)
-                                    Sudan (SD)
-                                    Swaziland (SZ)
-                                    Syrian Arab Republic (SY)
-                                    Tanzania United Republic of (TZ)
-                                    Thailand (TH)
-                                    Togo (TG)
-                                    Tunisia (TN)
-                                    Uganda (UG)
-                                    United Arab Emirates (AE)
-                                    Vietnam (VN)
-                                    Yemen (YE)
-                                    Zambia (ZM) and
-                                    Zimbabwe (ZW)
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        FREE SPINS TERMS AND CONDITIONS
-                        <ul>
-                            <li>
-                                1.
-
-                                When it comes to the 180 additional Free Spins that are a part of the welcome
-                                    package. A minimum of 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,250 RUB or 0.05 BTC is
-                                    required to receive the free spins. You also need to wager the amount once.
-                            </li>
-                            <li>
-                                2.
-
-                                You do not have to enter a bonus code to qualify for free spins.
-                            </li>
-                            <li>
-                                3.
-
-                                Any winnings generated from free spins will be awarded with a wagering requirement of
-                                    40 (forty).
-                            </li>
-                            <li>
-                                4.
-
-                                To activate your free spins you must access and open the game within 3 days of them
-                                    being credited, otherwise they will expire.
-                            </li>
-                            <li>
-                                5.
-
-                                Once your free spins have been activated you must complete all game rounds within 1
-                                    days otherwise they will expire.
-                            </li>
-                            <li>
-                                6.
-
-                                Casinobit reserves the right to cancel or amend these terms &amp; conditions at any
-                                    point without any prior notice.
-                            </li>
-                            <li>
-                                7.
-
-                                The 180 Free Spins that are being credited as a part of our welcome package will be
-                                    credited in increments of 20 per day for 9 days straight (as long as the player
-                                    qualifies and meet all the requirements for the promotion). The first 20 Free Spins
-                                    will be credited 23 hours after your first deposit and then in 24 hour increments
-                                    following the first crediting.
-                            </li>
-                            <li>
-                                8.
-
-                                Where Starburst is available, free spins will be credited on that game as a part of
-                                    the welcome package. If Starburst is not available due to currency or country
-                                    restriction, free spins will be given on Fruit Zen or Boomanji.
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        GENERAL BONUS TERMS AND CONDITIONS
-                        <ul>
-                            <li>
-                                1.
-
-                                All customer offers are limited to one per person, family, household address, email
-                                    address, telephone number, same payment account number (e.g. debit or credit card,
-                                    NETeller etc), IP, and shared computer, e.g. public library or workplace.
-                            </li>
-                            <li>
-                                2.a
-
-                                <span>Players who are solely making deposits when there is a bonus available will risk of
-                                    having their winnings from the bonus confiscated and being left with the initial
-                                    deposited amount of the bonus in question. Players who make 5 deposits in a row
-                                    (excluding welcome package) to the casino and trigger a bonus on all of those will
-                                    risk of losing their winnings from the bonus.<br><br>
-
-                                    At least a single genuine deposit without bonus release has to be made prior to
-                                    reaching 5 bonus releasing deposits in a row. The amount of the deposit has to be at
-                                    least the average amount of the previous deposits made that triggered a
-                                    bonus.<br><br>
-
-                                    Decision if to confiscate funds will be made by the Casinobit Management and the
-                                    decision made will be final.</span>
-                            </li>
-                            <li>
-                                2b.
-
-                                We reserve the right to not pay players using disposable email addresses
-                            </li>
-                            <li>
-                                2c.
-                                Players from the following countries are not eligible for any promotional offer:
-                                    Greece (GR), Hungary (HU), Mauritius (MU), Slovenia (SI), Croatia (HR), Bosnia and
-                                    Herzegovina (BA), Macedonia, Republic of (MK), Austria (AT) Montenegro (ME) and
-                                    Serbia (RS)
-
-                            </li>
-                            <li>
-                                2d.
-
-                                We reserve the right to lower the percentage of the Monday Reload bonus to a 25%
-                                    bonus for players who we deem have received an un-proportionate level of bonuses
-                                    based on their bonus release to deposit ratio.
-                            </li>
-
-                            <li>
-                                3.
-
-                                To claim the deposit welcome bonus or any deposit bonus (excluding free spins), the
-                                    user must make a minimum deposit of 20 EUR/GBP/USD/CAD, 200 SEK/NOK, 1,250 RUB or 50
-                                    mBTC. For example, the player will automatically receive their first bonus after
-                                    depositing an initial 20 EUR/GBP/USD/CAD/AUD, 200 SEK/NOK, 1,250 RUB or 0.05 BTC.
-                                    The second deposit bonus will be triggered once the player makes a second deposit of
-                                    20 EUR/GBP/USD/CAD, 200 SEK/NOK, 1,250 RUB or 50 mBTC or more at Casinobit. The same
-                                    rule applies for the third and the fourth deposit bonus.
-                            </li>
-                            <li>
-                                4.
-
-                                Once the first step of the welcome package is activated, the customer can then switch
-                                    currency as follows, i.e. if a player deposits €20 and activates the first step of
-                                    welcome package, he can then claim the second step by depositing in bitcoins.
-                            </li>
-                            <li>
-                                5.
-
-                                All bonuses (unless otherwise specified) need to be wagered 40 (forty) times before
-                                    the funds can be withdrawn.
-                            </li>
-                            <li>
-                                6.
-
-                                Please note that different games contribute to a different percentage towards the
-                                    wagering requirements. Slots contribute 100% (aside from excluded ones and classic
-                                    slots, see below), while all table games and video poker contribute 5% (live games
-                                    do not contribute).
-                            </li>
-                            <li>
-                                7.
-
-                                The following games do not contribute towards the completion of the wagering
-                                    requirement of a bonus: Immortal Romance, Aliens, Mega Moolah, Dead or Alive,
-                                    Ragnarok, Pocket Dice, Lucky Angler, Eggomatic, Big Bang, The Dark Knight,
-                                    Peek-A-Boo, Tomb Raider, The Dark Knight Rises, Forsaken Kingdom, Scrooge, Secret of
-                                    the Stones, Champion of the Track, Robin Hood, Tomb Raider 2, Queen of Gold and
-                                    Castle Builder. 
-                                Bloodsuckers, Bloodsuckers touch, Kings of Chicago, Simsalabim, Zombies, Jack Hammer
-                                    2, Jack Hammer 2 touch, Demolition Squad, Steam Tower, Reel Rush, Reel Rush touch,
-                                    Muse: Wild Inspiration, Victorious, Victorious touch, Ghost Pirates, Johnny the
-                                    Octopus and Mega Gems contribute at a 50% rate. Jackpot 6000, Mega Joker, Gypsy
-                                    Rose, Good Girl Bad Girl and Safari contribute at a 75% rate.
-                                Kindly note that Ninja, Dr. Jekyll &amp; Mr. Hyde, Devil\'s Delight, The Wish Master
-                                    and Jackpot Games are not able to be played with bonus money. 
-                            </li>
-                            <li>
-                                8.
-
-                                Players can request a withdrawal of their deposited amount prior to meeting the
-                                    wagering requirements. However, the bonus amount and winnings will be forfeited as a
-                                    result. Please note that when playing with a bonus, real money gets exhausted
-                                    first.
-                            </li>
-                            <li>
-                                9.
-
-                                All deposit and free cash bonuses will expire after 30 days, unless otherwise
-                                    stated.
-                            </li>
-                            <li>
-                                10.
-
-                                Bonus funds and winnings will be forfeited upon expiry of the bonus.
-                            </li>
-                            <li>
-                                11.
-
-                                When betting, placed bets are deducted from the player’s cash balance. However, if no
-                                    cash balance is available the bet placed will be deducted from the player’s bonus
-                                    balance.
-                            </li>
-                            <li>
-                                12.
-
-                                Until the play through requirements have been met, the maximum bet that can be placed
-                                    is 5 EUR/GBP/USD/CAD/AUD, 50 SEK/NOK or 300 RUB. When it comes to Bitcoin players
-                                    the maximum bet is 25 mBTC (0.025 BTC). This includes double up wagers after the
-                                    game round has been completed, for example, wagering winnings from X game round on
-                                    red/black.
-                            </li>
-                            <li>
-                                13.
-
-                                Any bonus can be removed prior to any wagering conditions being met. Please contact
-                                    Casinobit support to learn more or use the forfeit button under ’Bonuses’.
-                            </li>
-                            <li>
-                                14.
-
-                                Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked".
-                                    Casinobit.com management reserve the right to void any bonuses and/or winnings
-                                    obtained by fraudulent behavior.
-                            </li>
-                            <li>
-                                15.
-
-                                Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has
-                                    been wagered, lost or forfeited shall be removed.
-                            </li>
-                            <li>
-                                16.
-
-                                All withdrawals will be subject to an internal audit before being processed.
-                                    Casinobit reserves all rights to void Bonuses or any winnings for failed audits.
-                                    Player hereby consents in advance to same.
-                            </li>
-                            <li>
-                                17.
-
-                                If, upon such a review, it appears that a Player(s) are participating in strategies,
-                                    taking advantage of any software or system bug or failure, or participating in any
-                                    form of activity that Casinobit, in its sole and complete discretion, deems to be
-                                    abusive (\'Promotion Abuse\'), Casinobit reserves the right to revoke the entitlement
-                                    of such a Player to receive or benefit from the promotion (and/or withhold the pay
-                                    out of the proceeds of such abuse to the Player/s in question). Only fully settled
-                                    bets (i.e. bets that result in a win or loss) will be counted towards wagering.
-                            </li>
-                            <li>
-                                18.
-
-                                Multiple accounts are not permitted. Creating more than one accounts with Casinobit
-                                    in order to claim any bonuses is deemed as bonus abuse and may result in confiscated
-                                    funds.
-                            </li>
-                            <li>
-                                19.
-
-                                Bonus round and free spins do not qualify for the jackpot bonuses pursuant to casino
-                                    software provider rules. Only real money rounds qualify for the jackpot bonuses.
-                            </li>
-                            <li>
-                                20.
-
-                                Minimal risk bets on any games (i.e. betting in proportions on different outcomes in
-                                    the same hand to create "action" with minimal risk) do not qualify for completing
-                                    the wagering requirement. Examples of minimal risk bets include betting on red and
-                                    black simultaneously in Roulette, and betting player and banker simultaneously in
-                                    Baccarat. Players who are found to be adopting these practices risk of having their
-                                    bonus and winnings confiscated. 
-                            </li>
-                            <li>
-                                21.
-
-                                If it\'s discovered that a group players are using the same betting patterns and are
-                                    connected via (but not limited to) location, banking pattern or IP, Casinobit
-                                    management will at it\'s own discretion have the mandate to confiscate bonus winnings
-                                    and/or deposit. 
-                            </li>
-                            <li>
-                                22.
-
-                                If not stated otherwise, bonus money derived from free spins given on Softswiss games
-                                    can only be wagered on other Softswiss games. 
-                            </li>
-
-
-                            <li>
-                                23.
-
-                                If, while playing at Casinobit Casino, you win a sum regarded by Casinobit Management
-                                    as worthy of publicity, you agree to make yourself available for any event of such
-                                    nature arranged by Casinobit. While Casinobit protects all personal data entrusted
-                                    to us, we reserve the right to use first names and the first initial of the last
-                                    name in any Casinobit announcement about promotion results or on the website or
-                                    lobby.
-                            </li>
-                            <li>
-                                24.
-
-                                Regarding the bonuses and promotions, all times and dates are stated in CET.
-                            </li>
-
-                            <li>
-                                25.
-
-                                In the event of any dispute, the decision of Casinobit will be final.
-                            </li>
-                            <li>
-                                26.
-
-                                The Casinobit and Conditions as published on the Website (and updated from time to
-                                    time) are in English and it is the English version of these Terms and Conditions
-                                    that form the basis of these Terms and Conditions only. Translations into other
-                                    languages may be made as a service and are made in good faith. However, in the event
-                                    of differences between the English version and a translation, the English version
-                                    has priority over any translation.
-                            </li>
-                            <li>
-                                Last updated: Mar 3rd, 2017
-                            </li>
-
-                        </ul>
-                    </li>
-                </ul>',
-  'deposit_space' => 'D e p o s i t',
-  'bonus_deposit' => 'Would you like a BONUS on your next deposit?',
-  'open_bonus' => 'Open Bonuses',
-  'credits' => 'credits',
-  'add_credits' => 'Add Credits',
-  'minimum_deposit' => 'Minimum deposit is 1 mBTC',
-  'send_your_bitcoins' => 'Send your Bitcoins to this address:',
-  'transfer_wallet_address' => 'Transfer bitcoins to your wallet address.',
-  'have_millibitcoins' => 'You have :availableBalance MilliBitCoins (mBTC) available.',
-  'your_bitcoin_address' => 'Your Bitcoin address',
-  'enter_here' => 'Enter here',
-  'amount_mbtc' => 'Amount mBTC',
-  'open_history' => 'Open History',
-  'your_withdraws' => 'Your Withdraws',
-  'cancel' => 'Cancel',
-  'activate' => 'Activate',
-  'change_password' => 'Change Password',
-  'confirm_email' => 'Confirm email',
-  'old_password' => 'Old password',
-  'new_password' => 'New password',
-  'confirm_password' => 'Confirm password',
-  'confirmation' => 'Confirmation',
-  'update' => 'update',
-  'email_confirmation' => 'Email confirmation',
-  'email' => 'Email',
-  'send_mail' => 'Send MAIL',
+  'video_live_games' => 'วิดีโอเกมสด',
+  'games' => 'เกม',
+  'live_games_second' => 'เกมถ่ายทอดสด',
+  'play_now' => 'เล่นตอนนี้เลย',
+  'do_you_want_to_play' => 'คุณต้องการเล่นเกมส์อะไร?',
+  'gambling_card_games' => 'ER จัดอยู่ในตระกูลของเกมไพ่',
+  'bet_on_numbers' => 'เดิมพันตัวเลข',
+  'type_slots' => 'สล็อต',
+  'type_blackjack' => 'แบล็คแจ็ค',
+  'type_live_blackjack' => 'แบล็คแจ็คสด',
+  'type_live_poker' => 'โป๊กเกอร์สด',
+  'type_roulette' => 'รูเล็ต',
+  'type_baccarat' => 'บาคาร่า',
+  'type_live_baccarat' => 'บาคาร่าสด',
+  'type_bet_on_numbers' => 'เดิมพันตัวเลข',
+  'type_live_bet_on_numbers' => 'เดิมพันสดกับตัวเลข',
+  'type_keno' => 'คีโน',
+  'type_poker' => 'โป๊กเกอร์',
+  'type_others' => 'อื่น ๆ',
+  'type_dice' => 'ลูกเต๋า',
+  'type_live_dice' => 'ลูกเต๋าสด',
+  'type_live_casino' => 'คาสิโนสด',
+  'type_live_table_games' => 'เกมตารางสด',
+  'type_live_roulette' => 'รูเล็ตสด',
+  'search_game' => 'ค้นหาเกม',
+  'all' => 'ทั้งหมด',
+  'choose_your_game' => 'เลือกเกมของคุณ',
+  'support.create_account' => 'ฉันจะสร้างบัญชีของฉันได้อย่างไร',
+  'support.create_account_value' => 'กรุณากดปุ่มลงทะเบียนที่มุมขวาบนและกรอกข้อมูลในฟิลด์ที่จำเป็นทั้งหมด หลังจากกรอกแบบฟอร์มให้ถูกต้องเราจะส่งอีเมลถึงคุณพร้อมลิงก์เพื่อยืนยันที่อยู่อีเมลของคุณ เมื่ออีเมลของคุณได้รับการยืนยันบัญชีจะถูกสร้างและเปิดใช้งานสำเร็จ คุณจะสามารถเริ่มเล่นเกมของเราได้ทันที',
+  'support.forgotten_password' => 'ฉันควรทำอย่างไรถ้าฉันลืมรหัสผ่าน?',
+  'support.forgotten_password_value' => 'วิธีที่ดีที่สุดคือคลิกปุ่ม“ ฉันลืมรหัสผ่าน” และไปตามลิงก์ คุณจะได้รับอีเมลโดยอัตโนมัติพร้อมลิงค์กู้คืนซึ่งคุณจะได้รับคำแนะนำให้ป้อนรหัสผ่านใหม่ มิฉะนั้นคุณสามารถรายงานให้เราทราบผ่าน livechat เรายินดีให้ความช่วยเหลือเสมอ',
+  'support.buy_bitcoins' => 'ฉันจะซื้อ bitcoins ได้ที่ไหน',
+  'support.buy_bitcoins_value' => 'มีบริการจำนวน bitcoin ตัวอย่างเช่น bitstamp, coinbase และ spicepay สำหรับข้อมูลรายละเอียดเพิ่มเติมโปรดไปที่หน้า“ อะไรคือ bitcoin” หรือติดต่อ livechat ของเราเพื่อขอคำแนะนำ',
+  'support.games_fair' => 'เกมมีความยุติธรรมหรือไม่?',
+  'support.games_fair_value' => 'เกมของเรามีความยุติธรรม 100% เพื่อเป็นหลักฐานผู้เล่นแต่ละคนสามารถดูเครื่องมือที่เป็นธรรมและเชื่อถือได้ของเรา เกมทั้งหมดได้รับการควบคุมภายใต้ใบอนุญาตของ Curacao',
+  'terms' => 'เงื่อนไข',
+  'free' => 'ฟรี',
+  'spins' => 'สปิน',
+  'welcome_bonus' => 'โบนัสต้อนรับ',
+  'bonus.term' => '<h3>WELCOME BONUS TERMS AND CONDITIONS</h3><span><br>New players receive 50 Free Spins as Welcome Bonus. In order to claim the 50 free spins you have to confirm your email address.<br><br>To activate your Welcome Bonus, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and open the game within 5 days from the moment of registration, otherwise they will expire.<br><br>Once your free spins have been activated you must complete all game rounds within 24 hours otherwise all remaining game rounds will expire.<br>Welcome Bonus is granted only once.<br><br>The maximum winnings that will be paid out resulting from a Welcome Bonus without deposit will be 60 mBTC. Any winnings exceeding this amount will be forfeited.<br><br>All winnings from a Welcome Bonus will be credited to a player\'s bonus account balance and is subject to our standard terms and conditions, including bonus terms and wagering requirements.<br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<br><br>When wagering, funds on the main account will be used prior to the use of bonus money.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games, or any other games CANNOT be used to wager the bonus. “Playing for fun” (demo/practice mode/free play) on any game does not count towards any wagering (turnover) requirements.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>200% 1ST DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 1ST DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the first deposit.</span><br><span><br>Maximum amount for the 1ST DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 1ST DEPOSIT BONUS.<span><br><br></span></span><span>If the First Deposit is below the aforementioned minimum, the player will not receive the 1ST DEPOSIT BONUS.<br><br>1ST DEPOSIT BONUS is granted only once.<span><br><br></span></span>The First Deposit Bonus is only claimable along with a player’s first deposit. A 1ST DEPOSIT BONUS that was not redeemed along with the first deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 1ST DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>150% 2ND DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 2ND DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the second deposit.</span><span><br><br></span><span>Maximum amount for the 2ND DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 2ND DEPOSIT BONUS.<span><br><br></span></span><span>If the second deposit is below the aforementioned minimum, the player will not receive the 2ND DEPOSIT BONUS.<br><br>2ND DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 2ND DEPOSIT BONUS is only claimable along with a player’s second deposit. A 2ND DEPOSIT BONUS that was not redeemed along with the second deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 2ND DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span><span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<span><br><br></span></span>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>100% 3RD DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 3RD DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the third deposit</span><span><br><br></span><span>Maximum amount for the 3RD DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 3RD DEPOSIT BONUS.<span><br><br></span></span><span>If the third deposit is below the aforementioned minimum, the player will not receive the 3RD DEPOSIT BONUS.<br><br>3RD DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 3RD DEPOSIT BONUS is only claimable along with a player’s third deposit. A 3RD DEPOSIT BONUS that was not redeemed along with the third deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 3RD DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>GENERAL BONUS TERMS AND CONDITIONS</h3><span><br>Players may only claim the Welcome Bonus, 1st Deposit Bonus, 2nd Deposit Bonus and 2rd Deposit Bonus once.<br><br>Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked". CasinoBit.io management reserve the right to void any bonuses and/or winnings obtained by fraudulent behavior.<br><br>To claim the Welcome Bonus or any Deposit Bonus, the user must make a minimum deposit of 3 mBTC.<br><br>When accepting a deposit bonus, kindly remember that your deposit is locked with the accepted bonus. This means that you have two options, either to complete the wagering requirement of the bonus, or cancel the bonus. If you choose to cancel the bonus, the bonus and all winnings attributed to the bonus will be lost. Wagering with both the bonus money and your deposited cash will count towards the wagering requirement.<br><br>Players have 30 days from the moment of bonus activation to wager any bonus. If player does not meet the wagering requirements within the 30 days period, their bonus and any pending winnings will expire and be removed from the account.<br><br>All bonuses (unless otherwise specified) need to be wagered 33 times before the funds can be withdrawn.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Minimal risk bets on any games (i.e. betting in proportions on different outcomes in the same hand to create "action" with minimal risk) do not qualify for completing the wagering requirement. Examples of minimal risk bets include betting on red and black simultaneously in Roulette, and betting player and banker simultaneously in Baccarat. Players who are found to be adopting these practices risk of having their bonus and winnings confiscated.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has been wagered, lost or forfeited shall be removed.<br><br>Any bonus can be removed prior to any wagering conditions being met. Please contact CasinoBit.io support to learn more.<br><br>All withdrawals will be subject to an internal audit before being processed. CasinoBit.io reserves all rights to void Bonuses or any winnings for failed audits. Player hereby consents in advance to same.<br><br>If, upon such a review, it appears that a Player(s) are participating in strategies, taking advantage of any software or system bug or failure, or participating in any form of activity that CasinoBit.io, in its sole and complete discretion, deems to be abusive (\'Promotion Abuse\'), CasinoBit.io reserves the right to revoke the entitlement of such a Player to receive or benefit from the promotion (and/or withhold the pay out of the proceeds of such abuse to the Player/s in question). Only fully settled bets (i.e. bets that result in a win or loss) will be counted towards wagering.<br><br>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding the KYC (Know Your Customer), the following documents may be needed for verification: One government approved identity card (ID card, passport and driver\'s license) with a picture, as well as proof of residency such as a utility bill (which is not older than 2 months).<br><br>Players with disposable email addresses are not eligible for any bonus. If a player despite this would receive free spins, all winnings from the spins will be confiscated.<br><br>All customer offers are limited to one per person, family, household address, email address, telephone number, IP, and shared computer, e.g. public library or workplace.<br><br>If it\'s discovered that a group players are using the same betting patterns and are connected via (but not limited to) location, banking pattern or IP, CasinoBit.io management will at it\'s own discretion have the mandate to confiscate bonus winnings and/or deposit.<br><br>Kindly note that it\'s not allowed to use bonus funds purely to progress through the bonus stages and then final stages completed with cash bets when bonus funds have been released or forfeited. If such tactic is adopted, CasinoBit.io reserves the right to confiscate the winnings.<br><br>Any accounts that are identified to be linked to an account already claiming this promotion will not be eligible and any bonuses credited to both accounts will be forfeited.<br><br>Multiple accounts are not permitted. Creating more than one accounts with CasinoBit.io in order to claim any bonuses is deemed as bonus abuse and may result in confiscated funds.<br><br>In the event of any dispute, the decision of CasinoBit.io will be final.<br><br>The CasinoBit.io and Conditions as published on the Website (and updated from time to time) are in English and it is the English version of these Terms and Conditions that form the basis of these Terms and Conditions only. Translations into other languages may be made as a service and are made in good faith. However, in the event of differences between the English version and a translation, the English version has priority over any translation.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.</span>',
+  'deposit_space' => 'เงินฝาก',
+  'bonus_deposit' => 'คุณต้องการโบนัสจากการฝากครั้งต่อไปหรือไม่?',
+  'open_bonus' => 'เปิดโบนัส',
+  'credits' => 'เครดิต',
+  'add_credits' => 'เพิ่มเครดิต',
+  'minimum_deposit' => 'ฝากขั้นต่ำ 1 mBTC',
+  'send_your_bitcoins' => 'ส่ง Bitcoins ของคุณไปยังที่อยู่นี้:',
+  'transfer_wallet_address' => 'โอนบิตคอยน์ไปยังที่อยู่กระเป๋าเงินของคุณ',
+  'have_millibitcoins' => 'คุณมี :availableBalance MilliBitCoins (mBTC)',
+  'your_bitcoin_address' => 'ที่อยู่ Bitcoin ของคุณ',
+  'enter_here' => 'เข้าที่นี่',
+  'amount_mbtc' => 'จำนวน mBTC',
+  'open_history' => 'เปิดประวัติ',
+  'your_withdraws' => 'ถอนของคุณ',
+  'cancel' => 'ยกเลิก',
+  'activate' => 'กระตุ้น',
+  'change_password' => 'เปลี่ยนรหัสผ่าน',
+  'confirm_email' => 'ยืนยันอีเมล์',
+  'old_password' => 'รหัสผ่านเก่า',
+  'new_password' => 'รหัสผ่านใหม่',
+  'confirm_password' => 'ยืนยันรหัสผ่าน',
+  'confirmation' => 'การยืนยัน',
+  'update' => 'ปรับปรุง',
+  'email_confirmation' => 'อีเมล์ยืนยัน',
+  'email' => 'อีเมล์',
+  'send_mail' => 'ส่งอีเมล์',
   'language' => 'Language',
 )
 ?>
