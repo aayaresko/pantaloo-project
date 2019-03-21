@@ -21,7 +21,7 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
     <link href="/assets/css/languages.css?v=0.0.8" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.3" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -272,7 +272,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">{{ trans('casino.accept_the_terms') }}</label>
+                                <label for="agree"><input type="checkbox" name="agree" id="agree">{!! trans('casino.accept_the_terms') !!}</label>
                             </div>
                         </div>
                     </div>
@@ -356,12 +356,18 @@
 <script src="/vendors/main.js?v={{ time() }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="/vendors/new.js"></script>
+<script src="/vendors/new.js?v=1.0.1"></script>
 
 
 @yield('content')
 <div class="shadow-container"></div>
 <!-- footer start -->
+
+<div class="hidden">
+    <div id="reg-terms">
+        {!! trans('casino.terms_conditions') !!}
+    </div>
+</div>
 
 <script>
     @if(Session::has('auth'))
