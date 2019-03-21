@@ -1,0 +1,17 @@
+Application path: /Chat/php/app.php?install-wizard-2
+2019-03-21 02:00:03 touch(): Utime failed: Permission denied on line 2 in /var/www/html/public/Chat/php/controller/InstallController.php
+2019-03-21 02:00:03 touch(): Utime failed: Permission denied on line 2 in /var/www/html/public/Chat/php/controller/InstallController.php
+Application path: /Chat/php/app.php?install-wizard-2
+2019-03-21 02:01:01 [error] SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost'
+Stack trace:
+/var/www/html/public/Chat/php/service/Database.php:50 (Logger:error())
+/var/www/html/public/Chat/php/service/Database.php:68 (Database:connect())
+/var/www/html/public/Chat/php/service/Database.php:28 (Database:reconnect())
+/var/www/html/public/Chat/php/lib/Service.php:17 (Database:onRegister())
+/var/www/html/public/Chat/php/lib/ServiceContainer.php:55 (Service:setServiceContainer())
+/var/www/html/public/Chat/php/lib/Controller.php:33 (ServiceContainer:get())
+/var/www/html/public/Chat/php/controller/InstallController.php:2 (Controller:get())
+/var/www/html/public/Chat/php/app/Application.php:165 (InstallController:wizard2Action())
+/var/www/html/public/Chat/php/app/Application.php:89 (Application:runAction())
+/var/www/html/public/Chat/php/app.php:27 (Application:run())
+
