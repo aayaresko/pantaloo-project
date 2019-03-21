@@ -7479,7 +7479,7 @@ html.cropped {
   display: block;
 }
 
-.games-block .img_box:hover, .games-block:hover {
+.games-block .img_box:hover, .games-block:hover, .single-game-hover .games-block {
   -webkit-transform: translateZ(0) scale(1.07);
   transform: translateZ(0) scale(1.07);
   border-radius: 3px;
@@ -7504,7 +7504,7 @@ html.cropped {
   height: calc(100% - 42px);
 }
 
-.games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap {
+.games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap, .single-game-hover .games-block .games-block__wrap {
   text-align: center;
   position: absolute;
   background-color: rgba(131,116,214,.8);
@@ -7563,7 +7563,7 @@ html.cropped {
   height: 100%;
 }
 
-.games-block .img_box:hover .games-block__wrap .games-block__action, .games-block:hover .games-block__wrap .games-block__action {
+.games-block .img_box:hover .games-block__wrap .games-block__action, .games-block:hover .games-block__wrap .games-block__action, .single-game-hover .games-block .games-block__wrap .games-block__action {
   position: relative;
   display: block;
   width: 100%;
@@ -7587,8 +7587,8 @@ html.cropped {
   box-sizing: border-box;
 }
 
-.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name,
-.games-block .img_box:hover .games-block__buttons, .games-block:hover .games-block__buttons {
+.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name, .single-game-hover .games-block .games-block__name,
+.games-block .img_box:hover .games-block__buttons, .games-block:hover .games-block__buttons, .single-game-hover .games-block .games-block__buttons {
   display: block;
 }
 
