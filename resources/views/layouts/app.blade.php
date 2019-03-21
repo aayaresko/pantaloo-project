@@ -661,5 +661,6 @@
 {{--<noscript><div><img src="https://mc.yandex.ru/watch/43829254" style="position:absolute; left:-9999px;" alt="" /></div></noscript>--}}
 {{--<!-- /Yandex.Metrika counter -->--}}
 
+<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//casinobit.io/Chat/php/app.php?widget-init.js');</script>
 </body>
 </html>
