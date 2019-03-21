@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
                                 <h2 class="text-custom">{{$deposit_total}} mBtc</h2>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
                                 <h2 class="text-warning">{{$bonus_total}} mBtc</h2>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
                                 <h2 class="text-info">{{$revenue_total}} mBtc</h2>
@@ -50,11 +50,20 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-2 col-md-6">
                         <div class="card-box widget-user">
                             <div class="text-center">
                                 <h2 class="text-success">{{$profit_total}} mBtc</h2>
                                 <h5>PROFIT</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+                        <div class="card-box widget-user">
+                            <div class="text-center">
+                                <h2 class="text-success">{{$cpa_total}}</h2>
+                                <h5>CPA</h5>
                             </div>
                         </div>
                     </div>
@@ -81,6 +90,8 @@
                                         <tr role="row">
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User ID</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">CPA</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Pending CPA</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
@@ -96,6 +107,8 @@
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['user']->id}}</span></td>
                                                 <td>{{$stat['deposits']}}</td>
+                                                <td>{{$stat['cpa']}}</td>
+                                                <td>{{$stat['cpaPending']}}</td>
                                                 <td>{{$stat['bets']}}</td>
                                                 <td>{{$stat['bet_count']}}</td>
                                                 <td>{{$stat['avg_bet']}}</td>

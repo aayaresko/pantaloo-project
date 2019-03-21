@@ -8,6 +8,7 @@ use Validator;
 use App\Banner;
 use App\Tracker;
 use Carbon\Carbon;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
@@ -148,6 +149,9 @@ class AffiliatesController extends Controller
      */
     public function dashboard(Request $request)
     {
+        //preparation
+        $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
+
         try {
             $from = Carbon::createFromFormat("Y-m-d", $request->input('start'));
         } catch (\Exception $e) {
@@ -163,15 +167,23 @@ class AffiliatesController extends Controller
         $to->setTime(23, 59, 59);
         $from->setTime(0, 0, 0);
 
-        $transactions = collect();
-
+        //act
         $currentUser = Auth::user();
-        $users = User::where('agent_id', $currentUser->id)->get();
+        $typeDeposit = 3;
+        $users = User::select([
+            '*',
+//            DB::raw("(SELECT sum(transactions.sum) FROM transactions where user_id = users.id and " .
+//                "type = $typeDeposit and created_at >= '$from' and created_at <= '$to') as cpu"),
+        ])->where('agent_id', $currentUser->id)->get();
+
 
         $result = collect();
-
         foreach ($users as $user) {
             $stat = $user->stat($from, $to);
+            //set cpa
+            $stat['cpa'] = ($stat['deposits'] >= $cpumBtcLimit) ? 1 : 0;
+            $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
+            $stat['cpaPending'] = ($cpaPending >= 0) ? $cpaPending : 0;
 
             foreach ($stat as $key => $value)
                 $stat[$key] = round($value, 2);
@@ -213,7 +225,8 @@ class AffiliatesController extends Controller
             'deposit_total' => $result->sum('deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('profit')
+            'profit_total' => $result->sum('profit'),
+            'cpa_total' => $result->sum('cpa')
         ];
 
         return view('affiliates.dashboard', $data);

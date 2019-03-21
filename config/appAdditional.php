@@ -113,5 +113,7 @@ return [
         'enable' => 1
     ],
 
-    'getCountries' => 'https://restcountries.eu/rest/v2/all'
+    'getCountries' => 'https://restcountries.eu/rest/v2/all',
+
+    'defaultmBtcCpu' => 50
 ];
