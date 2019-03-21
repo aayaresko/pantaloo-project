@@ -21,7 +21,7 @@ return array (
   'password' => 'Password',
   'accept_the_terms' => 'I accept the <a href="#reg-terms" class="reg-terms">terms & conditions</a>',
   'email_address' => 'E-mail address',
-  'i_am_forget' => 'i am forget',
+  'i_am_forget' => 'Forgot password',
   'remember_me' => 'Remember me',
   'have_not_account' => 'i don\'t have account',
   'enter_now' => 'Enter Now',
