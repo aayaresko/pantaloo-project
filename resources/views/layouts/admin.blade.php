@@ -207,6 +207,12 @@
                                 <li><a href="{{route('admin.faq')}}">List</a></li>
                             </ul>
                         </li>
+
+
+                        <li>
+                            <a href="{{ config('app.chatUrl') }}" class="waves-effect"><i class="zmdi zmdi-email"></i> <span> Chat </span> </a>
+                        </li>
+
                     @endcan
 
                     <li>

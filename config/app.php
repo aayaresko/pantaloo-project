@@ -119,6 +119,8 @@ return [
 
     'currencyCode' => 'mBTC',
 
+    'chatUrl' => env('CHAT_URL', '/Chat'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
