@@ -7516,6 +7516,26 @@ html.cropped {
   box-shadow: 0 26px 40px rgba(0,0,0,.54);
 }
 
+.games-block:hover .games-block__wrap, .single-game-hover .games-block .games-block__wrap {
+    height: calc(100% - 55px);
+}
+
+.games-block:hover .games-block__wrap .games-block__name, .single-game-hover .games-block .games-block__wrap .games-block__name {
+    height: 55px;
+    display: flex !important;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    line-height: 55px;
+}
+
+.games-block:hover .games-block__wrap .games-block__name span, .single-game-hover .games-block .games-block__wrap .games-block__name span {
+    display: block;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+}
+
 .games-block__image {
   width: 100%;
   height: 100%;
@@ -7658,6 +7678,16 @@ html.cropped {
 
 .games-block__button_play-fun:hover {
   background-color: rgba(0,0,0,.8);
+}
+
+.games-block__name__category {
+    display: none;
+    font-size: 13px;
+    color: #aca1f8;
+}
+
+.games-block:hover .games-block__name .games-block__name__category, .single-game-hover .games-block .games-block__name .games-block__name__category {
+    display: block;
 }
 
 .slots-block .block-container .games-entry .single-game.ng-scope a:hover {
