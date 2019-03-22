@@ -215,6 +215,15 @@
 
                     @endcan
 
+                    @can('accessUserAffiliate')
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliate </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{route('admin.agents')}}">Accounts</a></li>
+                            </ul>
+                        </li>
+                    @endcan
+
                     <li>
                         <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                     </li>

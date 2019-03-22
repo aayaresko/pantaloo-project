@@ -33,4 +33,14 @@ class AdminPanelPolicy
     {
         return $user->role >= 2 and $user->role <= 10;
     }
+
+    public function accessUserAffiliate(User $user)
+    {
+        return $user->role == 3;
+    }
+
+    public function accessAdminAffiliatePublic(User $user)
+    {
+        return $user->role >= 2 and $user->role <= 3;
+    }
 }

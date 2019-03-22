@@ -236,6 +236,11 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
             Route::get('/balance', ['as' => 'admin.balance', 'uses' => 'AdminController@balance']);
         });
 
+        Route::group(['middleware' => ['can:accessAdminAffiliatePublic']], function () {
+            Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
+            Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
+        });
+
         Route::get('/', 'UsersController@index');
 
         Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);

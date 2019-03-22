@@ -8,6 +8,7 @@ use Validator;
 use App\Banner;
 use App\Tracker;
 use Carbon\Carbon;
+use App\ExtraUser;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
@@ -149,9 +150,6 @@ class AffiliatesController extends Controller
      */
     public function dashboard(Request $request)
     {
-        //preparation
-        $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
-
         try {
             $from = Carbon::createFromFormat("Y-m-d", $request->input('start'));
         } catch (\Exception $e) {
@@ -169,6 +167,14 @@ class AffiliatesController extends Controller
 
         //act
         $currentUser = Auth::user();
+        //preparation
+        $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
+
+        $extraUser = ExtraUser::where('user_id', $currentUser->id)->first();
+        if (!is_null($extraUser)) {
+            $cpumBtcLimit = $extraUser->base_line_cpa;
+        }
+
         $typeDeposit = 3;
         $users = User::select([
             '*',

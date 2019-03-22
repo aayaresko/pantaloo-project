@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Bitcoin\Service;
-use App\Currency;
-use App\Jobs\SetUserCountry;
-use App\Tracker;
 use App\User;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Validator;
+use App\Tracker;
+use App\ExtraUser;
+use App\Currency;
+use App\UserActivation;
+use App\Bitcoin\Service;
+use Helpers\GeneralHelper;
+use Illuminate\Http\Request;
+use App\Jobs\SetUserCountry;
 use App\Models\StatisticalData;
 use Illuminate\Support\Facades\Mail;
-use Helpers\GeneralHelper;
-use App\UserActivation;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Support\Facades\Cookie;
+
 
 class AuthController extends Controller
 {
@@ -151,5 +155,43 @@ class AuthController extends Controller
     public function share()
     {
 
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $credentials = $this->getCredentials($request);
+
+        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            $user = Auth::user();
+            $extraUser = ExtraUser::where('user_id', $user->id)->first();
+            if (!is_null($extraUser)) {
+                if ((int)$extraUser->block > 0) {
+                    Auth::logout();
+                    return back()->withErrors('The user is blocked');
+                }
+            }
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles && !$lockedOut) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
     }
 }

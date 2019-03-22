@@ -19,6 +19,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Affiliate</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Users</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Procent</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Base line CPA</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Next payment</th>
                                     <th>Edit</th>
                                 </tr>
@@ -31,6 +32,7 @@
                                         <td class="">{{$agent['agent']->email}}</td>
                                         <td class=""><span class="label label-success">{{$agent['users']}}</span></td>
                                         <td class="">{{$agent['agent']->commission}} %</td>
+                                        <td class="">{{$agent['agent']->base_line_cpa}}</td>
                                         <td>{{round($agent['available'], 2)}} mBtc</td>
                                         <td class="">
                                             <a class="modal_href btn btn-primary waves-effect waves-light m-r-5 m-b-10 btn-xs" data-modal_id="{{$agent['agent']->id}}">Edit</a>
@@ -47,6 +49,13 @@
                                                             {{$agent['agent']->email}}
                                                             <h4>Commission</h4>
                                                             <input type="text" name="commission" value="{{$agent['agent']->commission}}" class="form-control" style="text-align: center;">
+                                                            <br>
+                                                            <h4>Base line CPA</h4>
+                                                            <input type="text" name="base_line_cpa" value="{{$agent['agent']->base_line_cpa}}" class="form-control" style="text-align: center;">
+                                                            <br>
+                                                            <h4>Block User
+                                                                <input type="checkbox" name="block" id="block" value = 1 {{ ($agent['agent']->block > 0 ) ? 'checked="checked' : '' }}>
+                                                            </h4>
                                                             <br>
                                                             <input type="submit" name="save" value="Save" class="btn btn-success">
                                                         </form>
