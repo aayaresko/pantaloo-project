@@ -120,7 +120,7 @@ class IntegratedGamesController extends Controller
      */
     public function getGames(Request $request)
     {
-        $start = microtime(true);
+	    $start = microtime(true);
         $configIntegratedGames = config('integratedGames.common');
 
         $whereGameList = [

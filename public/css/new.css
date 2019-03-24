@@ -309,7 +309,7 @@
   padding-top: 130px;
 }
 
-#uls {
+#uls, #reg-terms {
   background-color: #fff;
   max-width: 900px;
   margin: 0 auto;
@@ -320,7 +320,7 @@
   max-height: 900px;
   overflow-x: auto;
 }
-#uls h3 {
+#uls h3, #reg-terms h3 {
   font-family: "MyriadPro-Cond", sans-serif;
   text-transform: uppercase;
   font-size: 48px;
@@ -328,20 +328,20 @@
   line-height: 35px;
   margin-bottom: 25px;
 }
-#uls .text {
+#uls .text, #reg-terms .text {
   position: relative;
   padding-left: 30px;
   font-size: 18px;
   font-family: "MyriadPro-Cond", sans-serif;
   margin-bottom: 25px;
 }
-#uls .text .num {
+#uls .text .num, #reg-terms .text .num {
   position: absolute;
   top: 0;
   left: 0;
   color: #5924a2;
 }
-#uls h4 {
+#uls h4, #reg-terms h4 {
   color: #5924a2;
   font-size: 24px;
   text-transform: uppercase;
@@ -349,12 +349,12 @@
   margin-left: -38px;
 }
 
-#uls .parent-list li {
+#uls .parent-list li, #reg-terms .parent-list li {
   position: relative;
   display: block;
 }
 
-#uls .parent-list li span {
+#uls .parent-list li span, #reg-terms .parent-list li span {
   color: #5924a2;
   left: -40px;
   position: absolute;
@@ -544,7 +544,7 @@
     bottom: 0px;
   }
 
-  #uls h3 {
+  #uls h3, #reg-terms h3 {
     font-size: 30px;
     margin-bottom: 10px;
   }
@@ -672,7 +672,7 @@
     margin-left: 17%;
   }
 
-  #uls h3 {
+  #uls h3, #reg-terms h3 {
     font-size: 24px;
     margin-bottom: 10px;
   }
@@ -685,11 +685,11 @@
     right: 20px;
   }
 
-  #uls h4 {
+  #uls h4, #reg-terms h4 {
     font-size: 20px;
   }
 
-  #uls {
+  #uls, #reg-terms {
     padding: 50px 10px;
   }
 }

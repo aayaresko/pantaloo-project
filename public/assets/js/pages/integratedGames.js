@@ -259,5 +259,12 @@ function resizeIframe()
 $(window).on('resize', resizeIframe);
 
 $('body').ready(function () {
+    $(document).on("click", function() {
+        $('.single-game-hover').removeClass('single-game-hover');
+    });
 
+    $(document).on("click", ".single-game", function (e) {
+        e.stopPropagation();
+        $(this).toggleClass('single-game-hover').siblings().removeClass('single-game-hover');
+    });
 });
