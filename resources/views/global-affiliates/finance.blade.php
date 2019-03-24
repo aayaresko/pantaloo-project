@@ -95,6 +95,12 @@
             $('#tableOrder').DataTable().destroy();
             //draw new
             options['_token'] = getToken();
+
+            let searchValue = '';
+            if (typeof globalTable === 'object') {
+                searchValue = globalTable.search();
+            }
+
             let table = $('#tableOrder').DataTable({
                 "order": [[0, "asc"]],
                 "columnDefs": [
@@ -111,6 +117,7 @@
                         console.log('error');
                     }
                 },
+                "oSearch": { "sSearch": searchValue },
                 "columns": [
                     {"data": "id"},
                     {"data": "email"},
