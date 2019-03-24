@@ -187,12 +187,12 @@ class AffiliatesController extends Controller
         foreach ($users as $user) {
             $stat = $user->stat($from, $to);
             //set cpa
+            foreach ($stat as $key => $value)
+                $stat[$key] = round($value, 2);
+
             $stat['cpa'] = ($stat['deposits'] >= $cpumBtcLimit) ? 1 : 0;
             $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
             $stat['cpaPending'] = ($cpaPending >= 0) ? $cpaPending : 0;
-
-            foreach ($stat as $key => $value)
-                $stat[$key] = round($value, 2);
 
             $stat['user'] = $user;
 

@@ -241,9 +241,18 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
             Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
         });
 
+        Route::group(['middleware' => ['can:accessUserAffiliate']], function () {
+            Route::get('/globalAffiliate/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
+            Route::get('/globalAffiliate/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+        });
+
+        Route::group(['middleware' => ['can:accessAdminTranslatorPublic']], function () {
+            Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
+        });
+
         Route::get('/', 'UsersController@index');
 
-        Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
+
         Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
         Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
     });

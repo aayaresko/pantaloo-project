@@ -35,5 +35,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('accessUserAdminPublic', AdminPanelPolicy::class . '@accessUserAdminPublic');
         Gate::define('accessUserAffiliate', AdminPanelPolicy::class . '@accessUserAffiliate');
         Gate::define('accessAdminAffiliatePublic', AdminPanelPolicy::class . '@accessAdminAffiliatePublic');
+        Gate::define('accessAdminTranslatorPublic', AdminPanelPolicy::class . '@accessAdminTranslatorPublic');
     }
 }
