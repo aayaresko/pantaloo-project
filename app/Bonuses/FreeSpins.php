@@ -272,6 +272,15 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'message' => 'The condition is not satisfied'
             ];
 
+            $now = Carbon::now();
+            if ($activeBonus->expires_at->format('U') < $now->format('U')) {
+                $this->cancel('Expired');
+                $response = [
+                    'success' => false,
+                    'message' => 'Expired'
+                ];
+            }
+
             if ($this->active_bonus->activated == 1) {
                 $wageredSum = $this->get('wagered_sum');
                 if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
@@ -348,6 +357,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $slotTypeId = config('appAdditional.slotTypeId');
+        $expired = 0;
 
         DB::beginTransaction();
         try {
@@ -356,79 +366,109 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
-            $dateStartBonus = $activeBonus->created_at;
-            //and add only slots games for this to do
-            //get only slots games
-            $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
-                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                ->whereIn('games_types_games.type_id', [$slotTypeId])
-                ->where([
-                    ['games_types_games.extra', '=', 1],
-                    ['games_list.active', '=', 1],
-                    ['games_types.active', '=', 1],
-                    ['games_categories.active', '=', 1],
-                ])
-                ->groupBy('games_types_games.game_id')->get();
-
-            $freeRoundGames = array_map(function ($item) {
-                return $item->id;
-            }, $freeRoundGames);
-
-            $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
-                'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
-                ->whereIn('game_id', $freeRoundGames)
-                ->where([
-                    ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
-                    ['games_pantallo_session.user_id', '=', $user->id],
-                ])->first();
-
-            if (!is_null($openGames)) {
-                throw new \Exception('Free rounds are already active. We cannot deactivate them.');
+            $now = Carbon::now();
+            if ($activeBonus->expires_at->format('U') < $now->format('U')) {
+                $expired = 1;
             }
 
-            //to do all sum last transaction if multi bonuses
-            $bonusAmount = -1 * $user->bonus_balance;
-            $transaction = new Transaction();
-            $transaction->bonus_sum = $bonusAmount;
-            $transaction->sum = 0;
-            $transaction->comment = $reason;
-            $transaction->type = 6;
-            $transaction->user()->associate($user);
-            $transaction->save();
+            if ($expired === 0) {
+                $dateStartBonus = $activeBonus->created_at;
+                //and add only slots games for this to do
+                //get only slots games
+                $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->where([
+                        ['games_types_games.extra', '=', 1],
+                        ['games_list.active', '=', 1],
+                        ['games_types.active', '=', 1],
+                        ['games_categories.active', '=', 1],
+                    ])
+                    ->groupBy('games_types_games.game_id')->get();
 
-            User::where('id', $user->id)->update([
-                'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
-            ]);
+                $freeRoundGames = array_map(function ($item) {
+                    return $item->id;
+                }, $freeRoundGames);
 
-            $updateUser = User::where('id', $user->id)->first();
+                $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
+                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                    ->whereIn('game_id', $freeRoundGames)
+                    ->where([
+                        ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
+                        ['games_pantallo_session.user_id', '=', $user->id],
+                    ])->first();
 
-            if ((float)$updateUser->bonus_balance === (float)0) {
-                $activeBonus->delete();
-            }
-
-            $request = new Request;
-            //add user for request - for lib
-            $request->merge(['user' => $user]);
-            $request->setUserResolver(function () use ($user) {
-                return $user;
-            });
-
-            if ((int)$activeBonus->activated === 0) {
-                $pantalloGamesSystem = new PantalloGamesSystem();
-                $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
-                if ($freeRound['success'] === false) {
-                    throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
+                if (!is_null($openGames)) {
+                    throw new \Exception('Free rounds are already active. We cannot deactivate them.');
                 }
+
+                //to do all sum last transaction if multi bonuses
+                $bonusAmount = -1 * $user->bonus_balance;
+                $transaction = new Transaction();
+                $transaction->bonus_sum = $bonusAmount;
+                $transaction->sum = 0;
+                $transaction->comment = $reason;
+                $transaction->type = 6;
+                $transaction->user()->associate($user);
+                $transaction->save();
+
+                User::where('id', $user->id)->update([
+                    'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+                ]);
+
+                $updateUser = User::where('id', $user->id)->first();
+
+                if ((float)$updateUser->bonus_balance === (float)0) {
+                    $activeBonus->delete();
+                }
+
+                $request = new Request;
+                //add user for request - for lib
+                $request->merge(['user' => $user]);
+                $request->setUserResolver(function () use ($user) {
+                    return $user;
+                });
+
+                if ((int)$activeBonus->activated === 0) {
+                    $pantalloGamesSystem = new PantalloGamesSystem();
+                    $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
+                    if ($freeRound['success'] === false) {
+                        throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
+                    }
+                }
+
+                $response = [
+                    'success' => true,
+                    'message' => 'Done'
+                ];
+            } else {
+                $bonusAmount = -1 * $user->bonus_balance;
+                $transaction = new Transaction();
+                $transaction->bonus_sum = $bonusAmount;
+                $transaction->sum = 0;
+                $transaction->comment = $reason;
+                $transaction->type = 6;
+                $transaction->user()->associate($user);
+                $transaction->save();
+
+                User::where('id', $user->id)->update([
+                    'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+                ]);
+
+                $updateUser = User::where('id', $user->id)->first();
+
+                if ((float)$updateUser->bonus_balance === (float)0) {
+                    $activeBonus->delete();
+                }
+
+                $response = [
+                    'success' => true,
+                    'message' => 'Done.Expire'
+                ];
             }
-
-            $response = [
-                'success' => true,
-                'message' => 'Done'
-            ];
-
         } catch (\Exception $e) {
             DB::rollBack();
             $errorLine = $e->getLine();

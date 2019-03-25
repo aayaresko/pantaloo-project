@@ -33,6 +33,24 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $bonuses = UserBonus::all();
+
+        foreach ($bonuses as $bonus)
+        {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            try {
+                $bonus_obj->realActivation();
+                $bonus_obj->close();
+            } catch (\Exception $e) {
+                Log::alert([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+        dd(2);
         $freeSpinWin =DB::table('transactions')->where('user_id', 157)->where([
             ['created_at', '>', '2019-03-05 16:49:03'],
             ['type', '=', 10]
