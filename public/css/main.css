@@ -7470,7 +7470,7 @@ html.cropped {
   transition: -webkit-transform .12s linear;
   transition: transform .12s linear;
   transition: transform .12s linear,-webkit-transform .12s linear;
-  height: 200px;
+  height: 212px;
   overflow: hidden;
 }
 
