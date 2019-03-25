@@ -174,6 +174,11 @@ class PantalloGamesSystem implements GamesSystem
         $debugGame = new DebugGame();
         $debugGame->start();
 
+        $rawLog = RawLog::create([
+            'type_id' => 2,
+            'request' => GeneralHelper::fullRequest(),
+        ]);
+
         DB::beginTransaction();
         try {
             //validation
@@ -541,9 +546,7 @@ class PantalloGamesSystem implements GamesSystem
         //finish debug
         $debugGameResult = $debugGame->end();
 
-        RawLog::create([
-            'type_id' => 2,
-            'request' => GeneralHelper::fullRequest(),
+        RawLog::where('id', $rawLog->id)->update([
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);
