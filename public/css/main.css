@@ -1486,7 +1486,7 @@ html.cropped {
   margin: 0 auto;
   list-style: none;
   max-width: 850px;
-  border-bottom: 1px solid #a034bc;
+  /*border-bottom: 1px solid #a034bc;*/
 }
 /* line 330, ../scss/_middle.scss */
 .mobile-container .welcome-mob .games-listing:after {
@@ -2386,8 +2386,9 @@ html.cropped {
   background-color: #000;
   text-align: center;
   overflow: auto;
-  padding-bottom: 50px;
-  min-height: calc(100vh - 169px);
+  padding-bottom: 230px;
+  /*min-height: calc(100vh - 169px);*/
+  min-height: 100vh;
 }
 /* line 999, ../scss/_middle.scss */
 .slots-block.mobile {
@@ -4344,7 +4345,17 @@ html.cropped {
   left: 0;
   width: 100%;
   z-index: 9999;
-  padding-bottom: 110px;
+  padding-bottom: 80px;
+}
+.footer.footer-static {
+    position: absolute;
+    padding-bottom: 0;
+}
+.footer.footer-home {
+    position: absolute;
+}
+.footer.footer-home .footer-copyrights {
+    display: none;
 }
 /* line 16, ../scss/_footer.scss */
 .footer.dark {
@@ -4400,14 +4411,15 @@ html.cropped {
 }
 /* line 60, ../scss/_footer.scss */
 .footer .msg-block {
-  text-align: right;
-  padding-right: 10%;
-  margin-bottom: 42px;
+  text-align: center;
+  /*padding-right: 10%;*/
+  margin-bottom: 30px;
 }
 /* line 64, ../scss/_footer.scss */
 .footer .msg-block .msg {
-  font-size: 17px;
+  font-size: 24px;
   letter-spacing: 2px;
+  font-weight: bold;
 }
 /* line 69, ../scss/_footer.scss */
 .footer .games-listing-block {
@@ -4444,6 +4456,7 @@ html.cropped {
   position: relative;
   padding-left: 57px;
   z-index: 99999999999999999;
+  font-size: 18px;
 }
 /* line 93, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a:before {
@@ -4488,6 +4501,38 @@ html.cropped {
 /* line 121, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a:hover {
   opacity: .8;
+}
+
+.footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
+    position: static;
+    text-align: center;
+    display: none;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-msg, .footer.footer-home .bitcoin-block .bitcoin-msg {
+    padding-left: 50px;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-icon, .footer.footer-home .bitcoin-block .bitcoin-icon {
+    background: url("../assets/images/bitcoin-icon.png") no-repeat scroll 0 0 transparent;
+    width: 33px;
+    height: 29px;
+    top: 0;
+    margin-top: -2px;
+    border: none;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-msg .bitcoin-icon:after, .footer.footer-home .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
+    display: none;
+}
+
+.footer-copyrights {
+    text-align: center;
+    color: #726577;
+    font-size: 16px;
+    border-top: 1px solid #38353c;
+    margin-top: 45px;
+    line-height: 60px;
 }
 
 /* new styles */
@@ -5754,6 +5799,23 @@ html.cropped {
 }
 /* Portrait tablet to landscape and desktop */
 /* Landscape phone to portrait tablet */
+@media (max-width: 1024px) {
+    body .mobile-container .welcome-mob {
+        padding-bottom: 210px !important;
+    }
+    .footer.footer-home .footer-copyrights {
+        display: block;
+    }
+    .footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
+        display: block;
+    }
+    body .slots-block {
+        padding-bottom: 150px;
+    }
+    .footer-copyrights {
+        margin-top: 25px;
+    }
+}
 @media (max-width: 991px) {
   /* line 924, ../scss/_responsive.scss */
   body .header {
@@ -7432,7 +7494,7 @@ html.cropped {
     left: 15px;
   }
   body .slots-block.mobile {
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
   }
   body .slots-block.mobile .block-heading {
     margin-top: 100px;

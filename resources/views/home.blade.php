@@ -142,9 +142,9 @@
                     @include('footer_links')
                 </ul>
             </div>
-            <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
-            </div>
+            {{--<div class="bitcoin-block">--}}
+                {{--<span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>--}}
+            {{--</div>--}}
             <div class="nav-block">
                 <div class="dots-block"></div>
             </div>
@@ -189,7 +189,10 @@
             <a href="#" class="registration-btn reg-btn"><span class="text">{{translate('Registration')}}</span></a>
         </div> -->
     </div>
-    <footer class="footer">
+    <footer class="footer footer-home">
+        <div class="bitcoin-block">
+            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
+        </div>
         <div class="msg-block">
             <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
         </div>
@@ -197,6 +200,9 @@
             <ul class="games-listing">
                 @include('footer_links')
             </ul>
+        </div>
+        <div class="footer-copyrights">
+            <p>© All rights reserved</p>
         </div>
     </footer>
 @endsection
