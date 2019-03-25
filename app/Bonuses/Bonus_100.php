@@ -33,14 +33,22 @@ class Bonus_100 extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $createdUser = $user->created_at;
-//        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
-//
-//        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
-//        $currentDate = new Carbon();
-//
-//        if ($allowedDate < $currentDate) {
-//            return false;
-//        }
+        //hide if user
+        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
+        $currentDate = new Carbon();
+
+        if ($allowedDate < $currentDate) {
+            return false;
+        }
+        //hide if user
+
+        //hide if deposit count
+        if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+            return false;
+        }
+        //hide if deposit count
 
         $countBonuses = $this->user->bonuses()
             ->where('bonus_id', static::$id)->withTrashed()->count();
@@ -84,7 +92,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('You already used this bonus');
             }
 
-            $date = Carbon::now();
+            $date = $user->created_at;
             $date->modify('+' . $this->expireDays . 'days');
 
             $bonus = new UserBonus();

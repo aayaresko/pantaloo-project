@@ -30,14 +30,16 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $createdUser = $user->created_at;
-//        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
-//
-//        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
-//        $currentDate = new Carbon();
-//
-//        if ($allowedDate < $currentDate) {
-//            return false;
-//        }
+        //hide if user 
+        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+
+        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
+        $currentDate = new Carbon();
+
+        if ($allowedDate < $currentDate) {
+            return false;
+        }
+        //hide if user 
 
         $countBonuses = $this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count();
         if ($countBonuses > 0) {

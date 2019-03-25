@@ -33,7 +33,13 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        dd($d1, $d2);
+        $user = User::where('id', 136)->first();
+        $d = $user->created_at;
+        $d1 = $d->modify("+3 days");
+        $dd = $user->created_at;
+        $d2 = $dd->modify("+100 days");
+        dd($d1, $d2);
         $bonuses = UserBonus::all();
 
         foreach ($bonuses as $bonus)
