@@ -108,7 +108,7 @@ function getListGames() {
             $(".insertGames").html(response.desktop);
             $(".insertGamesMobile").html(response.mobile);
             $('.preloaderCommon').hide();
-            resizeIframe();
+            //resizeIframe();
         }
     });
 }
