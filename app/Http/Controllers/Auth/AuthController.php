@@ -142,8 +142,12 @@ class AuthController extends Controller
 
         $activation->save();
 
-        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Confirm email');
+//        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
+//            $m->to($user->email, $user->name)->subject('Confirm email');
+//        });
+
+        Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
+            $m->to($user->email, $user->name)->subject('Email is now validated');
         });
         //to do check this
 
