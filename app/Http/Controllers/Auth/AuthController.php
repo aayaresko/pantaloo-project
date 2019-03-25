@@ -146,8 +146,9 @@ class AuthController extends Controller
 //            $m->to($user->email, $user->name)->subject('Confirm email');
 //        });
 
+        //'Email is now validated'
         Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Email is now validated');
+            $m->to($user->email, $user->name)->subject('Welcome to CasinoBit.io!');
         });
         //to do check this
 
