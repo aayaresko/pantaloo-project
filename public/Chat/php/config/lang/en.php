@@ -6,7 +6,7 @@ return array(
 
     'loadingLabel'           => 'Loading...',
     'loginError'             => 'Login error',
-    'chatHeader'             => 'Talk to us',
+    'chatHeader'             => 'Support',
     'startInfo'              => 'Please fill the following form to start the chat',
     'selectDepartment'       => 'Select department',
     'selectCancel'           => 'Cancel',
@@ -55,7 +55,7 @@ return array(
 
     // Administration side
 
-    'app.name' => 'PHP Live Chat Pro',
+    'app.name' => 'Casinobit Live Chat',
 
     'login.title' => 'Login',
     'login.intro' => 'Please login using the following form',

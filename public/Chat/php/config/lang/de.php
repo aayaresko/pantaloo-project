@@ -6,7 +6,7 @@ return array(
 
     'loadingLabel'           => 'Wird geladen...',
     'loginError'             => 'Login-Fehler',
-    'chatHeader'             => 'Können wir helfen?',
+    'chatHeader'             => 'Unterstützung',
     'startInfo'              => 'Fülle die folgenden Felder aus und beginne den Chat.',
     'selectDepartment'       => 'Abteilung wählen',
     'selectCancel'           => 'Abbrechen',
@@ -55,7 +55,7 @@ return array(
 
     // Administration side
 
-    'app.name' => 'PHP Live Chat Pro',
+    'app.name' => 'Casinobit Live Chat',
 
     'login.title' => 'Login',
     'login.intro' => 'Login mit folgendem Formular',
