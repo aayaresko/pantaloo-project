@@ -6,7 +6,7 @@ return array(
 
     'loadingLabel'           => 'Carico...',
     'loginError'             => 'Errore login',
-    'chatHeader'             => 'Scrivici',
+    'chatHeader'             => 'Supporto',
     'startInfo'              => 'Per favore, compila i seguenti campi per iniziare la chat',
     'selectDepartment'       => 'Scegli un reparto',
     'selectCancel'           => 'Annulla',
@@ -55,7 +55,7 @@ return array(
 
     // Administration side
 
-    'app.name' => 'White Hub Chat',
+    'app.name' => 'Casinobit Live Chat',
 
     'login.title' => 'Login',
     'login.intro' => 'Effettua il login utilizzando questo form',

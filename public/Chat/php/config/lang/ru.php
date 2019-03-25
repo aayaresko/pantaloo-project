@@ -6,7 +6,7 @@ return array(
 
     'loadingLabel'           => 'Загрузка...',
     'loginError'             => 'Ошибка авторизации',
-    'chatHeader'             => 'Мы онлайн!',
+    'chatHeader'             => 'Служба поддержки',
     'startInfo'              => 'Пожалуйста заполните форму для возможности общения',
     'selectDepartment'       => 'Выберите отдел',
     'selectCancel'           => 'Отменить',
@@ -55,7 +55,7 @@ return array(
 
     // Administration side
 
-    'app.name' => 'мш24.рф - LiveChat',
+    'app.name' => 'Casinobit Live Chat',
 
     'login.title' => 'Логин',
     'login.intro' => 'Пожалуйста, войдите в систему, используя следующую форму',
