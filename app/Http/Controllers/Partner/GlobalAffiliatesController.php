@@ -6,6 +6,7 @@ use DB;
 use App\User;
 use Carbon\Carbon;
 use App\Transaction;
+use App\Jobs\Withdraw;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,9 @@ class GlobalAffiliatesController extends Controller
      */
     protected $relatedFields;
 
+    /**
+     * GlobalAffiliatesController constructor.
+     */
     public function __construct()
     {
         $this->fields = [
@@ -36,6 +40,9 @@ class GlobalAffiliatesController extends Controller
         $this->relatedFields[2] = 'extra_users.base_line_cpa';
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         //get view
@@ -178,4 +185,112 @@ class GlobalAffiliatesController extends Controller
         return response()->json($jsonData);
     }
 
+    public function withdraws(Request $request)
+    {
+        //to do pagination database and to do in for usual player
+        //protection and validation for this page
+        //get transaction for affiliates
+        $frozen = Transaction::where('type', 4)
+            ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
+            ->where('withdraw_status', -1)->with('user')->get();
+
+        $pending = Transaction::where('type', 4)
+            ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
+            ->where('withdraw_status', 0)->with('user')->get();
+
+        $failed = Transaction::where('type', 4)
+            ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
+            ->where('withdraw_status', -2)->with('user')->get();
+
+        $approved = Transaction::where('type', 4)
+            ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
+            ->where('withdraw_status', 1)->with('user')->get();
+
+        $queue = Transaction::where('type', 4)
+            ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
+            ->where('withdraw_status', 3)->with('user')->get();
+
+        return view('global-affiliates.withdraw', [
+            'frozen' => $frozen,
+            'pending' => $pending,
+            'failed' => $failed,
+            'approved' => $approved,
+            'queue' => $queue
+        ]);
+    }
+
+    public function approve(Transaction $transaction)
+    {
+        $user = User::where('id', $transaction->user_id)->first();
+
+        if ((int)$user->role != 1) {
+            return redirect()->back()->withErrors(['Something is wrong']);
+        }
+
+        if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
+
+            $transaction->withdraw_status = 3;
+            $transaction->save();
+
+            $this->dispatch(new Withdraw($transaction));
+
+            return redirect()->route('pending')->with('msg', 'Transfer was complete!');
+        } else {
+            return redirect()->back()->withErrors(['Invalid type and status']);
+        }
+    }
+
+    public function freeze(Transaction $transaction)
+    {
+        $user = User::where('id', $transaction->user_id)->first();
+
+        if ((int)$user->role != 1) {
+            return redirect()->back()->withErrors(['Something is wrong']);
+        }
+
+        if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
+            $transaction->withdraw_status = -1;
+            $transaction->save();
+
+            return redirect()->route('pending')->with('msg', 'Transaction was frozen');
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
+    }
+
+    public function unfreeze(Transaction $transaction)
+    {
+        $user = User::where('id', $transaction->user_id)->first();
+
+        if ((int)$user->role != 1) {
+            return redirect()->back()->withErrors(['Something is wrong']);
+        }
+
+        if ($transaction->type == 4 and $transaction->withdraw_status == -1) {
+            $transaction->withdraw_status = 0;
+            $transaction->save();
+
+            return redirect()->route('pending')->with('msg', 'Transaction was unfrozen');
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
+    }
+
+    public function cancel(Transaction $transaction)
+    {
+        $user = User::where('id', $transaction->user_id)->first();
+
+        if ((int)$user->role != 1) {
+            return redirect()->back()->withErrors(['Something is wrong']);
+        }
+
+        if ($transaction->type == 4 and $transaction->withdraw_status == 3) {
+            $transaction->withdraw_status = 0;
+            $transaction->save();
+
+            return redirect()->route('pending')->with('msg', 'Transaction was canceled');
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
+    }
 }

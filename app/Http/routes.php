@@ -243,7 +243,13 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
 
         Route::group(['middleware' => ['can:accessUserAffiliate']], function () {
             Route::get('/globalAffiliate/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
+            Route::get('/globalAffiliate/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
             Route::get('/globalAffiliate/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+
+            Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
+            Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);
+            Route::get('/transaction/{transaction}/unfreeze', ['as' => 'globalAffiliates.unfreeze', 'uses' => 'Partner\GlobalAffiliatesController@unfreeze']);
+            Route::get('/transaction/{transaction}/cancel', ['as' => 'globalAffiliates.cancel', 'uses' => 'Partner\GlobalAffiliatesController@cancel']);
         });
 
         Route::group(['middleware' => ['can:accessAdminTranslatorPublic']], function () {

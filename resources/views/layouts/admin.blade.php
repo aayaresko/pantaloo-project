@@ -212,27 +212,21 @@
                         <li>
                             <a href="{{ config('app.chatUrl') }}" class="waves-effect"><i class="zmdi zmdi-email"></i> <span> Chat </span> </a>
                         </li>
-
                     @endcan
 
                     @can('accessUserAffiliate')
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliate </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="{{route('admin.agents')}}">Accounts</a></li>
-                            </ul>
+                        <li>
+                            <a href="{{route('admin.agents')}}" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliate </span> </a>
                         </li>
 
                         <li>
-                            <a href="{{route('translations')}}" class="waves-effect"><i class="fa fa-users"></i> <span> Withdraws </span> </a>
+                            <a href="{{route('globalAffiliates.withdraws')}}" class="waves-effect"><i class="fa fa-users"></i> <span> Withdraws </span> </a>
                         </li>
 
                         <li>
                             <a href="{{route('globalAffiliates.index')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Finance </span> </a>
                         </li>
-
                     @endcan
-
 
                     @can('accessAdminTranslatorPublic')
                         <li>
