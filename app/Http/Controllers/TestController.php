@@ -28,7 +28,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(1);
+        dd(config('appAdditional.minConfirmBtc'));
         //ini_set('max_execution_time', 600);
         $games = GamesList::all();
         foreach ($games as $game) {

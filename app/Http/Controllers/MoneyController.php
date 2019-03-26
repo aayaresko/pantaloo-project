@@ -142,9 +142,11 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+
         if(Auth::user()->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
 
-        if(Auth::user()->transactions()->deposits()->where('confirmations', '<', 6)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        if(Auth::user()->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
 
         if(Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 

@@ -117,7 +117,7 @@ return [
 
     'defaultmBtcCpu' => 50,
 
-    'minConfirmBtc' => 3,
+    'minConfirmBtc' => 2,
 
     'statusPayment' => [
         '-2' => 'failed',
