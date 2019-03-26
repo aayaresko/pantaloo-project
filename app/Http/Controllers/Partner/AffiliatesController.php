@@ -9,6 +9,7 @@ use App\Banner;
 use App\Tracker;
 use Carbon\Carbon;
 use App\ExtraUser;
+use App\Transaction;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
@@ -236,5 +237,26 @@ class AffiliatesController extends Controller
         ];
 
         return view('affiliates.dashboard', $data);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function withdraw(Request $request)
+    {
+        $statusPayment = config('appAdditional.statusPayment');
+        $user = $request->user();
+        $available = $user->getAgentAvailable();
+        //get transaction withdraw
+        //to do pagination for transactions
+        $transactions = Transaction::where('user_id', $user->id)
+            ->where('type', 4)->get();
+
+        return view('affiliates.withdraw', [
+            'available' => $available,
+            'transactions' => $transactions,
+            'statusPayment' => $statusPayment
+        ]);
     }
 }

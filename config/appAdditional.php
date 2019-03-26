@@ -115,5 +115,17 @@ return [
 
     'getCountries' => 'https://restcountries.eu/rest/v2/all',
 
-    'defaultmBtcCpu' => 50
+    'defaultmBtcCpu' => 50,
+
+    'minConfirmBtc' => 3,
+
+    'statusPayment' => [
+        '-2' => 'failed',
+        '-1' => 'frozen',
+        '0' => 'pending',
+        '1' => 'approve',
+        '2' => 'done',
+        '3' => 'queue',
+    ]
+
 ];

@@ -241,9 +241,15 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
             Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
         });
 
-        Route::group(['middleware' => ['can:accessUserAffiliate']], function () {
-            Route::get('/globalAffiliate/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
-            Route::get('/globalAffiliate/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+        Route::group(['prefix' => 'globalAffiliate', 'middleware' => ['can:accessUserAffiliate']], function () {
+            Route::get('/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
+            Route::get('/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
+            Route::get('/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+
+            Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
+            Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);
+            Route::get('/transaction/{transaction}/unfreeze', ['as' => 'globalAffiliates.unfreeze', 'uses' => 'Partner\GlobalAffiliatesController@unfreeze']);
+            Route::get('/transaction/{transaction}/cancel', ['as' => 'globalAffiliates.cancel', 'uses' => 'Partner\GlobalAffiliatesController@cancel']);
         });
 
         Route::group(['middleware' => ['can:accessAdminTranslatorPublic']], function () {
@@ -286,7 +292,8 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
 
         Route::get('/faq', ['as' => 'agent.faq', 'uses' => 'QuestionController@view']);
 
-        Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);
+        //Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);
+        Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'Partner\AffiliatesController@withdraw']);
         Route::post('/withdraw', ['as' => 'agent.withdrawDo', 'uses' => 'AgentController@withdrawDo']);
     });
 
