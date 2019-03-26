@@ -272,7 +272,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">{!! trans('casino.accept_the_terms') !!}</label>
+                                <label for="agree"><input type="checkbox" name="agree" id="agree">
+                                    {{ trans('casino.accept_the_terms_text') }}<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                </label>
                             </div>
                         </div>
                     </div>
