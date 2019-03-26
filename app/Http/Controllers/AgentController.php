@@ -165,23 +165,66 @@ class AgentController extends Controller
 
     public function withdrawDo(Request $request)
     {
+//        $this->validate($request, [
+//            'address' => 'required'
+//        ]);
+//
+//        $sum = Auth::user()->getAgentAvailable();
+//
+//        if ($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+//
+//        $service = new Service();
+//        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+//
+//        $payment = new Payment();
+//        $payment->sum = $sum;
+//        $payment->user()->associate(Auth::user());
+//        $payment->address = $request->input('address');
+//        $payment->status = 0;
+//        $payment->save();
+//
+//        return redirect()->back()->with('msg', 'Withdraw request was created');
+
         $this->validate($request, [
             'address' => 'required'
         ]);
 
-        $sum = Auth::user()->getAgentAvailable();
+        $user = Auth::user();
 
-        if ($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+        $sum = $user->getAgentAvailable();
+
+        if (Auth::user()->email_confirmed == 0) {
+            return redirect()->back()->withErrors(['E-mail confirmation required']);
+        }
+
+        if ($sum < 1) {
+            return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+        }
 
         $service = new Service();
-        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        if (!$service->isValidAddress($request->input('address'))) {
+            return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        }
 
+        //create payment
         $payment = new Payment();
         $payment->sum = $sum;
         $payment->user()->associate(Auth::user());
         $payment->address = $request->input('address');
         $payment->status = 0;
         $payment->save();
+        //end create payment
+
+        $sum = -1 * $sum;
+        $transaction = new Transaction();
+        $transaction->sum = $sum;
+        $transaction->bonus_sum = 0;
+        $transaction->user()->associate(Auth::user());
+        $transaction->type = 4;
+        $transaction->withdraw_status = 0;
+        $transaction->address = $request->input('address');
+        $transaction->save();
+        //edit access
 
         return redirect()->back()->with('msg', 'Withdraw request was created');
     }

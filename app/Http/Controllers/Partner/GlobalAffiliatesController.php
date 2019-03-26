@@ -234,7 +234,7 @@ class GlobalAffiliatesController extends Controller
 
             $this->dispatch(new Withdraw($transaction));
 
-            return redirect()->route('pending')->with('msg', 'Transfer was complete!');
+            return redirect()->route('globalAffiliates.withdraws')->with('msg', 'Transfer was complete!');
         } else {
             return redirect()->back()->withErrors(['Invalid type and status']);
         }
@@ -252,7 +252,7 @@ class GlobalAffiliatesController extends Controller
             $transaction->withdraw_status = -1;
             $transaction->save();
 
-            return redirect()->route('pending')->with('msg', 'Transaction was frozen');
+            return redirect()->route('globalAffiliates.withdraws')->with('msg', 'Transaction was frozen');
         } else {
             return redirect()->back()->withErrors(['Invalid type']);
         }
@@ -270,7 +270,7 @@ class GlobalAffiliatesController extends Controller
             $transaction->withdraw_status = 0;
             $transaction->save();
 
-            return redirect()->route('pending')->with('msg', 'Transaction was unfrozen');
+            return redirect()->route('globalAffiliates.withdraws')->with('msg', 'Transaction was unfrozen');
         } else {
             return redirect()->back()->withErrors(['Invalid type']);
         }
@@ -288,7 +288,7 @@ class GlobalAffiliatesController extends Controller
             $transaction->withdraw_status = 0;
             $transaction->save();
 
-            return redirect()->route('pending')->with('msg', 'Transaction was canceled');
+            return redirect()->route('globalAffiliates.withdraws')->with('msg', 'Transaction was canceled');
         } else {
             return redirect()->back()->withErrors(['Invalid type']);
         }
