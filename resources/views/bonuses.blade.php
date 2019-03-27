@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="cabinet-block act page-bonuses"
-         style="background: #000 url('/media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
+         style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="actions">
 
             <div class="container">

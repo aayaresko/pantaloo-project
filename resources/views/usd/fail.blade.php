@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg.png') center no-repeat; background-size: cover;">
+    <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="cabinet-entry">
             <div class="main-content">
                 <div class="credits-block">
