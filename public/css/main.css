@@ -3230,7 +3230,7 @@ html.cropped {
 .cabinet-block .cabinet-entry {
   max-width: 1060px;
   margin: 0 auto;
-  padding-bottom: 200px;
+  padding-bottom: 300px;
 }
 /* line 1648, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry:after {
@@ -4243,7 +4243,7 @@ html.cropped {
   max-width: 1000px;
   margin: 0 auto;
   padding-top: 205px;
-  padding-bottom: 200px;
+  padding-bottom: 230px;
 }
 /* line 2498, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry {

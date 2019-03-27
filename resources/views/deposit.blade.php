@@ -52,6 +52,23 @@
         </div>
     </div>
     </div>
+
+    <footer class="footer footer-static">
+        <div class="bitcoin-block">
+            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
+        </div>
+        <div class="msg-block">
+            <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
+        </div>
+        <div class="games-listing-block">
+            <ul class="games-listing">
+                @include('footer_links')
+            </ul>
+        </div>
+        <div class="footer-copyrights">
+            <p>© All rights reserved</p>
+        </div>
+    </footer>
 @endsection
 
 @section('js')
