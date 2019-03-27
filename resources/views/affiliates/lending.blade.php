@@ -265,6 +265,7 @@
                 {{--</div>--}}
                 <div class="contact-item">
                     <p><span><i class="fa fa-envelope-o"></i> Email</span> affiliates@casinobit.io</p>
+                    <p><span><i class="fa fa-skype"></i> Skype</span> live:affiliates_435</p>
                 </div>
             </div>
             <div class="col-md-12">
