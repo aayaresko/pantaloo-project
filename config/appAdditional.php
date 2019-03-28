@@ -126,6 +126,8 @@ return [
         '1' => 'approve',
         '2' => 'done',
         '3' => 'queue',
-    ]
+    ],
+
+    'cpaCurrencyCode' => 'mBTC',
 
 ];

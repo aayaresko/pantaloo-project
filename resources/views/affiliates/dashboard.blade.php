@@ -108,7 +108,7 @@
                                                 <td><span class="label label-default">{{$stat['user']->id}}</span></td>
                                                 <td>{{$stat['deposits']}}</td>
                                                 <td>{{$stat['cpa']}}</td>
-                                                <td>{{$stat['cpaPending']}}</td>
+                                                <td>{{$stat['cpaPending'] }} {{ $cpaCurrencyCode }}</td>
                                                 <td>{{$stat['bets']}}</td>
                                                 <td>{{$stat['bet_count']}}</td>
                                                 <td>{{$stat['avg_bet']}}</td>
