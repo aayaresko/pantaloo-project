@@ -170,6 +170,7 @@ class AffiliatesController extends Controller
         $currentUser = Auth::user();
         //preparation
         $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
+        $cpaCurrencyCode = config('appAdditional.cpaCurrencyCode');
 
         $extraUser = ExtraUser::where('user_id', $currentUser->id)->first();
         if (!is_null($extraUser)) {
@@ -233,7 +234,8 @@ class AffiliatesController extends Controller
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
             'profit_total' => $result->sum('profit'),
-            'cpa_total' => $result->sum('cpa')
+            'cpa_total' => $result->sum('cpa'),
+            'cpaCurrencyCode' => $cpaCurrencyCode
         ];
 
         return view('affiliates.dashboard', $data);
