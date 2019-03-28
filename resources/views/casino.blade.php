@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="live-block top-shadow">
-        <div class="bg" style="background: url('media/images/bg/blackjack.jpg') center no-repeat; background-size: cover;"></div>
+        <div class="bg" style="background: url('media/images/bg/blackjack-light.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
             <h1 class="page-title">{{translate($name)}}</h1>
             <span class="subtitle">{{translate('What you want to live play?')}}</span>
