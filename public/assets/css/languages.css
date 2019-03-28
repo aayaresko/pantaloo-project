@@ -15,8 +15,8 @@
     display: inline-block;
     vertical-align: middle;
     width: 85px;
-    margin-right: 80px;
-    margin-top: 7px;
+    margin-right: 0px;
+    margin-top: 0px;
     position: relative;
     z-index: 9999;
 }
@@ -36,6 +36,10 @@
     text-decoration: none;
     color: inherit;
 }
+.langbox > li > a {
+
+    padding: 11.5px 35px 11.5px 10px;
+}
 .langbox > li > a:after {
     content: '';
     background: url(../images/languages/carpet.png) no-repeat scroll 0 0 transparent;
@@ -43,7 +47,7 @@
     height: 6px;
     display: inline-block;
     position: absolute;
-    top: 13px;
+    top: 19px;
     right: 17px;
 }
 .langbox > li > a.is-open:after {
