@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="page-content-block"
-         style="background: #000 url('/media/images/bg/content-bg.png') center no-repeat; background-size: cover;">
+         style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="page-content-container">
             <div class="page-content-entry">
                 <div class="page-heading">
