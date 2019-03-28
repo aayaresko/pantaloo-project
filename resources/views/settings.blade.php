@@ -4,7 +4,7 @@
             <i class="bitcoin-icon"></i>
             <span class="balance"><span
                         class="value">{{ Auth::user()->getBalance() }}</span> {{ trans('casino.credits') }}</span>
-            <a class="add-credits-btn"><span class="text">{{ trans('casino.add_credits') }}</span></a>
+            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="add-credits-btn"><span class="text">{{ trans('casino.add_credits') }}</span></a>
         </div>
     @endif
     <ul class="cabinet-menu-listing">
