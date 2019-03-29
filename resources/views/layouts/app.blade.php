@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.9" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.10" rel="stylesheet">
     <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -151,6 +151,20 @@
                                 <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                             </div>
                         </li>
+                        <ul class="balancebox-dropdown">
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Real Balance</span>
+                                    <p>{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Bonus Balance</span>
+                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </ul>
                 </div>
 
@@ -423,10 +437,23 @@
         $('.langbox-dropdown').toggleClass('is-open');
         $('a', this).toggleClass('is-open');
     });
+    $('.balancebox > li').on('click', function (e) {
+        if($(e.target).attr('class') == 'usr-add-balance') return true;
+        e.stopPropagation();
+        e.preventDefault();
+        $('.balancebox-dropdown').toggleClass('is-open');
+        $('a', this).toggleClass('is-open');
+    });
     $(document).click(function(e) {
         $('.langbox')
             .not($('.langbox').has($(e.target)))
             .find('.langbox-dropdown, a')
+            .removeClass('is-open');
+    });
+    $(document).click(function(e) {
+        $('.balancebox')
+            .not($('.balancebox').has($(e.target)))
+            .find('.balancebox-dropdown, a')
             .removeClass('is-open');
     });
 
