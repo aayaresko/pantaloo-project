@@ -194,14 +194,14 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header.usr .header-right-part .usr-block {
   margin-top: -13px;
   display: block;
-  background-color: rgba(80, 19, 78, 0.5);
+  /*background-color: rgba(80, 19, 78, 0.5);*/
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
-  padding-top: 24px;
-  padding-bottom: 16px;
-  padding-left: 79px;
-  padding-right: 89px;
+  padding-top: 15px;
+  padding-bottom: 0;
+  padding-left: 36px;
+  padding-right: 0px;
   position: relative;
   text-align: left;
 }
@@ -219,14 +219,14 @@ header.header.active .promo-actions-block .promo-action-btn {
   width: 25px;
   height: 26px;
   top: 50%;
-  margin-top: -13px;
-  left: 36px;
+  margin-top: -10px;
+  left: 0;
   background: url("../media/images/sprite.png?v=1.1") 0 0;
 }
 /* line 82, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr {
   float: left;
-  margin-right: 23px;
+  margin-right: 10px;
 }
 /* line 85, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .welcome-msg {
@@ -252,6 +252,42 @@ header.header.active .promo-actions-block .promo-action-btn {
 /* line 99, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .usr-name:hover {
   opacity: .6;
+}
+.balancebox {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+}
+.usr-add-balance {
+  display: block;
+  background: url('/assets/images/icons/icon-plus.png') no-repeat scroll 0 0 transparent;
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.usr-add-balance:hover {
+  opacity: 0.7;
+}
+.balancebox-title {
+  float: left;
+}
+.balancebox-title span, .balancebox-title p {
+  display: block;
+}
+.balancebox-title span {
+  color: #bc97d5;
+  font-size: 11px;
+}
+.balancebox-title p {
+  font-size: 15px;
+  margin: 0;
+}
+.balancebox > li {
+  padding: 6px 35px 6px 10px;
+  background: #381351 !important;
+  border-radius: 40px;
 }
 /* line 104, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .deposit-block {
@@ -332,9 +368,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   top: 50%;
   margin-top: -10px;
   display: block;
-  height: 20px;
-  width: 20px;
-  background: url("../media/images/sprite.png") -282px 0px;
+  height: 26px;
+  width: 26px;
+  background: url("/assets/images/icons/icon-exit.png") 0px 0px;
   text-decoration: none;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;

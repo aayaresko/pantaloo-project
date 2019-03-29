@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.8" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.9" rel="stylesheet">
     <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -74,19 +74,19 @@
     </div>
     <div class="navigation-container">
 
-        <ul class="langbox floated">
-            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
-            <ul class="langbox-dropdown">
-                @foreach ($languages as $language)
-                    @if(app()->getLocale() == $language) @continue @endif
-                    <li>
-                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
-                            <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </ul>
+        {{--<ul class="langbox floated">--}}
+            {{--<li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>--}}
+            {{--<ul class="langbox-dropdown">--}}
+                {{--@foreach ($languages as $language)--}}
+                    {{--@if(app()->getLocale() == $language) @continue @endif--}}
+                    {{--<li>--}}
+                        {{--<a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">--}}
+                            {{--<img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--</ul>--}}
 
         {{--<div class="language-block floated">--}}
             {{--<ul class="language-listing">--}}
@@ -143,9 +143,35 @@
         @if(Auth::check())
             <div class="usr-block">
                 <div class="wlc-usr">
-                    <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>
-                    <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{Auth::user()->email}}</a>
+                    <ul class="balancebox floated">
+                        <li class="clearfix">
+                            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
+                            <div class="balancebox-title">
+                                <span>{{ trans('casino.balance') }}</span>
+                                <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+
+                {{--<div class="wlc-usr">--}}
+                    {{--<span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>--}}
+                    {{--<a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{Auth::user()->email}}</a>--}}
+                {{--</div>--}}
+
+                <ul class="langbox floated">
+                    <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+                    <ul class="langbox-dropdown">
+                        @foreach ($languages as $language)
+                            @if(app()->getLocale() == $language) @continue @endif
+                            <li>
+                                <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                    <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </ul>
                 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
             </div>
