@@ -272,15 +272,16 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 .balancebox-title {
   float: left;
+  cursor: pointer;
 }
-.balancebox-title span, .balancebox-title p {
+.balancebox-title span, .balancebox-title p, .balancebox-dropdown-title span, .balancebox-dropdown-title p {
   display: block;
 }
-.balancebox-title span {
+.balancebox-title span, .balancebox-dropdown-title span {
   color: #bc97d5;
   font-size: 11px;
 }
-.balancebox-title p {
+.balancebox-title p, .balancebox-dropdown-title p {
   font-size: 15px;
   margin: 0;
 }
@@ -288,6 +289,10 @@ header.header.active .promo-actions-block .promo-action-btn {
   padding: 6px 35px 6px 10px;
   background: #381351 !important;
   border-radius: 40px;
+  cursor: pointer;
+}
+.balancebox .balancebox-dropdown > li:first-child {
+  border-bottom: 1px solid #64459a;
 }
 /* line 104, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .deposit-block {

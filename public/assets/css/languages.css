@@ -27,6 +27,9 @@
     background: #481d66 !important;
     display: block;
 }
+.balancebox .balancebox-dropdown-title {
+    padding: 5px;
+}
 .langbox > li {
     background: #381351 !important;
 }
@@ -40,7 +43,7 @@
 
     padding: 11.5px 35px 11.5px 10px;
 }
-.langbox > li > a:after {
+.langbox > li > a:after, .balancebox > li > .balancebox-title:after {
     content: '';
     background: url(../images/languages/carpet.png) no-repeat scroll 0 0 transparent;
     width: 10px;
@@ -50,7 +53,7 @@
     top: 19px;
     right: 17px;
 }
-.langbox > li > a.is-open:after {
+.langbox > li > a.is-open:after, .balancebox > li > a.is-open:after {
     background-position: left bottom;
 }
 .langbox li:last-child {
@@ -63,7 +66,7 @@
     width: 20px;
     margin-right: 5px;
 }
-.langbox .langbox-dropdown {
+.langbox .langbox-dropdown, .balancebox .balancebox-dropdown {
     display: none;
     background: #481d66;
     border-radius: 5px;
@@ -74,10 +77,10 @@
     padding-left: 0;
     text-align: left;
 }
-.langbox .langbox-dropdown.is-open {
+.langbox .langbox-dropdown.is-open, .balancebox .balancebox-dropdown.is-open {
     display: block;
 }
-.langbox .langbox-dropdown li a {
+.langbox .langbox-dropdown li a, .balancebox .balancebox-dropdown li a {
     padding: 7px 10px 7px 10px;
     display: block;
 }
@@ -87,7 +90,7 @@
     margin-top: 1px;
     display: inline-block;
 }
-.langbox li a.active, .langbox .langbox-dropdown li a:hover {
+.langbox li a.active, .langbox .langbox-dropdown li a:hover, .balancebox li a.active, .balancebox .balancebox-dropdown li a:hover {
     -webkit-box-shadow: 0 0 0 2px #f6cc1a;
     -moz-box-shadow: 0 0 0 2px #f6cc1a;
     box-shadow: 0 0 0 2px #f6cc1a;
