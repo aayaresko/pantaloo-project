@@ -210,7 +210,7 @@
 
 
                         <li>
-                            <a href="{{ config('app.chatUrl') }}" class="waves-effect"><i class="zmdi zmdi-email"></i> <span> Chat </span> </a>
+                            <a href="{{ config('app.chatUrl') }}" class="waves-effect" target="_blank"><i class="zmdi zmdi-email"></i> <span> Chat </span> </a>
                         </li>
                     @endcan
 
