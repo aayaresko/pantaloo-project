@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
+use App\Country;
 use App\CustomField;
 use App\Models\GamesList;
 use App\Models\GamesType;
@@ -14,6 +15,7 @@ use App\Models\GamesListExtra;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
+use App\Models\RestrictionGamesCountry;
 
 /**
  * Class IntegratedGamesController
@@ -87,13 +89,14 @@ class IntegratedGamesController extends Controller
         $types = GamesType::select(['id', 'code', 'name'])->get();
         $categories = GamesCategory::select(['id', 'code', 'name'])->get();
         //to do check this in one query - i don't have time
+        $gameId = $request->id;
         $whereCompare = [
-            ['games_list.id', '=', $request->id],
+            ['games_list.id', '=', $gameId],
             ['games_types_games.extra', '=', 1]
         ];
 
         $whereCompareDefault = [
-            ['games_list.id', '=', $request->id],
+            ['games_list.id', '=', $gameId],
             ['games_types_games.extra', '=', 0]
         ];
 
@@ -124,10 +127,27 @@ class IntegratedGamesController extends Controller
         $game->type_id = explode(',', $game->type);
         $game->default_type_id = explode(',', $game->default_type_id);
 
+        //work with country - to one request
+        $countries = Country::all();
+        $markConfig = config('appAdditional.restrictionMark');
+        $allowGameCountry = RestrictionGamesCountry::where('game_id', $gameId)
+            ->where('mark', $markConfig['enable'])
+            ->lists('code_country')->toArray();
+
+        $banGameCountry = RestrictionGamesCountry::where('game_id', $gameId)
+            ->where('mark', $markConfig['disable'])
+            ->lists('code_country')->toArray();
+        $gameCountries = [
+            'allow' => $allowGameCountry,
+            'ban' => $banGameCountry,
+        ];
+
         return view('admin.integrated_game')->with([
             'game' => $game,
             'types' => $types,
+            'countries' => $countries,
             'categories' => $categories,
+            'gameCountries' => $gameCountries
         ]);
     }
 
@@ -146,6 +166,8 @@ class IntegratedGamesController extends Controller
             'name' => 'string|min:3|max:100',
             'type_id' => 'array',
             'type_id.*' => 'exists:games_types,id', // check each item in the array
+            'allowCountryGames_codes.*' => 'exists:countries,code',
+            'banCountryGames_codes.*' => 'exists:countries,code',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
@@ -187,6 +209,8 @@ class IntegratedGamesController extends Controller
             unset($updatedGame['rating']);
             unset($updatedGame['active']);
             unset($updatedGame['type_id']);
+            unset($updatedGame['banCountryGames_codes']);
+            unset($updatedGame['allowCountryGames_codes']);
 
             GamesListExtra::where('game_id', $request->id)->update($updatedGame);
 
@@ -212,6 +236,57 @@ class IntegratedGamesController extends Controller
 
                 GamesTypeGame::insert($relationType);
             }
+
+            /* work with restriction */
+            $gameId = $request->id;
+            $markConfig = config('appAdditional.restrictionMark');
+            $currentDate = new \DateTime();
+            //ALLOW
+            if ($request->has('allowCountryGames_codes')) {
+                $restrictionAllowItems = [];
+
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['enable'])->delete();
+
+                foreach ($request['allowCountryGames_codes'] as $allowCode) {
+                    array_push($restrictionAllowItems, [
+                        'game_id' => $gameId,
+                        'code_country' => $allowCode,
+                        'mark' => $markConfig['enable'],
+                        'created_at' => $currentDate,
+                        'updated_at' => $currentDate,
+                    ]);
+                }
+                RestrictionGamesCountry::insert($restrictionAllowItems);
+            } else {
+                //clear
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['enable'])->delete();
+            }
+
+            //BAN
+            if ($request->has('banCountryGames_codes')) {
+                $restrictionBanItems = [];
+
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['disable'])->delete();
+
+                foreach ($request['banCountryGames_codes'] as $banCode) {
+                    array_push($restrictionBanItems, [
+                        'game_id' => $gameId,
+                        'code_country' => $banCode,
+                        'mark' => $markConfig['disable'],
+                        'created_at' => $currentDate,
+                        'updated_at' => $currentDate,
+                    ]);
+                }
+                RestrictionGamesCountry::insert($restrictionBanItems);
+            } else {
+                //clear
+                RestrictionGamesCountry::where('game_id', $gameId)
+                    ->where('mark', $markConfig['disable'])->delete();
+            }
+            /* end work with restriction */
 
         } catch (\Exception $e) {
             DB::rollBack();

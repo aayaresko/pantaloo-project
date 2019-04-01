@@ -119,6 +119,8 @@ return [
 
     'currencyCode' => 'mBTC',
 
+    'chatUrl' => env('CHAT_URL', 'https://chat.casinobit.io'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

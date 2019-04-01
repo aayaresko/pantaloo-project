@@ -20,11 +20,17 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        if (Gate::allows('accessUserAdmin')) {
-            $users = User::orderBy('created_at', 'DESC')->get();
-            return view('admin.users', ['users' => $users]);
-        } else {
-            return redirect('admin/translations');
+        $user = $request->user();
+
+        switch ($user->role) {
+            case 2:
+                $users = User::orderBy('created_at', 'DESC')->get();
+                return view('admin.users', ['users' => $users]);
+            case 3:
+                return redirect('/admin/agent/list');
+                break;
+            case 10:
+                return redirect('/admin/translations');
         }
     }
 
@@ -104,9 +110,9 @@ class UsersController extends Controller
             $user->email_confirmed = 1;
             $user->save();
 
-            Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
-                $m->to($user->email, $user->name)->subject('Email is now validated');
-            });
+//            Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
+//                $m->to($user->email, $user->name)->subject('Email is now validated');
+//            });
 
             return redirect('/')->with('popup',
                 ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);

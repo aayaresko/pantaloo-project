@@ -57,7 +57,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <select name="type_id[]" class="js-example-basic-multiple" multiple="multiple">
+                                            <select name="type_id[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
                                                 @foreach($types as $type)
                                                     @if(in_array($type->id, $game->type_id))
                                                         <option value="{{ $type->id }}"
@@ -139,6 +140,40 @@
                                                     data-toggle="toggle"
                                                     @if($game->active == 1) checked @endif>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Allowed in countries</td>
+                                        <td>
+                                            <select name="allowCountryGames_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    @if(in_array($country->code, $gameCountries['allow']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Banned in countries</td>
+                                        <td>
+                                            <select name="banCountryGames_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    @if(in_array($country->code, $gameCountries['ban']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </td>
+
                                     </tr>
                                     <tr>
                                         <td><input type="submit" value="Save" class="btn btn-success"></td>

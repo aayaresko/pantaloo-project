@@ -108,5 +108,28 @@ return [
     'freeRounds' => [
         'available' => 50,
         'timeFreeRound' => 1209600
-    ]
+    ],
+
+    'restrictionMark' => [
+        'disable' => 0,
+        'enable' => 1
+    ],
+
+    'getCountries' => 'https://restcountries.eu/rest/v2/all',
+
+    'defaultmBtcCpu' => 50,
+
+    'minConfirmBtc' => 2,
+
+    'statusPayment' => [
+        '-2' => 'failed',
+        '-1' => 'frozen',
+        '0' => 'pending',
+        '1' => 'approve',
+        '2' => 'done',
+        '3' => 'queue',
+    ],
+
+    'cpaCurrencyCode' => 'mBTC',
+
 ];

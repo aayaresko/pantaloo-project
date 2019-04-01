@@ -194,14 +194,14 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header.usr .header-right-part .usr-block {
   margin-top: -13px;
   display: block;
-  background-color: rgba(80, 19, 78, 0.5);
+  /*background-color: rgba(80, 19, 78, 0.5);*/
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
-  padding-top: 24px;
-  padding-bottom: 16px;
-  padding-left: 79px;
-  padding-right: 89px;
+  padding-top: 15px;
+  padding-bottom: 0;
+  padding-left: 36px;
+  padding-right: 0px;
   position: relative;
   text-align: left;
 }
@@ -219,14 +219,14 @@ header.header.active .promo-actions-block .promo-action-btn {
   width: 25px;
   height: 26px;
   top: 50%;
-  margin-top: -13px;
-  left: 36px;
+  margin-top: -10px;
+  left: 0;
   background: url("../media/images/sprite.png?v=1.1") 0 0;
 }
 /* line 82, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr {
   float: left;
-  margin-right: 23px;
+  margin-right: 10px;
 }
 /* line 85, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .welcome-msg {
@@ -252,6 +252,47 @@ header.header.active .promo-actions-block .promo-action-btn {
 /* line 99, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .usr-name:hover {
   opacity: .6;
+}
+.balancebox {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+}
+.usr-add-balance {
+  display: block;
+  background: url('/assets/images/icons/icon-plus.png') no-repeat scroll 0 0 transparent;
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.usr-add-balance:hover {
+  opacity: 0.7;
+}
+.balancebox-title {
+  float: left;
+  cursor: pointer;
+}
+.balancebox-title span, .balancebox-title p, .balancebox-dropdown-title span, .balancebox-dropdown-title p {
+  display: block;
+}
+.balancebox-title span, .balancebox-dropdown-title span {
+  color: #bc97d5;
+  font-size: 11px;
+}
+.balancebox-title p, .balancebox-dropdown-title p {
+  font-size: 15px;
+  margin: 0;
+}
+.balancebox > li {
+  padding: 6px 35px 6px 10px;
+  background: #381351 !important;
+  border-radius: 40px;
+  cursor: pointer;
+}
+.balancebox .balancebox-dropdown > li:first-child {
+  border-bottom: 1px solid #64459a;
 }
 /* line 104, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .deposit-block {
@@ -332,9 +373,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   top: 50%;
   margin-top: -10px;
   display: block;
-  height: 20px;
-  width: 20px;
-  background: url("../media/images/sprite.png") -282px 0px;
+  height: 26px;
+  width: 26px;
+  background: url("/assets/images/icons/icon-exit.png") 0px 0px;
   text-decoration: none;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
@@ -765,7 +806,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   width: 100%;
   height: 100%;
   max-height: 1523px;
-  background: url("../media/images/bg/smoke-mobile.png") center no-repeat;
+  background: url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat;
 }
 /* line 499, ../scss/_navigation.scss */
 .mobile-menu .popup-entry {
@@ -1486,7 +1527,7 @@ html.cropped {
   margin: 0 auto;
   list-style: none;
   max-width: 850px;
-  border-bottom: 1px solid #a034bc;
+  /*border-bottom: 1px solid #a034bc;*/
 }
 /* line 330, ../scss/_middle.scss */
 .mobile-container .welcome-mob .games-listing:after {
@@ -1733,7 +1774,7 @@ html.cropped {
 }
 /* line 507, ../scss/_middle.scss */
 .mobile-container .free-games-block {
-  background: #000 url("../media/images/bg/smoke-mobile.png") center no-repeat;
+  background: #000 url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat;
   background-size: cover;
   padding-top: 170px;
   padding-bottom: 220px;
@@ -1806,7 +1847,7 @@ html.cropped {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999999999999999;
+  z-index: 1000000000;
   opacity: 0;
   transform: translate(0, -100%);
   -webkit-transform: translate(0, -100%);
@@ -2056,7 +2097,7 @@ html.cropped {
 .log-popup .popup-container .popup-entry .popup-form .forget-link {
   position: absolute;
   color: #fff;
-  right: -75px;
+  right: -95px;
   font-size: 19px;
   text-decoration: underline;
   top: 50%;
@@ -2386,8 +2427,9 @@ html.cropped {
   background-color: #000;
   text-align: center;
   overflow: auto;
-  padding-bottom: 50px;
-  min-height: calc(100vh - 169px);
+  padding-bottom: 230px;
+  /*min-height: calc(100vh - 169px);*/
+  min-height: 100vh;
 }
 /* line 999, ../scss/_middle.scss */
 .slots-block.mobile {
@@ -3229,7 +3271,7 @@ html.cropped {
 .cabinet-block .cabinet-entry {
   max-width: 1060px;
   margin: 0 auto;
-  padding-bottom: 200px;
+  padding-bottom: 300px;
 }
 /* line 1648, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry:after {
@@ -4242,7 +4284,7 @@ html.cropped {
   max-width: 1000px;
   margin: 0 auto;
   padding-top: 205px;
-  padding-bottom: 200px;
+  padding-bottom: 230px;
 }
 /* line 2498, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry {
@@ -4344,7 +4386,17 @@ html.cropped {
   left: 0;
   width: 100%;
   z-index: 9999;
-  padding-bottom: 110px;
+  padding-bottom: 80px;
+}
+.footer.footer-static {
+    position: absolute;
+    padding-bottom: 0;
+}
+.footer.footer-home {
+    position: absolute;
+}
+.footer.footer-home .footer-copyrights {
+    display: none;
 }
 /* line 16, ../scss/_footer.scss */
 .footer.dark {
@@ -4400,14 +4452,15 @@ html.cropped {
 }
 /* line 60, ../scss/_footer.scss */
 .footer .msg-block {
-  text-align: right;
-  padding-right: 10%;
-  margin-bottom: 42px;
+  text-align: center;
+  /*padding-right: 10%;*/
+  margin-bottom: 30px;
 }
 /* line 64, ../scss/_footer.scss */
 .footer .msg-block .msg {
-  font-size: 17px;
+  font-size: 24px;
   letter-spacing: 2px;
+  font-weight: bold;
 }
 /* line 69, ../scss/_footer.scss */
 .footer .games-listing-block {
@@ -4444,6 +4497,7 @@ html.cropped {
   position: relative;
   padding-left: 57px;
   z-index: 99999999999999999;
+  font-size: 18px;
 }
 /* line 93, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a:before {
@@ -4488,6 +4542,38 @@ html.cropped {
 /* line 121, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a:hover {
   opacity: .8;
+}
+
+.footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
+    position: static;
+    text-align: center;
+    display: none;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-msg, .footer.footer-home .bitcoin-block .bitcoin-msg {
+    padding-left: 50px;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-icon, .footer.footer-home .bitcoin-block .bitcoin-icon {
+    background: url("../assets/images/bitcoin-icon.png") no-repeat scroll 0 0 transparent;
+    width: 33px;
+    height: 29px;
+    top: 0;
+    margin-top: -2px;
+    border: none;
+}
+
+.footer.footer-static .bitcoin-block .bitcoin-msg .bitcoin-icon:after, .footer.footer-home .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
+    display: none;
+}
+
+.footer-copyrights {
+    text-align: center;
+    color: #726577;
+    font-size: 16px;
+    border-top: 1px solid #38353c;
+    margin-top: 45px;
+    line-height: 60px;
 }
 
 /* new styles */
@@ -4912,7 +4998,7 @@ html.cropped {
   }
   /* line 201, ../scss/_responsive.scss */
   body .slots-block .bg {
-    background: url("../media/images/bg/smoke-mobile.png") center no-repeat !important;
+    background: url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat !important;
     background-size: cover !important;
     max-height: 1523px;
     height: 100%;
@@ -5131,7 +5217,7 @@ html.cropped {
   }
   /* line 383, ../scss/_responsive.scss */
   body .live-block.mobile .bg {
-    background: url("../media/images/bg/smoke-mobile.png") center no-repeat !important;
+    background: url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat !important;
     background-size: cover !important;
     max-height: 1523px;
     height: 100%;
@@ -5245,7 +5331,7 @@ html.cropped {
     position: absolute;
     display: block;
     width: 100%;
-    background: url("../media/images/bg/smoke-mobile.png") center no-repeat !important;
+    background: url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat !important;
     background-size: cover !important;
     max-height: 1523px;
     height: 100%;
@@ -5754,6 +5840,23 @@ html.cropped {
 }
 /* Portrait tablet to landscape and desktop */
 /* Landscape phone to portrait tablet */
+@media (max-width: 1024px) {
+    body .mobile-container .welcome-mob {
+        padding-bottom: 210px !important;
+    }
+    .footer.footer-home .footer-copyrights {
+        display: block;
+    }
+    .footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
+        display: block;
+    }
+    body .slots-block {
+        padding-bottom: 150px;
+    }
+    .footer-copyrights {
+        margin-top: 25px;
+    }
+}
 @media (max-width: 991px) {
   /* line 924, ../scss/_responsive.scss */
   body .header {
@@ -7432,7 +7535,7 @@ html.cropped {
     left: 15px;
   }
   body .slots-block.mobile {
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
   }
   body .slots-block.mobile .block-heading {
     margin-top: 100px;
@@ -7470,7 +7573,7 @@ html.cropped {
   transition: -webkit-transform .12s linear;
   transition: transform .12s linear;
   transition: transform .12s linear,-webkit-transform .12s linear;
-  height: 200px;
+  height: 212px;
   overflow: hidden;
 }
 
@@ -7479,7 +7582,7 @@ html.cropped {
   display: block;
 }
 
-.games-block .img_box:hover, .games-block:hover {
+.games-block .img_box:hover, .games-block:hover, .single-game-hover .games-block {
   -webkit-transform: translateZ(0) scale(1.07);
   transform: translateZ(0) scale(1.07);
   border-radius: 3px;
@@ -7501,10 +7604,10 @@ html.cropped {
   left: 0;
   top: 0;
   width: 100%;
-  height: calc(100% - 42px);
+  height: calc(100% - 55px);
 }
 
-.games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap {
+.games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap, .single-game-hover .games-block .games-block__wrap {
   text-align: center;
   position: absolute;
   background-color: rgba(131,116,214,.8);
@@ -7512,8 +7615,15 @@ html.cropped {
   left: 0;
   top: 0;
   width: 100%;
-  height: calc(100% - 42px);
+  height: calc(100% - 55px);
   box-shadow: 0 26px 40px rgba(0,0,0,.54);
+}
+
+.games-block .games-block__wrap .games-block__name span {
+    display: block;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
 }
 
 .games-block__image {
@@ -7563,7 +7673,7 @@ html.cropped {
   height: 100%;
 }
 
-.games-block .img_box:hover .games-block__wrap .games-block__action, .games-block:hover .games-block__wrap .games-block__action {
+.games-block .img_box:hover .games-block__wrap .games-block__action, .games-block:hover .games-block__wrap .games-block__action, .single-game-hover .games-block .games-block__wrap .games-block__action {
   position: relative;
   display: block;
   width: 100%;
@@ -7571,12 +7681,12 @@ html.cropped {
 }
 
 .games-block__name {
-  height: 42px;
-  display: block;
+  height: 55px;
+  display: flex !important;
   color: #fff;
   text-align: center;
   overflow: hidden;
-  line-height: 42px;
+  line-height: 55px;
   width: 100%;
   position: relative;
   background-color: #8374d6;
@@ -7585,10 +7695,13 @@ html.cropped {
   padding: 0 5px;
   text-overflow: ellipsis;
   box-sizing: border-box;
+  justify-content: center;
+  justify-items: center;
+  flex-direction: column;
 }
 
-.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name,
-.games-block .img_box:hover .games-block__buttons, .games-block:hover .games-block__buttons {
+.games-block .img_box:hover .games-block__name, .games-block:hover .games-block__name, .single-game-hover .games-block .games-block__name,
+.games-block .img_box:hover .games-block__buttons, .games-block:hover .games-block__buttons, .single-game-hover .games-block .games-block__buttons {
   display: block;
 }
 
@@ -7660,6 +7773,12 @@ html.cropped {
   background-color: rgba(0,0,0,.8);
 }
 
+.games-block__name__category {
+    display: block;
+    font-size: 13px;
+    color: #aca1f8;
+}
+
 .slots-block .block-container .games-entry .single-game.ng-scope a:hover {
   opacity: 1;
 }
@@ -7716,7 +7835,7 @@ html.cropped {
 }
 
 .mainBackGround {
-  background: url(/media/images/bg/slots.jpg) top no-repeat;
+  background: url(/media/images/bg/slots-light.jpg) top no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
+use App\Country;
 use App\Models\GamesList;
 use App\Models\GamesCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
+use App\Models\RestrictionCategoriesCountry;
 
 /**
  * Class IntegratedCategoriesController
@@ -60,8 +62,27 @@ class IntegratedCategoriesController extends Controller
         View::share('typesImage', $imageConfig['mimes']);
 
         $type = GamesCategory::where('id', $request->id)->select($fields)->first();
+
+        //work with country - to one request
+        $categoryId = $request->id;
+        $countries = Country::all();
+        $markConfig = config('appAdditional.restrictionMark');
+        $allowGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
+            ->where('mark', $markConfig['enable'])
+            ->lists('code_country')->toArray();
+
+        $banGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
+            ->where('mark', $markConfig['disable'])
+            ->lists('code_country')->toArray();
+        $categoryCountries = [
+            'allow' => $allowGameCountry,
+            'ban' => $banGameCountry,
+        ];
+
         return view('admin.integrated_category')->with([
             'item' => $type,
+            'countries' => $countries,
+            'categoryCountries' => $categoryCountries
         ]);
     }
 
@@ -78,6 +99,8 @@ class IntegratedCategoriesController extends Controller
             'name' => 'string|min:3|max:100',
             'rating' => 'integer',
             'ratingItems' => 'integer',
+            'allowCountryCategories_codes.*' => 'exists:countries,code',
+            'banCountryCategories_codes.*' => 'exists:countries,code',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
         ]);
 
@@ -107,7 +130,64 @@ class IntegratedCategoriesController extends Controller
             }
 
             unset($updatedGame['_token']);
+            unset($updatedGame['banCountryCategories_codes']);
+            unset($updatedGame['allowCountryCategories_codes']);
             GamesCategory::where('id', $request->id)->update($updatedGame);
+
+            /* work with restriction */
+            $categoryId = $request->id;
+            $markConfig = config('appAdditional.restrictionMark');
+            $currentDate = new \DateTime();
+            //ALLOW
+            if ($request->has('allowCountryCategories_codes')) {
+                $restrictionAllowItems = [];
+
+                RestrictionCategoriesCountry::where('category_id', $categoryId)
+                    ->where('mark', $markConfig['enable'])->delete();
+
+                $allowCountryCategories = $request['allowCountryCategories_codes'];
+
+                foreach ($allowCountryCategories as $allowCode) {
+                    array_push($restrictionAllowItems, [
+                        'category_id' => $categoryId,
+                        'code_country' => $allowCode,
+                        'mark' => $markConfig['enable'],
+                        'created_at' => $currentDate,
+                        'updated_at' => $currentDate,
+                    ]);
+                }
+                RestrictionCategoriesCountry::insert($restrictionAllowItems);
+            } else {
+                //clear
+                RestrictionCategoriesCountry::where('category_id', $categoryId)
+                    ->where('mark', $markConfig['enable'])->delete();
+            }
+
+            //BAN
+            if ($request->has('banCountryCategories_codes')) {
+                $restrictionBanItems = [];
+
+                RestrictionCategoriesCountry::where('category_id', $categoryId)
+                    ->where('mark', $markConfig['disable'])->delete();
+
+                $banCountryCategories = $request['banCountryCategories_codes'];
+
+                foreach ($banCountryCategories as $banCode) {
+                    array_push($restrictionBanItems, [
+                        'category_id' => $categoryId,
+                        'code_country' => $banCode,
+                        'mark' => $markConfig['disable'],
+                        'created_at' => $currentDate,
+                        'updated_at' => $currentDate,
+                    ]);
+                }
+                RestrictionCategoriesCountry::insert($restrictionBanItems);
+            } else {
+                //clear
+                RestrictionCategoriesCountry::where('category_id', $categoryId)
+                    ->where('mark', $markConfig['disable'])->delete();
+            }
+            /* end work with restriction */
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors([$e->getMessage()]);

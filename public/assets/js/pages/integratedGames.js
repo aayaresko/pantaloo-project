@@ -108,7 +108,7 @@ function getListGames() {
             $(".insertGames").html(response.desktop);
             $(".insertGamesMobile").html(response.mobile);
             $('.preloaderCommon').hide();
-            resizeIframe();
+            //resizeIframe();
         }
     });
 }
@@ -186,78 +186,85 @@ $(function () {
 });
 
 
-// when you are in fullscreen, ESC and F11 may not be trigger by keydown listener.
-// so don't use it to detect exit fullscreen
-document.addEventListener('keydown', function (e) {
-    console.log('key press' + e.keyCode);
-});
-// detect enter or exit fullscreen mode
-document.addEventListener('webkitfullscreenchange', fullscreenChange);
-document.addEventListener('mozfullscreenchange', fullscreenChange);
-document.addEventListener('fullscreenchange', fullscreenChange);
-document.addEventListener('MSFullscreenChange', fullscreenChange);
-
-function fullscreen() {
-    // check if fullscreen mode is available
-    if (document.fullscreenEnabled ||
-        document.webkitFullscreenEnabled ||
-        document.mozFullScreenEnabled ||
-        document.msFullscreenEnabled) {
-
-        // which element will be fullscreen
-        var iframe = document.querySelector('.game-entry iframe');
-        // Do fullscreen
-        if (iframe.requestFullscreen) {
-            iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) {
-            iframe.webkitRequestFullscreen();
-        } else if (iframe.mozRequestFullScreen) {
-            iframe.mozRequestFullScreen();
-        } else if (iframe.msRequestFullscreen) {
-            iframe.msRequestFullscreen();
-        }
-    }
-    else {
-        document.querySelector('.error').innerHTML = 'Your browser is not supported';
-    }
-}
-
-function fullscreenChange() {
-    if (document.fullscreenEnabled ||
-        document.webkitIsFullScreen ||
-        document.mozFullScreen ||
-        document.msFullscreenElement) {
-        console.log('enter fullscreen');
-    }
-    else {
-        console.log('exit fullscreen');
-    }
-
-    var iframe = document.querySelector('iframe');
-    iframe.src = iframe.src;
-}
-
-function resizeIframe()
-{
-    var
-        w = $(window).width(),
-        h = $(window).height(),
-        gameContainer = $('.video-popup .game-entry'),
-        iframe = $('iframe', gameContainer);
-
-    if(iframe.length && w <= 812 && w > h)
-    {
-        gameContainer.addClass('is-mobile');
-        iframe.css({width: w, height: h});
-    }
-    else
-    {
-        gameContainer.removeClass('is-mobile');
-    }
-}
-
-$(window).on('resize', resizeIframe);
+// // when you are in fullscreen, ESC and F11 may not be trigger by keydown listener.
+// // so don't use it to detect exit fullscreen
+// document.addEventListener('keydown', function (e) {
+//     console.log('key press' + e.keyCode);
+// });
+// // detect enter or exit fullscreen mode
+// document.addEventListener('webkitfullscreenchange', fullscreenChange);
+// document.addEventListener('mozfullscreenchange', fullscreenChange);
+// document.addEventListener('fullscreenchange', fullscreenChange);
+// document.addEventListener('MSFullscreenChange', fullscreenChange);
+//
+// function fullscreen() {
+//     // check if fullscreen mode is available
+//     if (document.fullscreenEnabled ||
+//         document.webkitFullscreenEnabled ||
+//         document.mozFullScreenEnabled ||
+//         document.msFullscreenEnabled) {
+//
+//         // which element will be fullscreen
+//         var iframe = document.querySelector('.game-entry iframe');
+//         // Do fullscreen
+//         if (iframe.requestFullscreen) {
+//             iframe.requestFullscreen();
+//         } else if (iframe.webkitRequestFullscreen) {
+//             iframe.webkitRequestFullscreen();
+//         } else if (iframe.mozRequestFullScreen) {
+//             iframe.mozRequestFullScreen();
+//         } else if (iframe.msRequestFullscreen) {
+//             iframe.msRequestFullscreen();
+//         }
+//     }
+//     else {
+//         document.querySelector('.error').innerHTML = 'Your browser is not supported';
+//     }
+// }
+//
+// function fullscreenChange() {
+//     if (document.fullscreenEnabled ||
+//         document.webkitIsFullScreen ||
+//         document.mozFullScreen ||
+//         document.msFullscreenElement) {
+//         console.log('enter fullscreen');
+//     }
+//     else {
+//         console.log('exit fullscreen');
+//     }
+//
+//     var iframe = document.querySelector('iframe');
+//     iframe.src = iframe.src;
+// }
+//
+// function resizeIframe()
+// {
+//     var
+//         w = $(window).width(),
+//         h = $(window).height(),
+//         gameContainer = $('.video-popup .game-entry'),
+//         iframe = $('iframe', gameContainer);
+//
+//     if(iframe.length && w <= 812 && w > h)
+//     {
+//         gameContainer.addClass('is-mobile');
+//         iframe.css({width: w, height: h});
+//     }
+//     else
+//     {
+//         gameContainer.removeClass('is-mobile');
+//     }
+// }
+//
+// $(window).on('resize', resizeIframe);
 
 $('body').ready(function () {
+    $(document).on("click", function() {
+        $('.single-game-hover').removeClass('single-game-hover');
+    });
 
+    $(document).on("click", ".single-game", function (e) {
+        e.stopPropagation();
+        $(this).toggleClass('single-game-hover').siblings().removeClass('single-game-hover');
+    });
 });

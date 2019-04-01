@@ -39,9 +39,10 @@ class BitcoinResend extends Command
      */
     public function handle()
     {
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
         $service = new Service();
 
-        $transactions = Transaction::where('resend_status', 1)->where('confirmations', '>=', 6)->get();
+        $transactions = Transaction::where('resend_status', 1)->where('confirmations', '>=', $minConfirmBtc)->get();
 
         foreach ($transactions as $transaction)
         {

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Payment;
 use App\Tracker;
 use Illuminate\Http\Request;
-
+use DB;
+use App\ExtraUser;
 use App\Http\Requests;
 use App\Transaction;
 use Carbon\Carbon;
@@ -19,9 +20,8 @@ class AgentController extends Controller
 {
     public function login()
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
+        if (Auth::check()) {
+            if (Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
             else return redirect('/');
         }
 
@@ -30,20 +30,17 @@ class AgentController extends Controller
 
     public function enter(Request $request)
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
+        if (Auth::check()) {
+            if (Auth::user()->isAgent()) return redirect()->route('agent.dashboard');
             else return redirect()->url('/');
         }
 
-        if($request->input('remember_me') == 'on') $remember = true;
+        if ($request->input('remember_me') == 'on') $remember = true;
         else $remember = false;
 
-        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1], $remember))
-        {
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1], $remember)) {
             return redirect()->route('agent.dashboard');
-        }
-        else return redirect()->route('agent.login');
+        } else return redirect()->route('agent.login');
     }
 
     public function logout()
@@ -90,8 +87,7 @@ class AgentController extends Controller
 
         $trackers = collect();
 
-        foreach (Auth::user()->trackers as $tracker)
-        {
+        foreach (Auth::user()->trackers as $tracker) {
             $stat = $tracker->stat($from, $to);
 
             $stat['tracker'] = $tracker->name;
@@ -148,7 +144,7 @@ class AgentController extends Controller
 
     public function updateTracker(Tracker $tracker, Request $request)
     {
-        if($tracker->user_id != Auth::user()->id) return redirect()->back();
+        if ($tracker->user_id != Auth::user()->id) return redirect()->back();
 
         $this->validate($request, [
             'name' => 'required|max:50'
@@ -169,35 +165,87 @@ class AgentController extends Controller
 
     public function withdrawDo(Request $request)
     {
+//        $this->validate($request, [
+//            'address' => 'required'
+//        ]);
+//
+//        $sum = Auth::user()->getAgentAvailable();
+//
+//        if ($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+//
+//        $service = new Service();
+//        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+//
+//        $payment = new Payment();
+//        $payment->sum = $sum;
+//        $payment->user()->associate(Auth::user());
+//        $payment->address = $request->input('address');
+//        $payment->status = 0;
+//        $payment->save();
+//
+//        return redirect()->back()->with('msg', 'Withdraw request was created');
+
         $this->validate($request, [
             'address' => 'required'
         ]);
 
-        $sum = Auth::user()->getAgentAvailable();
+        $user = Auth::user();
 
-        if($sum < 1) return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+        $sum = $user->getAgentAvailable();
+
+        if (Auth::user()->email_confirmed == 0) {
+            return redirect()->back()->withErrors(['E-mail confirmation required']);
+        }
+
+        if ($sum < 1) {
+            return redirect()->back()->withErrors(['Minimum sum is 1 mBtc']);
+        }
 
         $service = new Service();
-        if(!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        if (!$service->isValidAddress($request->input('address'))) {
+            return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        }
 
+        //create payment
         $payment = new Payment();
         $payment->sum = $sum;
         $payment->user()->associate(Auth::user());
         $payment->address = $request->input('address');
         $payment->status = 0;
         $payment->save();
+        //end create payment
+
+        $sum = -1 * $sum;
+        $transaction = new Transaction();
+        $transaction->sum = $sum;
+        $transaction->bonus_sum = 0;
+        $transaction->user()->associate(Auth::user());
+        $transaction->type = 4;
+        $transaction->withdraw_status = 0;
+        $transaction->address = $request->input('address');
+        $transaction->save();
+        //edit access
 
         return redirect()->back()->with('msg', 'Withdraw request was created');
     }
 
     public function all()
     {
-        $agents = User::where('role', 1)->get();
+        $baseLineCpaDefault = config('appAdditional.defaultmBtcCpu');
+
+        $agents = User::leftJoin('extra_users as extra', 'users.id', '=', 'extra.user_id')
+            ->where('role', 1)
+            ->select(
+                [
+                    '*', 'users.id as id',
+                    DB::raw("IF(extra.base_line_cpa is null, $baseLineCpaDefault, extra.base_line_cpa) as base_line_cpa"),
+                    'extra.block'
+                ])
+            ->get();
 
         $result = [];
 
-        foreach ($agents as $agent)
-        {
+        foreach ($agents as $agent) {
             $item = [
                 'agent' => $agent,
                 'available' => $agent->getAgentAvailable(),
@@ -214,11 +262,33 @@ class AgentController extends Controller
 
     public function commission(User $user, Request $request)
     {
-        if($user->role != 1) return redirect()->back()->withErrors(['User not agent']);
+        if ($user->role != 1) return redirect()->back()->withErrors(['User not agent']);
 
         $this->validate($request, [
-            'commission' => 'required|numeric|min:0|max:100'
+            'commission' => 'required|numeric|min:0|max:100',
+            'base_line_cpa' => 'required|numeric',
+            'block' => 'integer',
         ]);
+
+        if ($request->has('base_line_cpa') or $request->has('block')) {
+
+            $block = ($request->has('block')) ? 1 : 0;
+            $extraUser = ExtraUser::where('user_id', $user->id)->first();
+            if (is_null($extraUser)) {
+                //add
+                ExtraUser::create([
+                    'user_id' => $user->id,
+                    'block' => $block,
+                    'base_line_cpa' => $request->base_line_cpa
+                ]);
+            } else {
+                //update value
+                ExtraUser::where('user_id', $user->id)->update([
+                    'block' => $block,
+                    'base_line_cpa' => $request->base_line_cpa
+                ]);
+            }
+        }
 
         $user->commission = $request->input('commission');
         $user->save();

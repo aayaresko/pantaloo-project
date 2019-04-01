@@ -41,9 +41,10 @@ class UpdateTransactions extends Command
     public function handle()
     {
         $service = new Service();
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
         while (true) {
-            $transactions = Transaction::where('confirmations', '<', 6)->where('type', 3)->get();
+            $transactions = Transaction::where('confirmations', '<', $minConfirmBtc)->where('type', 3)->get();
 
             foreach ($transactions as $transaction) {
 

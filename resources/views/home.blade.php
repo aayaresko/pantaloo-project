@@ -15,7 +15,7 @@
         <li data-menuanchor="block-4"><a href="#block-4">{{ trans('casino.slots') }}</a></li>
     </ul>
     <div class="sections-container">
-        <section class="section with-shadow welcome" style="background: url('media/images/bg/wellcome.jpg') center no-repeat; background-size: cover;">
+        <section class="section with-shadow welcome" style="background: url('media/images/bg/wellcome-light.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </section>
-        <section class="section with-shadow blackjack" style="background: url('media/images/bg/blackjack.jpg') center no-repeat; background-size: cover;">
+        <section class="section with-shadow blackjack" style="background: url('media/images/bg/blackjack-light.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </section>
-        <section class="section with-shadow roulette" style="background: url('media/images/bg/roulette.jpg') center no-repeat; background-size: cover;">
+        <section class="section with-shadow roulette" style="background: url('media/images/bg/roulette-light.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </section>
-        <section class="section with-shadow slots" style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;">
+        <section class="section with-shadow slots" style="background: url('media/images/bg/slots-light.jpg') center no-repeat; background-size: cover;">
             <div class="middle-shadow"></div>
             <div class="bitcoin-block">
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
@@ -142,16 +142,16 @@
                     @include('footer_links')
                 </ul>
             </div>
-            <div class="bitcoin-block">
-                <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
-            </div>
+            {{--<div class="bitcoin-block">--}}
+                {{--<span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>--}}
+            {{--</div>--}}
             <div class="nav-block">
                 <div class="dots-block"></div>
             </div>
         </section>
         <!-- <div class="games-block">
             <div class="games-slider">
-                <div class="game-entry" style="background: url('media/images/bg/blackjack.jpg') center no-repeat; background-size: cover;">
+                <div class="game-entry" style="background: url('media/images/bg/blackjack-light.jpg') center no-repeat; background-size: cover;">
                     <div class="main-title-block">
                         <span class="category-title">{{translate('Live Games')}}</span>
                         <h2 class="game-name word-split">{{translate('BlackJack')}}</h2>
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="game-entry" style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;">
+                <div class="game-entry" style="background: url('media/images/bg/slots-light.jpg') center no-repeat; background-size: cover;">
                     <div class="main-title-block">
                         <span class="category-title">{{translate('Live Games')}}</span>
                         <h2 class="game-name word-split">{{translate('Slots')}}</h2>
@@ -189,7 +189,10 @@
             <a href="#" class="registration-btn reg-btn"><span class="text">{{translate('Registration')}}</span></a>
         </div> -->
     </div>
-    <footer class="footer">
+    <footer class="footer footer-home">
+        <div class="bitcoin-block">
+            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
+        </div>
         <div class="msg-block">
             <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
         </div>
@@ -197,6 +200,9 @@
             <ul class="games-listing">
                 @include('footer_links')
             </ul>
+        </div>
+        <div class="footer-copyrights">
+            <p>© All rights reserved</p>
         </div>
     </footer>
 @endsection

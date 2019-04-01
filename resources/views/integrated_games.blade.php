@@ -87,7 +87,7 @@
 
     <div class="slots-block mobile top-shadow">
         <div class="bg"
-             style="background: url('media/images/bg/slots.jpg') center no-repeat; background-size: cover;"></div>
+             style="background: url('media/images/bg/slots-light.jpg') center no-repeat; background-size: cover;"></div>
         <div class="block-heading">
             <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
             <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
@@ -135,11 +135,20 @@
         </div>
     </div>
 
-    <footer class="footer dark">
+    <footer class="footer footer-static">
+        <div class="bitcoin-block">
+            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
+        </div>
+        <div class="msg-block">
+            <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
+        </div>
         <div class="games-listing-block">
             <ul class="games-listing">
                 @include('footer_links')
             </ul>
+        </div>
+        <div class="footer-copyrights">
+            <p>© All rights reserved</p>
         </div>
     </footer>
 @endsection

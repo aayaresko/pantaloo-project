@@ -20,8 +20,8 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.8" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.3" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.10" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -74,19 +74,19 @@
     </div>
     <div class="navigation-container">
 
-        <ul class="langbox floated">
-            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
-            <ul class="langbox-dropdown">
-                @foreach ($languages as $language)
-                    @if(app()->getLocale() == $language) @continue @endif
-                    <li>
-                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
-                            <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </ul>
+        {{--<ul class="langbox floated">--}}
+            {{--<li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>--}}
+            {{--<ul class="langbox-dropdown">--}}
+                {{--@foreach ($languages as $language)--}}
+                    {{--@if(app()->getLocale() == $language) @continue @endif--}}
+                    {{--<li>--}}
+                        {{--<a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">--}}
+                            {{--<img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--</ul>--}}
 
         {{--<div class="language-block floated">--}}
             {{--<ul class="language-listing">--}}
@@ -150,9 +150,51 @@
         @if(Auth::check())
             <div class="usr-block">
                 <div class="wlc-usr">
-                    <span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{$user->getBalance()}}</span></b> m{{$user->currency->title}} <span class="free_spins_balance" @if($user->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{$user->free_spins}}</b> spins</span></span>
-                    <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{$user->email}}</a>
+
+                    <ul class="balancebox floated">
+                        <li class="clearfix">
+                            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
+                            <div class="balancebox-title">
+                                <span>{{ trans('casino.balance') }}</span>
+                                <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                            </div>
+                        </li>
+                        <ul class="balancebox-dropdown">
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Real Balance</span>
+                                    <p>{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Bonus Balance</span>
+                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </ul>
+
                 </div>
+
+                {{--<div class="wlc-usr">--}}
+                    {{--<span class="welcome-msg">{{ trans('casino.balance') }}: <b><span class="deposit-value">{{Auth::user()->getBalance()}}</span></b> m{{Auth::user()->currency->title}} <span class="free_spins_balance" @if(Auth::user()->free_spins == 0) style="display: none;" @endif>+ <b class="spins_sum">{{Auth::user()->free_spins}}</b> spins</span></span>--}}
+                    {{--<a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-name">{{Auth::user()->email}}</a>--}}
+                {{--</div>--}}
+
+                <ul class="langbox floated">
+                    <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+                    <ul class="langbox-dropdown">
+                        @foreach ($languages as $language)
+                            @if(app()->getLocale() == $language) @continue @endif
+                            <li>
+                                <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                    <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </ul>
                 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
             </div>
@@ -279,7 +321,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">{{ trans('casino.accept_the_terms') }}</label>
+                                <label for="agree"><input type="checkbox" name="agree" id="agree">
+                                    {{ trans('casino.accept_the_terms_text') }}<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -363,12 +407,18 @@
 <script src="/vendors/main.js?v={{ time() }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="/vendors/new.js"></script>
+<script src="/vendors/new.js?v=1.0.1"></script>
 
 
 @yield('content')
 <div class="shadow-container"></div>
 <!-- footer start -->
+
+<div class="hidden">
+    <div id="reg-terms">
+        {!! trans('casino.terms_conditions') !!}
+    </div>
+</div>
 
 <script>
     @if(Session::has('auth'))
@@ -396,10 +446,23 @@
         $('.langbox-dropdown').toggleClass('is-open');
         $('a', this).toggleClass('is-open');
     });
+    $('.balancebox > li').on('click', function (e) {
+        if($(e.target).attr('class') == 'usr-add-balance') return true;
+        e.stopPropagation();
+        e.preventDefault();
+        $('.balancebox-dropdown').toggleClass('is-open');
+        $('a', this).toggleClass('is-open');
+    });
     $(document).click(function(e) {
         $('.langbox')
             .not($('.langbox').has($(e.target)))
             .find('.langbox-dropdown, a')
+            .removeClass('is-open');
+    });
+    $(document).click(function(e) {
+        $('.balancebox')
+            .not($('.balancebox').has($(e.target)))
+            .find('.balancebox-dropdown, a')
             .removeClass('is-open');
     });
 
@@ -687,5 +750,6 @@
 {{--<noscript><div><img src="https://mc.yandex.ru/watch/43829254" style="position:absolute; left:-9999px;" alt="" /></div></noscript>--}}
 {{--<!-- /Yandex.Metrika counter -->--}}
 
+<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>
 </body>
 </html>

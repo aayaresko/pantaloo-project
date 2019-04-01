@@ -172,6 +172,13 @@ class PantalloGetGames extends Command
                             'type_id' => $types[$gameType]->id,
                             'extra' => 1,
                         ]);
+
+                        //add to other new game
+                        GamesTypeGame::create([
+                            'game_id' => $game->id,
+                            'type_id' => 10011,
+                            'extra' => 1,
+                        ]);
                     } else {
                         //to update category and types
                         $gameDate = [

@@ -86,6 +86,41 @@
                                         <!-- <input type="checkbox" name="active"
                                                    @if($item->active == 1) checked @endif></td> -->
                                     </tr>
+                                    <tr>
+                                        <td>Allowed in countries</td>
+                                        <td>
+                                            <select name="allowCountryCategories_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    @if(in_array($country->code, $categoryCountries['allow']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>Banned in countries</td>
+                                        <td>
+                                            <select name="banCountryCategories_codes[]" class="js-example-basic-multiple"
+                                                    multiple="multiple">
+                                                @foreach($countries as $country)
+                                                    @if(in_array($country->code, $categoryCountries['ban']))
+                                                        <option value="{{ $country->code }}"
+                                                                selected>{{ $country->name }}</option>
+                                                    @else
+                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </td>
+
+                                    </tr>
 
 
                                     <tr>
@@ -107,5 +142,8 @@
 @endsection
 
 @section('js')
+    <script>
+        $('.js-example-basic-multiple').select2();
+    </script>
     <script src="/adminPanel/js/page/categoryAdminPanel.js?v={{time()}}"></script>
 @endsection

@@ -183,6 +183,11 @@ class PantalloGamesSystem implements GamesSystem
             'request' => GeneralHelper::fullRequest(),
         ]);
 
+        $rawLog = RawLog::create([
+            'type_id' => 2,
+            'request' => GeneralHelper::fullRequest(),
+        ]);
+
         DB::beginTransaction();
         try {
             /*preparation parameters*/

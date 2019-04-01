@@ -8,6 +8,9 @@ use Validator;
 use App\Banner;
 use App\Tracker;
 use Carbon\Carbon;
+use App\ExtraUser;
+use App\Transaction;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
@@ -163,18 +166,35 @@ class AffiliatesController extends Controller
         $to->setTime(23, 59, 59);
         $from->setTime(0, 0, 0);
 
-        $transactions = collect();
-
+        //act
         $currentUser = Auth::user();
-        $users = User::where('agent_id', $currentUser->id)->get();
+        //preparation
+        $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
+        $cpaCurrencyCode = config('appAdditional.cpaCurrencyCode');
+
+        $extraUser = ExtraUser::where('user_id', $currentUser->id)->first();
+        if (!is_null($extraUser)) {
+            $cpumBtcLimit = $extraUser->base_line_cpa;
+        }
+
+        $typeDeposit = 3;
+        $users = User::select([
+            '*',
+//            DB::raw("(SELECT sum(transactions.sum) FROM transactions where user_id = users.id and " .
+//                "type = $typeDeposit and created_at >= '$from' and created_at <= '$to') as cpu"),
+        ])->where('agent_id', $currentUser->id)->get();
+
 
         $result = collect();
-
         foreach ($users as $user) {
             $stat = $user->stat($from, $to);
-
+            //set cpa
             foreach ($stat as $key => $value)
                 $stat[$key] = round($value, 2);
+
+            $stat['cpa'] = ($stat['deposits'] >= $cpumBtcLimit) ? 1 : 0;
+            $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
+            $stat['cpaPending'] = ($cpaPending >= 0) ? $cpaPending : 0;
 
             $stat['user'] = $user;
 
@@ -213,9 +233,32 @@ class AffiliatesController extends Controller
             'deposit_total' => $result->sum('deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('profit')
+            'profit_total' => $result->sum('profit'),
+            'cpa_total' => $result->sum('cpa'),
+            'cpaCurrencyCode' => $cpaCurrencyCode
         ];
 
         return view('affiliates.dashboard', $data);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function withdraw(Request $request)
+    {
+        $statusPayment = config('appAdditional.statusPayment');
+        $user = $request->user();
+        $available = $user->getAgentAvailable();
+        //get transaction withdraw
+        //to do pagination for transactions
+        $transactions = Transaction::where('user_id', $user->id)
+            ->where('type', 4)->get();
+
+        return view('affiliates.withdraw', [
+            'available' => $available,
+            'transactions' => $transactions,
+            'statusPayment' => $statusPayment
+        ]);
     }
 }

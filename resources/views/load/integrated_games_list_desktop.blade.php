@@ -17,7 +17,10 @@
                                 {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>
-                        <span class="games-block__name ng-binding">{{ $game->name }}</span>
+                        <span class="games-block__name ng-binding">
+                            <span>{{ $game->name }}</span>
+                            <span class="games-block__name__category">{{ ucfirst($game->category) }}</span>
+                        </span>
                     </div>
                 </div>
             </div>

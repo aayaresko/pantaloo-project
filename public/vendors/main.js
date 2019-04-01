@@ -147,11 +147,12 @@ function animationInit(){
 			$('.simple-popup').removeClass('active');
 		}, 300);
 	})
-	$("body").click(function(){
-		$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-		setTimeout(function(){
-			$('.simple-popup').removeClass('active');
-		}, 300);
+	$("body").click(function(e){
+		if($(e.target).parents('.mfp-wrap').length || $(e.target).attr('class').indexOf('mfp-') == 0) return;
+        $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+        setTimeout(function(){
+            $('.simple-popup').removeClass('active');
+        }, 300);
 	});
 	$(".reg-popup .popup-container, .log-popup .popup-container, .simple-popup .popup-entry").click(function(e){
 		e.stopPropagation();

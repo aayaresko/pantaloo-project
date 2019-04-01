@@ -11,12 +11,14 @@ use Auth;
 use Log;
 use App\Bitcoin\Service;
 use App\Transaction;
+use App\Country;
 use App\User;
 use Validator;
 use App\UserBonus;
 use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
+use App\Models\GamesListExtra;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
@@ -33,6 +35,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
         $transactionHas = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
             ->where([
@@ -56,8 +59,7 @@ class TestController extends Controller
         dd($d1, $d2);
         $bonuses = UserBonus::all();
 
-        foreach ($bonuses as $bonus)
-        {
+        foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
             try {
@@ -71,7 +73,7 @@ class TestController extends Controller
             }
         }
         dd(2);
-        $freeSpinWin =DB::table('transactions')->where('user_id', 157)->where([
+        $freeSpinWin = DB::table('transactions')->where('user_id', 157)->where([
             ['created_at', '>', '2019-03-05 16:49:03'],
             ['type', '=', 10]
         ])->get();
@@ -96,13 +98,12 @@ class TestController extends Controller
         dd(2);
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
-                'headers' =>[
+                'headers' => [
                     'Authorization' => 'Bearer ' . $json->access_token,
-                    'Accept'     => 'application/json',
+                    'Accept' => 'application/json',
                 ]
             ]);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $response = $e->getResponse();
             $responseBodyAsString = $response->getBody()->getContents();
             return $responseBodyAsString;
@@ -125,8 +126,7 @@ class TestController extends Controller
 //        dd(2);
 
         $bonuses = UserBonus::all();
-        foreach ($bonuses as $bonus)
-        {
+        foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
             try {
@@ -178,7 +178,7 @@ class TestController extends Controller
             ->leftJoin('user_bonuses as bonus_not_active', function ($join) {
                 $join->on('users.id', '=', 'bonus_not_active.user_id')
                     ->where('bonus_not_active.activated', '=', 0);
-                    //->whereNull('user_bonuses.deleted_at');
+                //->whereNull('user_bonuses.deleted_at');
             })
             ->where([
                 ['users.id', '=', 136],
@@ -206,10 +206,10 @@ class TestController extends Controller
 
         $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
             ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
-            ->leftJoin('user_bonuses', function($join){
+            ->leftJoin('user_bonuses', function ($join) {
                 $join->on('users.id', '=', 'user_bonuses.user_id')
-                ->where('user_bonuses.activated', '=', 1)
-                ->whereNull('user_bonuses.deleted_at');
+                    ->where('user_bonuses.activated', '=', 1)
+                    ->whereNull('user_bonuses.deleted_at');
             })
             ->where([
                 ['users.id', '=', 155],
@@ -218,6 +218,19 @@ class TestController extends Controller
         dd($params['user']);
         dd(json_decode($params['user']->data));
         dd(2);
+
+        dd(config('appAdditional.minConfirmBtc'));
+        //ini_set('max_execution_time', 600);
+        $games = GamesList::all();
+        foreach ($games as $game) {
+            GamesListExtra::where('game_id', $game->id)->update([
+                'category_id' => $game->category_id
+            ]);
+        }
+        dd('Ok');
+        $games = GamesList::where('details', null)->get();
+        dd($games);
+
 
         $pantalloGamesSystem = new PantalloGamesSystem();
         $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
@@ -273,8 +286,6 @@ class TestController extends Controller
 
 
         dd(2);
-
-
 
 
         RawLog::create([
@@ -345,8 +356,7 @@ class TestController extends Controller
         $address = $service->getNewAddress('common');
         dd(2);
         $bonuses = UserBonus::all();
-        foreach ($bonuses as $bonus)
-        {
+        foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
             try {
@@ -394,8 +404,7 @@ class TestController extends Controller
 //        dd(2);
         $bonuses = UserBonus::all();
 
-        foreach ($bonuses as $bonus)
-        {
+        foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
             $bonus_obj->realActivation();
@@ -449,13 +458,12 @@ class TestController extends Controller
 
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
-                'headers' =>[
+                'headers' => [
                     'Authorization' => 'Bearer ' . $json->access_token,
-                    'Accept'     => 'application/json',
+                    'Accept' => 'application/json',
                 ]
             ]);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $response = $e->getResponse();
             $responseBodyAsString = $response->getBody()->getContents();
             return $responseBodyAsString;
