@@ -178,10 +178,6 @@ class PantalloGamesSystem implements GamesSystem
         $debugGame = new DebugGame();
         $debugGame->start();
         //start log
-        $rawLog = RawLog::create([
-            'type_id' => 2,
-            'request' => GeneralHelper::fullRequest(),
-        ]);
 
         $rawLog = RawLog::create([
             'type_id' => 2,
