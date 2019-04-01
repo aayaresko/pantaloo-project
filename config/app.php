@@ -119,7 +119,7 @@ return [
 
     'currencyCode' => 'mBTC',
 
-    'chatUrl' => env('CHAT_URL', '/Chat'),
+    'chatUrl' => env('CHAT_URL', 'https://chat.casinobit.io'),
 
     /*
     |--------------------------------------------------------------------------
