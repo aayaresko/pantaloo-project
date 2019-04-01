@@ -377,35 +377,35 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $dateStartBonus = $activeBonus->created_at;
                 //and add only slots games for this to do
                 //get only slots games
-                $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
-                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                    ->whereIn('games_types_games.type_id', [$slotTypeId])
-                    ->where([
-                        ['games_types_games.extra', '=', 1],
-                        ['games_list.active', '=', 1],
-                        ['games_types.active', '=', 1],
-                        ['games_categories.active', '=', 1],
-                    ])
-                    ->groupBy('games_types_games.game_id')->get();
-
-                $freeRoundGames = array_map(function ($item) {
-                    return $item->id;
-                }, $freeRoundGames);
-
-                $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
-                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
-                    ->whereIn('game_id', $freeRoundGames)
-                    ->where([
-                        ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
-                        ['games_pantallo_session.user_id', '=', $user->id],
-                    ])->first();
-
-                if (!is_null($openGames)) {
-                    throw new \Exception('Free rounds are already active. We cannot deactivate them.');
-                }
+//                $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+//                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+//                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+//                    ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+//                    ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+//                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+//                    ->where([
+//                        ['games_types_games.extra', '=', 1],
+//                        ['games_list.active', '=', 1],
+//                        ['games_types.active', '=', 1],
+//                        ['games_categories.active', '=', 1],
+//                    ])
+//                    ->groupBy('games_types_games.game_id')->get();
+//
+//                $freeRoundGames = array_map(function ($item) {
+//                    return $item->id;
+//                }, $freeRoundGames);
+//
+//                $openGames = GamesPantalloSessionGame::join('games_pantallo_session',
+//                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+//                    ->whereIn('game_id', $freeRoundGames)
+//                    ->where([
+//                        ['games_pantallo_session_game.created_at', '>', $dateStartBonus],
+//                        ['games_pantallo_session.user_id', '=', $user->id],
+//                    ])->first();
+//
+//                if (!is_null($openGames)) {
+//                    throw new \Exception('Free rounds are already active. We cannot deactivate them.');
+//                }
 
                 //to do all sum last transaction if multi bonuses
                 $bonusAmount = -1 * $user->bonus_balance;

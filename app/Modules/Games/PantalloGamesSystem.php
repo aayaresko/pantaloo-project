@@ -188,6 +188,7 @@ class PantalloGamesSystem implements GamesSystem
             /*preparation parameters*/
             //validation
             $modePlay = 0; //play real money
+            $notActiveBonus = 0;
             $bonusLimit = 0;
             $params = [];
             $slotTypeId = config('appAdditional.slotTypeId');
@@ -267,6 +268,7 @@ class PantalloGamesSystem implements GamesSystem
                 $typeBonus = $params['user']->bonus_n_active_id;
                 $bonusClass = config('bonus.classes')[$typeBonus];
                 $bonusLimit = $bonusClass::$maxAmount;
+                $notActiveBonus = 1;
                 //get bonus and set limit bonus
             }
 
@@ -425,9 +427,15 @@ class PantalloGamesSystem implements GamesSystem
 
                         //if free spins transactions
                         if (isset($requestParams['is_freeround_bet']) and $requestParams['is_freeround_bet'] == 1) {
-                            $createParams['type'] = 9;
-                            $createParams['sum'] = 0;
-                            $createParams['bonus_sum'] = 0;
+                            if ($notActiveBonus === 1) {
+                                $createParams['type'] = 9;
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = 0;
+                            } else {
+                                $createParams['type'] = 9;
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = 0;
+                            }
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -582,29 +590,35 @@ class PantalloGamesSystem implements GamesSystem
                             //sum all previous transaction and count and make yes or no
                             //this sum for win only free spins
                             //this mean for bonus active
-                            $amountFreeSpins = $amount;
+                            if ($notActiveBonus === 1) {
+                                $amountFreeSpins = $amount;
 
-                            $startDateBonus = $params['user']->start_bonus_n_active;
+                                $startDateBonus = $params['user']->start_bonus_n_active;
 
-                            $transactionSumBonus = Transaction::where([
-                                ['created_at', '>', $startDateBonus],
-                                ['type', '=', 10],
-                                ['user_id', '=', $params['user']->id]
-                            ])->sum('bonus_sum');
+                                $transactionSumBonus = Transaction::where([
+                                    ['created_at', '>', $startDateBonus],
+                                    ['type', '=', 10],
+                                    ['user_id', '=', $params['user']->id]
+                                ])->sum('bonus_sum');
 
-                            if ($bonusLimit !== 0) {
-                                $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
-                                if ($allowedBonusFunds <= $amount) {
-                                    $amountFreeSpins = $allowedBonusFunds;
-                                    if ($amountFreeSpins < 0) {
-                                        $amountFreeSpins = 0;
+                                if ($bonusLimit !== 0) {
+                                    $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
+                                    if ($allowedBonusFunds <= $amount) {
+                                        $amountFreeSpins = $allowedBonusFunds;
+                                        if ($amountFreeSpins < 0) {
+                                            $amountFreeSpins = 0;
+                                        }
                                     }
                                 }
-                            }
 
-                            $createParams['type'] = 10;
-                            $createParams['sum'] = 0;
-                            $createParams['bonus_sum'] = $amountFreeSpins;
+                                $createParams['type'] = 10;
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = $amountFreeSpins;
+                            } else {
+                                $createParams['type'] = 10;
+                                $createParams['sum'] = 0;
+                                $createParams['bonus_sum'] = 0;
+                            }
                         }
 
                         $transaction = Transaction::create($createParams);
@@ -739,7 +753,7 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['bonus_sum'] = 0;
                         }
 
-
+                        //if bonus not active already - we can to take away money
                         if ($transactionHas->action_id == 10) {
                             $createParams['type'] = 9;
                             $createParams['sum'] = 0;
