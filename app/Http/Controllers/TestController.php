@@ -33,7 +33,21 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd($d1, $d2);
+        $transactionHas = Transaction::leftJoin('games_pantallo_transactions',
+            'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+            ->where([
+                ['system_id', '=', 'gs-1006024717-9db8bb'],
+            ])->select([
+                'transactions.id',
+                'transactions.sum',
+                'transactions.bonus_sum',
+                'action_id',
+                DB::raw('(transactions.sum + transactions.bonus_sum) as real_amount'),
+                'games_pantallo_transactions.amount as amount',
+                'games_pantallo_transactions.game_id as game_id',
+                'games_pantallo_transactions.balance_after as balance_after'
+            ])->first();
+        dd($transactionHas);
         $user = User::where('id', 136)->first();
         $d = $user->created_at;
         $d1 = $d->modify("+3 days");

@@ -148,9 +148,10 @@ class Bonus_100 extends \App\Bonuses\Bonus
                             'message' => 'Close.Invalid deposit sum'
                         ];
                     } else {
+                        $bonusSum = $deposit->sum * ($this->percent / 100);
                         $transaction = new Transaction();
                         $transaction->sum = 0;
-                        $transaction->bonus_sum = $deposit->sum * ($this->percent / 100);
+                        $transaction->bonus_sum = $bonusSum;
                         $transaction->type = 5;
                         $transaction->comment = 'Bonus activation';
                         $transaction->user()->associate($user);
@@ -168,7 +169,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                         ]);
 
                         $this->set('transaction_id', $transaction->id);
-                        $this->set('wagered_sum', $this->playFactor * $deposit->sum);
+                        $this->set('wagered_sum', $this->playFactor * $bonusSum);
 
                         $activeBonus->activated = 1;
                         $activeBonus->save();

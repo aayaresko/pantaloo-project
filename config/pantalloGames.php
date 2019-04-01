@@ -18,7 +18,11 @@ return [
             'debit' => 1,
             'credit' => 2,
             'rollback' => 3,
-            'freeRound' => 4
+            'freeRound' => 4,
+        ],
+        'actionFreeRounds' => [
+            'debit' => 9,
+            'credit' => 10,
         ],
         'operation' => [
             'debit' => 'bcsub',
