@@ -225,8 +225,8 @@ Route::group(['middleware' => ['auth']], function () use ($languages) {
             Route::post('/faq/{question}/update', ['as' => 'faqUpdate', 'uses' => 'QuestionController@update']);
             Route::get('/faq/{question}/delete', ['as' => 'faqDelete', 'uses' => 'QuestionController@delete']);
 
-            Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
-            Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
+            //Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
+            //Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
 
             Route::get('/agent/payments', ['as' => 'admin.agentPayments', 'uses' => 'AgentController@payments']);
 
