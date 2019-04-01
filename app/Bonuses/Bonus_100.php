@@ -148,7 +148,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
                             'message' => 'Close.Invalid deposit sum'
                         ];
                     } else {
-                        $bonusSum = $deposit->sum * ($this->percent / 100);
+                        //TO DO round
+                        $bonusSum = GeneralHelper::formatAmount($deposit->sum * ($this->percent / 100));
+                        //check limit
+                        if ($bonusSum > self::$maxAmount) {
+                            $bonusSum = self::$maxAmount;
+                        }
+
                         $transaction = new Transaction();
                         $transaction->sum = 0;
                         $transaction->bonus_sum = $bonusSum;
@@ -156,13 +162,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
                         $transaction->comment = 'Bonus activation';
                         $transaction->user()->associate($user);
                         $transaction->save();
-
-                        //TO DO round
-                        $bonusSum = GeneralHelper::formatAmount($transaction->bonus_sum);
-                        //check limit
-                        if ($bonusSum > self::$maxAmount) {
-                            $bonusSum = self::$maxAmount;
-                        }
 
                         User::where('id', $user->id)->update([
                             'bonus_balance' => DB::raw("bonus_balance+$bonusSum"),
