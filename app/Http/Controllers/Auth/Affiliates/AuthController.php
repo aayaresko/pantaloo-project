@@ -7,6 +7,7 @@ use App\User;
 use Validator;
 use App\Tracker;
 use App\Currency;
+use App\ExtraUser;
 use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
@@ -196,6 +197,19 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($authData, $remember)) {
+            $user = Auth::user();
+            $extraUser = ExtraUser::where('user_id', $user->id)->first();
+            if (!is_null($extraUser)) {
+                if ((int)$extraUser->block > 0) {
+                    Auth::logout();
+                    return response()->json([
+                        'status' => false,
+                        'message' => [
+                            'errors' => ['The user is blocked']
+                        ]
+                    ]);
+                }
+            }
             return response()->json([
                 'status' => true,
                 'message' => [
