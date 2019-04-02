@@ -9,8 +9,15 @@ use App\Models\StatisticalData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class UserToAgent
+class UserToAgent extends CommonMiddleware
 {
+    /**
+     * @var array
+     */
+    protected $except = [
+        '/'
+    ];
+
     /**
      * Handle an incoming request.
      *
@@ -20,6 +27,11 @@ class UserToAgent
      */
     public function handle($request, Closure $next)
     {
+        $shouldPassThrough = $this->shouldPassThrough($request);
+        if ($shouldPassThrough) {
+            return $next($request);
+        }
+
         if (!Auth::check()) {
             if ($request->has('ref')) {
                 $ref = $request->input('ref');
