@@ -216,7 +216,7 @@
 
                     @can('accessUserAffiliate')
                         <li>
-                            <a href="{{route('admin.agents')}}" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliate </span> </a>
+                            <a href="{{route('admin.agents')}}" class="waves-effect"><i class="fa fa-user-secret"></i> <span> Affiliates </span> </a>
                         </li>
 
                         <li>
