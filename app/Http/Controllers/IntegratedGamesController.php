@@ -88,14 +88,16 @@ class IntegratedGamesController extends Controller
             }
         }
 
-        $orderType = ['rating', 'desc'];
+        $orderType = ['games_types.rating', 'desc'];
         if (isset($settings['types'])) {
             $orderType = $definitionSettings[$settings['types']];
+            $orderType[0] = 'games_types.' . $orderType[0];
         }
 
-        $orderCategoty = ['rating', 'desc'];
+        $orderCategoty = ['games_categories.rating', 'desc'];
         if (isset($settings['types'])) {
             $orderCategoty = $definitionSettings[$settings['categories']];
+            $orderCategoty[0] = 'games_categories.' . $orderCategoty[0];
         }
 
         $ipVisitor = GeneralHelper::visitorIpCloudFire();
@@ -112,6 +114,7 @@ class IntegratedGamesController extends Controller
             'games_types.id',
             'games_types.code',
             'games_types.name',
+            'games_types.rating',
         ];
 
         $gamesTypes = DB::table('games_types_games')->select($selectTypeFields)
@@ -147,11 +150,11 @@ class IntegratedGamesController extends Controller
             ->groupBy('games_types_games.type_id')
             ->orderBy($orderType[0], $orderType[1])->get();
 
-
         $selectCategoryFields = [
             'games_categories.id',
             'games_categories.code',
             'games_categories.name',
+            'games_categories.rating',
         ];
 
         $gamesCategories = DB::table('games_types_games')->select($selectCategoryFields)
