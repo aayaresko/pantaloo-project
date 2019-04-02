@@ -20,10 +20,9 @@ abstract class CommonMiddleware
     protected function shouldPassThrough($request)
     {
         foreach ($this->except as $except) {
-//            if ($except !== '/') {
-//                $except = trim($except, '/');
-//            }
-            $except = trim($except, '/');
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
 
             if ($request->is($except)) {
                 return true;
