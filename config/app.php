@@ -115,6 +115,7 @@ return [
     'foreignPages' => [
         'main' => env('MAIN_ADDRESS'),
         'partner' => env('PARTNER_ADDRESS'),
+        'landingPage' => env('LANDING_ADDRESS'),
     ],
 
     'currencyCode' => 'mBTC',
