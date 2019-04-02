@@ -11,7 +11,7 @@
     <title>CasinoBit Campaign</title>
     <script src="/landingPages/general/js/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="/landingPages/general/js/tweenmax.min.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="css/landing.min.css">
+    <link rel="stylesheet" href="/landingPages/general/css/landing.min.css">
     <!-- <link rel="stylesheet" href="css/main_landing.css"> -->
     <meta name="theme-color" content="#00111f">
     <meta name="msapplication-navbutton-color" content="#00111f">
@@ -28,7 +28,7 @@
         <div id="Content_Login"> <a href="{{ $mainUrl }}{{ $getParameters }}" class="btns">SIGNUP</a> <a href="{{ $mainUrl }}{{ $getParameters }}" class="btns">LOGIN</a> </div>
         <div class="Box_Sides" id="Cont_L"> <a href="{{ $mainUrl }}{{ $getParameters }}"><img src="/landingPages/general/images/logo.png" class="Logo_Casino"></a> <!--<a href="https://www.casinobit.io"><img src="images/main-characters.png" class="Characters"></a> --> </div>
         <div class="Box_Sides" id="Cont_R">
-            <a href="{{ $mainUrl }}{{ $getParameters }}"><img src="images/main-promo.png" class="Main_Promo"></a>
+            <a href="{{ $mainUrl }}{{ $getParameters }}"><img src="/landingPages/general/images/main-promo.png" class="Main_Promo"></a>
             <div class="Cont_Code">Click to start your winning journey</div>
 
             <div class="btn_promo1 Transitions" id="BtnPop1"><span>200% BONUS</span><br>ON 1ST DEPOSIT</div>
