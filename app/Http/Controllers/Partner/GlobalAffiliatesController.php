@@ -114,15 +114,15 @@ class GlobalAffiliatesController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $result = collect();
             foreach ($items as $user) {
+                $result = collect();
                 $transactionItems = Transaction::where($param['whereTransaction'])
                     ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = $user->id)")->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
-
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
+
                 $user->deposits = $result->sum('deposits');
                 $user->revenue = $result->sum('revenue');
                 $user->profit = $result->sum('profit');
@@ -148,13 +148,15 @@ class GlobalAffiliatesController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $result = collect();
             foreach ($items as $user) {
+                $result = collect();
                 $transactionItems = Transaction::where($param['whereTransaction'])
                     ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = $user->id)")->get();
+
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
+
                 $user->deposits = $result->sum('deposits');
                 $user->revenue = $result->sum('revenue');
                 $user->profit = $result->sum('profit');
