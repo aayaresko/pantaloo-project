@@ -18,9 +18,15 @@ Route::group(['middleware' => ['web']], function () {
 
     $foreignPages = config('app.foreignPages');
     $partner = parse_url($foreignPages['partner'])['host'];
+    $landingPage = parse_url($foreignPages['landingPage'])['host'];
     //$partner = 'partner.test.test';
 
     //sub-domain
+    Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
+        Route::get('/', ['as' => 'general', 'uses' => 'Landing\LandingController@main']);
+        Route::get('/general', ['as' => 'general', 'uses' => 'Landing\LandingController@generalLending']);
+    });
+
     Route::group(['domain' => $partner], function () {
 
         Route::get('/', ['as' => 'affiliates.index', 'uses' => 'Partner\AffiliatesController@index']);
