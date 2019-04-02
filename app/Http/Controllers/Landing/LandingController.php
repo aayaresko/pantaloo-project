@@ -27,7 +27,7 @@ class LandingController extends Controller
         $parsedUrl = parse_url($fullUrl);
         $getQuery = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 
-        $getParameters = '/' . $getQuery;
+        $getParameters = '/?' . $getQuery;
         $mainUrl = config('app.foreignPages.main');
         return view('landingPages.general')->with([
             'mainUrl' => $mainUrl,
