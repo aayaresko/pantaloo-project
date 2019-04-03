@@ -112,7 +112,7 @@
                                                 <td>{{ $stat['bets'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['bet_count'] }}</td>
                                                 <td>{{ $stat['avg_bet'] . ' ' . $currencyCode }}</td>
-                                                <td>{{ $stat['wins'] }}</td>
+                                                <td>{{ $stat['wins'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['revenue']  . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['bonus']  . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['profit']  . ' ' . $currencyCode}}</td>
