@@ -53,9 +53,9 @@ class User extends Authenticatable
         return round($this->balance, 5);
     }
 
-    public function getBonusBalance()
+    public function getBonusBalance($precision = 5)
     {
-        return round($this->bonus_balance, 5);
+        return round($this->bonus_balance, $precision);
     }
 
     public function getAgent()

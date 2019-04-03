@@ -249,7 +249,7 @@
                             <li>
                                 <div class="balancebox-dropdown-title">
                                     <span>Bonus Balance</span>
-                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <p>{{Auth::user()->getBonusBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                         </ul>
