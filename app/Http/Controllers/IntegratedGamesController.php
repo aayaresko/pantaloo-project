@@ -103,12 +103,19 @@ class IntegratedGamesController extends Controller
         $ipVisitor = GeneralHelper::visitorIpCloudFire();
         $codeCountry = geoip($ipVisitor)['iso_code'];
 
+
         $whereGame = [
             ['games_types_games.extra', '=', 1],
             ['games_list.active', '=', 1],
             ['games_types.active', '=', 1],
             ['games_categories.active', '=', 1],
         ];
+
+        if (Casino::isMobile()) {
+            array_push($whereGame, ['games_list.mobile', '=', 1]);
+        } else {
+            array_push($whereGame, ['games_list.mobile', '=', 0]);
+        }
 
 //        $selectTypeFields = [
 //            'games_types.id',
