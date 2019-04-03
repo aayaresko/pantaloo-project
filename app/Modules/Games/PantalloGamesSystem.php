@@ -902,7 +902,7 @@ class PantalloGamesSystem implements GamesSystem
                 $playerResponse = $playerExists;
             }
 
-            $player = $playerExists->response;
+            $player = $playerResponse->response;
 
             $validTo = new \DateTime();
             $validTo->modify("+$timeFreeRound second");
