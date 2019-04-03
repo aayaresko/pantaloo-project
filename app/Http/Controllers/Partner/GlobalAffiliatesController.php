@@ -74,6 +74,7 @@ class GlobalAffiliatesController extends Controller
         $param['endStart'] = $endStart;
 
         $param['cpumBtcLimit'] = config('appAdditional.defaultmBtcCpu');
+        $param['currencyCode'] = config('app.currencyCode');
 
         return $param;
     }
@@ -123,11 +124,11 @@ class GlobalAffiliatesController extends Controller
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
 
-                $user->deposits = $result->sum('deposits');
-                $user->revenue = $result->sum('revenue');
-                $user->profit = $result->sum('profit');
-                $user->bonus = $result->sum('bonus');
-                $user->cpa = $result->sum('cpa');
+                $user->deposits = $result->sum('deposits') . $param['currencyCode'];
+                $user->revenue = $result->sum('revenue') . $param['currencyCode'];
+                $user->profit = $result->sum('profit') . $param['currencyCode'];
+                $user->bonus = $result->sum('bonus') . $param['currencyCode'];
+                $user->cpa = $result->sum('cpa') . $param['currencyCode'];
             }
         } else {
             /* SEARCH */
@@ -157,11 +158,11 @@ class GlobalAffiliatesController extends Controller
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
 
-                $user->deposits = $result->sum('deposits');
-                $user->revenue = $result->sum('revenue');
-                $user->profit = $result->sum('profit');
-                $user->bonus = $result->sum('bonus');
-                $user->cpa = $result->sum('cpa');
+                $user->deposits = $result->sum('deposits') . $param['currencyCode'];
+                $user->revenue = $result->sum('revenue') . $param['currencyCode'];
+                $user->profit = $result->sum('profit') . $param['currencyCode'];
+                $user->bonus = $result->sum('bonus') . $param['currencyCode'];
+                $user->cpa = $result->sum('cpa') . $param['currencyCode'];
             }
 
             $countSum = User::select([DB::raw('COUNT(*) as `count`')])
