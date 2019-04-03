@@ -169,6 +169,7 @@ class AffiliatesController extends Controller
         //act
         $currentUser = Auth::user();
         //preparation
+        $currencyCode = config('app.currencyCode');
         $cpumBtcLimit = config('appAdditional.defaultmBtcCpu');
         $cpaCurrencyCode = config('appAdditional.cpaCurrencyCode');
 
@@ -235,7 +236,8 @@ class AffiliatesController extends Controller
             'revenue_total' => $result->sum('revenue'),
             'profit_total' => $result->sum('profit'),
             'cpa_total' => $result->sum('cpa'),
-            'cpaCurrencyCode' => $cpaCurrencyCode
+            'cpaCurrencyCode' => $cpaCurrencyCode,
+            'currencyCode' => $currencyCode
         ];
 
         return view('affiliates.dashboard', $data);
