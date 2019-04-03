@@ -106,16 +106,16 @@
                                         @foreach($users as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['user']->id}}</span></td>
-                                                <td>{{$stat['deposits']}}</td>
-                                                <td>{{$stat['cpa']}}</td>
-                                                <td>{{$stat['cpaPending'] }} {{ $cpaCurrencyCode }}</td>
-                                                <td>{{$stat['bets']}}</td>
-                                                <td>{{$stat['bet_count']}}</td>
-                                                <td>{{$stat['avg_bet']}}</td>
-                                                <td>{{$stat['wins']}}</td>
-                                                <td>{{$stat['revenue']}}</td>
-                                                <td>{{$stat['bonus']}}</td>
-                                                <td>{{$stat['profit']}}</td>
+                                                <td>{{ $stat['deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['cpa'] }}</td>
+                                                <td>{{ $stat['cpaPending'] }} {{ $cpaCurrencyCode }}</td>
+                                                <td>{{ $stat['bets'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bet_count'] }}</td>
+                                                <td>{{ $stat['avg_bet'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['wins'] }}</td>
+                                                <td>{{ $stat['revenue']  . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bonus']  . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['profit']  . ' ' . $currencyCode}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -140,12 +140,12 @@
                                         @foreach($trackers as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['tracker']}}</span></td>
-                                                <td>{{$stat['enters']}}</td>
-                                                <td>{{$stat['registrations']}}</td>
-                                                <td>{{$stat['deposits']}}</td>
-                                                <td>{{$stat['revenue']}}</td>
-                                                <td>{{$stat['bonus']}}</td>
-                                                <td>{{$stat['profit']}}</td>
+                                                <td>{{ $stat['enters'] }}</td>
+                                                <td>{{ $stat['registrations'] }}</td>
+                                                <td>{{ $stat['deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['revenue'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bonus'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['profit'] . ' ' . $currencyCode }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
