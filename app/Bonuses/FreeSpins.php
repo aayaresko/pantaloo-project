@@ -262,6 +262,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $conditions = 0;
 
         DB::beginTransaction();
         try {
@@ -276,6 +277,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
+                $conditions = 1;
                 $this->cancel('Expired');
                 $response = [
                     'success' => false,
@@ -283,7 +285,16 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
 
-            if ($this->active_bonus->activated == 1) {
+            if ($user->bonus_balance == 0) {
+                $conditions = 1;
+                $this->cancel('No bonus funds');
+                $response = [
+                    'success' => false,
+                    'message' => 'No bonus funds'
+                ];
+            }
+
+            if ($this->active_bonus->activated == 1 and $conditions === 0) {
                 $wageredSum = $this->get('wagered_sum');
                 if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
 

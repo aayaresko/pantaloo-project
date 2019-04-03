@@ -229,6 +229,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
+            $response = [
+                'success' => true,
+                'message' => 'The condition is not satisfied'
+            ];
+
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
                 $conditions = 1;
@@ -247,11 +252,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     'message' => 'No bonus funds'
                 ];
             }
-
-            $response = [
-                'success' => true,
-                'message' => 'The condition is not satisfied'
-            ];
 
             if ($activeBonus->activated == 1 and $conditions === 0) {
                 if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
