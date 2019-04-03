@@ -236,7 +236,7 @@
                             <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
                             <div class="balancebox-title">
                                 <span>{{ trans('casino.balance') }}</span>
-                                <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                <p>{{Auth::user()->getBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                             </div>
                         </li>
                         <ul class="balancebox-dropdown">
@@ -249,7 +249,7 @@
                             <li>
                                 <div class="balancebox-dropdown-title">
                                     <span>Bonus Balance</span>
-                                    <p>{{Auth::user()->getBonusBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                         </ul>

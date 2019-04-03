@@ -43,9 +43,9 @@ class User extends Authenticatable
         return bcdiv($this->balance, 1000, 8);
     }
 
-    public function getBalance()
+    public function getBalance($precision = 5)
     {
-        return round($this->balance + $this->bonus_balance, 5);
+        return round($this->balance + $this->bonus_balance, $precision);
     }
 
     public function getRealBalance()
@@ -53,9 +53,9 @@ class User extends Authenticatable
         return round($this->balance, 5);
     }
 
-    public function getBonusBalance($precision = 5)
+    public function getBonusBalance()
     {
-        return round($this->bonus_balance, $precision);
+        return round($this->bonus_balance, 5);
     }
 
     public function getAgent()
