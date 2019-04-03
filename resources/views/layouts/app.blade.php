@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.10" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.11" rel="stylesheet">
     <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -227,6 +227,53 @@
         @endif
 
         @if(Auth::check())
+        <div class="text-center">
+            <div class="usr-block">
+                <div class="wlc-usr">
+
+                    <ul class="balancebox floated">
+                        <li class="clearfix">
+                            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
+                            <div class="balancebox-title">
+                                <span>{{ trans('casino.balance') }}</span>
+                                <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                            </div>
+                        </li>
+                        <ul class="balancebox-dropdown">
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Real Balance</span>
+                                    <p>{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="balancebox-dropdown-title">
+                                    <span>Bonus Balance</span>
+                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </ul>
+
+                </div>
+
+                <ul class="langbox floated">
+                    <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+                    <ul class="langbox-dropdown">
+                        @foreach ($languages as $language)
+                            @if(app()->getLocale() == $language) @continue @endif
+                            <li>
+                                <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                    <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </ul>
+
+                <a href="{{url('/logout')}}" class="logout-btn"></a>
+            </div>
+        </div>
         <div class="block-heading">
             <h2 class="title">{{ trans('casino.menu') }}</h2>
         </div>
