@@ -9,6 +9,8 @@ use App\Invoice;
 use App\Jobs\Withdraw;
 use App\Transaction;
 use App\User;
+use Helpers\BonusHelper;
+use App\UserBonus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -65,6 +67,8 @@ class MoneyController extends Controller
             $sum = $transaction->sum;
             $transaction->notification = 1;
             $transaction->save();
+            //to do check active bonus
+            BonusHelper::bonusCheck($user, 0);
         } else {
             $sum = false;
         }
