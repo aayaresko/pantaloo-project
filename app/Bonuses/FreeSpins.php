@@ -375,9 +375,9 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //check to enters to games
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
+//            if ($this->hasBonusTransactions()) {
+//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+//            }
 
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
@@ -438,20 +438,20 @@ class FreeSpins extends \App\Bonuses\Bonus
                     $activeBonus->delete();
                 }
 
-//                $request = new Request;
-//                //add user for request - for lib
-//                $request->merge(['user' => $user]);
-//                $request->setUserResolver(function () use ($user) {
-//                    return $user;
-//                });
-//
-//                if ((int)$activeBonus->activated === 0) {
-//                    $pantalloGamesSystem = new PantalloGamesSystem();
-//                    $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
-//                    if ($freeRound['success'] === false) {
-//                        throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
-//                    }
-//                }
+                $request = new Request;
+                //add user for request - for lib
+                $request->merge(['user' => $user]);
+                $request->setUserResolver(function () use ($user) {
+                    return $user;
+                });
+
+                if ((int)$activeBonus->activated === 0) {
+                    $pantalloGamesSystem = new PantalloGamesSystem();
+                    $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
+                    if ($freeRound['success'] === false) {
+                        throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
+                    }
+                }
 
                 $response = [
                     'success' => true,
