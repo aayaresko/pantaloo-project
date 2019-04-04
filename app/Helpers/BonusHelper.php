@@ -2,6 +2,9 @@
 
 namespace Helpers;
 
+use Log;
+use App\UserBonus;
+
 /**
  * Class BonusHelper
  * @package Helpers
