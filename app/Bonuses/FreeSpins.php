@@ -438,20 +438,20 @@ class FreeSpins extends \App\Bonuses\Bonus
                     $activeBonus->delete();
                 }
 
-                $request = new Request;
-                //add user for request - for lib
-                $request->merge(['user' => $user]);
-                $request->setUserResolver(function () use ($user) {
-                    return $user;
-                });
-
-                if ((int)$activeBonus->activated === 0) {
-                    $pantalloGamesSystem = new PantalloGamesSystem();
-                    $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
-                    if ($freeRound['success'] === false) {
-                        throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
-                    }
-                }
+//                $request = new Request;
+//                //add user for request - for lib
+//                $request->merge(['user' => $user]);
+//                $request->setUserResolver(function () use ($user) {
+//                    return $user;
+//                });
+//
+//                if ((int)$activeBonus->activated === 0) {
+//                    $pantalloGamesSystem = new PantalloGamesSystem();
+//                    $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
+//                    if ($freeRound['success'] === false) {
+//                        throw new \Exception('Problem with provider free spins. Operation: removeFreeRounds');
+//                    }
+//                }
 
                 $response = [
                     'success' => true,
