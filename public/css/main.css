@@ -191,7 +191,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   display: none;
 }
 /* line 57, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block {
+.header.usr .header-right-part .usr-block, .mobile-menu .usr-block {
   margin-top: -13px;
   display: block;
   /*background-color: rgba(80, 19, 78, 0.5);*/
@@ -205,14 +205,18 @@ header.header.active .promo-actions-block .promo-action-btn {
   position: relative;
   text-align: left;
 }
+.mobile-menu .usr-block {
+  display: inline-block;
+  margin-top: 50px;
+}
 /* line 68, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block:after {
+.header.usr .header-right-part .usr-block:after, .mobile-menu .usr-block:after {
   content: '';
   display: block;
   clear: both;
 }
 /* line 71, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block:before {
+.header.usr .header-right-part .usr-block:before, .mobile-menu .usr-block:before {
   content: '';
   position: absolute;
   display: block;
@@ -224,12 +228,13 @@ header.header.active .promo-actions-block .promo-action-btn {
   background: url("../media/images/sprite.png?v=1.1") 0 0;
 }
 /* line 82, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .wlc-usr {
+.header.usr .header-right-part .usr-block .wlc-usr, .mobile-menu .usr-block .wlc-usr {
   float: left;
   margin-right: 10px;
+  position: relative;
 }
 /* line 85, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .wlc-usr .welcome-msg {
+.header.usr .header-right-part .usr-block .wlc-usr .welcome-msg, .mobile-menu .wlc-usr .welcome-msg {
   font-size: 13px;
   color: #b97bb8;
   text-transform: uppercase;
@@ -237,7 +242,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   letter-spacing: 2px;
 }
 /* line 92, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .wlc-usr .usr-name {
+.header.usr .header-right-part .usr-block .wlc-usr .usr-name, .mobile-menu .usr-block .wlc-usr .usr-name {
   color: #fff;
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   letter-spacing: 2px;
@@ -250,7 +255,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   transition: 0.2s linear;
 }
 /* line 99, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .wlc-usr .usr-name:hover {
+.header.usr .header-right-part .usr-block .wlc-usr .usr-name:hover, .mobile-menu .usr-block .wlc-usr .usr-name:hover {
   opacity: .6;
 }
 .balancebox {
@@ -367,7 +372,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   top: 11px;
 }
 /* line 161, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .logout-btn {
+.header.usr .header-right-part .usr-block .logout-btn, .mobile-menu .usr-block .logout-btn {
   right: -36px;
   position: absolute;
   top: 50%;
@@ -383,8 +388,13 @@ header.header.active .promo-actions-block .promo-action-btn {
   -o-transition: 0.2s linear;
   transition: 0.2s linear;
 }
+.mobile-menu .usr-block .logout-btn {
+  position: static;
+  display: inline-block;
+  margin: 10px 0 0 10px;
+}
 /* line 172, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block .logout-btn:hover {
+.header.usr .header-right-part .usr-block .logout-btn:hover, .mobile-menu .usr-block .logout-btn:hover {
   opacity: .6;
 }
 /* line 179, ../scss/_navigation.scss */
@@ -4776,12 +4786,12 @@ html.cropped {
   }
   /* line 21, ../scss/_responsive.scss */
   body .header.usr .header-right-part .usr-block {
-    padding-right: 35px;
+    /*padding-right: 35px;*/
   }
   /* line 23, ../scss/_responsive.scss */
   body .header.usr .header-right-part .usr-block .wlc-usr {
-    float: none;
-    margin-right: 0;
+    /*float: none;*/
+    /*margin-right: 0;*/
   }
   /* line 27, ../scss/_responsive.scss */
   body .header.usr .header-right-part .usr-block .deposit-block {
@@ -7563,6 +7573,15 @@ html.cropped {
 @media (max-width: 350px) {
   body .header .header-right-part .login-block .login-btn:before {
     display: none;
+  }
+  .mobile-menu .usr-block {
+    padding-left: 29px;
+  }
+  .mobile-menu .usr-block .wlc-usr {
+    margin-right: 5px;
+  }
+  .mobile-menu .usr-block .logout-btn {
+    margin-left: 5px;
   }
 }
 

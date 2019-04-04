@@ -28,7 +28,7 @@
     display: block;
 }
 .balancebox .balancebox-dropdown-title {
-    padding: 5px;
+    padding: 5px 10px;
 }
 .langbox > li {
     background: #381351 !important;
