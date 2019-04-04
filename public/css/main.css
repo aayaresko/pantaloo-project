@@ -7575,13 +7575,13 @@ html.cropped {
     display: none;
   }
   .mobile-menu .usr-block {
-    padding-left: 32px;
+    padding-left: 29px;
   }
   .mobile-menu .usr-block .wlc-usr {
     margin-right: 5px;
   }
   .mobile-menu .usr-block .logout-btn {
-    margin-left: 7px;
+    margin-left: 5px;
   }
 }
 
