@@ -375,9 +375,9 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //check to enters to games
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
+//            if ($this->hasBonusTransactions()) {
+//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+//            }
 
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {

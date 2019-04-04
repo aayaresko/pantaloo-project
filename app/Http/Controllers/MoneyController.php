@@ -9,6 +9,8 @@ use App\Invoice;
 use App\Jobs\Withdraw;
 use App\Transaction;
 use App\User;
+use Helpers\BonusHelper;
+use App\UserBonus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -45,6 +47,7 @@ class MoneyController extends Controller
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
         $user = User::where('email', $email)->first();
 
+        //to do this - fix this = use universal way
         $sessionUser = DB::table('sessions')->where('user_id', $user->id)
             ->where('id', $sessionId)
             ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
@@ -64,6 +67,9 @@ class MoneyController extends Controller
             $sum = $transaction->sum;
             $transaction->notification = 1;
             $transaction->save();
+            //to do check active bonus
+            //to do use dispatch
+            BonusHelper::bonusCheck($user, 0);
         } else {
             $sum = false;
         }
@@ -167,18 +173,22 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
+        $user = Auth::user();
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
-        if(Auth::user()->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
+        if($user->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
 
-        if(Auth::user()->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        if($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
 
-        if (Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
+        if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
         $this->validate($request, [
             'address' => 'required',
             'sum' => 'required|numeric|min:1'
         ]);
+
+        //check bonus
+        BonusHelper::bonusCheck($user, 1);
 
         $service = new Service();
 

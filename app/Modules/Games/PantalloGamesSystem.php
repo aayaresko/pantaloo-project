@@ -5,10 +5,10 @@ namespace App\Modules\Games;
 use DB;
 use Log;
 use App\User;
-use Symfony\Component\Console\Helper\Helper;
 use Validator;
 use App\RawLog;
 use App\Transaction;
+use Helpers\BonusHelper;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
@@ -833,6 +833,12 @@ class PantalloGamesSystem implements GamesSystem
                 $response['status'] = $errorCode;
                 $response['balance'] = isset($balanceBefore) ? $balanceBefore : null;
             }
+        }
+
+        //if free spins we add real activate
+        if ($notActiveBonus === 1) {
+            //to do use dispatch
+            BonusHelper::bonusCheck($params['user'], 0);
         }
 
         //finish debug

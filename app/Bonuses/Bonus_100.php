@@ -315,9 +315,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //check to enters to games
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
+//            if ($this->hasBonusTransactions()) {
+//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+//            }
 
             //to do all sum last transaction if multi bonuses
             $bonusAmount = -1 * $user->bonus_balance;
