@@ -45,6 +45,7 @@ class MoneyController extends Controller
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
         $user = User::where('email', $email)->first();
 
+        //to do this - fix this = use universal way
         $sessionUser = DB::table('sessions')->where('user_id', $user->id)
             ->where('id', $sessionId)
             ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
