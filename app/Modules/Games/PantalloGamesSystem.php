@@ -199,7 +199,6 @@ class PantalloGamesSystem implements GamesSystem
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];
             $typesActions = $configPantalloGames['additional']['action'];
-            $accuracyValues = GeneralHelper::getAccuracyValues();
 
             $validationDate = $requestParams;
             $key = $validationDate['key'];
@@ -247,6 +246,8 @@ class PantalloGamesSystem implements GamesSystem
                 })
                 ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
                     $join->on('users.id', '=', 'bonus_n_active.user_id')
+                        //bonus_id this for free spins
+                        ->where('user_bonuses.bonus_id', '=', 1)
                         ->whereNull('bonus_n_active.deleted_at');
                 })
                 ->where([
@@ -328,7 +329,7 @@ class PantalloGamesSystem implements GamesSystem
                     ->where([
                         ['games_pantallo_session.user_id', '=', $params['user']->id],
                     ])
-                    ->selelct([
+                    ->select([
                         'games_pantallo_session_game.id',
                     ])
                     ->orderBy('id', 'desc')
