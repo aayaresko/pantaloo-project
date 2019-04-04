@@ -257,10 +257,15 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('User is not found');
             }
 
-            $params['game'] = GamesList::select(['id', 'system_id'])
-                ->where('system_id', $requestParams['game_id'])->first();
-            if (is_null($params['game'])) {
-                throw new \Exception('Game is not found');
+            $action = $requestParams['action'];
+
+            $methodWithGameId = ['debit', 'credit'];
+            if (in_array($action, $methodWithGameId, true)) {
+                $params['game'] = GamesList::select(['id', 'system_id'])
+                    ->where('system_id', $requestParams['game_id'])->first();
+                if (is_null($params['game'])) {
+                    throw new \Exception('Game is not found');
+                }
             }
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
@@ -338,7 +343,7 @@ class PantalloGamesSystem implements GamesSystem
             if ($balanceBefore < 0) {
                 throw new \Exception('Insufficient funds', 403);
             }
-            $action = $requestParams['action'];
+
             if ($action !== 'balance') {
                 $gamesSessionIdThem = $requestParams['gamesession_id'];
                 $gamesSession = GamesPantalloSessionGame::where([
