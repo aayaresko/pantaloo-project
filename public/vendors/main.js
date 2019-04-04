@@ -148,7 +148,7 @@ function animationInit(){
 		}, 300);
 	})
 	$("body").click(function(e){
-		if($(e.target).parents('.mfp-wrap').length || $(e.target).attr('class').indexOf('mfp-') == 0) return;
+		if($(e.target).parents('.mfp-wrap').length || ($(e.target).attr('class') && $(e.target).attr('class').indexOf('mfp-') == 0)) return;
         $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
         setTimeout(function(){
             $('.simple-popup').removeClass('active');
