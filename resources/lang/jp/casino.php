@@ -19,7 +19,7 @@ return array (
   'exit' => 'ログアウト',
   'live_games' => 'ライブ ゲーム',
   'password' => 'パスワード',
-  'accept_the_terms_text' => '利用規約に同意します',
+  'accept_the_terms_text' => 'に同意します。',
   'accept_the_terms_link' => '利用規約',
   'email_address' => 'メールアドレス',
   'i_am_forget' => 'パスワードを忘れた場合',
