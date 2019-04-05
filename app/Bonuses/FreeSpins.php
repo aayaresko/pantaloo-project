@@ -276,7 +276,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             //get wageredSum
             $wageredSum = $this->get('wagered_sum');
-            if ($wageredSum > 0) {
+            if ($wageredSum == 0) {
                 throw new \Exception('Wagered sum less than zero');
             }
 
