@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
             return redirect()
                 ->back()
                 //->withInput($request->except('password', '_token'))
-                ->withErrors('This Validation token has been expired. Please try again');
+                ->withErrors('You have been inactive for too long, please reload the page.');
         }
 
         return parent::render($request, $e);
