@@ -233,6 +233,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   margin-right: 10px;
   position: relative;
 }
+.header.usr .header-right-part .usr-block .wlc-usr {
+  letter-spacing: 1px;
+}
 /* line 85, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .welcome-msg, .mobile-menu .wlc-usr .welcome-msg {
   font-size: 13px;
@@ -284,7 +287,8 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 .balancebox-title span, .balancebox-dropdown-title span {
   color: #bc97d5;
-  font-size: 11px;
+  font-size: 13px;
+  line-height: 11px;
 }
 .balancebox-title p, .balancebox-dropdown-title p {
   font-size: 15px;
