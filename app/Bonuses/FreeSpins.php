@@ -266,6 +266,10 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         DB::beginTransaction();
         try {
+            if ($activeBonus->activated == 0) {
+                throw new \Exception('Bonus is not activated');
+            }
+
             if ($this->hasBonusTransactions()) {
                 throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
@@ -285,19 +289,18 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
 
-            if ($this->active_bonus->activated == 1) {
+            if ($user->bonus_balance == 0) {
+                $conditions = 1;
+                $this->cancel('No bonus funds');
+                $response = [
+                    'success' => false,
+                    'message' => 'No bonus funds'
+                ];
+            }
+
+            if ($this->active_bonus->activated == 1 and $conditions === 0) {
                 $wageredSum = $this->get('wagered_sum');
-
-                if ($wageredSum > 0 and $user->bonus_balance == 0) {
-                    $conditions = 1;
-                    $this->cancel('No bonus funds');
-                    $response = [
-                        'success' => false,
-                        'message' => 'No bonus funds'
-                    ];
-                }
-
-                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum and $conditions === 0) {
+                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
 
                     $response = [
                         'success' => true,
