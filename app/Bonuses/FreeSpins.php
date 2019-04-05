@@ -285,18 +285,19 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
 
-            if ($user->bonus_balance == 0) {
-                $conditions = 1;
-                $this->cancel('No bonus funds');
-                $response = [
-                    'success' => false,
-                    'message' => 'No bonus funds'
-                ];
-            }
-
-            if ($this->active_bonus->activated == 1 and $conditions === 0) {
+            if ($this->active_bonus->activated == 1) {
                 $wageredSum = $this->get('wagered_sum');
-                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
+
+                if ($wageredSum > 0 and $user->bonus_balance == 0) {
+                    $conditions = 1;
+                    $this->cancel('No bonus funds');
+                    $response = [
+                        'success' => false,
+                        'message' => 'No bonus funds'
+                    ];
+                }
+
+                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum and $conditions === 0) {
 
                     $response = [
                         'success' => true,
