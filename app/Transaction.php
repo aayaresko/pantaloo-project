@@ -55,8 +55,13 @@ class Transaction extends Model
 
     public function isConfirmed()
     {
-        if ($this->confirmations > 5) return true;
-        else return false;
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+
+        if ($this->confirmations > ($minConfirmBtc - 1)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getStatus()
