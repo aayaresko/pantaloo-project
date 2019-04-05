@@ -234,7 +234,7 @@
         @endif
 
         @if(Auth::check())
-        <div class="text-center">
+        <div class="text-center hide">
             <div class="usr-block">
 
                 <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-block-icon"></a>
@@ -246,7 +246,7 @@
                             <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
                             <div class="balancebox-title">
                                 <span>{{ trans('casino.balance') }}</span>
-                                <p class="balancebox-getbalance">{{Auth::user()->getBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                             </div>
                         </li>
                         <ul class="balancebox-dropdown">
