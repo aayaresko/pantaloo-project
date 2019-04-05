@@ -150,7 +150,7 @@ input[type="password"]:-ms-input-placeholder {
 
 /* line 37, ../scss/_navigation.scss */
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -628,16 +628,17 @@ header.header.active .promo-actions-block .promo-action-btn {
   margin-right: 32px;
 }
 /* line 350, ../scss/_navigation.scss */
-.header .header-right-part .login-block .login-btn {
+.header .header-right-part .login-block .login-btn,
+ body .header .header-right-part .login-block .reg-btn {
   display: block;
   height: 32px;
   padding: 8px 0;
   padding-left: 46px;
   position: relative;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'Arial narrow', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -658,7 +659,8 @@ header.header.active .promo-actions-block .promo-action-btn {
   background: url("../media/images/sprite.png") 0 0;
 }
 /* line 373, ../scss/_navigation.scss */
-.header .header-right-part .login-block .login-btn:hover {
+.header .header-right-part .login-block .login-btn:hover,
+.header .header-right-part .login-block .reg-btn:hover {
   opacity: .8;
 }
 /* line 379, ../scss/_navigation.scss */
@@ -4969,18 +4971,32 @@ html.cropped {
   }
   /* line 167, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
+    position: relative;
     height: 146px;
-    border-right: 1px solid rgba(246, 23, 202, 0.5);
+    /* border-right: 1px solid rgba(246, 23, 202, 0.5); */
     padding: 45px 0;
   }
+  body .header .header-right-part .login-block:first-child::after {
+    content: '•';
+    display: block;
+    position: absolute;
+    right: -20px;
+    top: 6px;
+    font-size: 23px;
+    color: #7f349c;
+  }
+   body .header .header-right-part .login-block+.login-block {
+     border-right: none;
+   }
   /* line 171, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
+  body .header .header-right-part .login-block .login-btn,
+  body .header .header-right-part .login-block .reg-btn {
     height: 56px;
     padding: 14px 0;
-    padding-left: 83px;
-    font-family: "MyriadPro-Cond", arial, sans-serif;
-    font-size: 29px;
-    margin-right: 55px;
+    padding-left: 36px;
+   font-family: 'Arial narrow',arial,sans-serif;
+    /* font-size: 29px; */
+    /* margin-right: 55px; */
   }
   /* line 178, ../scss/_responsive.scss */
   body .header .header-right-part .login-block .login-btn:before {
@@ -5886,15 +5902,11 @@ html.cropped {
   /* line 934, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
     height: 75px;
-    padding: 11px 0;
+    padding: 0;
     margin-right: 0;
   }
   /* line 938, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
-    font-size: 25px;
-    padding-left: 46px;
-    margin-right: 30px;
-  }
+
   /* line 942, ../scss/_responsive.scss */
   body .header .header-right-part .login-block .login-btn:before {
     width: 25px;
@@ -5905,7 +5917,7 @@ html.cropped {
   }
   /* line 951, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
-    padding: 29px 0;
+    padding-top: 10px;
     margin-left: 30px;
   }
   /* line 954, ../scss/_responsive.scss */
@@ -6675,11 +6687,13 @@ html.cropped {
     padding: 0;
   }
   /* line 1603, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
+  body .header .header-right-part .login-block .login-btn,
+  body .header .header-right-part .login-block .reg-btn {
     height: 41px;
     padding: 13px 0;
     padding-left: 36px;
-    font-size: 16px;
+    font-size: 12px;
+    font-weight: bold;
   }
   /* line 1608, ../scss/_responsive.scss */
   body .header .header-right-part .login-block .login-btn:before {
