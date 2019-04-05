@@ -266,12 +266,18 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         DB::beginTransaction();
         try {
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            }
+
             if ($activeBonus->activated == 0) {
                 throw new \Exception('Bonus is not activated');
             }
 
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+            //get wageredSum
+            $wageredSum = $this->get('wagered_sum');
+            if ($wageredSum > 0) {
+                throw new \Exception('Wagered sum less than zero');
             }
 
             $response = [
@@ -298,10 +304,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
 
-            if ($this->active_bonus->activated == 1 and $conditions === 0) {
-                $wageredSum = $this->get('wagered_sum');
-                if ($wageredSum > 0 and $this->getPlayedSum() >= $wageredSum) {
-
+            if ($conditions === 0) {
+                if ($this->getPlayedSum() >= $wageredSum) {
                     $response = [
                         'success' => true,
                         'message' => 'Bonus to real transfer'
