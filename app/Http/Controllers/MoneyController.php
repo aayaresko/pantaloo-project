@@ -67,12 +67,13 @@ class MoneyController extends Controller
             $sum = $transaction->sum;
             $transaction->notification = 1;
             $transaction->save();
-            //to do check active bonus
-            //to do use dispatch
-            BonusHelper::bonusCheck($user, 0);
         } else {
             $sum = false;
         }
+
+        //to do check active bonus
+        //to do use dispatch
+        BonusHelper::bonusCheck($user, 1);
 
         return response()->json([
             'realBalance' => $user->balance,
@@ -176,6 +177,9 @@ class MoneyController extends Controller
         $user = Auth::user();
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
+        //check bonus
+        BonusHelper::bonusCheck($user, 1);
+
         if($user->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
 
         if($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
@@ -187,8 +191,6 @@ class MoneyController extends Controller
             'sum' => 'required|numeric|min:1'
         ]);
 
-        //check bonus
-        BonusHelper::bonusCheck($user, 1);
 
         $service = new Service();
 

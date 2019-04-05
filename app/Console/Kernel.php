@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
 
         //add to bitcoin update every sec
 
-        $schedule->command('bonus:jobs')->everyMinute();
+        //$schedule->command('bonus:jobs')->everyMinute();
 
         //get games pantallo
         $schedule->command('games:PantalloGetGames')->hourly();
