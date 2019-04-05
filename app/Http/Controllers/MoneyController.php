@@ -9,6 +9,7 @@ use App\Invoice;
 use App\Jobs\Withdraw;
 use App\Transaction;
 use App\User;
+use App\Jobs\BonusHandler;
 use Helpers\BonusHelper;
 use App\UserBonus;
 use Carbon\Carbon;
@@ -73,7 +74,7 @@ class MoneyController extends Controller
 
         //to do check active bonus
         //to do use dispatch
-        BonusHelper::bonusCheck($user, 1);
+        dispatch(new BonusHandler($user));
 
         return response()->json([
             'realBalance' => $user->balance,
