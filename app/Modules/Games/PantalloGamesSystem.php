@@ -835,12 +835,6 @@ class PantalloGamesSystem implements GamesSystem
             }
         }
 
-        //if free spins we add real activate
-        if ($notActiveBonus === 1) {
-            //to do use dispatch
-            BonusHelper::bonusCheck($params['user'], 0);
-        }
-
         //finish debug
         $debugGameResult = $debugGame->end();
 
