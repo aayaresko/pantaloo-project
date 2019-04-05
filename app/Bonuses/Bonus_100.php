@@ -45,9 +45,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //hide if user
 
         //hide if deposit count
-//        if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
-//            return false;
-//        }
+        if ($user->transactions()->deposits()->count() <= ($this->depositsCount - 1)) {
+            return false;
+        }
         //hide if deposit count
 
         $countBonuses = $this->user->bonuses()
