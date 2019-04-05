@@ -6,6 +6,8 @@ return array (
   'admin' => 'Admin',
   'deposit' => 'Deposit',
   'balance' => 'Balance',
+  'real_balance' => 'Real Balance',
+  'bonus_balance' => 'Bonus Balance',
   'login' => 'Login',
   'registration' => 'Registration',
   'menu' => 'Menu',
