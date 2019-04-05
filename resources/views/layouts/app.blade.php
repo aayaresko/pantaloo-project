@@ -20,7 +20,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.11" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.13" rel="stylesheet">
     <link href="/css/new.css?v=1.0.4" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
@@ -74,19 +74,23 @@
     </div>
     <div class="navigation-container">
 
-        {{--<ul class="langbox floated">--}}
-            {{--<li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>--}}
-            {{--<ul class="langbox-dropdown">--}}
-                {{--@foreach ($languages as $language)--}}
-                    {{--@if(app()->getLocale() == $language) @continue @endif--}}
-                    {{--<li>--}}
-                        {{--<a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">--}}
-                            {{--<img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                {{--@endforeach--}}
-            {{--</ul>--}}
-        {{--</ul>--}}
+        @if(!Auth::check())
+
+            <ul class="langbox floated">
+                <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+                <ul class="langbox-dropdown">
+                    @foreach ($languages as $language)
+                        @if(app()->getLocale() == $language) @continue @endif
+                        <li>
+                            <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </ul>
+
+        @endif
 
         {{--<div class="language-block floated">--}}
             {{--<ul class="language-listing">--}}
@@ -100,7 +104,7 @@
             {{--</ul>--}}
         {{--</div>--}}
 
-        <nav class="navigation hidden-xs floated">
+        <nav class="navigation hidden-xs floated{{ !Auth::check() ? ' navigation-uncheck' : '' }}">
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
@@ -149,6 +153,9 @@
         @endphp
         @if(Auth::check())
             <div class="usr-block">
+
+                <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-block-icon"></a>
+
                 <div class="wlc-usr">
 
                     <ul class="balancebox floated">
@@ -156,20 +163,20 @@
                             <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
                             <div class="balancebox-title">
                                 <span>{{ trans('casino.balance') }}</span>
-                                <p>{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                             </div>
                         </li>
                         <ul class="balancebox-dropdown">
                             <li>
                                 <div class="balancebox-dropdown-title">
-                                    <span>Real Balance</span>
-                                    <p>{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <span>{{ trans('casino.real_balance') }}</span>
+                                    <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                             <li>
                                 <div class="balancebox-dropdown-title">
-                                    <span>Bonus Balance</span>
-                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <span>{{ trans('casino.bonus_balance') }}</span>
+                                    <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -229,6 +236,9 @@
         @if(Auth::check())
         <div class="text-center">
             <div class="usr-block">
+
+                <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-block-icon"></a>
+
                 <div class="wlc-usr">
 
                     <ul class="balancebox floated">
@@ -236,20 +246,20 @@
                             <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
                             <div class="balancebox-title">
                                 <span>{{ trans('casino.balance') }}</span>
-                                <p>{{Auth::user()->getBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                <p class="balancebox-getbalance">{{Auth::user()->getBalance(2)}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                             </div>
                         </li>
                         <ul class="balancebox-dropdown">
                             <li>
                                 <div class="balancebox-dropdown-title">
                                     <span>Real Balance</span>
-                                    <p>{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                             <li>
                                 <div class="balancebox-dropdown-title">
                                     <span>Bonus Balance</span>
-                                    <p>{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -624,6 +634,13 @@
                     $('.simple-popup').addClass('active');
                     $('.simple-popup .popup-entry').addClass('active');
                     //alert('We got deposit from you ' + data.deposit);
+                }
+
+                if(data.balance_info)
+                {
+                    $(".balancebox-getbalance").html(data.balance_info.balance);
+                    $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
+                    $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
                 }
 
                 setTimeout(setBalance, 1000);

@@ -6,6 +6,8 @@ return array (
   'admin' => '管理者',
   'deposit' => '入金',
   'balance' => '残高',
+  'real_balance' => 'リアルバランス',
+  'bonus_balance' => 'ボーナスバランス',
   'login' => 'ログイン',
   'registration' => '登録',
   'menu' => 'メニュー',

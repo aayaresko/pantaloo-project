@@ -6,6 +6,8 @@ return array (
   'admin' => 'Amminitratore',
   'deposit' => 'Deposita',
   'balance' => 'Saldo',
+  'real_balance' => 'Equilibrio reale',
+  'bonus_balance' => 'Saldo bonus',
   'login' => 'Accedi',
   'registration' => 'Registrazione',
   'menu' => 'Menù',
