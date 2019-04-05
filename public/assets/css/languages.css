@@ -14,11 +14,12 @@
     padding: 0;
     display: inline-block;
     vertical-align: middle;
-    width: 85px;
+    width: 88px;
     margin-right: 0px;
     margin-top: 0px;
     position: relative;
     z-index: 9999;
+    letter-spacing: 1px;
 }
 .langbox li {
     margin: 0 0 0 0;
@@ -53,7 +54,7 @@
     top: 19px;
     right: 17px;
 }
-.langbox > li > a.is-open:after, .balancebox > li > a.is-open:after {
+.langbox > li > a.is-open:after, .balancebox > li > a.is-open + .balancebox-title:after {
     background-position: left bottom;
 }
 .langbox li:last-child {
@@ -76,6 +77,9 @@
     width: 85px;
     padding-left: 0;
     text-align: left;
+}
+.balancebox .balancebox-dropdown {
+    width: auto;
 }
 .langbox .langbox-dropdown.is-open, .balancebox .balancebox-dropdown.is-open {
     display: block;

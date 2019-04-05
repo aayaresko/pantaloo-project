@@ -6,6 +6,8 @@ return array (
   'admin' => 'Quản trị viên',
   'deposit' => 'Tiền gửi',
   'balance' => 'Số dư',
+  'real_balance' => 'Cân bằng thực',
+  'bonus_balance' => 'Số dư tiền thưởng',
   'login' => 'Đăng nhập',
   'registration' => 'Đăng ký',
   'menu' => 'Menu',

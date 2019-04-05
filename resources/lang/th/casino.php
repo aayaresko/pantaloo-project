@@ -6,6 +6,8 @@ return array (
   'admin' => 'ผู้ดูแลระบบ',
   'deposit' => 'เงินฝาก',
   'balance' => 'ยอดเงินคงเหลือ',
+  'real_balance' => 'ยอดคงเหลือจริง',
+  'bonus_balance' => 'ยอดเงินโบนัส',
   'login' => 'เข้าสู่ระบบ',
   'registration' => 'การลงทะเบียน',
   'menu' => 'เมนู',

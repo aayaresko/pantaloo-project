@@ -6,6 +6,8 @@ return array (
   'admin' => 'Admin',
   'deposit' => 'Einzahlung',
   'balance' => 'Saldo',
+  'real_balance' => 'Echte Balance',
+  'bonus_balance' => 'Bonusguthaben',
   'login' => 'Login',
   'registration' => 'Anmeldung',
   'menu' => 'Menü',
