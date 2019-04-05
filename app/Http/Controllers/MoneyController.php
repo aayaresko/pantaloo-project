@@ -80,7 +80,12 @@ class MoneyController extends Controller
             'realBalance' => $user->balance,
             'balance' => $user->getBalance(),
             'deposit' => $sum,
-            'free_spins' => $user->free_spins
+            'free_spins' => $user->free_spins,
+	        'balance_info' => [
+	        	'balance' => $user->getBalance(2) . ' m' . strtoupper($user->currency->title),
+	        	'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
+	        	'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
+	        ]
         ]);
     }
 

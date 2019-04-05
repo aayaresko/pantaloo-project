@@ -6,6 +6,8 @@ return array (
   'admin' => 'Administrateur',
   'deposit' => 'Dépôt',
   'balance' => 'Solde',
+  'real_balance' => 'Solde Réel',
+  'bonus_balance' => 'Solde bonus',
   'login' => 'S\'identifier',
   'registration' => 'S\'INSCRIRE',
   'menu' => 'Menu',

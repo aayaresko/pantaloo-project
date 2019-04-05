@@ -216,7 +216,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   clear: both;
 }
 /* line 71, ../scss/_navigation.scss */
-.header.usr .header-right-part .usr-block:before, .mobile-menu .usr-block:before {
+.header.usr .header-right-part .usr-block-icon, .mobile-menu .usr-block-icon {
   content: '';
   position: absolute;
   display: block;
@@ -226,6 +226,14 @@ header.header.active .promo-actions-block .promo-action-btn {
   margin-top: -10px;
   left: 0;
   background: url("../media/images/sprite.png?v=1.1") 0 0;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+  -ms-transition: 0.2s linear;
+  -o-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+.usr-block-icon:hover {
+  opacity: 0.6;
 }
 /* line 82, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr, .mobile-menu .usr-block .wlc-usr {
@@ -464,6 +472,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   padding-top: 5px;
   margin-right: 47px;
   margin-left: -47px;
+}
+.header .navigation.navigation-uncheck {
+  margin-left: 30px;
 }
 /* line 225, ../scss/_navigation.scss */
 .header .navigation:after {
