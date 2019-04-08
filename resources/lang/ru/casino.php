@@ -7,7 +7,7 @@ return array (
   'deposit' => 'Депозит',
   'balance' => 'Баланс',
   'real_balance' => 'Реальный баланс',
-  'bonus_balance' => 'Бонус Баланс',
+  'bonus_balance' => 'Бонусный баланс',
   'login' => 'Вход',
   'registration' => 'Регистрация',
   'menu' => 'Меню',
