@@ -194,7 +194,7 @@ class IntegratedGamesController extends Controller
                 " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
                 "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
                 "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
-            ->groupBy('games_list.category_id')
+            ->groupBy('games_categories.id')
             ->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         $gamesTypes = GamesType::where([
