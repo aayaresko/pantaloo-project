@@ -1061,31 +1061,36 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 689, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.bjack:before {
-  background-position: -92px -126px;
+   background: url('../media/images/icons/blackjack.png') no-repeat center;
 }
 /* line 692, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.roulette:before {
-  background-position: -192px -126px;
+   background: url('../media/images/icons/roulette.png') no-repeat center;
 }
 /* line 695, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.baccarat:before {
-  background-position: -304px -121px;
+   background: url('../media/images/icons/baccarat.png') no-repeat center;
 }
 /* line 698, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.bonumbers:before {
-  background-position: -427px -126px;
+   background: url('../media/images/icons/bonumbers.png') no-repeat center;
 }
 /* line 701, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.keno:before {
-  background-position: -428px -40px;
+   background: url('../media/images/icons/keno.png') no-repeat center;
 }
 .mobile-menu .games-listing li a.poker:before {
-  background-position: 135px -53px;
+   background: url('../media/images/icons/poker.png') no-repeat center;
   width: 37px;
   height: 37px;
   top: 68%;
   left: 10px;
 }
+
+.mobile-menu .games-listing li a.dice:before{
+  background: url('../media/images/icons/dice.png') no-repeat center;
+}
+
 /* line 704, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a:hover {
   opacity: .8;
@@ -1174,7 +1179,8 @@ html.cropped {
   left: 0;
   width: 100%;
   height: 303px;
-  background: url("../media/images/bg/top-shadow.png") center no-repeat;
+  /*background: url("../media/images/bg/top-shadow.png") center no-repeat;*/
+  background: linear-gradient(0deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
   background-size: cover;
 }
 /* line 37, ../scss/_middle.scss */
@@ -1193,11 +1199,12 @@ html.cropped {
   content: '';
   position: absolute;
   display: block;
-  background: url("../media/images/bg/side-nav-shadow.png") center no-repeat;
-  background-size: cover;
+  /*background: url("../media/images/bg/side-nav-shadow.png") center no-repeat;*/
+  background: linear-gradient(283deg, rgba(6,3,8,0) 24%, rgba(6,3,8,0.7) 74%);
+  /*background-size: cover;*/
   width: 336px;
-  height: 595px;
-  top: 15%;
+  height: 100%;
+  top: 0;
   left: 0;
 }
 
@@ -4609,7 +4616,7 @@ html.cropped {
     text-align: center;
     color: #726577;
     font-size: 16px;
-    border-top: 1px solid #38353c;
+    border-top: 1px solid #271849;
     margin-top: 45px;
     line-height: 60px;
 }
@@ -6435,7 +6442,7 @@ html.cropped {
   }
   /* line 1265, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing li a:before {
-    margin-top: -14.5px;
+    margin-top: -18.5px;
     height: 36px;
     width: 52px;
   }
@@ -6860,6 +6867,7 @@ html.cropped {
 
   .mobile-container .welcome-mob .games-listing li a.poker:before{
     background: url('../media/images/icons/poker.png') no-repeat center;
+    width: 50px;
   }
 
   .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
@@ -7640,7 +7648,7 @@ html.cropped {
     top: -100px;
     left: 0;
     width: 100%;
-    background: url("../media/images/bg/welcome-mobile-bg.png") center no-repeat;
+    background: url("../media/images/bg/welcome-mobile-bg.png") center -70px no-repeat;
     background-size: cover;
     opacity: .6;
   }
@@ -7651,12 +7659,26 @@ html.cropped {
   /* line 2178, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing {
     padding-bottom: 40px;
+    justify-content: flex-start;
   }
   /* line 2180, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing li {
-    width: 100%;
-    float: none;
+    /*width: 100%;*/
+    /*float: none;*/
   }
+  body .mobile-container .welcome-mob .games-listing li a{
+    padding-left: 57px;
+    padding-top: 0px;
+    text-align: left;
+  }
+
+  body .mobile-container .welcome-mob .games-listing li a:before{
+    left: 0;
+    transform: translate(0px,0px);
+  }
+
+
+
   /* line 2185, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block {
     margin-bottom: 80px;
@@ -7842,6 +7864,34 @@ html.cropped {
     height: 27px;
     width: 27px;
   }
+  
+  /*custom style*/
+
+  body .mobile-container .welcome-mob{
+    padding-top: 200px;
+    padding-bottom: 110px !important;
+  }
+
+
+
+  .welcome-mob:after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 420px;
+    background: linear-gradient(180deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
+
+  }
+
+  .games-listing-block{
+    position: relative;
+    z-index: 2;
+  }
+
+  /*end custom style*/
+
 }
 
 @media (max-width: 350px) {
