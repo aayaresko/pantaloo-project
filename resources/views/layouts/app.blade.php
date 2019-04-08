@@ -133,7 +133,7 @@
         <div class="login-block floated">
             <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
         </div>
-        <div class="login-block floated">
+        <div class="login-block reg-modified floated">
             <a href="#" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
         </div>
         @if(!Auth::check())
@@ -210,7 +210,7 @@
             </div>
         @endif
         <div class="menu-button-block floated">
-            <a href="#" class="menu-btn"></a>
+            <a href="#" class="menu-btn"><span></span></a>
         </div>
     </div>
 </header>
@@ -221,20 +221,23 @@
 
 <div class="mobile-menu">
     <div class="popup-entry">
-        <a href="#" class="close-icon"></a>
-        <div class="logo-container">
-            <a href="/" class="logo"><img src="/media/images/logo.png" alt="logo"></a>
-        </div>
-        @if(Auth::guest())
-        <div class="auth-block-mobile">
-            <div class="login-block floated">
-                <a href="{{url('/login')}}" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
+        <div class="mobTopWrap">       
+            
+            <div class="logo-container">
+                <a href="/" class="logo"><img src="/media/images/logo.png" alt="logo"></a>
             </div>
-            <div class="registration-block floated">
-                <a href="{{url('/registr')}}" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
+            @if(Auth::guest())
+            <div class="auth-block-mobile">
+                <div class="login-block floated">
+                    <a href="{{url('/login')}}" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
+                </div>
+                <div class="registration-block floated">
+                    <a href="{{url('/registr')}}" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
+                </div>
             </div>
+            <a href="#" class="close-icon"></a>
+            @endif
         </div>
-        @endif
 
         @if(Auth::check())
         <div class="text-center">
@@ -287,9 +290,7 @@
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
             </div>
         </div>
-        <div class="block-heading">
-            <h2 class="title">{{ trans('casino.menu') }}</h2>
-        </div>
+        
         <nav class="navigation">
             <ul class="navigation-list">
                 <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
@@ -299,10 +300,7 @@
             </ul>
         </nav>
         @endif
-        <div class="block-heading">
-            <span class="subtitle">{{ trans('casino.casinobit') }}</span>
-            <h2 class="title">{{ trans('casino.games') }}</h2>
-        </div>
+        
         <div class="games-listing-block">{{--{{ trans('casino.gambling_card_games') }}--}}
             <br>
             <br>
@@ -310,29 +308,26 @@
                 @include('footer_links')
             </ul>
         </div>
-        <div class="block-heading">
-            <h2 class="title">{{ trans('casino.info') }}</h2>
-        </div>
+        
         <nav class="navigation">
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
             </ul>
         </nav>
-        <div class="block-heading">
-            <h2 class="title">{{ trans('casino.language') }}</h2>
-        </div>
-        <nav class="navigation language-nav">
-            <ul class="navigation-list">
+       
+        <ul class="langbox floated">
+            <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
+            <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
                     <li>
-                        <a href="{{ url("/language/$language") }}">
+                        <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
                         </a>
                     </li>
                 @endforeach
             </ul>
-        </nav>
+        </ul>
 
         @if(Auth::check())
             <div class="block-heading">
