@@ -1466,7 +1466,7 @@ html.cropped {
 .mobile-container .welcome-mob {
   padding-top: 729px;
   padding-bottom: 137px;
-  background: url("../media/images/bg/welcome-mobile-bg.png") center no-repeat;
+  background: url("../media/images/bg/welcome-mobile-light.jpg") center no-repeat;
   background-size: cover;
   position: relative;
   z-index: 1;
@@ -7648,7 +7648,7 @@ html.cropped {
     top: -100px;
     left: 0;
     width: 100%;
-    background: url("../media/images/bg/welcome-mobile-bg.png") center -70px no-repeat;
+    background: url("../media/images/bg/welcome-mobile-light.jpg") center -70px no-repeat;
     background-size: cover;
     opacity: .6;
   }
@@ -8284,7 +8284,7 @@ html.cropped {
   body .mobile-container .welcome-mob {
     padding-top: 150px;
     padding-bottom: 50px;
-    background: url(../media/images/bg/welcome-mobile-bg.png) center 15% no-repeat;
+    background: url(../media/images/bg/welcome-mobile-light.jpg) center 15% no-repeat;
     background-size: cover;
   }
   body .mobile-container .welcome-mob .main-title-block {
