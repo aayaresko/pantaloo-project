@@ -193,7 +193,7 @@ class AffiliatesController extends Controller
             foreach ($stat as $key => $value)
                 $stat[$key] = round($value, 2);
 
-            $stat['cpa'] = ($stat['deposits'] >= $cpumBtcLimit) ? 1 : 0;
+            $stat['cpa'] = ($stat['confirm_deposits'] >= $cpumBtcLimit) ? 1 : 0;
             $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
             $stat['cpaPending'] = ($cpaPending >= 0) ? $cpaPending : 0;
 
@@ -232,6 +232,8 @@ class AffiliatesController extends Controller
             'users' => $result,
             'trackers' => $trackers,
             'deposit_total' => $result->sum('deposits'),
+            'pending_deposits' => $result->sum('pending_deposits'),
+            'confirm_deposits' => $result->sum('confirm_deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
             'profit_total' => $result->sum('profit'),
