@@ -814,6 +814,13 @@
 {{--<noscript><div><img src="https://mc.yandex.ru/watch/43829254" style="position:absolute; left:-9999px;" alt="" /></div></noscript>--}}
 {{--<!-- /Yandex.Metrika counter -->--}}
 
-<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>
+{{--<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>--}}
+<script type="text/javascript" >
+    var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){
+        _agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);
+        _agile.track_page_view();
+        _agile_execute_web_rules();};
+</script>
+
 </body>
 </html>
