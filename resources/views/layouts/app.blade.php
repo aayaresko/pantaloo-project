@@ -381,9 +381,9 @@
                                 <label for="agree"><input type="checkbox" name="agree" id="agree">
                                     {{--fix in future this--}}
                                     @if(app()->getLocale() === 'jp')
-                                        {{ trans('casino.accept_the_terms_text') }}<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
-                                    @else
                                         <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>{{ trans('casino.accept_the_terms_text') }}
+                                    @else
+                                        {{ trans('casino.accept_the_terms_text') }}<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
                                     @endif
                                 </label>
                             </div>
