@@ -123,12 +123,15 @@ class AdminController extends Controller
             $result->push($stat);
         }
 
+        $currencyCode = config('app.currencyCode');
+
         return view('admin.balance', [
             'users' => $result,
             'deposit_total' => $result->sum('deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('adminProfit')
+            'profit_total' => $result->sum('adminProfit'),
+            'currencyCode' => $currencyCode
         ]);
     }
 
