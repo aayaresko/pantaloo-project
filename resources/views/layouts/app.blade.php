@@ -815,6 +815,7 @@
 {{--<!-- /Yandex.Metrika counter -->--}}
 
 {{--<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>--}}
+<script id="_agile_min_js" async type="text/javascript" src="https://d1gwclp1pmzk26.cloudfront.net/agile/agile-cloud.js"> </script>
 <script type="text/javascript" >
     var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){
         _agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);
