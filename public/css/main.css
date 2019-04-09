@@ -669,6 +669,13 @@ header.header.active .promo-actions-block .promo-action-btn {
   flex-direction: row;
   justify-content: space-between;
 }
+.mobGameBlock {
+  border-top: 1px solid #ccc;
+}
+.mobTopWrap .wlc-usr {
+  position: relative;
+  margin-right: 58px;
+}
 /* line 362, ../scss/_navigation.scss */
 .auth-block-mobile .login-btn:before,
 .header .header-right-part .login-block .login-btn:before {
@@ -1070,7 +1077,20 @@ header.header.active .promo-actions-block .promo-action-btn {
   content: '';
   display: block;
   position: absolute;
-  background: url("../media/images/sprite.png") -158px 0;
+  /* background: url("../media/images/sprite.png") -158px 0; */
+  width: 19px;
+  height: 30px;
+  left: 0;
+  top: 50%;
+  margin-top: -19px;
+}
+
+/* line 723, ../scss/_navigation.scss */
+.mobile-menu .navigation .logout-btn {
+  content: '';
+  display: block;
+  position: absolute;
+  background: url("../assets/images/icons/icon-exit.png") -158px 0;
   width: 19px;
   height: 30px;
   left: 0;
@@ -7552,11 +7572,11 @@ html.cropped {
     margin-bottom: -20px;
   }
   /* line 2135, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li {
+  /* body .mobile-menu .popup-entry .games-listing li {
     margin-bottom: 20px;
     width: 100%;
     float: none;
-  }
+  } */
   /* line 2141, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .navigation .navigation-list li {
     margin-bottom: 20px;

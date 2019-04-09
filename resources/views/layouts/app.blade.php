@@ -235,15 +235,12 @@
                     <a href="{{url('/registr')}}" class="reg-btn"><span class="text">{{ trans('casino.registration') }}</span></a>
                 </div>
             </div>
-            <a href="#" class="close-icon"></a>
             @endif
+            <a href="#" class="close-icon"></a>
         </div>
 
         @if(Auth::check())
-        <div class="text-center hide">
-            <div class="usr-block">
 
-                <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-block-icon"></a>
 
                 <div class="wlc-usr">
 
@@ -273,35 +270,20 @@
 
                 </div>
 
-                <ul class="langbox floated">
-                    <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
-                    <ul class="langbox-dropdown">
-                        @foreach ($languages as $language)
-                            @if(app()->getLocale() == $language) @continue @endif
-                            <li>
-                                <a href="{{ url("/language/$language") }}" class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
-                                    <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}" /> <span>{{ $language }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </ul>
-
-                <a href="{{url('/logout')}}" class="logout-btn"></a>
-            </div>
-        </div>
+              
+    
         
-        <nav class="navigation">
+        <!-- <nav class="navigation">
             <ul class="navigation-list">
                 <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
                 <li><a href="{{route('withdraw', ['lang' => $currentLang])}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
                 <li><a href="{{route('bonus', ['lang' => $currentLang])}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
                 <li><a href="{{route('settings', ['lang' => $currentLang])}}" class="setting">{{ trans('casino.settings') }}</a></li>
             </ul>
-        </nav>
+        </nav> -->
         @endif
         
-        <div class="games-listing-block">{{--{{ trans('casino.gambling_card_games') }}--}}
+        <div class="games-listing-block mobGameBlock">{{--{{ trans('casino.gambling_card_games') }}--}}
             <br>
             <br>
             <ul class="games-listing">
@@ -311,6 +293,12 @@
         
         <nav class="navigation">
             <ul class="navigation-list">
+                @if(Auth::check())
+                <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
+                <li><a href="{{route('withdraw', ['lang' => $currentLang])}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
+                <li><a href="{{route('bonus', ['lang' => $currentLang])}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
+                <li><a href="{{route('settings', ['lang' => $currentLang])}}" class="setting">{{ trans('casino.settings') }}</a></li>
+                @endif
                 @include('page_links', ['is_main' => 1])
             </ul>
         </nav>
@@ -330,12 +318,9 @@
         </ul>
 
         @if(Auth::check())
-            <div class="block-heading">
-                <h2 class="title">{{ trans('casino.exit') }}</h2>
-            </div>
             <nav class="navigation">
                 <ul class="navigation-list">
-                    <li><a href="{{url('/logout')}}" class="deposite">{{ trans('logout') }}</a></li>
+                    <li><a href="{{url('/logout')}}" class="logout-btn">{{ trans('logout') }}</a></li>
                 </ul>
             </nav>
         @endif
