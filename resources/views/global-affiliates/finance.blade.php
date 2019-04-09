@@ -39,10 +39,10 @@
                                         Email
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
-                                        Deposits
+                                        Deposits Confirmed
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
-                                        Pending Deposits
+                                        Deposits Pending
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
                                         Bonus cost
