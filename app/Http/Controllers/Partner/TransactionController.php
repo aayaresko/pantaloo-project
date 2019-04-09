@@ -41,7 +41,7 @@ class TransactionController extends Controller
         ];
 
         $this->relatedFields = $this->fields;
-            $this->relatedFields[0] = 'users.id as user_id';
+        $this->relatedFields[0] = 'users.id as user_id';
         $this->relatedFields[6] = 'trackers.name as tracker_name';
     }
 
@@ -104,7 +104,7 @@ class TransactionController extends Controller
             array_push($param['conditions'], ['trackers.id', '=', $request->tracker_id]);
         }
 
-         /* COLUMNS */
+        /* COLUMNS */
         return $param;
     }
 
@@ -155,7 +155,8 @@ class TransactionController extends Controller
             $keyDescription = array_search($item->type, array_column($param['typeTransaction'], 'code'));
             $item->description = $param['typeTransaction'][$keyDescription]['value'];
             //TO DO - use config for text
-            if ((int)$item->confirmations < $param['minConfirmBtc']) {
+            //to do config get id deposit transaction
+            if ((int)$item->type === 3 and (int)$item->confirmations < $param['minConfirmBtc']) {
                 $item->description = $item->description . ' PENDING';
             }
 
