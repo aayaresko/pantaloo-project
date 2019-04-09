@@ -90,6 +90,7 @@
                                         <tr role="row">
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User ID</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Pending</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">CPA</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Pending CPA</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
@@ -106,7 +107,8 @@
                                         @foreach($users as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['user']->id}}</span></td>
-                                                <td>{{ $stat['deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['confirm_deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['pending_deposits'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['cpa'] }}</td>
                                                 <td>{{ $stat['cpaPending'] }} {{ $cpaCurrencyCode }}</td>
                                                 <td>{{ $stat['bets'] . ' ' . $currencyCode }}</td>
@@ -130,6 +132,7 @@
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Clicks</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Registrations</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Pending</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">My profit</th>
@@ -142,7 +145,8 @@
                                                 <td><span class="label label-default">{{$stat['tracker']}}</span></td>
                                                 <td>{{ $stat['enters'] }}</td>
                                                 <td>{{ $stat['registrations'] }}</td>
-                                                <td>{{ $stat['deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['confirm_deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['pending_deposits'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['revenue'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['bonus'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['profit'] . ' ' . $currencyCode }}</td>

@@ -35,6 +35,8 @@ class Tracker extends Model
     {
         $result = [
             'deposits' => 0,
+            'pending_deposits' => 0,
+            'confirm_deposits' => 0,
             'bets' => 0,
             'bet_count' => 0,
             'avg_bet' => 0,

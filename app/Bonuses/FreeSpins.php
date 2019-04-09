@@ -327,15 +327,12 @@ class FreeSpins extends \App\Bonuses\Bonus
                         'bonus_balance' => 0
                     ]);
 
-                    $now = Carbon::now();
 
-                    if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
-                        $activeBonus->delete();
-                        $response = [
-                            'success' => true,
-                            'message' => 'Done. Close'
-                        ];
-                    }
+                    $activeBonus->delete();
+                    $response = [
+                        'success' => true,
+                        'message' => 'Done. Close'
+                    ];
                 }
             }
             DB::commit();

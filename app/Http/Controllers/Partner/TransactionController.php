@@ -37,6 +37,7 @@ class TransactionController extends Controller
             4 => 'transactions.bonus_sum',
             5 => 'transactions.id',
             6 => 'trackers.name',
+            10 => 'transactions.confirmations',
         ];
 
         $this->relatedFields = $this->fields;
@@ -84,6 +85,8 @@ class TransactionController extends Controller
         $param['conditions'] = [
             ['transactions.agent_id', '=', $param['user']->id]
         ];
+
+        $param['minConfirmBtc'] = config('appAdditional.minConfirmBtc');
 
         if (isset($request->user_id) and $request->user_id != 0) {
             array_push($param['conditions'], ['transactions.user_id', '=', $request->user_id]);
@@ -151,6 +154,11 @@ class TransactionController extends Controller
         $data->map(function ($item, $key) use ($param) {
             $keyDescription = array_search($item->type, array_column($param['typeTransaction'], 'code'));
             $item->description = $param['typeTransaction'][$keyDescription]['value'];
+            //TO DO - use config for text
+            if ((int)$item->confirmations < $param['minConfirmBtc']) {
+                $item->description = $item->description . ' PENDING';
+            }
+
             return $item;
         });
 

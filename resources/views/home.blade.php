@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('description')
-    trans('casino.home_description')
+    {{ trans('casino.home_description') }}
 @endsection
 
 @section('keywords')
-    trans('casino.home_keywords')
+    {{ trans('casino.home_keywords') }}
 @endsection
 
 @section('content')

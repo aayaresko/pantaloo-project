@@ -75,8 +75,12 @@ class GeneralHelper
      */
     static public function statistics($transactions, $cpumBtcLimit)
     {
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+
         $stat = [
             'deposits' => 0,
+            'pending_deposits' => 0,
+            'confirm_deposits' => 0,
             'bets' => 0,
             'bet_count' => 0,
             'avg_bet' => 0,
@@ -90,6 +94,12 @@ class GeneralHelper
         foreach ($transactions as $transaction) {
 
             if ($transaction->type == 3) {
+
+                if ((int)$transaction->confirmations < $minConfirmBtc) {
+                    $stat['pending_deposits'] = $stat['pending_deposits'] + $transaction->sum;
+                } else {
+                    $stat['confirm_deposits'] = $stat['confirm_deposits'] + $transaction->sum;
+                }
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
 

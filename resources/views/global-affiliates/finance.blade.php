@@ -42,6 +42,9 @@
                                         Deposits
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
+                                        Pending Deposits
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
                                         Bonus cost
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
@@ -57,6 +60,7 @@
                                 </thead>
                                 <tbody>
                                 <tr role="row">
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -104,7 +108,7 @@
             let table = $('#tableOrder').DataTable({
                 "order": [[0, "asc"]],
                 "columnDefs": [
-                    {"orderable": false, "targets": [2, 3, 4, 5, 6]},
+                    {"orderable": false, "targets": [2, 3, 4, 5, 6, 7]},
                 ],
                 "processing": true,
                 "serverSide": true,
@@ -121,7 +125,8 @@
                 "columns": [
                     {"data": "id"},
                     {"data": "email"},
-                    {"data": "deposits"},
+                    {"data": "confirmDeposits"},
+                    {"data": "pendingDeposits"},
                     {"data": "bonus"},
                     {"data": "revenue"},
                     {"data": "profit"},
