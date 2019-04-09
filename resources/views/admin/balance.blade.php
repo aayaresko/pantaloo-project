@@ -91,15 +91,15 @@
                                         @foreach($users as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['user']->email}}</span></td>
-                                                <td>{{ $stat['deposits'] . $currencyCode }}</td>
-                                                <td>{{ $stat['bets'] . $currencyCode }}</td>
+                                                <td>{{ $stat['deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bets'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['bet_count'] }}</td>
-                                                <td>{{ $stat['avg_bet'] . $currencyCode }}</td>
-                                                <td>{{ $stat['wins'] . $currencyCode }}</td>
-                                                <td>{{ $stat['revenue'] . $currencyCode }}</td>
-                                                <td>{{ $stat['bonus'] . $currencyCode }}</td>
-                                                <td>{{ $stat['profit'] . $currencyCode }}</td>
-                                                <td>{{ $stat['adminProfit'] . $currencyCode }}</td>
+                                                <td>{{ $stat['avg_bet'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['wins'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['revenue'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bonus'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['profit'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['adminProfit'] . ' ' . $currencyCode }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
