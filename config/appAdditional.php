@@ -89,11 +89,6 @@ return [
             'code' => 'our_bingo',
             'name' => 'bingo',
         ],
-        [
-            'id' => 10018,
-            'code' => 'our_keno',
-            'name' => 'keno',
-        ],
     ],
 
     'slotTypeId' => 10001,
