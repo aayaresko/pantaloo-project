@@ -115,29 +115,66 @@ function getListGames() {
 
 var button = document.querySelector('.expand-game');
 
+var showLoader = window.location.href;
+    if ((showLoader).indexOf("showLoader") >= 0 ) {
+        $('.video-popup').addClass('popup-slot');
+        $('.video-popup').addClass('active');
+        $('.bottom-nav').hide();
+        $('._agile-lc-parent').hide();
+        // $('header.header').addClass('active');
+    }
+
+
 function getGame(url) {
     //$('.preloaderCommon').show();
     let statusGameRoomLocal = statusGameRoom;
     statusGameRoom++;
     //console.log(statusGameRoom);
-    $('.video-popup').addClass('popup-slot');
-    $('.video-popup').addClass('active');
-    $('header.header').addClass('active');
+    
+
+    let mobile = false
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        mobile = true
+    }
+
+    if(!mobile) {
+        $('.video-popup').addClass('popup-slot');
+        $('.video-popup').addClass('active');
+        $('header.header').addClass('active');
+    } else {
+
+        var windowReference = window.open('https://casinobit.io/en/games?showLoader=1');
+    }
+
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'GET',
         url: url,
         data: {},
-        success: function (html) {
+        success: function (html) {    
+
+
             //clear
             //insert games link
             //console.log(statusGameRoom);
             //console.log(statusGameRoomLocal + 1);
             if (statusGameRoom === (statusGameRoomLocal + 1)) {
-                $('.video-popup .game-entry').html(html);
-                $('.expand-game').removeClass('not-allowed');
-                button.addEventListener('click', fullscreen);
-                //$('.preloaderCommon').hide();
+                // console.log(html);
+
+                let gameUrl = $(html).attr('src')
+
+                if (mobile) {
+                 
+                    windowReference.location = gameUrl;
+                    // window.open(gameUrl, '_blank');
+                    // window.open('https://google.com', '_blank');
+                } else {
+                    $('.video-popup .game-entry').html(html);
+                    $('.expand-game').removeClass('not-allowed');
+                    button.addEventListener('click', fullscreen);
+                    //$('.preloaderCommon').hide();
+                }  
+
             }
         },
         statusCode: {

@@ -39,6 +39,7 @@ body {
   font-size: 14px;
   position: relative;
   line-height: 1.2357143;
+  background-color: rgba(6,3,8,1);
 }
 
 /* line 9, ../scss/_tipography.scss */
@@ -1057,38 +1058,38 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 686, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.slots:before {
-  background: url('../media/images/icons/slots.png') no-repeat center;
+  background: url('../media/images/icons/slots.svg') no-repeat center;
 }
 /* line 689, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.bjack:before {
-   background: url('../media/images/icons/blackjack.png') no-repeat center;
+   background: url('../media/images/icons/blackjack.svg') no-repeat center;
 }
 /* line 692, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.roulette:before {
-   background: url('../media/images/icons/roulette.png') no-repeat center;
+   background: url('../media/images/icons/roulette.svg') no-repeat center;
 }
 /* line 695, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.baccarat:before {
-   background: url('../media/images/icons/baccarat.png') no-repeat center;
+   background: url('../media/images/icons/baccarat.svg') no-repeat center;
 }
 /* line 698, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.bonumbers:before {
-   background: url('../media/images/icons/bonumbers.png') no-repeat center;
+   background: url('../media/images/icons/bonumbers.svg') no-repeat center;
 }
 /* line 701, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.keno:before {
-   background: url('../media/images/icons/keno.png') no-repeat center;
+   background: url('../media/images/icons/keno.svg') no-repeat center;
 }
 .mobile-menu .games-listing li a.poker:before {
-   background: url('../media/images/icons/poker.png') no-repeat center;
-  width: 37px;
+   background: url('../media/images/icons/poker.svg') no-repeat center;
+  /*width: 37px;
   height: 37px;
   top: 68%;
-  left: 10px;
+  left: 10px;*/
 }
 
 .mobile-menu .games-listing li a.dice:before{
-  background: url('../media/images/icons/dice.png') no-repeat center;
+  background: url('../media/images/icons/dice.svg') no-repeat center;
 }
 
 /* line 704, ../scss/_navigation.scss */
@@ -1178,7 +1179,7 @@ html.cropped {
   top: 0;
   left: 0;
   width: 100%;
-  height: 303px;
+  height: 130px;
   /*background: url("../media/images/bg/top-shadow.png") center no-repeat;*/
   background: linear-gradient(0deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
   background-size: cover;
@@ -1200,7 +1201,7 @@ html.cropped {
   position: absolute;
   display: block;
   /*background: url("../media/images/bg/side-nav-shadow.png") center no-repeat;*/
-  background: linear-gradient(283deg, rgba(6,3,8,0) 24%, rgba(6,3,8,0.7) 74%);
+  background: linear-gradient(283deg, rgba(6,3,8,0) 34%, rgba(6,3,8,0.7) 74%);
   /*background-size: cover;*/
   width: 336px;
   height: 100%;
@@ -1469,7 +1470,7 @@ html.cropped {
   background: url("../media/images/bg/welcome-mobile-light.jpg") center no-repeat;
   background-size: cover;
   position: relative;
-  z-index: 1;
+  /*z-index: 1;*/
 }
 /* line 270, ../scss/_middle.scss */
 .mobile-container .welcome-mob .main-title-block {
@@ -1572,7 +1573,7 @@ html.cropped {
   display: block;
   float: left;
   width: 50%;
-  margin-bottom: 64px;
+  /*margin-bottom: 64px;*/
   min-height: 60px;
   padding-left: 40px;
 }
@@ -1600,8 +1601,8 @@ html.cropped {
   left: 0;
   top: 50%;
   margin-top: -25px;
-  height: 60px;
-  width: 72px;
+  height: 40px;
+  width: 45px;
   background: url("../media/images/sprite.png");
 }
 /* line 361, ../scss/_middle.scss */
@@ -4426,6 +4427,8 @@ html.cropped {
 }
 .footer.footer-home {
     position: absolute;
+ /*   background: rgba(6,3,8,0.99);
+    box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);*/
 }
 .footer.footer-home .footer-copyrights {
     display: none;
@@ -4544,44 +4547,44 @@ html.cropped {
 }
 /* line 103, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.slots:before {
-  background: url("../media/images/icons/slots.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/slots.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 106, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.bjack:before {
-  background: url("../media/images/icons/blackjack.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/blackjack.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 109, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.roulette:before {
-  background: url("../media/images/icons/roulette.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/roulette.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 112, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.baccarat:before {
-  background: url("../media/images/icons/baccarat.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/baccarat.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 115, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.bonumbers:before {
-  background: url("../media/images/icons/bonumbers.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/bonumbers.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 118, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.keno:before {
-  background: url("../media/images/icons/keno.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/keno.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 /* line 118, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.poker:before {
-  background: url("../media/images/icons/poker.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/poker.svg") no-repeat center;
+  /*background-size: cover;*/
 /*  height: 33px;*/
 }
 /* line 118, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a.dice:before {
-  background: url("../media/images/icons/dice.png") no-repeat center;
-  background-size: cover;
+  background: url("../media/images/icons/dice.svg") no-repeat center;
+  /*background-size: cover;*/
 }
 
 /* line 121, ../scss/_footer.scss */
@@ -5915,10 +5918,10 @@ html.cropped {
 
 
   .mobile-container .welcome-mob .games-listing li a{
-    font-size: 12px;
+    font-size: 17px;
     padding-left: 0px;
     text-align: center;
-    padding-top: 50px
+    padding-top: 60px;
   }
 
   .mobile-container .welcome-mob .games-listing li a:before{
@@ -5927,35 +5930,41 @@ html.cropped {
   }
 
   .mobile-container .welcome-mob .games-listing li a.slots:before{
-    background: url('../media/images/icons/slots.png') no-repeat center;
+    background: url('../media/images/icons/slots.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.bjack:before{
-    background: url('../media/images/icons/blackjack.png') no-repeat center;
+    background: url('../media/images/icons/blackjack.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.roulette:before{
-     background: url('../media/images/icons/roulette.png') no-repeat center;
+     background: url('../media/images/icons/roulette.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.baccarat:before{
-    background: url('../media/images/icons/baccarat.png') no-repeat center;
+    background: url('../media/images/icons/baccarat.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.poker:before{
-    background: url('../media/images/icons/poker.png') no-repeat center;
+    background: url('../media/images/icons/poker.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
-    background: url('../media/images/icons/bonumbers.png') no-repeat center;
+    background: url('../media/images/icons/bonumbers.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.keno:before{
-    background: url('../media/images/icons/keno.png') no-repeat center;
+    background: url('../media/images/icons/keno.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.dice:before{
-     background: url('../media/images/icons/dice.png') no-repeat center;
+     background: url('../media/images/icons/dice.svg') no-repeat center;
+  }
+
+
+  .footer.footer-home {
+    background: rgba(6,3,8,0.99);
+    box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
   }
 
     /*end upTech custom style*/
@@ -5971,7 +5980,10 @@ html.cropped {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 99999;
   }
+
 }
 
 
@@ -6006,13 +6018,13 @@ html.cropped {
 /* Landscape phone to portrait tablet */
 @media (max-width: 1024px) {
     body .mobile-container .welcome-mob {
-        padding-bottom: 210px !important;
+        padding-bottom: 110px !important;
     }
     .footer.footer-home .footer-copyrights {
         display: block;
     }
     .footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
-        display: block;
+        display: none;
     }
     body .slots-block {
         padding-bottom: 150px;
@@ -6336,8 +6348,8 @@ html.cropped {
   }
   /* line 1190, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob {
-    padding-top: 629px;
-    padding-bottom: 60px;
+    padding-top: 375px;
+    padding-bottom: 85px !important;
   }
   .mobile-container .welcome-mob .bitcoin-block {
     margin-top: 70px;
@@ -6836,6 +6848,8 @@ html.cropped {
 
    body .mobile-container .welcome-mob .games-listing{
       max-width: 90%;
+      position: relative;
+      z-index: 99999;
    }
 
     body .mobile-container .welcome-mob .games-listing li{
@@ -6844,44 +6858,52 @@ html.cropped {
 
 
    body .mobile-container .welcome-mob .games-listing li a{
-      font-size: inherit;
+      font-size: 12px;
       padding-left: initial;
    }
 
 
    .mobile-container .welcome-mob .games-listing li a.slots:before{
-    background: url('../media/images/icons/slots.png') no-repeat center;
+    background: url('../media/images/icons/slots.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.bjack:before{
-    background: url('../media/images/icons/blackjack.png') no-repeat center;
+    background: url('../media/images/icons/blackjack.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.roulette:before{
-     background: url('../media/images/icons/roulette.png') no-repeat center;
+     background: url('../media/images/icons/roulette.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.baccarat:before{
-    background: url('../media/images/icons/baccarat.png') no-repeat center;
+    background: url('../media/images/icons/baccarat.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.poker:before{
-    background: url('../media/images/icons/poker.png') no-repeat center;
+    background: url('../media/images/icons/poker.svg') no-repeat center;
     width: 50px;
   }
 
   .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
-    background: url('../media/images/icons/bonumbers.png') no-repeat center;
+    background: url('../media/images/icons/bonumbers.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.keno:before{
-    background: url('../media/images/icons/keno.png') no-repeat center;
+    background: url('../media/images/icons/keno.svg') no-repeat center;
   }
 
   .mobile-container .welcome-mob .games-listing li a.dice:before{
-     background: url('../media/images/icons/dice.png') no-repeat center;
+     background: url('../media/images/icons/dice.svg') no-repeat center;
   }
 
+  .footer.footer-home{
+      background: rgba(6,3,8,0.99); 
+     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99); 
+  }
+
+  .mobile-container .welcome-mob{
+    background-position: center -217px;
+  }
     /*end upTech custom style*/
 }
 
@@ -7074,21 +7096,21 @@ html.cropped {
   }
   /* line 1736, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a {
-    padding-left: 55px;
-    font-size: 16px;
+    padding-left: 44px;
+    font-size: 12px;
   }
   /* line 1739, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a:before {
     margin-top: -14.5px;
-    height: 29px;
+    height: 30px;
     width: 37px;
   }
   /* line 1744, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.slots:before {
-    background: url('../media/images/icons-small/slots.png') no-repeat center;
+    background: url('../media/images/icons/slots.svg') no-repeat center;
   }
   body .mobile-menu .popup-entry .games-listing li a.poker:before {
-    background: url('../media/images/icons-small/poker.png') no-repeat center;
+    background: url('../media/images/icons/poker.svg') no-repeat center;
     /*height: 32px;*/
     /*width: 37px;*/
     left: 0;
@@ -7096,31 +7118,31 @@ html.cropped {
   }
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {
-    background: url('../media/images/icons-small/blackjack.png') no-repeat center;
+    background: url('../media/images/icons/blackjack.svg') no-repeat center;
     /*background-size: cover;*/
   }
   /* line 1750, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.roulette:before {
-    background: url('../media/images/icons-small/roulette.png') no-repeat center;
+    background: url('../media/images/icons/roulette.svg') no-repeat center;
     /*background-size: cover;*/
   }
   /* line 1753, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.baccarat:before {
-    background: url('../media/images/icons-small/baccarat.png') no-repeat center;
+    background: url('../media/images/icons/baccarat.svg') no-repeat center;
     /*background-size: cover;*/
   }
   /* line 1756, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bonumbers:before {
-    background: url('../media/images/icons-small/bonumbers.png') no-repeat center;
+    background: url('../media/images/icons/bonumbers.svg') no-repeat center;
     /*background-size: cover;*/
   }
   /* line 1759, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.keno:before {
-    background: url('../media/images/icons-small/keno.png') no-repeat center;
+    background: url('../media/images/icons/keno.svg') no-repeat center;
     /*background-size: cover;*/
   }
   body .mobile-menu .popup-entry .games-listing li a.dice:before {
-    background: url('../media/images/icons-small/dice.png') no-repeat center;
+    background: url('../media/images/icons/dice.svg') no-repeat center;
     /*background-size: cover;*/
   }
   /* line 1762, ../scss/_responsive.scss */
@@ -7172,7 +7194,7 @@ html.cropped {
   }
   /* line 1807, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing {
-    max-width: 400px;
+    /*max-width: 400px;*/
   }
   /* line 1810, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .nav-block {
@@ -7420,6 +7442,10 @@ html.cropped {
       flex-basis: 25%
    }
 
+   .mobile-container .welcome-mob{
+      background-position: center -100px;
+   }
+
 
 
 
@@ -7462,6 +7488,11 @@ html.cropped {
 }
 /* Landscape phones and down */
 @media (max-width: 480px) {
+  
+  body{
+    background: #fff;
+  }
+
   /* line 2040, ../scss/_responsive.scss */
   body input[type="email"],
   body input[type="password"] {
@@ -7612,9 +7643,9 @@ html.cropped {
   }
   /* line 2135, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li {
-    margin-bottom: 20px;
-    width: 100%;
-    float: none;
+    /*margin-bottom: 20px;*/
+    /*width: 100%;*/
+    /*float: none;*/
   }
   /* line 2141, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .navigation .navigation-list li {
@@ -7658,13 +7689,14 @@ html.cropped {
   }
   /* line 2178, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing {
-    padding-bottom: 40px;
+/*    padding-bottom: 40px;*/
     justify-content: flex-start;
   }
   /* line 2180, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing li {
     /*width: 100%;*/
     /*float: none;*/
+    /*font-size: 12px;*/
   }
   body .mobile-container .welcome-mob .games-listing li a{
     padding-left: 57px;
@@ -7872,8 +7904,6 @@ html.cropped {
     padding-bottom: 110px !important;
   }
 
-
-
   .welcome-mob:after{
     content: '';
     position: absolute;
@@ -7882,13 +7912,53 @@ html.cropped {
     width: 100%;
     height: 420px;
     background: linear-gradient(180deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
-
   }
 
-  .games-listing-block{
-    position: relative;
-    z-index: 2;
+  .footer.footer-home{
+    background: initial;
+     box-shadow: none;
   }
+
+    body .mobile-container .welcome-mob .games-listing li a:before{
+      height: 30px;
+  }
+
+  /*.mobile-container .welcome-mob .games-listing li a.slots:before{
+    background: url("../media/images/icons/slots.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.bjack:before{
+    background: url("../media/images/icons/blackjack.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.roulette:before{
+    background: url("../media/images/icons/roulette.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.dice:before{
+    background: url("../media/images/icons/dice.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.keno:before{
+    background: url("../media/images/icons/keno.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.baccarat:before{
+    background: url("../media/images/icons/baccarat.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
+    background: url("../media/images/icons/bonumbers.svg") no-repeat center;
+  }
+
+  .mobile-container .welcome-mob .games-listing li a.poker:before{
+    background: url("../media/images/icons/poker.svg") no-repeat center;
+  }*/
+
+
+
+
+ 
 
   /*end custom style*/
 
