@@ -159,7 +159,6 @@ class TransactionController extends Controller
             if ((int)$item->type === 3 and (int)$item->confirmations < $param['minConfirmBtc']) {
                 $item->description = $item->description . ' ' . view('admin..parts.extra.pending')->render();
             }
-
             return $item;
         });
 
