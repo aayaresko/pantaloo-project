@@ -232,8 +232,12 @@ class User extends Authenticatable
 
     public function stat(Carbon $from, Carbon $to)
     {
+        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+
         $stat = [
             'deposits' => 0,
+            'pending_deposits' => 0,
+            'confirm_deposits' => 0,
             'bets' => 0,
             'bet_count' => 0,
             'avg_bet' => 0,
@@ -250,6 +254,12 @@ class User extends Authenticatable
         {
             if($transaction->type == 3)
             {
+                if ((int)$transaction->confirmations < $minConfirmBtc) {
+                    $stat['pending_deposits'] = $stat['pending_deposits'] + $transaction->sum;
+                } else {
+                    $stat['confirm_deposits'] = $stat['confirm_deposits'] + $transaction->sum;
+                }
+
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
             }
             elseif($transaction->type == 1 or $transaction->type == 2)

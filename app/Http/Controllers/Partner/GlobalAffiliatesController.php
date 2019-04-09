@@ -124,6 +124,8 @@ class GlobalAffiliatesController extends Controller
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
 
+                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
                 $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
                 $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
                 $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
@@ -158,6 +160,8 @@ class GlobalAffiliatesController extends Controller
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
 
+                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
                 $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
                 $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
                 $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
