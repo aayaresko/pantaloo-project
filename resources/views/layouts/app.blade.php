@@ -26,8 +26,21 @@
     <link rel="canonical" href="#" />
 
     <link rel="icon" href="/favicon.png">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5MGSS83');</script>
+    <!-- End Google Tag Manager -->
 </head>
 <body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MGSS83"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <div id="preloader" class="preloader-block"><span class="spin"></span></div>
 <div class="preloaderCommon" style="display: none"></div>
@@ -69,7 +82,8 @@
 <header class="header @if(Auth::check()) usr @endif">
     <div class="header-left">
         <div class="logo-block">
-            <a href="/"><img src="/media/images/logo.png" alt="logo"></a>
+            <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+            <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
         </div>
     </div>
     <div class="navigation-container">
@@ -224,7 +238,7 @@
         <div class="mobTopWrap">       
             
             <div class="logo-container">
-                <a href="/" class="logo"><img src="/media/images/logo.png" alt="logo"></a>
+                <a href="/" class="logo"><img src="/media/images/logoSmall.png" alt="logo"></a>
             </div>
             @if(Auth::guest())
             <div class="auth-block-mobile">
@@ -236,62 +250,50 @@
                 </div>
             </div>
             @endif
+            @if(Auth::check())
+
+
+                    <div class="wlc-usr">
+
+                        <ul class="balancebox floated">
+                            <li class="clearfix">
+                                <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
+                                <div class="balancebox-title">
+                                    <span>{{ trans('casino.balance') }}</span>
+                                    <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                </div>
+                            </li>
+                            <ul class="balancebox-dropdown">
+                                <li>
+                                    <div class="balancebox-dropdown-title">
+                                        <span>Real Balance</span>
+                                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="balancebox-dropdown-title">
+                                        <span>Bonus Balance</span>
+                                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+
+                    </div>      
+
+            @endif
             <a href="#" class="close-icon"></a>
         </div>
 
-        @if(Auth::check())
-
-
-                <div class="wlc-usr">
-
-                    <ul class="balancebox floated">
-                        <li class="clearfix">
-                            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
-                            <div class="balancebox-title">
-                                <span>{{ trans('casino.balance') }}</span>
-                                <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                            </div>
-                        </li>
-                        <ul class="balancebox-dropdown">
-                            <li>
-                                <div class="balancebox-dropdown-title">
-                                    <span>Real Balance</span>
-                                    <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="balancebox-dropdown-title">
-                                    <span>Bonus Balance</span>
-                                    <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </ul>
-
-                </div>
-
-              
-    
-        
-        <!-- <nav class="navigation">
-            <ul class="navigation-list">
-                <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
-                <li><a href="{{route('withdraw', ['lang' => $currentLang])}}" class="withdraw">{{ trans('casino.withdraw') }}</a></li>
-                <li><a href="{{route('bonus', ['lang' => $currentLang])}}" class="bonus">{{ trans('casino.get_bonus') }}</a></li>
-                <li><a href="{{route('settings', ['lang' => $currentLang])}}" class="setting">{{ trans('casino.settings') }}</a></li>
-            </ul>
-        </nav> -->
-        @endif
-        
+       
+         
         <div class="games-listing-block mobGameBlock">{{--{{ trans('casino.gambling_card_games') }}--}}
-            <br>
-            <br>
             <ul class="games-listing">
                 @include('footer_links')
             </ul>
         </div>
         
-        <nav class="navigation">
+        <nav class="navigation mobNav">
             <ul class="navigation-list">
                 @if(Auth::check())
                 <li><a href="{{route('deposit', ['lang' => $currentLang])}}" class="deposite">{{ trans('casino.deposit') }}</a></li>
@@ -318,11 +320,9 @@
         </ul>
 
         @if(Auth::check())
-            <nav class="navigation">
-                <ul class="navigation-list">
-                    <li><a href="{{url('/logout')}}" class="logout-btn">{{ trans('logout') }}</a></li>
-                </ul>
-            </nav>
+          
+            <a href="{{url('/logout')}}" class="logout-btn">{{ trans('logout') }}</a>
+         
         @endif
     </div>
 </div>
@@ -762,16 +762,7 @@
 
 <img src="/images/pixel.png" alt="" style="display: none" />
 
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-6858113-16', 'auto');
-    ga('send', 'pageview');
-
-</script>
 
 {{--<!-- Yandex.Metrika counter -->--}}
 {{--<script type="text/javascript">--}}
