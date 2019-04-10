@@ -75,7 +75,8 @@
                                         <thead>
                                         <tr role="row">
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Confirmed</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Pending</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bets</th>
                                             <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending">Bet count</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Avg bet</th>
@@ -91,15 +92,16 @@
                                         @foreach($users as $stat)
                                             <tr role="row">
                                                 <td><span class="label label-default">{{$stat['user']->email}}</span></td>
-                                                <td>{{ $stat['deposits'] . $currencyCode }}</td>
-                                                <td>{{ $stat['bets'] . $currencyCode }}</td>
+                                                <td>{{ $stat['confirm_deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['pending_deposits'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bets'] . ' ' . $currencyCode }}</td>
                                                 <td>{{ $stat['bet_count'] }}</td>
-                                                <td>{{ $stat['avg_bet'] . $currencyCode }}</td>
-                                                <td>{{ $stat['wins'] . $currencyCode }}</td>
-                                                <td>{{ $stat['revenue'] . $currencyCode }}</td>
-                                                <td>{{ $stat['bonus'] . $currencyCode }}</td>
-                                                <td>{{ $stat['profit'] . $currencyCode }}</td>
-                                                <td>{{ $stat['adminProfit'] . $currencyCode }}</td>
+                                                <td>{{ $stat['avg_bet'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['wins'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['revenue'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['bonus'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['profit'] . ' ' . $currencyCode }}</td>
+                                                <td>{{ $stat['adminProfit'] . ' ' . $currencyCode }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

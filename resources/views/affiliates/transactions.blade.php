@@ -17,7 +17,7 @@
                                     <select name="user_id" class="selectpicker" data-live-search="true">
                                         <option value="0" selected>Users / All</option>
                                         @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->email}}</option>
+                                            <option value="{{$user->id}}">{{$user->id}}</option>
                                         @endforeach
                                     </select>
                                 </div>
