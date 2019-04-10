@@ -794,13 +794,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {{--<!-- /Yandex.Metrika counter -->--}}
 
 {{--<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>--}}
-<script id="_agile_min_js" async type="text/javascript" src="https://d1gwclp1pmzk26.cloudfront.net/agile/agile-cloud.js"> </script>
-<script type="text/javascript" >
-    var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){
-        _agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);
-        _agile.track_page_view();
-        _agile_execute_web_rules();};
-</script>
+{{--<script id="_agile_min_js" async type="text/javascript" src="https://d1gwclp1pmzk26.cloudfront.net/agile/agile-cloud.js"> </script>--}}
+{{--<script type="text/javascript" >--}}
+    {{--var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){--}}
+        {{--_agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);--}}
+        {{--_agile.track_page_view();--}}
+        {{--_agile_execute_web_rules();};--}}
+{{--</script>--}}
+<!-- Start of uptechsupport Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>
+<!-- End of uptechsupport Zendesk Widget script -->
 
 </body>
 </html>
