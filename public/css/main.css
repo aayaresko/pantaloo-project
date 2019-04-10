@@ -4997,20 +4997,97 @@ html.cropped {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 1080px) {
+
+  .mobGameBlock .games-listing{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .mobGameBlock .games-listing li{
+    flex-basis: 50%;
+  }
+
+  .mobGameBlock .games-listing li.slots{
+    order: 1;
+  }
+
+  .mobGameBlock .games-listing li.roulette{
+    order: 3;
+  }
+
+  .mobGameBlock .games-listing li.bjack{
+    order: 5;
+  }
+
+  .mobGameBlock .games-listing li.poker{
+    order: 7;
+  }
+
+  .mobGameBlock .games-listing li.baccarat{
+    order: 2;
+  }
+
+  .mobGameBlock .games-listing li.dice{
+    order: 4;
+  }
+
+  .mobGameBlock .games-listing li.bonumbers{
+    order: 6;
+  }
+
+  .mobGameBlock .games-listing li.keno{
+    order: 8;
+  }
+
+
+
+  .mobNav .navigation-list li.order-deposite{
+    order: 1;
+  }
+
+  .mobNav .navigation-list li.order-bonuses{
+    order: 2;
+  }
+
+  .mobNav .navigation-list li.order-withdraw{
+    order: 3;
+  }
+
+  .mobNav .navigation-list li.order-afiliate{
+    order: 4;
+  }
+
+  .mobNav .navigation-list li.order-bonus{
+    order: 5;
+  }
+
+  .mobNav .navigation-list li.order-support{
+    order: 6;
+  }
+
+  .mobNav .navigation-list li.order-setting{
+    order: 7;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* line 142, ../scss/_responsive.scss */
   body {
     overflow-x: hidden;
@@ -7430,7 +7507,7 @@ html.cropped {
 /* Landscape phones and down */
 @media (max-width: 480px) {
 
-  .games-listing{
+  body .welcome-mob .games-listing{
     display: flex;
     flex-wrap: wrap;
   }
@@ -7439,47 +7516,38 @@ html.cropped {
     flex-basis: 50%;
   }
 
-  .games-listing li.slots{
+  .welcome-mob .games-listing li.slots{
     order: 1
   }
 
-  .games-listing li.roulette{
+  .welcome-mob .games-listing li.roulette{
     order: 3
   }
 
-  .games-listing li.bjack{
+  .welcome-mob .games-listing li.bjack{
     order: 5
   }
 
-  .games-listing li.poker{
+  .welcome-mob .games-listing li.poker{
     order: 7
   }
 
-   .games-listing li.baccarat{
+  .welcome-mob .games-listing li.baccarat{
     order: 2
   }
 
-  .games-listing li.dice{
+  .welcome-mob .games-listing li.dice{
     order: 4
   }
 
-  .games-listing li.bonumbers{
+  .welcome-mob .games-listing li.bonumbers{
     order: 6
   }
 
-  .games-listing li.keno{
+  .welcome-mob .games-listing li.keno{
     order: 8
   }
 
-
-
-
-
-
-  
-  /* body{
-    background: #fff;
-  } */
   .mobile-menu {
     width: 100%;
   }
