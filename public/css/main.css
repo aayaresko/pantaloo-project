@@ -2564,6 +2564,7 @@ html.cropped {
 
 .slots-block .block-container .games-entry .single-game > a:first-child{
   border-radius: 10px 10px 0px 0px;
+  overflow: hidden;
 }
 
 .slots-block .block-container .games-entry .single-game > a:last-child{
@@ -6293,10 +6294,10 @@ html.cropped {
   body .slots-block .block-container .games-entry .single-game a .game-preview {
     height: 100px;
     width: 100%;
-    max-width: 160px;
-    border-radius: 22px;
+    /*max-width: 160px;*/
+  /*  border-radius: 22px;
     -webkit-border-radius: 22px;
-    -moz-border-radius: 22px;
+    -moz-border-radius: 22px;*/
     background-size: 100% !important;
   }
   /* line 1062, ../scss/_responsive.scss */
