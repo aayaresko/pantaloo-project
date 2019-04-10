@@ -5766,6 +5766,11 @@ html.cropped {
   /* line 613, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block table td {
     text-align: center;
+    display: block;
+    width: 100%;
+  }
+  .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block .text {
+    margin-bottom: 10px;
   }
   /* line 615, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block table td input[type="text"] {
@@ -5812,9 +5817,9 @@ html.cropped {
     width: auto;
   }
   /* line 646, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block table td:first-child .text {
+  /* body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block table td:first-child .text {
     display: none;
-  }
+  } */
   /* line 651, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .bottom-block {
     display: none;
@@ -5917,6 +5922,12 @@ html.cropped {
   /* line 737, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs {
     display: none;
+  }
+  .dontShow {
+    display: none !important;
+  }
+  .needShow {
+    display: block !important;
   }
   /* line 740, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion {
@@ -7511,6 +7522,12 @@ html.cropped {
   body .welcome-mob .games-listing{
     display: flex;
     flex-wrap: wrap;
+  }
+  .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs.needShow {
+    padding-left: 0;
+  }
+  .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs.needShow .ui-tabs-panel .single-section table td {
+    display: block;
   }
 
   body .mobile-container .welcome-mob .games-listing li{
