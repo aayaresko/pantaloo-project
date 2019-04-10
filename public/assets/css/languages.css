@@ -91,7 +91,7 @@
 .langbox li span {
     vertical-align: top;
     text-transform: uppercase;
-    margin-top: 1px;
+    margin-top: 3px;
     display: inline-block;
 }
 .langbox li a.active, .langbox .langbox-dropdown li a:hover, .balancebox li a.active, .balancebox .balancebox-dropdown li a:hover {
@@ -118,7 +118,7 @@ body .mobile-menu .popup-entry .language-nav img {
         max-width: 30px;
     }
 }
-
+/* 
 @media (max-width: 767px) {
     body .mobile-menu .popup-entry .logo-container {
         width: 100%;
@@ -133,4 +133,4 @@ body .mobile-menu .popup-entry .language-nav img {
     body .mobile-menu .popup-entry .language-nav img {
         max-width: 20px;
     }
-}
+} */

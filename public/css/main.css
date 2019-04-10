@@ -503,6 +503,9 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header .navigation .navigation-list li:last-child {
   padding-right: 0;
 }
+.reg-modified {
+  display: none;
+}
 /* line 242, ../scss/_navigation.scss */
 .header .navigation .navigation-list li a {
   color: #fff;
@@ -644,16 +647,17 @@ header.header.active .promo-actions-block .promo-action-btn {
   margin-right: 32px;
 }
 /* line 350, ../scss/_navigation.scss */
-.header .header-right-part .login-block .login-btn {
+.header .header-right-part .login-block .login-btn,
+ body .header .header-right-part .login-block .reg-btn {
   display: block;
   height: 32px;
   padding: 8px 0;
   padding-left: 46px;
   position: relative;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'Arial narrow', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -661,7 +665,49 @@ header.header.active .promo-actions-block .promo-action-btn {
   transition: 0.2s linear;
   text-decoration: none;
 }
+/* line 499, ../scss/_navigation.scss */
+.mobile-menu .popup-entry {
+  position: relative;
+  /* padding: 22px 30px; */
+  /* padding-top: 163px; */
+}
+.mobTopWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px 20px;
+  border-bottom: 2px solid #321e5b;
+}
+.mobTopWrap .balancebox {
+  margin-bottom: 0;
+}
+.mobGameBlock {
+  padding: 20px 24px;
+  border-bottom: 2px solid #321e5b;
+}
+.mobNav {
+  padding: 20px 24px;
+  border-bottom: 2px solid #321e5b;
+  
+}
+.mobTopWrap .login-block {
+  position: relative;
+}
+.mobTopWrap .wlc-usr {
+  position: relative;
+  margin-right: 42px;
+}
+.mobile-menu .langbox {
+  margin-left: 24px;
+  margin-top: 24px;
+}
+.mobile-menu .langbox li span {
+  font-weight: bold;
+}
+
+
 /* line 362, ../scss/_navigation.scss */
+.auth-block-mobile .login-btn:before,
 .header .header-right-part .login-block .login-btn:before {
   content: '';
   position: absolute;
@@ -670,11 +716,12 @@ header.header.active .promo-actions-block .promo-action-btn {
   height: 26px;
   top: 50%;
   margin-top: -13px;
-  left: 0;
+  left: -14px;
   background: url("../media/images/sprite.png") 0 0;
 }
 /* line 373, ../scss/_navigation.scss */
-.header .header-right-part .login-block .login-btn:hover {
+.header .header-right-part .login-block .login-btn:hover,
+.header .header-right-part .login-block .reg-btn:hover {
   opacity: .8;
 }
 /* line 379, ../scss/_navigation.scss */
@@ -791,17 +838,20 @@ header.header.active .promo-actions-block .promo-action-btn {
 .sections-nav li.active a:after {
   display: none;
 }
+.header-left .logo-block .logoMob {
+  display: none;
+}
 
 /* line 473, ../scss/_navigation.scss */
 .mobile-menu {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 99999999999999;
-  width: 100%;
+  width: 380px;
   height: 100%;
   overflow-y: scroll;
-  background-color: #000;
+  background-color: #100920;
   transform: translate(100%, 0);
   -webkit-transform: translate(100%, 0);
   -moz-transform: translate(100%, 0);
@@ -821,32 +871,15 @@ header.header.active .promo-actions-block .promo-action-btn {
   -o-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
 }
-/* line 487, ../scss/_navigation.scss */
-.mobile-menu:before {
-  content: '';
-  display: block;
-  height: 1523px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  max-height: 1523px;
-  background: url("../media/images/bg/smoke-mobile-light.jpg") center no-repeat;
-}
-/* line 499, ../scss/_navigation.scss */
-.mobile-menu .popup-entry {
-  position: relative;
-  padding: 71px;
-  padding-top: 163px;
-}
+
+
 /* line 503, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .close-icon {
   position: absolute;
-  right: 113px;
-  top: 89px;
-  height: 47px;
-  width: 47px;
+  right: 10px;
+  top: 28px;
+  height: 40px;
+  width: 40px;
 }
 /* line 509, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .close-icon:after, .mobile-menu .popup-entry .close-icon:before {
@@ -854,7 +887,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   position: absolute;
   left: 0;
   top: 50%;
-  width: 100%;
+  width: 76%;
   height: 4px;
   background-color: #fff;
   margin-top: -3px;
@@ -878,6 +911,8 @@ header.header.active .promo-actions-block .promo-action-btn {
 /* line 535, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .logo-container {
   text-align: center;
+  float: left;
+  margin-top: 5px;
 }
 /* line 537, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .logo-container .logo {
@@ -885,42 +920,17 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 541, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .auth-block-mobile {
+  margin-right: 45px;
+  margin-top: 2px;
   text-align: center;
-  margin-top: 135px;
-  padding-bottom: 97px;
-  border-bottom: 1px solid #b11da0;
 }
-/* line 546, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .login-block {
-  margin-right: 76px;
-  float: none;
-  display: inline-block;
+.mobile-menu .balancebox .balancebox-dropdown {
+  z-index: 99;
 }
-/* line 550, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn {
-  display: block;
-  text-align: center;
-  height: 101px;
-  text-align: center;
-  text-decoration: none;
-  padding: 28px 0;
-  background: #b10096;
-  background: -moz-linear-gradient(-45deg, #b10096 0%, #610046 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, #b10096), color-stop(100%, #610046));
-  background: -webkit-linear-gradient(-45deg, #b10096 0%, #610046 100%);
-  background: -o-linear-gradient(-45deg, #b10096 0%, #610046 100%);
-  background: -ms-linear-gradient(-45deg, #b10096 0%, #610046 100%);
-  background: linear-gradient(135deg, #b10096 0%, #610046 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b10096', endColorstr='#610046', GradientType=1 );
-  border-radius: 51px;
-  -webkit-border-radius: 51px;
-  -moz-border-radius: 51px;
-  padding-left: 60px;
-  padding-right: 88px;
-  border-top: 1px solid #ef00ea;
-}
+
+
 /* line 569, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text {
+/* .mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text {
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   font-size: 44px;
   color: #fff;
@@ -928,20 +938,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   letter-spacing: 5px;
   position: relative;
   padding-left: 83px;
-}
+} */
 /* line 577, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text:before {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 0;
-  background: url("../media/images/sprite.png");
-  height: 56px;
-  width: 53px;
-  margin-top: -31px;
-  background-position: -314px -217px;
-}
+
 /* line 592, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .auth-block-mobile .registration-block {
   float: none;
@@ -949,35 +948,16 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 595, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn {
-  position: relative;
-  display: block;
-  width: 383px;
-  height: 101px;
-  text-align: center;
-  text-decoration: none;
-  padding: 28px 0;
+  height: 41px;
+  padding: 13px 0;
+  padding-left: 22px;
+  font-size: 12px;
+  font-weight: bold;
 }
 /* line 603, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn .text {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  font-size: 44px;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  position: relative;
-}
+
 /* line 611, ../scss/_navigation.scss */
-.mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn:before {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 122px;
-  top: 50%;
-  margin-top: -71px;
-  width: 383px;
-  background: url("../media/images/bg/mobile-reg-btn.png") center no-repeat;
-}
+
 /* line 622, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn:hover {
   opacity: .8;
@@ -1020,21 +1000,22 @@ header.header.active .promo-actions-block .promo-action-btn {
   clear: both;
 }
 /* line 658, ../scss/_navigation.scss */
-.mobile-menu .games-listing li {
+.mobile-menu .games-listing li,
+.mobile-menu .navigation-list li {
   display: block;
   float: left;
   width: 50%;
-  margin-bottom: 64px;
-  min-height: 60px;
-  padding-left: 40px;
+  margin: 16px 0;
 }
 /* line 665, ../scss/_navigation.scss */
-.mobile-menu .games-listing li a {
+.mobile-menu .logout-btn,
+.mobile-menu .games-listing li a,
+.mobile-menu .navigation-list li a {
   display: block;
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -1042,20 +1023,35 @@ header.header.active .promo-actions-block .promo-action-btn {
   transition: 0.2s linear;
   text-decoration: none;
   position: relative;
-  padding-left: 97px;
-  font-size: 39px;
+  padding-left: 40px;
+  font-size: 13px;
 }
-/* line 676, ../scss/_navigation.scss */
-.mobile-menu .games-listing li a:before {
+.mobile-menu .logout-btn {
+  float: left;
+  margin-top: 39px;
+  margin-left: 20px;
+}
+.mobile-menu .logout-btn::before{
   content: '';
   position: absolute;
   left: 0;
-  top: 50%;
-  margin-top: -30px;
-  height: 60px;
-  width: 72px;
-  background: url("../media/images/sprite.png");
+  top: -5px;
+  height: 25px;
+  width: 30px;
+  background: url('../assets/images/icons/icon-exit.png') no-repeat center;
 }
+/* line 676, ../scss/_navigation.scss */
+.mobile-menu .games-listing li a:before,
+.mobile-menu .navigation-list li a:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -6px;
+  height: 25px;
+  width: 30px;
+  /* background: url("../media/images/sprite.png"); */
+}
+
 /* line 686, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a.slots:before {
   background: url('../media/images/icons/slots.svg') no-repeat center;
@@ -1088,9 +1084,34 @@ header.header.active .promo-actions-block .promo-action-btn {
   left: 10px;*/
 }
 
+
 .mobile-menu .games-listing li a.dice:before{
   background: url('../media/images/icons/dice.svg') no-repeat center;
 }
+
+.mobile-menu .navigation-list li a.bonuses:before {
+  background: url('../media/images/icons/bonuses.png') no-repeat center;
+}
+
+.mobile-menu .navigation-list li a.support:before {
+  background: url('../media/images/icons/support.png') no-repeat center;
+}
+.mobile-menu .navigation-list li a.deposite:before {
+  background: url('../media/images/icons/deposit.png') no-repeat center;
+}
+.mobile-menu .navigation-list li a.withdraw:before {
+  background: url('../media/images/icons/withdraw.png') no-repeat center;
+}
+.mobile-menu .navigation-list li a.bonus:before {
+  background: url('../media/images/icons/getbonus.png') no-repeat center;
+}
+.mobile-menu .navigation-list li a.setting:before {
+  background: url('../media/images/icons/settings.png') no-repeat center;
+}
+.mobile-menu .navigation-list li a.afiliate:before {
+  background: url('../media/images/icons/afiliate.png') no-repeat center;
+}
+
 
 /* line 704, ../scss/_navigation.scss */
 .mobile-menu .games-listing li a:hover {
@@ -1098,45 +1119,23 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 711, ../scss/_navigation.scss */
 .mobile-menu .navigation .navigation-list {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0;
   margin: 0;
   list-style: none;
 }
-/* line 715, ../scss/_navigation.scss */
-.mobile-menu .navigation .navigation-list li {
-  position: relative;
-  padding-left: 84px;
-  min-height: 32px;
-  display: block;
-  float: left;
-  width: 50%;
-  margin-bottom: 63px;
-}
+
+
 /* line 723, ../scss/_navigation.scss */
-.mobile-menu .navigation .navigation-list li:before {
-  content: '';
+.mobile-menu .navigation .logout-btn {
   display: block;
-  position: absolute;
-  background: url("../media/images/sprite.png") -158px 0;
+  background: url("../assets/images/icons/icon-exit.png") -158px 0;
   width: 19px;
   height: 30px;
-  left: 0;
-  top: 50%;
   margin-top: -19px;
 }
-/* line 734, ../scss/_navigation.scss */
-.mobile-menu .navigation .navigation-list li a {
-  font-size: 47px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: #fff;
-}
-/* line 741, ../scss/_navigation.scss */
-.mobile-menu .navigation .navigation-list:after {
-  content: '';
-  display: block;
-  clear: both;
-}
+
 
 /*=====================SLIDER======================*/
 /*=====================MIDDLE======================*/
@@ -1880,7 +1879,7 @@ html.cropped {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000000000;
+  z-index: 999999999999999;
   opacity: 0;
   transform: translate(0, -100%);
   -webkit-transform: translate(0, -100%);
@@ -2525,7 +2524,7 @@ html.cropped {
 }
 /* line 1050, ../scss/_middle.scss */
 .slots-block .block-container .games-entry {
-  padding: 0 30px;
+  padding: 10px 30px;
   width: 100%;
   overflow: hidden;
   display: -webkit-flex;
@@ -2540,7 +2539,7 @@ html.cropped {
 /* line 1060, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game {
   padding: 0 15px;
-  width: 300px;
+  width: 281px;
   /* float: left; */
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2558,6 +2557,21 @@ html.cropped {
   transition: 0.2s linear;
   text-decoration: none;
 }
+
+.slots-block .insertGamesMobile .single-game a.open_game{
+  background: #8374d6;
+}
+
+.slots-block .block-container .games-entry .single-game > a:first-child{
+  border-radius: 10px 10px 0px 0px;
+}
+
+.slots-block .block-container .games-entry .single-game > a:last-child{
+  padding: 8px 0px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+
 /* line 1073, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game a .game-preview {
   height: 133px;
@@ -2575,9 +2589,9 @@ html.cropped {
   display: block;
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   color: #fff;
-  font-size: 17px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  font-size: 15px;
+  /*text-transform: uppercase;*/
+  /*letter-spacing: 3px;*/
 }
 /* line 1090, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game a:hover {
@@ -4844,7 +4858,7 @@ html.cropped {
   }
   /* line 36, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game {
-    width: 25%;
+    width: 20%;
   }
   /* line 39, ../scss/_responsive.scss */
   body .bitcoin-block {
@@ -5001,10 +5015,113 @@ html.cropped {
   body {
     overflow-x: hidden;
   }
+  .balancebox>li {
+    padding: 10px 35px 10px 10px;
+  }
+  .header.usr .header-right-part .usr-block .wlc-usr {
+    margin-right: 0;
+  }
+  .balancebox-title {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .reg-modified {
+    display: block;
+  }
+  body .header.usr .header-right-part .usr-block {
+     margin-top: -19px;
+    float: left;
+  }
+  body .header .header-right-part .login-block {
+    height: auto;
+    padding: 0;
+  }
+    body .header {
+    padding: 0 30px;
+    padding-top: 22px;
+  }
+  /* line 927, ../scss/_responsive.scss */
+  body .header .logo-block {
+    max-width: 153px;
+    margin-top: 0;
+  }
+  /* line 931, ../scss/_responsive.scss */
+  body .header .header-right-part {
+    padding-right: 0;
+    top: 0;
+  }
+  /* line 934, ../scss/_responsive.scss */
+  body .header .header-right-part .login-block {
+    height: 75px;
+    padding: 0;
+    margin-right: 0;
+  }
+  /* line 938, ../scss/_responsive.scss */
+
+  /* line 942, ../scss/_responsive.scss */
+  body .header .header-right-part .login-block .login-btn:before {
+    width: 25px;
+    height: 26px;
+    top: 50%;
+    margin-top: -13px;
+    background-position: 0 0;
+  }
+  /* line 951, ../scss/_responsive.scss */
+  body .header .header-right-part .menu-button-block {
+    padding-top: 7px;
+    margin-left: 30px;
+  }
+  /* line 954, ../scss/_responsive.scss */
+  body .header .header-right-part .menu-button-block .menu-btn {
+   width: 34px;
+   height: 34px;
+  }
+  body .header .header-right-part .menu-button-block .menu-btn span{
+    display: block;
+   width: 34px;
+   height: 4px;
+   border-radius: 3px;
+   background: #fff;
+  }
+  /* line 957, ../scss/_responsive.scss */
+  body .header .header-right-part .menu-button-block .menu-btn:before, body .header .header-right-part .menu-button-block .menu-btn:after {
+    height: 4px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+  }
+  body .header .header-right-part .menu-button-block .menu-btn:before {
+    top: 10px;
+  }
+  body .header .header-right-part .menu-button-block .menu-btn:after {
+    bottom: 10px;
+  }
+  /* line 1603, ../scss/_responsive.scss */
+  body .header .header-right-part .login-block .login-btn,
+  body .header .header-right-part .login-block .reg-btn,
+  .mobile-menu .auth-block-mobile .login-btn ,
+  .mobile-menu .auth-block-mobile .reg-btn {
+    display: block;
+    height: 41px;
+    padding: 13px 0;
+    padding-left: 22px;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    font-family: 'Arial narrow', arial, sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+    text-decoration: none;
+  }
   /* line 144, ../scss/_responsive.scss */
   body .header {
     z-index: 9999999;
-    padding-left: 73px;
   }
   /* line 147, ../scss/_responsive.scss */
   body .header.usr {
@@ -5015,45 +5132,42 @@ html.cropped {
     right: 20px;
   }
   /* line 151, ../scss/_responsive.scss */
-  body .header.usr .header-right-part .usr-block {
+  body .header.usr .header-right-part .usr-block > a,
+  body .header.usr .header-right-part .usr-block .logout-btn,
+  body .header.usr .header-right-part .usr-block .langbox {
     display: none;
   }
   /* line 156, ../scss/_responsive.scss */
-  body .header .logo-block {
-    max-width: 383px;
-    margin-top: 43px;
-    position: relative;
-    float: left;
-  }
+
   /* line 162, ../scss/_responsive.scss */
   body .header .header-right-part {
     right: auto;
     position: relative;
     float: right;
-    padding-right: 64px;
   }
   /* line 167, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block {
+  body .header .header-right-part .login-block{
+    position: relative;
     height: 146px;
-    border-right: 1px solid rgba(246, 23, 202, 0.5);
-    padding: 45px 0;
+    /* border-right: 1px solid rgba(246, 23, 202, 0.5); */
+   
   }
+  .mobile-menu .auth-block-mobile .login-block:first-child::after,
+  body .header .header-right-part .login-block:first-child::after {
+    content: '•';
+    display: block;
+    position: absolute;
+    right: -14px;
+    top: 6px;
+    font-size: 23px;
+    color: #7f349c;
+  }
+   body .header .header-right-part .login-block+.login-block {
+     border-right: none;
+   }
   /* line 171, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
-    height: 56px;
-    padding: 14px 0;
-    padding-left: 83px;
-    font-family: "MyriadPro-Cond", arial, sans-serif;
-    font-size: 29px;
-    margin-right: 55px;
-  }
-  /* line 178, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn:before {
-    height: 56px;
-    width: 53px;
-    margin-top: -28px;
-    background-position: -314px -217px;
-  }
+
+
   /* line 186, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block {
     display: block;
@@ -5108,7 +5222,7 @@ html.cropped {
   }
   /* line 227, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game {
-    width: 50%;
+    width: 25%;
   }
   /* line 230, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .game-preview {
@@ -5118,8 +5232,10 @@ html.cropped {
   }
   /* line 235, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .title {
-    font-size: 34px;
-    margin-top: 40px;
+    font-size: 15px;
+    margin-top: 0px;
+    height: 22px;
+    line-height: 22px;
   }
   /* line 243, ../scss/_responsive.scss */
   body .slots-block .games-listing-block {
@@ -6045,100 +6161,8 @@ html.cropped {
 
 @media (max-width: 991px) {
   /* line 924, ../scss/_responsive.scss */
-  body .header {
-    padding: 0 30px;
-    padding-top: 22px;
-  }
-  /* line 927, ../scss/_responsive.scss */
-  body .header .logo-block {
-    max-width: 283px;
-    margin-top: 0;
-  }
-  /* line 931, ../scss/_responsive.scss */
-  body .header .header-right-part {
-    padding-right: 0;
-    top: 0;
-  }
-  /* line 934, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block {
-    height: 75px;
-    padding: 11px 0;
-    margin-right: 0;
-  }
-  /* line 938, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
-    font-size: 25px;
-    padding-left: 46px;
-    margin-right: 30px;
-  }
-  /* line 942, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn:before {
-    width: 25px;
-    height: 26px;
-    top: 50%;
-    margin-top: -13px;
-    background-position: 0 0;
-  }
-  /* line 951, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block {
-    padding: 29px 0;
-    margin-left: 30px;
-  }
-  /* line 954, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block .menu-btn {
-    width: 34px;
-    height: 16px;
-  }
-  /* line 957, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block .menu-btn:before, body .header .header-right-part .menu-button-block .menu-btn:after {
-    height: 5px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-  }
-  /* line 970, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn {
-    height: 50px;
-    padding: 13px 0;
-    padding-left: 30px;
-    padding-right: 48px;
-  }
-  /* line 975, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text {
-    padding-left: 46px;
-    font-size: 22px;
-  }
-  /* line 978, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text:before {
-    width: 25px;
-    height: 26px;
-    top: 50%;
-    margin-top: -15px;
-    background-position: 0 0;
-  }
-  /* line 988, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .registration-block {
-    vertical-align: middle;
-  }
-  /* line 990, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn {
-    height: 50px;
-    padding: 14px 0;
-    width: 203px;
-    margin-top: -9px;
-  }
-  /* line 995, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn .text {
-    font-size: 22px;
-    letter-spacing: 2px;
-  }
-  /* line 999, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .registration-block .reg-btn:before {
-    height: 59px;
-    width: 203px;
-    background-size: cover;
-    margin-top: -34px;
-  }
+
+
   /* line 1009, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading .subtitle {
     font-size: 16px;
@@ -6149,14 +6173,7 @@ html.cropped {
     font-size: 40px;
     letter-spacing: 20px;
   }
-  /* line 1018, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li a {
-    font-size: 23px;
-  }
-  /* line 1021, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li a {
-    font-size: 23px;
-  }
+ 
   /* line 1027, ../scss/_responsive.scss */
   body .slots-block .block-heading {
     margin-top: 180px;
@@ -6190,10 +6207,11 @@ html.cropped {
   /* line 1047, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a:first-child {
     display: block;
-    margin: 0 auto;
-    max-width: 160px;
+    /*margin: 0 auto;*/
+    /*max-width: 160px;*/
     width: 100%;
   }
+
   /* line 1053, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .game-preview {
     height: 100px;
@@ -6206,9 +6224,9 @@ html.cropped {
   }
   /* line 1062, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .title {
-    display: inline-block;
-    font-size: 17px;
-    margin-top: 24px;
+    /*display: inline-block;*/
+    /*font-size: 17px;*/
+    /*margin-top: 24px;*/
   }
   /* line 1070, ../scss/_responsive.scss */
   body .slots-block .btn-block {
@@ -6928,38 +6946,16 @@ html.cropped {
     max-width: 153px;
   }
   /* line 1600, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block {
-    height: auto;
-    padding: 0;
-  }
-  /* line 1603, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn {
-    height: 41px;
-    padding: 13px 0;
-    padding-left: 36px;
-    font-size: 16px;
-  }
+
   /* line 1608, ../scss/_responsive.scss */
   body .header .header-right-part .login-block .login-btn:before {
     background-size: 1600%;
-    margin-top: -10px;
+    margin-top: -11px;
   }
-  /* line 1614, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block {
-    padding: 15px 0;
-  }
+
   /* line 1616, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block .menu-btn {
-    width: 18px;
-    height: 9px;
-  }
-  /* line 1619, ../scss/_responsive.scss */
-  body .header .header-right-part .menu-button-block .menu-btn:before, body .header .header-right-part .menu-button-block .menu-btn:after {
-    height: 2px;
-    border-radius: 1px;
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
-  }
+
+
   /* line 1628, ../scss/_responsive.scss */
   body .reg-popup .popup-container,
   body .log-popup .popup-container {
@@ -7040,36 +7036,11 @@ html.cropped {
   body .mobile-menu:before {
     height: 714px;
   }
-  /* line 1695, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry {
-    padding: 30px;
-    padding-top: 40px;
-  }
-  /* line 1698, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .logo-container {
-    max-width: 200px;
-    margin: 0 auto;
-  }
-  /* line 1702, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .close-icon {
-    top: 30px;
-    right: 30px;
-    height: 20px;
-    width: 20px;
-  }
-  /* line 1707, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .close-icon:before, body .mobile-menu .popup-entry .close-icon:after {
-    height: 3px;
-  }
-  /* line 1712, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile {
-    margin-top: 40px;
-    padding-bottom: 30px;
-  }
-  /* line 1715, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block {
-    margin-right: 30px;
-  }
+  
+
+
+
+
   /* line 1719, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading {
     padding: 0 30px;
@@ -7084,38 +7055,16 @@ html.cropped {
   body .mobile-menu .popup-entry .block-heading .title {
     margin-bottom: 30px;
   }
-  /* line 1730, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing {
-    margin-bottom: -30px;
-  }
+
   /* line 1732, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li {
-    min-height: 31px;
-    margin-bottom: 30px;
-    padding-left: 0;
-  }
-  /* line 1736, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li a {
-    padding-left: 44px;
-    font-size: 12px;
-  }
-  /* line 1739, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li a:before {
-    margin-top: -14.5px;
-    height: 30px;
-    width: 37px;
-  }
+
+ 
+
   /* line 1744, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.slots:before {
     background: url('../media/images/icons/slots.svg') no-repeat center;
   }
-  body .mobile-menu .popup-entry .games-listing li a.poker:before {
-    background: url('../media/images/icons/poker.svg') no-repeat center;
-    /*height: 32px;*/
-    /*width: 37px;*/
-    left: 0;
-    margin-top: -17px;
-  }
+
   /* line 1747, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a.bjack:before {
     background: url('../media/images/icons/blackjack.svg') no-repeat center;
@@ -7150,26 +7099,8 @@ html.cropped {
     opacity: .8;
   }
   /* line 1768, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li {
-    padding-left: 30px;
-    margin-bottom: 30px;
-    min-height: 19px;
-  }
-  /* line 1772, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li a {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-  /* line 1776, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li:before {
-    font-family: 'FontAwesome';
-    background: none;
-    content: '\f054';
-    color: #a915c6;
-    width: 15px;
-    height: 17px;
-    margin-top: -10px;
-  }
+
+
   /* line 1790, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block {
     max-width: 400px;
@@ -7446,6 +7377,11 @@ html.cropped {
       background-position: center -100px;
    }
 
+   body .slots-block .block-container .games-entry .single-game{
+    width: 50%;
+    max-width: 225px;
+   }
+
 
 
 
@@ -7473,12 +7409,7 @@ html.cropped {
 
 @media (max-width: 520px) {
   /* line 2028, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block {
-    display: block;
-    max-width: 203px;
-    margin: 0 auto;
-    margin-bottom: 40px;
-  }
+
   .video-popup.popup-slot .video-container .game-entry {
     z-index: 999;
   }
@@ -7486,12 +7417,83 @@ html.cropped {
 .login-block-reg {
   display: none;
 }
+
+
+
+
+
+
+
+
+
+
 /* Landscape phones and down */
 @media (max-width: 480px) {
-  
-  body{
-    background: #fff;
+
+  .games-listing{
+    display: flex;
+    flex-wrap: wrap;
   }
+
+  body .mobile-container .welcome-mob .games-listing li{
+    flex-basis: 50%;
+  }
+
+  .games-listing li.slots{
+    order: 1
+  }
+
+  .games-listing li.roulette{
+    order: 3
+  }
+
+  .games-listing li.bjack{
+    order: 5
+  }
+
+  .games-listing li.poker{
+    order: 7
+  }
+
+   .games-listing li.baccarat{
+    order: 2
+  }
+
+  .games-listing li.dice{
+    order: 4
+  }
+
+  .games-listing li.bonumbers{
+    order: 6
+  }
+
+  .games-listing li.keno{
+    order: 8
+  }
+
+
+
+
+
+
+  
+  /* body{
+    background: #fff;
+  } */
+  .mobile-menu {
+    width: 100%;
+  }
+  .mobile-menu .popup-entry .close-icon {
+    right: 5px;
+  }
+  .header-left .logo-block .logoPc {
+    display: none;
+  }
+  .header-left .logo-block .logoMob {
+    display: block;
+    margin-top: 2px;
+  }
+
 
   /* line 2040, ../scss/_responsive.scss */
   body input[type="email"],
@@ -7504,7 +7506,7 @@ html.cropped {
   /* line 2047, ../scss/_responsive.scss */
   body .header {
     padding: 0 20px;
-    padding-top: 22px;
+    padding-top: 27px;
   }
   /* line 2051, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
@@ -7598,28 +7600,14 @@ html.cropped {
   body .mobile-menu:before {
     height: 714px;
   }
-  /* line 2103, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry {
-    padding: 20px;
-  }
+
   /* line 2105, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .logo-container {
     max-width: 160px;
   }
-  /* line 2108, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .close-icon {
-    top: 20px;
-    right: 20px;
-  }
-  /* line 2112, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile {
-    margin-top: 20px;
-    padding-bottom: 20px;
-  }
-  /* line 2115, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .auth-block-mobile .login-block {
-    margin-bottom: 30px;
-  }
+
+
+
   /* line 2119, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading {
     padding: 0 20px;
@@ -7637,27 +7625,7 @@ html.cropped {
     margin-top: 10px;
     margin-bottom: 20px;
   }
-  /* line 2133, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing {
-    margin-bottom: -20px;
-  }
-  /* line 2135, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .games-listing li {
-    /*margin-bottom: 20px;*/
-    /*width: 100%;*/
-    /*float: none;*/
-  }
-  /* line 2141, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li {
-    margin-bottom: 20px;
-    min-height: 19px;
-    width: 100%;
-  }
-  /* line 2145, ../scss/_responsive.scss */
-  body .mobile-menu .popup-entry .navigation .navigation-list li a {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
+
   /* line 2152, ../scss/_responsive.scss */
   body .mobile-container {
     background-color: #000;
@@ -7923,38 +7891,10 @@ html.cropped {
       height: 30px;
   }
 
-  /*.mobile-container .welcome-mob .games-listing li a.slots:before{
-    background: url("../media/images/icons/slots.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.bjack:before{
-    background: url("../media/images/icons/blackjack.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.roulette:before{
-    background: url("../media/images/icons/roulette.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.dice:before{
-    background: url("../media/images/icons/dice.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.keno:before{
-    background: url("../media/images/icons/keno.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.baccarat:before{
-    background: url("../media/images/icons/baccarat.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
-    background: url("../media/images/icons/bonumbers.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.poker:before{
-    background: url("../media/images/icons/poker.svg") no-repeat center;
-  }*/
-
+  /*body .slots-block .block-container .games-entry .single-game{
+    width: 10s0%;
+   }
+*/
 
 
 
@@ -7965,7 +7905,8 @@ html.cropped {
 }
 
 @media (max-width: 350px) {
-  body .header .header-right-part .login-block .login-btn:before {
+  body .header .header-right-part .login-block .login-btn:before,
+  body .mobile-menu .auth-block-mobile .login-btn:before {
     display: none;
   }
   .mobile-menu .usr-block {
@@ -7988,6 +7929,7 @@ html.cropped {
   transition: transform .12s linear,-webkit-transform .12s linear;
   height: 212px;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .games-block .games-block__item {
@@ -8002,6 +7944,10 @@ html.cropped {
   overflow: hidden;
   z-index: 12;
   box-shadow: 0 26px 40px rgba(0,0,0,.54);
+}
+
+.games-block:hover{
+  border-radius: 10px;
 }
 
 .games-block__wrap {
