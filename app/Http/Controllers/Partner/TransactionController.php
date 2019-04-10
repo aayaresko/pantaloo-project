@@ -156,9 +156,15 @@ class TransactionController extends Controller
             $item->description = $param['typeTransaction'][$keyDescription]['value'];
             //TO DO - use config for text
             //to do config get id deposit transaction
-            if ((int)$item->type === 3 and (int)$item->confirmations < $param['minConfirmBtc']) {
-                $item->description = $item->description . ' ' . view('admin..parts.extra.pending')->render();
+
+            if ((int)$item->type === 3) {
+                if ((int)$item->confirmations < $param['minConfirmBtc']) {
+                    $item->description = $item->description . ' ' . view('admin.parts.extra.pending')->render();
+                } else {
+                    $item->description = $item->description . ' ' . view('admin.parts.extra.confirm')->render();
+                }
             }
+
             return $item;
         });
 
