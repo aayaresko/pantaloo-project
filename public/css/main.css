@@ -5924,18 +5924,12 @@ html.cropped {
     display: none;
     /*display: block;*/
   }
-<<<<<<< HEAD
   .dontShow {
     display: none !important;
   }
   .needShow {
     display: block !important;
   }
-=======
- /* setting-accordion ui-accordion ui-widget ui-helper-reset*/
-
-
->>>>>>> 2befbdc370de2007e5dae022c111775956bd5a3e
   /* line 740, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion {
     display: block;
