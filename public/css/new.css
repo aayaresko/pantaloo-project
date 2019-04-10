@@ -309,6 +309,10 @@
   padding-top: 130px;
 }
 
+body .cabinet-block{
+  padding-bottom: 130px;
+}
+
 #uls, #reg-terms {
   background-color: #fff;
   max-width: 900px;

@@ -101,9 +101,9 @@ img {
 /* line 2, ../scss/_navigation.scss */
 input[type="email"],
 input[type="password"] {
-  height: 53px;
-  border: 1px solid transparent;
-  border-top: 2px solid transparent;
+  height: 39px;
+  border: 1px solid #a87bb4;
+  /*border-top: 2px solid transparent;*/
   width: 100%;
   border-radius: 24px;
   -webkit-border-radius: 24px;
@@ -113,7 +113,7 @@ input[type="password"] {
   background: transparent;
   padding-left: 35px;
   outline: none;
-  margin-bottom: 30px;
+  /*margin-bottom: 30px;*/
   letter-spacing: 2px;
 }
 /* line 16, ../scss/_navigation.scss */
@@ -2579,9 +2579,9 @@ html.cropped {
   width: 100%;
   max-width: 218px;
   margin: 0 auto;
-  border-radius: 22px;
+/*  border-radius: 22px;
   -webkit-border-radius: 22px;
-  -moz-border-radius: 22px;
+  -moz-border-radius: 22px;*/
   overflow: hidden;
 }
 /* line 1081, ../scss/_middle.scss */
@@ -5922,13 +5922,20 @@ html.cropped {
   /* line 737, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs {
     display: none;
+    /*display: block;*/
   }
+<<<<<<< HEAD
   .dontShow {
     display: none !important;
   }
   .needShow {
     display: block !important;
   }
+=======
+ /* setting-accordion ui-accordion ui-widget ui-helper-reset*/
+
+
+>>>>>>> 2befbdc370de2007e5dae022c111775956bd5a3e
   /* line 740, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion {
     display: block;
@@ -7011,7 +7018,12 @@ html.cropped {
   .mobile-container .welcome-mob{
     background-position: center -217px;
   }
-    /*end upTech custom style*/
+
+  .footer.footer-static{
+    position: relative;
+  }
+
+      /*end upTech custom style*/
 }
 
 
@@ -7041,6 +7053,7 @@ html.cropped {
     background-size: 1600%;
     margin-top: -11px;
   }
+
 
   /* line 1616, ../scss/_responsive.scss */
 
