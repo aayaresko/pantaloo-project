@@ -2525,7 +2525,7 @@ html.cropped {
 }
 /* line 1050, ../scss/_middle.scss */
 .slots-block .block-container .games-entry {
-  padding: 0 30px;
+  padding: 10px 30px;
   width: 100%;
   overflow: hidden;
   display: -webkit-flex;
@@ -2540,7 +2540,7 @@ html.cropped {
 /* line 1060, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game {
   padding: 0 15px;
-  width: 300px;
+  width: 281px;
   /* float: left; */
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2558,6 +2558,21 @@ html.cropped {
   transition: 0.2s linear;
   text-decoration: none;
 }
+
+.slots-block .insertGamesMobile .single-game a.open_game{
+  background: #8374d6;
+}
+
+.slots-block .block-container .games-entry .single-game > a:first-child{
+  border-radius: 10px 10px 0px 0px;
+}
+
+.slots-block .block-container .games-entry .single-game > a:last-child{
+  padding: 8px 0px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+
 /* line 1073, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game a .game-preview {
   height: 133px;
@@ -2575,9 +2590,9 @@ html.cropped {
   display: block;
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   color: #fff;
-  font-size: 17px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  font-size: 15px;
+  /*text-transform: uppercase;*/
+  /*letter-spacing: 3px;*/
 }
 /* line 1090, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game a:hover {
@@ -4844,7 +4859,7 @@ html.cropped {
   }
   /* line 36, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game {
-    width: 25%;
+    width: 20%;
   }
   /* line 39, ../scss/_responsive.scss */
   body .bitcoin-block {
@@ -5108,7 +5123,7 @@ html.cropped {
   }
   /* line 227, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game {
-    width: 50%;
+    width: 25%;
   }
   /* line 230, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .game-preview {
@@ -5118,8 +5133,10 @@ html.cropped {
   }
   /* line 235, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .title {
-    font-size: 34px;
-    margin-top: 40px;
+    font-size: 15px;
+    margin-top: 0px;
+    height: 22px;
+    line-height: 22px;
   }
   /* line 243, ../scss/_responsive.scss */
   body .slots-block .games-listing-block {
@@ -6190,10 +6207,11 @@ html.cropped {
   /* line 1047, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a:first-child {
     display: block;
-    margin: 0 auto;
-    max-width: 160px;
+    /*margin: 0 auto;*/
+    /*max-width: 160px;*/
     width: 100%;
   }
+
   /* line 1053, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .game-preview {
     height: 100px;
@@ -6206,9 +6224,9 @@ html.cropped {
   }
   /* line 1062, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .title {
-    display: inline-block;
-    font-size: 17px;
-    margin-top: 24px;
+    /*display: inline-block;*/
+    /*font-size: 17px;*/
+    /*margin-top: 24px;*/
   }
   /* line 1070, ../scss/_responsive.scss */
   body .slots-block .btn-block {
@@ -7101,7 +7119,7 @@ html.cropped {
   }
   /* line 1739, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .games-listing li a:before {
-    margin-top: -14.5px;
+    margin-top: -16.5px;
     height: 30px;
     width: 37px;
   }
@@ -7446,6 +7464,11 @@ html.cropped {
       background-position: center -100px;
    }
 
+   body .slots-block .block-container .games-entry .single-game{
+    width: 50%;
+    max-width: 225px;
+   }
+
 
 
 
@@ -7486,8 +7509,65 @@ html.cropped {
 .login-block-reg {
   display: none;
 }
+
+
+
+
+
+
+
+
+
+
 /* Landscape phones and down */
 @media (max-width: 480px) {
+
+  .games-listing{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  body .mobile-container .welcome-mob .games-listing li{
+    flex-basis: 50%;
+  }
+
+  .games-listing li.slots{
+    order: 1
+  }
+
+  .games-listing li.roulette{
+    order: 3
+  }
+
+  .games-listing li.bjack{
+    order: 5
+  }
+
+  .games-listing li.poker{
+    order: 7
+  }
+
+   .games-listing li.baccarat{
+    order: 2
+  }
+
+  .games-listing li.dice{
+    order: 4
+  }
+
+  .games-listing li.bonumbers{
+    order: 6
+  }
+
+  .games-listing li.keno{
+    order: 8
+  }
+
+
+
+
+
+
   
   body{
     background: #fff;
@@ -7923,38 +8003,10 @@ html.cropped {
       height: 30px;
   }
 
-  /*.mobile-container .welcome-mob .games-listing li a.slots:before{
-    background: url("../media/images/icons/slots.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.bjack:before{
-    background: url("../media/images/icons/blackjack.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.roulette:before{
-    background: url("../media/images/icons/roulette.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.dice:before{
-    background: url("../media/images/icons/dice.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.keno:before{
-    background: url("../media/images/icons/keno.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.baccarat:before{
-    background: url("../media/images/icons/baccarat.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.bonumbers:before{
-    background: url("../media/images/icons/bonumbers.svg") no-repeat center;
-  }
-
-  .mobile-container .welcome-mob .games-listing li a.poker:before{
-    background: url("../media/images/icons/poker.svg") no-repeat center;
-  }*/
-
+  /*body .slots-block .block-container .games-entry .single-game{
+    width: 10s0%;
+   }
+*/
 
 
 
@@ -7988,6 +8040,7 @@ html.cropped {
   transition: transform .12s linear,-webkit-transform .12s linear;
   height: 212px;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .games-block .games-block__item {
@@ -8002,6 +8055,10 @@ html.cropped {
   overflow: hidden;
   z-index: 12;
   box-shadow: 0 26px 40px rgba(0,0,0,.54);
+}
+
+.games-block:hover{
+  border-radius: 10px;
 }
 
 .games-block__wrap {

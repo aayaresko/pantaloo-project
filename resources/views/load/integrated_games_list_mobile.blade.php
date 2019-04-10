@@ -8,8 +8,10 @@
                     </div>
                 </a>
                 <a class="open_game"
-                   href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}"><span
-                            class="title">{{$game->name}}</span></a>
+                   href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}">
+                   <span class="title">{{$game->name}}</span>
+                   <span class="games-block__name__category">{{ ucfirst($game->category) }}</span>
+                    </a>
             </div>
         @endforeach
     </div>
