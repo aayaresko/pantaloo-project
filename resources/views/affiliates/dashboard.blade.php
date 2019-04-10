@@ -89,7 +89,7 @@
                                         <thead>
                                         <tr role="row">
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">User ID</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Confirmed</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Pending</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">CPA</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Pending CPA</th>
@@ -131,7 +131,7 @@
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Campaign Name</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Clicks</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Registrations</th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Confirmed</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Deposits Pending</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Revenue</th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Bonus</th>
