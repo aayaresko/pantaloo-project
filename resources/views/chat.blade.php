@@ -227,9 +227,9 @@
                             </p>
                         </div>
                         <div class="col-sm-12">
-                            <h5>Can I change my registered email address?</h5>
+                            <h5>Where can I purchase Bitcoins?</h5>
                             <p class="text">
-                                No. Unfortunately it's not possible to change your email address.
+                                There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.
                             </p>
                         </div>
                     </div>
