@@ -2129,7 +2129,7 @@ html.cropped {
 .log-popup .popup-container .popup-entry .popup-form .forget-link {
   position: absolute;
   color: #fff;
-  right: -95px;
+  right: -115px;
   font-size: 19px;
   text-decoration: underline;
   top: 50%;
@@ -4326,6 +4326,7 @@ html.cropped {
 .page-content-block {
   min-height: 100vh;
   background-size: cover !important;
+  background-attachment: fixed !important;
 }
 /* line 2493, ../scss/_middle.scss */
 .page-content-block .page-content-container {
@@ -7518,6 +7519,10 @@ html.cropped {
 /* Landscape phones and down */
 @media (max-width: 480px) {
 
+  .slots-block .block-container .games-entry .single-game > a:last-child{
+    padding: 3px 0px 3px 0px;
+  }
+
   body .welcome-mob .games-listing{
     display: flex;
     flex-wrap: wrap;
@@ -7902,7 +7907,7 @@ html.cropped {
   }
   /* line 2294, ../scss/_responsive.scss */
   body .slots-block .block-container .games-entry .single-game a .title {
-    margin-top: 5px;
+    /*margin-top: 5px;*/
   }
   /* line 2300, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block .owl-prev,
