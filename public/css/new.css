@@ -311,6 +311,7 @@
 
 body .cabinet-block{
   padding-bottom: 130px;
+  background-attachment: fixed !important;
 }
 
 #uls, #reg-terms {
