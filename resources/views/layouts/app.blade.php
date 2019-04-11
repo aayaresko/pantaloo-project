@@ -21,7 +21,7 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
     <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.4" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -305,7 +305,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
         </nav>
        
-        <ul class="langbox floated">
+        <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
@@ -331,7 +331,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{ trans('casino.live_games') }}</span>
                 <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
             </div>
             <div class="popup-form">
@@ -389,7 +388,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{ trans('casino.live_games') }}</span>
                 <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
             </div>
             <div class="popup-form">
@@ -442,6 +440,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </div>
 </div>
+<div class="overlayMenu"></div>
 <script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>

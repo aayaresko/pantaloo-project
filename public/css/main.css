@@ -210,6 +210,23 @@ header.header.active .promo-actions-block .promo-action-btn {
   display: inline-block;
   margin-top: 50px;
 }
+.overlayMenu {
+  /* display: none; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: #000;
+  opacity: 0;
+  transition: .5s;
+  z-index: -1;
+}
+.overlayMenu.active {
+  z-index: 999990;
+  /* display: block; */
+  opacity: 0.5;
+}
 /* line 68, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block:after, .mobile-menu .usr-block:after {
   content: '';
@@ -668,8 +685,7 @@ header.header.active .promo-actions-block .promo-action-btn {
 /* line 499, ../scss/_navigation.scss */
 .mobile-menu .popup-entry {
   position: relative;
-  /* padding: 22px 30px; */
-  /* padding-top: 163px; */
+  padding-bottom: 80px;
 }
 .mobTopWrap {
   display: flex;
@@ -683,6 +699,7 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 .mobGameBlock {
   padding: 20px 24px;
+  background-color: #130b26;
   border-bottom: 2px solid #321e5b;
 }
 .mobNav {
@@ -847,9 +864,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 99999999999999;
+  z-index: 999999;
   width: 380px;
-  height: 100%;
+  height: 100vh;
   overflow-y: scroll;
   background-color: #100920;
   transform: translate(100%, 0);
@@ -862,6 +879,14 @@ header.header.active .promo-actions-block .promo-action-btn {
   -ms-transition: 0.5s linear;
   -o-transition: 0.5s linear;
   transition: 0.5s linear;
+}
+.mobile-menu .langbox .langbox-dropdown {
+  top: auto;
+  bottom: 53px;
+}
+.mobile-menu .langbox {
+  width: auto;
+  vertical-align: inherit;
 }
 /* line 484, ../scss/_navigation.scss */
 .mobile-menu.active {
@@ -1027,7 +1052,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   font-size: 13px;
 }
 .mobile-menu .logout-btn {
-  float: left;
+  display: inline-block;
   margin-top: 39px;
   margin-left: 20px;
 }
@@ -1879,13 +1904,13 @@ html.cropped {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999999999999999;
+  z-index: 999999;
   opacity: 0;
-  transform: translate(0, -100%);
-  -webkit-transform: translate(0, -100%);
-  -moz-transform: translate(0, -100%);
-  -o-transform: translate(0, -100%);
-  -ms-transform: translate(0, -100%);
+  transform: translate(0, -200%);
+  -webkit-transform: translate(0, -200%);
+  -moz-transform: translate(0, -200%);
+  -o-transform: translate(0, -200%);
+  -ms-transform: translate(0, -200%);
   background: rgba(0, 0, 0, 0.9);
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
@@ -1937,18 +1962,7 @@ html.cropped {
   text-transform: uppercase;
 }
 /* line 604, ../scss/_middle.scss */
-.reg-popup .popup-container .popup-entry .popup-heading:before {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 50%;
-  margin-left: -26px;
-  background: url("../media/images/sprite.png");
-  height: 56px;
-  width: 53px;
-  background-position: -314px -217px;
-}
+
 /* line 616, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-heading .popup-title {
   font-size: 66px;
@@ -2091,19 +2105,7 @@ html.cropped {
   letter-spacing: 10px;
   text-transform: uppercase;
 }
-/* line 713, ../scss/_middle.scss */
-.log-popup .popup-container .popup-entry .popup-heading:before {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 50%;
-  margin-left: -26px;
-  background: url("../media/images/sprite.png");
-  height: 56px;
-  width: 53px;
-  background-position: -314px -217px;
-}
+
 /* line 725, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-heading .popup-title {
   max-width: 312px;
@@ -5004,6 +5006,14 @@ html.cropped {
     display: flex;
     flex-wrap: wrap;
   }
+  .log-popup .close-icon,
+  .reg-popup .close-icon {
+    top: 28px;
+    right: 34px;
+    height: 27px;
+    width: 27px;
+  }
+  
 
   .mobGameBlock .games-listing li{
     flex-basis: 50%;
@@ -5199,7 +5209,7 @@ html.cropped {
   }
   /* line 144, ../scss/_responsive.scss */
   body .header {
-    z-index: 9999999;
+    z-index: 99;
   }
   /* line 147, ../scss/_responsive.scss */
   body .header.usr {
@@ -7520,7 +7530,12 @@ html.cropped {
 
 
 
-
+@media screen and (orientation:landscape) {
+  .reg-popup.active,
+  .log-popup.active {
+    overflow-y: scroll;
+  }
+}
 
 
 /* Landscape phones and down */

@@ -553,9 +553,7 @@ body .cabinet-block{
     margin-bottom: 10px;
   }
 
-  .mfp-close {
-    right: 20px;
-  }
+
 
   .actions {
     margin-left: 0;
@@ -583,6 +581,9 @@ body .cabinet-block{
   .actions .block-bonus .block-money .big {
     font-size: 75px;
   }
+  /* .mfp-close {
+    right: 30px;
+  } */
 
   .actions .block-bonus .number-block .number {
     font-size: 70px;
