@@ -20,6 +20,8 @@ class Tracker extends Model
     public function getLinks()
     {
         $domains = Domain::all();
+        $trackers = Tracker::all();
+
 
         $links = collect([]);
 

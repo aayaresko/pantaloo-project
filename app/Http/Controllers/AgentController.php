@@ -118,6 +118,7 @@ class AgentController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:50',
+            'campaignlink' => 'required',
 //            'ref' => 'required|max:50|alpha_num'
         ]);
 
@@ -136,6 +137,7 @@ class AgentController extends Controller
 //        $tracker->ref = $request->input('ref');
         $tracker->ref = $ref;
         $tracker->name = $request->input('name');
+        $tracker->campaignlink = $request->input('campaignlink');
         $tracker->user()->associate(Auth::user());
         $tracker->save();
 
@@ -147,10 +149,12 @@ class AgentController extends Controller
         if ($tracker->user_id != Auth::user()->id) return redirect()->back();
 
         $this->validate($request, [
-            'name' => 'required|max:50'
+            'name' => 'required|max:50',
+            'campaignlink' => 'required'
         ]);
 
         $tracker->name = $request->input('name');
+        $tracker->campaignlink = $request->input('campaignlink');
         $tracker->save();
 
         return redirect()->back()->with('msg', 'Tracker was updated');

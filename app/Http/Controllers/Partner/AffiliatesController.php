@@ -44,11 +44,14 @@ class AffiliatesController extends Controller
     public function trackers(Request $request)
     {
         $user = $request->user();
-        $trackersFileds = ['id', 'ref', 'name'];
+        $trackersFileds = ['id', 'ref', 'name','campaignlink'];
         $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
+
+        
+
         $params['link'] = sprintf("%s?%s=", $necessaryAddress,
             $configPartner['keyLink']);
 
@@ -68,10 +71,10 @@ class AffiliatesController extends Controller
         $configPartner = config('partner');
         $bannersFileds = ['id', 'url'];
         $banners = Banner::select($bannersFileds)->get();
-        $trackersFileds = ['id', 'ref', 'name'];
+        $trackersFileds = ['id', 'ref', 'name','campaignlink'];
         $tracker = Tracker::select($trackersFileds)->where('id', $id)->first();
         $params['name'] = $tracker->name;
-
+        $params['campaignlink'] = $tracker->campaignlink;
         $necessaryAddress = config('app.foreignPages.main');
         $params['link'] = sprintf("%s?%s=%s", $necessaryAddress,
             $configPartner['keyLink'], $tracker->ref);
