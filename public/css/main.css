@@ -160,7 +160,7 @@ input[type="password"]:-ms-input-placeholder {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999999;
+  z-index: 99999999;
   padding-top: 22px;
   padding-left: 58px;
   text-align: center;
@@ -171,18 +171,19 @@ input[type="password"]:-ms-input-placeholder {
 }
 
 header.header.active {
-  padding-top: 10px;
+  /*padding-top: 38px;*/
 }
 
 header.header.active .navigation-container {
-  margin-top: -11px;
+  /*margin-top: -11px;*/
 }
 
 header.header.active .promo-actions-block .promo-action-btn {
-  height: 31px;
-  padding: 7px 26px;
-  margin-top: 8px;
+  /*height: 31px;*/
+  /*padding: 7px 26px;*/
+  /*margin-top: 8px;*/
 }
+
 /* line 48, ../scss/_navigation.scss */
 .header.usr .navigation-container {
   padding-top: 5px;
@@ -5046,9 +5047,9 @@ html.cropped {
 
 @media (max-width: 1080px) {
 
-  .video-popup .video-container .right-nav{
+ /* .video-popup .video-container .right-nav{
     display: none;
-  }
+  }*/
 
   .video-popup .video-container .bottom-nav{
     position: absolute;
@@ -8488,5 +8489,15 @@ html.cropped {
   }
   body .mobile-container .welcome-mob .bitcoin-block {
     margin-top: 70px;
+  }
+}
+
+
+@media (max-height: 850px){
+  .header{
+    z-index: 9999999;
+  }
+  .video-popup.popup-slot .video-container{
+    height: 80%;
   }
 }

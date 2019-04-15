@@ -132,19 +132,22 @@ function getGame(url) {
     //console.log(statusGameRoom);
     
 
-    let mobile = false
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        mobile = true
-    }
+    // let mobile = false
+    // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    //     mobile = true
+    // }
 
-    if(!mobile) {
-        $('.video-popup').addClass('popup-slot');
+    // if(!mobile) {
+    //     $('.video-popup').addClass('popup-slot');
+    //     $('.video-popup').addClass('active');
+    //     $('header.header').addClass('active');
+    // } else {
+
+    //     var windowReference = window.open('https://casinobit.io/en/games?showLoader=1');
+    // }
+    $('.video-popup').addClass('popup-slot');
         $('.video-popup').addClass('active');
         $('header.header').addClass('active');
-    } else {
-
-        var windowReference = window.open('https://casinobit.io/en/games?showLoader=1');
-    }
 
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -161,19 +164,22 @@ function getGame(url) {
             if (statusGameRoom === (statusGameRoomLocal + 1)) {
                 // console.log(html);
 
-                let gameUrl = $(html).attr('src')
+                // let gameUrl = $(html).attr('src')
 
-                if (mobile) {
+                // if (mobile) {
                  
-                    windowReference.location = gameUrl;
-                    // window.open(gameUrl, '_blank');
-                    // window.open('https://google.com', '_blank');
-                } else {
-                    $('.video-popup .game-entry').html(html);
+                //     windowReference.location = gameUrl;
+                //     // window.open(gameUrl, '_blank');
+                //     // window.open('https://google.com', '_blank');
+                // } else {
+                //     $('.video-popup .game-entry').html(html);
+                //     $('.expand-game').removeClass('not-allowed');
+                //     button.addEventListener('click', fullscreen);
+                //     //$('.preloaderCommon').hide();
+                // }  
+                $('.video-popup .game-entry').html(html);
                     $('.expand-game').removeClass('not-allowed');
                     button.addEventListener('click', fullscreen);
-                    //$('.preloaderCommon').hide();
-                }  
 
             }
         },
@@ -221,37 +227,6 @@ $(function () {
     events();
     getListGames();
 });
-
-// let fs = true;
-
-// function fullscreen(){
-
-//         let gameFullScreen = $('.video-popup.popup-slot.active .video-container');
-    
-//         gameFullScreen.toggleClass('fullScreen');
-
-//         fs = false;
-
-//         if
-
-//         // console.log(gameFullScreen)
-
-
-// };
-
-// $(document).keyup(function(e){
-//             if(e.key === "Escape") {
-//                 $('.video-popup.popup-slot.active .video-container').removeClass('fullScreen');
-//                 // gameFullScreen.children('.game-entry').css('z-index','99999')
-//                  console.log(2)
-//                  return
-//             }else{
-//                  console.log(1)
-//                 return
-//             }
-//         });
-
-
 
 
 // when you are in fullscreen, ESC and F11 may not be trigger by keydown listener.
