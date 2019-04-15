@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ mb_convert_case(trans('casino.support'), MB_CASE_TITLE) }}
+    {{ trans('casino.frq') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-content-container">
             <div class="page-content-entry">
                 <div class="page-heading">
-                    <h1 class="page-title">{{ mb_convert_case(trans('casino.support'), MB_CASE_TITLE) }}</h1>
+                    <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
                 </div>
                 <div class="page-entry">
                     <div class="row">
