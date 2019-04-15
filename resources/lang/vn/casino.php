@@ -90,8 +90,6 @@ return array (
   'support_is_there_a_maximum_withdrawal_rule' => 'Is there a maximum withdrawal rule I should know about?',
   'support_is_there_a_maximum_withdrawal_rule_value' => 'We don\'t enforce any limits now.',
   'the_casino' => 'the Casino',
-  'support_are_the_games_fair' => 'Are the games fair?',
-  'support_are_the_games_fair_value' => 'Our games are 100% fair. To prove our words, each player can check our provability fair widget. All games are regulated under the license of Curacao.',
   'support_deposit_what_happens' => 'What happens if I encounter an error or the game freezes?',
   'support_deposit_what_happens_value' => 'Most of the time, if your game freezes then you can pick up exactly where you left off next time you open the game. If there is no option for you to do this, then the round will continue to play out on the server. This will happen even if your computer is frozen or you lose internet connection. All your winnings will be paid into your account as normal. In order to get back into the game a simple refresh of the site usually works, and if this does not let you back into the game, you just need to clear your cookies and cache in your browser and it shall work once again. Is the game still not opening up, you can contact us on support@casinobit.io or via the web chat here.',
   'support_i_cant_get_the_casino_game' => 'I can’t get the casino game to start when I click the link. What should I do?',
