@@ -43,7 +43,7 @@
                                         <td>{{ $item->link }}</td>
                                         <td>
                                             <div class="copyHtml{{ $index }}">{{ $item->html }}</div>
-                                            <a href="#copy" class="btn btn-purple btn-xs copy-letter-button"
+                                            <a href="$item->link" class="btn btn-purple btn-xs copy-letter-button"
                                                data-clipboard-action="copy"
                                                data-clipboard-target=".copyHtml{{ $index }}">Copy</a>
                                         </td>

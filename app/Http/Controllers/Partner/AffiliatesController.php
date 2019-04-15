@@ -50,15 +50,19 @@ class AffiliatesController extends Controller
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
 
-        
-
-        $params['link'] = sprintf("%s?%s=", $necessaryAddress,
+        foreach ($trackers as $tracker) {
+            # code...
+             $params['link'] = sprintf("%s?%s=", $tracker->campaignlink,
             $configPartner['keyLink']);
 
+        
+        }
+        
         return view('affiliates.trackers', [
             'trackers' => $trackers,
             'params' => $params
         ]);
+       
     }
 
     /**
@@ -76,7 +80,7 @@ class AffiliatesController extends Controller
         $params['name'] = $tracker->name;
         $params['campaignlink'] = $tracker->campaignlink;
         $necessaryAddress = config('app.foreignPages.main');
-        $params['link'] = sprintf("%s?%s=%s", $necessaryAddress,
+        $params['link'] = sprintf("%s?%s=%s", $tracker->campaignlink,
             $configPartner['keyLink'], $tracker->ref);
 
         $url = url('/');
