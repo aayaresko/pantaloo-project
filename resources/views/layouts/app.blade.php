@@ -20,8 +20,8 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.13" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.4" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -305,7 +305,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
         </nav>
        
-        <ul class="langbox floated">
+        <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
@@ -331,7 +331,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{ trans('casino.live_games') }}</span>
                 <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
             </div>
             <div class="popup-form">
@@ -389,7 +388,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <span class="subtitle">{{ trans('casino.live_games') }}</span>
                 <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
             </div>
             <div class="popup-form">
@@ -442,6 +440,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </div>
 </div>
+<div class="overlayMenu"></div>
 <script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
@@ -802,8 +801,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {{--_agile_execute_web_rules();};--}}
 {{--</script>--}}
 <!-- Start of uptechsupport Zendesk Widget script -->
+{{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
+<!-- End of uptechsupport Zendesk Widget script -->
+{{--<script type="text/javascript">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"20d401dd0bef4c4a89b7d31699a0965e3f436766499f2fd628d7b7b221e5dda9", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);</script>--}}
+<!-- Start of uptechsupport Zendesk Widget script -->
 <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>
 <!-- End of uptechsupport Zendesk Widget script -->
-
 </body>
 </html>

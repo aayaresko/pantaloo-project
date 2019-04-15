@@ -39,11 +39,13 @@ function mobMenuInit(){
 		$('.header-right-part .menu-btn').click(function(){
 			$('body, html').addClass('cropped');
 			$('.mobile-menu').addClass('active');
+			$('.overlayMenu').addClass('active');
 			return false;
 		})
 		$('.mobile-menu .close-icon').click(function(){
 			$('body, html').removeClass('cropped');
 			$('.mobile-menu').removeClass('active');
+			$('.overlayMenu').removeClass('active');
 			return false;
 		})
 	}
@@ -94,7 +96,7 @@ function gamePopup(){
 function animationInit(){
 	$('.reg-btn').each(function(){
 		$(this).click(function(e){
-			ga('send','pageview','/registr');
+			// ga('send','pageview','/registr');
 			$('.reg-popup').addClass('active');
 			return false;
 		});
@@ -114,7 +116,7 @@ function animationInit(){
 
 	$('.login-btn').each(function(){
 		$(this).click(function(e){
-			ga('send','pageview','/login');
+			// ga('send','pageview','/login');
 			$('.log-popup').addClass('active');
 			return false
 		})

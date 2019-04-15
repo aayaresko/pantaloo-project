@@ -309,6 +309,11 @@
   padding-top: 130px;
 }
 
+body .cabinet-block{
+  padding-bottom: 130px;
+  background-attachment: fixed !important;
+}
+
 #uls, #reg-terms {
   background-color: #fff;
   max-width: 900px;
@@ -549,9 +554,7 @@
     margin-bottom: 10px;
   }
 
-  .mfp-close {
-    right: 20px;
-  }
+
 
   .actions {
     margin-left: 0;
@@ -579,6 +582,9 @@
   .actions .block-bonus .block-money .big {
     font-size: 75px;
   }
+  /* .mfp-close {
+    right: 30px;
+  } */
 
   .actions .block-bonus .number-block .number {
     font-size: 70px;
