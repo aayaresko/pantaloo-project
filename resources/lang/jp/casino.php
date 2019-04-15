@@ -82,7 +82,7 @@ return array (
   'support_what_should_i_do_account_value'=>'The quickest way is to create a new password by clicking this ‘Forgot Password?’ link. We will then send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit account. Alternatively, you can contact our helpful customer support either by the web chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
   'support_can_i_change_email'=>'Can I change my registered email address?',
   'support_can_i_change_email_value'=>'No. Unfortunately it\'s not possible to change your email address.',
-  'deposit' => 'Deposits & Withdrawals',
+  'support_deposit' => 'Deposits & Withdrawals',
   'support_what_happens' => 'What happens if my deposit is not showing?',
   'support_what_happens_value'=>'If your crypto deposit is now showing, this most likely means that it has not yet been confirmed in the blockchain, or that your wallet has not yet sent the funds, you can always check the blockchain to see if your transfer is visible there, or ask the support if you need a hand with this.',
   'support_how_long' => 'How long does it take for deposits for show in my account?',

@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="page-heading">
-                    <h1 class="page-title">{{ mb_convert_case(trans('casino.deposit'), MB_CASE_TITLE) }}</h1>
+                    <h1 class="page-title">{{ mb_convert_case(trans('casino.support_deposit'), MB_CASE_TITLE) }}</h1>
                 </div>
                 <div class="page-entry">
                     <div class="row">
