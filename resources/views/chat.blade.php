@@ -82,9 +82,9 @@
                 <div class="page-entry">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h4>{{ trans('casino.support_what_happens') }}</h4>
+                            <h4>{{ trans('casino.support_deposit_what_happens') }}</h4>
                             <p class="text">
-                                {{ trans('casino.support_what_happens_value') }}
+                                {{ trans('casino.support_deposit_what_happens_value') }}
                             </p>
                         </div>
 
