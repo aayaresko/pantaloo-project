@@ -89,7 +89,7 @@ Route::group(['middleware' => ['web']], function () use ($languages, $partner) {
 
         Route::get('/page/{page_url}', ['as' => 'page', 'uses' => 'PageController@get']);
 
-        Route::get('/support', ['as' => 'support', 'uses' => 'ChatController@index']);
+        Route::get('/faq', ['as' => 'support', 'uses' => 'ChatController@index']);
 
         Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
 
