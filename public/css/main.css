@@ -33,6 +33,11 @@
 /*=====================VARIABLES======================*/
 /*=====================TIPOGRAPHY======================*/
 /* line 2, ../scss/_tipography.scss */
+
+html{
+  padding: 0px !important;
+}
+
 body {
   font-family: "MyriadPro-Cond", arial, sans-serif;
   color: #fff;
@@ -155,7 +160,7 @@ input[type="password"]:-ms-input-placeholder {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 99999999;
+  z-index: 9999999;
   padding-top: 22px;
   padding-left: 58px;
   text-align: center;
@@ -3131,7 +3136,7 @@ html.cropped {
   -moz-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  border: 1px solid rgba(116, 10, 208, 0.3);
+/*  border: 1px solid rgba(116, 10, 208, 0.3);*/
   max-width: 90%;
   /* height: 90%; */
   width: 100%;
@@ -3286,7 +3291,7 @@ html.cropped {
 /* line 1610, ../scss/_middle.scss */
 .video-popup .video-container .bottom-nav {
   position: absolute;
-  bottom: -35px;
+  bottom: -45px;
   text-align: center;
   width: 100%;
 }
@@ -3296,9 +3301,9 @@ html.cropped {
   color: #fff;
   text-transform: uppercase;
   font-size: 13px;
-  letter-spacing: 6px;
+  padding: 13px 22px 7px 40px;
+  letter-spacing: 1px;
   position: relative;
-  padding-right: 36px;
   text-decoration: none;
   -webkit-transition: 0.2 linear;
   -moz-transition: 0.2 linear;
@@ -3306,6 +3311,8 @@ html.cropped {
   -o-transition: 0.2 linear;
   transition: 0.2 linear;
   background: url('../media/images/btn_img_right.png') no-repeat center;
+  background-size: cover;
+
 }
 /* line 1625, ../scss/_middle.scss */
 .video-popup .video-container .bottom-nav .choose-other-link:hover {
@@ -3313,17 +3320,30 @@ html.cropped {
 }
 /* line 1628, ../scss/_middle.scss */
 .video-popup .video-container .bottom-nav .choose-other-link:after {
-  font-family: 'FontAwesome';
-  content: '\f107';
-  display: block;
+  content: "";
+  width: 10px;
+  height: 10px;
+  display: inline-block;
   position: absolute;
-  right: 0;
-  top: 0;
+  left: 19px;
+  top: 16px;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAALCAYAAABCm8wlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkM5NkMzM0YzNUNGQjExRTlCODdGOEU4RERCNjNGM0Y4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkM5NkMzM0Y0NUNGQjExRTlCODdGOEU4RERCNjNGM0Y4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Qzk2QzMzRjE1Q0ZCMTFFOUI4N0Y4RThEREI2M0YzRjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Qzk2QzMzRjI1Q0ZCMTFFOUI4N0Y4RThEREI2M0YzRjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4esXX7AAAAfElEQVR42mL4//8/AxoWAuL1QKwB4qNL8gDxzf8Q8AyIDZAluYH4+n9UcBlZ5zU0yddAbAKSVMaiE6RYDuaGPf8xgQnMahChB8QP0RScBmJRZF+IAPEDNEWPQF5F9oUwFpMuo4eDKFQnCLwDYhsGLCEpDcQ7gNgQxAcIMAA0GTFB7Wa29AAAAABJRU5ErkJggg==') no-repeat center;
 }
 .video-popup.popup-slot .video-container{
   height: 90%;
   position: relative;
 }
+
+.video-container.fullScreen{
+  position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0px;
+
+}
+
 .video-popup.popup-slot .video-container .game-entry {
   height: 100%;
   overflow: hidden;
@@ -5026,6 +5046,22 @@ html.cropped {
 
 @media (max-width: 1080px) {
 
+  .video-popup .video-container .right-nav{
+    display: none;
+  }
+
+  .video-popup .video-container .bottom-nav{
+    position: absolute;
+    top: -70px;
+    text-align: center;
+     width: auto; 
+    left: 15px;
+  }
+
+  .video-popup.popup-slot .video-container .game-entry{
+    box-shadow: none;
+  }
+
   .mobGameBlock .games-listing{
     display: flex;
     flex-wrap: wrap;
@@ -5426,7 +5462,8 @@ html.cropped {
   /* line 303, ../scss/_responsive.scss */
   body .video-popup {
     background: none;
-    background-color: #000;
+    background-color: #17062e;
+    padding-top: 55px;
   }
   /* line 306, ../scss/_responsive.scss */
   body .video-popup .video-container {
@@ -5468,12 +5505,11 @@ html.cropped {
   /* line 337, ../scss/_responsive.scss */
   body .video-popup .video-container .right-nav {
     right: 46px;
-    left: auto;
-    top: 39px;
-    margin-left: 0;
+    top: -67px;
+    right: 15px;
   }
   /* line 342, ../scss/_responsive.scss */
-  body .video-popup .video-container .right-nav .exit-btn {
+  /*body .video-popup .video-container .right-nav .exit-btn {
     height: 97px;
     width: 97px;
     display: block;
@@ -5483,13 +5519,13 @@ html.cropped {
     -moz-border-radius: 100%;
     background-color: #160521;
     padding: 0;
-  }
+  }*/
   /* line 350, ../scss/_responsive.scss */
   body .video-popup .video-container .right-nav .exit-btn .text {
     display: none;
   }
   /* line 353, ../scss/_responsive.scss */
-  body .video-popup .video-container .right-nav .exit-btn:before {
+  /*body .video-popup .video-container .right-nav .exit-btn:before {
     height: 31px;
     width: 31px;
     background: url("../media/images/sprite.png") -335px 0;
@@ -5502,7 +5538,7 @@ html.cropped {
     top: 50%;
     margin-top: -15px;
     margin-left: -15px;
-  }
+  }*/
   /* line 367, ../scss/_responsive.scss */
   body .video-popup .video-container .right-nav .exit-btn:after {
     display: none;
@@ -7405,19 +7441,19 @@ html.cropped {
     right: 15px;
   }
   /* line 1926, ../scss/_responsive.scss */
-  body .video-popup .video-container .right-nav .exit-btn {
+  /*body .video-popup .video-container .right-nav .exit-btn {
     height: 48px;
     width: 48px;
-  }
+  }*/
   /* line 1929, ../scss/_responsive.scss */
-  body .video-popup .video-container .right-nav .exit-btn:before {
+  /*body .video-popup .video-container .right-nav .exit-btn:before {
     height: 25px;
     width: 25px;
     background-size: 1200%;
     background-position: -198px 2px;
     margin-top: -12px;
     margin-left: -13px;
-  }
+  }*/
   /* line 1940, ../scss/_responsive.scss */
   body .cabinet-block {
     padding-top: 120px;
