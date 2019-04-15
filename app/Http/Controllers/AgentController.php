@@ -118,7 +118,7 @@ class AgentController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:50',
-            'campaignlink' => 'required',
+            'campaign_link' => 'required|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
 //            'ref' => 'required|max:50|alpha_num'
         ]);
 
@@ -137,7 +137,7 @@ class AgentController extends Controller
 //        $tracker->ref = $request->input('ref');
         $tracker->ref = $ref;
         $tracker->name = $request->input('name');
-        $tracker->campaignlink = $request->input('campaignlink');
+        $tracker->campaign_link = $request->input('campaign_link');
         $tracker->user()->associate(Auth::user());
         $tracker->save();
 
@@ -150,11 +150,11 @@ class AgentController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:50',
-            'campaignlink' => 'required'
+            'campaign_link' => 'required|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/'
         ]);
 
         $tracker->name = $request->input('name');
-        $tracker->campaignlink = $request->input('campaignlink');
+        $tracker->campaign_link = $request->input('campaign_link');
         $tracker->save();
 
         return redirect()->back()->with('msg', 'Tracker was updated');

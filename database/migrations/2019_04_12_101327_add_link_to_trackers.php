@@ -13,7 +13,7 @@ class AddLinkToTrackers extends Migration
     public function up()
 {
     Schema::table('trackers', function(Blueprint $table) {
-        $table->string('campaignlink',255);
+        $table->string('campaign_link',255);
     });
 }
 
@@ -26,7 +26,7 @@ class AddLinkToTrackers extends Migration
   public function down()
 {
     Schema::table('trackers', function(Blueprint $table) {
-        $table->dropColumn('campaignlink');
+        $table->dropColumn('campaign_link');
     });
 }
 }

@@ -23,7 +23,7 @@
                                         <h4>Campaign Name</h4>
                                         <input type="text" class="form-control" name="name" value="">
                                         <h4>Campaign Link</h4>
-                                        <input type="text" class="form-control" name="campaignlink" value="">
+                                        <input type="text" class="form-control" name="campaign_link" value="">
                                         {{--<h4>Ref</h4>--}}
                                         {{--<input type="text" class="form-control" name="ref" value="">--}}
                                         <br>
@@ -66,7 +66,7 @@
                                         <tr>
                                             <td>{{$tracker->name}}</td>
                                             <td>
-                                                {{$tracker->campaignlink}}?ref={{$tracker->ref }} <a href="#links_{{$tracker->id}}"
+                                                {{$tracker->campaign_link}}?ref={{$tracker->ref }} <a href="#links_{{$tracker->id}}"
                                                                                          class="btn btn-purple btn-xs"
                                                                                          data-animation="fadein"
                                                                                          data-plugin="custommodal"
@@ -90,7 +90,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <input type="text" class="form-control"
-                                                                               value="{{$tracker->campaignlink}}?ref={{$tracker->ref}}"
+                                                                               value="{{$tracker->campaign_link}}?ref={{$tracker->ref}}"
                                                                                readonly>
                                                                     </td>
                                                                     {{--<td>{{strtoupper($domain->lang)}}</td>--}}
@@ -122,8 +122,8 @@
                                                             <input type="text" class="form-control" name="name"
                                                                    value="{{$tracker->name}}">
                                                              <h4>Campaign Link</h4>
-                                                            <input type="text" class="form-control" name="campaignlink"
-                                                                   value="{{$tracker->campaignlink}}">       
+                                                            <input type="text" class="form-control" name="campaign_link"
+                                                                   value="{{$tracker->campaign_link}}">       
                                                             <br>
                                                             <input type="submit" name="save" value="Save"
                                                                    class="btn btn-info">

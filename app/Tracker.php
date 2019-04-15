@@ -20,11 +20,7 @@ class Tracker extends Model
     public function getLinks()
     {
         $domains = Domain::all();
-        $trackers = Tracker::all();
-
-
         $links = collect([]);
-
         foreach ($domains as $domain)
         {
             $links->push('http://' . $domain->domain . '/?ref=' . $this->ref);
