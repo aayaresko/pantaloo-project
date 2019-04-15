@@ -51,8 +51,11 @@ class AffiliatesController extends Controller
         $necessaryAddress = config('app.foreignPages.main');
 
         foreach ($trackers as $tracker) {
-            # code...
-             $params['link'] = sprintf("%s?%s=", $tracker->campaign_link,
+            $campaignLink = $tracker->campaign_link;
+            if (is_null($tracker->campaign_link)) {
+                $campaignLink = $necessaryAddress;
+            }
+             $params['link'] = sprintf("%s?%s=", $campaignLink,
             $configPartner['keyLink']);
 
         
