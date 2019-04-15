@@ -66,7 +66,7 @@
                                         <tr>
                                             <td>{{$tracker->name}}</td>
                                             <td>
-                                                {{$tracker->campaign_link}}?ref={{$tracker->ref }} <a href="#links_{{$tracker->id}}"
+                                                {{ $tracker->fullLink }} <a href="#links_{{$tracker->id}}"
                                                                                          class="btn btn-purple btn-xs"
                                                                                          data-animation="fadein"
                                                                                          data-plugin="custommodal"
@@ -90,7 +90,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <input type="text" class="form-control"
-                                                                               value="{{$tracker->campaign_link}}?ref={{$tracker->ref}}"
+                                                                               value="{{ $tracker->fullLink }}"
                                                                                readonly>
                                                                     </td>
                                                                     {{--<td>{{strtoupper($domain->lang)}}</td>--}}
@@ -123,7 +123,7 @@
                                                                    value="{{$tracker->name}}">
                                                              <h4>Campaign Link</h4>
                                                             <input type="text" class="form-control" name="campaign_link"
-                                                                   value="{{$tracker->campaign_link}}">       
+                                                                   value="{{$tracker->campaign_linkFull}}">
                                                             <br>
                                                             <input type="submit" name="save" value="Save"
                                                                    class="btn btn-info">
