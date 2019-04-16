@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <footer class="footer footer-static">
+    <footer class="footer footer-home">
         <div class="bitcoin-block">
             <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
         </div>
@@ -125,13 +125,25 @@
             </ul>
         </div>
         <div class="footer-copyrights">
-            <p>© All rights reserved</p>
+            <ul class="footerLinks">
+                <li class="rightReservedTxt">© All rights reserved</li>
+                <li><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li>
+                <li><a target="_blank" href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
+                <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
+                <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>
+            </ul>
         </div>
+        
     </footer>
-
-    <div class="hidden">
+     <div class="hidden">
         <div id="uls">
             {!! trans('casino.bonus.term') !!}
+        </div>
+    </div>
+
+    <div class="hidden">
+        <div id="reg-terms">
+            {!! trans('casino.terms_conditions') !!}
         </div>
     </div>
 

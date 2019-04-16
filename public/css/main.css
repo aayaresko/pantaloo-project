@@ -1259,6 +1259,8 @@ html.cropped {
   position: relative;
   font-size: 20px;
   letter-spacing: 2px;
+  line-height: 27px;
+  display: inline-block;
 }
 /* line 76, ../scss/_middle.scss */
 .bitcoin-block .bitcoin-msg .bitcoin-icon {
@@ -4388,7 +4390,7 @@ html.cropped {
 }
 /* line 2501, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry .page-heading {
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 }
 /* line 2503, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
@@ -4396,7 +4398,7 @@ html.cropped {
   text-transform: uppercase;
   letter-spacing: 8px;
   line-height: 60px;
-  margin-bottom: 75px;
+  margin-bottom: 25px;
 }
 /* line 2510, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry .page-heading .descr {
@@ -4481,7 +4483,7 @@ html.cropped {
   left: 0;
   width: 100%;
   z-index: 9999;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
 }
 .footer.footer-static {
     position: absolute;
@@ -4493,8 +4495,30 @@ html.cropped {
     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);*/
 }
 .footer.footer-home .footer-copyrights {
-    display: none;
+    opacity: 1;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    border-top: 1px solid #473d5c;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    transition: opacity 0.2s;
 }
+
+/*.footer.footer-home .footer-copyrights.showFooterLink{
+  opacity: 1;
+}*/
+
+.fp-enabled .footer.footer-home .footer-copyrights {
+    opacity: 0;
+}
+
+.fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
+  opacity: 1;
+}
+
 /* line 16, ../scss/_footer.scss */
 .footer.dark {
   position: relative;
@@ -4678,12 +4702,12 @@ html.cropped {
 }
 
 .footer-copyrights {
-    text-align: center;
+    /*text-align: center;
     color: #726577;
     font-size: 16px;
     border-top: 1px solid #271849;
     margin-top: 45px;
-    line-height: 60px;
+    line-height: 60px;*/
 }
 
 /* new styles */
@@ -4866,6 +4890,81 @@ html.cropped {
   -o-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
 }
+
+
+.footerLinks{
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding-left: 0px;
+  margin: 0px;
+}
+
+.footerLinks li,
+.footer .usl-link{
+  margin: 3px 5px;
+  text-transform: initial;
+  top: 0px;
+  letter-spacing: 1px;
+  font-size: 12px;
+  font-family: "MyriadPro-Cond", arial, sans-serif;
+}
+
+
+
+.footerLinks li a {
+  color: #726577;
+}
+
+.footerLinks li a:hover{
+  text-decoration: none;
+  color: #fff;
+}
+
+
+
+.footerLinks li:first-letter{
+  text-transform: uppercase;
+}
+
+
+.footer-copyrights{
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.rightReservedTxt{
+  font-size: 12px;
+  color: #726577;
+  margin: 0px 6px; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5349,7 +5448,7 @@ html.cropped {
   }
   /* line 211, ../scss/_responsive.scss */
   body .slots-block .block-heading {
-    margin-top: 280px;
+    margin-top: 120px;
   }
   /* line 213, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
@@ -5663,7 +5762,7 @@ html.cropped {
   /* line 468, ../scss/_responsive.scss */
   body .cabinet-block {
     padding: 0 20px;
-    padding-top: 332px;
+    padding-top: 120px;
     background: #000 !important;
   }
   /* line 472, ../scss/_responsive.scss */
@@ -6028,7 +6127,8 @@ html.cropped {
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing {
     max-width: 100%;
     padding: 0 65px;
-    margin-top: 302px;
+    margin-top: 75px;
+    margin-bottom: 75px;
   }
   /* line 756, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li {
@@ -6087,7 +6187,8 @@ html.cropped {
   }
   /* line 813, ../scss/_responsive.scss */
   body .page-content-block .page-content-container {
-    padding-top: 312px;
+    padding-top: 100px;
+    padding-bottom: 30px;
   }
   /* line 815, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry {
@@ -6097,7 +6198,7 @@ html.cropped {
   }
   /* line 819, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-heading {
-    padding-bottom: 100px;
+    /*padding-bottom: 100px;*/
     border-bottom: 1px solid #d30582;
   }
   /* line 822, ../scss/_responsive.scss */
@@ -6116,7 +6217,7 @@ html.cropped {
   /* line 834, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-entry .text {
     font-size: 38px;
-    margin-bottom: 140px;
+    margin-bottom: 110px;
   }
   /* line 840, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .btn-block.mobile {
@@ -6199,6 +6300,8 @@ html.cropped {
   body .page-content-block .page-content-container .page-content-navigation {
     display: none;
   }
+
+
 
 
   /*upTech custom style*/
@@ -6305,16 +6408,17 @@ html.cropped {
 /* Landscape phone to portrait tablet */
 @media (max-width: 1024px) {
     body .mobile-container .welcome-mob {
-        padding-bottom: 110px !important;
+        padding-bottom: 90px !important;
     }
     .footer.footer-home .footer-copyrights {
-        display: block;
+        display: flex;
     }
     .footer.footer-static .bitcoin-block, .footer.footer-home .bitcoin-block {
         display: none;
     }
     body .slots-block {
-        padding-bottom: 150px;
+        /*padding-bottom: 150px;*/
+        padding-bottom: 100px;
     }
     .footer-copyrights {
         margin-top: 25px;
@@ -6347,7 +6451,7 @@ html.cropped {
  
   /* line 1027, ../scss/_responsive.scss */
   body .slots-block .block-heading {
-    margin-top: 180px;
+    margin-top: 120px;
   }
   /* line 1029, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
@@ -6711,7 +6815,8 @@ html.cropped {
   }
   /* line 1324, ../scss/_responsive.scss */
   body .cabinet-block {
-    padding-top: 170px;
+  /*  padding-top: 170px;*/
+    padding-top: 120px;
   }
   /* line 1329, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
@@ -6894,6 +6999,8 @@ html.cropped {
   /* line 1492, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing {
     margin-top: 85px;
+    margin-top: 70px;
+    margin-bottom: 70px;
   }
   /* line 1495, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
@@ -6929,7 +7036,7 @@ html.cropped {
   }
   /* line 1526, ../scss/_responsive.scss */
   body .page-content-block .page-content-container {
-    padding-top: 152px;
+    padding-top: 110px;
     padding-bottom: 100px;
   }
   /* line 1529, ../scss/_responsive.scss */
@@ -6978,7 +7085,7 @@ html.cropped {
   /* line 1566, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-heading {
     padding-bottom: 20px;
-    margin-bottom: 20px;
+  /*  margin-bottom: 20px;*/
   }
   /* line 1569, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
@@ -7098,7 +7205,7 @@ html.cropped {
     position: relative;
   }
 
-      /*end upTech custom style*/
+    /*end upTech custom style*/
 }
 
 
@@ -7117,6 +7224,11 @@ html.cropped {
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+
+  #launcher{
+    bottom: 34px !important;
+  }
+
   /* line 1596, ../scss/_responsive.scss */
   body .header .logo-block {
     max-width: 153px;
@@ -7612,6 +7724,33 @@ html.cropped {
 /* Landscape phones and down */
 @media (max-width: 480px) {
 
+
+  body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing{
+    margin-bottom: 110px;
+  }
+
+  .actions{
+    padding-bottom: 150px;
+  }
+
+
+  body .slots-block {
+        padding-bottom: 150px;
+    }
+
+  body .page-content-block .page-content-container{
+    padding-bottom: 140px;
+    padding-top: 110px;
+  }
+
+  .footer.footer-home .bitcoin-block{
+    position: relative;
+    top: -97px;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .slots-block .block-container .games-entry .single-game > a:last-child{
     padding: 3px 0px 3px 0px;
   }
@@ -8052,7 +8191,7 @@ html.cropped {
 
   body .mobile-container .welcome-mob{
     padding-top: 200px;
-    padding-bottom: 110px !important;
+    padding-bottom: 130px !important;
   }
 
   .welcome-mob:after{
