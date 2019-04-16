@@ -92,8 +92,6 @@ return array (
   'support_is_there_a_maximum_withdrawal_rule'=>'Is there a maximum withdrawal rule I should know about?',
   'support_is_there_a_maximum_withdrawal_rule_value'=>'We don\'t enforce any limits now.',
   'the_casino'=>'the Casino',
-  'support_are_the_games_fair'=>'Are the games fair?',
-  'support_are_the_games_fair_value'=>'Our games are 100% fair. To prove our words, each player can check our provability fair widget. All games are regulated under the license of Curacao.',
   'support_deposit_what_happens'=>'What happens if I encounter an error or the game freezes?',
   'support_deposit_what_happens_value'=>'Most of the time, if your game freezes then you can pick up exactly where you left off next time you open the game. If there is no option for you to do this, then the round will continue to play out on the server. This will happen even if your computer is frozen or you lose internet connection. All your winnings will be paid into your account as normal. In order to get back into the game a simple refresh of the site usually works, and if this does not let you back into the game, you just need to clear your cookies and cache in your browser and it shall work once again. Is the game still not opening up, you can contact us on support@casinobit.io or via the web chat here.',
   'support_i_cant_get_the_casino_game'=>'I can’t get the casino game to start when I click the link. What should I do?',
@@ -115,6 +113,53 @@ return array (
   'support_can_my_documents_be_refused_value'=>'Yes. We must be in accordance to the rules stated by our licensing institution in Curacao. In cases where it is needed, we will reach out to you to ask for more or alternative document copies, in order to stay within the law.',
   'support_how_can_i_make_sure_my_account_is_fully_protected'=>'How can I make sure my account is fully protected?',
   'support_how_can_i_make_sure_my_account_is_fully_protected_value'=>'There are a few steps you can take to make sure that your account is as safe as it can be. 1. Make sure you are using a different password for CasinoBit than your email account connected to your CasinoBit account or any other site you are using. 2. Do regular virus scans on your computer to ensure no malicious programs such as keyloggers that can gather your secure information are hiding on your computer.',
+
+    'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
+    'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
+    'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
+    'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
+    'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
+    'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
+                                may take longer than others.
+                                Casinobit.io shall try to pay out withdrawals within 1 hour, however in some cases,
+                                withdrawals may take longer.',
+    'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase Bitcoins?',
+    'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
+    'support_most_popular' => 'Most Popular',
+    'support_how_do_create_my_account' => 'How do I create my casinobit account?',
+    'support_how_do_create_my_account_value' => 'All you have to do to get started is click the \'Registration\' button in the upper left
+                                corner and fill in all the required fields.
+                                We’ll then pop you over an email where you can verify your email address using the
+                                verification link we send you.
+                                Once all this is done, your account will be fully active.',
+    'support_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins.
+                                Online exchanges include Coinbase, Bitstamp and Bitpanda.
+                                To find out more about buying Bitcoins, please visit our About Bitcoin page.',
+    'support_what_currencies_cryptocurrencies' => 'What currencies and cryptocurrencies do you accept?',
+    'support_what_currencies_cryptocurrencies_value' => 'Our idea was to create an online casino where you can play with Bitcoin only.',
+    'support_how_start' => 'How to start',
+    'support_i_havent_receved_confirmation' => 'I haven\'t receved confirmation email...',
+    'support_i_havent_receved_confirmation_value' => 'In this case you need first to check your \'Spam\' folder.
+                                Sometimes automatic emails can be found there because of your email box filtering
+                                settings.
+                                If you cannot find our email in any of your email box folders, please contact us in the
+                                web chat or over the email support@casinobit.io.',
+    'support_what_is_age_allowed' => 'What is the minimum age allowed?',
+    'support_what_is_age_allowed_value' => 'You may participate in any of the Games if and only if: You are over eighteen (18) years
+                                of age or such higher minimum legal age of majority as stipulated in the jurisdiction of
+                                Your residence; and It is legal for You to participate in the Games according to
+                                applicable laws in the jurisdiction of your residence.',
+    'support_how_to_make_deposit' => 'How to make a deposit?',
+    'support_how_to_make_deposit_value' => 'You need to click on \'+\' button in a top right corner and then you will receive an
+                                address to send your Bitcoins.',
+
+    'support_we_accept_only_bitcoin' => 'We accept only Bitcoin.',
+
+    'support_what_is_bitcoin' => 'What is Bitcoin?',
+    'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
+                                receive money across the internet, even to someone they don\'t know or don\'t trust. Money
+                                can be exchanged without being linked to a real identity. The mathematical field of
+                                cryptography is the basis for Bitcoin\'s security.',
   
   'terms' => '規約',
   'free' => 'フリー',

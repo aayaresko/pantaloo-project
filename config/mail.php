@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@casinobit.ru', 'name' => 'Casinobit'],
+    'from' => ['address' => 'noreply@casinobit.io', 'name' => 'Casinobit'],
 
     /*
     |--------------------------------------------------------------------------

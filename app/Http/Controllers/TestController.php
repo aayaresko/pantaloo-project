@@ -36,6 +36,10 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
         $transactionHas = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
             ->where([

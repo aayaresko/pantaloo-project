@@ -177,17 +177,24 @@ class AuthController extends Controller
             $remember = false;
         }
 
-        $authData = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'role' => 1
-        ];
+        //to do config
+        $allowRoles = [1, 3];
+        $email = $request->input('email');
 
-        $user = User::select(['id', 'email_confirmed'])
-            ->where('email', $authData['email'])->first();
+        $user = User::select(['id', 'email_confirmed', 'role'])
+            ->where('email', $email)->first();
 
         //check user confirm
-        if (!is_null($user) and $user->email_confirmed != 1) {
+        if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['These credentials do not match our records.']
+                ]
+            ]);
+        }
+
+        if ($user->email_confirmed != 1) {
             return response()->json([
                 'status' => false,
                 'message' => [
@@ -195,6 +202,20 @@ class AuthController extends Controller
                 ]
             ]);
         }
+
+        $roleUser = (int)$user->role;
+        $allowRoleKey = array_search($roleUser, $allowRoles);
+        if ($allowRoleKey === false) {
+            $allowRole = $allowRoles[0];
+        } else {
+            $allowRole = $allowRoles[$allowRoleKey];
+        }
+
+        $authData = [
+            'email' => $email,
+            'password' => $request->input('password'),
+            'role' => $allowRole
+        ];
 
         if (Auth::attempt($authData, $remember)) {
             $user = Auth::user();
@@ -210,12 +231,23 @@ class AuthController extends Controller
                     ]);
                 }
             }
-            return response()->json([
-                'status' => true,
-                'message' => [
-                    'redirect' => '/affiliates',
-                ]
-            ]);
+            //to do super affiliates
+            switch ($roleUser) {
+                case 1:
+                    return response()->json([
+                        'status' => true,
+                        'message' => [
+                            'redirect' => '/affiliates',
+                        ]
+                    ]);
+                case 3:
+                    return response()->json([
+                        'status' => true,
+                        'message' => [
+                            'redirect' => '/admin',
+                        ]
+                    ]);
+            }
         } else {
             return response()->json([
                 'status' => false,
