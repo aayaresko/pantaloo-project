@@ -181,6 +181,13 @@ class AuthController extends Controller
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             $user = Auth::user();
+            $roleUser = (int)Auth::user()->role;
+
+            if (array_search($roleUser, [1, 3]) !== false) {
+                Auth::logout();
+                return back()->withErrors('This type of user is not allowed to login');
+            }
+
             $extraUser = ExtraUser::where('user_id', $user->id)->first();
             if (!is_null($extraUser)) {
                 if ((int)$extraUser->block > 0) {
