@@ -15,7 +15,7 @@ return [
     */
 
     'mailgun' => [
-        'domain' => 'casinobit.co',
+        'domain' => 'mail.casinobit.io',
         'secret' => 'key-a49ad43af632d2c1bf52158dfac5ff38',
     ],
 
