@@ -22,5 +22,5 @@ $pages = $pages->get();
 
 <li class="order-support"><a href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
 <li class="order-bonuses"><a href="{{route('bonus.promo', ['lang' => $currentLang])}}" class="bonuses">{{ trans('casino.bonuses') }}</a></li>
-<li class="order-afiliate"><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li>
+<!-- <li class="order-afiliate"><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li> -->
 

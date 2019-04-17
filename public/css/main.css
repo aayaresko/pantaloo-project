@@ -354,6 +354,13 @@ header.header.active .promo-actions-block .promo-action-btn {
   transition: 0.2s linear;
   float: left;
 }
+
+.insertGamesMobile{
+  position: relative;
+  z-index: 99999;
+}
+
+
 /* line 115, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .deposit-block .deposit-btn:before {
   content: '';
@@ -435,9 +442,16 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 179, ../scss/_navigation.scss */
 .header:after {
-  content: '';
-  display: block;
-  clear: both;
+    content: '';
+    display: block;
+    clear: both;
+    background: linear-gradient(0deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
+    height: 130px;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
 }
 /* line 182, ../scss/_navigation.scss */
 .header .floated {
@@ -1203,17 +1217,17 @@ html.cropped {
   position: relative;
 }
 /* line 27, ../scss/_middle.scss */
-.section.with-shadow:before {
+/*.section.with-shadow:before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 130px;
-  /*background: url("../media/images/bg/top-shadow.png") center no-repeat;*/
+  background: url("../media/images/bg/top-shadow.png") center no-repeat;
   background: linear-gradient(0deg, rgba(6,3,8,0) 0%, rgba(6,3,8,1) 70%);
   background-size: cover;
-}
+}*/
 /* line 37, ../scss/_middle.scss */
 .section.with-shadow:after {
   content: '';
@@ -1912,7 +1926,7 @@ html.cropped {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999999;
+  z-index: 99999999;
   opacity: 0;
   transform: translate(0, -200%);
   -webkit-transform: translate(0, -200%);
@@ -4270,6 +4284,8 @@ html.cropped {
   margin: 0;
   list-style: none;
   max-width: 177px;
+  position: relative;
+  z-index: 99999;
 }
 /* line 2409, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
@@ -4505,6 +4521,8 @@ html.cropped {
     padding-top: 20px;
     padding-bottom: 20px;
     transition: opacity 0.2s;
+    background: rgba(6,3,8,0.99);
+    box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
 }
 
 /*.footer.footer-home .footer-copyrights.showFooterLink{
@@ -4576,6 +4594,8 @@ html.cropped {
   text-align: center;
   /*padding-right: 10%;*/
   margin-bottom: 30px;
+  position: relative;
+  z-index: 9;
 }
 /* line 64, ../scss/_footer.scss */
 .footer .msg-block .msg {
@@ -4920,6 +4940,7 @@ html.cropped {
 
 .footerLinks li a {
   color: #726577;
+  text-decoration: underline;
 }
 
 .footerLinks li a:hover{
@@ -6188,13 +6209,15 @@ html.cropped {
   /* line 813, ../scss/_responsive.scss */
   body .page-content-block .page-content-container {
     padding-top: 100px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
   }
   /* line 815, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry {
     margin: 0 auto;
     max-width: 700px;
     float: none;
+    position: relative;
+    z-index: 99999;
   }
   /* line 819, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-heading {
@@ -6352,10 +6375,10 @@ html.cropped {
   }
 
 
-  .footer.footer-home {
+  /*.footer.footer-home {
     background: rgba(6,3,8,0.99);
     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
-  }
+  }*/
 
     /*end upTech custom style*/
 }
@@ -7037,7 +7060,7 @@ html.cropped {
   /* line 1526, ../scss/_responsive.scss */
   body .page-content-block .page-content-container {
     padding-top: 110px;
-    padding-bottom: 100px;
+    padding-bottom: 110px;
   }
   /* line 1529, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry {
