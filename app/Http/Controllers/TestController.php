@@ -37,6 +37,9 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        $pantalloGames = new PantalloGames;
+        $allGames = $pantalloGames->getGameList([], true);
+        dd($allGames);
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
             ,   'Content-type'        => 'text/csv'
