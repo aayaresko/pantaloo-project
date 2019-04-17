@@ -234,6 +234,53 @@ function blockFilter() {
 	}
 }
 
+
+$(document).ready(function(){
+	
+
+
+
+function getCurrentScreen(){
+
+	let fullpageWrapper = $('.fullpage-wrapper');
+
+	fullpageWrapper.length
+
+	let pageCount = location.href;
+
+	if($(window).width() > 1080){
+
+		if(pageCount.match('block-4')){
+			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+		}else{
+			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
+		}
+
+	}else{
+		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+	}
+
+}
+
+
+
+getCurrentScreen()
+
+
+$(window).on('mousewheel', getCurrentScreen);
+
+});
+
+// let pageCount = location.href;
+
+
+// if(pageCount.match('block-4')){
+// 	console.log(1)
+// }
+
+// console.log(pageCount)
+
+
 // function cached(url){
 // 	var test = document.createElement("img");
 // 	test.src = url;
