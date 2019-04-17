@@ -151,11 +151,11 @@ return array (
   'support_how_to_make_deposit_value' => 'È necessario fare clic sul pulsante \'+\' nell\'angolo in alto a destra e quindi si riceverà un
                                  indirizzo per inviare i tuoi Bitcoin.',
   'support_we_accept_only_bitcoin' => 'Accettiamo solo Bitcoin.',
-  'support_what_is_bitcoin' => 'What is Bitcoin?',
-  'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
-                                receive money across the internet, even to someone they don\'t know or don\'t trust. Money
-                                can be exchanged without being linked to a real identity. The mathematical field of
-                                cryptography is the basis for Bitcoin\'s security.',
+  'support_what_is_bitcoin' => 'Cos\'è Bitcoin?',
+  'support_what_is_bitcoin_value' => 'Bitcoin è una valuta del sistema monetario digitale e globale. Permette alle persone di inviare o
+                                 ricevere denaro attraverso Internet, anche a qualcuno che non conoscono o di cui non si fida. I soldi
+                                 può essere scambiato senza essere collegato ad una vera identità. Il campo matematico di
+                                 la crittografia è la base per la sicurezza di Bitcoin.',
   'terms' => 'termini',
   'free' => 'gratis',
   'spins' => 'giri',
