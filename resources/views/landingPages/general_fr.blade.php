@@ -18,7 +18,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#00111f">
     <script src="/landingPages/general/{{ $lang }}/js/owl.carousel.min.js"></script>
     <!---->
-    <link rel="icon" href="https://casinobit.io/favicon.png">
+    <link rel="icon" href={{ $mainUrl }}/favicon.png">
 </head>
 <body>
 
