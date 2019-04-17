@@ -133,23 +133,24 @@ return array (
                                  Gli scambi online includono Coinbase, Bitstamp e Bitpanda.
                                  Per ulteriori informazioni sull\'acquisto di Bitcoin, visita la nostra pagina Informazioni su Bitcoin.',
   'support_what_currencies_cryptocurrencies' => 'Quali valute e criptovalute accettate?',
-  'support_what_currencies_cryptocurrencies_value' => 'Our idea was to create an online casino where you can play with Bitcoin only.',
-  'support_how_start' => 'How to start',
-  'support_i_havent_receved_confirmation' => 'I haven\'t receved confirmation email...',
-  'support_i_havent_receved_confirmation_value' => 'In this case you need first to check your \'Spam\' folder.
-                                Sometimes automatic emails can be found there because of your email box filtering
-                                settings.
-                                If you cannot find our email in any of your email box folders, please contact us in the
-                                web chat or over the email support@casinobit.io.',
-  'support_what_is_age_allowed' => 'What is the minimum age allowed?',
-  'support_what_is_age_allowed_value' => 'You may participate in any of the Games if and only if: You are over eighteen (18) years
-                                of age or such higher minimum legal age of majority as stipulated in the jurisdiction of
-                                Your residence; and It is legal for You to participate in the Games according to
-                                applicable laws in the jurisdiction of your residence.',
-  'support_how_to_make_deposit' => 'How to make a deposit?',
-  'support_how_to_make_deposit_value' => 'You need to click on \'+\' button in a top right corner and then you will receive an
-                                address to send your Bitcoins.',
-  'support_we_accept_only_bitcoin' => 'We accept only Bitcoin.',
+  'support_what_currencies_cryptocurrencies_value' => 'La nostra idea era di creare un casinò online in cui giocare solo con Bitcoin.',
+  'support_how_start' => 'Come iniziare?',
+  'support_i_havent_receved_confirmation' => 'Non ho ricevuto l\'e-mail di conferma ...',
+  'support_i_havent_receved_confirmation_value' => 'In questo caso è necessario prima controllare la cartella "Spam".
+                                 A volte è possibile trovare e-mail automatiche a causa del filtraggio della casella di posta elettronica
+                                 impostazioni.
+                                 Se non riesci a trovare la nostra email in nessuna delle tue cartelle della casella di posta elettronica, ti preghiamo di contattarci nel
+                                 chat web o via e-mail support@casinobit.io.',
+  'support_what_is_age_allowed' => 'Qual è l\'età minima consentita?',
+  'support_what_is_age_allowed_value' => 'Puoi partecipare a uno qualsiasi dei Giochi se e solo se: hai più di diciotto (18) anni
+                                 di età o di una maggiore età minima di età secondo quanto stabilito nella giurisdizione di
+                                 La tua residenza; ed è legale per te partecipare ai giochi secondo
+                                 leggi applicabili nella giurisdizione della vostra residenza.
+',
+  'support_how_to_make_deposit' => 'Come fare un deposito?',
+  'support_how_to_make_deposit_value' => 'È necessario fare clic sul pulsante \'+\' nell\'angolo in alto a destra e quindi si riceverà un
+                                 indirizzo per inviare i tuoi Bitcoin.',
+  'support_we_accept_only_bitcoin' => 'Accettiamo solo Bitcoin.',
   'support_what_is_bitcoin' => 'What is Bitcoin?',
   'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
                                 receive money across the internet, even to someone they don\'t know or don\'t trust. Money

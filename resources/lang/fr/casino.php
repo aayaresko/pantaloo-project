@@ -104,7 +104,7 @@ cache dans votre navigateur et il fonctionnera une fois de plus. Si le jeu ne
 s’ouvre toujours pas, vous pouvez nous contacter sur support@casinobit.io ou
 via le Web chat ici.',
   'support_i_cant_get_the_casino_game' => 'Je n’arrive pas au jeu de casino quand je clique sur le lien. Que dois-je faire ?',
-  'support_i_cant_get_the_casino_game_value' => 'Afin de jouer sur CasinoBit vous aurez besoin d’avoir Java installé sur votre ordinateur. Vous pouvez télécharger Java ici : <a target="_blank" rel="nofollow" href="http://java.com/veuillez">http://java.com/veuillez</a> également vérifier que vous avez installé la dernière version de Flash. Si vous avez besoin de Télécharger Flash, alors vous pouvez le faire ici : <a target="_blank" rel="nofollow" href="http://get.adobe.com/flashplayer/">http://get.adobe.com/flashplayer/</a> si cela ne résout pas le problème, alors cela pourrait signifier que vous avez perdu le contact avec votre serveur. Essayez de vous déconnecter et de vous reconnecter avant de cliquer à nouveau sur le lien. Occasionnellement, vous devrez peut-être fermer votre navigateur et le rouvrir à nouveau pour que le jeu arrive à charger. Si vous avez essayé tout cela et que le problème persiste, contactez notre équipe de support.',
+  'support_i_cant_get_the_casino_game_value' => 'Afin de jouer sur CasinoBit vous aurez besoin d’avoir Java installé sur votre ordinateur. Vous pouvez télécharger Java ici : http://java.com/veuillez également vérifier que vous avez installé la dernière version de Flash. Si vous avez besoin de Télécharger Flash, alors vous pouvez le faire ici : http://get.adobe.com/flashplayer/ si cela ne résout pas le problème, alors cela pourrait signifier que vous avez perdu le contact avec votre serveur. Essayez de vous déconnecter et de vous reconnecter avant de cliquer à nouveau sur le lien. Occasionnellement, vous devrez peut-être fermer votre navigateur et le rouvrir à nouveau pour que le jeu arrive à charger. Si vous avez essayé tout cela et que le problème persiste, contactez notre équipe de support.',
   'support_an_error_or_technical_issue' => 'Une erreur ou un problème technique s’est produit dans le Casino. Que dois-je faire ?',
   'support_an_error_or_technical_issue_value' => 'Nous stockons chaque spin que vous faites dans notre base de données afin d’aider à ces problèmes. Si vous estimez qu’une erreur s’est produite lors de votre jeu, veuillez contacter notre équipe d’assistance. Rappelez-vous que plus d’informations vous pourrez nous donner, plus il sera facile pour nous de résoudre le problème. Essayez de noter le nom du jeu, la quantité de temps que vous avez joué, les mises que vous jouiez et les détails sur ce qui s’est passé. Si vous êtes en mesure de fournir une capture d’écran du problème, cela nous aidera également à résoudre le problème. Il est toujours judicieux d’arrêter de jouer jusqu’à ce que le problème ait été résolu.',
   'support_how_can_i_take_a_screenshot' => 'Comment puis-je prendre une capture d’écran ?',
@@ -126,9 +126,7 @@ nous gardons tous nos joueurs en sécurité et que nous prenons cela très au
 sérieux. Si vous jouez avec crypto-monnaies tels que Bitcoins, vous n’aurez pas
 à fournir des documents en tant que norme. Toutefois, nous nous réservons le
 droit d’effectuer des vérifications supplémentaires si nous suspectons que des
-comportements suspects ou frauduleux ont eu lieu dans votre compte.
-
-<br><br><br><br><br>',
+comportements suspects ou frauduleux ont eu lieu dans votre compte.',
   'support_is_all_my_information_secure_on_casinobit' => 'Est-ce que toutes mes informations sont sécurisées sur CasinoBit ?',
   'support_is_all_my_information_secure_on_casinobit_value' => 'Toujours. Dès que vous vous connectez, toute communication que vous faites entre votre navigateur Web et le site Web de CasinoBit sera protégée par la technologie de cryptage standard de l’industrie. Cela signifie que toutes vos données personnelles et toute activité que vous effectuez sur le site seront conservées complètement privées.',
   'support_are_my_bitcoins_secure_on_casinobit' => 'Mes Bitcoins sont-ils sécurisés sur CasinoBit ?',
@@ -138,19 +136,19 @@ comportements suspects ou frauduleux ont eu lieu dans votre compte.
   'support_can_my_documents_be_refused' => 'Mes documents peuvent-ils être refusés ?',
   'support_can_my_documents_be_refused_value' => 'Oui. Nous devons être en conformité avec les règles énoncées par notre établissement de licence à Curaçao. Dans le cas où cela est nécessaire, nous vous demanderons de nous envoyer des copies supplémentaires ou alternatives de documents, afin de rester dans la Loi.',
   'support_how_can_i_make_sure_my_account_is_fully_protected' => 'Comment puis-je m’assurer que mon compte est entièrement protégé ?',
-  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => '<div>Il y a quelques mesures que vous pouvez prendre
+  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => 'Il y a quelques mesures que vous pouvez prendre
 pour vous assurer que votre compte est aussi sûr qu’il peut être&nbsp;: 
 
-<br></div><div>1. Assurez-vous que vous utilisez un mot de passe
+1. Assurez-vous que vous utilisez un mot de passe
 différent pour CasinoBit. Différent de celui de votre compte de messagerie
 connecté à votre compte CasinoBit ou tout autre site que vous utilisez. 
 
-<br></div><div>2. Faites des scans de virus réguliers sur votre
+2. Faites des scans de virus réguliers sur votre
 ordinateur pour vous assurer qu’aucun des programmes malveillants, tels que les
 enregistreurs de frappe qui peuvent rassembler vos informations sécurisées, ne se
 cachent sur votre ordinateur.
 
-</div>',
+',
   'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
   'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
   'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
