@@ -122,10 +122,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
-                    @if(Auth::user()->role == 1)
-                        <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li>
-                    @endif
-
                     @can('accessUserAdminPublic')
                         <li><a href="/admin">{{ trans('casino.admin') }}</a></li>
                     @endcan
