@@ -159,7 +159,6 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
-        dd($request->toArray());
         //to do check this method
         if ($request->has('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
@@ -187,31 +186,32 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
-//            if ((int)$request->email_confirmed === 1) {
-//                $user->email_confirmed = 1;
-//            }
-//
-//            if ((int)$request->has('block')) {
-//                //update or set value
-//                $blockUser = ModernExtraUsers::where('user_id', $user->id)
-//                    ->where('code', 'block')->get();
-//                //might use update or create but i use this way
-//                if (is_null($blockUser)) {
-//                    ModernExtraUsers::create([
-//                        'user_id' => $user->id,
-//                        'code' => 'block',
-//                        'value' => $request->block
-//                    ]);
-//                } else {
-//                    ModernExtraUsers::where('user_id', $user->id)
-//                        ->where('code', 'block')->get();
-//                }
-//            }
+            //email confirm
+            $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
+            $user->email_confirmed = $emailConfirmed;
 
             $user->commission = $commission;
             $user->role = $request->input('role');
 
             $user->save();
+
+            //block user
+            $block = ($request->has('block')) ? 1 : 0;
+            $blockUser = ModernExtraUsers::where('user_id', $user->id)
+                ->where('code', 'block')->get();
+            //might use update or create but i use this way
+            if (is_null($blockUser)) {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'block',
+                    'value' => $block
+                ]);
+            } else {
+                ModernExtraUsers::where('user_id', $user->id)
+                    ->where('code', 'block')->update([
+                        'value' => $block
+                    ]);
+            }
         }
 
         return redirect()->back()->with('msg', 'User was updated!');
