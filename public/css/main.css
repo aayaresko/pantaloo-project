@@ -1495,7 +1495,7 @@ html.cropped {
   color: #000;
   background-color: #fff;
   display: block;
-  height: 65px;
+  /*height: 65px;*/
   border-radius: 27px;
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
@@ -1599,7 +1599,7 @@ html.cropped {
 }
 /* line 314, ../scss/_middle.scss */
 .mobile-container .welcome-mob .main-title-block .main-btn-block .play-btn .btn-entry {
-  height: 109px;
+  /*height: 109px;*/
   font-size: 63px;
   padding: 20px 70px;
   border-radius: 54px;
@@ -3606,7 +3606,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   position: relative;
   border: none;
   outline: none;
-  font-size: 31px;
+  font-size: 23px;
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -3622,8 +3622,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   -webkit-border-radius: 26px;
   -moz-border-radius: 26px;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0 48px;
-  padding-top: 10px;
+  padding: 7px 48px;
+  /*padding-top: 10px;*/
   padding-right: 85px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
@@ -4243,7 +4243,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   display: block;
   width: 53px;
   height: 31px;
-  background: url("../media/images/sprite.png") -57px 0;
+  background: url("../media/images/mBIT.png") no-repeat center;
   margin: 0 auto;
   margin-top: 22px;
 }
@@ -5028,6 +5028,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 
+.block-bonus-buttons{
+  float: right;
+  margin-top: 5px;
+}
+
 
 
 
@@ -5231,6 +5236,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
  /* .video-popup .video-container .right-nav{
     display: none;
   }*/
+
+  .block-filter{
+    padding-right: 40px;
+  }
 
   .video-popup .video-container .bottom-nav{
     position: absolute;
@@ -6515,8 +6524,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 
 
 @media (max-width: 991px) {
-  /* line 924, ../scss/_responsive.scss */
-
 
   /* line 1009, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading .subtitle {
@@ -6769,7 +6776,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .mobile-container .welcome-mob .main-title-block .main-btn-block .play-btn .btn-entry {
     font-size: 38px;
     padding: 13px 36px;
-    height: 65px;
+    /*height: 65px;*/
     border-radius: 27px;
     -webkit-border-radius: 27px;
     -moz-border-radius: 27px;
@@ -7283,6 +7290,18 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 
   .footer.footer-static{
     position: relative;
+  }
+
+  .slots-block.mobile .block-filter{
+      padding-bottom: 60px;
+  }
+
+  .block-bonus-buttons {
+    float: none;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
     /*end upTech custom style*/
@@ -8125,7 +8144,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .mobile-container .welcome-mob .main-title-block .main-btn-block .play-btn .btn-entry {
     font-size: 16px;
     padding: 8px 16px;
-    height: 32px;
+    /*height: 32px;*/
     border-radius: 27px;
     -webkit-border-radius: 27px;
     -moz-border-radius: 27px;
