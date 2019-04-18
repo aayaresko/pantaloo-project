@@ -82,8 +82,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="header @if(Auth::check()) usr @endif">
     <div class="header-left">
         <div class="logo-block">
-            <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
-            <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+           @if(Route::currentRouteName() == 'main')
+                <a class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+                 <a class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+            @else
+                <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+                <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+            @endif
         </div>
     </div>
     <div class="navigation-container">
@@ -122,6 +127,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
+                    @if(Auth::user()->role == 1)
+                        <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li>
+                    @endif
+
                     @can('accessUserAdminPublic')
                         <li><a href="/admin">{{ trans('casino.admin') }}</a></li>
                     @endcan

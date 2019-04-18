@@ -741,7 +741,17 @@ header.header.active .promo-actions-block .promo-action-btn {
 .mobile-menu .langbox li span {
   font-weight: bold;
 }
-
+html[lang="th"] .reg-popup .popup-container .popup-entry .popup-heading .popup-title,
+html[lang="th"] .main-title-block .game-name {
+  display: block;
+  text-align: center;
+}
+html[lang="th"] .welcome .main-title-block .game-name {
+  display: flex;
+}
+html[lang="th"] .main-title-block {
+  text-align: center;
+}
 
 /* line 362, ../scss/_navigation.scss */
 .auth-block-mobile .login-btn:before,
@@ -4975,7 +4985,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-transform: initial;
   top: 0px;
   letter-spacing: 1px;
-  font-size: 12px;
+  font-size: 13px;
   font-family: "MyriadPro-Cond", arial, sans-serif;
 }
 
