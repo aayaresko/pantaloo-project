@@ -157,6 +157,7 @@ return array (
                                  có thể được trao đổi mà không được liên kết với một danh tính thực sự. Lĩnh vực toán học của
                                  mật mã là nền tảng cho bảo mật của Bitcoin.',
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'miễn phí',
   'spins' => 'quay',
   'welcome_bonus' => 'phần thưởng chào mừng',

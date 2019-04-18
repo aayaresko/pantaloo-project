@@ -157,6 +157,7 @@ return array (
                                 cryptography is the basis for Bitcoin\'s security.',
 
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',

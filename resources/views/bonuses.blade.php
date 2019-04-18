@@ -30,7 +30,7 @@
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                    <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
 
