@@ -156,7 +156,7 @@ return array (
                                  ricevere denaro attraverso Internet, anche a qualcuno che non conoscono o di cui non si fida. I soldi
                                  può essere scambiato senza essere collegato ad una vera identità. Il campo matematico di
                                  la crittografia è la base per la sicurezza di Bitcoin.',
-  'terms' => 'termini',
+  'terms' => 'Bonus Terms & Conditions',
   'free' => 'gratis',
   'spins' => 'giri',
   'welcome_bonus' => 'bonus di benvenuto',
