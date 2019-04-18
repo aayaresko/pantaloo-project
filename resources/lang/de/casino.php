@@ -157,6 +157,7 @@ return array (
                                  kann ausgetauscht werden, ohne an eine echte Identität gebunden zu sein. Das mathematische Feld von
                                  Kryptographie ist die Basis für die Sicherheit von Bitcoin.',
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'Kostenlos',
   'spins' => 'spins',
   'welcome_bonus' => 'Willkommensbonus',
