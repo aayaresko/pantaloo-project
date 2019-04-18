@@ -186,6 +186,7 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
+
             //email confirm
             $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
             $user->email_confirmed = $emailConfirmed;
@@ -198,7 +199,7 @@ class UsersController extends Controller
             //block user
             $block = ($request->has('block')) ? 1 : 0;
             $blockUser = ModernExtraUsers::where('user_id', $user->id)
-                ->where('code', 'block')->get();
+                ->where('code', 'block')->first();
             //might use update or create but i use this way
             if (is_null($blockUser)) {
                 ModernExtraUsers::create([
