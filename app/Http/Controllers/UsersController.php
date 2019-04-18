@@ -27,12 +27,13 @@ class UsersController extends Controller
         switch ($user->role) {
             case 2:
                 //to do block to config value
-                $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
-                    ->leftJoin('modern_extra_users as block', function ($join) {
-                        $join->on('users.id', '=', 'block.user_id')
-                            ->where('block.code', '=', 'block');
-                    })
-                    ->orderBy('created_at', 'DESC')->get();
+//                $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
+//                    ->leftJoin('modern_extra_users as block', function ($join) {
+//                        $join->on('users.id', '=', 'block.user_id')
+//                            ->where('block.code', '=', 'block');
+//                    })
+//                    ->orderBy('created_at', 'DESC')->get();
+                $users = User::orderBy('created_at', 'DESC')->get();
 
                 return view('admin.users', ['users' => $users]);
             case 3:
@@ -187,10 +188,12 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
+//            $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
 //            if ((int)$request->email_confirmed === 1) {
 //                $user->email_confirmed = 1;
 //            }
 //
+//            $block = ($request->has('block')) ? 1 : 0;
 //            if ((int)$request->has('block')) {
 //                //update or set value
 //                $blockUser = ModernExtraUsers::where('user_id', $user->id)
