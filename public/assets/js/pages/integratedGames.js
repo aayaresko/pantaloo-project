@@ -96,6 +96,7 @@ let events = function () {
         setDefaultFilter(1);
         setDefaultTitle();
         $('html,body').scrollTop(0);
+        listGameParams.freeSpins = 0;
     });
 
 
