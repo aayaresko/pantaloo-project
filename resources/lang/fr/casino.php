@@ -153,11 +153,8 @@ cachent sur votre ordinateur.
   'support_account_what_are_deposits_value' => 'CasinoBit n\'impose aucun frais de dépôt ou de retrait.',
   'support_account_what_your_minimums_deposits' => 'Quels sont les montants minimums de dépôts et de retraits?',
   'support_account_what_your_minimums_deposits_value' => 'Le dépôt minimum est de 1 mBTC (1 BTC = 1000 mBTC)',
-  'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
-  'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
-                                may take longer than others.
-                                Casinobit.io shall try to pay out withdrawals within 1 hour, however in some cases,
-                                withdrawals may take longer.',
+  'support_account_how_long_will_request_withdrawal' => 'Combien de temps faut-il pour que je reçoive mon argent une fois que j\'ai demandé un retrait?',
+  'support_account_how_long_will_request_withdrawal_value' => 'Bien que CasinoBit.io s\'efforce de payer les retraits immédiatement, certains retraits peuvent durer plus longtemps que d\'autres. CasinoBit.io essaiera de régler les retraits en moins d\'une heure. Toutefois, dans certains cas, les retraits peuvent durer plus longtemps.',
   'support_account_where_can_i_purchase_bitcoins' => 'Où puis-je acheter des Bitcoins?',
   'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
   'support_most_popular' => 'Questions les plus recherchées',
