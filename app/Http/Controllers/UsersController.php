@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Domain;
 use App\Jobs\SetUserCountry;
 use App\UserActivation;
@@ -24,7 +25,13 @@ class UsersController extends Controller
 
         switch ($user->role) {
             case 2:
-                $users = User::orderBy('created_at', 'DESC')->get();
+                //to do block to config value
+                $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
+                    ->leftJoin('modern_extra_users as block', function ($join) {
+                        $join->on('users.id', '=', 'block.user_id')
+                            ->where('block.code', '=', 'block');
+                    })
+                    ->orderBy('created_at', 'DESC')->get();
 
                 return view('admin.users', ['users' => $users]);
             case 3:
@@ -151,6 +158,7 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+        //to do check this method
         if ($request->has('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
                 return redirect()->back()->withErrors(['Invalid role']);
@@ -174,6 +182,15 @@ class UsersController extends Controller
                 $user->confirmation_required = 1;
             } else {
                 $user->confirmation_required = 0;
+            }
+
+            if ((int)$request->email_confirmed === 1) {
+                $user->email_confirmed = 1;
+            }
+
+            if ((int)$request->block === 1) {
+                //update or set value
+                $user->email_confirmed = 1;
             }
 
             $user->commission = $commission;

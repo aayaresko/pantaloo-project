@@ -96,7 +96,7 @@
                                                                     <input type="text" name="commission" value="{{$user->commission}}" class="form-control" style="text-align: center;">
 
                                                                     <h4>Confirm Email
-                                                                        <input type="checkbox" name="confirm_email" value = 1 {{ ($user->email_confirmed > 0 ) ? 'checked="checked' : '' }}>
+                                                                        <input type="checkbox" name="email_confirmed" value = 1 {{ ($user->email_confirmed > 0 ) ? 'checked="checked' : '' }}>
                                                                     </h4>
 
                                                                     <h4>Block User
