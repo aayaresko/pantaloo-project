@@ -162,6 +162,7 @@ return array (
                                 cryptography is the basis for Bitcoin\'s security.',
   
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'フリー',
   'spins' => 'スピン',
   'welcome_bonus' => 'ウェルカム ボーナス',

@@ -143,6 +143,7 @@ return array (
   'support_what_is_bitcoin' => 'What is Bitcoin?',
   'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or receive money across the Internet even to someone they don\'t know or don\'t trust. Money can be exchanged without being linked to a real identity. The mathematical field of cryptography is the basis for Bitcoin\'s security.',
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',

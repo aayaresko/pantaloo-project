@@ -174,6 +174,7 @@ cachent sur votre ordinateur.
   'support_what_is_bitcoin' => 'Qu’est-ce que le Bitcoin ?',
   'support_what_is_bitcoin_value' => 'Le Bitcoin est une monnaie numérique et mondiale du système monétaire. Il permet aux gens d’envoyer ou de recevoir de l’argent sur Internet, même à quelqu’un qu’ils ne connaissent pas ou ne font pas confiance. L’argent peut être échangé sans être lié à une identité réelle. Le domaine mathématique de la cryptographie est la base de la sécurité de Bitcoin.',
   'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'gratuit',
   'spins' => 'tours',
   'welcome_bonus' => 'bonus de bienvenue',
