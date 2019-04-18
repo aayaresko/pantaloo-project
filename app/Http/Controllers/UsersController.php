@@ -25,6 +25,7 @@ class UsersController extends Controller
         switch ($user->role) {
             case 2:
                 $users = User::orderBy('created_at', 'DESC')->get();
+
                 return view('admin.users', ['users' => $users]);
             case 3:
                 return redirect('/admin/agent/list');
