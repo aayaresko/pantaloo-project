@@ -1229,7 +1229,7 @@ html.cropped {
   background-size: cover;
 }*/
 /* line 37, ../scss/_middle.scss */
-.section.with-shadow:after {
+/*.section.with-shadow:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1238,7 +1238,7 @@ html.cropped {
   height: 303px;
   background: url("../media/images/bg/bot-shadow.png") center no-repeat;
   background-size: cover;
-}
+}*/
 /* line 47, ../scss/_middle.scss */
 .section.with-shadow .middle-shadow {
   content: '';
@@ -4233,12 +4233,10 @@ html.cropped {
   font-size: 13px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   display: inline-block;
-  max-width: 124px;
-  width: 100%;
-  padding: 9px 0;
-  padding-left: 32px;
+  max-width: 170px;
+  padding: 19px 20px 16px 28px;
   text-decoration: none;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
@@ -4247,6 +4245,7 @@ html.cropped {
   transition: 0.2s linear;
   right: 0;
   bottom: -40px;
+  min-width: 128px;
 }
 /* line 2375, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .add-credits-btn .text {
@@ -4259,21 +4258,24 @@ html.cropped {
   position: absolute;
   font-size: 18px;
   z-index: 1;
-  left: 15px;
+  left: 9px;
   top: 50%;
   margin-top: -11px;
 }
 /* line 2388, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .add-credits-btn:after {
-  content: '';
-  top: -8px;
-  left: 0;
-  position: absolute;
-  display: block;
-  height: 45px;
-  width: 123px;
-  background: url("../media/images/bg/credits-button.png") center no-repeat;
+    content: '';
+    top: -2px;
+    left: 0;
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: url(../media/images/bg/credits-button.png) center no-repeat;
+    background-size: cover;
 }
+
+
 /* line 2398, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .add-credits-btn:hover {
   opacity: .8;
@@ -4536,6 +4538,21 @@ html.cropped {
 .fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
   opacity: 1;
 }
+
+
+.fp-enabled .section:after{
+    content: "";
+    display: block;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 85px;
+    background: rgba(6,3,8,0.99);
+    box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
+
+}
+
 
 /* line 16, ../scss/_footer.scss */
 .footer.dark {
@@ -8665,3 +8682,6 @@ html.cropped {
     height: 80%;
   }*/
 }
+
+
+
