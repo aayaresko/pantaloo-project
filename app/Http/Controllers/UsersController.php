@@ -159,7 +159,6 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
-        dd($request->toArray());
         //to do check this method
         if ($request->has('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
