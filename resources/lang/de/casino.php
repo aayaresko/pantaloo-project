@@ -13,7 +13,7 @@ return array (
   'menu' => 'Menü',
   'withdraw' => 'Auszahlung',
   'get_bonus' => 'Bonus erhalten',
-  'settings' => 'Einstellungen<br>',
+  'settings' => 'Einstellungen',
   'support' => 'Support',
   'bonuses' => 'Boni',
   'affiliates' => 'Partner',
