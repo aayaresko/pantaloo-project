@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use Validator;
+use App\UserBonus;
 use App\Slots\Casino;
 use App\Models\GamesList;
 use App\Models\GamesType;
@@ -205,8 +206,15 @@ class IntegratedGamesController extends Controller
 //            ['active', '=', 1],
 //        ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
+        $currentUser = $request->user();
+        //to do
+        $idFreeSpinsBonus = 1;
+        $freeSpinsBonus = UserBonus::where('user_id', $currentUser->id)->where('bonus_id', $idFreeSpinsBonus)->first();
+        $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
+
         return view('integrated_games')->with([
             'title' => $title,
+            'freeSpins' => $freeSpins,
             'gamesTypes' => $gamesTypes,
             'gamesCategories' => $gamesCategories,
             'titleDefault' => $appAdditional['defaultTitle'],
