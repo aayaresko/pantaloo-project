@@ -33,7 +33,7 @@ return array (
   'blackjack' => 'Blackjack',
   'roulette' => 'Roulette',
   'slots' => 'Machines à sous',
-  'work_bitcoin' => 'Nous ne travaillons qu\'avec bitcoin',
+  'work_bitcoin' => 'Nous ne travaillons qu\'en Bitcoin',
   'bonus' => 'bonus',
   'after_first_deposit' => 'Après le premier dépôt',
   'welcome' => 'Bienvenue',
@@ -104,9 +104,7 @@ cache dans votre navigateur et il fonctionnera une fois de plus. Si le jeu ne
 s’ouvre toujours pas, vous pouvez nous contacter sur support@casinobit.io ou
 via le Web chat ici.',
   'support_i_cant_get_the_casino_game' => 'Je n’arrive pas au jeu de casino quand je clique sur le lien. Que dois-je faire ?',
-  'support_i_cant_get_the_casino_game_value' => 'Afin de jouer dans
-le CasinoBit vous aurez besoin d’avoir Java installé sur votre ordinateur. Vous
-pouvez télécharger Java ici :&nbsp;',
+  'support_i_cant_get_the_casino_game_value' => 'Afin de jouer sur CasinoBit vous aurez besoin d’avoir Java installé sur votre ordinateur. Vous pouvez télécharger Java ici : http://java.com/veuillez également vérifier que vous avez installé la dernière version de Flash. Si vous avez besoin de Télécharger Flash, alors vous pouvez le faire ici : http://get.adobe.com/flashplayer/ si cela ne résout pas le problème, alors cela pourrait signifier que vous avez perdu le contact avec votre serveur. Essayez de vous déconnecter et de vous reconnecter avant de cliquer à nouveau sur le lien. Occasionnellement, vous devrez peut-être fermer votre navigateur et le rouvrir à nouveau pour que le jeu arrive à charger. Si vous avez essayé tout cela et que le problème persiste, contactez notre équipe de support.',
   'support_an_error_or_technical_issue' => 'Une erreur ou un problème technique s’est produit dans le Casino. Que dois-je faire ?',
   'support_an_error_or_technical_issue_value' => 'Nous stockons chaque spin que vous faites dans notre base de données afin d’aider à ces problèmes. Si vous estimez qu’une erreur s’est produite lors de votre jeu, veuillez contacter notre équipe d’assistance. Rappelez-vous que plus d’informations vous pourrez nous donner, plus il sera facile pour nous de résoudre le problème. Essayez de noter le nom du jeu, la quantité de temps que vous avez joué, les mises que vous jouiez et les détails sur ce qui s’est passé. Si vous êtes en mesure de fournir une capture d’écran du problème, cela nous aidera également à résoudre le problème. Il est toujours judicieux d’arrêter de jouer jusqu’à ce que le problème ait été résolu.',
   'support_how_can_i_take_a_screenshot' => 'Comment puis-je prendre une capture d’écran ?',
@@ -128,9 +126,7 @@ nous gardons tous nos joueurs en sécurité et que nous prenons cela très au
 sérieux. Si vous jouez avec crypto-monnaies tels que Bitcoins, vous n’aurez pas
 à fournir des documents en tant que norme. Toutefois, nous nous réservons le
 droit d’effectuer des vérifications supplémentaires si nous suspectons que des
-comportements suspects ou frauduleux ont eu lieu dans votre compte.
-
-<br><br><br><br><br>',
+comportements suspects ou frauduleux ont eu lieu dans votre compte.',
   'support_is_all_my_information_secure_on_casinobit' => 'Est-ce que toutes mes informations sont sécurisées sur CasinoBit ?',
   'support_is_all_my_information_secure_on_casinobit_value' => 'Toujours. Dès que vous vous connectez, toute communication que vous faites entre votre navigateur Web et le site Web de CasinoBit sera protégée par la technologie de cryptage standard de l’industrie. Cela signifie que toutes vos données personnelles et toute activité que vous effectuez sur le site seront conservées complètement privées.',
   'support_are_my_bitcoins_secure_on_casinobit' => 'Mes Bitcoins sont-ils sécurisés sur CasinoBit ?',
@@ -140,45 +136,42 @@ comportements suspects ou frauduleux ont eu lieu dans votre compte.
   'support_can_my_documents_be_refused' => 'Mes documents peuvent-ils être refusés ?',
   'support_can_my_documents_be_refused_value' => 'Oui. Nous devons être en conformité avec les règles énoncées par notre établissement de licence à Curaçao. Dans le cas où cela est nécessaire, nous vous demanderons de nous envoyer des copies supplémentaires ou alternatives de documents, afin de rester dans la Loi.',
   'support_how_can_i_make_sure_my_account_is_fully_protected' => 'Comment puis-je m’assurer que mon compte est entièrement protégé ?',
-  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => '<div>Il y a quelques mesures que vous pouvez prendre
+  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => 'Il y a quelques mesures que vous pouvez prendre
 pour vous assurer que votre compte est aussi sûr qu’il peut être&nbsp;: 
 
-<br></div><div>1. Assurez-vous que vous utilisez un mot de passe
+1. Assurez-vous que vous utilisez un mot de passe
 différent pour CasinoBit. Différent de celui de votre compte de messagerie
 connecté à votre compte CasinoBit ou tout autre site que vous utilisez. 
 
-<br></div><div>2. Faites des scans de virus réguliers sur votre
+2. Faites des scans de virus réguliers sur votre
 ordinateur pour vous assurer qu’aucun des programmes malveillants, tels que les
 enregistreurs de frappe qui peuvent rassembler vos informations sécurisées, ne se
 cachent sur votre ordinateur.
 
-</div>',
-  'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
-  'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
-  'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
-  'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
-  'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
-  'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
-                                may take longer than others.
-                                Casinobit.io shall try to pay out withdrawals within 1 hour, however in some cases,
-                                withdrawals may take longer.',
-  'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase Bitcoins?',
+',
+  'support_account_what_are_deposits' => 'Quels sont les frais sur les dépôts et les retraits?',
+  'support_account_what_are_deposits_value' => 'CasinoBit n\'impose aucun frais de dépôt ou de retrait.',
+  'support_account_what_your_minimums_deposits' => 'Quels sont les montants minimums de dépôts et de retraits?',
+  'support_account_what_your_minimums_deposits_value' => 'Le dépôt minimum est de 1 mBTC (1 BTC = 1000 mBTC)',
+  'support_account_how_long_will_request_withdrawal' => 'Combien de temps faut-il pour que je reçoive mon argent une fois que j\'ai demandé un retrait?',
+  'support_account_how_long_will_request_withdrawal_value' => 'Bien que CasinoBit.io s\'efforce de payer les retraits immédiatement, certains retraits peuvent durer plus longtemps que d\'autres. CasinoBit.io essaiera de régler les retraits en moins d\'une heure. Toutefois, dans certains cas, les retraits peuvent durer plus longtemps.',
+  'support_account_where_can_i_purchase_bitcoins' => 'Où puis-je acheter des Bitcoins?',
   'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
   'support_most_popular' => 'Questions les plus recherchées',
-  'support_how_do_create_my_account' => 'Comment puis-je créer mon compte casinobit ?',
+  'support_how_do_create_my_account' => 'Comment puis-je créer mon compte CasinoBit ?',
   'support_how_do_create_my_account_value' => 'La seule chose à faire pour ouvrir votre compte est de cliquer sur le bouton « inscription » dans le coin supérieur gauche puis de remplir tous les champs obligatoires. Nous vous enverrons ensuite un e-mail duquel vous pourrez vérifier votre adresse e-mail en utilisant le lien de vérification que nous vous envoyons. Une fois que tout cela est fait, votre compte sera entièrement actif.',
   'support_can_i_purchase_bitcoins_value' => 'Il y a beaucoup d’endroits où vous pouvez acheter et vendre des Bitcoins. Les échanges en ligne incluent Coinbase, Bitstamp et Bitpanda. Pour en savoir plus sur l’achat de Bitcoins, veuillez visiter notre page spéciale sur le Bitcoin.',
   'support_what_currencies_cryptocurrencies' => 'Quelles monnaies et crypto-monnaies acceptez-vous ?',
   'support_what_currencies_cryptocurrencies_value' => 'Notre idée est de créer un casino en ligne où vous ne pouvez jouer qu’avec Bitcoin.',
   'support_how_start' => 'Comment commencer',
-  'support_i_havent_receved_confirmation' => 'Je n’ai pas reçu e-mail de confirmation...',
+  'support_i_havent_receved_confirmation' => 'Je n’ai pas reçu un e-mail de confirmation...',
   'support_i_havent_receved_confirmation_value' => 'Dans ce cas, vous devez d’abord vérifier votre dossier ’spam\'. Parfois, les e-mails automatiques peuvent être trouvés là en raison de vos paramètres de filtrage de boîte e-mail. Si vous ne trouvez pas notre e-mail dans l’un des dossiers de votre boîte de courriel, veuillez nous contacter dans le chat Web ou sur le courriel support@casinobit.io.',
   'support_what_is_age_allowed' => 'Quel est l’âge minimum autorisé ?',
   'support_what_is_age_allowed_value' => 'Vous pouvez participer à l’un des jeux si et seulement si vous avez plus de dix-huit (18) ans d’âge, ou un âge légal minimum supérieur à la majorité telle que stipulée dans la juridiction de votre résidence ; et qu’il est légal pour vous de participer aux jeux conformément aux lois applicables dans la juridiction de votre résidence.',
   'support_how_to_make_deposit' => 'Comment faire un dépôt ?',
   'support_how_to_make_deposit_value' => 'Vous devez cliquer sur le bouton \' + \' dans un coin supérieur droit, puis vous recevrez une adresse pour envoyer vos Bitcoins.',
   'support_we_accept_only_bitcoin' => 'Nous acceptons seulement les Bitcoins.',
-  'support_what_is_bitcoin' => 'Qu’est-ce que Bitcoin ?',
+  'support_what_is_bitcoin' => 'Qu’est-ce que le Bitcoin ?',
   'support_what_is_bitcoin_value' => 'Le Bitcoin est une monnaie numérique et mondiale du système monétaire. Il permet aux gens d’envoyer ou de recevoir de l’argent sur Internet, même à quelqu’un qu’ils ne connaissent pas ou ne font pas confiance. L’argent peut être échangé sans être lié à une identité réelle. Le domaine mathématique de la cryptographie est la base de la sécurité de Bitcoin.',
   'terms' => 'Conditions des bonus',
   'free' => 'gratuit',

@@ -19,9 +19,10 @@ class LandingController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param string $lang
+     * @return mixed
      */
-    public function generalLending(Request $request)
+    public function generalLending(Request $request, $lang = 'en')
     {
         $fullUrl = $request->fullUrl();
         $parsedUrl = parse_url($fullUrl);
@@ -29,7 +30,16 @@ class LandingController extends Controller
 
         $getParameters = '/?' . $getQuery;
         $mainUrl = config('app.foreignPages.main');
-        return view('landingPages.general')->with([
+        $defaultView = 'landingPages.general';
+        //to do this - 
+        if ($lang !== 'en') {
+            $currentView = $defaultView . '_' . $lang;
+        } else {
+            $currentView = $defaultView;
+        }
+        
+        return view($currentView)->with([
+            'lang' => $lang,
             'mainUrl' => $mainUrl,
             'getParameters' => $getParameters,
         ]);

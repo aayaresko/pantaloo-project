@@ -86,6 +86,20 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
+    $('body').on('click', '.getFreeSpins', function (e) {
+        e.preventDefault();
+        listGameParams.typeId = 0;
+        listGameParams.categoryId = 0;
+        listGameParams.page = 1;
+        listGameParams.freeSpins = 1;
+        getListGames();
+        setDefaultFilter(1);
+        setDefaultTitle();
+        $('html,body').scrollTop(0);
+        listGameParams.freeSpins = 0;
+    });
+
+
 };
 
 function handleImage(img) {
@@ -187,12 +201,18 @@ function getGame(url) {
     });
 }
 
-function setDefaultFilter() {
-
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var type_id = url.searchParams.get("type_id");
-    var category_id = url.searchParams.get("category_id");
+function setDefaultFilter(full = 0)
+{
+    let type_id, category_id;
+    let url_string = window.location.href;
+    let url = new URL(url_string);
+    if (full === 1) {
+        type_id = 0;
+        category_id = 0;
+    } else {
+        type_id = url.searchParams.get("type_id");
+        category_id = url.searchParams.get("category_id");
+    }
 
     if (type_id !== null) {
         $('.type_of_game').val(type_id).trigger('change');
@@ -201,7 +221,7 @@ function setDefaultFilter() {
     }
 
     if (category_id !== null) {
-        $('.type_of_game').val(category_id).trigger('change');
+        $('.filter_provider').val(category_id).trigger('change');
     } else {
         category_id = 0;
     }

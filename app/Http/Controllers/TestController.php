@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\RawLog;
 use DB;
 use Auth;
+use Response;
 use Log;
 use App\Bitcoin\Service;
 use App\Transaction;
@@ -36,9 +37,50 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
-        Mail::queue('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+        $pantalloGames = new PantalloGames;
+        $allGames = $pantalloGames->getGameList([], true);
+        dd($allGames);
+        $headers = [
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+            ,   'Content-type'        => 'text/csv'
+            ,   'Content-Disposition' => 'attachment; filename=games.csv'
+            ,   'Expires'             => '0'
+            ,   'Pragma'              => 'public'
+        ];
+
+        $list = GamesTypeGame::select(['games_list_extra.name as origin_name', 'games_categories.name as provider_name'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_list.active', '=', 1],
+                ['games_list.free_round', '=', 1],
+                ['games_types_games.extra', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get()->toArray();
+
+        # add headers for each column in the CSV download
+        array_unshift($list, array_keys($list[0]));
+
+        $callback = function() use ($list)
+        {
+            $FH = fopen('php://output', 'w');
+            foreach ($list as $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return Response::stream($callback, 200, $headers);
+        dd(2);
+        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m)  {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
+
         dd(2);
         $transactionHas = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
