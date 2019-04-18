@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests;
 use App\User;
+use App\ModernExtraUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -158,11 +159,13 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+        dd($request->toArray());
         //to do check this method
         if ($request->has('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
+            //validation
 
             $commission = $request->input('commission');
 
@@ -184,14 +187,26 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
-            if ((int)$request->email_confirmed === 1) {
-                $user->email_confirmed = 1;
-            }
-
-            if ((int)$request->block === 1) {
-                //update or set value
-                $user->email_confirmed = 1;
-            }
+//            if ((int)$request->email_confirmed === 1) {
+//                $user->email_confirmed = 1;
+//            }
+//
+//            if ((int)$request->has('block')) {
+//                //update or set value
+//                $blockUser = ModernExtraUsers::where('user_id', $user->id)
+//                    ->where('code', 'block')->get();
+//                //might use update or create but i use this way
+//                if (is_null($blockUser)) {
+//                    ModernExtraUsers::create([
+//                        'user_id' => $user->id,
+//                        'code' => 'block',
+//                        'value' => $request->block
+//                    ]);
+//                } else {
+//                    ModernExtraUsers::where('user_id', $user->id)
+//                        ->where('code', 'block')->get();
+//                }
+//            }
 
             $user->commission = $commission;
             $user->role = $request->input('role');
