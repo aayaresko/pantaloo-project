@@ -207,10 +207,15 @@ class IntegratedGamesController extends Controller
 //        ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         $currentUser = $request->user();
-        //to do
-        $idFreeSpinsBonus = 1;
-        $freeSpinsBonus = UserBonus::where('user_id', $currentUser->id)->where('bonus_id', $idFreeSpinsBonus)->first();
-        $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
+        if (is_null($currentUser)) {
+            $freeSpins = 0;
+        } else {
+            //to do
+            $idFreeSpinsBonus = 1;
+            $freeSpinsBonus = UserBonus::where('user_id', $currentUser->id)
+                ->where('bonus_id', $idFreeSpinsBonus)->first();
+            $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
+        }
 
         return view('integrated_games')->with([
             'title' => $title,
