@@ -148,7 +148,7 @@ class PantalloGetGames extends Command
                             'image_background' => $game->image_background,
                             'rating' => 1,
                             'active' => 1,
-                            'free_round' => $game->play_for_fun_supported
+                            'free_round' => $game->freerounds_supported
                         ];
                         $game = GamesList::create($gameDate);
 
@@ -191,7 +191,7 @@ class PantalloGetGames extends Command
                             'image_filled' => $game->image_filled,
                             'image_background' => $game->image_background,
                             'active' => 1,
-                            'free_round' => $game->play_for_fun_supported
+                            'free_round' => $game->freerounds_supported
                         ];
 
                         //no update for find new game - new game this is game was not updated

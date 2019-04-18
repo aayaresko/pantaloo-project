@@ -113,8 +113,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
                 ->whereIn('games_types_games.type_id', [$slotTypeId])
                 ->where([
-                    ['games_types_games.extra', '=', 1],
                     ['games_list.active', '=', 1],
+                    ['games_list.free_round', '=', 1],
+                    ['games_types_games.extra', '=', 1],
                     ['games_types.active', '=', 1],
                     ['games_categories.active', '=', 1],
                 ])

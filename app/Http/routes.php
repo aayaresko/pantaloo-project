@@ -20,6 +20,13 @@ $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
 
+Route::group(['middleware' => ['landing']], function () use ($landingPage) {
+    Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
+        Route::get('/', ['as' => 'general', 'uses' => 'Landing\LandingController@main']);
+        Route::get('/general/{lang?}', ['as' => 'general', 'uses' => 'Landing\LandingController@generalLending']);
+    });
+});
+
 Route::group(['middleware' => ['web']], function () use ($languages, $partner) {
     //sub-domain
     Route::group(['domain' => $partner], function () {
@@ -349,11 +356,4 @@ Route::group(['middleware' => ['ajax']], function () {
 
 Route::group(['middleware' => ['api']], function () {
     Route::post('/api/getToken', ['uses' => 'Api\ApiController@authenticate']);
-});
-
-Route::group(['middleware' => ['landing']], function () use ($landingPage) {
-    Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
-        Route::get('/', ['as' => 'general', 'uses' => 'Landing\LandingController@main']);
-        Route::get('/general', ['as' => 'general', 'uses' => 'Landing\LandingController@generalLending']);
-    });
 });
