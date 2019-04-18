@@ -73,88 +73,89 @@ return array (
   'support.buy_bitcoins_value' => 'Có rất nhiều cách để mua bitcoin. Ví dụ: bitstamp, coinbase và spicepay. Để biết thêm thông tin chi tiết, vui lòng truy cập vào trang của chúng tôi \'Bitcoin là gì\' hoặc liên hệ với livechat của chúng tôi để được tư vấn.',
   'support.games_fair' => 'Các trò chơi có công bằng không?',
   'support.games_fair_value' => 'Trò chơi của chúng tôi là 100% công bằng. Để chứng minh, mỗi người chơi có thể xem tiện ích công bằng và độ tin cậy của chúng tôi. Tất cả các trò chơi được quy định theo giấy phép của Curacao.',
-  'account' => 'Account',
-  'support_can_i_have_account' => 'Can I have more than one account?',
-  'support_can_i_have_account_value' => 'No, it is only allowed to open one account during your lifetime, even if an old account is closed down, you would have to request this one to be reopened as no new accounts can not be created.',
-  'support_what_should_i_do_account' => 'What should I do if I have forgotten my password?',
-  'support_what_should_i_do_account_value' => 'The quickest way is to create a new password by clicking this ‘Forgot Password?’ link. We will then send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit account. Alternatively, you can contact our helpful customer support either by the web chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
-  'support_can_i_change_email' => 'Can I change my registered email address?',
-  'support_can_i_change_email_value' => 'No. Unfortunately it\'s not possible to change your email address.',
-  'support_deposit' => 'Deposits & Withdrawals',
-  'support_what_happens' => 'What happens if my deposit is not showing?',
-  'support_what_happens_value' => 'If your crypto deposit is now showing, this most likely means that it has not yet been confirmed in the blockchain, or that your wallet has not yet sent the funds, you can always check the blockchain to see if your transfer is visible there, or ask the support if you need a hand with this.',
-  'support_how_long' => 'How long does it take for deposits for show in my account?',
-  'support_how_long_value' => 'As soon as your deposit appear in the blockchain network, it\'s shown in your account.',
-  'support_what_are_the_rules' => 'What are the rules to withdrawing my balance?',
-  'support_what_are_the_rules_value' => 'Before a withdrawal is allowed to be made your deposit has to be wagered 3 times. If you only play table games such as Roulette and Blackjack, then the deposit needs to be wagered 10 times. These rules exist to prevent money laundering and fraud.',
-  'support_is_there_a_maximum_withdrawal_rule' => 'Is there a maximum withdrawal rule I should know about?',
-  'support_is_there_a_maximum_withdrawal_rule_value' => 'We don\'t enforce any limits now.',
-  'the_casino' => 'the Casino',
-  'support_deposit_what_happens' => 'What happens if I encounter an error or the game freezes?',
-  'support_deposit_what_happens_value' => 'Most of the time, if your game freezes then you can pick up exactly where you left off next time you open the game. If there is no option for you to do this, then the round will continue to play out on the server. This will happen even if your computer is frozen or you lose internet connection. All your winnings will be paid into your account as normal. In order to get back into the game a simple refresh of the site usually works, and if this does not let you back into the game, you just need to clear your cookies and cache in your browser and it shall work once again. Is the game still not opening up, you can contact us on support@casinobit.io or via the web chat here.',
-  'support_i_cant_get_the_casino_game' => 'I can’t get the casino game to start when I click the link. What should I do?',
-  'support_i_cant_get_the_casino_game_value' => 'In order to play in the CasinoBit you will need to have Java installed on your computer. You can download Java here: http://java.com/ Please also check that you have installed the latest version of Flash. If you need to download Flash, then you can do so here: http://get.adobe.com/flashplayer/ If neither of these resolves the issue, then it could mean you have lost contact with your server. Try logging out and logging back in before you click the link again. Occasionally you may need to shut down your whole browser and reopen it again for the game to load. If you’ve tried all these and the problem continues to persist, then contact our support team.',
-  'support_an_error_or_technical_issue' => 'An error or technical issue occurred in the casino. What should I do?',
-  'support_an_error_or_technical_issue_value' => 'We store every single spin you make in our database in order to help with these problems. If you feel that an error has occurred during your game play, then please contact our support team. Remember that the more information you can give us, the easier it will be for us to resolve the problem. Try to note down the game name, the amount of time you have played, the stake you were playing and details on what happened. If you are able to provide a screenshot of the problem then this will also assist us in fixing the problem. It is always a good idea to stop playing until the issue has been resolved.',
-  'support_how_can_i_take_a_screenshot' => 'How can I take a screenshot?',
-  'support_how_can_i_take_a_screenshot_value' => 'A screenshot is a photo of the display currently on your computer screen. The image will be saved in your computer as a file, and can easily be attached to emails in order to send to our support team. In order to take a screenshot in Windows, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press the \'Print Screen\' button on your keyboard. This button is usually located on the right hand side of the keyboard. Step 3: Open a \'Paint\' or \'Word\' program on your computer and then press Ctrl + V to paste the image in. You can also click the \'Paste\' option from the ‘Edit’ menu to do this. You will then see your print screen image appear in the document. Step 4: Save this file to your computer using a name that will help you easily identify it. We also recommend that you save it to your desktop to allow faster access to the file. Step 5: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error. In order to take a screenshot on a Mac, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press Shift + CMD + 4, then click on the spacebar to make the camera appear. Click the mouse in order to take a snapshot of the current window open on your screen. This image will automatically save to your computer desktop, with the current time and date. Step 3: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error.',
-  'security' => 'Security',
-  'support_am_i_required_to_upload_documents_and_why' => 'Am I required to upload documents and why?',
-  'support_am_i_required_to_upload_documents_and_why_value' => 'Our top priority is to make sure that we keep all our players safe and we take this very seriously. If you are playing with cryptocurrencies such as Bitcoins you will not have to provide documents as a standard. However, we do reserve the right to carry out additional verification if we believe any suspicious or fraudulent behaviour has occurred on your account.',
-  'support_is_all_my_information_secure_on_casinobit' => 'Is all my information secure on CasinoBit?',
-  'support_is_all_my_information_secure_on_casinobit_value' => 'Always. As soon as you log in, any communication you make between your web browser and the CasinoBit website will be protected by industry-standard encryption technology. This means that all your personal data and any activity you make on the site will be kept completely private.',
-  'support_are_my_bitcoins_secure_on_casinobit' => 'Are my Bitcoins secure on CasinoBit?',
-  'support_are_my_bitcoins_secure_on_casinobit_value' => 'We take your security extremely seriously. Our experts have built in various sophisticated measures to prevent theft of funds or case sensitive information. In addition to this, we follow all the best practices to keep your coins safe, as outlined below: We store all the bitcoins in cold wallets, which are completely isolated from any online system. Being in cold wallets, they are protected with air-gap isolation All wallets are encrypted',
-  'support_how_does_your_kyc_process_work' => 'How does your KYC process work, how long does it take and will I be notified?',
-  'support_how_does_your_kyc_process_work_value' => 'When you request a withdrawal, if we at this stage require documents from you we will send you an email asking for the required documents with instructions on how to proceed. The documents will be verified within 12 hours time, mostly this is done within one hour though.',
-  'support_can_my_documents_be_refused' => 'Can my documents be refused?',
-  'support_can_my_documents_be_refused_value' => 'Yes. We must be in accordance to the rules stated by our licensing institution in Curacao. In cases where it is needed, we will reach out to you to ask for more or alternative document copies, in order to stay within the law.',
-  'support_how_can_i_make_sure_my_account_is_fully_protected' => 'How can I make sure my account is fully protected?',
-  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => 'There are a few steps you can take to make sure that your account is as safe as it can be. 1. Make sure you are using a different password for CasinoBit than your email account connected to your CasinoBit account or any other site you are using. 2. Do regular virus scans on your computer to ensure no malicious programs such as keyloggers that can gather your secure information are hiding on your computer.',
-  'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
-  'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
-  'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
-  'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
-  'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
-  'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
-                                may take longer than others.
-                                Casinobit.io shall try to pay out withdrawals within 1 hour, however in some cases,
-                                withdrawals may take longer.',
-  'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase Bitcoins?',
-  'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
-  'support_most_popular' => 'Most Popular',
-  'support_how_do_create_my_account' => 'How do I create my casinobit account?',
-  'support_how_do_create_my_account_value' => 'All you have to do to get started is click the \'Registration\' button in the upper left
-                                corner and fill in all the required fields.
-                                We’ll then pop you over an email where you can verify your email address using the
-                                verification link we send you.
-                                Once all this is done, your account will be fully active.',
-  'support_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins.
-                                Online exchanges include Coinbase, Bitstamp and Bitpanda.
-                                To find out more about buying Bitcoins, please visit our About Bitcoin page.',
-  'support_what_currencies_cryptocurrencies' => 'What currencies and cryptocurrencies do you accept?',
-  'support_what_currencies_cryptocurrencies_value' => 'Our idea was to create an online casino where you can play with Bitcoin only.',
-  'support_how_start' => 'How to start',
-  'support_i_havent_receved_confirmation' => 'I haven\'t receved confirmation email...',
-  'support_i_havent_receved_confirmation_value' => 'In this case you need first to check your \'Spam\' folder.
-                                Sometimes automatic emails can be found there because of your email box filtering
-                                settings.
-                                If you cannot find our email in any of your email box folders, please contact us in the
-                                web chat or over the email support@casinobit.io.',
-  'support_what_is_age_allowed' => 'What is the minimum age allowed?',
-  'support_what_is_age_allowed_value' => 'You may participate in any of the Games if and only if: You are over eighteen (18) years
-                                of age or such higher minimum legal age of majority as stipulated in the jurisdiction of
-                                Your residence; and It is legal for You to participate in the Games according to
-                                applicable laws in the jurisdiction of your residence.',
-  'support_how_to_make_deposit' => 'How to make a deposit?',
-  'support_how_to_make_deposit_value' => 'You need to click on \'+\' button in a top right corner and then you will receive an
-                                address to send your Bitcoins.',
-  'support_we_accept_only_bitcoin' => 'We accept only Bitcoin.',
-  'support_what_is_bitcoin' => 'What is Bitcoin?',
-  'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
-                                receive money across the internet, even to someone they don\'t know or don\'t trust. Money
-                                can be exchanged without being linked to a real identity. The mathematical field of
-                                cryptography is the basis for Bitcoin\'s security.',
+  'account' => 'Tài khoản',
+  'support_can_i_have_account' => 'Tôi có thể có nhiều tài khoản không?',
+  'support_can_i_have_account_value' => 'Không, nó chỉ được phép mở một tài khoản trong suốt cuộc đời của bạn, ngay cả khi tài khoản cũ bị đóng, bạn sẽ phải yêu cầu mở lại tài khoản này vì không thể tạo tài khoản mới.',
+  'support_what_should_i_do_account' => 'Tôi nên làm gì nếu tôi quên mật khẩu?',
+  'support_what_should_i_do_account_value' => 'Cách nhanh nhất là tạo một mật khẩu mới bằng cách nhấp vào liên kết này ‘Quên mật khẩu? Sau đó chúng tôi sẽ gửi một email sẽ đưa bạn đến một liên kết mới. Sau đó, bạn có thể nhập mật khẩu mới cho tài khoản CasinoBit của mình. Ngoài ra, bạn có thể liên hệ với bộ phận hỗ trợ khách hàng hữu ích của chúng tôi bằng tùy chọn trò chuyện trên web hoặc bằng cách gửi email cho chúng tôi theo địa chỉ support@casinobit.io. Chúng tôi sẽ rất vui khi được hỗ trợ bạn thêm.',
+  'support_can_i_change_email' => 'Tôi có thể thay đổi địa chỉ email đã đăng ký không?',
+  'support_can_i_change_email_value' => 'Không may là không thể thay đổi địa chỉ email của bạn.',
+  'support_deposit' => 'Tiền gửi và rút tiền',
+  'support_what_happens' => 'Điều gì xảy ra nếu tiền gửi của tôi không hiển thị?',
+  'support_what_happens_value' => 'Hầu hết thời gian, nếu trò chơi của bạn đóng băng thì bạn có thể chọn chính xác nơi bạn rời đi vào lần tới khi bạn mở trò chơi. Nếu không có tùy chọn cho bạn để làm điều này, thì vòng sẽ tiếp tục diễn ra trên máy chủ. Điều này sẽ xảy ra ngay cả khi máy tính của bạn bị đóng băng hoặc bạn mất kết nối Internet. Tất cả tiền thắng cược của bạn sẽ được trả vào tài khoản của bạn như bình thường. Để quay lại trò chơi, một trang web làm mới đơn giản thường hoạt động và nếu điều này không cho phép bạn quay lại trò chơi, bạn chỉ cần xóa cookie và bộ nhớ cache trong trình duyệt và nó sẽ hoạt động trở lại. Nếu trò chơi vẫn không mở, bạn có thể liên hệ với chúng tôi trên support@casinobit.io hoặc qua web chat tại đây.',
+  'support_how_long' => 'Mất bao lâu để gửi tiền để hiển thị trong tài khoản của tôi?',
+  'support_how_long_value' => 'Ngay khi tiền gửi của bạn xuất hiện trong mạng blockchain, nó sẽ được hiển thị trong tài khoản của bạn.',
+  'support_what_are_the_rules' => 'Các quy tắc để rút số dư của tôi là gì?',
+  'support_what_are_the_rules_value' => 'Trước khi rút tiền được phép thực hiện, tiền gửi của bạn phải được đặt cược 3 lần. Nếu bạn chỉ chơi các trò chơi trên bàn như Roulette và Blackjack, thì khoản tiền gửi cần được đặt cược 10 lần. Những quy tắc này tồn tại để ngăn chặn rửa tiền và lừa đảo.',
+  'support_is_there_a_maximum_withdrawal_rule' => 'Có một quy tắc rút tiền tối đa tôi nên biết về?',
+  'support_is_there_a_maximum_withdrawal_rule_value' => 'Chúng tôi không thực thi bất kỳ giới hạn bây giờ.',
+  'the_casino' => 'Sòng bạc',
+  'support_deposit_what_happens' => 'Điều gì xảy ra nếu tôi gặp lỗi hoặc đóng băng trò chơi?',
+  'support_deposit_what_happens_value' => 'Nếu tiền gửi tiền điện tử của bạn không hiển thị, điều này rất có thể có nghĩa là nó chưa được xác nhận trong blockchain hoặc ví của bạn chưa gửi tiền, bạn luôn có thể kiểm tra blockchain để xem liệu chuyển khoản của bạn có hiển thị ở đó không, hoặc yêu cầu hỗ trợ nếu bạn cần một tay với điều này.',
+  'support_i_cant_get_the_casino_game' => 'Tôi có thể bắt đầu trò chơi sòng bạc khi tôi nhấp vào liên kết. Tôi nên làm gì?',
+  'support_i_cant_get_the_casino_game_value' => 'Để chơi trong CasinoBit, bạn sẽ cần cài đặt Java trên máy tính của mình. Bạn có thể tải xuống Java tại đây: http://java.com/ Vui lòng kiểm tra xem bạn đã cài đặt phiên bản Flash mới nhất chưa. Nếu bạn cần tải xuống Flash, thì bạn có thể làm như vậy tại đây: http://get.adobe.com/flashplayer/ Nếu cả hai không giải quyết được vấn đề này, thì điều đó có nghĩa là bạn đã mất liên lạc với máy chủ của mình. Hãy thử đăng xuất và đăng nhập lại trước khi bạn nhấp lại vào liên kết. Đôi khi bạn có thể cần phải tắt toàn bộ trình duyệt của mình và mở lại nó để trò chơi tải. Nếu bạn đã thử tất cả những điều này và vấn đề vẫn tiếp tục, hãy liên hệ với nhóm hỗ trợ của chúng tôi.',
+  'support_an_error_or_technical_issue' => 'Một lỗi hoặc vấn đề kỹ thuật xảy ra trong sòng bạc. Tôi nên làm gì?',
+  'support_an_error_or_technical_issue_value' => 'Chúng tôi lưu trữ mọi spin bạn thực hiện trong cơ sở dữ liệu của chúng tôi để giúp giải quyết những vấn đề này. Nếu bạn cảm thấy có lỗi xảy ra trong khi chơi trò chơi của mình, vui lòng liên hệ với nhóm hỗ trợ của chúng tôi. Hãy nhớ rằng bạn càng cung cấp nhiều thông tin cho chúng tôi, chúng tôi càng dễ dàng giải quyết vấn đề hơn. Cố gắng ghi lại tên trò chơi, thời gian bạn đã chơi, tiền cược bạn đang chơi và chi tiết về những gì đã xảy ra. Nếu bạn có thể cung cấp một ảnh chụp màn hình của vấn đề thì điều này cũng sẽ hỗ trợ chúng tôi khắc phục sự cố. Luôn luôn là một ý tưởng tốt để dừng chơi cho đến khi vấn đề đã được giải quyết.',
+  'support_how_can_i_take_a_screenshot' => 'Làm thế nào tôi có thể chụp ảnh màn hình?',
+  'support_how_can_i_take_a_screenshot_value' => 'Ảnh chụp màn hình là ảnh của màn hình hiện trên màn hình máy tính của bạn. Hình ảnh sẽ được lưu trong máy tính của bạn dưới dạng tệp và có thể dễ dàng đính kèm vào email để gửi cho nhóm hỗ trợ của chúng tôi. Để chụp ảnh màn hình trong Windows, chỉ cần làm theo các bước được nêu dưới đây: Bước 1: Đảm bảo rằng chế độ xem hiện tại trên màn hình của bạn là hình ảnh bạn muốn chụp ảnh màn hình. Đóng hoặc thu nhỏ bất kỳ cửa sổ bổ sung nào có thể che khuất tầm nhìn. Bước 2: Nhấn nút \'Màn hình in\' trên bàn phím của bạn. Nút này thường nằm ở phía bên tay phải của bàn phím. Bước 3: Mở chương trình \'Vẽ\' hoặc \'Word\' trên máy tính của bạn và sau đó nhấn Ctrl + V để dán hình ảnh vào. Bạn cũng có thể nhấp vào tùy chọn \'Dán\' từ menu ‘Chỉnh sửa hình xăm để thực hiện việc này. Sau đó, bạn sẽ thấy hình ảnh màn hình in của bạn xuất hiện trong tài liệu. Bước 4: Lưu tệp này vào máy tính của bạn bằng tên sẽ giúp bạn dễ dàng xác định nó. Chúng tôi cũng khuyên bạn nên lưu nó vào máy tính để bàn để cho phép truy cập tệp nhanh hơn. Bước 5: Đính kèm tệp này vào một email được gửi tới support@casinobit.io, bao gồm tất cả các thông tin bổ sung về lỗi. Để chụp ảnh màn hình trên máy Mac, chỉ cần làm theo các bước được nêu dưới đây: Bước 1: Đảm bảo rằng chế độ xem hiện tại trên màn hình của bạn là hình ảnh bạn muốn chụp ảnh màn hình. Đóng hoặc thu nhỏ bất kỳ cửa sổ bổ sung nào có thể che khuất tầm nhìn. Bước 2: Nhấn Shift + CMD + 4, sau đó nhấp vào phím cách để làm cho máy ảnh xuất hiện. Nhấp chuột để chụp ảnh cửa sổ hiện tại đang mở trên màn hình của bạn. Hình ảnh này sẽ tự động lưu vào máy tính để bàn của bạn, với thời gian và ngày hiện tại. Bước 3: Đính kèm tệp này vào một email được gửi tới support@casinobit.io, bao gồm tất cả các thông tin bổ sung về lỗi.',
+  'security' => 'Bảo vệ',
+  'support_am_i_required_to_upload_documents_and_why' => 'Tôi có bắt buộc phải tải lên tài liệu không và tại sao?',
+  'support_am_i_required_to_upload_documents_and_why_value' => 'Ưu tiên hàng đầu của chúng tôi là đảm bảo rằng chúng tôi giữ an toàn cho tất cả các cầu thủ của mình và chúng tôi rất coi trọng vấn đề này. Nếu bạn đang chơi với tiền điện tử như Bitcoin, bạn sẽ không phải cung cấp tài liệu theo tiêu chuẩn. Tuy nhiên, chúng tôi có quyền tiến hành xác minh bổ sung nếu chúng tôi tin rằng bất kỳ hành vi đáng ngờ hoặc gian lận nào đã xảy ra trên tài khoản của bạn.',
+  'support_is_all_my_information_secure_on_casinobit' => 'Tất cả thông tin của tôi có an toàn trên CasinoBit không?',
+  'support_is_all_my_information_secure_on_casinobit_value' => 'Luôn luôn. Ngay khi bạn đăng nhập, mọi giao tiếp bạn thực hiện giữa trình duyệt web và trang web CasinoBit sẽ được bảo vệ bởi công nghệ mã hóa tiêu chuẩn công nghiệp. Điều này có nghĩa là tất cả dữ liệu cá nhân của bạn và mọi hoạt động bạn thực hiện trên trang web sẽ được giữ kín hoàn toàn.',
+  'support_are_my_bitcoins_secure_on_casinobit' => 'Bitcoin của tôi có an toàn trên CasinoBit không?',
+  'support_are_my_bitcoins_secure_on_casinobit_value' => 'Chúng tôi rất coi trọng an ninh của bạn. Các chuyên gia của chúng tôi đã xây dựng các biện pháp tinh vi khác nhau để ngăn chặn hành vi trộm cắp tiền hoặc thông tin nhạy cảm trong trường hợp. Ngoài ra, chúng tôi tuân theo tất cả các thực tiễn tốt nhất để giữ tiền của bạn an toàn, như được nêu dưới đây: Chúng tôi lưu trữ tất cả bitcoin trong ví lạnh, cách ly hoàn toàn với bất kỳ hệ thống trực tuyến nào. Ở trong ví lạnh, chúng được bảo vệ bằng cách ly khe hở không khí Tất cả các ví đều được mã hóa',
+  'support_how_does_your_kyc_process_work' => 'Quá trình KYC của bạn hoạt động như thế nào, mất bao lâu và tôi sẽ được thông báo?',
+  'support_how_does_your_kyc_process_work_value' => 'Khi bạn yêu cầu rút tiền, nếu chúng tôi ở giai đoạn này yêu cầu tài liệu từ bạn, chúng tôi sẽ gửi cho bạn một email yêu cầu các tài liệu cần thiết kèm theo hướng dẫn về cách tiến hành. Các tài liệu sẽ được xác minh trong vòng 12 giờ, chủ yếu là việc này được thực hiện trong vòng một giờ.',
+  'support_can_my_documents_be_refused' => 'Tài liệu của tôi có thể bị từ chối không?',
+  'support_can_my_documents_be_refused_value' => 'Vâng. Chúng tôi phải tuân theo các quy tắc được nêu bởi tổ chức cấp phép của chúng tôi ở Curacao. Trong trường hợp cần thiết, chúng tôi sẽ liên hệ với bạn để yêu cầu thêm hoặc sao chép tài liệu thay thế, để tuân thủ luật pháp.',
+  'support_how_can_i_make_sure_my_account_is_fully_protected' => 'Làm cách nào để đảm bảo tài khoản của tôi được bảo vệ hoàn toàn?',
+  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => 'Có một vài bước bạn có thể thực hiện để đảm bảo rằng tài khoản của bạn an toàn nhất có thể. 1. Đảm bảo bạn đang sử dụng một mật khẩu khác cho CasinoBit so với tài khoản email của bạn được kết nối với tài khoản CasinoBit hoặc bất kỳ trang web nào khác bạn đang sử dụng. 2. Quét virus thường xuyên trên máy tính của bạn để đảm bảo không có chương trình độc hại nào như keylogger có thể thu thập thông tin bảo mật của bạn đang ẩn trên máy tính của bạn.',
+  'support_account_what_are_deposits' => 'Lệ phí tiền gửi và rút tiền là gì?',
+  'support_account_what_are_deposits_value' => 'CasinoBit không có bất kỳ khoản phí nào khi gửi hoặc rút tiền.',
+  'support_account_what_your_minimums_deposits' => 'Tối thiểu của bạn về tiền gửi và rút tiền là gì?',
+  'support_account_what_your_minimums_deposits_value' => 'Tiền gửi tối thiểu là 1 mBTC (1 BTC = 1000 mBTC)',
+  'support_account_how_long_will_request_withdrawal' => 'Sẽ mất bao lâu để tôi nhận được tiền của mình sau khi tôi yêu cầu rút tiền?',
+  'support_account_how_long_will_request_withdrawal_value' => 'Trong khi Casinobit.io sẽ nỗ lực thanh toán rút tiền ngay lập tức, một số lần rút tiền
+                                 có thể mất nhiều thời gian hơn những người khác.
+                                 Casinobit.io sẽ cố gắng thanh toán rút tiền trong vòng 1 giờ, tuy nhiên trong một số trường hợp,
+                                 rút tiền có thể mất nhiều thời gian hơn.',
+  'support_account_where_can_i_purchase_bitcoins' => 'Tôi có thể mua Bitcoin ở đâu?',
+  'support_account_where_can_i_purchase_bitcoins_value' => 'Có rất nhiều nơi cho phép bạn mua và bán Bitcoin. Trao đổi trực tuyến bao gồm Coinbase, Bitstamp và Bitpanda.',
+  'support_most_popular' => 'Phổ biến nhất
+',
+  'support_how_do_create_my_account' => 'Làm cách nào để tạo tài khoản casinobit của tôi?',
+  'support_how_do_create_my_account_value' => 'Tất cả những gì bạn phải làm để bắt đầu là nhấp vào nút \'Đăng ký\' ở phía trên bên trái
+                                 góc và điền vào tất cả các trường bắt buộc.
+                                 Sau đó chúng tôi sẽ đưa bạn qua một email nơi bạn có thể xác minh địa chỉ email của mình bằng cách sử dụng
+                                 liên kết xác minh chúng tôi gửi cho bạn.
+                                 Khi tất cả điều này được thực hiện, tài khoản của bạn sẽ hoàn toàn hoạt động.',
+  'support_can_i_purchase_bitcoins_value' => 'Có rất nhiều nơi cho phép bạn mua và bán Bitcoin.
+                                 Trao đổi trực tuyến bao gồm Coinbase, Bitstamp và Bitpanda.
+                                 Để tìm hiểu thêm về việc mua Bitcoin, vui lòng truy cập trang Giới thiệu về Bitcoin của chúng tôi.',
+  'support_what_currencies_cryptocurrencies' => 'Những loại tiền tệ và tiền điện tử nào bạn chấp nhận?',
+  'support_what_currencies_cryptocurrencies_value' => 'Ý tưởng của chúng tôi là tạo ra một sòng bạc trực tuyến nơi bạn chỉ có thể chơi bằng Bitcoin.',
+  'support_how_start' => 'Làm thế nào để bắt đầu?',
+  'support_i_havent_receved_confirmation' => 'Tôi chưa nhận được email xác nhận ...',
+  'support_i_havent_receved_confirmation_value' => 'Trong trường hợp này, trước tiên bạn cần kiểm tra thư mục \'Spam\'.
+                                 Đôi khi email tự động có thể được tìm thấy ở đó vì lọc hộp thư điện tử của bạn
+                                 cài đặt.
+                                 Nếu bạn không thể tìm thấy email của chúng tôi trong bất kỳ thư mục hộp thư điện tử nào của bạn, vui lòng liên hệ với chúng tôi trong
+                                 trò chuyện trên web hoặc qua email support@casinobit.io.',
+  'support_what_is_age_allowed' => 'Độ tuổi tối thiểu được phép là bao nhiêu?',
+  'support_what_is_age_allowed_value' => 'Bạn có thể tham gia bất kỳ Trò chơi nào nếu và chỉ khi: Bạn trên mười tám (18) năm
+                                 tuổi hoặc độ tuổi hợp pháp tối thiểu cao hơn như vậy theo quy định tại khu vực tài phán của
+                                 Nơi cư trú của bạn; và việc bạn tham gia Thế vận hội là hợp pháp
+                                 luật áp dụng trong khu vực tài phán của bạn.',
+  'support_how_to_make_deposit' => 'Làm thế nào để gửi tiền?',
+  'support_how_to_make_deposit_value' => 'Bạn cần nhấp vào nút \'+\' ở góc trên bên phải và sau đó bạn sẽ nhận được một
+                                 địa chỉ để gửi Bitcoin của bạn.',
+  'support_we_accept_only_bitcoin' => 'Chúng tôi chỉ chấp nhận Bitcoin.',
+  'support_what_is_bitcoin' => 'Bitcoin là gì?',
+  'support_what_is_bitcoin_value' => 'Bitcoin là một loại tiền tệ hệ thống tiền kỹ thuật số và toàn cầu. Nó cho phép mọi người gửi hoặc
+                                 nhận tiền qua internet, ngay cả với người mà họ không biết hoặc không tin tưởng. Tiền bạc
+                                 có thể được trao đổi mà không được liên kết với một danh tính thực sự. Lĩnh vực toán học của
+                                 mật mã là nền tảng cho bảo mật của Bitcoin.',
   'terms' => 'điều kiện',
   'free' => 'miễn phí',
   'spins' => 'quay',
