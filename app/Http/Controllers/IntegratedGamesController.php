@@ -240,6 +240,13 @@ class IntegratedGamesController extends Controller
             ['games_categories.active', '=', 1],
         ];
 
+        if ((int)$request->freeSpins === 1) {
+            //to do
+            $typeSlot = 10001;
+            array_push($whereGameList, ['games_types_games.type_id', '=', $typeSlot]);
+            array_push($whereGameList, ['games_list.free_round', '=', $request->freeSpins]);
+        }
+
         if ((int)$request->categoryId !== 0) {
             array_push($whereGameList, ['games_list_extra.category_id', '=', $request->categoryId]);
         }
