@@ -156,7 +156,7 @@ return array (
                                  nhận tiền qua internet, ngay cả với người mà họ không biết hoặc không tin tưởng. Tiền bạc
                                  có thể được trao đổi mà không được liên kết với một danh tính thực sự. Lĩnh vực toán học của
                                  mật mã là nền tảng cho bảo mật của Bitcoin.',
-  'terms' => 'điều kiện',
+  'terms' => 'Bonus Terms & Conditions',
   'free' => 'miễn phí',
   'spins' => 'quay',
   'welcome_bonus' => 'phần thưởng chào mừng',
