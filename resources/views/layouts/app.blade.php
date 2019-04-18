@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,6 @@
     <!-- Icons -->
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Main styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link href="/vendors/animate/animate.css" rel="stylesheet">
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
@@ -83,8 +82,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="header @if(Auth::check()) usr @endif">
     <div class="header-left">
         <div class="logo-block">
-            <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
-            <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+           @if(Route::currentRouteName() == 'main')
+                <a class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+                 <a class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+            @else
+                <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+                <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+            @endif
         </div>
     </div>
     <div class="navigation-container">
@@ -123,6 +127,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <ul class="navigation-list">
                 @include('page_links', ['is_main' => 1])
                 @if(Auth::check())
+                    @if(Auth::user()->role == 1)
+                        <li><a href="/affiliates">{{ trans('casino.admin') }}</a></li>
+                    @endif
+
                     @can('accessUserAdminPublic')
                         <li><a href="/admin">{{ trans('casino.admin') }}</a></li>
                     @endcan

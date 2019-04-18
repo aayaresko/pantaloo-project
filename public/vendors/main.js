@@ -183,8 +183,15 @@ function logOut(){
 }
 
 function lettering(){
-	$('.word-split').each(function(){
-		$(this).lettering();
+	$('.word-split').each(function(index){
+		// fix th lang on home page headers
+		console.log(index);
+		
+		if (($('html').attr('lang') == 'th') && index == 2) {
+			$(this).lettering();
+		} else if ($('html').attr('lang') != 'th') {
+			$(this).lettering();
+		}
 	})
 }
 
