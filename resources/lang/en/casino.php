@@ -142,7 +142,7 @@ return array (
   'support_we_accept_only_bitcoin' => 'We accept bitcoins only.',
   'support_what_is_bitcoin' => 'What is Bitcoin?',
   'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or receive money across the Internet even to someone they don\'t know or don\'t trust. Money can be exchanged without being linked to a real identity. The mathematical field of cryptography is the basis for Bitcoin\'s security.',
-  'terms' => 'terms',
+  'terms' => 'Bonus Terms & Conditions',
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',
