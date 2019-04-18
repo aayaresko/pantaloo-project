@@ -152,7 +152,7 @@ cachent sur votre ordinateur.
   'support_account_what_are_deposits' => 'Quels sont les frais sur les dépôts et les retraits?',
   'support_account_what_are_deposits_value' => 'CasinoBit n\'impose aucun frais de dépôt ou de retrait.',
   'support_account_what_your_minimums_deposits' => 'Quels sont les montants minimums de dépôts et de retraits?',
-  'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
+  'support_account_what_your_minimums_deposits_value' => 'Le dépôt minimum est de 1 mBTC (1 BTC = 1000 mBTC)',
   'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
   'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
                                 may take longer than others.
