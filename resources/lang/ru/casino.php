@@ -11,7 +11,7 @@ return array (
   'login' => 'Вход',
   'registration' => 'Регистрация',
   'menu' => 'Меню',
-  'withdraw' => 'Вывод',
+  'withdraw' => 'Вывод средств',
   'get_bonus' => 'Получить бонус',
   'settings' => 'Настройки',
   'support' => 'Служба поддержки',
