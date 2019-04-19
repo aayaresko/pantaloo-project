@@ -36,6 +36,61 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $ip = GeneralHelper::visitorIpCloudFire();
+        //dump($ip);
+        //$ip = '165.227.71.60';
+        //to do this job edit session way
+        $ip = geoip($ip);
+        dd($ip);
+        DB::enableQueryLog();
+        $user = User::where('id', 1031)->first();
+        $transaction = $user->transactions()
+            ->where('type', 3)->where('notification', 0)->first();
+        dd(DB::getQueryLog());
+        dd(2);
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_list.active', '=', 1],
+                ['games_list.free_round', '=', 1],
+                ['games_types_games.extra', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item->system_id;
+        }, $freeRoundGames));
+
+        $request->merge(['gamesIds' => $gamesIds]);
+        $request->merge(['available' => 50]);
+        $request->merge(['timeFreeRound' => strtotime("5 day", 0)]);
+
+        $user = User::where('id', 1031)->first();
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->freeRound($request, $user);
+        dd($freeRound);
+        dd(2);
+        $users = User::where('id', '>', 450)->get();
+        foreach ($users as $user) {
+            User::where('id', $user->id)->update([
+                'email_confirmed' => 1
+            ]);
+        }
+        dd(2);
+        //peho@max-mail.info
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) use ($user) {
+            $m->to('alexproc1313@gmail.com', $user->name)->subject('Confirm email');
+        });
+        dd(2);
+        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m)  {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
         dd(2);
         $pantalloGames = new PantalloGames;
         $allGames = $pantalloGames->getGameList([], true);
