@@ -180,7 +180,7 @@
 .actions {
   padding-bottom: 70px;
   position: relative;
-  z-index: 9999;
+  /*z-index: 9999;*/
 }
 .actions .container .row {
   margin-bottom: 30px;
@@ -484,7 +484,7 @@ body .cabinet-block{
 @media (max-width: 768px) {
   .actions {
     margin-left: -5px;
-    padding-bottom: 120px;
+    padding-bottom: 160px;
   }
   
 

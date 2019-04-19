@@ -5028,7 +5028,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 
-.block-bonus-buttons{
+.block-filter .block-bonus-buttons{
   float: right;
   margin-top: 5px;
 }
@@ -7296,7 +7296,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
       padding-bottom: 60px;
   }
 
-  .block-bonus-buttons {
+  .block-filter .block-bonus-buttons {
     float: none;
     position: absolute;
     bottom: 0px;
@@ -7304,7 +7304,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     transform: translateX(-50%);
   }
 
-    /*end upTech custom style*/
+    
 }
 
 
