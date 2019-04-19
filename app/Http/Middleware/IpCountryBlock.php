@@ -19,11 +19,9 @@ class IpCountryBlock
     {
     	$ip = GeneralHelper::visitorIpCloudFire();
 
-    	if($ip and $ip == '185.216.33.153')
+    	if($ip and $ip == '188.239.72.9')
 	    {
 		    $geo2 = geoip($ip);
-
-		    dd($geo2);
 
 		    if($geo2 and isset($geo2->iso_code) and $geo2->iso_code == 'US')
 		    {
