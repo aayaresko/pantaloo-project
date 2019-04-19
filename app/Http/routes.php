@@ -80,7 +80,7 @@ Route::group(['middleware' => ['web']], function () use ($languages, $partner) {
         'where' => ['lang' => '(' . implode("|", $languages) . ')'],
         'middleware' => 'language.switch'
     ], function () {
-        Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
+        Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index'])->middleware('ip.country.block');
         Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
         Route::get('/dice', ['as' => 'dice', 'uses' => 'SlotController@dice']);
         Route::get('/blackjack', ['as' => 'blackjack', 'uses' => 'SlotController@blackjack']);
