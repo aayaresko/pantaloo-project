@@ -20,15 +20,14 @@
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt="" />
                                 </div>
                             </div>
-
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                        <a href="{{route('bonus.activate', '1')}}"
+                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
-                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
                                     <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
@@ -48,11 +47,11 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                        <a href="{{route('bonus.activate', '2')}}"
+                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
-                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
                                     <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
@@ -73,11 +72,11 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                        <a href="{{route('bonus.activate', '3')}}"
+                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
-                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
                                     <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
@@ -95,11 +94,11 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ route('deposit', ['lang' => $currentLang]) }}"
-                                           class="btn-play-action"><span>{{ trans('casino.deposit_space') }}</span></a>
+                                        <a href="{{route('bonus.activate', '4')}}"
+                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
-                                           class="btn-play-action reg-btn"><span>{{ trans('casino.registration') }}</span></a>
+                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
                                     <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
