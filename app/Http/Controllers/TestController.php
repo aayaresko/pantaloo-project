@@ -23,6 +23,7 @@ use App\Models\GamesListExtra;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
+use Cookie;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
@@ -36,6 +37,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $timeKeepLang = config('appAdditional.keepLanguage');
+        $prefixLang = $request->route()->parameter('lang');
+        $cookieLang = Cookie::get('lang');
+        $currentLocale = app()->getLocale();
+        dd(GeneralHelper::getLang($prefixLang, $cookieLang, $currentLocale));
         dd(2);
         $pantalloGames = new PantalloGames;
         $allGames = $pantalloGames->getGameList([], true);
