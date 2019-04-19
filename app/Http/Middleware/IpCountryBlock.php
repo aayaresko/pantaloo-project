@@ -17,11 +17,16 @@ class IpCountryBlock
      */
     public function handle($request, Closure $next)
     {
-	    $geo2 = geoip(GeneralHelper::visitorIpCloudFire());
+    	$ip = GeneralHelper::visitorIpCloudFire();
 
-	    if($geo2 and isset($geo2->iso_code) and $geo2->iso_code == 'US')
+    	if($ip and $ip == '185.216.33.153')
 	    {
-//		    return abort(403);
+		    $geo2 = geoip($ip);
+
+		    if($geo2 and isset($geo2->iso_code) and $geo2->iso_code == 'US')
+		    {
+			    return abort(403);
+		    }
 	    }
 
         return $next($request);
