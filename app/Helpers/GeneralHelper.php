@@ -141,4 +141,27 @@ class GeneralHelper
 
         return $stat;
     }
+
+    /**
+     *
+     */
+    static public function getLang($prefixLang, $cookieLang, $currentLocale)
+    {
+        $lang = $currentLocale;
+
+        if (!is_null($prefixLang)) {
+            $lang = $prefixLang;
+        } else {
+            if (!is_null($cookieLang)) {
+                $lang = $cookieLang;
+            } else {
+                //check ip address and check language
+                //if difference then ask message with gow language select
+                //and set language above
+                //App::setlocale($lang);
+                //if we don't have this language we use en
+            }
+        }
+        return $lang;
+    }
 }
