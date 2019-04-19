@@ -156,7 +156,8 @@ return array (
                                  Geld über das Internet erhalten, auch an jemanden, den sie nicht kennen oder dem sie nicht trauen. Geld
                                  kann ausgetauscht werden, ohne an eine echte Identität gebunden zu sein. Das mathematische Feld von
                                  Kryptographie ist die Basis für die Sicherheit von Bitcoin.',
-  'terms' => 'Bedingungen',
+  'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'Kostenlos',
   'spins' => 'spins',
   'welcome_bonus' => 'Willkommensbonus',

@@ -161,7 +161,8 @@ return array (
                                 can be exchanged without being linked to a real identity. The mathematical field of
                                 cryptography is the basis for Bitcoin\'s security.',
   
-  'terms' => '規約',
+  'terms' => 'Bonus Terms & Conditions',
+  'bonus_terms' => 'Terms',
   'free' => 'フリー',
   'spins' => 'スピン',
   'welcome_bonus' => 'ウェルカム ボーナス',

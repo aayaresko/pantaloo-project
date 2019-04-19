@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Domain;
 use App\Jobs\SetUserCountry;
 use App\UserActivation;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests;
 use App\User;
+use App\ModernExtraUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +26,14 @@ class UsersController extends Controller
 
         switch ($user->role) {
             case 2:
-                $users = User::orderBy('created_at', 'DESC')->get();
+                //to do block to config value
+                $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
+                    ->leftJoin('modern_extra_users as block', function ($join) {
+                        $join->on('users.id', '=', 'block.user_id')
+                            ->where('block.code', '=', 'block');
+                    })
+                    ->orderBy('created_at', 'DESC')->get();
+
                 return view('admin.users', ['users' => $users]);
             case 3:
                 return redirect('/admin/agent/list');
@@ -150,10 +159,12 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+        //to do check this method
         if ($request->has('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
+            //validation
 
             $commission = $request->input('commission');
 
@@ -175,10 +186,33 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
+
+            //email confirm
+            $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
+            $user->email_confirmed = $emailConfirmed;
+
             $user->commission = $commission;
             $user->role = $request->input('role');
 
             $user->save();
+
+            //block user
+            $block = ($request->has('block')) ? 1 : 0;
+            $blockUser = ModernExtraUsers::where('user_id', $user->id)
+                ->where('code', 'block')->first();
+            //might use update or create but i use this way
+            if (is_null($blockUser)) {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'block',
+                    'value' => $block
+                ]);
+            } else {
+                ModernExtraUsers::where('user_id', $user->id)
+                    ->where('code', 'block')->update([
+                        'value' => $block
+                    ]);
+            }
         }
 
         return redirect()->back()->with('msg', 'User was updated!');

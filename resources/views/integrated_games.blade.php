@@ -125,6 +125,11 @@
                             <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
+                    @if ($freeSpins === 1)
+                        <div class="block-bonus-buttons" style="display: inline-block">
+                            <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
+                        </div>
+                    @endif
                 </div>
                 <div class="pull-right">
                     <div class="input-search">
