@@ -11,6 +11,7 @@ return array (
   'login' => 'Login',
   'registration' => 'Registration',
   'menu' => 'Menu',
+  'join_now' => 'Join Now',
   'withdraw' => 'Withdraw',
   'get_bonus' => 'Get Bonus',
   'settings' => 'Settings',
