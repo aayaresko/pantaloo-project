@@ -8,6 +8,7 @@ use App\Http\Middleware\EmailConfirmation;
 use App\Http\Middleware\GeneralMiddleware;
 use App\Http\Middleware\IpCheck;
 use App\Http\Middleware\IpCountryBlock;
+use App\Http\Middleware\IpDomainCountryBlock;
 use App\Http\Middleware\LanguageGet;
 use App\Http\Middleware\LanguageSet;
 use App\Http\Middleware\SessionReflash;
@@ -85,6 +86,7 @@ class Kernel extends HttpKernel
         'ip.check' => IpCheck::class,
         'language.switch' =>  LanguageSwitch::class,
         'session.reflash' =>  SessionReflash::class,
-	    'ip.country.block' => IpCountryBlock::class
+	    'ip.country.block' => IpCountryBlock::class,
+	    'ip.domain.country.block' => IpDomainCountryBlock::class
     ];
 }
