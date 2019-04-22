@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <div class="setting-accordion">
+                        <div class="setting-accordion dontShow">
                             <h3 class="setting-title">{{translate('Change Password')}}</h3>
                             <div>
                             </div>
