@@ -23,6 +23,7 @@ use App\Models\GamesListExtra;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
+use Cookie;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+
         $transactions = [];
         $setAmount = 60;
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
@@ -125,6 +127,14 @@ class TestController extends Controller
         Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m)  {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
+
+        $timeKeepLang = config('appAdditional.keepLanguage');
+        $prefixLang = $request->route()->parameter('lang');
+        $cookieLang = Cookie::get('lang');
+        $currentLocale = app()->getLocale();
+        $lang = GeneralHelper::getLang($prefixLang, $cookieLang, $currentLocale);
+        dd($lang);
+
         dd(2);
         $pantalloGames = new PantalloGames;
         $allGames = $pantalloGames->getGameList([], true);

@@ -100,5 +100,10 @@ return [
             'value' => 'Free Win',
             'filter' => 0
         ],
+        [
+            'code' => 11,
+            'value' => 'System',
+            'filter' => 0
+        ],
     ]
 ];
