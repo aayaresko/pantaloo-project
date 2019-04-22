@@ -37,11 +37,13 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
         $timeKeepLang = config('appAdditional.keepLanguage');
         $prefixLang = $request->route()->parameter('lang');
         $cookieLang = Cookie::get('lang');
         $currentLocale = app()->getLocale();
-        dd(GeneralHelper::getLang($prefixLang, $cookieLang, $currentLocale));
+        $lang = GeneralHelper::getLang($prefixLang, $cookieLang, $currentLocale);
+        dd($lang);
         dd(2);
         $pantalloGames = new PantalloGames;
         $allGames = $pantalloGames->getGameList([], true);
