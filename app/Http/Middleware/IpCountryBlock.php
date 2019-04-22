@@ -24,7 +24,7 @@ class IpCountryBlock
 	    {
 		    $geo2 = geoip($ip);
 
-		    if($geo2 and isset($geo2->iso_code) and $geo2->iso_code == 'US')
+		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA','IL']))
 		    {
 			    return abort(403);
 		    }
