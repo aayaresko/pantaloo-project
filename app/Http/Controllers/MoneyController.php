@@ -192,6 +192,10 @@ class MoneyController extends Controller
 
         if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
+        if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+            return redirect()->back()->withErrors(['You do not have any deposits.']);
+        }
+
         $this->validate($request, [
             'address' => 'required',
             'sum' => 'required|numeric|min:1'
