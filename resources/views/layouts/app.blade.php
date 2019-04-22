@@ -224,7 +224,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         @endforeach
                     </ul>
                 </ul>
-                
+
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
             </div>
         @endif
@@ -240,8 +240,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="mobile-menu">
     <div class="popup-entry">
-        <div class="mobTopWrap">       
-            
+        <div class="mobTopWrap">
+
             <div class="logo-container">
                 <a href="/" class="logo"><img src="/media/images/logoSmall.png" alt="logo"></a>
             </div>
@@ -284,20 +284,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </ul>
                         </ul>
 
-                    </div>      
+                    </div>
 
             @endif
             <a href="#" class="close-icon"></a>
         </div>
 
-       
-         
+
+
         <div class="games-listing-block mobGameBlock">{{--{{ trans('casino.gambling_card_games') }}--}}
             <ul class="games-listing">
                 @include('footer_links')
             </ul>
         </div>
-        
+
         <nav class="navigation mobNav">
             <ul class="navigation-list">
                 @if(Auth::check())
@@ -309,7 +309,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 @include('page_links', ['is_main' => 1])
             </ul>
         </nav>
-       
+
         <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}" alt="{{ app()->getLocale() }}" /> <span>{{ app()->getLocale() }}</span></a></li>
             <ul class="langbox-dropdown">
@@ -325,9 +325,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </ul>
 
         @if(Auth::check())
-          
+
             <a href="{{url('/logout')}}" class="logout-btn">{{ trans('logout') }}</a>
-         
+
         @endif
     </div>
 </div>
@@ -336,7 +336,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
+                {{--<h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>--}}
+                <h5 class="popup-title">Registrations are temporary disabled. We are sorry for the inconvenience.</h5>
             </div>
             <div class="popup-form">
                 <form id="registr" action="/register" method="POST">
@@ -348,12 +349,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <input type="email" class="email-input red" placeholder="{{ trans('casino.email_address') }}" name="email">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">
-                        </div>
-                    </div>
-                    <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
+
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>--}}
+
                     {{--<div class="row">--}}
                         {{--<div class="col-sm-12">--}}
                             {{--<div class="block-thumbnail block-thumbnail-radio">--}}
@@ -362,27 +365,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             {{--</div>--}}
                         {{--</div>--}}
                     {{--</div>--}}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">
+
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<div class="block-thumbnail">--}}
+                                {{--<label for="agree"><input type="checkbox" name="agree" id="agree">--}}
                                     {{--fix in future this--}}
-                                    @if(app()->getLocale() === 'jp')
-                                        <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
-                                    @else
-                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                                    {{--@if(app()->getLocale() === 'jp')--}}
+                                        {{--<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}--}}
+                                    {{--@else--}}
+                                        {{--{{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>--}}
+                                    {{--@endif--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{----}}
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>
+                                <button class="send-btn"><span class="btn-entry">Get Notified</span></button>
+                                {{--<button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>--}}
                             </div>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -727,7 +735,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     //     return false;
     // });
     //end off
-    
+
     $('ul.cabinet-menu-listing li a').each(function () {
 
         if (this.href.match(window.location.pathname))
@@ -809,8 +817,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
 <!-- End of uptechsupport Zendesk Widget script -->
 {{--<script type="text/javascript">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"20d401dd0bef4c4a89b7d31699a0965e3f436766499f2fd628d7b7b221e5dda9", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);</script>--}}
-<!-- Start of uptechsupport Zendesk Widget script -->
-<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>
-<!-- End of uptechsupport Zendesk Widget script -->
+{{--<!-- Start of uptechsupport Zendesk Widget script -->--}}
+{{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
+{{--<!-- End of uptechsupport Zendesk Widget script -->--}}
+
+
+<script>
+    @if (is_null($user))
+        window.intercomSettings = {
+        app_id: "ebzyh5ul"
+    };
+    @else
+        @php
+            $hmac = hash_hmac('sha256', $user->id, env('INTERCOM_KEY'));
+        @endphp
+
+        window.intercomSettings = {
+        app_id: "ebzyh5ul",
+        user_id: "{{ $user->id }}", // User ID
+        user_hash: '{{ $hmac }}', // HMAC using SHA-256
+        email: "{{ $user->email }}", // Email address
+        created_at: "{{ strtotime($user->created_at) }}", // Signup Date,
+    };
+    @endif
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/u91xvurq';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+
 </body>
 </html>

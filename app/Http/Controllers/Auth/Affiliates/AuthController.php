@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use DB;
 use Hash;
 use App\User;
 use Validator;
@@ -65,6 +66,49 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        //temporary
+        $errors = [];
+        $data = $request->toArray();
+        $validator = Validator::make($data, [
+            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+        ]);
+
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+        }
+
+        $email = $request->email;
+        $currentDate = new \DateTime();
+
+        DB::table('new_affiliates')->insert([
+            [
+                'email' => $email,
+                'type_id' => 2,
+                'created_at' => $currentDate,
+                'updated_at' => $currentDate
+            ],
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'email' => $email,
+                'title' => 'Register a CasinoBit Affiliate Account',
+                'body' => '<h4>Thank you for understanding! We will contact you!</h4>'
+            ]
+        ]);
+
+        //normal code
         $data = $request->toArray();
         $validator = Validator::make($data, [
             'name' => 'string|max:255',

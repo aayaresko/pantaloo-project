@@ -132,4 +132,7 @@ return [
 
     'cpaCurrencyCode' => 'mBTC',
 
+    'allowIps' => [
+        '213.169.83.245'
+    ]
 ];

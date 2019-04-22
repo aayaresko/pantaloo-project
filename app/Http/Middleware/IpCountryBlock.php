@@ -26,7 +26,11 @@ class IpCountryBlock
 
 		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA']))
 		    {
-			    return abort(403);
+		        $allowIps = config('appAdditional.allowIps');
+		        //exception
+                if (!in_array($ip, $allowIps)) {
+                    return abort(403);
+                }
 		    }
 	    }
 
