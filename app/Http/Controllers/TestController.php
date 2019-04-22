@@ -36,6 +36,40 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $transactions = [];
+        $setAmount = 60;
+        $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
+        foreach ($getTransactions as $transaction) {
+            $absTransactionSum = (-1)*$transaction->sum;
+            if ($absTransactionSum > $setAmount) {
+                Transaction::where('id', $transaction->id)->update([
+                    'sum' => -1 * $setAmount
+                ]);
+                $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
+                $date = new \DateTime();
+                Transaction::insert([
+                    [
+                        'type' => '11',
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'deleted_at' => $date,
+                        'sum' => -1 * $difference,
+                        'user_id' => $transaction->user_id,
+                        'comment' => 'system'
+                    ],
+                ]);
+            }
+        }
+        dd('ok');
+        //$amount = $getTransaction
+        Transaction::where('id', 307311)->where('type', 4)->update([
+            'sum' => '-60'
+        ]);
+        //create new transaction
+
+        dd($getTransaction);
+        dd(2);
         $ip = GeneralHelper::visitorIpCloudFire();
         //dump($ip);
         //$ip = '165.227.71.60';
