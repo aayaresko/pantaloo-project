@@ -337,7 +337,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="popup-entry">
             <div class="popup-heading">
                 {{--<h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>--}}
-                <h5 class="popup-title">Registrations are temporary disabled. We are sorry fo the inconvenience.</h5>
+                <h5 class="popup-title">Registrations are temporary disabled. We are sorry for the inconvenience.</h5>
             </div>
             <div class="popup-form">
                 <form id="registr" action="/register" method="POST">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -77,9 +78,11 @@ class AuthController extends Controller
      * @param  array $data
      * @return User
      */
-    protected function create(array $data)
+    //protected function create(array $data)
+    protected function create(Request $request)
     {
         //temporary
+        $data = $request->toArray();
         $errors = [];
         $validator = Validator::make($data, [
             'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
@@ -91,7 +94,7 @@ class AuthController extends Controller
                 array_push($errors, $item);
             });
 
-            return redirect('/')->withErrors($errors);
+            return redirect()->back()->withErrors($errors);
         }
 
         $email = $data['email'];
@@ -107,7 +110,8 @@ class AuthController extends Controller
         ]);
 
         return redirect()->back()->with('popup',
-            ['Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
+            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
+
 
         $service = new Service();
         $address = $service->getNewAddress('common');

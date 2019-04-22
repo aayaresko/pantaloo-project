@@ -68,7 +68,7 @@ return array (
   'all' => 'All',
   'choose_your_game' => 'Choose your game',
   'support.create_account' => 'How do I create my account?',
-  'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields. After correct filling of the forms, we will email you with the confirmation link to verify your email address. Once your email is confirmed, the account will be successfully created and activated. Now you can start playing our beautiful games.',
+  'support.create_account_value' => 'Please press the sign up button in the upper right corner and fill in all the required fields. After correct filling of the forms, we will email you with the confirmation link to verify your email address. Once your email is confirmed, the account will be successfully created and activated. Now you can start playing our games.',
   'support.forgotten_password' => 'What should I do if I have forgotten the password?',
   'support.forgotten_password_value' => 'The best way is to click “I forgot my password” button and follow the link. You will be automatically sent an email with the recover link where you will be advised to enter a new password. Otherwise, you can report us through our livechat. We are happy to help.',
   'support.buy_bitcoins' => 'Where can I buy bitcoins?',
