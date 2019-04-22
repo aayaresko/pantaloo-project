@@ -28,7 +28,7 @@ class IpCountryBlock
 	    {
 		    $geo2 = geoip($ip);
 
-		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA','IL']))
+		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA']))
 		    {
                 View::share('registrationStatus', 0);
 		        $allowIps = config('appAdditional.allowIps');

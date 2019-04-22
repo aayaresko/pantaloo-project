@@ -16,7 +16,7 @@
                 </div>
                 <div class="main-content-entry">
                     <div class="setting-entry">
-                        <div class="setting-tabs">
+                        <div class="setting-tabs needShow">
                             <div id="tabs-1" class="ui-tabs-panel">
 
                                 <form method="POST" action="{{ url('/password/reset') }}">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <div class="setting-accordion">
+                        <div class="setting-accordion dontShow">
                             <h3 class="setting-title">{{translate('Change Password')}}</h3>
                             <div>
                             </div>
