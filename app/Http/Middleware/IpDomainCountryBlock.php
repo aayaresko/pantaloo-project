@@ -6,7 +6,7 @@ use Closure;
 use Helpers\GeneralHelper;
 use Torann\GeoIP\Facades\GeoIP;
 
-class IpCountryBlock
+class IpDomainCountryBlock
 {
     /**
      * Handle an incoming request.
@@ -24,7 +24,7 @@ class IpCountryBlock
 	    {
 		    $geo2 = geoip($ip);
 
-		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA','IL']))
+		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US']))
 		    {
 			    return abort(403);
 		    }
