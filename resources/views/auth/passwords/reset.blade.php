@@ -16,7 +16,7 @@
                 </div>
                 <div class="main-content-entry">
                     <div class="setting-entry">
-                        <div class="setting-tabs">
+                        <div class="setting-tabs needShow">
                             <div id="tabs-1" class="ui-tabs-panel">
 
                                 <form method="POST" action="{{ url('/password/reset') }}">
