@@ -180,7 +180,7 @@
 .actions {
   padding-bottom: 70px;
   position: relative;
-  z-index: 9999;
+  /*z-index: 9999;*/
 }
 .actions .container .row {
   margin-bottom: 30px;
@@ -326,13 +326,14 @@ body .cabinet-block{
   border-radius: 10px;
   max-height: 900px;
   overflow-x: auto;
+  font-size: 15px;
 }
 #uls h3, #reg-terms h3 {
   font-family: "MyriadPro-Cond", sans-serif;
   text-transform: uppercase;
   font-size: 48px;
   margin-top: 0;
-  line-height: 35px;
+  line-height: 46px;
   margin-bottom: 25px;
 }
 #uls .text, #reg-terms .text {
@@ -484,7 +485,7 @@ body .cabinet-block{
 @media (max-width: 768px) {
   .actions {
     margin-left: -5px;
-    padding-bottom: 120px;
+    padding-bottom: 160px;
   }
   
 

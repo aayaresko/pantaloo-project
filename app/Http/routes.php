@@ -20,14 +20,14 @@ $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
 
-Route::group(['middleware' => ['landing']], function () use ($landingPage) {
+Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
         Route::get('/', ['as' => 'general', 'uses' => 'Landing\LandingController@main']);
         Route::get('/general/{lang?}', ['as' => 'general', 'uses' => 'Landing\LandingController@generalLending']);
     });
 });
 
-Route::group(['middleware' => ['web']], function () use ($languages, $partner) {
+Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($languages, $partner) {
     //sub-domain
     Route::group(['domain' => $partner], function () {
 
@@ -350,10 +350,10 @@ Route::group(['middleware' => ['web']], function () use ($languages, $partner) {
     });
 });
 
-Route::group(['middleware' => ['ajax']], function () {
+Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
     Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
 
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['api', 'ip.country.block']], function () {
     Route::post('/api/getToken', ['uses' => 'Api\ApiController@authenticate']);
 });
