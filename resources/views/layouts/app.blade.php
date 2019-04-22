@@ -345,6 +345,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 @endif
 
             </div>
+
+            @if ($registrationStatus === 1)
             <div class="popup-form">
                 <form id="registr" action="/register" method="POST">
                     {{csrf_field()}}
@@ -399,6 +401,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 </form>
             </div>
+            @endif
+
         </div>
     </div>
 </div>
