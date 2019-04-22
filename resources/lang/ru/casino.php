@@ -152,9 +152,8 @@ return array (
                                 receive money across the internet, even to someone they don\'t know or don\'t trust. Money
                                 can be exchanged without being linked to a real identity. The mathematical field of
                                 cryptography is the basis for Bitcoin\'s security.',
-
   'terms' => 'Bonus Terms & Conditions',
-  'bonus_terms' => 'Terms',
+  'bonus_terms' => 'Условия',
   'free' => 'free',
   'spins' => 'spins',
   'welcome_bonus' => 'welcome bonus',
