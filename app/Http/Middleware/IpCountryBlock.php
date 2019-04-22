@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Helpers\GeneralHelper;
 use Torann\GeoIP\Facades\GeoIP;
+use Illuminate\Support\Facades\View;
 
 class IpCountryBlock
 {
@@ -19,6 +20,9 @@ class IpCountryBlock
     {
     	$ip = GeneralHelper::visitorIpCloudFire();
 
+    	//temporary solution TO DO
+    	View::share('registrationStatus', 1);
+
 //    	if($ip and $ip == '188.239.72.9')
     	if($ip)
 	    {
@@ -26,6 +30,7 @@ class IpCountryBlock
 
 		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA','IL']))
 		    {
+                View::share('registrationStatus', 0);
 		        $allowIps = config('appAdditional.allowIps');
 		        //exception
                 if (!in_array($ip, $allowIps)) {
