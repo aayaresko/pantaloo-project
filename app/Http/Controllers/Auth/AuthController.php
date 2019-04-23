@@ -10,6 +10,7 @@ use App\ExtraUser;
 use App\Currency;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
@@ -222,9 +223,14 @@ class AuthController extends Controller
                 return back()->withErrors('This type of user is not allowed to login');
             }
 
-            $extraUser = ExtraUser::where('user_id', $user->id)->first();
-            if (!is_null($extraUser)) {
-                if ((int)$extraUser->block > 0) {
+            //$extraUser = ExtraUser::where('user_id', $user->id)->first();
+
+            $blockUser = ModernExtraUsers::where('user_id', $user->id)
+                ->where('code', 'block')->first();
+
+            if (!is_null($blockUser)) {
+                if ((int)$blockUser->value === 1) {
+                    //delete global session TO DO
                     Auth::logout();
                     return back()->withErrors('The user is blocked');
                 }
