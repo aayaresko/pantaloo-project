@@ -213,6 +213,16 @@ class UsersController extends Controller
                         'value' => $block
                     ]);
             }
+
+            if ($block === 1) {
+                //to do necessary update this code for all drivers etc
+                $sessionsUser = DB::table('sessions')
+                    ->select(['id'])
+                    ->where('user_id', $user->id)
+                    ->get()->pluck('id')->toArray();
+                dd(2);
+                DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
+            }
         }
 
         return redirect()->back()->with('msg', 'User was updated!');
