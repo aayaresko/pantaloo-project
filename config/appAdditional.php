@@ -121,6 +121,8 @@ return [
 
     'minConfirmBtc' => 2,
 
+    'normalConfirmBtc' => 6,
+
     'statusPayment' => [
         '-2' => 'failed',
         '-1' => 'frozen',
