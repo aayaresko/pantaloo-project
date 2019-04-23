@@ -33,7 +33,7 @@ return array (
   'blackjack' => 'Blackjack',
   'roulette' => 'Roulette',
   'slots' => 'Machines à sous',
-  'work_bitcoin' => 'Nous ne travaillons qu\'en Bitcoin',
+  'work_bitcoin' => 'Nous ne travaillons qu\'en bitcoin',
   'bonus' => 'bonus',
   'after_first_deposit' => 'Après le premier dépôt',
   'welcome' => 'Bienvenue',
