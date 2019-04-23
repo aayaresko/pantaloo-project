@@ -126,6 +126,7 @@
                         </table>
                         </div>
                     </div>
+                    <div class="col-sm-12">{{$users->links()}}</div>
                 </div>
             </div>
         </div>
