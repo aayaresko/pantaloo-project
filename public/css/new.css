@@ -9,7 +9,7 @@
     min-height: 280px !important;
   }
   .actions .block-bonus .block-bonus-left {
-    top: 70px !important;
+    top: 45px !important;
   }
   .actions .block-bonus .block-bonus-right {
     bottom: 30px !important;
@@ -234,7 +234,7 @@
 }
 .actions .block-bonus .block-bonus-left {
   position: absolute;
-  top: 100px;
+  top: 60px;
   left: 30px;
 }
 .actions .block-bonus2 .block-bonus-left, .actions .block-bonus4 .block-bonus-left {
@@ -410,10 +410,10 @@ body .cabinet-block{
     min-height: 250px;
   }
   .actions .block-bonus .block-bonus-left {
-    top: 48px;
+    top: 25px;
   }
   .actions .block-bonus .block-bonus-right {
-    bottom: 44px;
+    bottom: 23px;
   }
 }
 @media (max-width: 992px) {
