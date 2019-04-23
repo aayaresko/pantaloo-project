@@ -49,8 +49,9 @@ class MoneyController extends Controller
         $user = User::where('email', $email)->first();
 
         //to do this - fix this = use universal way
-        $sessionUser = DB::table('sessions')->where('user_id', $user->id)
+        $sessionUser = DB::table('sessions')
             ->where('id', $sessionId)
+            ->where('user_id', $user->id)
             ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
             ->first();
 
