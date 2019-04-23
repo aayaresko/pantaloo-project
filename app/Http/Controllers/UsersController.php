@@ -223,8 +223,8 @@ class UsersController extends Controller
                 $sessionsUser = DB::table('sessions')
                     ->select(['id'])
                     ->where('user_id', $user->id)
-                    ->get()->pluck('id')->toArray();
-                dd(2);
+                    ->pluck('id');
+
                 DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
             }
         }

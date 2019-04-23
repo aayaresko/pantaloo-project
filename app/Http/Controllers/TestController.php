@@ -38,6 +38,13 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        $transactions = Transaction::where('confirmations', '<', 2)->where('type', 3)->get();
+        foreach ($transactions as $item) {
+            dump($item->id);
+            dump($item->ext_id);
+            echo '<br>';
+        }
+        dd($transactions);
 
         $transactions = [];
         $setAmount = 60;
