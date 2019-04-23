@@ -31,8 +31,12 @@ class UsersController extends Controller
                     ->leftJoin('modern_extra_users as block', function ($join) {
                         $join->on('users.id', '=', 'block.user_id')
                             ->where('block.code', '=', 'block');
-                    })
-                    ->orderBy('created_at', 'DESC')->get();
+                    });
+                if ($request->email) {
+                    $users->where('users.email', $request->email);
+                }
+
+                $users = $users->orderBy('created_at', 'DESC')->paginate(100);
 
                 return view('admin.users', ['users' => $users]);
             case 3:
