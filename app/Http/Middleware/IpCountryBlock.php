@@ -18,10 +18,17 @@ class IpCountryBlock
      */
     public function handle($request, Closure $next)
     {
-//    	$ip = GeneralHelper::visitorIpCloudFire();
+    	$ip = GeneralHelper::visitorIpCloudFire();
 
     	//temporary solution TO DO
     	View::share('registrationStatus', 1);
+
+        if($ip) {
+            $geo2 = geoip($ip);
+            if (in_array($geo2->iso_code, ['US','UA', 'IL'])) {
+                View::share('registrationStatus', 0);
+            }
+        }
 
 //    	if($ip and $ip == '188.239.72.9')
 //    	if($ip)
