@@ -37,6 +37,101 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        //dd(GeneralHelper::visitorIpCloudFire());
+//        dd(2);
+//        $user = User::where('email', 'dinut-11@hotmail.com')->first();
+//        dd($user);
+//        $date = new \DateTime();
+//
+//        $balanceUser = $user->balance;
+//
+//        User::where('id', $user->id)->update([
+//            'balance' => 0
+//        ]);
+//
+//        Transaction::insert([
+//            [
+//                'type' => '11',
+//                'created_at' => $date,
+//                'updated_at' => $date,
+//                'deleted_at' => $date,
+//                'sum' => -1 * $balanceUser,
+//                'user_id' => $user->id,
+//                'comment' => 'system balance'
+//            ],
+//        ]);
+        dd(2);
+        $transactions = [234575];
+        $setAmount = 60;
+        $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
+        dump($getTransactions);
+        foreach ($getTransactions as $transaction) {
+            $absTransactionSum = (-1)*$transaction->sum;
+            if ($absTransactionSum > $setAmount) {
+                Transaction::where('id', $transaction->id)->update([
+                    'sum' => -1 * $setAmount
+                ]);
+                $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
+                $date = new \DateTime();
+                Transaction::insert([
+                    [
+                        'type' => '11',
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'deleted_at' => $date,
+                        'sum' => -1 * $difference,
+                        'user_id' => $transaction->user_id,
+                        'comment' => 'system'
+                    ],
+                ]);
+            }
+        }
+        dd('ok');
+        dd(22);
+
+        $bonuses = UserBonus::where('user_id', 680)->get();
+
+        foreach ($bonuses as $bonus) {
+            $class = $bonus->bonus->getClass();
+            $bonus_obj = new $class($bonus->user);
+            try {
+                dump($bonus_obj->realActivation());
+                dump($bonus_obj->close());
+            } catch (\Exception $e) {
+                dd([
+                    'id' => $bonus->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+        dd(2);
+        dd(GeneralHelper::visitorIpCloudFire());
+        $transactions = [385460];
+        $setAmount = 60;
+        $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
+
+        foreach ($getTransactions as $transaction) {
+            $absTransactionSum = (-1)*$transaction->sum;
+            if ($absTransactionSum > $setAmount) {
+                Transaction::where('id', $transaction->id)->update([
+                    'sum' => -1 * $setAmount
+                ]);
+                $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
+                $date = new \DateTime();
+                Transaction::insert([
+                    [
+                        'type' => '11',
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'deleted_at' => $date,
+                        'sum' => -1 * $difference,
+                        'user_id' => $transaction->user_id,
+                        'comment' => 'system'
+                    ],
+                ]);
+            }
+        }
+        dd('ok');
         dd(2);
         $transactions = Transaction::where('confirmations', '<', 2)->where('type', 3)->get();
         foreach ($transactions as $item) {
