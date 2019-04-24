@@ -62,7 +62,7 @@ class MoneyController extends Controller
                 'messages' => ['User or session is not found'],
             ]);
         }
-        
+
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 

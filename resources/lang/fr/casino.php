@@ -185,7 +185,7 @@ cachent sur votre ordinateur.
   'credits' => 'Crédits',
   'add_credits' => 'Ajouter des crédits',
   'minimum_deposit' => 'Le dépôt minimal est de 1 mBTC',
-  'send_your_bitcoins' => 'Envoyez vos Bitcoins à cette adresse:',
+  'send_your_bitcoins' => 'Envoyez vos bitcoins à cette adresse:',
   'transfer_wallet_address' => 'Transférez les bitcoins à votre adresse de portefeuille',
   'have_millibitcoins' => 'Vous avez :availableBalance Milibitcoins (mBTC) de disponibles',
   'your_bitcoin_address' => 'Votre adresse Bitcoin',
