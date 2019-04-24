@@ -50,6 +50,7 @@ class MoneyController extends Controller
 
         //to do this - fix this = use universal way
         $sessionUser = DB::table('sessions')
+            ->select(['id'])
             ->where('id', $sessionId)
             ->where('user_id', $user->id)
             ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
@@ -61,7 +62,7 @@ class MoneyController extends Controller
                 'messages' => ['User or session is not found'],
             ]);
         }
-
+        
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 
