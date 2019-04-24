@@ -106,9 +106,43 @@ class User extends Authenticatable
         return $profit;
     }
 
+    public function getAgentProfit()
+    {
+        $profit = 0;
+
+        $users = User::where('agent_id', $this->id)->get();
+
+        foreach ($users as $user) {
+            $stat = $user->getUserAgentProfit();
+            $profit = $profit + $stat;
+        }
+
+        return $profit;
+    }
+
+    public function getUserAgentProfit()
+    {
+        $stat = 0;
+
+        $transactions = $this->transactions()
+            ->select(DB::raw('sum(`sum`) as total'), 'agent_commission')
+            ->where('transactions.sum', '<>', 0)
+            ->where('agent_commission', '<>', 0)
+            ->whereIn('type', [1,2])
+            ->groupBy('agent_commission')
+            ->get();
+
+
+        foreach ($transactions as $transaction) {
+            $stat = $stat + (-1)*$transaction->total*$transaction->agent_commission/100;
+        }
+
+        return $stat;
+    }
+
     public function getAgentAvailable()
     {
-        $profit = $this->getAgentTotal();
+        $profit = $this->getAgentProfit();
 
         $available = $profit - $this->payments()->sum('sum');
 

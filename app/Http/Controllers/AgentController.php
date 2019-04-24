@@ -252,7 +252,7 @@ class AgentController extends Controller
         foreach ($agents as $agent) {
             $item = [
                 'agent' => $agent,
-                'available' => 'not available',//$agent->getAgentAvailable(),
+                'available' => $agent->getAgentAvailable(),
                 'users' => User::where('agent_id', $agent->id)->count(),
                 'procent' => $agent->commission,
                 'total' => 'not available'//$agent->getAgentTotal()
