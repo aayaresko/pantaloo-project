@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Validators\TemporaryMailCheck;
 use DB;
 use App\User;
 use Validator;
@@ -60,7 +61,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -76,7 +77,7 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      * @return User
      */
     //protected function create(array $data)
@@ -87,7 +88,15 @@ class AuthController extends Controller
         $errors = [];
         $validator = Validator::make($data, [
             'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+            'agree' => 'accepted'
         ]);
+
+        // Check if mail provider is not temporary mail services
+        $validator->after(function ($validator) use ($data) {
+            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+                $validator->errors()->add('email', 'Try use other mail service!');
+            }
+        });
 
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();

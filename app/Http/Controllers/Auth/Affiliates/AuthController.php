@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use App\Validators\TemporaryMailCheck;
 use DB;
 use Hash;
 use App\User;
@@ -71,7 +72,15 @@ class AuthController extends Controller
         $data = $request->toArray();
         $validator = Validator::make($data, [
             'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+            'agree' => 'accepted'
         ]);
+
+        // Check if mail provider is not temporary mail services
+        $validator->after(function ($validator) use ($data) {
+            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+                $validator->errors()->add('email', 'Try use other mail service!');
+            }
+        });
 
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
