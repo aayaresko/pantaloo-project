@@ -46,16 +46,20 @@ class MoneyController extends Controller
         $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $user = User::where('email', $email)->first();
-
-        //to do this - fix this = use universal way
-        $sessionUser = DB::table('sessions')
-            ->where('id', $sessionId)
-            ->where('user_id', $user->id)
-            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+        $user = User::where('email', $email)
+            ->join('sessions as s', 's.user_id', '=', 'users.id')
+            ->where('s.id', $sessionId)
+            ->with('currency')
             ->first();
 
-        if (is_null($sessionUser)) {
+        //to do this - fix this = use universal way
+//        $sessionUser = DB::table('sessions')
+//            ->where('id', $sessionId)
+//            ->where('user_id', $user->id)
+//            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+//            ->first();
+
+        if (is_null($user)) {
             return response()->json([
                 'status' => false,
                 'messages' => ['User or session is not found'],
