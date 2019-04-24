@@ -48,6 +48,13 @@ class MoneyController extends Controller
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
         $user = User::where('email', $email)->first();
 
+        if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User or session is not found'],
+            ]);
+        }
+
         //to do this - fix this = use universal way
         $sessionUser = DB::table('sessions')
             ->select(['id'])
