@@ -20,6 +20,7 @@ class IpCountryBlock
     {
     	$ip = GeneralHelper::visitorIpCloudFire();
 
+
     	//temporary solution TO DO
     	View::share('registrationStatus', 1);
 
@@ -30,24 +31,18 @@ class IpCountryBlock
             }
         }
 
-//    	if($ip and $ip == '188.239.72.9')
-//    	if($ip)
-//	    {
-//		    $geo2 = geoip($ip);
-//
-//            if (in_array($geo2->iso_code, ['US','UA', 'IL'])) {
-//                View::share('registrationStatus', 0);
-//            }
-//
-//		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA']))
-//		    {
-//		        $allowIps = config('appAdditional.allowIps');
-//		        //exception
-//                if (!in_array($ip, $allowIps)) {
-//                    return abort(403);
-//                }
-//		    }
-//	    }
+    	$test_ip = [
+    	    'US' => '27.974.399.65',
+    	    'UA' => '213.169.83.245',
+    	    'ID' => '43.247.39.190',
+            ];
+
+        $iso_code = \geoip($ip)['iso_code'];
+
+        $registrationStatus = !in_array($iso_code, ['US','UA','CA','IL']) ? 1 : 0;
+
+
+    	View::share('registrationStatus', $registrationStatus);
 
         return $next($request);
     }

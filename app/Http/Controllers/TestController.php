@@ -37,9 +37,68 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $user = User::where('email', 'marcin.treider8@gmail.com')->first();
+       dd($user);
+        $date = new \DateTime();
+
+        $balanceUser = $user->balance;
+
+        User::where('id', $user->id)->update([
+            'balance' => 0
+        ]);
+
+        Transaction::insert([
+            [
+                'type' => '11',
+                'created_at' => $date,
+                'updated_at' => $date,
+                'deleted_at' => $date,
+                'sum' => -1 * $balanceUser,
+                'user_id' => $user->id,
+                'comment' => 'system balance'
+            ],
+        ]);
+
+        dd(2);
+        $user = User::where('email', 'dimarik11162@gmail.com')->first();
+
+        //add user for request - for lib
+        $request->merge(['user' => $user]);
+        $request->setUserResolver(function () use ($user) {
+            return $user;
+        });
+
+        //get games for free spins
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [10001])
+            ->where([
+                ['games_list.active', '=', 1],
+                ['games_list.free_round', '=', 1],
+                ['games_types_games.extra', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item->system_id;
+        }, $freeRoundGames));
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->freeRound($request);
+
+        dd($freeRound);
+        $request->merge(['gamesIds' => $gamesIds]);
+        $request->merge(['available' => 50]);
+        $request->merge(['timeFreeRound' => strtotime("30 day", 0)]);
+        dd(2);
         //dd(GeneralHelper::visitorIpCloudFire());
 //        dd(2);
-//        $user = User::where('email', 'dinut-11@hotmail.com')->first();
+//        $user = User::where('email', 'tafuzijos@blackbird.ws')->first();
 //        dd($user);
 //        $date = new \DateTime();
 //
