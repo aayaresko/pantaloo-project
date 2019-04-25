@@ -34,60 +34,6 @@ abstract class Bonus
         }
     }
 
-    public function cancel($reason = false)
-    {
-        if ($this->hasBonusTransactions()) {
-            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-        }
-
-        $transaction = new Transaction();
-        $transaction->bonus_sum = -1 * $this->user->bonus_balance;
-        $transaction->sum = 0;
-        $transaction->comment = $reason;
-        $transaction->type = 6;
-        $transaction->user()->associate($this->user);
-
-        $this->user->changeBalance($transaction);
-
-        if ($this->user->bonus_balance == 0) {
-            $this->active_bonus->delete();
-        }
-    }
-
-    public function close()
-    {
-        if ($this->hasBonusTransactions()) {
-            return false;
-        }
-
-        $now = Carbon::now();
-
-        if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
-            $this->cancel('Expired');
-        }
-        if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0 and $this->user->free_spins == 0) {
-            $this->cancel('No bonus funds');
-        }
-
-        if ($this->active_bonus->activated == 1) {
-            if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
-                $transaction = new Transaction();
-                $transaction->bonus_sum = -1 * $this->user->bonus_balance;
-                $transaction->sum = $this->user->bonus_balance;
-                $transaction->comment = 'Bonus to real transfer';
-                $transaction->type = 7;
-                $transaction->user()->associate($this->user);
-
-                $this->user->changeBalance($transaction);
-
-                $this->active_bonus->delete();
-
-                $this->user->bonus_balance = 0;
-                $this->user->save();
-            }
-        }
-    }
-
     public function get($var)
     {
         $data = $this->active_bonus->data;
@@ -113,6 +59,12 @@ abstract class Bonus
 
         return $value;
     }
+
+
+    abstract public function cancel();
+
+    abstract public function close();
+
 
     abstract public function getStatus();
 
