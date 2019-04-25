@@ -336,8 +336,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
+                {{--<h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>--}}
+
                 @if ($registrationStatus === 1)
-                    <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
+                    <h5 class="popup-title">Registrations are temporary disabled. We are sorry for the inconvenience.</h5>
                 @else
                     <h5 class="popup-title">Registrations are not available in you region.</h5>
                 @endif
@@ -356,43 +358,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">
-                        </div>
-                    </div>
-                    <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>--}}
 
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="block-thumbnail block-thumbnail-radio">
-                                <label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>
-                                <label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<div class="block-thumbnail block-thumbnail-radio">--}}
+                                {{--<label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>--}}
+                                {{--<label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="block-thumbnail">
-                                <label for="agree"><input type="checkbox" name="agree" id="agree">
-{{--                                    fix in future this--}}
-                                    @if(app()->getLocale() === 'jp')
-                                        <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
-                                    @else
-                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<div class="block-thumbnail">--}}
+                                {{--<label for="agree"><input type="checkbox" name="agree" id="agree">--}}
+                                    {{--fix in future this--}}
+                                    {{--@if(app()->getLocale() === 'jp')--}}
+                                        {{--<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}--}}
+                                    {{--@else--}}
+                                        {{--{{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>--}}
+                                    {{--@endif--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{----}}
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-{{--                                <button class="send-btn"><span class="btn-entry">Get Notified</span></button>--}}
-                                <button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>
+                                <button class="send-btn"><span class="btn-entry">Get Notified</span></button>
+                                {{--<button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>--}}
                             </div>
                         </div>
                     </div>
