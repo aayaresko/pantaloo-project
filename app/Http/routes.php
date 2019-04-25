@@ -91,7 +91,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
         Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
         Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
-        Route::get('/games', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
+
+
+        Route::get('/games/{type_name?}', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
         //Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
         Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
         Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
