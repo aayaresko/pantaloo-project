@@ -17,9 +17,7 @@ class AddOptTablesTable extends Migration
         });
 
         Schema::table('transactions', function ($table) {
-            $table->index('type');
             $table->dropIndex('token_id');
-            $table->dropIndex('round_id');
         });
 
     }
@@ -36,10 +34,7 @@ class AddOptTablesTable extends Migration
         });
 
         Schema::table('transactions', function ($table) {
-            //add user_id and default null
-            $table->dropIndex('type');
             $table->index('token_id');
-            $table->index('round_id');
         });
     }
 }
