@@ -87,7 +87,7 @@ class IntegratedGamesController extends Controller
 
         // Check slug
         if ($type_name) {
-            $type_name = str_replace('_',' ', $type_name);
+            $type_name = str_replace('-',' ', $type_name);
             foreach ($defaultTypes as $defaultType) {
                 if ($defaultType['name'] == $type_name) {
                     $title = $defaultType['name'];
@@ -102,7 +102,7 @@ class IntegratedGamesController extends Controller
                 if ($defaultType['id'] == $type_id) {
                     return redirect()->route('games', [
                         'lang' => $lang,
-                        'type_name' => str_replace(' ', '_', $defaultType['name']),
+                        'type_name' => str_replace(' ', '-', $defaultType['name']),
                     ], 301);
                 }
             }
