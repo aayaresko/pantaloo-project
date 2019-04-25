@@ -42,6 +42,8 @@ class ApiController extends Controller
 
             if(!$user) throw new \Exception('Technical error', 1);
 
+            $raw_log->user_id = $user->id;
+
             $resp = [];
 
             switch ($request->input('request'))

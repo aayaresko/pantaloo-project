@@ -839,6 +839,7 @@ class PantalloGamesSystem implements GamesSystem
         $debugGameResult = $debugGame->end();
 
         RawLog::where('id', $rawLog->id)->update([
+            'user_id' => $params['user']->id,
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);
