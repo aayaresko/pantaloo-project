@@ -20,10 +20,6 @@ class IpCountryBlock
     {
     	$ip = GeneralHelper::visitorIpCloudFire();
 
-
-    	//temporary solution TO DO
-    	View::share('registrationStatus', 1);
-
         if($ip) {
             $geo2 = geoip($ip);
             if (in_array($geo2->iso_code, ['US','UA', 'IL'])) {
@@ -41,8 +37,10 @@ class IpCountryBlock
 
         $registrationStatus = !in_array($iso_code, ['US','UA','CA','IL']) ? 1 : 0;
 
-
-    	View::share('registrationStatus', $registrationStatus);
+        //temporary solution TO DO
+        $registrationStatus = 0;
+        
+        View::share('registrationStatus', $registrationStatus);
 
         return $next($request);
     }
