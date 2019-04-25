@@ -40,7 +40,7 @@ return array (
   'after_first_deposit' => 'after the first deposit',
   'welcome' => 'Welcome!',
   'casinobit' => 'CasinoBit',
-  'video_live_games' => 'Live Video Games',
+  'video_live_games' => 'Live Games',
   'games' => 'Games',
   'live_games_second' => 'Live Games',
   'play_now' => 'Play Now',

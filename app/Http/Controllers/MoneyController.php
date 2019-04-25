@@ -48,8 +48,16 @@ class MoneyController extends Controller
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
         $user = User::where('email', $email)->first();
 
+        if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User or session is not found'],
+            ]);
+        }
+
         //to do this - fix this = use universal way
         $sessionUser = DB::table('sessions')
+            ->select(['id'])
             ->where('id', $sessionId)
             ->where('user_id', $user->id)
             ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
@@ -193,10 +201,13 @@ class MoneyController extends Controller
 
         if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
-        if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
-            return redirect()->back()->withErrors(['You do not have any deposits.']);
+        //2391
+        if ((int)$user->id > 2391) {
+            if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                return redirect()->back()->withErrors(['You do not have any deposits.']);
+            }
         }
-
+        
         $this->validate($request, [
             'address' => 'required',
             'sum' => 'required|numeric|min:1'
