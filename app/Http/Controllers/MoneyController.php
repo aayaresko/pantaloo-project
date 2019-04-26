@@ -46,7 +46,32 @@ class MoneyController extends Controller
         $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $user = User::where('email', $email)->first();
+
+        $date = new \DateTime();
+        $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
+
+        //select nesessary fields
+        $user = User::select(['users.*', 's.id as session_id'])
+            ->join('sessions as s', 's.user_id', '=', 'users.id')
+            ->where('users.email', $email)
+            ->where('s.id', $sessionId)
+            ->where('s.last_activity', '>=', $minimumAllowedActivity)
+            ->first();
+
+        if (is_null($user) or is_null($user->session_id)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User or session is not found'],
+            ]);
+        }
+
+        //to do this - fix this = use universal way for get sessino user
+
+//        $sessionUser = DB::table('sessions')
+//            ->where('id', $sessionId)
+//            ->where('user_id', $user->id)
+//            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+//            ->first();
 
         if (is_null($user)) {
             return response()->json([
@@ -55,21 +80,7 @@ class MoneyController extends Controller
             ]);
         }
 
-        //to do this - fix this = use universal way
-        $sessionUser = DB::table('sessions')
-            ->select(['id'])
-            ->where('id', $sessionId)
-            ->where('user_id', $user->id)
-            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
-            ->first();
-
-        if (is_null($sessionUser)) {
-            return response()->json([
-                'status' => false,
-                'messages' => ['User or session is not found'],
-            ]);
-        }
-
+        //to do once in 10 seconds and use other table for natifications
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 

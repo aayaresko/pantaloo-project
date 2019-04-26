@@ -10,6 +10,7 @@ use App\RawLog;
 use App\Transaction;
 use Helpers\BonusHelper;
 use App\Models\GamesList;
+use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
@@ -36,26 +37,39 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function loginPlayer($request)
     {
+        $date = new \DateTime();
+
         $debugGame = new DebugGame();
         $debugGame->start();
+
+        $user = $request->user();
+        $userId = $user->id;
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => 1,
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         DB::beginTransaction();
         try {
             $game = GamesList::where('id', $request->gameId)->first();
             $gameId = $game->system_id;
-            $user = $request->user();
 
-            $userId = $user->id;
+            $userName = $this->getUserName($user);
+
             $pantalloGames = new PantalloGames;
             $playerExists = $pantalloGames->playerExists([
-                'user_username' => $user->id,
+                'user_username' => $userName,
             ], true);
 
             //active player request
             if ($playerExists->response === false) {
                 $player = $pantalloGames->createPlayer([
                     'user_id' => $userId,
-                    'user_username' => $userId,
+                    'user_username' => $userName,
                     'password' => self::PASSWORD
                 ], true);
             } else {
@@ -65,7 +79,7 @@ class PantalloGamesSystem implements GamesSystem
             //login request
             $login = $pantalloGames->loginPlayer([
                 'user_id' => $userId,
-                'user_username' => $userId,
+                'user_username' => $userName,
                 'password' => self::PASSWORD
             ], true);
 
@@ -80,8 +94,8 @@ class PantalloGamesSystem implements GamesSystem
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
-                'user_id' => $user->id,
-                'user_username' => $user->id,
+                'user_id' => $userId,
+                'user_username' => $userName,
                 'user_password' => self::PASSWORD,
                 'gameid' => $gameId,
                 'play_for_fun' => 0,
@@ -120,9 +134,7 @@ class PantalloGamesSystem implements GamesSystem
         ];
         $debugGameResult = $debugGame->end();
 
-        RawLog::create([
-            'type_id' => 1,
-            'request' => GeneralHelper::fullRequest(),
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);
@@ -136,16 +148,22 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function logoutPlayer($user)
     {
+        $date = new \DateTime();
+
+        $userId = $user->id;
+
         DB::beginTransaction();
         try {
             $configCommon = config('integratedGames.common');
             $statusLogout = $configCommon['statusSession']['logout'];
             $statusLogin = $configCommon['statusSession']['login'];
             $pantalloGames = new PantalloGames;
-            $userId = $user->id;
+
+            $userName = $this->getUserName($user);
+
             $logout = $pantalloGames->logoutPlayer([
                 'user_id' => $userId,
-                'user_username' => $userId,
+                'user_username' => $userName,
                 'password' => self::PASSWORD
             ], true);
             $session = GamesPantalloSession::where([
@@ -175,13 +193,17 @@ class PantalloGamesSystem implements GamesSystem
      */
     public function callback($request)
     {
+        $date = new \DateTime();
+
         $debugGame = new DebugGame();
         $debugGame->start();
         //start log
 
-        $rawLog = RawLog::create([
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => 2,
             'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
         ]);
 
         DB::beginTransaction();
@@ -838,7 +860,10 @@ class PantalloGamesSystem implements GamesSystem
         //finish debug
         $debugGameResult = $debugGame->end();
 
-        RawLog::where('id', $rawLog->id)->update([
+        $userId = is_null($params['user']) ? 0 : $params['user']->id;
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'user_id' => $userId,
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);
@@ -846,14 +871,10 @@ class PantalloGamesSystem implements GamesSystem
         return $response;
     }
 
-
     public function balance($params)
     {
         //app accuracyValues
-        $response = [
-            'status' => 200,
-            'balance' => bcadd($params['user']->balance, $params['user']->balance, 5)
-        ];
+        $response = [];
         return $response;
     }
 
@@ -882,6 +903,8 @@ class PantalloGamesSystem implements GamesSystem
     public function freeRound($request)
     {
         //input
+        $date = new \DateTime();
+
         $available = $request->available;
         $timeFreeRound = $request->timeFreeRound;
         $gamesIds = $request->gamesIds;
@@ -889,19 +912,31 @@ class PantalloGamesSystem implements GamesSystem
         $debugGame = new DebugGame();
         $debugGame->start();
 
+        $user = $request->user();
+        $userId = $user->id;
+
+        //start log
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => 4,
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
         DB::beginTransaction();
         try {
-            $user = $request->user();
-            $userId = $user->id;
+            $userName = $this->getUserName($user);
+
             $pantalloGames = new PantalloGames;
             $playerExists = $pantalloGames->playerExists([
-                'user_username' => $user->id,
+                'user_username' => $userName,
             ], true);
 
             if ($playerExists->response === false) {
                 $playerResponse = $pantalloGames->createPlayer([
                     'user_id' => $userId,
-                    'user_username' => $userId,
+                    'user_username' => $userName,
                     'password' => self::PASSWORD
                 ], true);
             } else {
@@ -964,14 +999,9 @@ class PantalloGamesSystem implements GamesSystem
         $debugGameResult = $debugGame->end();
 
         //logs to any connection to db
-        $date = new \DateTime();
-        DB::connection('logs')->table('raw_log')->insert([
-            'type_id' => 4,
-            'request' => GeneralHelper::fullRequest(),
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult),
-            'created_at' => $date,
-            'updated_at' => $date
+            'extra' => json_encode($debugGameResult)
         ]);
 
         return $response;
@@ -980,15 +1010,29 @@ class PantalloGamesSystem implements GamesSystem
 
     public function removeFreeRounds($request)
     {
+        $date = new \DateTime();
+
         $debugGame = new DebugGame();
         $debugGame->start();
+
+        $user = $request->user();
+        $userId = $user->id;
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => 5,
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
         DB::beginTransaction();
         try {
-            $user = $request->user();
             $pantalloGames = new PantalloGames;
+            $userName = $this->getUserName($user);
 
             $playerExists = $pantalloGames->playerExists([
-                'user_username' => $user->id,
+                'user_username' => $userName,
             ], true);
 
             //active player request
@@ -1041,16 +1085,39 @@ class PantalloGamesSystem implements GamesSystem
         $debugGameResult = $debugGame->end();
 
         //logs to any connection to db
-        $date = new \DateTime();
-        DB::connection('logs')->table('raw_log')->insert([
-            'type_id' => 5,
-            'request' => GeneralHelper::fullRequest(),
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult),
-            'created_at' => $date,
-            'updated_at' => $date
+            'extra' => json_encode($debugGameResult)
         ]);
 
         return $response;
+    }
+
+    /**
+     * @param $user
+     * @return string
+     */
+    protected function getUserName($user)
+    {
+        $userNameDefault = $user->id;
+        $usePrefixAfter = config('pantalloGames.usePrefixAfter');
+        $prefixName = config('pantalloGames.prefixName');
+
+        $userName = $userNameDefault;
+
+        if ($user->created_at > $usePrefixAfter) {
+            $userName = $prefixName . $userNameDefault;
+        }
+
+        $prefixNameStrictly = ModernExtraUsers::select(['user_id', 'code', 'value'])
+            ->where('user_id', $user->id)
+            ->where('code', 'prefixName')
+            ->first();
+
+        if (!is_null($prefixNameStrictly)) {
+            $userName = $prefixNameStrictly->value . $userNameDefault;
+        }
+
+        return $userName;
     }
 }
