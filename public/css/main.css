@@ -4556,8 +4556,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     display: -o-flex;
     display: flex;
     border-top: 1px solid #473d5c;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 0px;
     transition: opacity 0.2s;
     background: rgba(6,3,8,0.99);
     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
@@ -4977,6 +4977,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   list-style: none;
   padding-left: 0px;
   margin: 0px;
+  min-height: 60px;
 }
 
 .footerLinks li,
@@ -7854,7 +7855,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 
   .footer.footer-home .bitcoin-block{
     position: relative;
-    top: -97px;
+    top: -108px;
     display: block;
     left: 50%;
     transform: translateX(-50%);
