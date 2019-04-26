@@ -55,7 +55,7 @@ class MoneyController extends Controller
             ->join('sessions as s', 's.user_id', '=', 'users.id')
             ->where('users.email', $email)
             ->where('s.id', $sessionId)
-            ->where('last_activity', '>=', $minimumAllowedActivity)
+            ->where('s.last_activity', '>=', $minimumAllowedActivity)
             ->first();
 
         if (is_null($user) or is_null($user->session_id)) {
