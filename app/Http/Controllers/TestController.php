@@ -38,6 +38,10 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $date = new \DateTime();
+        dump($date);
+        $minimumAllowedActivity = $date->modify("-222 second");
+        dd($minimumAllowedActivity);
         dd(2);
         $configIntegratedGames = config('integratedGames.common');
 
