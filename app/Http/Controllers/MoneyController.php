@@ -46,20 +46,26 @@ class MoneyController extends Controller
         $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $user = User::where('email', $email)
+
+        $date = new \DateTime();
+        $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
+
+        //select nesessary fields
+        $user = User::select(['users.*', 's.id'])
             ->join('sessions as s', 's.user_id', '=', 'users.id')
+            ->where('users.email', $email)
             ->where('s.id', $sessionId)
-            ->with('currency')
+            ->where('last_activity', '>=', $minimumAllowedActivity)
             ->first();
 
-        if (is_null($user)) {
+        if (is_null($user) or is_null($user->session_id)) {
             return response()->json([
                 'status' => false,
                 'messages' => ['User or session is not found'],
             ]);
         }
 
-        //to do this - fix this = use universal way
+        //to do this - fix this = use universal way for get sessino user
 
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
@@ -74,6 +80,7 @@ class MoneyController extends Controller
             ]);
         }
 
+        //to do once in 10 seconds and use other table for natifications
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 
