@@ -51,7 +51,7 @@ class MoneyController extends Controller
         $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
 
         //select nesessary fields
-        $user = User::select(['users.*', 's.id'])
+        $user = User::select(['users.*', 's.id as session_id'])
             ->join('sessions as s', 's.user_id', '=', 'users.id')
             ->where('users.email', $email)
             ->where('s.id', $sessionId)
