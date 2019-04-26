@@ -170,7 +170,8 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         browner12\helpers\HelperServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        \App\Providers\JsBridgeServiceProvider::class,
     ],
 
     /*
@@ -220,5 +221,6 @@ return [
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JsBridge' => \App\Providers\JsBridge\JsBridge::class,
     ],
 ];
