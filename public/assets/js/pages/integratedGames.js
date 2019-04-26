@@ -208,6 +208,11 @@ function setDefaultFilter(full = 0)
     let type_id, category_id;
     let url_string = window.location.href;
     let url = new URL(url_string);
+
+    if (document.jsBridge.games_type_id){
+        url.searchParams.set("type_id", document.jsBridge.games_type_id);
+    }
+
     if (full === 1) {
         type_id = 0;
         category_id = 0;
