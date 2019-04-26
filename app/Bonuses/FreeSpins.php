@@ -18,8 +18,8 @@ class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
     public static $maxAmount = 60;
-    protected $playFactor = 40;
-    protected $expireDays = 30;
+    protected $playFactor = 50;
+    protected $expireDays = 10;
     protected $freeSpins = 50;
     protected $timeActiveBonusDays = 5;
 
