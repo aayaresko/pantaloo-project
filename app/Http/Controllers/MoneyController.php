@@ -50,6 +50,7 @@ class MoneyController extends Controller
         $date = new \DateTime();
         $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
 
+        //to do this - fix this = use universal way for get sessino user
         //select nesessary fields
         $user = User::select(['users.*', 's.id as session_id'])
             ->join('sessions as s', 's.user_id', '=', 'users.id')
@@ -64,8 +65,6 @@ class MoneyController extends Controller
                 'messages' => ['User or session is not found'],
             ]);
         }
-
-        //to do this - fix this = use universal way for get sessino user
 
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
