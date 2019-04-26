@@ -68,7 +68,7 @@ class IntegratedGamesController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, $lang, $type_name = "")
     {
         $configIntegratedGames = config('integratedGames.common');
         $appAdditional = config('appAdditional');
@@ -81,10 +81,29 @@ class IntegratedGamesController extends Controller
         $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
 
         $title = $defaultTitle;
-        if ($request->has('type_id')) {
+
+        // Set flag
+        $need_redirect = true;
+
+        // Check slug
+        if ($type_name) {
+            $type_name = str_replace('-',' ', $type_name);
             foreach ($defaultTypes as $defaultType) {
-                if ($defaultType['id'] == $request->type_id) {
+                if ($defaultType['name'] == $type_name) {
                     $title = $defaultType['name'];
+                    $need_redirect = false;         // Has correct slug, reset redirect flag
+                }
+            }
+        }
+
+        if ($need_redirect) {
+            $type_id = $request->has('type_id') ? $request->type_id : $type_name;
+            foreach ($defaultTypes as $defaultType) {
+                if ($defaultType['id'] == $type_id) {
+                    return redirect()->route('games', [
+                        'lang' => $lang,
+                        'type_name' => str_replace(' ', '-', $defaultType['name']),
+                    ], 301);
                 }
             }
         }
