@@ -88,12 +88,12 @@ class FreeSpins extends \App\Bonuses\Bonus
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
-            $bonus = BonusModel::where('id', static::$id)->firstOrFail();
+            //$bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
             $bonusUser = UserBonus::create([
                 'expires_at' => $date,
                 'user_id' => $user->id,
-                'bonus_id' => $bonus->id,
+                'bonus_id' => static::$id,
             ]);
 
             //get all games for free
