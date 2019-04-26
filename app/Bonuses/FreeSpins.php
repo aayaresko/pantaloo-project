@@ -177,8 +177,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             //to define start transaction wagered
             $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
-                ['created_at', '>', $dateStartBonus],
                 ['type', '=', 10],
+                ['created_at', '>', $dateStartBonus],
             ])->orderBy('id', 'DESC')->first();
 
             //no transactions for increasing amount bonus
@@ -193,9 +193,9 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                 //get transaction to real for for this bonus
                 $transactionToReal = Transaction::where([
-                    ['created_at', '>', $dateStartBonus],
+                    ['user_id', '=', $user->id],
                     ['type', '=', 7],
-                    ['user_id', '=', $user->id]
+                    ['created_at', '>', $dateStartBonus],
                 ])->first();
 
                 //to do check to sum
@@ -207,8 +207,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ])->sum('bonus_sum');
                 } else {
                     $freeSpinWin = $this->user->transactions()->where([
+                        ['type', '=', 10],
                         ['created_at', '>', $dateStartBonus],
-                        ['type', '=', 10]
                     ])->sum('bonus_sum');
                     if (is_null($freeSpinWin)) {
                         $freeSpinWin = 0;
@@ -327,7 +327,6 @@ class FreeSpins extends \App\Bonuses\Bonus
                         'balance' => DB::raw("balance+$winAmount"),
                         'bonus_balance' => 0
                     ]);
-
 
                     $activeBonus->delete();
                     $response = [
@@ -546,6 +545,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     /**
      * @return float|int
+     * @throws \Exception
      */
     public function getPlayedSum()
     {
@@ -561,6 +561,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     /**
      * @return float|int
+     * @throws \Exception
      */
     public function getPercent()
     {
