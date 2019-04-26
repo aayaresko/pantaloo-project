@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\RawLog;
+use App\ModernExtraUsers;
 use DB;
 use Auth;
 use Response;
@@ -37,30 +38,111 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $user = User::where('email', 'marcin.treider8@gmail.com')->first();
-       dd($user);
-        $date = new \DateTime();
+        dd(2);
+        $configIntegratedGames = config('integratedGames.common');
 
-        $balanceUser = $user->balance;
+        $whereGameList = [
+            ['games_types_games.extra', '=', 1],
+            ['games_list.active', '=', 1],
+            ['games_types.active', '=', 1],
+            ['games_categories.active', '=', 1],
+        ];
 
-        User::where('id', $user->id)->update([
-            'balance' => 0
-        ]);
+//        $paginationCount = $configIntegratedGames['listGames']['pagination']['mobile'];
+//        array_push($whereGameList, ['games_list.mobile', '=', 1]);
 
-        Transaction::insert([
-            [
-                'type' => '11',
-                'created_at' => $date,
-                'updated_at' => $date,
-                'deleted_at' => $date,
-                'sum' => -1 * $balanceUser,
-                'user_id' => $user->id,
-                'comment' => 'system balance'
-            ],
-        ]);
+        $paginationCount = $configIntegratedGames['listGames']['pagination']['desktop'];
+        array_push($whereGameList, ['games_list.mobile', '=', 0]);
+
+        $list = GamesTypeGame::select([
+            0 => "games_list.id",
+            1 => "games_list_extra.name",
+            2 => "games_list.provider_id",
+            3 => "games_types.name as type",
+            4 => "games_categories.name as category",
+            5 => "games_list_extra.image as image",
+            6 => "games_list.rating",
+            7 => "games_list.active",
+            8 => "games_list.mobile",
+            9 => "games_list.created_at",
+        ])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where($whereGameList)
+            ->groupBy('games_types_games.game_id')
+            ->get()->toArray();
+
+
+        $headers = [
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
+            , 'Content-type' => 'text/csv'
+            , 'Content-Disposition' => 'attachment; filename=games_all.csv'
+            , 'Expires' => '0'
+            , 'Pragma' => 'public'
+        ];
+
+
+        # add headers for each column in the CSV download
+        array_unshift($list, array_keys($list[0]));
+
+        $callback = function () use ($list) {
+            $FH = fopen('php://output', 'w');
+            foreach ($list as $row) {
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return Response::stream($callback, 200, $headers);
+
 
         dd(2);
-        $user = User::where('email', 'dimarik11162@gmail.com')->first();
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
+        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
+//        $a = RawLog::create([
+//            'type_id' => 21,
+//            'request' => GeneralHelper::fullRequest(),
+//        ]);
+        $a = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => 21,
+            'request' => GeneralHelper::fullRequest(),
+        ]);
+
+        DB::connection('logs')->table('raw_log')->where('id', $a)->update([
+            //'user_id' => 22222,
+            'response' => 2,
+            'extra' => 2
+        ]);
+        dd($a);
+        $user = User::where('email', 'bekerman.i@blockspoint.com')->first();
+        $userNameDefault = $user->id;
+        $usePrefixAfter = '2019-04-25 00:00:00';
+        $prefixName = 'test';
+
+        $userName = $userNameDefault;
+
+        if ($user->created_at > $usePrefixAfter) {
+            $userName = $prefixName . $userNameDefault;
+        }
+
+        $prefixNameStrictly = ModernExtraUsers::select(['user_id', 'code', 'value'])
+            ->where('user_id', $user->id)
+            ->where('code', 'prefixName')
+            ->first();
+
+        if (!is_null($prefixNameStrictly)) {
+            $userName = $prefixNameStrictly->value . $userNameDefault;
+        }
+
+        dd($userName);
 
         //add user for request - for lib
         $request->merge(['user' => $user]);
@@ -125,7 +207,7 @@ class TestController extends Controller
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
         dump($getTransactions);
         foreach ($getTransactions as $transaction) {
-            $absTransactionSum = (-1)*$transaction->sum;
+            $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
                     'sum' => -1 * $setAmount
@@ -170,7 +252,7 @@ class TestController extends Controller
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
 
         foreach ($getTransactions as $transaction) {
-            $absTransactionSum = (-1)*$transaction->sum;
+            $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
                     'sum' => -1 * $setAmount
@@ -204,7 +286,7 @@ class TestController extends Controller
         $setAmount = 60;
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
         foreach ($getTransactions as $transaction) {
-            $absTransactionSum = (-1)*$transaction->sum;
+            $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
                     'sum' => -1 * $setAmount
@@ -285,7 +367,7 @@ class TestController extends Controller
             $m->to('alexproc1313@gmail.com', $user->name)->subject('Confirm email');
         });
         dd(2);
-        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m)  {
+        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
 
@@ -301,11 +383,11 @@ class TestController extends Controller
         $allGames = $pantalloGames->getGameList([], true);
         dd($allGames);
         $headers = [
-            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
-            ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename=games.csv'
-            ,   'Expires'             => '0'
-            ,   'Pragma'              => 'public'
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
+            , 'Content-type' => 'text/csv'
+            , 'Content-Disposition' => 'attachment; filename=games.csv'
+            , 'Expires' => '0'
+            , 'Pragma' => 'public'
         ];
 
         $list = GamesTypeGame::select(['games_list_extra.name as origin_name', 'games_categories.name as provider_name'])
@@ -326,8 +408,7 @@ class TestController extends Controller
         # add headers for each column in the CSV download
         array_unshift($list, array_keys($list[0]));
 
-        $callback = function() use ($list)
-        {
+        $callback = function () use ($list) {
             $FH = fopen('php://output', 'w');
             foreach ($list as $row) {
                 fputcsv($FH, $row);
@@ -337,7 +418,7 @@ class TestController extends Controller
 
         return Response::stream($callback, 200, $headers);
         dd(2);
-        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m)  {
+        Mail::send('emails.partner.confirm', ['link' => 'https://www.google.com/'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
 

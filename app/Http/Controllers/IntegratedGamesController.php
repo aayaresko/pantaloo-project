@@ -177,53 +177,55 @@ class IntegratedGamesController extends Controller
 //            ->groupBy('games_types_games.type_id')
 //            ->orderBy($orderType[0], $orderType[1])->get();
 
-        $selectCategoryFields = [
-            'games_categories.id',
-            'games_categories.code',
-            'games_categories.name',
-            'games_categories.rating',
-        ];
-        //to do get this date from js
-        $gamesCategories = DB::table('games_types_games')->select($selectCategoryFields)
-            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-            ->leftJoin('restriction_games_by_country as rg_n', function ($join) use ($codeCountry) {
-                $join->on('rg_n.game_id', '=', 'games_list.id')
-                    ->where('rg_n.code_country', '=', $codeCountry)
-                    ->where('rg_n.mark', '=', 0);
-            })
-            ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
-                $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
-                    ->where('rc_n.code_country', '=', $codeCountry)
-                    ->where('rc_n.mark', '=', 0);
-            })
-            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
-                $join->on('rg.game_id', '=', 'games_list.id')
-                    ->where('rg.mark', '=', 1);
-            })
-            ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
-                $join->on('rc.category_id', '=', 'games_list_extra.category_id')
-                    ->where('rc.mark', '=', 1);
-            })
-            ->where($whereGame)
-            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
-                " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
-            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
-                " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
-                "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
-                "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
-            ->groupBy('games_categories.id')
-            ->orderBy($orderCategoty[0], $orderCategoty[1])->get();
+
+        //comment 182-220 uncomment 226
+//        $selectCategoryFields = [
+//            'games_categories.id',
+//            'games_categories.code',
+//            'games_categories.name',
+//            'games_categories.rating',
+//        ];
+//        //to do get this date from js
+//        $gamesCategories = DB::table('games_types_games')->select($selectCategoryFields)
+//            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+//            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+//            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+//            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+//            ->leftJoin('restriction_games_by_country as rg_n', function ($join) use ($codeCountry) {
+//                $join->on('rg_n.game_id', '=', 'games_list.id')
+//                    ->where('rg_n.code_country', '=', $codeCountry)
+//                    ->where('rg_n.mark', '=', 0);
+//            })
+//            ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
+//                $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
+//                    ->where('rc_n.code_country', '=', $codeCountry)
+//                    ->where('rc_n.mark', '=', 0);
+//            })
+//            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
+//                $join->on('rg.game_id', '=', 'games_list.id')
+//                    ->where('rg.mark', '=', 1);
+//            })
+//            ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
+//                $join->on('rc.category_id', '=', 'games_list_extra.category_id')
+//                    ->where('rc.mark', '=', 1);
+//            })
+//            ->where($whereGame)
+//            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
+//                " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
+//            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
+//                " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
+//                "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
+//                "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
+//            ->groupBy('games_categories.id')
+//            ->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
         ])->orderBy($orderType[0], $orderType[1])->get();
 
-//        $gamesCategories = GamesCategory::where([
-//            ['active', '=', 1],
-//        ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
+        $gamesCategories = GamesCategory::where([
+            ['active', '=', 1],
+        ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
 
         $currentUser = $request->user();
         if (is_null($currentUser)) {
@@ -316,39 +318,41 @@ class IntegratedGamesController extends Controller
         //for test
         //$codeCountry = 'UA';
 
-        array_push($this->relatedFields, 'rg_n.id as rg_n', 'rc_n.id as rc_n');
-        array_push($this->relatedFields, 'rg.id as rg', 'rc.id as rc');
+        //comment close games  321-322 329-346 348-354
+
+//        array_push($this->relatedFields, 'rg_n.id as rg_n', 'rc_n.id as rc_n');
+//        array_push($this->relatedFields, 'rg.id as rg', 'rc.id as rc');
 
         $gameList = DB::table('games_types_games')->select($this->relatedFields)
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
             ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
             ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-            ->leftJoin('restriction_games_by_country as rg_n', function ($join) use ($codeCountry) {
-                $join->on('rg_n.game_id', '=', 'games_list.id')
-                    ->where('rg_n.code_country', '=', $codeCountry)
-                    ->where('rg_n.mark', '=', 0);
-            })
-            ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
-                $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
-                    ->where('rc_n.code_country', '=', $codeCountry)
-                    ->where('rc_n.mark', '=', 0);
-            })
-            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
-                $join->on('rg.game_id', '=', 'games_list.id')
-                    ->where('rg.mark', '=', 1);
-            })
-            ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
-                $join->on('rc.category_id', '=', 'games_list_extra.category_id')
-                    ->where('rc.mark', '=', 1);
-            })
+//            ->leftJoin('restriction_games_by_country as rg_n', function ($join) use ($codeCountry) {
+//                $join->on('rg_n.game_id', '=', 'games_list.id')
+//                    ->where('rg_n.code_country', '=', $codeCountry)
+//                    ->where('rg_n.mark', '=', 0);
+//            })
+//            ->leftJoin('restriction_categories_by_country as rc_n', function ($join) use ($codeCountry) {
+//                $join->on('rc_n.category_id', '=', 'games_list_extra.category_id')
+//                    ->where('rc_n.code_country', '=', $codeCountry)
+//                    ->where('rc_n.mark', '=', 0);
+//            })
+//            ->leftJoin('restriction_games_by_country as rg', function ($join) use ($codeCountry) {
+//                $join->on('rg.game_id', '=', 'games_list.id')
+//                    ->where('rg.mark', '=', 1);
+//            })
+//            ->leftJoin('restriction_categories_by_country as rc', function ($join) use ($codeCountry) {
+//                $join->on('rc.category_id', '=', 'games_list_extra.category_id')
+//                    ->where('rc.mark', '=', 1);
+//            })
             ->where($whereGameList)
-            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
-                " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
-            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
-                " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
-                "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
-                "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
+//            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
+//                " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
+//            ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
+//                " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
+//                "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
+//                "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
             ->groupBy('games_types_games.game_id')
             ->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
 
