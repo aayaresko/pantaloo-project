@@ -400,3 +400,4 @@ class IntegratedGamesController extends Controller
         return view('load.integrated_games_link')->with(['link' => $link]);
     }
 }
+

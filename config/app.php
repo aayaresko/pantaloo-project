@@ -224,3 +224,4 @@ return [
         'JsBridge' => \App\Providers\JsBridge\JsBridge::class,
     ],
 ];
+

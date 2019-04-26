@@ -32,3 +32,4 @@ class JsBridgeServiceProvider extends ServiceProvider
         });
     }
 }
+
