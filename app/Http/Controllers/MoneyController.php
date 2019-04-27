@@ -72,12 +72,12 @@ class MoneyController extends Controller
 //            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
 //            ->first();
 
-        if (is_null($user)) {
+        /*if (is_null($user)) {
             return response()->json([
                 'status' => false,
                 'messages' => ['User or session is not found'],
             ]);
-        }
+        }*/
 
         //to do once in 10 seconds and use other table for natifications
         $transaction = $user->transactions()
