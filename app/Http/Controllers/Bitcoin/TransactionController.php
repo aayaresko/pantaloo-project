@@ -3,283 +3,250 @@
 namespace App\Http\Controllers\Bitcoin;
 
 use DB;
+use Log;
+use Validator;
+use App\Transaction;
 use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
+use App\Modules\Others\DebugGame;
 use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {
-
+    /**
+     *
+     * Get new transactions
+     *
+     * @param Request $request
+     * @return array
+     */
     public function walletNotify(Request $request)
     {
         dd(2);
-        $service = new Service();
         $date = new \DateTime();
+
+        $debugGame = new DebugGame();
+        $debugGame->start();
+
         $userId = 0;//system user
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
-            'type_id' => 1,
+            'type_id' => 10,
             'user_id' => $userId,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
             'updated_at' => $date
         ]);
 
-
-        //only raw transaction
-        //check ip address
-        //only raw transaction
-        $configBitcore = config('arbex.bitcore');
-        $paramsAct = [
-            'transactionDone' => 2,
-            'configBitcore' => $configBitcore
-        ];
-        $currentIp = request()->ip();
-        $trulyCurrentIp = $_SERVER['SERVER_ADDR'];
-        if ($currentIp === '::1' or $currentIp === $trulyCurrentIp) {
-            $currentIp = 'localhost';
-        }
-
-        if ($currentIp != $configBitcore['address'] and !$request->has('txid')) {
-            Log::error(['walletNotify' => 'Something is wrong by IP']);
-            die();
-        }
-        //Log::error(['walletNotify' => 222]);
-        //Log::error(['walletNotify' => $request->txid]);
-        //die();
         DB::beginTransaction();
         try {
-            //get transaction and checker
-            $resGetTransaction = Bitcore::sendCustomRequest([
-                'method' => 'gettransaction',
-                'txid' => $request->txid
-            ]);
-
-            if (filter_var($resGetTransaction->success, FILTER_VALIDATE_BOOLEAN) === false) {
-                Log::error(['walletNotify' => $resGetTransaction->message]);
-                die();
+            //validate
+            //add balidate ip
+            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipExpected = config('app.bitcoinHost');
+            if ($ipSender != $ipExpected) {
+                throw new \Exception('Not allowed IP');
             }
 
-            //get raw transaction and check
-            $gettransactionown = Bitcore::sendCustomRequest([
-                'method' => 'gettransactionown',
-                'txid' => $request->txid
+            $validator = Validator::make($request->all(), [
+                'txid' => 'required|string',
             ]);
 
-            if (filter_var($gettransactionown->success, FILTER_VALIDATE_BOOLEAN) === false) {
-                Log::error(['walletNotify' => $gettransactionown->message]);
-                die();
+            if ($validator->fails()) {
+                ;
+                $error = $validator->errors()->first();
+                throw new \Exception($error);
             }
 
-            $startTime = microtime(true);
-            $timeReceived = new \DateTime();
-            $currentTransaction = TransactionBtcSimple::select(['id'])->where('txid', $request->txid)->first();
+            //init params
+            $txid = $request->txid;
+            $service = new Service();
 
-            if (is_null($currentTransaction)) {
-                $params = [];
-                $params['currencyId'] = 2; //only btc
-                $params['memo'] = 'unknown';
-                $params['ip'] = $currentIp;
-                $params['feeAmount'] = $gettransactionown->message->fee;
-                $params['amount'] = $gettransactionown->message->amount;
-                //only transaction from one sender - else many sender - then - need modify
-                $params['fromAddress'] = $gettransactionown->message->from[0]->address;
-                $params['toAddress'] = $gettransactionown->message->to[0]->address;
-                $params['balanceFrom'] = $gettransactionown->message->from[0]->balance;
-                $params['balanceTo'] = $gettransactionown->message->to[0]->balance;
-                $params['timeReceived'] = $timeReceived->setTimestamp(
-                    $gettransactionown->message->timeReceived);
-                $params['txid'] = $request->txid;
+            $response = [
+                'success' => true,
+                'message' => ['TXID:' . $txid]
+            ];
 
-                $getDateForTransaction = SendBtcModule::getDateForTransaction($params, ['possibleNull', 'from']);
-                if ($getDateForTransaction['success'] === false) {
-                    Log::error(['blockNotify' => $getDateForTransaction['messageError']]);
-                    die();
-                }
+            //get transaction
+            $rawTransaction = $service->getTransaction($txid);
+            if (!$rawTransaction) {
+                throw new \Exception('Transactions is not found in node');
+            }
 
-                $params = $getDateForTransaction['params'];
-                SendBtcModule::makeTransactionBtc($params);
-            } else {
-                //update time and first confirm
-                TransactionBtcSimple::where('txid', $request->txid)->update([
-                    'confirmation' => $resGetTransaction->message->confirmations,
+            $user = User::where('bitcoin_address', $rawTransaction['address'])->first();
+
+            if (is_null($user)) {
+                throw new \Exception('User with current address is not found');
+            }
+            $userId = $user->id;
+
+            $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
+
+            if ($transactionSystem) {
+                //update
+                //check must if transaction has 1 confirmation
+                //confirmations must be 1
+                Transaction::where('id', $transactionSystem->id)->create([
+                    'confirmations' => $rawTransaction['confirmations']
                 ]);
 
-                if ((int)$resGetTransaction->message->confirmations >= $configBitcore['min_confirmations']) {
-                    //update status transaction for this transaction
-                    //to do one query - join or whereIn call back or with() where
-                    $tranasctionIds = TransactionRelationship::select(['id', 'transaction_id'])
-                        ->where('transactions_btc_simple_id', $currentTransaction->id)
-                        ->pluck('transaction_id')->toArray();
-
-                    $transactions = Transaction::leftJoin('wallets as w_out',
-                        'w_out.id', '=', 'transactions.wallet_out')
-                        ->leftJoin('wallets as w_in', 'w_in.id', '=', 'transactions.wallet_in')
-                        ->whereIn('transactions.id', $tranasctionIds)
-                        ->select(
-                            ['transactions.id']
-                        )->get();
-
-                    foreach ($transactions as $transaction) {
-                        //update wallet and status in transaction
-                        Transaction::where('id', $transaction->id)->update([
-                            'status' => $paramsAct['transactionDone']
-                        ]);
-                    }
-
-                }
+                throw new \Exception('Transaction exists. And Updated');
             }
-            $endTime = round(microtime(true) - $startTime, 4);
-            Log::info(['walletNotify' => [
-                'runTime' => $endTime,
-                'memory' => memory_get_peak_usage(),
-            ]]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error(['walletNotify' => $e->getMessage()]);
-            die();
-        }
-        DB::commit();
 
+            $amountTransaction = $rawTransaction['amount'] * 1000;
+
+            $transaction = Transaction::create([
+                'sum' => $amountTransaction,
+                'bonus_sum' => 0,
+                'type' => 3,
+                'user_id' => $user->id,
+                'ext_id' => $rawTransaction['txid'],
+                'confirmations' => $rawTransaction['confirmations']
+            ]);
+            array_push($response['message'], "TRANSACTION:{$transaction->id}");
+
+            $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
+
+            User::where('id', $user->id)->update([
+                'balance' => DB::raw("balance+{$amountTransactionFormat}")
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
+
+            $response = [
+                'success' => false,
+                'msg' => $errorMessage . ' Line:' . $errorLine
+            ];
+        }
+
+        $debugGameResult = $debugGame->end();
+
+        //rewrite log
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'user_id' => $userId,
             'response' => json_encode($response),
             'extra' => json_encode($debugGameResult)
         ]);
 
-        return response()->json([
-            'success' => true
-        ]);
-
+        return $response;
     }
 
+    /**
+     *
+     * Update transactions
+     *
+     * @param Request $request
+     * @return array
+     */
     public function blockNotify(Request $request)
     {
-        //only raw transaction
-        //check ip address
-        //only raw transaction
-        $howMany = 500;
-        $configBitcore = config('arbex.bitcore');
-        $paramsAct = [
-            'transactionDone' => 2,
-            'configBitcore' => config('arbex.bitcore'),
-        ];
+        dd(2);
+        $date = new \DateTime();
 
-        $responseTxids = [
-            'confirm' => 0,
-            'notConfirmed' => 0,
-            'erroneous' => 0,
-        ];
-        $currentIp = request()->ip();
-        $trulyCurrentIp = $_SERVER['SERVER_ADDR'];
-        if ($currentIp === '::1' or $currentIp === $trulyCurrentIp) {
-            $currentIp = 'localhost';
-        }
+        $debugGame = new DebugGame();
+        $debugGame->start();
+        $countTransaction = 500;
 
-        if ($currentIp != $configBitcore['address'] and !$request->has('blockhash')) {
-            Log::error(['blockNotify' => 'Something is wrong by IP']);
-            die();
-        }
+        $userId = 0;//system user
 
-        DB::beginTransaction();
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => 11,
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
         try {
-            $startTime = microtime(true);
-            //TO DO OPTIMISATION - COUNT NEW BLOCK AND UPDATE STATUS - ANYWHERE +1, WHEN
-            //CONFIRMATION = 5 - SEND TO NODE BTC THIS ITEM - CHECK (UPDATE TO 6 OR SET HIS REAL VALUE)
-            //OR GET TRANSACTION IN BLOCK IN OWN  $listsinceblock?
-            //get all where confirmation < {value}
-            TransactionBtcSimple::where('confirmation', '=', $configBitcore['min_confirmations'] - 1)
-                ->select(['id', 'txid'])->chunk($howMany, function ($tranasctionBtcItems)
-                use ($paramsAct, &$responseTxids) {
-                    $tranasctionBtc = $tranasctionBtcItems->toArray();
+            //validate
+            //add balidate ip
+            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipExpected = config('app.bitcoinHost');
+            if ($ipSender != $ipExpected) {
+                throw new \Exception('Not allowed IP');
+            }
 
-                    //create array -> send array -> return array with confirmations
-                    $paramsCheckConfirm = [
-                        'method' => 'checkconfirmrawtransaction',
-                        'txids' => json_encode($tranasctionBtc),
-                        'minConfirm' => $paramsAct['configBitcore']['min_confirmations']
-                    ];
+            $validator = Validator::make($request->all(), [
+                'blockhash' => 'required|string',
+            ]);
 
-                    //Add to index column for this table
-                    $checkConfirm = Bitcore::sendCustomRequest($paramsCheckConfirm);
-                    if (filter_var($checkConfirm->success, FILTER_VALIDATE_BOOLEAN) === false) {
-                        Log::error(['blockNotify' => $checkConfirm->message]);
-                        die();
-                    }
-                    $txids = $checkConfirm->message->txids;
-                    $confirm = $txids->confirm;
-                    $notConfirmed = $txids->notConfirmed;
-                    $erroneous = $txids->erroneous;
+            if ($validator->fails()) {
+                ;
+                $error = $validator->errors()->first();
+                throw new \Exception($error);
+            }
 
-                    //Erroneous
-                    $erroneousUpdate = [];
-                    foreach ($erroneous as $erroneousItem) {
-                        array_push($erroneousUpdate, $erroneousItem->id);
-                    }
+            //init params
+            $blockhash = $request->blockhash;
+            $service = new Service();
 
-                    TransactionBtcSimple::whereIn('id', $erroneousUpdate)->update([
-                        'confirmation' => -1,
-                    ]);
+            $response = [
+                'success' => true,
+                'message' => ['BLOCKHASH:' . $blockhash]
+            ];
 
-                    //Not confirmed
-                    foreach ($notConfirmed as $notConfirmedItem) {
-                        TransactionBtcSimple::where('id', $notConfirmedItem->id)->update([
-                            'confirmation' => $notConfirmedItem->confirmation,
-                        ]);
-                    }
-                    //Confirmed
-                    $tranasctionHashIds = [];
-                    foreach ($confirm as $confirmItem) {
-                        array_push($tranasctionHashIds, $confirmItem->id);
-                    }
-                    //to do one query - join or whereIn call back or with() where
-                    $tranasctionIds = TransactionRelationship::select(['id', 'transaction_id'])
-                        ->whereIn('transactions_btc_simple_id', $tranasctionHashIds)
-                        ->pluck('transaction_id')->toArray();
+            //to do get block use this command and check block hash
 
-                    $transactions = Transaction::leftJoin('wallets as w_out',
-                        'w_out.id', '=', 'transactions.wallet_out')
-                        ->leftJoin('wallets as w_in', 'w_in.id', '=', 'transactions.wallet_in')
-                        ->whereIn('transactions.id', $tranasctionIds)
-                        ->select(
-                            ['transactions.id']
-                        )->get();
+            $minConfirmBtc = config('appAdditional.normalConfirmBtc');
+            $params = [
+                'badTransactions' => []
+            ];
 
-                    TransactionBtcSimple::whereIn('id', $tranasctionHashIds)->update([
-                        'confirmation' => $paramsAct['configBitcore']['min_confirmations'],
-                    ]);
+            Transaction::where('type', 3)
+                ->where('confirmations', '=', $minConfirmBtc - 1)
+                ->select(['id', 'ext_id'])
+                ->chunk($countTransaction, function ($transactions) use ($service, &$params) {
 
                     foreach ($transactions as $transaction) {
-                        //update wallet and status in transaction
-                        Transaction::where('id', $transaction->id)->update([
-                            'status' => $paramsAct['transactionDone']//status done
-                        ]);
-                    }
+                        try {
+                            $getTransaction = $service->getTransaction($transaction->ext_id);
 
-                    $responseTxids['confirm'] += count($confirm);
-                    $responseTxids['notConfirmed'] += count($notConfirmed);
-                    $responseTxids['erroneous'] += count($erroneous);
+                            if ($getTransaction) {
+                                Transaction::where('id', $transaction->id)
+                                    ->update([
+                                        'confirmations' => $getTransaction['confirmations']
+                                    ]);
+                            }
+                        } catch (\Exception $ex) {
+                            array_push($params['badTransactions'], $transaction->id);
+                        }
+                    }
                 });
 
-            TransactionBtcSimple::where(
+            $response['badTransactions'] = $params['badTransactions'];
+
+            Transaction::where(
                 [
-                    ['confirmation', '>=', 1],
-                    ['confirmation', '<', $paramsAct['configBitcore']['min_confirmations'] - 1]
+                    ['type', '=', 3],
+                    ['confirmations', '>=', 1],
+                    ['confirmations', '<', $minConfirmBtc - 1]
                 ]
-            )->update(['confirmation' => DB::raw('confirmation+1')]);
+            )->update(['confirmations' => DB::raw('confirmations + 1')]);
 
-            $endTime = round(microtime(true) - $startTime, 4);
-            Log::info(['blockNotify' => [
-                'runTime' => $endTime,
-                'memory' => memory_get_peak_usage(),
-                'txids' => $responseTxids
-            ]]);
         } catch (\Exception $e) {
-            DB::rollback();
-            Log::error(['blockNotify' => $e->getMessage()]);
-            die();
-        }
-        DB::commit();
-    }
+            $errorMessage = $e->getMessage();
+            $errorLine = $e->getLine();
 
+            $response = [
+                'success' => false,
+                'msg' => $errorMessage . ' Line:' . $errorLine
+            ];
+        }
+
+        $debugGameResult = $debugGame->end();
+
+        //rewrite log
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'user_id' => $userId,
+            'response' => json_encode($response),
+            'extra' => json_encode($debugGameResult)
+        ]);
+
+        return $response;
+    }
 }

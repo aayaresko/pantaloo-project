@@ -44,6 +44,35 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $service = new Service();
+        /*dd(count(        Transaction::where('type', 3)
+            ->where('confirmations', '<', 6)
+            ->select(['id', 'ext_id', 'confirmations'])->get()));*/
+        Transaction::where('type', 3)
+            ->where('confirmations', '<', 6)
+            ->select(['id', 'ext_id', 'confirmations'])
+            ->chunk(100, function ($transactions) use ($service) {
+                dd($transactions);
+                foreach ($transactions as $transaction) {
+                    try {
+                        $getTransaction = $service->getTransaction($transaction->ext_id);
+
+                        if ($getTransaction) {
+                            Transaction::where('id', $transaction->id)
+                                ->update([
+                                    'confirmations' => $getTransaction['confirmations']
+                                ]);
+                        }
+                    } catch (\Exception $ex) {
+                        //to do logs and rollback
+                        print_r($ex->getMessage());
+                    }
+                }
+
+            });
+        dd(3);
+
         dd(22);
         $userFields = [
             'users.id as id',

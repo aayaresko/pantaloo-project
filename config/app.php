@@ -121,6 +121,8 @@ return [
     'currencyCode' => 'mBTC',
 
     'chatUrl' => env('CHAT_URL', 'https://chat.casinobit.io'),
+    
+    'bitcoinHost' => env('BITCOIN_HOST'),
 
     /*
     |--------------------------------------------------------------------------
