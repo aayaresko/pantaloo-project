@@ -358,6 +358,11 @@ Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
     Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
 
+Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
+    Route::get('walletNotify', 'Bitcoin\TransactionController@walletNotify')->name('walletNotify');
+    Route::get('blockNotify', 'Bitcoin\TransactionController@blockNotify')->name('blockNotify');
+});
+
 Route::group(['middleware' => ['api', 'ip.country.block']], function () {
     Route::post('/api/getToken', ['uses' => 'Api\ApiController@authenticate']);
 });
