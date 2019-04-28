@@ -25,6 +25,7 @@ use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use GuzzleHttp\Client;
 use Cookie;
+use App\Jobs\BonusHandler;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
@@ -36,8 +37,114 @@ class TestController extends Controller
 {
     const PASSWORD = 'rf3js1Q';
 
+    public function test1(Request $request)
+    {
+        dd(2);
+    }
+
     public function test(Request $request)
     {
+        dd(22);
+        $userFields = [
+            'users.id as id',
+            'users.balance as balance',
+            'users.bonus_balance as bonus_balance',
+            DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+        ];
+
+        
+        //add additional fields
+        $additionalFieldsUser = [
+            'affiliates.id as partner_id',
+            'affiliates.commission as partner_commission',
+            'user_bonuses.id as bonus',
+            'user_bonuses.bonus_id as bonus_id',
+            'user_bonuses.created_at as start_bonus',
+            'bonus_n_active.id as bonus_n_active',
+            'bonus_n_active.bonus_id as bonus_n_active_id',
+            'bonus_n_active.created_at as start_bonus_n_active',
+            'bonus_n_active.expires_at as expires_at',
+        ];
+
+        $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+            ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+            ->leftJoin('user_bonuses', function ($join) {
+                $join->on('users.id', '=', 'user_bonuses.user_id')
+                    ->where('user_bonuses.activated', '=', 1)
+                    ->whereNull('user_bonuses.deleted_at');
+            })
+            ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
+                $join->on('users.id', '=', 'bonus_n_active.user_id')
+                    //bonus_id this for free spins
+                    ->where('bonus_n_active.bonus_id', '=', 1)
+                    ->whereNull('bonus_n_active.deleted_at');
+            })
+            ->where([
+                ['users.id', '=', 635],
+            ])->first();
+        dd($params);
+        $user = User::where('id', 478)->first();
+        $user->bonus_balance = 0;
+        dispatch(new BonusHandler($user));
+        dd($user);
+
+
+        DB::beginTransaction();
+        try {
+            dump($user);
+            User::where('id', 136)->update(['bonus_balance' => 10]);
+            $user1 =User::where('id', 136)->first();
+
+            dump($user1);
+
+            sleep(10);
+            DB::rollBack();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        dd(2);
+        $user = User::where('id', 621)->first();
+        dispatch(new BonusHandler($user));
+        dd(21);
+        //to do universal way define user to DO
+        $sessionId = $_COOKIE['laravel_session'];
+        $sessionLeftTime = config('session.lifetime');
+        $sessionLeftTimeSecond = $sessionLeftTime * 60;
+        $user = User::where('email', 'alexproc1313@gmail.com')
+            ->with('currency')
+            ->first();
+
+        //to do this - fix this = use universal way
+        $sessionUser = DB::table('sessions')
+            ->where('id', $sessionId)
+            ->where('user_id', $user->id)
+            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+            ->first();
+
+        /*if (is_null($sessionUser)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User or session is not found'],
+            ]);
+        }*/
+
+        $transaction = $user->transactions()
+            ->where('type', 3)->where('notification', 0)->first();
+
+        if ($transaction) {
+            $sum = $transaction->sum;
+            $transaction->notification = 1;
+            $transaction->save();
+        } else {
+            $sum = false;
+        }
+
+        //to do check active bonus
+        //to do use dispatch
+        dispatch(new BonusHandler($user));
+        dd(2);
         $date = new \DateTime();
         dump($date);
         $minimumAllowedActivity = $date->modify("-222 second");
