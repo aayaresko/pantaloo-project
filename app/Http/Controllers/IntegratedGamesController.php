@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Providers\JsBridge\JsBridge;
 use DB;
 use Log;
 use Validator;
@@ -92,6 +93,7 @@ class IntegratedGamesController extends Controller
                 if ($defaultType['name'] == $type_name) {
                     $title = $defaultType['name'];
                     $need_redirect = false;         // Has correct slug, reset redirect flag
+                    app(jsBridge::class)['games_type_id'] = $defaultType['id'];
                 }
             }
         }

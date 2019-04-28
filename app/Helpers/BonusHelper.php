@@ -31,6 +31,7 @@ class BonusHelper
                 }
             } catch (\Exception $e) {
                 Log::alert([
+                    'code' => 'bonusMessage',
                     'id' => $notActiveBonus->id,
                     'error' => $e->getMessage()
                 ]);
