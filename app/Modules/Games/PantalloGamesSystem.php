@@ -316,14 +316,15 @@ class PantalloGamesSystem implements GamesSystem
                     ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                     ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                     ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                    ->whereIn('games_types_games.type_id', [$slotTypeId])
                     ->where([
                         ['games_list.system_id', '=', $gameIdRequest],
                         ['games_types_games.extra', '=', 1],
                         ['games_list.active', '=', 1],
                         ['games_types.active', '=', 1],
                         ['games_categories.active', '=', 1],
-                    ])->groupBy('games_types_games.game_id')->first();
+                    ])
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
+                    ->groupBy('games_types_games.game_id')->first();
 
                 $typeOpenGame = $slotsGame;
             } else {
@@ -332,13 +333,13 @@ class PantalloGamesSystem implements GamesSystem
                     ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                     ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
                     ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
-                    ->whereIn('games_types_games.type_id', [$slotTypeId])
                     ->where([
                         ['games_types_games.extra', '=', 1],
                         ['games_list.active', '=', 1],
                         ['games_types.active', '=', 1],
                         ['games_categories.active', '=', 1],
                     ])
+                    ->whereIn('games_types_games.type_id', [$slotTypeId])
                     ->groupBy('games_types_games.game_id')->get();
 
                 $slotsGameIds = array_map(function ($item) {
@@ -347,10 +348,10 @@ class PantalloGamesSystem implements GamesSystem
 
                 $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
                     'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
-                    ->whereIn('game_id', $slotsGameIds)
                     ->where([
                         ['games_pantallo_session.user_id', '=', $params['user']->id],
                     ])
+                    ->whereIn('game_id', $slotsGameIds)
                     ->select([
                         'games_pantallo_session_game.id',
                     ])
