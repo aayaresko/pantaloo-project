@@ -17,7 +17,9 @@
             <li><a target="_blank" href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
             <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
             <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>
+            @if(App::getLocale() == 'jp') 
             <li><IFRAME SRC="https://licensing.gaming-curacao.com/validator/?lh=625d61ed52ae40b378494428c1137099&template=seal" WIDTH=150 HEIGHT=50 STYLE="border:none;"></IFRAME> </li>
+            @endif
         </ul>
     </div>
 

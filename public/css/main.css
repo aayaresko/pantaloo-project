@@ -7828,6 +7828,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* Landscape phones and down */
 @media (max-width: 480px) {
 
+  .footerLinks {
+    min-height: 84px;
+  }
+
   html[lang="vn"] body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry{
     font-size: 14px;
     height: 51px;
