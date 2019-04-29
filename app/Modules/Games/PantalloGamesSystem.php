@@ -624,11 +624,11 @@ class PantalloGamesSystem implements GamesSystem
                                 $amountFreeSpins = $amount;
 
                                 $startDateBonus = $params['user']->start_bonus_n_active;
-
+                                //to do sum one query
                                 $transactionSumBonus = Transaction::where([
-                                    ['created_at', '>', $startDateBonus],
+                                    ['user_id', '=', $params['user']->id],
                                     ['type', '=', 10],
-                                    ['user_id', '=', $params['user']->id]
+                                    ['created_at', '>', $startDateBonus],
                                 ])->sum('bonus_sum');
 
                                 if ($bonusLimit !== 0) {
