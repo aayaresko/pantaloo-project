@@ -19,7 +19,8 @@ return [
         2 => 'App\Bonuses\Bonus_200',
         3 => 'App\Bonuses\Bonus_150',
         4 => 'App\Bonuses\Bonus_100',
+    ],
 
-    ]
+    'checkFrequency' => 3
 
 ];

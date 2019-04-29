@@ -211,6 +211,7 @@ class PantalloGetGames extends Command
         } catch (\Exception $e) {
             DB::rollBack();
             Log::emergency([
+                'code' => 'PantalloGetGames',
                 'error' => $e->getMessage(),
                 'line' => $e->getLine()
             ]);

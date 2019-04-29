@@ -216,7 +216,7 @@ class PantalloGamesSystem implements GamesSystem
             $params = [];
             $slotTypeId = config('appAdditional.slotTypeId');
             $requestParams = $request->query();
-            Log::info($requestParams);
+            //Log::info($requestParams);
 
             $configPantalloGames = config('pantalloGames');
             $salt = $configPantalloGames['additional']['salt'];

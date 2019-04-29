@@ -50,6 +50,7 @@ class MoneyController extends Controller
         $date = new \DateTime();
         $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
 
+        //to do this - fix this = use universal way for get sessino user
         //select nesessary fields
         $user = User::select(['users.*', 's.id as session_id'])
             ->join('sessions as s', 's.user_id', '=', 'users.id')
@@ -65,20 +66,18 @@ class MoneyController extends Controller
             ]);
         }
 
-        //to do this - fix this = use universal way for get sessino user
-
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
 //            ->where('user_id', $user->id)
 //            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
 //            ->first();
 
-        if (is_null($user)) {
+        /*if (is_null($user)) {
             return response()->json([
                 'status' => false,
                 'messages' => ['User or session is not found'],
             ]);
-        }
+        }*/
 
         //to do once in 10 seconds and use other table for natifications
         $transaction = $user->transactions()
@@ -93,8 +92,11 @@ class MoneyController extends Controller
         }
 
         //to do check active bonus
-        //to do use dispatch
-        dispatch(new BonusHandler($user));
+        //to do not use dispatch
+        $checkFrequencyBonus = config('bonus.checkFrequency');
+        if (rand(1, $checkFrequencyBonus) === 1) {
+            BonusHelper::bonusCheck($user, 1);
+        }
 
         return response()->json([
             'realBalance' => $user->balance,
