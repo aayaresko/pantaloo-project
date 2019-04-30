@@ -12,6 +12,7 @@ use App\Transaction;
 use App\Models\GamesList;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
+use App\Models\LastActionGame;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -541,10 +542,14 @@ class FreeSpins extends \App\Bonuses\Bonus
         //only bonus transaction
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
+        $user = $this->user;
 
-        $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+        $lastActionGame = LastActionGame::where('user_id', $user->id)
+            ->where('last_action', '>', $date)->first();
 
-        if (!$transaction) {
+        //$transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+
+        if (!$lastActionGame) {
             return false;
         } else {
             return true;

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Transaction;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
+use App\Models\LastActionGame;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 

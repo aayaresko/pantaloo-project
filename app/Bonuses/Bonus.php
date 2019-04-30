@@ -3,8 +3,8 @@
 namespace App\Bonuses;
 
 use App\User;
-use App\Transaction;
 use Carbon\Carbon;
+use App\Transaction;
 
 abstract class Bonus
 {
@@ -25,9 +25,14 @@ abstract class Bonus
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
 
-        $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+        $user = $this->user;
 
-        if (!$transaction) {
+        $lastActionGame = LastActionGame::where('user_id', $user->id)
+            ->where('last_action', '>', $date)->first();
+
+        //$transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+
+        if (!$lastActionGame) {
             return false;
         } else {
             return true;
