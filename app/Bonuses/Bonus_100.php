@@ -12,6 +12,7 @@ use App\Transaction;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Models\LastActionGame;
+use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -46,6 +47,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //hide if user
 
         //hide if deposit count
+        //$userDeposits = SystemNotification::where('user_id', $user->id)->where('type_id', 1)->count();
+
         if ($user->transactions()->deposits()->count() > $this->depositsCount) {
             return false;
         }

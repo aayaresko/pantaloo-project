@@ -24,6 +24,7 @@ use App\Models\GamesList;
 use App\Models\GamesListExtra;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
+//use App\Models\SystemNotification;
 use GuzzleHttp\Client;
 use Cookie;
 use App\Jobs\BonusHandler;
@@ -45,6 +46,14 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        DB::enableQueryLog();
+
+        $deposit = SystemNotification::where('user_id', 136)->where('type_id', 1)->count();
+        dump($deposit);
+        dd(DB::getQueryLog());
+
+        dd($deposit);
         SystemNotification::create([
             'user_id' => 136,
             //to do config - mean deposit transactions
