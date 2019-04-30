@@ -10,6 +10,7 @@ use App\ModernExtraUsers;
 use DB;
 use Auth;
 use Response;
+use App\Models\SystemNotification;
 use Log;
 use App\Bitcoin\Service;
 use App\Transaction;
@@ -44,6 +45,16 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        SystemNotification::create([
+            'user_id' => 136,
+            //to do config - mean deposit transactions
+            'type_id' => 1,
+            'extra' => json_encode([
+                'transactionId' => 1,
+                'depositAmount' => 200.200
+            ])
+        ]);
+        dd(2);
         $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
             ->where([
                 'game_id' => '',

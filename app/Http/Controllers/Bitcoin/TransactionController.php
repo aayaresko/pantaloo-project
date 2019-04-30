@@ -10,6 +10,7 @@ use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\Others\DebugGame;
+use App\Models\SystemNotification;
 use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
@@ -54,7 +55,6 @@ class TransactionController extends Controller
             ]);
 
             if ($validator->fails()) {
-                ;
                 $error = $validator->errors()->first();
                 throw new \Exception($error);
             }
@@ -70,6 +70,7 @@ class TransactionController extends Controller
 
             //get transaction
             $rawTransaction = $service->getTransaction($txid);
+
             if (!$rawTransaction) {
                 throw new \Exception('Transactions is not found in node');
             }
@@ -83,11 +84,11 @@ class TransactionController extends Controller
 
             $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
 
-            if ($transactionSystem) {
+            if (!is_null($transactionSystem)) {
                 //update
                 //check must if transaction has 1 confirmation
                 //confirmations must be 1
-                Transaction::where('id', $transactionSystem->id)->create([
+                Transaction::where('id', $transactionSystem->id)->update([
                     'confirmations' => $rawTransaction['confirmations']
                 ]);
 
@@ -104,12 +105,24 @@ class TransactionController extends Controller
                 'ext_id' => $rawTransaction['txid'],
                 'confirmations' => $rawTransaction['confirmations']
             ]);
+
             array_push($response['message'], "TRANSACTION:{$transaction->id}");
 
             $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
 
             User::where('id', $user->id)->update([
                 'balance' => DB::raw("balance+{$amountTransactionFormat}")
+            ]);
+
+            //to do include notifications
+            SystemNotification::create([
+                'user_id' => $user->id,
+                //to do config - mean deposit transactions
+                'type_id' => 1,
+                'extra' => json_encode([
+                    'transactionId' => $transaction->id,
+                    'depositAmount' => $amountTransaction
+                ])
             ]);
 
             DB::commit();
