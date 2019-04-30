@@ -14,6 +14,7 @@ use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\PantalloGames;
+use App\Models\LastActionGame;
 use App\Modules\Others\DebugGame;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloFreeRounds;
@@ -369,16 +370,49 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             if ($action !== 'balance') {
+                //part 1
                 $gamesSessionIdThem = $requestParams['gamesession_id'];
-                $gamesSession = GamesPantalloSessionGame::where([
-                    'session_id' => $params['session']->system_id,
-                    'gamesession_id' => $gamesSessionIdThem,
-                ])->first();
+                $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
+                    ->where([
+                        'session_id' => $params['session']->system_id,
+                        'gamesession_id' => $gamesSessionIdThem,
+                    ])->first();
                 if (is_null($gamesSession)) {
                     throw new \Exception('Games session is not found.' .
                         ' This user is not playing currently.', 500);
                 }
                 $gamesSessionId = $gamesSession->id;
+
+                //part 2
+                //dd(2);
+                //to do log what player is gaming
+                $getLastActionGame = LastActionGame::select(['id', 'gamesession_id', 'number_games'])
+                    ->where('user_id', $params['user']->id)->first();
+
+                if (is_null($getLastActionGame)) {
+                    LastActionGame::create([
+                        'user_id' => $params['user']->id,
+                        'game_id' => $gamesSession->game_id,
+                        'last_action' => $date,
+                        'gamesession_id' => $gamesSessionIdThem,
+                        'number_games' => 1
+                    ]);
+                } else {
+                    $lastActionGameUpdate = [
+                        'game_id' => $gamesSession->game_id,
+                        'last_action' => $date,
+                        'gamesession_id' => $gamesSessionIdThem,
+                    ];
+
+                    $numberGames = (int)$getLastActionGame->number_games;
+
+                    if ($gamesSessionIdThem !== $getLastActionGame->gamesession_id) {
+                        $numberGames = $getLastActionGame->number_games + 1;
+                    }
+                    $lastActionGameUpdate['number_games'] = $numberGames;
+
+                    LastActionGame::where('user_id', $params['user']->id)->update($lastActionGameUpdate);
+                }
             }
 
             switch ($action) {

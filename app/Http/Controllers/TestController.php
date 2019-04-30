@@ -44,7 +44,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
+            ->where([
+                'game_id' => '',
+            ])->first();
+        dd($gamesSession);
         $service = new Service();
         /*dd(count(        Transaction::where('type', 3)
             ->where('confirmations', '<', 6)
