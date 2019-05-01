@@ -17,7 +17,7 @@ class CreateLastActionGamesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('game_id')->unsigned();
-            $table->timestamp('last_action');
+            $table->timestamp('last_action')->nullable();
             $table->string('gamesession_id');
             $table->integer('number_games')->unsigned()->default(0);
             $table->timestamps();

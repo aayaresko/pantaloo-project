@@ -22,6 +22,7 @@ use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesListExtra;
+use App\Models\LastActionGame;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 //use App\Models\SystemNotification;
@@ -46,7 +47,31 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+
+        $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->whereIn('games_types_games.type_id', [10001])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $slotsGameIds = array_map(function ($item) {
+            return $item->id;
+        }, $slotsGames);
+
+        //to do! use table last action
+        $typeOpenGame = LastActionGame::select(['id', 'game_id'])
+            ->where('user_id', 136)
+            ->whereIn('game_id', $slotsGameIds)
+            ->first();
+        dd($typeOpenGame);
         DB::enableQueryLog();
 
         $deposit = SystemNotification::where('user_id', 136)->where('type_id', 1)->count();

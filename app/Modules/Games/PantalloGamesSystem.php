@@ -109,8 +109,37 @@ class PantalloGamesSystem implements GamesSystem
                 'game_id' => $game->id
             ]);
 
-            DB::commit();
+            $getLastActionGame = LastActionGame::select(['id', 'gamesession_id', 'number_games'])
+                ->where('user_id', $user->id)->first();
 
+            if (is_null($getLastActionGame)) {
+                LastActionGame::create([
+                    'user_id' => $user->id,
+                    'game_id' => $game->id,
+                    'last_game' => $date,
+                    'last_action' => $date,
+                    'gamesession_id' => $getGame->gamesession_id,
+                    'number_games' => 1
+                ]);
+            } else {
+                $lastActionGameUpdate = [
+                    'last_game' => $date,
+                    'game_id' => $game->id,
+                    'gamesession_id' => $getGame->gamesession_id
+                ];
+
+                $numberGames = (int)$getLastActionGame->number_games;
+                //to do this
+                if ($getGame->gamesession_id !== $getLastActionGame->gamesession_id) {
+                    $numberGames = $getLastActionGame->number_games + 1;
+                }
+
+                $lastActionGameUpdate['number_games'] = $numberGames;
+
+                LastActionGame::where('id', $getLastActionGame->id)->update($lastActionGameUpdate);
+            }
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             dump($playerExists);
@@ -312,6 +341,7 @@ class PantalloGamesSystem implements GamesSystem
             $gameIdRequest = isset($requestParams['game_id']) ? $requestParams['game_id'] : null;
 
             if (!is_null($gameIdRequest)) {
+                //to do! table slots games
                 $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
                     ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                     ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
@@ -329,6 +359,7 @@ class PantalloGamesSystem implements GamesSystem
 
                 $typeOpenGame = $slotsGame;
             } else {
+                //to do! table slots games
                 $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
                     ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                     ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
@@ -347,17 +378,12 @@ class PantalloGamesSystem implements GamesSystem
                     return $item->id;
                 }, $slotsGames);
 
-                $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
-                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
-                    ->where([
-                        ['games_pantallo_session.user_id', '=', $params['user']->id],
-                    ])
+                //to do! use table last action
+                $typeOpenGame = LastActionGame::select(['id'])
+                    ->where('user_id', $params['user']->id)
                     ->whereIn('game_id', $slotsGameIds)
-                    ->select([
-                        'games_pantallo_session_game.id',
-                    ])
-                    ->orderBy('id', 'desc')
                     ->first();
+
             }
 
             if (!is_null($typeOpenGame)) {
@@ -386,33 +412,11 @@ class PantalloGamesSystem implements GamesSystem
                 //part 2
                 //dd(2);
                 //to do log what player is gaming
-                $getLastActionGame = LastActionGame::select(['id', 'gamesession_id', 'number_games'])
-                    ->where('user_id', $params['user']->id)->first();
+                $lastActionGameUpdate = [
+                    'last_action' => $date,
+                ];
 
-                if (is_null($getLastActionGame)) {
-                    LastActionGame::create([
-                        'user_id' => $params['user']->id,
-                        'game_id' => $gamesSession->game_id,
-                        'last_action' => $date,
-                        'gamesession_id' => $gamesSessionIdThem,
-                        'number_games' => 1
-                    ]);
-                } else {
-                    $lastActionGameUpdate = [
-                        'game_id' => $gamesSession->game_id,
-                        'last_action' => $date,
-                        'gamesession_id' => $gamesSessionIdThem,
-                    ];
-
-                    $numberGames = (int)$getLastActionGame->number_games;
-
-                    if ($gamesSessionIdThem !== $getLastActionGame->gamesession_id) {
-                        $numberGames = $getLastActionGame->number_games + 1;
-                    }
-                    $lastActionGameUpdate['number_games'] = $numberGames;
-
-                    LastActionGame::where('user_id', $params['user']->id)->update($lastActionGameUpdate);
-                }
+                LastActionGame::where('user_id', $params['user']->id)->update($lastActionGameUpdate);
             }
 
             switch ($action) {
