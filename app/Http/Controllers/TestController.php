@@ -47,7 +47,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
+        dd(2);
         $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
             ->where([

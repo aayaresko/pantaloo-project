@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\UserBonus;
 use App\Transaction;
 use App\Models\GamesList;
+use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
 use App\Models\LastActionGame;
@@ -19,7 +20,7 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
-    public static $maxAmount = 60;
+    public static $maxAmount = 20;
     protected $playFactor = 50;
     protected $expireDays = 10;
     protected $freeSpins = 50;
@@ -266,6 +267,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $bonusLimit = self::$maxAmount;
         $conditions = 0;
 
         DB::beginTransaction();
@@ -324,7 +326,25 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ];
 
                     $transaction = new Transaction();
+
                     $winAmount = $user->bonus_balance;
+                    //check max amount
+                    $allowedBonusFunds = $bonusLimit - (float)$bonusLimit->total_amount;
+                    if ($allowedBonusFunds <= $winAmount) {
+                        $winAmount = $allowedBonusFunds;
+                        $trimBonusAmount = GeneralHelper::formatAmount($winAmount - $allowedBonusFunds);
+                        //create transaction
+                        Transaction::create([
+                            'sum' => 0,
+                            'bonus_sum' => -1* $trimBonusAmount,
+                            'comment' => 'Trim',
+                            'type' => 12,
+                            'user_id' => $user->id,
+                        ]);
+                        if ($winAmount <= 0) {
+                            $winAmount = 0;
+                        }
+                    }
 
                     $bonusAmount = -1 * $user->bonus_balance;
                     $transaction->bonus_sum = $bonusAmount;
@@ -335,8 +355,12 @@ class FreeSpins extends \App\Bonuses\Bonus
                     $transaction->save();
 
                     User::where('id', $user->id)->update([
-                        'balance' => DB::raw("balance+$winAmount"),
+                        'balance' => DB::raw("balance + $winAmount"),
                         'bonus_balance' => 0
+                    ]);
+
+                    UserBonus::where('id', $activeBonus->id)->update([
+                        'total_amount' => DB::raw("total_amount + $winAmount"),
                     ]);
 
                     $activeBonus->delete();

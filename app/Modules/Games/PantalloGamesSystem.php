@@ -668,23 +668,23 @@ class PantalloGamesSystem implements GamesSystem
                             if ($notActiveBonus === 1) {
                                 $amountFreeSpins = $amount;
 
-                                $startDateBonus = $params['user']->start_bonus_n_active;
-                                //to do sum one query
-                                $transactionSumBonus = Transaction::where([
-                                    ['user_id', '=', $params['user']->id],
-                                    ['type', '=', 10],
-                                    ['created_at', '>', $startDateBonus],
-                                ])->sum('bonus_sum');
-
-                                if ($bonusLimit !== 0) {
-                                    $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
-                                    if ($allowedBonusFunds <= $amount) {
-                                        $amountFreeSpins = $allowedBonusFunds;
-                                        if ($amountFreeSpins < 0) {
-                                            $amountFreeSpins = 0;
-                                        }
-                                    }
-                                }
+//                                $startDateBonus = $params['user']->start_bonus_n_active;
+//                                //to do sum one query
+//                                $transactionSumBonus = Transaction::where([
+//                                    ['user_id', '=', $params['user']->id],
+//                                    ['type', '=', 10],
+//                                    ['created_at', '>', $startDateBonus],
+//                                ])->sum('bonus_sum');
+//
+//                                if ($bonusLimit !== 0) {
+//                                    $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
+//                                    if ($allowedBonusFunds <= $amount) {
+//                                        $amountFreeSpins = $allowedBonusFunds;
+//                                        if ($amountFreeSpins < 0) {
+//                                            $amountFreeSpins = 0;
+//                                        }
+//                                    }
+//                                }
 
                                 $createParams['type'] = 10;
                                 $createParams['sum'] = 0;

@@ -105,5 +105,10 @@ return [
             'value' => 'System',
             'filter' => 0
         ],
+        [
+            'code' => 12,
+            'value' => 'Trim bonus amount',
+            'filter' => 0
+        ],
     ]
 ];
