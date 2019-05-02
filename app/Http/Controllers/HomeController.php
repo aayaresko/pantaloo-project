@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
@@ -31,6 +32,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        dump(Auth::user());
+        dump(Auth::user()->id);
         return view('home');
     }
 

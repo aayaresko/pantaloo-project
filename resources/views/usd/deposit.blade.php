@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{translate('Deposit')}}
+    {{translate('DepositEvent')}}
 @endsection
 
 @section('content')

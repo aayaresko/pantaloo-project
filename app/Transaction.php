@@ -103,7 +103,7 @@ class Transaction extends Model
 
 //        if ($this->type == 1) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Bet at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
 //        elseif ($this->type == 2) $html = $html . '<span class="label ' . $this->token->slot->category->css_class . '">' . $this->token->slot->category->name . '</span> <div class="pull-right"><i>Win at <b>' . ucfirst($this->token->slot->name) . '</b></i></div>';
-//        elseif ($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
+//        elseif ($this->type == 3) $html = $html . '<div class="pull-right">DepositEvent</div>';
 //        elseif ($this->type == 4) $html = $html . '<div class="pull-right">Withdraw</div>';
 //        elseif ($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
 //        elseif ($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
@@ -116,7 +116,7 @@ class Transaction extends Model
 
         if ($this->type == 1) $html = $html . '<div class="pull-right">Bet</div>';
         elseif ($this->type == 2) $html = $html . '<div class="pull-right">Win</div>';
-        elseif ($this->type == 3) $html = $html . '<div class="pull-right">Deposit</div>';
+        elseif ($this->type == 3) $html = $html . '<div class="pull-right">DepositEvent</div>';
 
         elseif ($this->type == 5) $html = $html . '<div class="pull-right">Bonus activation</div>';
         elseif ($this->type == 6) $html = $html . '<div class="pull-right">Bonus cancellation</div>';
@@ -174,7 +174,7 @@ class Transaction extends Model
                 return 'Lose';
                 break;
             case 3:
-                return 'Deposit';
+                return 'DepositEvent';
                 break;
             case 4:
                 return 'Withdraw';
