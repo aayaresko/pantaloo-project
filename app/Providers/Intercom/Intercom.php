@@ -3,7 +3,7 @@
 
 namespace App\Providers\Intercom;
 
-use App\Providers\IntercomEventsResolver;
+use App\Providers\Intercom\IntercomEventsResolver;
 use App\User;
 use Intercom\IntercomClient;
 
@@ -25,8 +25,7 @@ class Intercom
         dump($result);
     }
 
-    public function send_event(User $user, $event_name, $timestamp){
-        $data = IntercomEventsResolver::getEventsData($user, $event_name, $timestamp);
+    public function send_event($data){
         dump($data);
         $result = $this->client->events->create($data);
         dump($result);

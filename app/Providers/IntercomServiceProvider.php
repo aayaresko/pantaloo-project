@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 
 class IntercomServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+
     /**
      * Register the application services.
      *

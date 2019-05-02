@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Events\OpenBonusEvent;
 use App\Providers\Intercom\Intercom;
-
-use App\Providers\Intercom\IntercomEventsResolver;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -41,8 +40,6 @@ class updateUserIntercom extends Command
      */
     public function handle()
     {
-        $intercom = new Intercom();
-        //$intercom->create_or_update_user(new User());
-        $intercom->send_event(new User(), IntercomEventsResolver::OPEN_BONUS, time());
+        event(new OpenBonusEvent(User::findOrFail(146), 'nice test bonus'));
     }
 }
