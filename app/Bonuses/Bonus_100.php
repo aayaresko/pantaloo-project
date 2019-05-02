@@ -258,6 +258,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
             }
 
             if ($activeBonus->activated == 1 and $conditions === 0) {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
                 if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
                     $transaction = new Transaction();
                     $transaction->bonus_sum = -1 * $user->bonus_balance;

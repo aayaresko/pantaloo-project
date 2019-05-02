@@ -177,6 +177,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //to define start transaction wagered
+            //to do is be new play gaming then go way down!!!!!!!!!!!!
             $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
                 ['type', '=', 10],
@@ -315,6 +316,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 //            }
 
             if ($conditions === 0) {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
                 if ($this->getPlayedSum() >= $wageredSum) {
                     $response = [
                         'success' => true,

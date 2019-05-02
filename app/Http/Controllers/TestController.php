@@ -48,6 +48,89 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
+        $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
+            'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+            ->where([
+                ['games_pantallo_transactions.action_id', '=', 1],
+                ['transactions.user_id', '=', 136],
+                //['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
+            ])->where(function ($query) {
+                $query->where('transactions.sum', '<>', 0)
+                    ->orWhere('transactions.bonus_sum', '<>', 0);
+            })
+            ->select([
+                'transactions.id',
+                'transactions.*',
+                'games_pantallo_transactions.id as ids',
+                'action_id',
+                'transactions.sum',
+                'transactions.bonus_sum',
+                'games_pantallo_transactions.amount as amount',
+                'games_pantallo_transactions.game_id as game_id',
+                'games_pantallo_transactions.balance_after as balance_after'
+            ])->orderBy('id', 'DESC')->first();
+
+        dump($lastTransaction->toArray());
+        if (!is_null($lastTransaction)) {
+            if ((float)$lastTransaction->bonus_sum <> 0 and (float)$lastTransaction->sum <> 0) {
+                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                $percentageSum = abs($lastTransaction->sum) / $totalSum;
+                $createParams['sum'] = GeneralHelper::formatAmount(2 * $percentageSum);
+
+                $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+                $createParams['bonus_sum'] = GeneralHelper::formatAmount(2 * $percentageBonusSum);
+            } elseif (0 == 0) {
+                $createParams['sum'] = 0;
+                $createParams['bonus_sum'] = 2;
+            } else {
+                $createParams['sum'] = 2;
+                $createParams['bonus_sum'] = 0;
+            }
+        } else {
+            $createParams['sum'] = 0;
+            $createParams['bonus_sum'] = 2;
+        }
+
+
+dd($createParams);
+        $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->whereIn('games_types_games.type_id', [10001])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $slotsGameIds = array_map(function ($item) {
+            return $item->id;
+        }, $slotsGames);
+
+
+        $typeOpenGame = LastActionGame::select(['id'])
+            ->where('user_id', 136)
+            ->whereIn('game_id', $slotsGameIds)
+            ->first();
+        dd($typeOpenGame);
+
+        $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
+            'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+            ->where([
+                ['games_pantallo_session.user_id', '=', 136],
+            ])
+            ->whereIn('game_id', $slotsGameIds)
+            ->select([
+                'games_pantallo_session_game.id',
+            ])
+            ->orderBy('id', 'desc')
+            ->first();
+        dd($typeOpenGame);
         $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
