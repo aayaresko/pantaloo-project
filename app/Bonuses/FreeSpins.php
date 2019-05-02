@@ -26,6 +26,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     protected $expireDays = 10;
     protected $freeSpins = 50;
     protected $timeActiveBonusDays = 5;
+    protected $minDeposit = 5;
 
     /**
      * @return bool
@@ -318,17 +319,39 @@ class FreeSpins extends \App\Bonuses\Bonus
 //                ];
 //            }
 
-            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
-                ->where('type_id', 1)
+
+            $depositForBonus = Transaction::where('user_id', $user->id)
+                ->where('type', 3)
+                ->where('sum', $this->minDeposit)
                 ->where('created_at', '>', $activeBonus->created_at)
                 ->first();
 
-            if (is_null($notificationTransactionDeposit)) {
+//            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+//                ->where('type_id', 1)
+//                ->where('created_at', '>', $activeBonus->created_at)
+//                ->first();
+
+            if (is_null($depositForBonus)) {
                 $conditions = 1;
                 $response = [
                     'success' => true,
                     'message' => 'Deposit is not found'
                 ];
+            } else {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
+                //check sum
+                $playedAmount = -1 * $this->user->transactions()
+                        ->where('id', '>', $this->get('transaction_id'))
+                        ->where('type', 1)
+                        ->sum('sum');
+
+                if ($playedAmount > (float)$depositForBonus->sum) {
+                    $conditions = 1;
+                    $response = [
+                        'success' => true,
+                        'message' => 'Deposit not won back'
+                    ];
+                }
             }
 
             if ($conditions === 0) {
@@ -350,7 +373,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                         //create transaction
                         Transaction::create([
                             'sum' => 0,
-                            'bonus_sum' => -1* $trimBonusAmount,
+                            'bonus_sum' => -1 * $trimBonusAmount,
                             'comment' => 'Trim',
                             'type' => 12,
                             'user_id' => $user->id,
