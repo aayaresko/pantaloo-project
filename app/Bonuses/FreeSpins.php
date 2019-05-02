@@ -14,6 +14,7 @@ use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
 use App\Models\LastActionGame;
+use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -316,6 +317,19 @@ class FreeSpins extends \App\Bonuses\Bonus
 //                    'message' => 'No bonus funds'
 //                ];
 //            }
+
+            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 1)
+                ->where('created_at', '>', $activeBonus->created_at)
+                ->first();
+
+            if (is_null($notificationTransactionDeposit)) {
+                $conditions = 1;
+                $response = [
+                    'success' => true,
+                    'message' => 'Deposit is not found'
+                ];
+            }
 
             if ($conditions === 0) {
                 //to do is be new play gaming then go way down!!!!!!!!!!!!

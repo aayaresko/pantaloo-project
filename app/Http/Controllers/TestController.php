@@ -48,6 +48,22 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        $activeBonus = UserBonus::where('id', 1129)->first();
+
+        $notificationTransactionDeposit = SystemNotification::where('user_id', 136)
+            ->where('type_id', 1)
+            ->where('created_at', '>', $activeBonus->created_at)
+            ->first();
+        dd($notificationTransactionDeposit);
+        if (is_null($notificationTransactionDeposit)) {
+            $conditions = 1;
+            $response = [
+                'success' => true,
+                'message' => 'Deposit is not found'
+            ];
+        }
+
+        dd(2);
         $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
             ->where([
