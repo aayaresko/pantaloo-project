@@ -274,34 +274,35 @@ class PantalloGamesSystem implements GamesSystem
                 'users.balance as balance',
                 'users.bonus_balance as bonus_balance',
                 DB::raw('(users.balance + users.bonus_balance) as full_balance'),
+                'users.bonus_id as bonus',
             ];
 
             //add additional fields
-            $additionalFieldsUser = [
-                'affiliates.id as partner_id',
-                'affiliates.commission as partner_commission',
-                'user_bonuses.id as bonus',
-                'user_bonuses.bonus_id as bonus_id',
-                'user_bonuses.created_at as start_bonus',
-                'bonus_n_active.id as bonus_n_active',
-                'bonus_n_active.bonus_id as bonus_n_active_id',
-                'bonus_n_active.created_at as start_bonus_n_active',
-                'bonus_n_active.expires_at as expires_at',
-            ];
+//            $additionalFieldsUser = [
+//                'affiliates.id as partner_id',
+//                'affiliates.commission as partner_commission',
+//                'user_bonuses.id as bonus',
+//                'user_bonuses.bonus_id as bonus_id',
+//                'user_bonuses.created_at as start_bonus',
+//                'bonus_n_active.id as bonus_n_active',
+//                'bonus_n_active.bonus_id as bonus_n_active_id',
+//                'bonus_n_active.created_at as start_bonus_n_active',
+//                'bonus_n_active.expires_at as expires_at',
+//            ];
 
-            $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+            $params['user'] = User::select(array_merge($userFields))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
-                ->leftJoin('user_bonuses', function ($join) {
-                    $join->on('users.id', '=', 'user_bonuses.user_id')
-                        ->where('user_bonuses.activated', '=', 1)
-                        ->whereNull('user_bonuses.deleted_at');
-                })
-                ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
-                    $join->on('users.id', '=', 'bonus_n_active.user_id')
-                        //bonus_id this for free spins
-                        ->where('bonus_n_active.bonus_id', '=', 1)
-                        ->whereNull('bonus_n_active.deleted_at');
-                })
+//                ->leftJoin('user_bonuses', function ($join) {
+//                    $join->on('users.id', '=', 'user_bonuses.user_id')
+//                        ->where('user_bonuses.activated', '=', 1)
+//                        ->whereNull('user_bonuses.deleted_at');
+//                })
+//                ->leftJoin('user_bonuses as bonus_n_active', function ($join) {
+//                    $join->on('users.id', '=', 'bonus_n_active.user_id')
+//                        //bonus_id this for free spins
+//                        ->where('bonus_n_active.bonus_id', '=', 1)
+//                        ->whereNull('bonus_n_active.deleted_at');
+//                })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
                 ])->first();
@@ -323,13 +324,13 @@ class PantalloGamesSystem implements GamesSystem
 
             $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
 
-            if (!is_null($params['user']->bonus_n_active)) {
-                $typeBonus = $params['user']->bonus_n_active_id;
-                $bonusClass = config('bonus.classes')[$typeBonus];
-                $bonusLimit = $bonusClass::$maxAmount;
-                $notActiveBonus = 1;
-                //get bonus and set limit bonus
-            }
+//            if (!is_null($params['user']->bonus_n_active)) {
+//                $typeBonus = $params['user']->bonus_n_active_id;
+//                $bonusClass = config('bonus.classes')[$typeBonus];
+//                $bonusLimit = $bonusClass::$maxAmount;
+//                $notActiveBonus = 1;
+//                //get bonus and set limit bonus
+//            }
 
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
@@ -500,7 +501,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         //if free spins transactions
                         if (isset($requestParams['is_freeround_bet']) and $requestParams['is_freeround_bet'] == 1) {
-                            if ($notActiveBonus === 1) {
+                            if ($modePlay === 1) {
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = 0;
@@ -665,7 +666,7 @@ class PantalloGamesSystem implements GamesSystem
                             //sum all previous transaction and count and make yes or no
                             //this sum for win only free spins
                             //this mean for bonus active
-                            if ($notActiveBonus === 1) {
+                            if ($modePlay === 1) {
                                 $amountFreeSpins = $amount;
 
 //                                $startDateBonus = $params['user']->start_bonus_n_active;

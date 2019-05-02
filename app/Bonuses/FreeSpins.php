@@ -99,6 +99,17 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => static::$id,
+                'activated' => 1,
+                'data' => json_encode([
+                    'free_spin_win' => 0,
+                    'wagered_sum' => 0,
+                    'transaction_id' => 0,
+                    'dateStart' => $currentDate
+                ])
+            ]);
+
+            User::where('id', $user->id)->update([
+                'bonus_id' => static::$id
             ]);
 
             //get all games for free
@@ -279,14 +290,14 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Bonus is not activated');
             }
 
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
-
             //get wageredSum
             $wageredSum = $this->get('wagered_sum');
             if ($wageredSum == 0) {
                 throw new \Exception('Wagered sum less than zero');
+            }
+            
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
             $response = [
@@ -393,8 +404,10 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                     User::where('id', $user->id)->update([
                         'balance' => DB::raw("balance + $winAmount"),
-                        'bonus_balance' => 0
+                        'bonus_balance' => 0,
+                        'bonus_id' => null
                     ]);
+
 
                     UserBonus::where('id', $activeBonus->id)->update([
                         'total_amount' => DB::raw("total_amount + $winAmount"),
