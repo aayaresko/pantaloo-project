@@ -47,9 +47,17 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        //dd(LastActionGame::where('user_id', 136)->first());
+        $activeBonus = UserBonus::where('id', 1129)->first();
+        dd($activeBonus->data['lastCheck']['date']);
+        $bonusData = $activeBonus->date;
+        $bonusData['test'] = 1;
+        //$bonusLastAction = $bonusData['lastCheck'];
+        $bonusData['lastCheck'] = new \DateTime();
+        UserBonus::where('id', 1129)->update(['data' => json_encode($bonusData)]);
         dd(2);
         $activeBonus = UserBonus::where('id', 1129)->first();
-
+        dd($activeBonus->data);
         $notificationTransactionDeposit = SystemNotification::where('user_id', 136)
             ->where('type_id', 1)
             ->where('created_at', '>', $activeBonus->created_at)

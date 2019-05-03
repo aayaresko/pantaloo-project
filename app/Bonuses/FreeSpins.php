@@ -104,7 +104,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'free_spin_win' => 0,
                     'wagered_sum' => 0,
                     'transaction_id' => 0,
-                    'dateStart' => $currentDate
+                    'dateStart' => $currentDate,
+                    'lastCheck' => $currentDate,
+                    'deposit' => 0
                 ])
             ]);
 
@@ -331,18 +333,14 @@ class FreeSpins extends \App\Bonuses\Bonus
 //            }
 
 
-            $depositForBonus = Transaction::where('user_id', $user->id)
-                ->where('type', 3)
-                ->where('sum', $this->minDeposit)
-                ->where('created_at', '>', $activeBonus->created_at)
-                ->first();
-
-//            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
-//                ->where('type_id', 1)
+//            $depositForBonus = Transaction::where('user_id', $user->id)
+//                ->where('type', 3)
+//                ->where('sum', $this->minDeposit)
 //                ->where('created_at', '>', $activeBonus->created_at)
 //                ->first();
+            $notificationTransactionDeposit = $this->lastActionDeposit;
 
-            if (is_null($depositForBonus)) {
+            if (is_null($notificationTransactionDeposit)) {
                 $conditions = 1;
                 $response = [
                     'success' => true,
@@ -351,12 +349,13 @@ class FreeSpins extends \App\Bonuses\Bonus
             } else {
                 //to do is be new play gaming then go way down!!!!!!!!!!!!
                 //check sum
+
                 $playedAmount = -1 * $this->user->transactions()
                         ->where('id', '>', $this->get('transaction_id'))
                         ->where('type', 1)
                         ->sum('sum');
 
-                if ($playedAmount > (float)$depositForBonus->sum) {
+                if ($playedAmount > (float)$notificationTransactionDeposit->value) {
                     $conditions = 1;
                     $response = [
                         'success' => true,

@@ -119,6 +119,7 @@ class TransactionController extends Controller
                 'user_id' => $user->id,
                 //to do config - mean deposit transactions
                 'type_id' => 1,
+                'value' => $amountTransaction,
                 'extra' => json_encode([
                     'transactionId' => $transaction->id,
                     'depositAmount' => $amountTransaction
