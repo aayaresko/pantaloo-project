@@ -116,7 +116,7 @@ return array (
   'support_account_what_are_deposits' => 'What are fees on deposits and withdrawals?',
   'support_account_what_are_deposits_value' => 'CasinoBit.io does not have any fee on deposit or withdrawal.',
   'support_account_what_your_minimums_deposits' => 'What is the minimum deposit?',
-  'support_account_what_your_minimums_deposits_value' => 'The minimum deposit is&nbsp;3&nbsp;mBTC (1 BTC = 1000 mBTC)',
+  'support_account_what_your_minimums_deposits_value' => 'The minimum deposit is&nbsp;1&nbsp;mBTC (1 BTC = 1000 mBTC)',
   'support_account_how_long_will_request_withdrawal' => 'How long will it take me to receive my money once I request a withdrawal?',
   'support_account_how_long_will_request_withdrawal_value' => 'While CasinoBit.io endeavours to pay out withdrawals immediately, some withdrawals may take longer than others. CasinoBit.io shall try to pay out withdrawals within one hour, however in some cases, the withdrawal process may last longer.',
   'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase bitcoins?',
