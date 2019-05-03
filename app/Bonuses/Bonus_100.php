@@ -47,11 +47,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //hide if user
 
         //hide if deposit count
-        //$userDeposits = SystemNotification::where('user_id', $user->id)->where('type_id', 1)->count();
+        $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+            ->where('type_id', 1)
+            ->count();
 
-        if ($user->transactions()->deposits()->count() > $this->depositsCount) {
+        if ($notificationTransactionDeposits > $this->depositsCount) {
             return false;
         }
+
+//        if ($user->transactions()->deposits()->count() > $this->depositsCount) {
+//            return false;
+//        }
         //hide if deposit count
 
         $countBonuses = $this->user->bonuses()
@@ -88,9 +94,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('You already use bonus');
             }
 
-            if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 1)
+                ->count();
+
+            if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
                 throw new \Exception('You can\'t use this bonus');
             }
+
+//            if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+//                throw new \Exception('You can\'t use this bonus');
+//            }
 
             if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
                 throw new \Exception('You already used this bonus');
@@ -418,8 +432,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function getBonusDeposit()
     {
+        $user = $this->user;
         $depositsCount = $this->depositsCount;
-        $deposits = $this->user->transactions()->deposits()->orderBy('id')->limit($depositsCount)->get();
+
+        //$deposits = $this->user->transactions()->deposits()->orderBy('id')->limit($depositsCount)->get();
+
+        $deposits = SystemNotification::where('user_id', $user->id)
+            ->where('type_id', 1)->orderBy('id')->limit($depositsCount)->get();
 
         if (count($deposits) == $depositsCount) {
             return $deposits[$depositsCount - 1];

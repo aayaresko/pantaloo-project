@@ -338,7 +338,11 @@ class FreeSpins extends \App\Bonuses\Bonus
 //                ->where('sum', $this->minDeposit)
 //                ->where('created_at', '>', $activeBonus->created_at)
 //                ->first();
-            $notificationTransactionDeposit = $this->lastActionDeposit;
+
+            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 2)
+                ->where('value', $this->minDeposit)
+                ->first();
 
             if (is_null($notificationTransactionDeposit)) {
                 $conditions = 1;

@@ -114,11 +114,16 @@ class TransactionController extends Controller
                 'balance' => DB::raw("balance+{$amountTransactionFormat}")
             ]);
 
+            $depositNotifications = 1;
+            if (!is_null($user->bonus_id) and (int)$user->bonus_id === 1) {
+                $depositNotifications = 2;
+            }
+
             //to do include notifications
             SystemNotification::create([
                 'user_id' => $user->id,
                 //to do config - mean deposit transactions
-                'type_id' => 1,
+                'type_id' => $depositNotifications,
                 'value' => $amountTransaction,
                 'extra' => json_encode([
                     'transactionId' => $transaction->id,

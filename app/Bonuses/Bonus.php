@@ -13,7 +13,6 @@ abstract class Bonus
     public static $id;
     protected $user;
     protected $lastAction;
-    protected $lastActionDeposit;
     protected $active_bonus;
     protected $data;
 
@@ -24,12 +23,6 @@ abstract class Bonus
         $this->active_bonus = $this->user->bonuses()->first();
 
         $this->lastAction = LastActionGame::where('user_id', $user->id)->first();
-
-        $this->lastActionDeposit = SystemNotification::where('user_id', $user->id)
-            ->where('type_id', 1)
-            ->where('sum', $this->minDeposit)
-            ->where('created_at', '>', $this->active_bonus->created_at)
-            ->first();
     }
 
     protected function checkActionGame()
@@ -37,6 +30,7 @@ abstract class Bonus
         if (is_null($this->lastAction)) {
             return false;
         }
+        
         $bonusData = $this->active_bonus->date;
         if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
             return false;
@@ -52,7 +46,7 @@ abstract class Bonus
         return true;
     }
 
-    
+
     public function hasBonusTransactions($minutes = 1)
     {
         $date = Carbon::now();

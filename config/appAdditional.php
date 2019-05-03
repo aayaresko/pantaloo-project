@@ -136,5 +136,20 @@ return [
 
     'allowIps' => [
         '213.169.83.245'
+    ],
+
+
+
+
+
+
+
+
+
+
+
+    'depositNotifications' => [
+        1 => 'usual bonus notifications',
+        2 => 'free spins bonus notifications',
     ]
 ];
