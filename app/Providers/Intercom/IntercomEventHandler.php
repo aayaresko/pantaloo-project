@@ -5,6 +5,7 @@ namespace App\Providers\Intercom;
 
 
 use App\Bonus;
+use App\Events\AccountStatusEvent;
 use App\Events\BonusDepositEvent;
 use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
@@ -12,6 +13,9 @@ use App\Events\DepositEvent;
 use App\Events\DepositWagerDoneEvent;
 use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
+use App\Events\WithdrawalApprovedEvent;
+use App\Events\WithdrawalFrozenEvent;
+use App\Events\WithdrawalRequestedEvent;
 use App\Jobs\IntercomSendEvent;
 use App\User;
 use Carbon\Carbon;
@@ -21,13 +25,13 @@ class IntercomEventHandler
 {
     public function onOpenBonus(OpenBonusEvent $event)
     {
-        $name = "активирован '{$event->bonusName}'";
+        $name = "open '{$event->bonusName}'";
         $this->sendEvent($event->user->email, $name);
     }
 
     public function onCloseBonus(CloseBonusEvent $event)
     {
-        $name = "закрыт '{$event->bonusName}'";
+        $name = "close '{$event->bonusName}'";
         $this->sendEvent($event->user->email, $name);
     }
 
@@ -56,6 +60,31 @@ class IntercomEventHandler
         $this->sendEvent($event->user->email, $name);
     }
 
+    // onWithdrawalRequested
+    // onWithdrawalApproved
+    // onWithdrawalFrozen
+    // onAccountStatus
+
+    public function onWithdrawalRequested(WithdrawalRequestedEvent $event){
+        $name = "withdrawal requested";
+        $this->sendEvent($event->user->email, $name);
+    }
+
+    public function onWithdrawalApproved(WithdrawalApprovedEvent $event){
+        $name = "withdrawal approved";
+        $this->sendEvent($event->user->email, $name);
+    }
+
+    public function onWithdrawalFrozen(WithdrawalFrozenEvent $event){
+        $name = "withdrawal frozen: {$event->comment}";
+        $this->sendEvent($event->user->email, $name);
+    }
+
+    public function onAccountStatus(AccountStatusEvent $event){
+        $name = "account status change from {$event->old_status} to {$event->new_status}";
+        $this->sendEvent($event->user->email, $name);
+    }
+
 
     /**
      * Register the listeners for the subscriber.
@@ -72,6 +101,11 @@ class IntercomEventHandler
         $events->listen('App\Events\WagerDoneEvent', 'App\Providers\Intercom\IntercomEventHandler@onWagerDone');
         $events->listen('App\Events\DepositWagerDoneEvent', 'App\Providers\Intercom\IntercomEventHandler@onDepositWagerDone');
         $events->listen('App\Events\BonusGameEvent', 'App\Providers\Intercom\IntercomEventHandler@onBonusGame');
+
+        $events->listen('App\Events\WithdrawalRequestedEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalRequested');
+        $events->listen('App\Events\WithdrawalApprovedEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalApproved');
+        $events->listen('App\Events\WithdrawalFrozenEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalFrozen');
+        $events->listen('App\Events\AccountStatusEvent', 'App\Providers\Intercom\IntercomEventHandler@onAccountStatus');
 
     }
 
