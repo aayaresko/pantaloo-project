@@ -62,7 +62,7 @@ return [
         ],
         [
             'code' => 3,
-            'value' => 'Deposit',
+            'value' => 'DepositEvent',
             'filter' => 1
         ],
         [
