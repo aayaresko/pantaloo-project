@@ -344,9 +344,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 {{--<h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>--}}
 
                 @if ($registrationStatus === 1)
-                    <h5 class="popup-title">Registrations are temporary disabled. We are sorry for the inconvenience.</h5>
+                    <h5 class="popup-title">Due to high demand we are experiencing technical difficulties.
+                        Registration are temporary disabled. Sorry for the inconvenience.</h5>
                 @else
-                    <h5 class="popup-title">Registrations are not available in you region.</h5>
+                    <h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>
                 @endif
 
             </div>
