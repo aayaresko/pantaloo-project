@@ -30,18 +30,16 @@ abstract class Bonus
         if (is_null($this->lastAction)) {
             return false;
         }
-        
-        $bonusData = $this->active_bonus->date;
+
+        $bonusData = $this->active_bonus->data;
         if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
             return false;
         }
 
-        $presentTime = new \DateTime();
-        $bonusData['lastCheck'] = $presentTime;
-
-        UserBonus::where('id', $this->active_bonus->id)->update([
-            'data' => json_encode($bonusData)
-        ]);
+        //example
+//        if ($this->checkActionGame() === false) {
+//            throw new \Exception('No new actions');
+//        }
 
         return true;
     }

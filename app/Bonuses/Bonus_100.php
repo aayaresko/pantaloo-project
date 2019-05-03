@@ -112,10 +112,12 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             $date = $user->created_at;
             $date->modify('+' . $this->expireDays . 'days');
+            $presentTime = new \DateTime();
 
             $bonus = new UserBonus();
             $bonus->user()->associate($user);
             $bonus->activated = 0;
+            $bonus->data = ['lastCheck' => $presentTime];
             $bonus->expires_at = $date;
             $bonus->bonus()->associate(Bonus::findOrFail(static::$id));
             $bonus->save();

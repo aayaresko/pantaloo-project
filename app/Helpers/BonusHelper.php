@@ -37,7 +37,15 @@ class BonusHelper
                 ]);
                 return false;
             }
+            $presentTime = new \DateTime();
+            $bonusData = $notActiveBonus->data;
+            $bonusData['lastCheck'] = $presentTime;
+
+            UserBonus::where('id', $notActiveBonus->id)->update([
+                'data' => json_encode($bonusData)
+            ]);
         }
+        
         return true;
     }
 

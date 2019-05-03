@@ -49,7 +49,11 @@ class TestController extends Controller
     {
         //dd(LastActionGame::where('user_id', 136)->first());
         $activeBonus = UserBonus::where('id', 1129)->first();
-        dd($activeBonus->data['lastCheck']['date']);
+        dd($activeBonus->data);
+        $activeBonus->data = ['lastCheck'=> new \DateTime()];
+        $activeBonus->save();
+
+        dd($activeBonus->data);
         $bonusData = $activeBonus->date;
         $bonusData['test'] = 1;
         //$bonusLastAction = $bonusData['lastCheck'];
