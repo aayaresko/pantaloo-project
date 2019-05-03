@@ -18,11 +18,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
     public static $maxAmount = 1000;
-    protected $percent = 100;
+    protected $percent = 55;
     protected $minSum = 3;
     protected $maxSum = 0;
     protected $depositsCount = 3;
-    protected $playFactor = 33;
+    protected $playFactor = 50;
     protected $expireDays = 30;
     protected $timeActiveBonusDays = 30;
 
