@@ -1,6 +1,6 @@
 <footer class="footer footer-home">
     <div class="bitcoin-block">
-        <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
+        <span class="bitcoin-msg"><i class="bitcoin-icon"></i>{{ trans('casino.work_bitcoin') }}</span>
     </div>
     <div class="msg-block">
         <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
