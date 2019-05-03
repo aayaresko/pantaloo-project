@@ -136,5 +136,9 @@ return [
 
     'allowIps' => [
         '213.169.83.245'
+    ],
+
+    'emailsShowAllGames' => [
+        'tuzomi@mail-list.top'
     ]
 ];

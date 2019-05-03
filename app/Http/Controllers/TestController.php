@@ -45,6 +45,14 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        $transaction = Transaction::leftJoin('games_pantallo_transactions',
+            'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+            ->where([
+                ['system_id', '=', 'ha-33776d8b2a554bbc8a0628156da2347c'],
+                ['games_pantallo_transactions.action_id', '=', 2]
+            ])
+            ->toSql();
+        dd($transaction);
         $service = new Service();
         /*dd(count(        Transaction::where('type', 3)
             ->where('confirmations', '<', 6)
