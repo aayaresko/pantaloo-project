@@ -26,7 +26,7 @@ class IpCountryBlock
 
 		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US','UA','IL']))
 		    {
-			    return abort(403);
+			    //return abort(403);
 		    }
 	    }
 
