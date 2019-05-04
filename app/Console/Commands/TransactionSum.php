@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\AgentsKoef;
+use App\Models\UserSum;
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class TransactionSum extends Command
 {
@@ -41,10 +43,32 @@ class TransactionSum extends Command
     {
         $agents = User::whereIn('role', [1, 3])->get();
         foreach ($agents as $agent) {
-            $newAgent = new AgentsKoef();
-            $newAgent->user_id = $agent->id;
-            $newAgent->koef = 0;
-            $newAgent->save();
+            $newAgent = AgentsKoef::where('user_id', $agent->id)->first();
+            if (!$newAgent) {
+                $newAgent = new AgentsKoef();
+                $newAgent->user_id = $agent->id;
+                $newAgent->koef = 0;
+                $newAgent->save();
+            }
+
+            $users = User::where('agent_id', $agent->id)->get();
+
+            foreach ($users as $user) {
+                $transactions = $user->transactions()
+                    ->select(DB::raw('sum(`sum`) as total'))
+                    ->where('transactions.sum', '<>', 0)
+                    // ->where('agent_commission', '<>', 0)
+                    ->whereIn('type', [1, 2])
+                    ->where('created_at', '<', '2019-05')
+                    ->first();
+                if ($transactions->total) {
+                    $trSum = new UserSum();
+                    $trSum->user_id = $user->id;
+                    $trSum->parent_id = $agent->id;
+                    $trSum->sum = $transactions->total;
+                    $trSum->save();
+                }
+            }
         }
     }
 }
