@@ -155,6 +155,7 @@
                             <ul class="list-unstyled">
                                 <li><a href="{{route('admin.agents')}}">Accounts</a></li>
                                 <li><a href="{{route('admin.agentPayments')}}">Withdraws</a></li>
+                                <li><a href="{{route('admin.agents.tree')}}">Tree</a></li>
                             </ul>
                         </li>
 

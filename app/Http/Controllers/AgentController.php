@@ -264,6 +264,78 @@ class AgentController extends Controller
         return view('admin.agents', ['agents' => $result]);
     }
 
+    public function showTree()
+    {
+        $prepareQuerry = DB::table('users')
+            ->select('id', 'email', 'agent_id', 'created_at');
+
+        $users = $prepareQuerry->get();
+
+        $ids = [];
+        foreach ($users as $user) {
+            $ids[] = $user->id;
+        }
+        $parentIdChildArr = [];
+        foreach ($users as $user){
+            $parentId = ($user->agent_id and in_array($user->agent_id, $ids)) ? $user->agent_id : 0;
+            $parentIdChildArr[$parentId][] = $user;
+            $user->countChild = 0;
+            $user->totalCountChild = 0;
+            $user->deep = 0;
+            $user->created_at = date('d.m.Y', strtotime($user->created_at));
+        }
+        $tree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
+        $newTree = [];
+        foreach ($tree as &$parent) {
+            $this->getChildCount($parent);
+            if ($parent->countChild) {
+                $newTree[] = $parent;
+            }
+        }
+
+        return view('admin.tree', compact('newTree'));
+    }
+    /**
+     * @param $list
+     * @param $parent
+     * @return array
+     */
+    protected function createTree(&$list, $parent)
+    {
+        $tree = [];
+        foreach ($parent as $child) {
+            if (isset($list[$child->id])){
+                $child->_children = $this->createTree($list, $list[$child->id]);
+                $child->countChild = count($child->_children);
+            }
+            $tree[] = $child;
+        }
+        return $tree;
+    }
+    /**
+     * set max deep and totalCountChild
+     * @param $child
+     * @return array
+     */
+    protected function getChildCount(&$child)
+    {
+        $sumChildCount = 0;
+        $maxDeep = 0;
+        if ($child->countChild) {
+            foreach ($child->_children as $children) {
+                $middleArr = $this->getChildCount($children);
+                $sumChildCount += $middleArr[0];
+                if($maxDeep <= $middleArr[1]) { $maxDeep = $middleArr[1] + 1; }
+            }
+            $child->deep = $maxDeep;
+            $sumChildCount += $child->countChild;
+        } else {
+            $child->deep = 0;
+        }
+        $child->totalCountChild = $sumChildCount;
+        return [$sumChildCount, $maxDeep];
+    }
+
     public function commission(User $user, Request $request)
     {
         if ($user->role != 1) return redirect()->back()->withErrors(['User not agent']);
