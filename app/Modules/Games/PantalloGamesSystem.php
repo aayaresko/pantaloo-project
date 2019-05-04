@@ -896,8 +896,11 @@ class PantalloGamesSystem implements GamesSystem
         //finish debug
         $debugGameResult = $debugGame->end();
 
-        $userId = is_null($params['user']) ? 0 : $params['user']->id;
-
+        $userId = 0;
+        if (isset($params['user'])) {
+            $userId = is_null($params['user']) ? 0 : $params['user']->id;
+        }
+        
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'user_id' => $userId,
             'response' => json_encode($response),
@@ -1011,7 +1014,7 @@ class PantalloGamesSystem implements GamesSystem
 
             DB::commit();
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             //rollback free rounds
             $errorMessage = $e->getMessage();
