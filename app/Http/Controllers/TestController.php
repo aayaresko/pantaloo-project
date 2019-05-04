@@ -47,6 +47,37 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
+        $userBonus = UserBonus::where('id', 2225)->first();
+        dd($userBonus->data);
+        $date = new \DateTime();
+        $userBonus = UserBonus::where('id', 2225)->update([
+            'data' => json_encode(['wagered_sum' => 0])
+        ]);
+        dd(2);
+        $date = new \DateTime();
+        $bonusUser = UserBonus::create([
+            'expires_at' => $date,
+            'user_id' => 136,
+            'bonus_id' => 1,
+            'activated' => 1,
+            'data' => [
+                'free_spin_win' => 0,
+                'wagered_sum' => 0,
+                'transaction_id' => 0,
+                'dateStart' => $date,
+                'lastCheck' => $date
+            ]
+        ]);
+        dd(2);
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
         $ip = GeneralHelper::visitorIpCloudFire();
         dump($ip);
         $iso_code = \geoip($ip)['iso_code'];
