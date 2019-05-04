@@ -36,6 +36,7 @@
 
 html{
   padding: 0px !important;
+  margin: 0px;
 }
 
 body {
@@ -1399,6 +1400,7 @@ html.cropped {
   -ms-transform-origin: 100% 50%;
   -o-transform-origin: 100% 50%;
   transform-origin: 100% 50%;
+  display: none;
 }
 
 /* line 176, ../scss/_middle.scss */
@@ -2461,7 +2463,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 950, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block, .fixed-popup .popup-fixed-entry .popup-text-block {
   padding-top: 60px;
-  font-size: 18px;
+  font-size: 20px;
 }
 /* line 952, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block .text, .fixed-popup .popup-fixed-entry .popup-text-block .text {
@@ -2547,6 +2549,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   -o-transform-origin: 100% 50%;
   transform-origin: 100% 50%;
   opacity: .7;
+  display: none;
 }
 /* line 1022, ../scss/_middle.scss */
 .slots-block .bg {
@@ -2567,19 +2570,28 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 57px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 31px;
+  /*letter-spacing: 31px;*/
   margin-bottom: 0;
 }
+
+.slots-block .block-heading .tittlePage{
+  /*transform: translateX(3%);*/
+  display: inline-block;
+  letter-spacing: 0.3em;
+  margin-right: -0.3em;
+}
+
 /* line 1040, ../scss/_middle.scss */
 .slots-block .block-heading .subtitle {
   font-size: 23px;
   color: #6b6b6b;
   letter-spacing: 5px;
+  display: inline-block;
 }
 /* line 1046, ../scss/_middle.scss */
 .slots-block .block-container {
   margin-top: 43px;
-  padding-right: 50px;
+  /*padding-right: 50px;*/
   position: relative;
 }
 /* line 1050, ../scss/_middle.scss */
@@ -5560,7 +5572,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .slots-block .block-heading .page-title {
     color: #fff;
     font-size: 101px;
-    letter-spacing: 58px;
+    /*letter-spacing: 58px;*/
     margin-bottom: 40px;
   }
   /* line 219, ../scss/_responsive.scss */
@@ -6554,7 +6566,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1029, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
     font-size: 68px;
-    letter-spacing: 20px;
+    /*letter-spacing: 20px;*/
     margin-bottom: 10px;
   }
   /* line 1034, ../scss/_responsive.scss */
@@ -8249,7 +8261,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 2277, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
     font-size: 36px;
-    letter-spacing: 8px;
+    /*letter-spacing: 8px;*/
     line-height: 42px;
   }
   /* line 2282, ../scss/_responsive.scss */
