@@ -47,7 +47,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        dd($request->user());
         Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });

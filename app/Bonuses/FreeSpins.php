@@ -202,9 +202,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         try {
             //to define start transaction wagered
             //to do is be new play gaming then go way down!!!!!!!!!!!!
-            if ($this->checkActionGame() === false) {
-                throw new \Exception('No new actions');
-            }
+
             $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
                 ['type', '=', 10],
@@ -364,9 +362,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             } else {
                 //to do is be new play gaming then go way down!!!!!!!!!!!!
                 //check sum
-                if ($this->checkActionGame() === false) {
-                    throw new \Exception('No new actions');
-                }
+
                 $playedAmount = -1 * $this->user->transactions()
                         ->where('id', '>', $this->get('transaction_id'))
                         ->where('type', 1)
@@ -383,9 +379,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($conditions === 0) {
                 //to do is be new play gaming then go way down!!!!!!!!!!!!
-                if ($this->checkActionGame() === false) {
-                    throw new \Exception('No new actions');
-                }
+
                 if ($this->getPlayedSum() >= $wageredSum) {
                     $response = [
                         'success' => true,

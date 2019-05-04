@@ -25,25 +25,25 @@ abstract class Bonus
         $this->lastAction = LastActionGame::where('user_id', $user->id)->first();
     }
 
-    protected function checkActionGame()
-    {
-        if (is_null($this->lastAction)) {
-            return false;
-        }
-
-        $bonusData = $this->active_bonus->data;
-        
-        if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
-            return false;
-        }
-
-        //example
-//        if ($this->checkActionGame() === false) {
-//            throw new \Exception('No new actions');
+//    protected function checkActionGame()
+//    {
+//        if (is_null($this->lastAction)) {
+//            return false;
 //        }
-
-        return true;
-    }
+//
+//        $bonusData = $this->active_bonus->data;
+//
+//        if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
+//            return false;
+//        }
+//
+//        //example
+////        if ($this->checkActionGame() === false) {
+////            throw new \Exception('No new actions');
+////        }
+//
+//        return true;
+//    }
 
 
     public function hasBonusTransactions($minutes = 1)
