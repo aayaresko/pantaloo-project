@@ -9,14 +9,15 @@ use App\Invoice;
 use App\Jobs\Withdraw;
 use App\Transaction;
 use App\User;
+use Helpers\PayTrio;
 use App\Jobs\BonusHandler;
 use Helpers\BonusHelper;
 use App\UserBonus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
-use Helpers\PayTrio;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class MoneyController extends Controller
@@ -79,17 +80,33 @@ class MoneyController extends Controller
             ]);
         }*/
 
-        //to do once in 10 seconds and use other table for natifications
-        $transaction = $user->transactions()
-            ->where('type', 3)->where('notification', 0)->first();
+        //to do once in 10 seconds and use other table for notifications
 
-        if ($transaction) {
-            $sum = $transaction->sum;
-            $transaction->notification = 1;
-            $transaction->save();
+        $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+            ->where('type_id', 1)
+            ->where('status', 0)
+            ->first();
+
+        if ($notificationTransactionDeposit) {
+            SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
+                'status' => 1
+            ]);
+            $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
+            $sum = $extraSystemNotification->depositAmount;
         } else {
             $sum = false;
         }
+
+//        $transaction = $user->transactions()
+//            ->where('type', 3)->where('notification', 0)->first();
+//
+//        if ($transaction) {
+//            $sum = $transaction->sum;
+//            $transaction->notification = 1;
+//            $transaction->save();
+//        } else {
+//            $sum = false;
+//        }
 
         //to do check active bonus
         //to do not use dispatch

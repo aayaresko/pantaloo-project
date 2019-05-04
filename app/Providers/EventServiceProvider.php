@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+
+use App\Providers\Intercom\IntercomEventHandler;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -28,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        //
+        $subscriber = new IntercomEventHandler();
+        Event::subscribe($subscriber);
     }
 }
