@@ -25,6 +25,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 
+
 class AuthController extends Controller
 {
     /*
@@ -71,6 +72,7 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'agree' => 'required',
+            'betatest' => 'required|integer|min:100|max:200'
         ]);
     }
 
@@ -80,49 +82,70 @@ class AuthController extends Controller
      * @param array $data
      * @return User
      */
+//    protected function create(array $data)
     //protected function create(array $data)
     protected function create(Request $request)
     {
-        //temporary
+//        //temporary
         $data = $request->toArray();
-        $errors = [];
-        $validator = Validator::make($data, [
-            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
-            'agree' => 'accepted'
-        ]);
 
-        // Check if mail provider is not temporary mail services
-        $validator->after(function ($validator) use ($data) {
-            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
-                $validator->errors()->add('email', 'Try use other mail service!');
-            }
-        });
+//        $errors = [];
+//        $validator = Validator::make($data, [
+//            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+//            'agree' => 'accepted'
+//        ]);
+//
+//        // Check if mail provider is not temporary mail services
+//        $validator->after(function ($validator) use ($data) {
+//            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+//                $validator->errors()->add('email', 'Try use other mail service!');
+//            }
+//        });
+//
+//        if ($validator->fails()) {
+//            $validatorErrors = $validator->errors()->toArray();
+//            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+//                array_push($errors, $item);
+//            });
+//
+//            return redirect()->back()->withErrors($errors);
+//        }
+//
+//        $email = $data['email'];
+//        $currentDate = new \DateTime();
+//
+//        DB::table('new_affiliates')->insert([
+//            [
+//                'email' => $email,
+//                'type_id' => 1,
+//                'created_at' => $currentDate,
+//                'updated_at' => $currentDate
+//            ],
+//        ]);
+//
+//        return redirect()->back()->with('popup',
+//            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
+
+        //temporary
+
+        $betatest = Cookie::get('betatest');
+
+        if ((int)$betatest !== 1) {
+            return redirect()->back()->withErrors(['Registration is closed']);
+        }
+        
+        $validator =  Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'agree' => 'required',
+        ]);
 
         if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
-
+            $errors = $validator->errors();
             return redirect()->back()->withErrors($errors);
         }
-
-        $email = $data['email'];
-        $currentDate = new \DateTime();
-
-        DB::table('new_affiliates')->insert([
-            [
-                'email' => $email,
-                'type_id' => 1,
-                'created_at' => $currentDate,
-                'updated_at' => $currentDate
-            ],
-        ]);
-
-        return redirect()->back()->with('popup',
-            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
-
-
+        //start
         $service = new Service();
         $address = $service->getNewAddress('common');
 

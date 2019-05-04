@@ -22,8 +22,7 @@ class IpCountryBlock
 
         $iso_code = \geoip($ip)['iso_code'];
 
-
-        $registrationStatus = !in_array($iso_code, ['US','UA','CA','IL']) ? 1 : 0;
+        $registrationStatus = !in_array($iso_code, ['US','CA','IL']) ? 1 : 0;
 
         View::share('registrationStatus', $registrationStatus);
 

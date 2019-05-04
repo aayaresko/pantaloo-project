@@ -19,6 +19,7 @@ class GeneralMiddleware
     public function handle($request, Closure $next)
     {
         $ip = GeneralHelper::visitorIpCloudFire();
+        //dd($ip);
 
 
         //dump($request);
