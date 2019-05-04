@@ -20,11 +20,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
     public static $maxAmount = 1000;
-    protected $percent = 100;
+    protected $percent = 55;
     protected $minSum = 3;
     protected $maxSum = 0;
     protected $depositsCount = 3;
-    protected $playFactor = 33;
+    protected $playFactor = 50;
     protected $expireDays = 30;
     protected $timeActiveBonusDays = 30;
 
@@ -35,6 +35,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $createdUser = $user->created_at;
+
         //hide if user
         $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
 
@@ -86,6 +87,15 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         DB::beginTransaction();
         try {
+
+            //baned country
+            if (!is_null($user->country)) {
+                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+                if (in_array($user->country, $banedBonusesCountries)) {
+                    throw new \Exception('Bonus is not prohibited in your country. Read the rules.');
+                }
+            }
+
             if ($allowedDate < $currentDate) {
                 throw new \Exception('You can\'t use this bonus. Read terms.');
             }

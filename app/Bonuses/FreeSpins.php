@@ -74,6 +74,14 @@ class FreeSpins extends \App\Bonuses\Bonus
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
 
+            //baned country
+            if (!is_null($user->country)) {
+                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+                if (in_array($user->country, $banedBonusesCountries)) {
+                    throw new \Exception('Bonus is not prohibited in your country. Read the rules.');
+                }
+            }
+
             if ($this->active_bonus) {
                 throw new \Exception('You already use bonus.');
             }

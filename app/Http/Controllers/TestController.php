@@ -73,6 +73,7 @@ class TestController extends Controller
         }
         dd($createParams);
         dd(2);
+
         $modePlay = 1;
         $amount = -5;
         $transactionHas = (object) ['sum' => 10, 'bonus_sum' => 2];
@@ -215,7 +216,7 @@ class TestController extends Controller
         }
 
 
-dd($createParams);
+        dd($createParams);
         $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
@@ -299,6 +300,43 @@ dd($createParams);
                 'game_id' => '',
             ])->first();
         dd($gamesSession);
+
+        $transactions = [888048];
+        $setAmount = 60;
+        $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
+        dump($getTransactions);
+        foreach ($getTransactions as $transaction) {
+            $absTransactionSum = (-1) * $transaction->sum;
+            if ($absTransactionSum > $setAmount) {
+                Transaction::where('id', $transaction->id)->update([
+                    'sum' => -1 * $setAmount
+                ]);
+                $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
+                $date = new \DateTime();
+                Transaction::insert([
+                    [
+                        'type' => '11',
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'deleted_at' => $date,
+                        'sum' => -1 * $difference,
+                        'user_id' => $transaction->user_id,
+                        'comment' => 'system'
+                    ],
+                ]);
+            }
+        }
+        dd('ok');
+        dd(2);
+        $transaction = Transaction::leftJoin('games_pantallo_transactions',
+            'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+            ->where([
+                ['system_id', '=', 'ha-33776d8b2a554bbc8a0628156da2347c'],
+                ['games_pantallo_transactions.action_id', '=', 2]
+            ])
+            ->toSql();
+        dd($transaction);
+
         $service = new Service();
         /*dd(count(        Transaction::where('type', 3)
             ->where('confirmations', '<', 6)
