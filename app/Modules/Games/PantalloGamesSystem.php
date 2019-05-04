@@ -278,9 +278,9 @@ class PantalloGamesSystem implements GamesSystem
             ];
 
             //add additional fields
-//            $additionalFieldsUser = [
-//                'affiliates.id as partner_id',
-//                'affiliates.commission as partner_commission',
+            $additionalFieldsUser = [
+                'affiliates.id as partner_id',
+                'affiliates.commission as partner_commission',
 //                'user_bonuses.id as bonus',
 //                'user_bonuses.bonus_id as bonus_id',
 //                'user_bonuses.created_at as start_bonus',
@@ -288,9 +288,9 @@ class PantalloGamesSystem implements GamesSystem
 //                'bonus_n_active.bonus_id as bonus_n_active_id',
 //                'bonus_n_active.created_at as start_bonus_n_active',
 //                'bonus_n_active.expires_at as expires_at',
-//            ];
+            ];
 
-            $params['user'] = User::select(array_merge($userFields))
+            $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
                 ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
 //                ->leftJoin('user_bonuses', function ($join) {
 //                    $join->on('users.id', '=', 'user_bonuses.user_id')
@@ -312,7 +312,7 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             $action = $requestParams['action'];
-
+            //DOUBLE FIX this!
             $methodWithGameId = ['debit', 'credit'];
             if (in_array($action, $methodWithGameId, true)) {
                 $params['game'] = GamesList::select(['id', 'system_id'])
@@ -339,6 +339,7 @@ class PantalloGamesSystem implements GamesSystem
 
             //get type games
             //mode if isset ids games
+            //DOUBLE FIX this!
             $gameIdRequest = isset($requestParams['game_id']) ? $requestParams['game_id'] : null;
 
             if (!is_null($gameIdRequest)) {
@@ -484,15 +485,11 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['sum'] = $amount;
                             $createParams['bonus_sum'] = 0;
                         } else {
-                            //to do fix this
+                            //to do!! fix this
                             if ((float)$params['user']->balance < abs($amount)) {
                                 $createParams['sum'] = -1 * $params['user']->balance;
                                 $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
                                         abs($amount) - abs($createParams['sum']));
-
-//                            } elseif ((float)$params['user']->balance < 0) {
-//                                $createParams['sum'] = 0;
-//                                $createParams['bonus_sum'] = $amount;
                             } else {
                                 $createParams['sum'] = $amount;
                                 $createParams['bonus_sum'] = 0;
@@ -501,6 +498,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         //if free spins transactions
                         if (isset($requestParams['is_freeround_bet']) and $requestParams['is_freeround_bet'] == 1) {
+                            $caseAction = 'freeRound';
                             if ($modePlay === 1) {
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
@@ -619,8 +617,8 @@ class PantalloGamesSystem implements GamesSystem
                             $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
                                 'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                                 ->where([
-                                    ['games_pantallo_transactions.action_id', '=', 1],
                                     ['transactions.user_id', '=', $params['user']->id],
+                                    ['games_pantallo_transactions.action_id', '=', 1],
                                     //['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
                                 ])->where(function ($query) {
                                     $query->where('transactions.sum', '<>', 0)
@@ -640,29 +638,23 @@ class PantalloGamesSystem implements GamesSystem
 
                             //if is null - this after bonus money
                             if (!is_null($lastTransaction)) {
-                                //to do! fix this
-                                if ((float)$lastTransaction->bonus_sum !== 0 and (float)$lastTransaction->sum !== 0) {
-                                    $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+                                //to do!! fix this
+                                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
-                                    $percentageSum = abs($lastTransaction->sum) / $totalSum;
-                                    $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+                                $percentageSum = abs($lastTransaction->sum) / $totalSum;
+                                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
 
-                                    $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
-                                    $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
-//                                } elseif ((float)$params['user']->balance < 0) {
-//                                    $createParams['sum'] = 0;
-//                                    $createParams['bonus_sum'] = $amount;
-                                } else {
-                                    $createParams['sum'] = $amount;
-                                    $createParams['bonus_sum'] = 0;
-                                }
+                                $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+                                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
                             } else {
+                                //to do throw if transactions not found
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amount;
                             }
                         }
 
                         if (isset($requestParams['is_freeround_win']) and $requestParams['is_freeround_win'] == 1) {
+                            $caseAction = 'freeRound';
                             //sum all previous transaction and count and make yes or no
                             //this sum for win only free spins
                             //this mean for bonus active
@@ -677,7 +669,7 @@ class PantalloGamesSystem implements GamesSystem
 //                                    ['created_at', '>', $startDateBonus],
 //                                ])->sum('bonus_sum');
 //
-//                                if ($bonusLimit !== 0) {
+//                                if ($bonusLimit != 0) {
 //                                    $allowedBonusFunds = $bonusLimit - $transactionSumBonus;
 //                                    if ($allowedBonusFunds <= $amount) {
 //                                        $amountFreeSpins = $allowedBonusFunds;
@@ -811,20 +803,14 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['sum'] = $amount;
                             $createParams['bonus_sum'] = 0;
                         } else {
-                            //to do fix this
-                            if ((float)$transactionHas->bonus_sum !== 0 and (float)$transactionHas->sum !== 0) {
-                                $createParams['sum'] = (-1) * $transactionHas->sum;
-                                $createParams['bonus_sum'] = (-1) * $transactionHas->bonus_sum;
-//                            } elseif ((float)$params['user']->balance < 0) {
-//                                $createParams['sum'] = 0;
-//                                $createParams['bonus_sum'] = $amount;
-                            } else {
-                                $createParams['sum'] = $amount;
-                                $createParams['bonus_sum'] = 0;
-                            }
+                            //to do!! fix this
+                            $createParams['sum'] = (-1) * $transactionHas->sum;
+                            $createParams['bonus_sum'] = (-1) * $transactionHas->bonus_sum;
                         }
 
                         if ($transactionHas->action_id == 9) {
+                            $caseAction = 'freeRound';
+
                             $createParams['type'] = 10;
                             $createParams['sum'] = 0;
                             $createParams['bonus_sum'] = 0;
@@ -832,6 +818,8 @@ class PantalloGamesSystem implements GamesSystem
 
                         //if bonus not active already - we can to take away money
                         if ($transactionHas->action_id == 10) {
+                            $caseAction = 'freeRound';
+
                             $createParams['type'] = 9;
                             $createParams['sum'] = 0;
                             $createParams['bonus_sum'] = $amount;

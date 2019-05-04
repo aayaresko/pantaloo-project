@@ -32,8 +32,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        dump(Auth::user());
-        dump(Auth::user()->id);
         return view('home');
     }
 

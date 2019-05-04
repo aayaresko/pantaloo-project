@@ -47,6 +47,100 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $amount = 5;
+        $lastTransaction = Transaction::where('sum', 0)
+            ->where(function ($query) {
+            $query->where('transactions.sum', '<>', 0)
+                ->orWhere('transactions.bonus_sum', '<>', 0);
+        })->first();
+
+        $lastTransaction->sum = -2;
+        dump($lastTransaction->toArray());
+
+        if (!is_null($lastTransaction)) {
+            //to do! fix this
+            $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+            $percentageSum = abs($lastTransaction->sum) / $totalSum;
+            $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+            $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+            $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+        } else {
+            //to do throw if transactions not found
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        }
+        dd($createParams);
+        dd(2);
+        $modePlay = 1;
+        $amount = -5;
+        $transactionHas = (object) ['sum' => 10, 'bonus_sum' => 2];
+
+
+        if ($modePlay === 0) {
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        } else {
+            //to do!! fix this
+            $createParams['sum'] = (-1) * $transactionHas->sum;
+            $createParams['bonus_sum'] = (-1) * $transactionHas->bonus_sum;
+        }
+        dd($createParams);
+
+        $modePlay = 1;
+
+        $balance = 1;
+        $amount = -2;
+
+        if ($modePlay === 0) {
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        } else {
+            //to do fix this
+            if ((float)$balance < abs($amount)) {
+                $createParams['sum'] = -1 * $balance;
+                $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
+                        abs($amount) - abs($createParams['sum']));
+
+//                            } elseif ((float)$params['user']->balance < 0) {
+//                                $createParams['sum'] = 0;
+//                                $createParams['bonus_sum'] = $amount;
+            } else {
+                $createParams['sum'] = $amount;
+                $createParams['bonus_sum'] = 0;
+            }
+        }
+
+
+        dd($createParams);
+        $amount = 5;
+        $lastTransaction = Transaction::where('sum', 0)->first();
+        $lastTransaction->bonus_sum = '2.0';
+        $lastTransaction->sum = '1.0';
+        dump($lastTransaction->toArray());
+        if (!is_null($lastTransaction)) {
+            //to do! fix this
+            if ((float)$lastTransaction->bonus_sum > 0) {
+
+                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                $percentageSum = abs($lastTransaction->sum) / $totalSum;
+                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+                $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+            } else {
+                $createParams['sum'] = $amount;
+                $createParams['bonus_sum'] = 0;
+            }
+        } else {
+            //to do throw if transactions not found
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        }
+        dd($createParams);
+        dd($t);
         //dd(LastActionGame::where('user_id', 136)->first());
         $activeBonus = UserBonus::where('id', 1129)->first();
         dd($activeBonus->data);
