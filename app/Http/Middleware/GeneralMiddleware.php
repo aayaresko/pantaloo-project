@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
@@ -17,7 +18,9 @@ class GeneralMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->cookies->has('betatest')){
+        $ip = GeneralHelper::visitorIpCloudFire();
+
+        if (!$request->cookies->has('betatest') || $ip != '172.68.110.111'){
             return redirect('/coming_soon');
         }
 
