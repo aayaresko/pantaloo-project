@@ -54,7 +54,6 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
         try {
             $game = GamesList::where('id', $request->gameId)->first();
             $gameId = $game->system_id;
@@ -92,6 +91,8 @@ class PantalloGamesSystem implements GamesSystem
 
             GamesPantalloSession::updateOrCreate(
                 ['sessionid' => $loginResponse['sessionid']], $loginResponse);
+
+            DB::beginTransaction();
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
@@ -140,7 +141,7 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             dump($playerExists);
             dump($player);
@@ -900,7 +901,7 @@ class PantalloGamesSystem implements GamesSystem
         if (isset($params['user'])) {
             $userId = is_null($params['user']) ? 0 : $params['user']->id;
         }
-        
+
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'user_id' => $userId,
             'response' => json_encode($response),
