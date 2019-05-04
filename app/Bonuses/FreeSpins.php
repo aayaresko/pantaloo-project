@@ -10,19 +10,23 @@ use Carbon\Carbon;
 use App\UserBonus;
 use App\Transaction;
 use App\Models\GamesList;
+use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
+use App\Models\LastActionGame;
+use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
-    public static $maxAmount = 60;
+    public static $maxAmount = 20;
     protected $playFactor = 50;
     protected $expireDays = 10;
     protected $freeSpins = 50;
     protected $timeActiveBonusDays = 5;
+    protected $minDeposit = 5;
 
     /**
      * @return bool
@@ -99,10 +103,23 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             //$bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
+            $presentTime = new \DateTime();
             $bonusUser = UserBonus::create([
                 'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => static::$id,
+                'activated' => 1,
+                'data' => json_encode([
+                    'free_spin_win' => 0,
+                    'wagered_sum' => 0,
+                    'transaction_id' => 0,
+                    'dateStart' => $currentDate,
+                    'lastCheck' => $presentTime,
+                ])
+            ]);
+
+            User::where('id', $user->id)->update([
+                'bonus_id' => static::$id
             ]);
 
             //get all games for free
@@ -184,6 +201,10 @@ class FreeSpins extends \App\Bonuses\Bonus
         DB::beginTransaction();
         try {
             //to define start transaction wagered
+            //to do is be new play gaming then go way down!!!!!!!!!!!!
+            if ($this->checkActionGame() === false) {
+                throw new \Exception('No new actions');
+            }
             $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
                 ['type', '=', 10],
@@ -272,13 +293,11 @@ class FreeSpins extends \App\Bonuses\Bonus
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $bonusLimit = self::$maxAmount;
         $conditions = 0;
 
         DB::beginTransaction();
         try {
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
 
             if ($activeBonus->activated == 0) {
                 throw new \Exception('Bonus is not activated');
@@ -288,6 +307,10 @@ class FreeSpins extends \App\Bonuses\Bonus
             $wageredSum = $this->get('wagered_sum');
             if ($wageredSum == 0) {
                 throw new \Exception('Wagered sum less than zero');
+            }
+            
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
             $response = [
@@ -305,22 +328,64 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
 
-            if ($user->bonus_balance == 0) {
-                $conditions = 1;
+//            if ($user->bonus_balance == 0) {
+//                $conditions = 1;
+//
+//                /*Log::alert([
+//                    'user' => $user,
+//                    'code' => 'BUGUSER'
+//                ]);*/
+//
+//                $this->cancel('No bonus funds');
+//                $response = [
+//                    'success' => false,
+//                    'message' => 'No bonus funds'
+//                ];
+//            }
 
-                /*Log::alert([
-                    'user' => $user,
-                    'code' => 'BUGUSER'
-                ]);*/
-                
-                $this->cancel('No bonus funds');
+
+//            $depositForBonus = Transaction::where('user_id', $user->id)
+//                ->where('type', 3)
+//                ->where('sum', $this->minDeposit)
+//                ->where('created_at', '>', $activeBonus->created_at)
+//                ->first();
+
+            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 2)
+                ->where('value', $this->minDeposit)
+                ->first();
+
+            if (is_null($notificationTransactionDeposit)) {
+                $conditions = 1;
                 $response = [
-                    'success' => false,
-                    'message' => 'No bonus funds'
+                    'success' => true,
+                    'message' => 'Deposit is not found'
                 ];
+            } else {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
+                //check sum
+                if ($this->checkActionGame() === false) {
+                    throw new \Exception('No new actions');
+                }
+                $playedAmount = -1 * $this->user->transactions()
+                        ->where('id', '>', $this->get('transaction_id'))
+                        ->where('type', 1)
+                        ->sum('sum');
+
+                if ($playedAmount > (float)$notificationTransactionDeposit->value) {
+                    $conditions = 1;
+                    $response = [
+                        'success' => true,
+                        'message' => 'Deposit not won back'
+                    ];
+                }
             }
 
             if ($conditions === 0) {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
+                if ($this->checkActionGame() === false) {
+                    throw new \Exception('No new actions');
+                }
                 if ($this->getPlayedSum() >= $wageredSum) {
                     $response = [
                         'success' => true,
@@ -328,7 +393,25 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ];
 
                     $transaction = new Transaction();
+
                     $winAmount = $user->bonus_balance;
+                    //check max amount
+                    $allowedBonusFunds = $bonusLimit - (float)$bonusLimit->total_amount;
+                    if ($allowedBonusFunds <= $winAmount) {
+                        $winAmount = $allowedBonusFunds;
+                        $trimBonusAmount = GeneralHelper::formatAmount($winAmount - $allowedBonusFunds);
+                        //create transaction
+                        Transaction::create([
+                            'sum' => 0,
+                            'bonus_sum' => -1 * $trimBonusAmount,
+                            'comment' => 'Trim',
+                            'type' => 12,
+                            'user_id' => $user->id,
+                        ]);
+                        if ($winAmount <= 0) {
+                            $winAmount = 0;
+                        }
+                    }
 
                     $bonusAmount = -1 * $user->bonus_balance;
                     $transaction->bonus_sum = $bonusAmount;
@@ -339,8 +422,14 @@ class FreeSpins extends \App\Bonuses\Bonus
                     $transaction->save();
 
                     User::where('id', $user->id)->update([
-                        'balance' => DB::raw("balance+$winAmount"),
-                        'bonus_balance' => 0
+                        'balance' => DB::raw("balance + $winAmount"),
+                        'bonus_balance' => 0,
+                        'bonus_id' => null
+                    ]);
+
+
+                    UserBonus::where('id', $activeBonus->id)->update([
+                        'total_amount' => DB::raw("total_amount + $winAmount"),
                     ]);
 
                     $activeBonus->delete();
@@ -548,10 +637,14 @@ class FreeSpins extends \App\Bonuses\Bonus
         //only bonus transaction
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
+        $user = $this->user;
 
-        $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+        $lastActionGame = LastActionGame::where('user_id', $user->id)
+            ->where('last_action', '>', $date)->first();
 
-        if (!$transaction) {
+        //$transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+
+        if (!$lastActionGame) {
             return false;
         } else {
             return true;

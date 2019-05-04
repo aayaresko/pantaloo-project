@@ -3,13 +3,16 @@
 namespace App\Bonuses;
 
 use App\User;
-use App\Transaction;
 use Carbon\Carbon;
+use App\UserBonus;
+use App\Transaction;
+use App\Models\LastActionGame;
 
 abstract class Bonus
 {
     public static $id;
     protected $user;
+    protected $lastAction;
     protected $active_bonus;
     protected $data;
 
@@ -18,16 +21,43 @@ abstract class Bonus
         $this->user = $user;
 
         $this->active_bonus = $this->user->bonuses()->first();
+
+        $this->lastAction = LastActionGame::where('user_id', $user->id)->first();
     }
+
+    protected function checkActionGame()
+    {
+        if (is_null($this->lastAction)) {
+            return false;
+        }
+
+        $bonusData = $this->active_bonus->data;
+        if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
+            return false;
+        }
+
+        //example
+//        if ($this->checkActionGame() === false) {
+//            throw new \Exception('No new actions');
+//        }
+
+        return true;
+    }
+
 
     public function hasBonusTransactions($minutes = 1)
     {
         $date = Carbon::now();
         $date->modify('-' . $minutes . ' minutes');
 
-        $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+        $user = $this->user;
 
-        if (!$transaction) {
+        $lastActionGame = LastActionGame::where('user_id', $user->id)
+            ->where('last_action', '>', $date)->first();
+
+        //$transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
+
+        if (!$lastActionGame) {
             return false;
         } else {
             return true;

@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use App\Transaction;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
+use App\Models\LastActionGame;
+use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -46,9 +48,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //hide if user
 
         //hide if deposit count
-        if ($user->transactions()->deposits()->count() > $this->depositsCount) {
+        $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+            ->where('type_id', 1)
+            ->count();
+
+        if ($notificationTransactionDeposits > $this->depositsCount) {
             return false;
         }
+
+//        if ($user->transactions()->deposits()->count() > $this->depositsCount) {
+//            return false;
+//        }
         //hide if deposit count
 
         $countBonuses = $this->user->bonuses()
@@ -94,9 +104,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('You already use bonus');
             }
 
-            if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 1)
+                ->count();
+
+            if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
                 throw new \Exception('You can\'t use this bonus');
             }
+
+//            if ($user->transactions()->deposits()->count() != ($this->depositsCount - 1)) {
+//                throw new \Exception('You can\'t use this bonus');
+//            }
 
             if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
                 throw new \Exception('You already used this bonus');
@@ -104,10 +122,12 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             $date = $user->created_at;
             $date->modify('+' . $this->expireDays . 'days');
+            $presentTime = new \DateTime();
 
             $bonus = new UserBonus();
             $bonus->user()->associate($user);
             $bonus->activated = 0;
+            $bonus->data = ['lastCheck' => $presentTime];
             $bonus->expires_at = $date;
             $bonus->bonus()->associate(Bonus::findOrFail(static::$id));
             $bonus->save();
@@ -264,6 +284,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
             }
 
             if ($activeBonus->activated == 1 and $conditions === 0) {
+                //to do is be new play gaming then go way down!!!!!!!!!!!!
                 if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
                     $transaction = new Transaction();
                     $transaction->bonus_sum = -1 * $user->bonus_balance;
@@ -423,8 +444,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function getBonusDeposit()
     {
+        $user = $this->user;
         $depositsCount = $this->depositsCount;
-        $deposits = $this->user->transactions()->deposits()->orderBy('id')->limit($depositsCount)->get();
+
+        //$deposits = $this->user->transactions()->deposits()->orderBy('id')->limit($depositsCount)->get();
+
+        $deposits = SystemNotification::where('user_id', $user->id)
+            ->where('type_id', 1)->orderBy('id')->limit($depositsCount)->get();
 
         if (count($deposits) == $depositsCount) {
             return $deposits[$depositsCount - 1];
