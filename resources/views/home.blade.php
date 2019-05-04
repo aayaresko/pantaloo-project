@@ -23,7 +23,7 @@
             @if(Auth::guest())
             <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                 <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -50,7 +50,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -77,7 +77,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -104,7 +104,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
