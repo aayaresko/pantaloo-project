@@ -5,46 +5,113 @@
 @endsection
 
 @section('content')
-    <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
+    <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-dark.jpg') center no-repeat; background-size: cover;">
         <div class="cabinet-entry">
             <div class="main-content">
-                <div class="credits-block">
-                    <i class="bitcoin-icon"></i>
-                    <span class="balance"><span class="value">{{Auth::user()->getBalance()}}</span> {{trans('casino.credits') }}</span>
-                    <a class="add-credits-btn" href="{{route('deposit', ['lang' => $currentLang])}}"><span class="text">{{trans('casino.add_credits')}}</span></a>
-                </div>
                 <div class="page-heading">
                     <h1 class="page-title">{{trans('casino.get_bonus')}}</h1>
-                    <p class="sub-text">{{trans('casino.bonus_deposit')}}</p>
+                </div>
+                <div class="userBalanceWrap">
+                    <i class="bitcoin-icon"></i>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
+                        <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
+                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    
+                    <div class="userBalanceCol">
+                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
+                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
+                                        class="text">{{ trans('casino.add_credits') }}</span></a>
                 </div>
                 <div class="main-content-entry">
                     <div class="bonus-entry">
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
-                                @if($active_bonus)
+                                
+                            @if($active_bonus)
                                     <div class="item">
-                                        <div class="single-bonus">
-                                            <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
-                                            <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
-                                            @if ($active_bonus->bonus_id != 1)
-                                                <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
-                                                <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
-                                            @endif
-                                            <a href="{{route('bonus.cancel')}}" class="push-button">{{ trans('casino.cancel') }}</a>
+                                        <div class="single-bonus activated">
+                                            <div class="itemWrapper">
+                                                <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
+                                                <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
+                                                <div class="activeWrapper">
+                                                        <div class="icon avail">
+
+                                                        </div>   
+                                                        @if ($active_bonus->bonus_id != 1)
+                                                            <h3 class="title">activated</h3>
+                                                            <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
+                                                            <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
+                                                        @endif
+                                                </div>
+                                            </div>
+                                            <div class="wrapperBottom">
+                                                <div class="btnWrap">
+                                                    <a href="{{route('bonus.cancel')}}" class="push-button canceledBtn"><i class="fa fa-plus"></i> {{ trans('casino.cancel') }}</a>
+                                                </div>
+                                                <a href="#reg-terms" class="reg-terms">terms</a>
+                                                <a href="#" class="reg-terms showGameLink">Show games</a>
+                                            </div>
+                                            
+                                                
+                                            <!-- <a href="{{route('bonus.cancel')}}" class="push-button">{{ trans('casino.cancel') }}</a> -->
                                         </div>
                                     </div>
-                                @else
+                                    @else
+               
+                            
                                     @foreach($bonuses as $bonus)
+
                                     <div class="item">
                                         <div class="single-bonus">
-                                            <h3 class="title">{{translate($bonus->name)}}</h3>
-                                            <p class="text">{{translate($bonus->descr)}}</p>
-                                            <a href="{{route('bonus.activate', $bonus)}}" class="push-button">{{trans('casino.activate')}}</a>
+                                            <div class="itemWrapper">
+                                                <h3 class="title">{{translate($bonus->name)}}</h3>
+                                                <p class="text">{{translate($bonus->descr)}}</p>
+                                                <!-- <div class="activeWrapper">
+                                                    <div class="icon avail">
+
+                                                    </div>   
+                                                    <h3 class="title">Activated</h3>
+                                                    <p class="text">Wagered sun: 0 mBTC Percent: 0%</p>
+                                                </div> -->
+                                                <div class="unavailableWrapper">
+                                                    <div class="icon unavail">
+
+                                                    </div> 
+                                                    <h3 class="title">unavailable</h3>
+                                                </div>
+                                            </div>
+                                            <div class="wrapperBottom">
+                                                <div class="btnWrap">
+                                                    <a href="{{route('bonus.activate', $bonus)}}" class="push-button activatedBtn"><i class="fa fa-check"></i>{{trans('casino.activate')}}</a>
+                                                    <a href="{{route('bonus.activate', $bonus)}}" class="push-button canceledBtn"><i class="fa fa-plus"></i>Cancel</a>
+                                                </div>
+                                                <p class="unavailInfo">Просрочен!  <button id="popUpBonus"><span class="infoTxt">info</span></button></p>
+                                                <a href="#reg-terms" class="reg-terms">terms</a>
+                                                <a href="#" class="reg-terms showGameLink">Show games</a>
+                                            </div>
+                                            <div class="popUpBonusUnavail">
+                                                <h3>Unavailable <span class="popUpHideBtn"></span></h3>
+                                                <p>Бонус просрочен. По условиям вы не можете использовать его для запуска игр и получения бесплатных новых бонусов.
+                                                По условиям вы не можете использовать его для запуска игр и получения бесплатных новых бонусов.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
+                                    
                                     @endforeach
+                                    
                                 @endif
+
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -53,6 +120,8 @@
             @include('settings')
         </div>
     </div>
+
+   
 
     <footer class="footer footer-home">
         <div class="bitcoin-block">

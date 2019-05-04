@@ -9,7 +9,7 @@ $(document).ready(function(){
 	logOut();
 	animationInit();
 	gamePopup();
-	bonusSlider();
+	// bonusSlider();
 	controlsInit();
 	blockFilter();
     resizeIframe();
@@ -216,20 +216,20 @@ function gamesSlider(){
 	}
 }
 
-function bonusSlider(){
-	if ($('.bonuses-listing').length>0 && $(window).width() < 1080){
-		var owl = $('.bonuses-listing');
-		owl.owlCarousel({
-			items:1,
-			addClassActive : true,
-			loop: true,
-			nav: true,
-			navContainer: '.middle-block',
-			dotsContainer: '.nav-block',
-			navText: ''
-		})
-	}
-}
+// function bonusSlider(){
+// 	if ($('.bonuses-listing').length>0 && $(window).width() < 1080){
+// 		var owl = $('.bonuses-listing');
+// 		owl.owlCarousel({
+// 			items:1,
+// 			addClassActive : true,
+// 			loop: true,
+// 			nav: true,
+// 			navContainer: '.middle-block',
+// 			dotsContainer: '.nav-block',
+// 			navText: ''
+// 		})
+// 	}
+// }
 
 function blockFilter() {
 	if($('.block-filter select').length > 0){
@@ -242,9 +242,6 @@ function blockFilter() {
 
 $(document).ready(function(){
 	
-
-
-
 function getCurrentScreen(){
 
 	let fullpageWrapper = $('.fullpage-wrapper');
@@ -267,14 +264,80 @@ function getCurrentScreen(){
 
 }
 
+	getCurrentScreen()
+
+	$(window).on('mousewheel', getCurrentScreen);
 
 
-getCurrentScreen()
+
+	$("#btnKey").on("click", function(){
+
+		let el = $('.generated-key').select();
+		
+		document.execCommand("copy");
+
+	});
 
 
-$(window).on('mousewheel', getCurrentScreen);
+	let table = $('#transactionsTable').DataTable({
+		"searching": false,
+		"bPaginate": true,
+		"info":     false,
+		"ajax": "http://localhost/vendors/test.json",
+		"iDisplayLength" : 10,
+		"columns": [
+            { "data": "date" },
+            { "data": "id" },
+            { "data": "status" },
+            { "data": "amount" }
+		],
+		
+		"columnDefs": [
+			{ "orderable": false, "targets": 1 },
+			{ "orderable": false, "targets": 2 }
+		  ],
+		drawCallback: function(){
+			$('#btn-example-load-more').toggle(this.api().page.hasMore());
+		},
+		createdRow: function( row, data, dataIndex ) {
+			// Set the data-status attribute, and add a class
+			let tdStatus = $( row ).find('td:eq(2)')
+			tdStatus.addClass('statustransAction');
+				
+			if(data.status === 'Confirmed' ){
+				tdStatus.addClass('confirm')
+			}else{
+				tdStatus.addClass('notConfirm')
+			}
+				
+				
+		}
+
+	});
+
+	$('.loadMoredataTableBtn').on('click', function(){  
+
+		table.page.loadMore();
+
+	 });
+
+
+
+
+	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
+	 });
+
+	 $(".popUpHideBtn").on("click", function(){
+		$(".popUpBonusUnavail").removeClass("showPoUp");
+	 });
+
+	 
 
 });
+
+
+
 
 // let pageCount = location.href;
 

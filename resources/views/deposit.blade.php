@@ -6,32 +6,46 @@
 
 @section('content')
     <div class="cabinet-block"
-         style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
-        <div class="cabinet-entry">
+         style="background: #000 url('/media/images/bg/deposit-bg-dark.jpg') center no-repeat; background-size: cover;">
+        <div class="cabinet-entry cabinetMod">
             <div class="main-content">
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.deposit'), MB_CASE_UPPER) }}</h1>
-                    <span class="sub-text">{{ trans('casino.bonus_deposit') }}</span>
-                    <a href="{{ route('bonus', ['lang' => $currentLang]) }}" class="bonuses-btn">{{ trans('casino.open_bonus') }}</a>
+                    <!-- <span class="sub-text">{{ trans('casino.bonus_deposit') }}</span> -->
+                    <!-- <a href="{{ route('bonus', ['lang' => $currentLang]) }}" class="bonuses-btn">{{ trans('casino.open_bonus') }}</a> -->
+                </div>
+                <div class="userBalanceWrap">
+                    <i class="bitcoin-icon"></i>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
+                        <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
+                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    
+                    <div class="userBalanceCol">
+                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
+                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
+                                        class="text">{{ trans('casino.add_credits') }}</span></a>
                 </div>
                 <div class="main-content-entry">
                     <div class="deposit-entry">
-                        <div class="credits-block">
-                            <i class="bitcoin-icon"></i>
-                            <span class="balance">
-                                <span class="value">{{Auth::user()->getBalance()}}</span> {{ trans('casino.credits') }}
-                            </span>
-                            <a class="add-credits-btn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
-                                        class="text">{{ trans('casino.add_credits') }}</span></a>
-                        </div>
+                       
                         <div class="left-content">
                             <div class="text-block">
                                 <p class="descr">{{ trans('casino.minimum_deposit') }}</p>
                                 <p class="descr">(1 BTC = 1000 mBTC)</p>
-
-                                <p class="descr">{{ trans('casino.send_your_bitcoins') }}</p>
                             </div>
-                            <span class="generated-key">{{ $bitcoin_address }}</span>
+                            <p class="descrTxt">{{ trans('casino.send_your_bitcoins') }}</p>
+                            <div class="generated-key-wrapper">
+                                <input type="text" class="generated-key" value="{{ $bitcoin_address }}">
+                                
+                                <button id="btnKey" class="generated-key-btn">copy</button>
+                            </div>
                         </div>
                         <div class="qr-code">
                             <img class="rounded"
@@ -46,6 +60,21 @@
                         </div>
 
                     </div>
+                </div>
+                <div class='tableTransactionsWrapper'>
+                    <p class="descr">Your Deposits</p>
+                    <table id="transactionsTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <button class="loadMoredataTableBtn">more</button>
+                    <hr class="devider">
                 </div>
             </div>
             @include('settings')

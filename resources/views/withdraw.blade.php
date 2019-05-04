@@ -6,20 +6,33 @@
 
 @section('content')
     <div class="cabinet-block"
-         style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
-        <div class="cabinet-entry">
+         style="background: #000 url('/media/images/bg/deposit-bg-dark.jpg') center no-repeat; background-size: cover;">
+        <div class="cabinet-entry cabinetMod">
             <div class="main-content">
-                <div class="credits-block">
-                    <i class="bitcoin-icon"></i>
-                    <span class="balance"><span
-                                class="value">{{Auth::user()->getBalance()}}</span> {{ trans('casino.credits') }}</span>
-                    <a class="add-credits-btn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
-                                class="text">{{ trans('casino.add_credits') }}</span></a>
-                </div>
                 <div class="page-heading">
                     <h1 class="page-title">{{ trans('casino.withdraw') }}</h1>
-                    <p class="sub-text">{{ trans('casino.transfer_wallet_address') }}</p>
-                    <p class="sub-text">{{ trans('casino.have_millibitcoins', ['availableBalance' => Auth::user()->getRealBalance()]) }}</p>
+                </div>
+                <div class="userBalanceWrap">
+                    <i class="bitcoin-icon"></i>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
+                        <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <div class="userBalanceCol leftBorder">
+                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
+                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    
+                    <div class="userBalanceCol">
+                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
+                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
+                    </div>
+                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
+                                        class="text">{{ trans('casino.add_credits') }}</span></a>
+                </div>
+                <div class="text-block-withdraw">
+                    <p class="descr">{{ trans('casino.transfer_wallet_address') }}</p>
+                    <p class="descr">{{ trans('casino.have_millibitcoins', ['availableBalance' => Auth::user()->getRealBalance()]) }}</p>
                 </div>
                 <div class="main-content-entry">
                     <div class="withdraw-entry">
@@ -30,28 +43,15 @@
                                 @endforeach
                                 <br><br>
                             </center>
-                            <form action="" method="POST">
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td><span class="text">{{ trans('casino.your_bitcoin_address') }}</span></td>
-                                        <td><input type="text" name="address"
-                                                   placeholder="{{ trans('casino.enter_here') }}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="text">{{ trans('casino.amount_mbtc') }}</span></td>
-                                        <td><input type="text" name="sum"
-                                                   placeholder="{{ trans('casino.enter_here') }}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <button class="withdraw">{{ trans('casino.withdraw') }}</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                            <form action="" method="POST">               
+                                <span class="text">{{ trans('casino.your_bitcoin_address') }}</span>
+                                <input type="text" name="address">
+                            
+                            
+                                <span class="text">{{ trans('casino.amount_mbtc') }}</span>
+                                <input type="text" name="sum">
+                                <button class="withdraw">{{ trans('casino.withdraw') }}</button>
+                                
                                 {{csrf_field()}}
                             </form>
                         </div>
@@ -66,6 +66,21 @@
                             @include('transactions')
                         </div>
                     </div>
+                </div>
+                <div class='tableTransactionsWrapper'>
+                    <p class="descr">Your Withdraws</p>
+                    <table id="transactionsTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <button class="loadMoredataTableBtn">more</button>
+                    <hr class="devider">
                 </div>
             </div>
             @include('settings')
