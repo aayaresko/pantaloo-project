@@ -276,12 +276,13 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         DB::beginTransaction();
         try {
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
 
             if ($activeBonus->activated == 0) {
                 throw new \Exception('Bonus is not activated');
+            }
+
+            if ($this->hasBonusTransactions()) {
+                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
             }
 
             //get wageredSum
