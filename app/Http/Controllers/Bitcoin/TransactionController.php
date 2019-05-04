@@ -24,7 +24,6 @@ class TransactionController extends Controller
      */
     public function walletNotify(Request $request)
     {
-        dd(2);
         $date = new \DateTime();
 
         $debugGame = new DebugGame();
@@ -164,7 +163,6 @@ class TransactionController extends Controller
      */
     public function blockNotify(Request $request)
     {
-        dd(2);
         $date = new \DateTime();
 
         $debugGame = new DebugGame();
