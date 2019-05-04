@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
         Commands\SlotChecker::class,
         Commands\BitcoinSend::class,
         Commands\BonusTest::class,
-        Commands\BonusJobs::class
+        Commands\BonusJobs::class,
+        Commands\TransactionSum::class
     ];
 
     /**
