@@ -19,8 +19,6 @@ class EzugiController extends Controller
         $input = json_decode($request->getContent(), true);
 
         $raw_log = new RawLog();
-        $raw_log->save();
-
         $raw_log->request = $request->getContent();
         $raw_log->save();
 
@@ -57,6 +55,7 @@ class EzugiController extends Controller
             }
 
             $resp['uid'] = (string)$user->id;
+            $raw_log->user_id = $user->id;
 
             switch ($request->input('request'))
             {

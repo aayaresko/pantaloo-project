@@ -50,6 +50,7 @@ class BonusJobs extends Command
                 $bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
+                    'code' => 'bonusMessage',
                     'id' => $bonus->id,
                     'error' => $e->getMessage()
                 ]);

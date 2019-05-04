@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Validators\TemporaryMailCheck;
+use DB;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -9,6 +11,7 @@ use App\ExtraUser;
 use App\Currency;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
@@ -58,7 +61,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -74,11 +77,52 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      * @return User
      */
-    protected function create(array $data)
+    //protected function create(array $data)
+    protected function create(Request $request)
     {
+        //temporary
+        $data = $request->toArray();
+        $errors = [];
+        $validator = Validator::make($data, [
+            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+            'agree' => 'accepted'
+        ]);
+
+        // Check if mail provider is not temporary mail services
+        $validator->after(function ($validator) use ($data) {
+            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+                $validator->errors()->add('email', 'Try use other mail service!');
+            }
+        });
+
+        if ($validator->fails()) {
+            $validatorErrors = $validator->errors()->toArray();
+            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                array_push($errors, $item);
+            });
+
+            return redirect()->back()->withErrors($errors);
+        }
+
+        $email = $data['email'];
+        $currentDate = new \DateTime();
+
+        DB::table('new_affiliates')->insert([
+            [
+                'email' => $email,
+                'type_id' => 1,
+                'created_at' => $currentDate,
+                'updated_at' => $currentDate
+            ],
+        ]);
+
+        return redirect()->back()->with('popup',
+            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
+
+
         $service = new Service();
         $address = $service->getNewAddress('common');
 
@@ -188,9 +232,14 @@ class AuthController extends Controller
                 return back()->withErrors('This type of user is not allowed to login');
             }
 
-            $extraUser = ExtraUser::where('user_id', $user->id)->first();
-            if (!is_null($extraUser)) {
-                if ((int)$extraUser->block > 0) {
+            //$extraUser = ExtraUser::where('user_id', $user->id)->first();
+
+            $blockUser = ModernExtraUsers::where('user_id', $user->id)
+                ->where('code', 'block')->first();
+
+            if (!is_null($blockUser)) {
+                if ((int)$blockUser->value === 1) {
+                    //delete global session TO DO
                     Auth::logout();
                     return back()->withErrors('The user is blocked');
                 }

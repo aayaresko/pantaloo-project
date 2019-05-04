@@ -46,21 +46,40 @@ class MoneyController extends Controller
         $sessionId = $_COOKIE['laravel_session'];
         $sessionLeftTime = config('session.lifetime');
         $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $user = User::where('email', $email)->first();
 
-        //to do this - fix this = use universal way
-        $sessionUser = DB::table('sessions')->where('user_id', $user->id)
-            ->where('id', $sessionId)
-            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+        $date = new \DateTime();
+        $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
+
+        //to do this - fix this = use universal way for get sessino user
+        //select nesessary fields
+        $user = User::select(['users.*', 's.id as session_id'])
+            ->join('sessions as s', 's.user_id', '=', 'users.id')
+            ->where('users.email', $email)
+            ->where('s.id', $sessionId)
+            ->where('s.last_activity', '>=', $minimumAllowedActivity)
             ->first();
 
-        if (is_null($sessionUser)) {
+        if (is_null($user) or is_null($user->session_id)) {
             return response()->json([
                 'status' => false,
                 'messages' => ['User or session is not found'],
             ]);
         }
 
+//        $sessionUser = DB::table('sessions')
+//            ->where('id', $sessionId)
+//            ->where('user_id', $user->id)
+//            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+//            ->first();
+
+        /*if (is_null($user)) {
+            return response()->json([
+                'status' => false,
+                'messages' => ['User or session is not found'],
+            ]);
+        }*/
+
+        //to do once in 10 seconds and use other table for natifications
         $transaction = $user->transactions()
             ->where('type', 3)->where('notification', 0)->first();
 
@@ -73,8 +92,11 @@ class MoneyController extends Controller
         }
 
         //to do check active bonus
-        //to do use dispatch
-        dispatch(new BonusHandler($user));
+        //to do not use dispatch
+        $checkFrequencyBonus = config('bonus.checkFrequency');
+        if (rand(1, $checkFrequencyBonus) === 1) {
+            BonusHelper::bonusCheck($user, 1);
+        }
 
         return response()->json([
             'realBalance' => $user->balance,
@@ -192,6 +214,13 @@ class MoneyController extends Controller
 
         if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
+        //2391
+        if ((int)$user->id > 2391) {
+            if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                return redirect()->back()->withErrors(['You do not have any deposits.']);
+            }
+        }
+        
         $this->validate($request, [
             'address' => 'required',
             'sum' => 'required|numeric|min:1'

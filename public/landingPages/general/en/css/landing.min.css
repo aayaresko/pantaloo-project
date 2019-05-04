@@ -1,0 +1,2302 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 14px
+}
+
+body {
+    height: 100%;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    background: #00111f
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+img {
+    border: 0 !important;
+    outline: none !important
+}
+
+a {
+    text-decoration: none !important;
+    outline: none
+}
+
+.Transitions {
+    -webkit-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out
+}
+
+.ClearFix {
+    clear: both
+}
+
+.NoSelect {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    -o-user-select: none !important;
+    user-select: none !important
+}
+
+#Bar_Top {
+    display: block;
+    width: 100%;
+    min-height: 578px;
+    background: url(../images/bg_top_promo.jpg) top center no-repeat;
+    background-size: cover;
+    padding: 0 10px
+}
+
+#Bar_Top .Main_Content {
+    display: block;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative
+}
+
+#Bar_Top .Main_Content .Box_Sides {
+    display: block;
+    min-height: 578px;
+    position: absolute;
+    z-index: 0
+}
+
+#Bar_Top .Main_Content #Cont_L {
+    width: 63%;
+    left: 0;
+    right: auto;
+    top: 0
+}
+
+#Bar_Top .Main_Content #Cont_L .Logo_Casino {
+    width: 32%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto
+}
+
+#Bar_Top .Main_Content #Cont_L .Characters {
+    width: 60%;
+    position: absolute;
+    top: 150px;
+    left: auto;
+    right: 5px
+}
+
+#Bar_Top .Main_Content #Cont_R {
+    width: 37%;
+    right: 0;
+    left: auto;
+    top: 0
+}
+
+#Bar_Top .Main_Content #Cont_R .Main_Promo {
+    display: block;
+    width: 100%;
+    margin: 114px 0 0
+}
+
+#Bar_Top .Main_Content #Cont_R .Cont_Code {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    text-transform: capitalize
+}
+
+#Bar_Top .Main_Content #Cont_R .Cont_Code span {
+    border: 1px solid #fff;
+    padding: 5px 35px;
+    font-weight: 700
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo1 {
+    display: block;
+    width: 85%;
+    margin: 5px auto;
+    padding: 8px 0;
+    height: 60px;
+    line-height: 22px;
+    font-size: 22px;
+    color: #203359;
+    text-align: center;
+    background: #9fb7d6;
+    font-weight: 400;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo1 span {
+    font-size: 26px;
+    font-weight: 700
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo1:hover {
+    background: rgba(159, 183, 214, 0.8)
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo2 {
+    display: block;
+    width: 85%;
+    margin: 5px auto;
+    padding: 12px 0;
+    height: 60px;
+    line-height: 18px !important;
+    font-size: 16px;
+    color: #2846a6;
+    text-align: center;
+    background: #fcdb21;
+    font-weight: 400;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo2 span {
+    font-size: 26px;
+    font-weight: 700
+}
+
+#Bar_Top .Main_Content #Cont_R .btn_promo2:hover {
+    background: rgba(252, 219, 33, 0.8)
+}
+
+#Bar_Top .Main_Content #Cont_R .Cont_Specs {
+    display: block;
+    width: 100%;
+    margin: 30px auto;
+    font-size: 16px
+}
+
+#Bar_Top .Main_Content #Cont_R .Cont_Specs .Icn {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px
+}
+
+#Bar_Top .Main_Content #Content_Login {
+    display: block;
+    width: 212px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 32px;
+    z-index: 1;
+    background: blue
+}
+
+#Bar_Top .Main_Content #Content_Login::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 2;
+    background: #062a3f
+}
+
+#Bar_Top .Main_Content #Content_Login .btns {
+    display: block;
+    width: 50%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #203359;
+    float: left;
+    text-align: center;
+    background: #9fb7d6;
+    font-weight: 700
+}
+
+#Bar_Middle {
+    display: block;
+    width: 100%;
+    min-height: 330px;
+    position: relative;
+    padding: 0 10px
+}
+
+
+
+#Bar_Middle .Main_Content .Box_Middle {
+    display: block;
+    min-height: 330px;
+    position: absolute;
+    text-align: left;
+    padding: 45px 0
+}
+
+#Bar_Middle .Main_Content #BoxR {
+    width: 67%;
+    right: 0;
+    left: auto;
+    top: 0;
+    text-align: center
+}
+
+#Bar_Middle .Main_Content #BoxR h1 {
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: inline-block
+}
+
+#Bar_Middle .Main_Content #BoxR .Line {
+    width: 18%;
+    height: 1px;
+    background: #4d5963;
+    display: inline-block;
+    vertical-align: super;
+    margin: 0 2px
+}
+
+#Bar_Middle .Main_Content #BoxR .Slider {
+    display: block;
+    width: 100%;
+    height: auto
+}
+
+#Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+    display: none;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 900;
+    margin: 10px auto;
+    text-transform: uppercase
+}
+
+#C_Slots {
+    display: block
+}
+
+#C_Table {
+    display: none
+}
+
+#C_Poker {
+    display: none
+}
+
+#Bar_Middle .Main_Content #BoxR .Link_Play {
+    display: block;
+    margin: -20px 0 0;
+    text-align: right;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline !important;
+    text-transform: uppercase
+}
+
+#Bar_Middle .Main_Content #BoxL {
+    width: 33%;
+    left: 0;
+    right: auto;
+    top: 0
+}
+
+#Bar_Middle .Main_Content #BoxL h1 {
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-bottom: 20px
+}
+
+#Bar_Middle .Main_Content #BoxL ul li {
+    margin: 0 17px;
+    padding: 0;
+    list-style: outside;
+    font-size: 14px
+}
+
+#Bar_Middle .Main_Content #BoxL .btn_started {
+    display: block;
+    width: 85%;
+    margin: 20px 0;
+    height: 45px;
+    line-height: 45px;
+    font-size: 18px;
+    color: #2846a6;
+    text-align: center;
+    background: #fcdb21;
+    font-weight: 700;
+    text-transform: uppercase
+}
+
+#Bar_Middle .Main_Content #BoxL .btn_started:hover {
+    background: rgba(252, 219, 33, 0.8)
+}
+
+#Bar_Footer {
+    display: block;
+    width: 100%;
+    min-height: 175px;
+    background: #000815
+}
+
+#Bar_Footer .CenterCont {
+    display: block;
+    width: 100%;
+    max-width: 642px;
+    height: 100%;
+    margin: 0 auto;
+    padding-top: 50px
+}
+
+#Bar_Footer .CenterCont h1 {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase
+}
+
+#Bar_Footer .CenterCont #BtnBTerms {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    height: 35px;
+    line-height: 36px;
+    margin: 10px auto;
+    float: right;
+    border: solid 1px #fff;
+    background: rgba(255, 255, 255, 0);
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer !important;
+    font-weight: 700
+}
+
+#Bar_Footer .CenterCont #BtnBTerms:hover {
+    border: solid 1px #fcdb21;
+    background: #fcdb21;
+    color: #2846a6;
+    cursor: pointer !important
+}
+
+#Bar_Footer .CenterCont #ImgDM {
+    display: block;
+    width: 100%;
+    max-width: 343px;
+    height: auto;
+    margin: 10px auto 0;
+    float: left
+}
+
+#PopupContent {
+    width: 100%;
+    height: 120% !important;
+    display: block;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999 !important;
+    margin: 0;
+    padding: 0;
+    display: none
+}
+
+#PopupContent .bgPopup {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    background: url(../images/bg-popup.jpg);
+    border: 1px solid #89b4ca;
+    margin: 7% auto;
+    padding: 50px;
+    position: relative
+}
+
+#PopupContent #Popup1 {
+    display: none
+}
+
+#PopupContent #Popup2 {
+    display: none
+}
+
+#PopupContent .promo {
+    width: 100%;
+    max-width: 317px;
+    height: auto;
+    display: block;
+    margin: 0 auto
+}
+
+#PopupContent .lgGame {
+    width: 100%;
+    max-width: 327px;
+    display: block;
+    margin: 0 auto
+}
+
+#PopupContent p {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 25px 0 10px
+}
+
+#PopupContent .ContentCode {
+    width: 100%;
+    height: 40px;
+    display: block;
+    margin: 15px auto
+}
+
+#PopupContent .ContentCode .code {
+    width: 54%;
+    height: 40px;
+    display: inline-block;
+    border: 1px dotted #fcdb21;
+    background: #00111f;
+    line-height: 40px;
+    font-size: 20px;
+    color: #fcdb21;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    vertical-align: top
+}
+
+#PopupContent .ContentCode .copyBtn {
+    width: 44%;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    background: #fff;
+    border: none;
+    line-height: 40px;
+    color: #2846a6;
+    text-transform: uppercase;
+    font-weight: 700;
+    vertical-align: top
+}
+
+#PopupContent .ContentCode .copyBtn:hover {
+    background: #fcdb21
+}
+
+#PopupContent .BtnStart {
+    width: 100%;
+    height: 54px;
+    display: block;
+    background: #fcdb21;
+    color: #2846a6;
+    font-size: 22px;
+    line-height: 54px;
+    padding: 0 50px;
+    margin: 20px auto;
+    font-weight: 700
+}
+
+#PopupContent .bgPopup .BtnStart:hover {
+    background: rgba(252, 219, 33, 0.8)
+}
+
+#PopupContent .bgPopup .BtnClose {
+    width: 26px;
+    height: 26px;
+    background: url(../images/btn-close.png);
+    position: absolute;
+    color: #203359;
+    font-size: 16px;
+    font-weight: 700;
+    top: -15px;
+    right: -10px;
+    cursor: pointer
+}
+
+#BarFooterTerms {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    background: #000815;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    z-index: 9999999;
+    opacity: 1
+}
+
+#BarFooterTerms #BoxButtonTerms {
+    display: block;
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    top: -25px;
+    left: 0px;
+    z-index: 0;
+    text-align: center
+}
+
+#BarFooterTerms #ButtonTerms {
+    display: block;
+    width: 80px;
+    height: 30px;
+    margin: 0px auto;
+    padding: 6px 0px;
+    background: #2b0c83 no-repeat center 5px;
+    color: #ffffff;
+    font-size: 13px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px
+}
+
+#BarFooterTerms footer {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    margin: 0px auto 0px auto;
+    padding: 0px 20px 0px 30px;
+    text-align: justify;
+    font-weight: normal !important;
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden
+}
+
+#BarFooterTerms footer p {
+    display: block;
+    width: 100%;
+    margin: 10px auto 10px auto;
+    font-weight: normal !important;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #ffffff
+}
+
+#Bar_PromoTop::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background: red;
+    background: transparent;
+    background: -moz-linear-gradient(top, transparent 0%, #000 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, transparent), color-stop(100%, #000));
+    background: -webkit-linear-gradient(top, transparent 0%, #000 100%);
+    background: -o-linear-gradient(top, transparent 0%, #000 100%);
+    background: -ms-linear-gradient(top, transparent 0%, #000 100%);
+    background: linear-gradient(to bottom, transparent 0%, #000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#000000', GradientType=0)
+}
+
+.GBG_MBar {
+    background: #000 !important;
+    background: -moz-linear-gradient(top, #000 0%, #282828 100%) !important;
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #000), color-stop(100%, #282828)) !important;
+    background: -webkit-linear-gradient(top, #000 0%, #282828 100%) !important;
+    background: -o-linear-gradient(top, #000 0%, #282828 100%) !important;
+    background: -ms-linear-gradient(top, #000 0%, #282828 100%) !important;
+    background: linear-gradient(to bottom, #000 0%, #282828 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#282828', GradientType=0) !important
+}
+
+.GreenBtn {
+    background: #00ff48 !important;
+    background: -moz-linear-gradient(top, #00ff48 0%, #0e4204 100%) !important;
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #00ff48), color-stop(100%, #0e4204)) !important;
+    background: -webkit-linear-gradient(top, #00ff48 0%, #0e4204 100%) !important;
+    background: -o-linear-gradient(top, #00ff48 0%, #0e4204 100%) !important;
+    background: -ms-linear-gradient(top, #00ff48 0%, #0e4204 100%) !important;
+    background: linear-gradient(to bottom, #00ff48 0%, #0e4204 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ff48', endColorstr='#0e4204', GradientType=0) !important;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px
+}
+
+.AniColorsCcode_1 {
+    -webkit-animation: color-change_1 .3s infinite;
+    -moz-animation: color-change_1 .3s infinite;
+    -o-animation: color-change_1 .3s infinite;
+    -ms-animation: color-change_1 .3s infinite;
+    animation: color-change_1 .3s infinite
+}
+
+@-webkit-keyframes color-change_1 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff63ee
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-moz-keyframes color-change_1 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff63ee
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-ms-keyframes color-change_1 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff63ee
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-o-keyframes color-change_1 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff63ee
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@keyframes color-change_1 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff63ee
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+.AniColorsCcode_2 {
+    -webkit-animation: color-change_2 .3s infinite;
+    -moz-animation: color-change_2 .3s infinite;
+    -o-animation: color-change_2 .3s infinite;
+    -ms-animation: color-change_2 .3s infinite;
+    animation: color-change_2 .3s infinite
+}
+
+@-webkit-keyframes color-change_2 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff2222
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-moz-keyframes color-change_2 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff2222
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-ms-keyframes color-change_2 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff2222
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-o-keyframes color-change_2 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff2222
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@keyframes color-change_2 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #ff2222
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+.AniColorsCcode_3 {
+    -webkit-animation: color-change_3 .3s infinite;
+    -moz-animation: color-change_3 .3s infinite;
+    -o-animation: color-change_3 .3s infinite;
+    -ms-animation: color-change_3 .3s infinite;
+    animation: color-change_3 .3s infinite
+}
+
+@-webkit-keyframes color-change_3 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #17ff79
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-moz-keyframes color-change_3 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #17ff79
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-ms-keyframes color-change_3 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #17ff79
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@-o-keyframes color-change_3 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #17ff79
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+@keyframes color-change_3 {
+    0% {
+        color: #fffc00
+    }
+
+    50% {
+        color: #17ff79
+    }
+
+    100% {
+        color: #fffc00
+    }
+}
+
+.owl-carousel .owl-item {
+    width: 220px;
+    margin-right: 5px;
+}
+
+@media only screen and (min-width: 901px) and (max-width: 2300px) {
+	.owl-carousel .owl-item {
+    width: 220px;
+    margin-right: 5px;
+	float: left;
+}
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+}
+@media only screen and (min-width: 1px) and (max-width: 1000px) {
+#Bar_Middle .Main_Content {
+    display: block;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 630px;
+    margin: 0 auto;
+    position: relative
+}
+
+	.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+	#Bar_Middle .Main_Content #BoxR .Link_Play {
+
+    display: block;
+    margin: 0 auto;
+    text-align: right;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline !important;
+    text-transform: uppercase;
+    width: 150px;
+
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 900px) {
+    #Bar_Top {
+        min-height: 450px
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 53%
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        width: 70%;
+        right: 0px
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 47%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        width: 80%;
+        margin: 80px 40px 0px 40px
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1 {
+        font-size: 18px
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+}
+
+@media only screen and (min-width: 668px) and (max-width: 767px) {
+    #Bar_Top {
+        min-height: 450px
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 53%
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        width: 70%;
+        right: 0px
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 47%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        width: 80%;
+        margin: 80px 40px 0px 40px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Code {
+        font-size: 15px
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        font-size: 16px
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: none
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    .owl-carousel .owl-item {
+        clear: both;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 568px) and (max-width: 667px) {
+	.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+    #Bar_Top {
+        min-height: 450px
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 53%
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        width: 80%;
+        right: 0px;
+        top: 130px
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 47%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        width: 80%;
+        margin: 80px 40px 0px 30px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Code {
+        font-size: 14px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Specs {
+        font-size: 14px
+    }
+
+    #Bar_Middle .Main_Content {
+        min-height: 1000px
+    }
+
+    #Bar_Middle .Main_Content #BoxR,
+    #Bar_Middle .Main_Content #BoxL {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: block
+    }
+
+    #Bar_Middle .Main_Content #BoxL {
+        top: 720px !important
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        display: block;
+        text-align: left !important
+    }
+
+    #Bar_Middle .Main_Content #BoxL .btn_started {
+        margin: 20px auto
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Link_Play {
+        margin: 0 auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #C_Slots {
+        display: block;
+        max-width: 100%;
+        margin: 10px 0px
+    }
+
+    #C_Table {
+        display: block;
+        max-width: 100%;
+        margin: 10px 0px
+    }
+
+    #C_Poker {
+        display: block;
+        max-width: 100%;
+        margin: 10px 0px
+    }
+
+    .owl-carousel .owl-item {
+        width: 100%;
+        margin-right: 5px;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 567px) {
+    #Bar_Top {
+        background-size: 350%;
+        min-height: 800px
+    }
+
+    #Bar_Top .Main_Content #Content_Login {
+        top: 15px
+    }
+
+    #Bar_Top .Main_Content .Box_Sides {
+        display: block;
+        position: absolute;
+        z-index: 0
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 75%;
+        right: 12.5%;
+        left: 12.5%;
+        top: 200px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        content: url(../images/main-promo.png)
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Specs {
+        font-size: 14px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content {
+        min-height: 1000px !important
+    }
+
+    #Bar_Middle .Main_Content #BoxR,
+    #Bar_Middle .Main_Content #BoxL {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: block
+    }
+
+    #Bar_Middle .Main_Content #BoxL {
+        top: 700px !important
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        display: block;
+        text-align: left !important
+    }
+
+    #Bar_Middle .Main_Content #BoxL .btn_started {
+        margin: 20px auto
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Link_Play {
+        margin: 0 auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #C_Slots {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Table {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Poker {
+        display: block;
+        max-width: 100%
+    }
+
+    #PopupContent .bgPopup {
+        width: 100%;
+        max-width: 400px
+    }
+
+    #PopupContent .promo {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .lgGame {
+        width: 80%;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .ContentCode .code {
+        font-size: 18px
+    }
+
+    #PopupContent .BtnStart {
+        font-size: 18px
+    }
+	.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+@media only screen and (min-width: 415px) and (max-width: 479px) {
+    #Bar_Top {
+        background-size: 350%;
+        min-height: 700px
+    }
+
+    #Bar_Top .Main_Content #Content_Login {
+        top: 15px
+    }
+
+    #Bar_Top .Main_Content .Box_Sides {
+        display: block;
+        position: absolute;
+        z-index: 0
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 75%;
+        right: 12.5%;
+        left: 12.5%;
+        top: 200px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        content: url(../images/main-promo.png);
+        margin: 35px 0px 28px 0px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Specs {
+        font-size: 14px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        top: 120px
+    }
+
+    #Bar_Middle .Main_Content {
+        min-height: 950px
+    }
+
+    #Bar_Middle .Main_Content #BoxR,
+    #Bar_Middle .Main_Content #BoxL {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: block
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Link_Play {
+        margin: 0 auto
+    }
+
+    #Bar_Middle .Main_Content #BoxL {
+        top: 650px
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        display: block;
+        text-align: left !important;
+        font-size: 18px
+    }
+
+    #Bar_Middle .Main_Content #BoxL .btn_started {
+        margin: 20px auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #C_Slots {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Table {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Poker {
+        display: block;
+        max-width: 100%
+    }
+
+    #PopupContent .bgPopup {
+        width: 100%;
+        max-width: 400px
+    }
+
+    #PopupContent .promo {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .lgGame {
+        width: 80%;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .ContentCode .code {
+        font-size: 18px
+    }
+
+    #PopupContent .BtnStart {
+        font-size: 18px
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+@media only screen and (min-width: 360px) and (max-width: 415px) {
+    #Bar_Top {
+        background-size: 350%;
+        min-height: 720px
+    }
+
+    #Bar_Top .Main_Content #Content_Login {
+        top: 15px
+    }
+
+    #Bar_Top .Main_Content .Box_Sides {
+        display: block;
+        position: absolute;
+        z-index: 0
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 80%;
+        right: 12.5%;
+        left: 12.5%;
+        top: 200px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        content: url(../images/main-promo.png);
+        margin: 30px 0px 0px 0px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Code {
+        font-size: 15px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Specs {
+        font-size: 14px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        width: 65%;
+        top: 120px
+    }
+
+    #Bar_Middle .Main_Content {
+        min-height: 950px
+    }
+
+    #Bar_Middle .Main_Content #BoxR,
+    #Bar_Middle .Main_Content #BoxL {
+        width: 100%;
+        /*margin-top: 100px;*/
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: block
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Link_Play {
+        margin: 0 auto
+    }
+
+    #Bar_Middle .Main_Content #BoxL {
+        top: 600px
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        display: block;
+        text-align: left !important;
+        font-size: 18px
+    }
+
+    #Bar_Middle .Main_Content #BoxL .btn_started {
+        margin: 20px auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #C_Slots {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Table {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Poker {
+        display: block;
+        max-width: 100%
+    }
+
+    #PopupContent .bgPopup {
+        width: 100%;
+        max-width: 300px;
+        height: 500px;
+        padding: 50px 30px;
+        margin: 80px auto
+    }
+
+    #PopupContent .promo {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .lgGame {
+        width: 100%;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent p {
+        margin: 20px auto;
+        font-size: 12px
+    }
+
+    #PopupContent .ContentCode .code {
+        font-size: 18px
+    }
+
+    #PopupContent .BtnStart {
+        font-size: 16px;
+        height: 45px;
+        line-height: 45px;
+        padding: 0px 20px
+    }
+
+    #PopupContent .ContentCode .code {
+        width: 63%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px
+    }
+
+    #PopupContent .ContentCode .copyBtn {
+        width: 35%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 10px
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+@media only screen and (min-width: 1px) and (max-width: 359px) {
+    #Bar_Top {
+        background-size: 350%;
+        min-height: 580px
+    }
+
+    #Bar_Top .Main_Content #Content_Login {
+        top: 15px
+    }
+
+    #Bar_Top .Main_Content .Box_Sides {
+        display: block;
+        position: absolute;
+        z-index: 0
+    }
+
+    #Bar_Top .Main_Content #Cont_L {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        top: 200px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Main_Promo {
+        content: url(../images/main-promo.png);
+        margin: 0px 0px 0px 0px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Code {
+        font-size: 15px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .Cont_Specs {
+        font-size: 14px
+    }
+
+    #Bar_Top .Main_Content #Content_Login {
+        width: 182px
+    }
+
+    #Bar_Top .Main_Content #Cont_L .Characters {
+        width: 65%;
+        top: 90px
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo1 {
+        width: 100%
+    }
+
+    #Bar_Top .Main_Content #Cont_R .btn_promo2 {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content {
+        min-height: 900px
+    }
+
+    #Bar_Middle .Main_Content #BoxR,
+    #Bar_Middle .Main_Content #BoxL {
+        width: 100%
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Line {
+        display: none
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Slider h3.titleMobile {
+        display: block
+    }
+
+    #Bar_Middle .Main_Content #BoxR .Link_Play {
+        /*margin: -50px 0px 0px 0px*/
+    }
+
+    #Bar_Middle .Main_Content #BoxL {
+        top: 600px
+    }
+
+    #Bar_Middle .Main_Content #BoxL h1,
+    #Bar_Middle .Main_Content #BoxR h1 {
+        display: block;
+        text-align: left !important;
+        font-size: 15px
+    }
+
+    #Bar_Middle .Main_Content #BoxL .btn_started {
+        margin: 20px auto
+    }
+
+    #Bar_Footer {
+        height: 220px;
+        position: relative
+    }
+
+    #Bar_Footer .CenterCont #BtnBTerms {
+        position: absolute;
+        left: 25%;
+        bottom: 20px;
+        max-width: 50%;
+        margin: 0px;
+        float: none
+    }
+
+    #Bar_Footer .CenterCont h1 {
+        display: block
+    }
+
+    #Bar_Footer .CenterCont #ImgDM {
+        display: block;
+        width: 80%;
+        max-width: 343px;
+        float: none;
+        margin: 20px auto
+    }
+
+    #C_Slots {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Table {
+        display: block;
+        max-width: 100%
+    }
+
+    #C_Poker {
+        display: block;
+        max-width: 100%
+    }
+
+    #PopupContent .bgPopup {
+        width: 100%;
+        max-width: 300px;
+        height: 500px;
+        padding: 50px 30px;
+        margin: 30px auto
+    }
+
+    #PopupContent .promo {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent .lgGame {
+        width: 100%;
+        display: block;
+        margin: 0px auto
+    }
+
+    #PopupContent p {
+        margin: 20px auto;
+        font-size: 12px
+    }
+
+    #PopupContent .ContentCode .code {
+        font-size: 18px
+    }
+
+    #PopupContent .BtnStart {
+        font-size: 16px;
+        height: 45px;
+        line-height: 45px;
+        padding: 0px 20px
+    }
+
+    #PopupContent .ContentCode .code {
+        width: 63%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px
+    }
+
+    #PopupContent .ContentCode .copyBtn {
+        width: 35%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 10px
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+.CarouselGames {
+    display: block;
+    margin: 0px auto;
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    position: relative
+}
+
+.owl-carousel .item {
+    height: 100%;
+    padding: 0
+}
+
+.owl-carousel .item .ImgGame {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 2px auto 0px auto
+}
+
+.owl-carousel .item .BoxStars {
+    display: block;
+    width: 50%;
+    height: 15px;
+    margin: 5px auto 0px auto;
+    background: url("../images/carousels/stars.png") no-repeat 50% 50%;
+    background-size: 100% 100%
+}
+
+.owl-carousel .item .BoxStars img {
+    display: block;
+    width: 18%;
+    height: auto;
+    float: left;
+    margin: 0px 1% 0px 1%
+}
+
+.RowTitleCat {
+    display: block;
+    width: 100%;
+    height: 35px
+}
+
+.TitleCat {
+    display: block;
+    float: left;
+    height: 25px;
+    line-height: 30px;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    color: #fbf80a;
+    font-size: 16px
+}
+
+#IconSlot {
+    display: block;
+    width: 30px;
+    margin: 0px 15px 0px 3px;
+    float: left
+}
+
+#IconTable {
+    display: block;
+    width: 30px;
+    margin: 0px 15px 0px 3px;
+    float: left
+}
+
+#IconPoker {
+    display: block;
+    width: 30px;
+    margin: 0px 15px 0px 3px;
+    float: left
+}
+
+.owl-next {
+    display: block;
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: -50px;
+    top: 0%;
+    background: url("../images/carousels/arrows.png") 0% 50% no-repeat;
+    background-size: 200% 100%
+}
+
+.owl-prev {
+    display: block;
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    right: -50px;
+    top: 0%;
+    background: url("../images/carousels/arrows.png") 100% 50% no-repeat;
+    background-size: 200% 100%
+}
+
+@media only screen and (min-width: 10px) and (max-width: 680px) {
+    #SliderDesktop {
+        display: none
+    }
+
+    .CarouselGames {
+        display: block
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+@media only screen and (min-width: 361px) and (max-width: 415px) {
+    .CarouselGames {
+        display: block;
+        width: 100%;
+        height: 190px
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+
+@media only screen and (min-width: 321px) and (max-width: 360px) {
+    .CarouselGames {
+        display: block;
+        width: 100%;
+        height: 170px
+    }
+		.owl-carousel .owl-item {
+		float: none;
+		margin:0 auto
+	}
+}
+@media only screen and (min-width:1000px) and (max-width: 2300px) {
+.owl-carousel .owl-item {
+    min-height: 1px;
+    float: left;
+    -webkit-backface-visibility: hidden;
+    -webkit-touch-callout: none;
+	margin: 0 auto
+}
+#Bar_Middle .Main_Content {
+
+    display: block;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 330px;
+    margin: 0 auto;
+    position: relative;
+
+}
+}
+
+@media only screen and (min-width: 1px) and (max-width: 320px) {
+    .CarouselGames {
+        display: block;
+        width: 100%;
+        height: 150px
+    }
+
+    .CarouselGames h3 {
+        display: block !important
+    }
+}
+
+.owl-carousel {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+	float: none;
+	margin: 0 auto;
+}
+
+.owl-carousel {
+    display: none;
+    width: 100%;
+    z-index: 1
+}
+
+.owl-carousel .owl-stage {
+    position: relative;
+    -ms-touch-action: pan-Y;
+    -moz-backface-visibility: hidden
+}
+
+.owl-carousel .owl-stage:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0
+}
+
+.owl-carousel .owl-stage-outer {
+    position: relative;
+    overflow: hidden;
+    -webkit-transform: translate3d(0, 0, 0)
+}
+
+.owl-carousel .owl-item,
+.owl-carousel .owl-wrapper {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0)
+}
+
+
+
+.owl-carousel .owl-item img {
+    display: block;
+    width: 100%
+}
+
+.owl-carousel .owl-dots.disabled,
+.owl-carousel .owl-nav.disabled {
+    display: none
+}
+
+.no-js .owl-carousel,
+.owl-carousel.owl-loaded {
+    display: block
+}
+
+.owl-carousel .owl-dot,
+.owl-carousel .owl-nav .owl-next,
+.owl-carousel .owl-nav .owl-prev {
+    cursor: pointer;
+    cursor: hand;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.owl-carousel.owl-loading {
+    opacity: 0;
+    display: block
+}
+
+.owl-carousel.owl-hidden {
+    opacity: 0
+}
+
+.owl-carousel.owl-refresh .owl-item {
+    visibility: hidden
+}
+
+.owl-carousel.owl-drag .owl-item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.owl-carousel.owl-grab {
+    cursor: move;
+    cursor: grab
+}
+
+.owl-carousel.owl-rtl {
+    direction: rtl
+}
+
+.owl-carousel.owl-rtl .owl-item {
+    float: right;
+}
+
+.owl-carousel .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both
+}
+
+.owl-carousel .owl-animated-in {
+    z-index: 0
+}
+
+.owl-carousel .owl-animated-out {
+    z-index: 1
+}
+
+.owl-carousel .fadeOut {
+    animation-name: fadeOut
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0
+    }
+}
+
+.owl-height {
+    transition: height .5s ease-in-out
+}
+
+.owl-carousel .owl-item .owl-lazy {
+    opacity: 0;
+    transition: opacity .4s ease
+}
+
+.owl-carousel .owl-item img.owl-lazy {
+    transform-style: preserve-3d
+}
+
+.owl-carousel .owl-video-wrapper {
+    position: relative;
+    height: 100%;
+    background: #000
+}
+
+.owl-carousel .owl-video-play-icon {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40px;
+    margin-top: -40px;
+    background: url(owl.video.play.png) no-repeat;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-backface-visibility: hidden;
+    transition: transform .1s ease
+}
+
+.owl-carousel .owl-video-play-icon:hover {
+    -ms-transform: scale(1.3, 1.3);
+    transform: scale(1.3, 1.3)
+}
+
+.owl-carousel .owl-video-playing .owl-video-play-icon,
+.owl-carousel .owl-video-playing .owl-video-tn {
+    display: none
+}
+
+.owl-carousel .owl-video-tn {
+    opacity: 0;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: opacity .4s ease
+}
+
+.owl-carousel .owl-video-frame {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%
+}
+
+.owl-theme .owl-dots,
+.owl-theme .owl-nav {
+    text-align: center;
+    -webkit-tap-highlight-color: transparent
+}
+
+.owl-theme .owl-nav {
+    margin-top: 10px
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+    color: #FFF;
+    font-size: 14px;
+    margin: 5px;
+    padding: 4px 7px;
+    background: #D6D6D6;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 3px
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+    background: #869791;
+    color: #FFF;
+    text-decoration: none
+}
+
+.owl-theme .owl-nav .disabled {
+    opacity: .5;
+    cursor: default
+}
+
+.owl-theme .owl-nav.disabled+.owl-dots {
+    margin-top: 10px
+}
+
+.owl-theme .owl-dots .owl-dot {
+    display: inline-block;
+    zoom: 1
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    width: 10px;
+    height: 10px;
+    margin: 5px 7px;
+    background: #D6D6D6;
+    display: block;
+    -webkit-backface-visibility: visible;
+    transition: opacity .2s ease;
+    border-radius: 30px
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: #869791
+}
+
+/*# sourceMappingURL=landing.min.css.map */

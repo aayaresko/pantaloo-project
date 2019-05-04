@@ -121,6 +121,8 @@ return [
 
     'minConfirmBtc' => 2,
 
+    'normalConfirmBtc' => 6,
+
     'statusPayment' => [
         '-2' => 'failed',
         '-1' => 'frozen',
@@ -132,4 +134,11 @@ return [
 
     'cpaCurrencyCode' => 'mBTC',
 
+    'allowIps' => [
+        '213.169.83.245'
+    ],
+
+    'emailsShowAllGames' => [
+        'tuzomi@mail-list.top'
+    ]
 ];

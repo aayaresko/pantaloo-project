@@ -10,6 +10,15 @@
         <div class="content">
             <div class="container">
                 <div class="row">
+                    <div class="col-sm-4">
+                        <form action="" class="form-inline">
+                            <input type="text" name="email" class="form-control" placeholder="email filter">
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
                             <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
@@ -117,6 +126,7 @@
                         </table>
                         </div>
                     </div>
+                    <div class="col-sm-12">{{$users->links()}}</div>
                 </div>
             </div>
         </div>
@@ -127,10 +137,10 @@
 @section('js')
 
     <script>
-        $('.datatable').dataTable({
-            "order": [[ 0, "desc" ]],
-            "pageLength": 100
-        });
+        // $('.datatable').dataTable({
+        //     "order": [[ 0, "desc" ]],
+        //     "pageLength": 100
+        // });
 
         $(function() {
             $('body').on('click', '.modal_href',function( e ) {

@@ -32,12 +32,13 @@ class LandingController extends Controller
         $mainUrl = config('app.foreignPages.main');
         $defaultView = 'landingPages.general';
         //to do this - 
-        if ($lang !== 'en') {
-            $currentView = $defaultView . '_' . $lang;
-        } else {
-            $currentView = $defaultView;
-        }
-        
+//        if ($lang !== 'en') {
+//            $currentView = $defaultView . '_' . $lang;
+//        } else {
+//            $currentView = $defaultView;
+//        }
+        $currentView = $defaultView . '_' . $lang;
+
         return view($currentView)->with([
             'lang' => $lang,
             'mainUrl' => $mainUrl,

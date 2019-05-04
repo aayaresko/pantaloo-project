@@ -41,20 +41,28 @@ class UpdateTransactions extends Command
     public function handle()
     {
         $service = new Service();
-        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+        $minConfirmBtc = config('appAdditional.normalConfirmBtc');
 
         while (true) {
             $transactions = Transaction::where('confirmations', '<', $minConfirmBtc)->where('type', 3)->get();
 
             foreach ($transactions as $transaction) {
 
-                if ($data = $service->getTransaction($transaction->ext_id)) {
+                try {
+                    $data = $service->getTransaction($transaction->ext_id);
 
-                    print_r($data);
+                    if ($data) {
 
-                    $transaction->confirmations = $data['confirmations'];
+                        print_r($data);
 
-                    $transaction->save();
+                        $transaction->confirmations = $data['confirmations'];
+
+                        $transaction->save();
+                    }
+
+                } catch (\Exception $ex) {
+                    //to do logs and rollback
+                    print_r($ex->getMessage());
                 }
             }
 

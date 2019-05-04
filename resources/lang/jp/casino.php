@@ -74,99 +74,399 @@ return array (
   'support.buy_bitcoins_value' => 'さまざまな取引所でビットコインをご購入になれます。 ｚbitstamp、coinbase、spicepay などがありますが、詳しくは当サイトの「ビットコインとは」ページをご覧になるか、ライブチャットでお問い合わせください。',
   'support.games_fair' => 'ゲームは公平ですか?',
   'support.games_fair_value' => '当サイトのゲームは 100% 公平です。公平性と信頼性のある製品を提供しております。また、ゲームはすべてキュラソー島のライセンス下で運営されています。',
-
-'account' => 'Account',
-  'support_can_i_have_account'=>'Can I have more than one account?',
-  'support_can_i_have_account_value'=>'No, it is only allowed to open one account during your lifetime, even if an old account is closed down, you would have to request this one to be reopened as no new accounts can not be created.',
-  'support_what_should_i_do_account'=>'What should I do if I have forgotten my password?',
-  'support_what_should_i_do_account_value'=>'The quickest way is to create a new password by clicking this ‘Forgot Password?’ link. We will then send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit account. Alternatively, you can contact our helpful customer support either by the web chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
-  'support_can_i_change_email'=>'Can I change my registered email address?',
-  'support_can_i_change_email_value'=>'No. Unfortunately it\'s not possible to change your email address.',
+  'account' => 'Account',
+  'support_can_i_have_account' => 'Can I have more than one account?',
+  'support_can_i_have_account_value' => 'No, it is only allowed to open one account during your lifetime, even if an old account is closed down, you would have to request this one to be reopened as no new accounts can not be created.',
+  'support_what_should_i_do_account' => 'What should I do if I have forgotten my password?',
+  'support_what_should_i_do_account_value' => 'The quickest way is to create a new password by clicking this ‘Forgot Password?’ link. We will then send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit account. Alternatively, you can contact our helpful customer support either by the web chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
+  'support_can_i_change_email' => 'Can I change my registered email address?',
+  'support_can_i_change_email_value' => 'No. Unfortunately it\'s not possible to change your email address.',
   'support_deposit' => 'Deposits & Withdrawals',
   'support_what_happens' => 'What happens if my deposit is not showing?',
-  'support_what_happens_value'=>'If your crypto deposit is now showing, this most likely means that it has not yet been confirmed in the blockchain, or that your wallet has not yet sent the funds, you can always check the blockchain to see if your transfer is visible there, or ask the support if you need a hand with this.',
+  'support_what_happens_value' => 'If your crypto deposit is now showing, this most likely means that it has not yet been confirmed in the blockchain, or that your wallet has not yet sent the funds, you can always check the blockchain to see if your transfer is visible there, or ask the support if you need a hand with this.',
   'support_how_long' => 'How long does it take for deposits for show in my account?',
   'support_how_long_value' => 'As soon as your deposit appear in the blockchain network, it\'s shown in your account.',
-  'support_what_are_the_rules'=>'What are the rules to withdrawing my balance?',
-  'support_what_are_the_rules_value'=>'Before a withdrawal is allowed to be made your deposit has to be wagered 3 times. If you only play table games such as Roulette and Blackjack, then the deposit needs to be wagered 10 times. These rules exist to prevent money laundering and fraud.',
-  'support_is_there_a_maximum_withdrawal_rule'=>'Is there a maximum withdrawal rule I should know about?',
-  'support_is_there_a_maximum_withdrawal_rule_value'=>'We don\'t enforce any limits now.',
-  'the_casino'=>'the Casino',
-  'support_deposit_what_happens'=>'What happens if I encounter an error or the game freezes?',
-  'support_deposit_what_happens_value'=>'Most of the time, if your game freezes then you can pick up exactly where you left off next time you open the game. If there is no option for you to do this, then the round will continue to play out on the server. This will happen even if your computer is frozen or you lose internet connection. All your winnings will be paid into your account as normal. In order to get back into the game a simple refresh of the site usually works, and if this does not let you back into the game, you just need to clear your cookies and cache in your browser and it shall work once again. Is the game still not opening up, you can contact us on support@casinobit.io or via the web chat here.',
-  'support_i_cant_get_the_casino_game'=>'I can’t get the casino game to start when I click the link. What should I do?',
-  'support_i_cant_get_the_casino_game_value'=>'In order to play in the CasinoBit you will need to have Java installed on your computer. You can download Java here: http://java.com/ Please also check that you have installed the latest version of Flash. If you need to download Flash, then you can do so here: http://get.adobe.com/flashplayer/ If neither of these resolves the issue, then it could mean you have lost contact with your server. Try logging out and logging back in before you click the link again. Occasionally you may need to shut down your whole browser and reopen it again for the game to load. If you’ve tried all these and the problem continues to persist, then contact our support team.',
-  'support_an_error_or_technical_issue'=>'An error or technical issue occurred in the casino. What should I do?',
-  'support_an_error_or_technical_issue_value'=>'We store every single spin you make in our database in order to help with these problems. If you feel that an error has occurred during your game play, then please contact our support team. Remember that the more information you can give us, the easier it will be for us to resolve the problem. Try to note down the game name, the amount of time you have played, the stake you were playing and details on what happened. If you are able to provide a screenshot of the problem then this will also assist us in fixing the problem. It is always a good idea to stop playing until the issue has been resolved.',
-  'support_how_can_i_take_a_screenshot'=>'How can I take a screenshot?',
-  'support_how_can_i_take_a_screenshot_value'=>'A screenshot is a photo of the display currently on your computer screen. The image will be saved in your computer as a file, and can easily be attached to emails in order to send to our support team. In order to take a screenshot in Windows, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press the \'Print Screen\' button on your keyboard. This button is usually located on the right hand side of the keyboard. Step 3: Open a \'Paint\' or \'Word\' program on your computer and then press Ctrl + V to paste the image in. You can also click the \'Paste\' option from the ‘Edit’ menu to do this. You will then see your print screen image appear in the document. Step 4: Save this file to your computer using a name that will help you easily identify it. We also recommend that you save it to your desktop to allow faster access to the file. Step 5: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error. In order to take a screenshot on a Mac, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press Shift + CMD + 4, then click on the spacebar to make the camera appear. Click the mouse in order to take a snapshot of the current window open on your screen. This image will automatically save to your computer desktop, with the current time and date. Step 3: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error.',
-  'security'=>'Security',
-  'support_am_i_required_to_upload_documents_and_why'=>'Am I required to upload documents and why?',
-  'support_am_i_required_to_upload_documents_and_why_value'=>'Our top priority is to make sure that we keep all our players safe and we take this very seriously. If you are playing with cryptocurrencies such as Bitcoins you will not have to provide documents as a standard. However, we do reserve the right to carry out additional verification if we believe any suspicious or fraudulent behaviour has occurred on your account.',
-  'support_is_all_my_information_secure_on_casinobit'=> 'Is all my information secure on CasinoBit?',
-  'support_is_all_my_information_secure_on_casinobit_value'=>'Always. As soon as you log in, any communication you make between your web browser and the CasinoBit website will be protected by industry-standard encryption technology. This means that all your personal data and any activity you make on the site will be kept completely private.',
-  'support_are_my_bitcoins_secure_on_casinobit'=>'Are my Bitcoins secure on CasinoBit?',
-  'support_are_my_bitcoins_secure_on_casinobit_value'=>'We take your security extremely seriously. Our experts have built in various sophisticated measures to prevent theft of funds or case sensitive information. In addition to this, we follow all the best practices to keep your coins safe, as outlined below: We store all the bitcoins in cold wallets, which are completely isolated from any online system. Being in cold wallets, they are protected with air-gap isolation All wallets are encrypted',
+  'support_what_are_the_rules' => 'What are the rules to withdrawing my balance?',
+  'support_what_are_the_rules_value' => 'Before a withdrawal is allowed to be made your deposit has to be wagered 3 times. If you only play table games such as Roulette and Blackjack, then the deposit needs to be wagered 10 times. These rules exist to prevent money laundering and fraud.',
+  'support_is_there_a_maximum_withdrawal_rule' => 'Is there a maximum withdrawal rule I should know about?',
+  'support_is_there_a_maximum_withdrawal_rule_value' => 'We don\'t enforce any limits now.',
+  'the_casino' => 'the Casino',
+  'support_deposit_what_happens' => 'What happens if I encounter an error or the game freezes?',
+  'support_deposit_what_happens_value' => 'Most of the time, if your game freezes then you can pick up exactly where you left off next time you open the game. If there is no option for you to do this, then the round will continue to play out on the server. This will happen even if your computer is frozen or you lose internet connection. All your winnings will be paid into your account as normal. In order to get back into the game a simple refresh of the site usually works, and if this does not let you back into the game, you just need to clear your cookies and cache in your browser and it shall work once again. Is the game still not opening up, you can contact us on support@casinobit.io or via the web chat here.',
+  'support_i_cant_get_the_casino_game' => 'I can’t get the casino game to start when I click the link. What should I do?',
+  'support_i_cant_get_the_casino_game_value' => 'In order to play in the CasinoBit you will need to have Java installed on your computer. You can download Java here: http://java.com/ Please also check that you have installed the latest version of Flash. If you need to download Flash, then you can do so here: http://get.adobe.com/flashplayer/ If neither of these resolves the issue, then it could mean you have lost contact with your server. Try logging out and logging back in before you click the link again. Occasionally you may need to shut down your whole browser and reopen it again for the game to load. If you’ve tried all these and the problem continues to persist, then contact our support team.',
+  'support_an_error_or_technical_issue' => 'An error or technical issue occurred in the casino. What should I do?',
+  'support_an_error_or_technical_issue_value' => 'We store every single spin you make in our database in order to help with these problems. If you feel that an error has occurred during your game play, then please contact our support team. Remember that the more information you can give us, the easier it will be for us to resolve the problem. Try to note down the game name, the amount of time you have played, the stake you were playing and details on what happened. If you are able to provide a screenshot of the problem then this will also assist us in fixing the problem. It is always a good idea to stop playing until the issue has been resolved.',
+  'support_how_can_i_take_a_screenshot' => 'How can I take a screenshot?',
+  'support_how_can_i_take_a_screenshot_value' => 'A screenshot is a photo of the display currently on your computer screen. The image will be saved in your computer as a file, and can easily be attached to emails in order to send to our support team. In order to take a screenshot in Windows, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press the \'Print Screen\' button on your keyboard. This button is usually located on the right hand side of the keyboard. Step 3: Open a \'Paint\' or \'Word\' program on your computer and then press Ctrl + V to paste the image in. You can also click the \'Paste\' option from the ‘Edit’ menu to do this. You will then see your print screen image appear in the document. Step 4: Save this file to your computer using a name that will help you easily identify it. We also recommend that you save it to your desktop to allow faster access to the file. Step 5: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error. In order to take a screenshot on a Mac, just follow the steps outlined below: Step 1: Ensure that the current view on your screen is the image you want to take a screenshot of. Close or minimise any additional windows that may be obscuring the view. Step 2: Press Shift + CMD + 4, then click on the spacebar to make the camera appear. Click the mouse in order to take a snapshot of the current window open on your screen. This image will automatically save to your computer desktop, with the current time and date. Step 3: Attach this file into an email addressed to support@casinobit.io, including all the additional information about the error.',
+  'security' => 'Security',
+  'support_am_i_required_to_upload_documents_and_why' => 'Am I required to upload documents and why?',
+  'support_am_i_required_to_upload_documents_and_why_value' => 'Our top priority is to make sure that we keep all our players safe and we take this very seriously. If you are playing with cryptocurrencies such as Bitcoins you will not have to provide documents as a standard. However, we do reserve the right to carry out additional verification if we believe any suspicious or fraudulent behaviour has occurred on your account.',
+  'support_is_all_my_information_secure_on_casinobit' => 'Is all my information secure on CasinoBit?',
+  'support_is_all_my_information_secure_on_casinobit_value' => 'Always. As soon as you log in, any communication you make between your web browser and the CasinoBit website will be protected by industry-standard encryption technology. This means that all your personal data and any activity you make on the site will be kept completely private.',
+  'support_are_my_bitcoins_secure_on_casinobit' => 'Are my Bitcoins secure on CasinoBit?',
+  'support_are_my_bitcoins_secure_on_casinobit_value' => 'We take your security extremely seriously. Our experts have built in various sophisticated measures to prevent theft of funds or case sensitive information. In addition to this, we follow all the best practices to keep your coins safe, as outlined below: We store all the bitcoins in cold wallets, which are completely isolated from any online system. Being in cold wallets, they are protected with air-gap isolation All wallets are encrypted',
   'support_how_does_your_kyc_process_work' => 'How does your KYC process work, how long does it take and will I be notified?',
   'support_how_does_your_kyc_process_work_value' => 'When you request a withdrawal, if we at this stage require documents from you we will send you an email asking for the required documents with instructions on how to proceed. The documents will be verified within 12 hours time, mostly this is done within one hour though.',
-  'support_can_my_documents_be_refused'=>'Can my documents be refused?',
-  'support_can_my_documents_be_refused_value'=>'Yes. We must be in accordance to the rules stated by our licensing institution in Curacao. In cases where it is needed, we will reach out to you to ask for more or alternative document copies, in order to stay within the law.',
-  'support_how_can_i_make_sure_my_account_is_fully_protected'=>'How can I make sure my account is fully protected?',
-  'support_how_can_i_make_sure_my_account_is_fully_protected_value'=>'There are a few steps you can take to make sure that your account is as safe as it can be. 1. Make sure you are using a different password for CasinoBit than your email account connected to your CasinoBit account or any other site you are using. 2. Do regular virus scans on your computer to ensure no malicious programs such as keyloggers that can gather your secure information are hiding on your computer.',
-
-    'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
-    'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
-    'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
-    'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
-    'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
-    'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
+  'support_can_my_documents_be_refused' => 'Can my documents be refused?',
+  'support_can_my_documents_be_refused_value' => 'Yes. We must be in accordance to the rules stated by our licensing institution in Curacao. In cases where it is needed, we will reach out to you to ask for more or alternative document copies, in order to stay within the law.',
+  'support_how_can_i_make_sure_my_account_is_fully_protected' => 'How can I make sure my account is fully protected?',
+  'support_how_can_i_make_sure_my_account_is_fully_protected_value' => 'There are a few steps you can take to make sure that your account is as safe as it can be. 1. Make sure you are using a different password for CasinoBit than your email account connected to your CasinoBit account or any other site you are using. 2. Do regular virus scans on your computer to ensure no malicious programs such as keyloggers that can gather your secure information are hiding on your computer.',
+  'support_account_what_are_deposits' => 'What are the fees on deposits and withdrawals?',
+  'support_account_what_are_deposits_value' => 'CasinoBit does not have any fee on deposit or withdrawal.',
+  'support_account_what_your_minimums_deposits' => 'What are your minimums on deposits and withdrawals?',
+  'support_account_what_your_minimums_deposits_value' => 'Minimum deposit is 1 mBTC (1 BTC = 1000 mBTC)',
+  'support_account_how_long_will_request_withdrawal' => 'How long will it take for me to receive my money once I request a withdrawal?',
+  'support_account_how_long_will_request_withdrawal_value' => 'While Casinobit.io will endeavour to pay out withdrawals immediately, some withdrawals
                                 may take longer than others.
                                 Casinobit.io shall try to pay out withdrawals within 1 hour, however in some cases,
                                 withdrawals may take longer.',
-    'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase Bitcoins?',
-    'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
-    'support_most_popular' => 'Most Popular',
-    'support_how_do_create_my_account' => 'How do I create my casinobit account?',
-    'support_how_do_create_my_account_value' => 'All you have to do to get started is click the \'Registration\' button in the upper left
+  'support_account_where_can_i_purchase_bitcoins' => 'Where can I purchase Bitcoins?',
+  'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins. Online exchanges include Coinbase, Bitstamp and Bitpanda.',
+  'support_most_popular' => 'Most Popular',
+  'support_how_do_create_my_account' => 'How do I create my casinobit account?',
+  'support_how_do_create_my_account_value' => 'All you have to do to get started is click the \'Registration\' button in the upper left
                                 corner and fill in all the required fields.
                                 We’ll then pop you over an email where you can verify your email address using the
                                 verification link we send you.
                                 Once all this is done, your account will be fully active.',
-    'support_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins.
+  'support_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell Bitcoins.
                                 Online exchanges include Coinbase, Bitstamp and Bitpanda.
                                 To find out more about buying Bitcoins, please visit our About Bitcoin page.',
-    'support_what_currencies_cryptocurrencies' => 'What currencies and cryptocurrencies do you accept?',
-    'support_what_currencies_cryptocurrencies_value' => 'Our idea was to create an online casino where you can play with Bitcoin only.',
-    'support_how_start' => 'How to start',
-    'support_i_havent_receved_confirmation' => 'I haven\'t receved confirmation email...',
-    'support_i_havent_receved_confirmation_value' => 'In this case you need first to check your \'Spam\' folder.
+  'support_what_currencies_cryptocurrencies' => 'What currencies and cryptocurrencies do you accept?',
+  'support_what_currencies_cryptocurrencies_value' => 'Our idea was to create an online casino where you can play with Bitcoin only.',
+  'support_how_start' => 'How to start',
+  'support_i_havent_receved_confirmation' => 'I haven\'t receved confirmation email...',
+  'support_i_havent_receved_confirmation_value' => 'In this case you need first to check your \'Spam\' folder.
                                 Sometimes automatic emails can be found there because of your email box filtering
                                 settings.
                                 If you cannot find our email in any of your email box folders, please contact us in the
                                 web chat or over the email support@casinobit.io.',
-    'support_what_is_age_allowed' => 'What is the minimum age allowed?',
-    'support_what_is_age_allowed_value' => 'You may participate in any of the Games if and only if: You are over eighteen (18) years
+  'support_what_is_age_allowed' => 'What is the minimum age allowed?',
+  'support_what_is_age_allowed_value' => 'You may participate in any of the Games if and only if: You are over eighteen (18) years
                                 of age or such higher minimum legal age of majority as stipulated in the jurisdiction of
                                 Your residence; and It is legal for You to participate in the Games according to
                                 applicable laws in the jurisdiction of your residence.',
-    'support_how_to_make_deposit' => 'How to make a deposit?',
-    'support_how_to_make_deposit_value' => 'You need to click on \'+\' button in a top right corner and then you will receive an
+  'support_how_to_make_deposit' => 'How to make a deposit?',
+  'support_how_to_make_deposit_value' => 'You need to click on \'+\' button in a top right corner and then you will receive an
                                 address to send your Bitcoins.',
-
-    'support_we_accept_only_bitcoin' => 'We accept only Bitcoin.',
-
-    'support_what_is_bitcoin' => 'What is Bitcoin?',
-    'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
+  'support_we_accept_only_bitcoin' => 'We accept only Bitcoin.',
+  'support_what_is_bitcoin' => 'What is Bitcoin?',
+  'support_what_is_bitcoin_value' => 'Bitcoin is a digital and global money system currency. It allows people to send or
                                 receive money across the internet, even to someone they don\'t know or don\'t trust. Money
                                 can be exchanged without being linked to a real identity. The mathematical field of
                                 cryptography is the basis for Bitcoin\'s security.',
-  
-  'terms' => 'Bonus Terms & Conditions',
+  'terms' => 'Bonus Terms &amp; Conditions',
   'bonus_terms' => 'Terms',
   'free' => 'フリー',
   'spins' => 'スピン',
   'welcome_bonus' => 'ウェルカム ボーナス',
-  'bonus.term' => '<h3>WELCOME BONUS TERMS AND CONDITIONS</h3><span><br>New players receive 50 Free Spins as Welcome Bonus. In order to claim the 50 free spins you have to confirm your email address.<br><br>To activate your Welcome Bonus, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and open the game within 5 days from the moment of registration, otherwise they will expire.<br><br>Welcome Bonus is granted only once.<br><br>The maximum winnings that will be paid out resulting from a Welcome Bonus without deposit will be 60 mBTC. Any winnings exceeding this amount will be forfeited.<br><br>All winnings from a Welcome Bonus will be credited to a player\'s bonus account balance and is subject to our standard terms and conditions, including bonus terms and wagering requirements.<br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<br><br>When wagering, funds on the main account will be used prior to the use of bonus money.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games, or any other games CANNOT be used to wager the bonus. “Playing for fun” (demo/practice mode/free play) on any game does not count towards any wagering (turnover) requirements.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>200% 1ST DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 1ST DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the first deposit.</span><br><span><br>Maximum amount for the 1ST DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 1ST DEPOSIT BONUS.<span><br><br></span></span><span>If the First Deposit is below the aforementioned minimum, the player will not receive the 1ST DEPOSIT BONUS.<br><br>1ST DEPOSIT BONUS is granted only once.<span><br><br></span></span>The First Deposit Bonus is only claimable along with a player’s first deposit. A 1ST DEPOSIT BONUS that was not redeemed along with the first deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 1ST DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>150% 2ND DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 2ND DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the second deposit.</span><span><br><br></span><span>Maximum amount for the 2ND DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 2ND DEPOSIT BONUS.<span><br><br></span></span><span>If the second deposit is below the aforementioned minimum, the player will not receive the 2ND DEPOSIT BONUS.<br><br>2ND DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 2ND DEPOSIT BONUS is only claimable along with a player’s second deposit. A 2ND DEPOSIT BONUS that was not redeemed along with the second deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 2ND DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span><span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<span><br><br></span></span>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>100% 3RD DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 3RD DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the third deposit</span><span><br><br></span><span>Maximum amount for the 3RD DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 3RD DEPOSIT BONUS.<span><br><br></span></span><span>If the third deposit is below the aforementioned minimum, the player will not receive the 3RD DEPOSIT BONUS.<br><br>3RD DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 3RD DEPOSIT BONUS is only claimable along with a player’s third deposit. A 3RD DEPOSIT BONUS that was not redeemed along with the third deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 33 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 3RD DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>GENERAL BONUS TERMS AND CONDITIONS</h3><span><br>Players may only claim the Welcome Bonus, 1st Deposit Bonus, 2nd Deposit Bonus and 2rd Deposit Bonus once.<br><br>Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked". CasinoBit.io management reserve the right to void any bonuses and/or winnings obtained by fraudulent behavior.<br><br>To claim the Welcome Bonus or any Deposit Bonus, the user must make a minimum deposit of 3 mBTC.<br><br>When accepting a deposit bonus, kindly remember that your deposit is locked with the accepted bonus. This means that you have two options, either to complete the wagering requirement of the bonus, or cancel the bonus. If you choose to cancel the bonus, the bonus and all winnings attributed to the bonus will be lost. Wagering with both the bonus money and your deposited cash will count towards the wagering requirement.<br><br>Players have 30 days from the moment of bonus activation to wager any bonus. If player does not meet the wagering requirements within the 30 days period, their bonus and any pending winnings will expire and be removed from the account.<br><br>All bonuses (unless otherwise specified) need to be wagered 33 times before the funds can be withdrawn.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Minimal risk bets on any games (i.e. betting in proportions on different outcomes in the same hand to create "action" with minimal risk) do not qualify for completing the wagering requirement. Examples of minimal risk bets include betting on red and black simultaneously in Roulette, and betting player and banker simultaneously in Baccarat. Players who are found to be adopting these practices risk of having their bonus and winnings confiscated.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has been wagered, lost or forfeited shall be removed.<br><br>Any bonus can be removed prior to any wagering conditions being met. Please contact CasinoBit.io support to learn more.<br><br>All withdrawals will be subject to an internal audit before being processed. CasinoBit.io reserves all rights to void Bonuses or any winnings for failed audits. Player hereby consents in advance to same.<br><br>If, upon such a review, it appears that a Player(s) are participating in strategies, taking advantage of any software or system bug or failure, or participating in any form of activity that CasinoBit.io, in its sole and complete discretion, deems to be abusive (\'Promotion Abuse\'), CasinoBit.io reserves the right to revoke the entitlement of such a Player to receive or benefit from the promotion (and/or withhold the pay out of the proceeds of such abuse to the Player/s in question). Only fully settled bets (i.e. bets that result in a win or loss) will be counted towards wagering.<br><br>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding the KYC (Know Your Customer), the following documents may be needed for verification: One government approved identity card (ID card, passport and driver\'s license) with a picture, as well as proof of residency such as a utility bill (which is not older than 2 months).<br><br>Players with disposable email addresses are not eligible for any bonus. If a player despite this would receive free spins, all winnings from the spins will be confiscated.<br><br>All customer offers are limited to one per person, family, household address, email address, telephone number, IP, and shared computer, e.g. public library or workplace.<br><br>If it\'s discovered that a group players are using the same betting patterns and are connected via (but not limited to) location, banking pattern or IP, CasinoBit.io management will at it\'s own discretion have the mandate to confiscate bonus winnings and/or deposit.<br><br>Kindly note that it\'s not allowed to use bonus funds purely to progress through the bonus stages and then final stages completed with cash bets when bonus funds have been released or forfeited. If such tactic is adopted, CasinoBit.io reserves the right to confiscate the winnings.<br><br>Any accounts that are identified to be linked to an account already claiming this promotion will not be eligible and any bonuses credited to both accounts will be forfeited.<br><br>Multiple accounts are not permitted. Creating more than one accounts with CasinoBit.io in order to claim any bonuses is deemed as bonus abuse and may result in confiscated funds.<br><br>In the event of any dispute, the decision of CasinoBit.io will be final.<br><br>The CasinoBit.io and Conditions as published on the Website (and updated from time to time) are in English and it is the English version of these Terms and Conditions that form the basis of these Terms and Conditions only. Translations into other languages may be made as a service and are made in good faith. However, in the event of differences between the English version and a translation, the English version has priority over any translation.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.</span>',
+  'bonus.term' => '<h3>
+
+ウェルカムボーナスの利用規約</h3><br><br>
+
+新規プレイヤーにはウェルカムボーナスとしてフリースピン
+50 回分が付与されます。フリースピンを受け取るにはメールアドレスを認証する必要があります。
+
+&nbsp;
+
+ウェルカムボーナスを入手するには、マイアカウントの [ボーナス] セクションに移動して [利用する] をクリックし、登録から 5 日以内に取得してください。これを過ぎるとボーナスは失効します。
+
+&nbsp;
+
+フリースピンが利用可能になったら 24 時間以内に使い切ってください。残ったフリースピンはすべて無効となります。
+
+&nbsp;
+
+ウェルカムボーナスのご利用は 1 回のみです。
+
+&nbsp;
+
+ウェルカムボーナスを使って獲得した勝利金の出金限度額は 60mBTC です (入金がない場合)。超過分は没収されます。
+
+&nbsp;
+
+ウェルカムボーナスを使って獲得した勝利金はボーナスアカウントの残高に加算され、ボーナス条件および賭け条件を含む当社の一般利用規約が適用されます。
+
+&nbsp;
+
+ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 33 倍の取引 (最低賭け条件) を達成しなければなりません。
+
+&nbsp;
+
+ベットの際はボーナスマネーの前にリアルマネー(ビットコイン）が優先的に使用されます。
+
+&nbsp;
+
+ボーナスマネーはスロットでのみベットが可能です。テーブルゲーム、ライブゲーム、またはその他のゲームでボーナスマネーをベットすることはできません。「リアル以外のプレイ」 (デモ/練習モード/無料プレイ) は賭け (ターンオーバー) 条件にカウントされません。
+
+　　　　　　　　　　　　　　　　　
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。
+
+<span><br>
+</span><span><br><br><br><br></span><h3>200% 初回入金ボーナスの利用規約</h3><br>
+
+初回入金ボーナスを入手するには、マイアカウントの [ボーナス] セクションに移動して [利用する] をクリックして入金します。初回入金時にアカウントに自動でボーナスが付与されます。
+
+&nbsp;
+
+<span>初回入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>初回入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>初回の入金額が上記の最低入金額を下回る場合は、初回入金ボーナスは付与されません。<span><br>
+<br>
+</span>初回入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+初回入金ボーナスは初回の入金時のみ獲得できます。初回の入金時に初回入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません。 
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 33 倍のベット (最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>初回入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。<span><br><br><br><br><br></span><h3>150% セカンド入金ボーナスの利用規約<br></h3>
+
+セカンド入金ボーナスを入手するには、プロフィールの [ボーナス] セクションに移動して [利用する] をクリックして入金します。2 回目の入金時にアカウントに自動でボーナスが付与されます。
+
+<span><br>
+<br>
+</span>
+
+<span>セカンド入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>セカンド入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>2 回目の入金額が上記の最低入金額を下回る場合は、セカンド入金ボーナスは付与されません。<span><br>
+<br>
+</span>セカンド入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+セカンド入金ボーナスは 2 回目の入金時のみ獲得することができます。2 回目の入金時にセカンド入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません 。
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 33 倍のベット (最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>セカンド入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+<span>ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。<span><br>
+<br>
+</span></span>
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。<span><br><br></span><h3>100% サード入金ボーナスの利用規約</h3><br>
+
+サード入金ボーナスを入手するには、マイアカウントの [[ボーナス] セクションに移動して [利用する] をクリックして入金します。3 回目の入金時にアカウントに自動でボーナスが付与されます。
+
+<span><br>
+<br>
+</span>
+
+<span>サード入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>サード入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>3 回目の入金額が上記の最低入金額を下回る場合は、サード入金ボーナスは付与されません。<span><br>
+<br>
+</span>サード入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+サード入金ボーナスは 3 回目の入金時のみ獲得することができます。3 回目の入金時にサード入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません。 。
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 33 倍のベット(最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>サード入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+<br><br>
+
+一般ボーナス利用規約が適用されます。
+
+<span><br><br><br></span><h3>一般ボーナス利用規約</h3><br><div>
+
+ウェルカムボーナス、初回入金ボーナス、セカンド入金ボーナス、サード入金ボーナスのご利用はそれぞれ 1 回のみです。
+
+&nbsp;
+
+ボーナスは一度に 1 つしか利用できません。入金関連のボーナスを「重複」して利用することはできません。CasinoBit.io のマネジメントは不正行為により獲得したボーナスや勝利金を無効にする権利を留保します。
+
+&nbsp;
+
+ウェルカムボーナスまたは入金ボーナスを獲得するには、最低でも 3mBTC を入金しなければなりません。
+
+&nbsp;
+
+入金ボーナスの入金分は一時的に出金できなくなるのでご注意ください。「ベット条件を達成する」または「ボーナスをキャンセル」することで入金分を出金することができます。ボーナスをキャンセルした場合、ボーナスとボーナスを使って獲得した勝利金は没収されます。ボーナスマネーと入金分を使ったベットがともに賭け条件にカウントされます。
+
+&nbsp;
+
+どのボーナスも有効になってから 30 日間ベットが可能です。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。
+
+&nbsp;
+
+どのボーナスも (別途記載のない限り) 出金するにはボーナス額の 33 倍のベットを行う必要があります。
+
+&nbsp;
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+オポジットベット（両張り） (同じハンドで両方の結果にベットして最小のリスクしか負わないベット方法) は賭け条件にはカウントされません(例: ルーレットでレッドとブラックに同時にベットする、バカラでプレイヤーとバンカーに同時にベットするなど)。このようなベットを行っていることが発覚した場合、ボーナスと勝利金が没収されることがあります。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。</div><div>&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+ボーナスの資金から獲得した「フリースピン」または「ボーナス」の勝利金は、ボーナスがベット、損失、没収されるとなくなります。
+
+&nbsp;
+
+賭け条件を達成する前にボーナスを放棄することができます。詳しくは CasinoBit.io サポートまでお問い合わせください。
+
+&nbsp;
+
+出金処理の前に内部監査が行われます。CasinoBit.io は監査失格となったボーナスまたは勝利金を無効にするあらゆる権利を留保します。プレイヤーはこれに同意するものとします。
+
+&nbsp;
+
+監査の際に、プレイヤーがソフトウェアやシステムのバグや欠陥を悪用する戦略、またはその他 CasinoBit.io がその単独の完全な裁量により悪用と見なす行為 (「ボーナス乱用」) を行っていたことが発覚した場合、CasinoBit.io はプレイヤーのプロモーションへの参加資格またはプロモーションからの得た利益を無効にする権利を留保します (当該プレイヤーの出金処理の保留含む)。精算済みのベット (勝敗が決定したベット) のみベットとしてカウントされます。
+
+&nbsp;
+
+当社は入金不要ボーナスの出金に当たって、プレイヤーに対して KYC (Known Your Customer)&nbsp; を要求する権利を留保します。KYCには、次の本人確認書類が必要になる場合があります。官公署発行の写真付き身分証明書 (身分証明書、パスポート、運転免許証)、公共料金の請求書などの住所が証明できる書類 (2 か月以内のもの)。
+
+&nbsp;
+
+使い捨ての電子メールアドレスで登録を行ったプレイヤーにはボーナスの獲得資格はありません。このようなプレイヤーがフリースピンを受け取った場合、スピンにより獲得した勝利金はすべて没収されます。
+
+&nbsp;
+
+すべてのオファーは 1 人、 1 つの家族、世帯、電子メールアドレス、電話番号、IP、共有 PC (図書館、職場など) につき 1 回のみご利用になれます。
+
+&nbsp;
+
+プレイヤーが集団で同じベッティングパターンを使用し、場所、銀行、IP (を含むがこれに限定されない) を介してつながっていることが発覚した場合、CasinoBit.io のマネジメントは独自の裁量でボーナスの勝利金や入金を没収することができます。
+
+&nbsp;
+
+ボーナス資金をボーナスステージ達成のためにのみ使用し、ボーナス資金が換金または没収されてから、最終ステージをキャッシュによるベットで達成することは禁止されているのでご注意ください。そのような行為を行った場合、CasinoBit.io は勝利金を没収する権利を留保します。
+
+&nbsp;
+
+このプロモーションをすでに利用しているアカウントと関連するアカウントはボーナスを獲得することはできません。また、両方のアカウントに付与されたボーナスはすべて没収されます。
+
+&nbsp;
+
+複数のアカウントを所持することは禁止されています。ボーナスを獲得するために CasinoBit.io で複数のアカウントを開設することはボーナスの乱用と見なされ、資金が没収されることがあります。
+
+&nbsp;
+
+紛争が発生した場合、CasinoBit.io の決定が最終的なものとなります。
+
+&nbsp;
+
+&nbsp;
+
+ウェブサイト上で公開されている (そして随時更新される) CasinoBit.io および規約のオリジナルは英語で作成されており、英語版のみがこれらの利用規約の根拠となります。他の言語への翻訳はサービスであり、誠意を持って行われますが、英語版と翻訳版の間に相違がある場合は、英語版が最優先されます。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。</div><br><br><br><br><br><br><br><br><br><br>',
   'deposit_space' => '入金',
   'bonus_deposit' => '次回の入金でボーナスを手に入れませんか?',
   'open_bonus' => '実施中のボーナス',

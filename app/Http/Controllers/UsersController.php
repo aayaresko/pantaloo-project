@@ -31,8 +31,12 @@ class UsersController extends Controller
                     ->leftJoin('modern_extra_users as block', function ($join) {
                         $join->on('users.id', '=', 'block.user_id')
                             ->where('block.code', '=', 'block');
-                    })
-                    ->orderBy('created_at', 'DESC')->get();
+                    });
+                if ($request->email) {
+                    $users->where('users.email', $request->email);
+                }
+
+                $users = $users->orderBy('created_at', 'DESC')->paginate(100);
 
                 return view('admin.users', ['users' => $users]);
             case 3:
@@ -212,6 +216,16 @@ class UsersController extends Controller
                     ->where('code', 'block')->update([
                         'value' => $block
                     ]);
+            }
+
+            if ($block === 1) {
+                //to do necessary update this code for all drivers etc
+                $sessionsUser = DB::table('sessions')
+                    ->select(['id'])
+                    ->where('user_id', $user->id)
+                    ->pluck('id');
+
+                DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
             }
         }
 

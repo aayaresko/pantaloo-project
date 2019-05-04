@@ -3,6 +3,7 @@
 namespace App\Bonuses;
 
 use DB;
+use Log;
 use App\User;
 use App\BonusLog;
 use Carbon\Carbon;
@@ -18,8 +19,8 @@ class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
     public static $maxAmount = 60;
-    protected $playFactor = 33;
-    protected $expireDays = 30;
+    protected $playFactor = 50;
+    protected $expireDays = 10;
     protected $freeSpins = 50;
     protected $timeActiveBonusDays = 5;
 
@@ -88,12 +89,12 @@ class FreeSpins extends \App\Bonuses\Bonus
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
-            $bonus = BonusModel::where('id', static::$id)->firstOrFail();
+            //$bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
             $bonusUser = UserBonus::create([
                 'expires_at' => $date,
                 'user_id' => $user->id,
-                'bonus_id' => $bonus->id,
+                'bonus_id' => static::$id,
             ]);
 
             //get all games for free
@@ -177,8 +178,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             //to define start transaction wagered
             $dateStartBonus = $activeBonus->created_at;
             $transaction = $this->user->transactions()->where([
-                ['created_at', '>', $dateStartBonus],
                 ['type', '=', 10],
+                ['created_at', '>', $dateStartBonus],
             ])->orderBy('id', 'DESC')->first();
 
             //no transactions for increasing amount bonus
@@ -193,9 +194,9 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                 //get transaction to real for for this bonus
                 $transactionToReal = Transaction::where([
-                    ['created_at', '>', $dateStartBonus],
+                    ['user_id', '=', $user->id],
                     ['type', '=', 7],
-                    ['user_id', '=', $user->id]
+                    ['created_at', '>', $dateStartBonus],
                 ])->first();
 
                 //to do check to sum
@@ -207,8 +208,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ])->sum('bonus_sum');
                 } else {
                     $freeSpinWin = $this->user->transactions()->where([
+                        ['type', '=', 10],
                         ['created_at', '>', $dateStartBonus],
-                        ['type', '=', 10]
                     ])->sum('bonus_sum');
                     if (is_null($freeSpinWin)) {
                         $freeSpinWin = 0;
@@ -298,6 +299,12 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($user->bonus_balance == 0) {
                 $conditions = 1;
+
+                /*Log::alert([
+                    'user' => $user,
+                    'code' => 'BUGUSER'
+                ]);*/
+                
                 $this->cancel('No bonus funds');
                 $response = [
                     'success' => false,
@@ -327,7 +334,6 @@ class FreeSpins extends \App\Bonuses\Bonus
                         'balance' => DB::raw("balance+$winAmount"),
                         'bonus_balance' => 0
                     ]);
-
 
                     $activeBonus->delete();
                     $response = [
@@ -546,6 +552,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     /**
      * @return float|int
+     * @throws \Exception
      */
     public function getPlayedSum()
     {
@@ -561,6 +568,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     /**
      * @return float|int
+     * @throws \Exception
      */
     public function getPercent()
     {

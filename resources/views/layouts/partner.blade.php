@@ -137,6 +137,63 @@
 </div>
 
 <!-- Modal 2 -->
+{{--<div class="modal fade" id="myModal2" role="dialog">--}}
+    {{--<div class="modal-dialog">--}}
+
+        {{--<!-- Modal content-->--}}
+        {{--<div class="modal-content">--}}
+            {{--<div class="modal-header">--}}
+                {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+                {{--<h4 class="modal-title">Register a CasinoBit Affiliate Account</h4>--}}
+            {{--</div>--}}
+            {{--<div class="modal-body">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-6 col-md-offset-3">--}}
+                        {{--<div class="panel panel-login">--}}
+                            {{--<div class="panel-body">--}}
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12">--}}
+                                        {{--<form id="register-form" action="/affiliates/register" method="post" role="form" style="display: block;">--}}
+                                            {{--{{csrf_field()}}--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="" required>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" required>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<div class="row">--}}
+                                                    {{--<!-- <div class="col-sm-6 col-sm-offset-3"> -->--}}
+                                                    {{--<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Register Now">--}}
+                                                    {{--<!-- </div> -->--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</form>--}}
+                                        {{--<div class="error-lists" style="display: none">--}}
+                                            {{--<ul class="error-lists">--}}
+                                            {{--</ul>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="modal-footer">--}}
+                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+
+
 <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
 
@@ -153,24 +210,21 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <h4>Sorry for inconveniences. Registration now is not available. Leave your email for us to contact you as soon is it works.</h4>
+                                        <br>
                                         <form id="register-form" action="/affiliates/register" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
                                             {{--<div class="form-group">--}}
-                                                {{--<input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>--}}
+                                            {{--<input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>--}}
                                             {{--</div>--}}
                                             <div class="form-group">
                                                 <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email Address" value="" required>
                                             </div>
-                                            <div class="form-group">
-                                                <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
-                                            </div>
+
                                             <div class="form-group">
                                                 <div class="row">
                                                     <!-- <div class="col-sm-6 col-sm-offset-3"> -->
-                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Register Now">
+                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="btn btn-custom btn-lg page-scroll" style="margin-top: 13px;padding: 5px 15px; background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);width: 100%;" value="Get Notified">
                                                     <!-- </div> -->
                                                 </div>
                                             </div>
@@ -192,6 +246,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal 3. Forgot password -->
 <div class="modal fade" id="myModal3" role="dialog">

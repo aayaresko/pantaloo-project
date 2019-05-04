@@ -28,5 +28,9 @@ return [
             'debit' => 'bcsub',
             'credit' => 'bcadd',
         ]
-    ]
+    ],
+
+    'prefixName' => 'CBit',
+
+    'usePrefixAfter' => '2019-04-25 00:00:00'
 ];

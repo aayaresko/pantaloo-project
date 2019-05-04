@@ -255,7 +255,7 @@ class AgentController extends Controller
                 'available' => $agent->getAgentAvailable(),
                 'users' => User::where('agent_id', $agent->id)->count(),
                 'procent' => $agent->commission,
-                'total' => $agent->getAgentTotal()
+                'total' => 'not available'//$agent->getAgentTotal()
             ];
 
             $result[] = $item;

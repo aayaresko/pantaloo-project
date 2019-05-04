@@ -180,6 +180,7 @@ class FreeSpinsController extends Controller
         }
 
         $raw_log->response = $response;
+        $raw_log->user_id = $user->id;
         $raw_log->save();
 
         return response()->make($response, 200, [

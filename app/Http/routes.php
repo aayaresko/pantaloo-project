@@ -68,7 +68,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     // Registration Routes...
     Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    Route::post('register', 'Auth\AuthController@register');
+    //Route::post('register', 'Auth\AuthController@register');
+    Route::post('register', 'Auth\AuthController@create');
 
     // Password Reset Routes...
     //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
@@ -90,7 +91,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
         Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
         Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
-        Route::get('/games', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
+
+
+        Route::get('/games/{type_name?}', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
         //Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
         Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
         Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
@@ -340,6 +343,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     //testing
     Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
+    Route::get('/test/test1', ['as' => 'test.test1', 'uses' => 'TestController@test1']);
+
     Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestController@testTypes']);
     Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);
 
@@ -353,6 +358,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
 Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
     Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
+});
+
+Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
+    Route::get('walletNotify', 'Bitcoin\TransactionController@walletNotify')->name('walletNotify');
+    Route::get('blockNotify', 'Bitcoin\TransactionController@blockNotify')->name('blockNotify');
 });
 
 Route::group(['middleware' => ['api', 'ip.country.block']], function () {
