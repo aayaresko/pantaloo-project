@@ -20,7 +20,7 @@ class GeneralMiddleware
     {
         $ip = GeneralHelper::visitorIpCloudFire();
 
-        if (!$request->cookies->has('betatest') || $ip != '172.68.110.111'){
+        if (!$request->cookies->has('betatest') && $ip != '172.68.110.111'){
             return redirect('/coming_soon');
         }
 
