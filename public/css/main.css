@@ -2462,7 +2462,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 950, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block, .fixed-popup .popup-fixed-entry .popup-text-block {
   padding-top: 60px;
-  font-size: 18px;
+  font-size: 20px;
 }
 /* line 952, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block .text, .fixed-popup .popup-fixed-entry .popup-text-block .text {
