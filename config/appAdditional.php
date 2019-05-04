@@ -140,5 +140,7 @@ return [
 
     'emailsShowAllGames' => [
         'tuzomi@mail-list.top'
-    ]
+    ],
+
+    'banedBonusesCountries' => ['RU', 'IN']
 ];
