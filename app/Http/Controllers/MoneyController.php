@@ -110,10 +110,11 @@ class MoneyController extends Controller
 
         //to do check active bonus
         //to do not use dispatch
-        $checkFrequencyBonus = config('bonus.checkFrequency');
-        if (rand(1, $checkFrequencyBonus) === 1) {
-            BonusHelper::bonusCheck($user, 1);
-        }
+//        $checkFrequencyBonus = config('bonus.checkFrequency');
+//        if (rand(1, $checkFrequencyBonus) === 1) {
+//            BonusHelper::bonusCheck($user, 1);
+//        }
+        BonusHelper::bonusCheck($user, 1);
 
         return response()->json([
             'realBalance' => $user->balance,

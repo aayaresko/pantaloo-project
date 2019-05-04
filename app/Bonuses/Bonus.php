@@ -32,6 +32,7 @@ abstract class Bonus
         }
 
         $bonusData = $this->active_bonus->data;
+        
         if ($bonusData['lastCheck']['date'] > $this->lastAction->last_action) {
             return false;
         }

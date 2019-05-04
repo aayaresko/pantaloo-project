@@ -109,13 +109,13 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'user_id' => $user->id,
                 'bonus_id' => static::$id,
                 'activated' => 1,
-                'data' => json_encode([
+                'data' => [
                     'free_spin_win' => 0,
                     'wagered_sum' => 0,
                     'transaction_id' => 0,
                     'dateStart' => $currentDate,
                     'lastCheck' => $presentTime,
-                ])
+                ]
             ]);
 
             User::where('id', $user->id)->update([
