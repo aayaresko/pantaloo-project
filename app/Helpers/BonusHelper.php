@@ -33,7 +33,7 @@ class BonusHelper
                 Log::alert([
                     'code' => 'bonusMessage',
                     'id' => $notActiveBonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage() . 'CodeLine:' . $e->getLine()
                 ]);
                 return false;
             }
