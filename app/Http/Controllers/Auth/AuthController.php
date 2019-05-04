@@ -72,8 +72,28 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'agree' => 'required',
-            'betatest' => 'required|integer|min:100|max:200'
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $betatest = Cookie::get('betatest');
+
+        if ((int)$betatest !== 1) {
+            return redirect()->back()->withErrors(['Registration is closed']);
+        }
+
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -83,11 +103,11 @@ class AuthController extends Controller
      * @return User
      */
 //    protected function create(array $data)
-    //protected function create(array $data)
-    protected function create(Request $request)
+    protected function create(array $data)
+//    protected function create(Request $request)
     {
 //        //temporary
-        $data = $request->toArray();
+//        $data = $request->toArray();
 
 //        $errors = [];
 //        $validator = Validator::make($data, [
@@ -128,23 +148,23 @@ class AuthController extends Controller
 
         //temporary
 
-        $betatest = Cookie::get('betatest');
-
-        if ((int)$betatest !== 1) {
-            return redirect()->back()->withErrors(['Registration is closed']);
-        }
-        
-        $validator =  Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'agree' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return redirect()->back()->withErrors($errors);
-        }
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Registration is closed']);
+//        }
+//
+//        $validator =  Validator::make($data, [
+//            'name' => 'required|max:255',
+//            'email' => 'required|email|max:255|unique:users',
+//            'password' => 'required|min:6|confirmed',
+//            'agree' => 'required',
+//        ]);
+//
+//        if ($validator->fails()) {
+//            $errors = $validator->errors();
+//            return redirect()->back()->withErrors($errors);
+//        }
         //start
         $service = new Service();
         $address = $service->getNewAddress('common');

@@ -68,7 +68,7 @@ return array (
   'all' => 'All',
   'choose_your_game' => 'Choose your game',
   'support.create_account' => 'How do I create my account?',
-  'support.create_account_value' => 'To get started, click the \'Registration\' button in the upper left corner and fill in all the required fields. We will send you an email with a verification link to verify your email address. Once all this is done, your account will be fully active.',
+  'support.create_account_value' => 'To get started, click the \'Registration\' button in the upper right corner and fill in all the required fields. We will send you an email with a verification link to verify your email address. Once all this is done, your account will be fully active.',
   'support.forgotten_password' => 'What should I do if I have forgotten the password?',
   'support.forgotten_password_value' => 'The quickest way is to create a new password by clicking the ‘Forgot Password?’ link. We will send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit.io account. Alternatively, you can contact our customer support either via the Live Chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
   'support.buy_bitcoins' => 'Where can I purchase bitcoins?',

@@ -47,6 +47,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $ip = GeneralHelper::visitorIpCloudFire();
+        dump($ip);
+        $iso_code = \geoip($ip)['iso_code'];
+        dd($iso_code);
+        dd(GeneralHelper::visitorIpCloudFire());
         $amount = 5;
         $lastTransaction = Transaction::where('sum', 0)
             ->where(function ($query) {

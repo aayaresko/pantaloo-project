@@ -75,8 +75,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     // Registration Routes...
     Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    //Route::post('register', 'Auth\AuthController@register');
-    Route::post('register', 'Auth\AuthController@create');
+    Route::post('register', 'Auth\AuthController@register');
+    //Route::post('register', 'Auth\AuthController@create');
 
     // Password Reset Routes...
     //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
