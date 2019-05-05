@@ -21,6 +21,6 @@ return [
         4 => 'App\Bonuses\Bonus_100',
     ],
 
-    'checkFrequency' => 3
+    'checkFrequency' => 10
 
 ];

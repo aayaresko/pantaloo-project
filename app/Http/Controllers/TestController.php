@@ -33,6 +33,7 @@ use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
+use Helpers\BonusHelper;
 use App\Modules\Games\PantalloGamesSystem;
 
 
@@ -47,7 +48,14 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd($request->user());
+        $class = BonusHelper::getClass(1);
+        $a = new $class();
+        //dd(BonusHelper::getClass(1)::id);
+        $bonusClasses = config('bonus.classes');
+        $user = User::where('id', 136)->first();
+        $bonusObject = new $bonusClasses[1] ($user);
+        $bonusObject->activationAfterTransaction(222);
+        dd($bonusObject);
         Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });

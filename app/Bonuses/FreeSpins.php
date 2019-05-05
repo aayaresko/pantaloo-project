@@ -22,19 +22,20 @@ class FreeSpins extends \App\Bonuses\Bonus
 {
     public static $id = 1;
     public static $maxAmount = 20;
+
     protected $playFactor = 50;
     protected $expireDays = 10;
     protected $freeSpins = 50;
     protected $timeActiveBonusDays = 5;
     protected $minDeposit = 5;
 
-    /**
-     * @return bool
-     */
+    const SPECIAL = 1313;
+
     public function bonusAvailable()
     {
         $user = $this->user;
         $createdUser = $user->created_at;
+
         //hide if user 
         $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
 
@@ -47,6 +48,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         //hide if user 
 
         $countBonuses = $this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count();
+
         if ($countBonuses > 0) {
             return false;
         }
@@ -54,21 +56,14 @@ class FreeSpins extends \App\Bonuses\Bonus
         return true;
     }
 
-    /**
-     * @return bool
-     * @throws \Exception
-     */
+
     public function activate()
     {
-        $response = [
-            'success' => true,
-            'message' => 'Done'
-        ];
         $user = $this->user;
+        $date = new \DateTime();
         $configBonus = config('bonus');
         $slotTypeId = config('appAdditional.slotTypeId');
 
-        DB::beginTransaction();
         try {
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
@@ -101,21 +96,18 @@ class FreeSpins extends \App\Bonuses\Bonus
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
-            //$bonus = BonusModel::where('id', static::$id)->firstOrFail();
 
-            $presentTime = new \DateTime();
             $bonusUser = UserBonus::create([
-                'expires_at' => $date,
                 'user_id' => $user->id,
                 'bonus_id' => static::$id,
-                'activated' => 1,
                 'data' => [
                     'free_spin_win' => 0,
                     'wagered_sum' => 0,
                     'transaction_id' => 0,
                     'dateStart' => $currentDate,
-                    'lastCheck' => $presentTime,
-                ]
+                ],
+                'activated' => 0,
+                'expires_at' => $date,
             ]);
 
             User::where('id', $user->id)->update([
@@ -162,6 +154,11 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Problem with provider free spins');
             }
 
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
             BonusLog::updateOrCreate(
                 [
                     'bonus_id' => $bonusUser->id,
@@ -171,95 +168,73 @@ class FreeSpins extends \App\Bonuses\Bonus
             );
 
         } catch (\Exception $e) {
-            DB::rollBack();
-            $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
-            //dd($errorMessage);
-            throw new \Exception($errorMessage);
+            $response = [
+                'success' => false,
+                'message' => $errorMessage
+                //'message' => 'Message:' . $errorMessage. ' Line:' . $errorLine
+            ];
         }
-        DB::commit();
 
-        return true;
+//         DB::connection('logs')->table('bonus_logs')->insertGetId([
+//            'bonus_id' => $bonusUser->id,
+//            'operation_id' => $configBonus['operation']['active'],
+//            'status' => json_encode($response),
+//            'created_at' => $date,
+//            'updated_at' => $date
+//        ]);
+
+        return $response;
     }
 
-    /**
-     * @return bool
-     * @throws \Exception
-     */
-    public function realActivation()
+
+    public function realActivation($params)
     {
+        $amount = $params['amount'];
+        $transactionId = $params['transactionId'];
+
+        $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
-        $error = 0;
-        $user = $this->user;
-        $errorMessage = 0;
-        $response = [
-            'success' => true,
-            'message' => 'Done'
-        ];
-        DB::beginTransaction();
+
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['realActivation'])
+            ->first();
+
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['realActivation'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
         try {
-            //to define start transaction wagered
-            //to do is be new play gaming then go way down!!!!!!!!!!!!
+            $dataBonus = $activeBonus->data;
+            $freeSpinWinOld = $dataBonus['free_spin_win'];
+            $freeSpinWin = GeneralHelper::formatAmount($amount + (float)$freeSpinWinOld);
+            $dataBonus['free_spin_win'] = $freeSpinWin;
+            $dataBonus['wagered_sum'] = $freeSpinWin * $this->playFactor;
 
-            $dateStartBonus = $activeBonus->created_at;
-            $transaction = $this->user->transactions()->where([
-                ['type', '=', 10],
-                ['created_at', '>', $dateStartBonus],
-            ])->orderBy('id', 'DESC')->first();
-
-            //no transactions for increasing amount bonus
-            if (is_null($transaction)) {
-                throw new \Exception('No transactions yet with type 10');
+            if ((int) $activeBonus->activated === 0) {
+                //transaction_id
+                $dataBonus['transaction_id'] = $transactionId;
+                $dataBonus['activated'] = 1;
             }
 
-            $now = Carbon::now();
+            UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($dataBonus)]);
 
-            //180 time when we realy get all transaction
-            if ($now->format('U') - $transaction->created_at->format('U') > 60) {
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
 
-                //get transaction to real for for this bonus
-                $transactionToReal = Transaction::where([
-                    ['user_id', '=', $user->id],
-                    ['type', '=', 7],
-                    ['created_at', '>', $dateStartBonus],
-                ])->first();
-
-                //to do check to sum
-                if (!is_null($transactionToReal)) {
-                    //get only transaction after
-                    $freeSpinWin = $this->user->transactions()->where([
-                        ['id', '>', $transactionToReal->id],
-                        ['type', '=', 10]
-                    ])->sum('bonus_sum');
-                } else {
-                    $freeSpinWin = $this->user->transactions()->where([
-                        ['type', '=', 10],
-                        ['created_at', '>', $dateStartBonus],
-                    ])->sum('bonus_sum');
-                    if (is_null($freeSpinWin)) {
-                        $freeSpinWin = 0;
-                    }
-                }
-
-                UserBonus::where('id', $activeBonus->id)->update([
-                    'activated' => 1,
-                    'data' => json_encode([
-                        'free_spin_win' => $freeSpinWin,
-                        'wagered_sum' => $freeSpinWin * $this->playFactor,
-                        'transaction_id' => $transaction->id,
-                        'dateStart' => $dateStartBonus
-                    ])
-                ]);
-
-            } else {
-                throw new \Exception('All transactions not yet received.');
-            }
         } catch (\Exception $e) {
-            DB::rollBack();
-            $error = 1;
-            $errorCode = $e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
             $response = [
@@ -267,36 +242,39 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
             ];
         }
-        DB::commit();
 
-        BonusLog::updateOrCreate(
-            [
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['realActivation']
-            ],
-            ['status' => json_encode($response)]
-        );
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
 
-        if ($error === 1) {
-            throw new \Exception($errorMessage);
-        }
-
-        return true;
+        return $response;
     }
 
-    public function close()
+    public function close($mode = 0)
     {
-        $error = 0;
-        $errorMessage = 0;
         $user = $this->user;
+        $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $bonusLimit = self::$maxAmount;
-        $conditions = 0;
 
-        DB::beginTransaction();
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['close'])
+            ->first();
+
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['close'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
         try {
-
             if ($activeBonus->activated == 0) {
                 throw new \Exception('Bonus is not activated');
             }
@@ -306,47 +284,22 @@ class FreeSpins extends \App\Bonuses\Bonus
             if ($wageredSum == 0) {
                 throw new \Exception('Wagered sum less than zero');
             }
-            
-            if ($this->hasBonusTransactions()) {
-                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-            }
 
-            $response = [
-                'success' => true,
-                'message' => 'The condition is not satisfied'
-            ];
+            if ($mode == 1) {
+                if ($this->hasBonusTransactions()) {
+                    throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
+                }
+            }
 
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
-                $conditions = 1;
-                $this->cancel('Expired');
-                $response = [
-                    'success' => false,
-                    'message' => 'Expired'
-                ];
+                $cancelBonus = $this->cancel('Expired');
+                if ($cancelBonus['success'] === false) {
+                    throw new \Exception('Method cancel not working');
+                } else {
+                    throw new \Exception('Expired', self::SPECIAL);
+                }
             }
-
-//            if ($user->bonus_balance == 0) {
-//                $conditions = 1;
-//
-//                /*Log::alert([
-//                    'user' => $user,
-//                    'code' => 'BUGUSER'
-//                ]);*/
-//
-//                $this->cancel('No bonus funds');
-//                $response = [
-//                    'success' => false,
-//                    'message' => 'No bonus funds'
-//                ];
-//            }
-
-
-//            $depositForBonus = Transaction::where('user_id', $user->id)
-//                ->where('type', 3)
-//                ->where('sum', $this->minDeposit)
-//                ->where('created_at', '>', $activeBonus->created_at)
-//                ->first();
 
             $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
                 ->where('type_id', 2)
@@ -354,90 +307,74 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ->first();
 
             if (is_null($notificationTransactionDeposit)) {
-                $conditions = 1;
-                $response = [
-                    'success' => true,
-                    'message' => 'Deposit is not found'
-                ];
+                throw new \Exception('Deposit is not found');
             } else {
                 //to do is be new play gaming then go way down!!!!!!!!!!!!
                 //check sum
-
                 $playedAmount = -1 * $this->user->transactions()
                         ->where('id', '>', $this->get('transaction_id'))
                         ->where('type', 1)
                         ->sum('sum');
 
                 if ($playedAmount > (float)$notificationTransactionDeposit->value) {
-                    $conditions = 1;
-                    $response = [
-                        'success' => true,
-                        'message' => 'Deposit not won back'
-                    ];
+                    throw new \Exception('Deposit not won back');
                 }
             }
 
-            if ($conditions === 0) {
-                //to do is be new play gaming then go way down!!!!!!!!!!!!
+            if ($this->getPlayedSum() >= $wageredSum) {
 
-                if ($this->getPlayedSum() >= $wageredSum) {
-                    $response = [
-                        'success' => true,
-                        'message' => 'Bonus to real transfer'
-                    ];
+                $transaction = new Transaction();
 
-                    $transaction = new Transaction();
-
-                    $winAmount = $user->bonus_balance;
-                    //check max amount
-                    $allowedBonusFunds = $bonusLimit - (float)$bonusLimit->total_amount;
-                    if ($allowedBonusFunds <= $winAmount) {
-                        $winAmount = $allowedBonusFunds;
-                        $trimBonusAmount = GeneralHelper::formatAmount($winAmount - $allowedBonusFunds);
-                        //create transaction
-                        Transaction::create([
-                            'sum' => 0,
-                            'bonus_sum' => -1 * $trimBonusAmount,
-                            'comment' => 'Trim',
-                            'type' => 12,
-                            'user_id' => $user->id,
-                        ]);
-                        if ($winAmount <= 0) {
-                            $winAmount = 0;
-                        }
+                $winAmount = (float) $user->bonus_balance;
+                //check max amount
+                if ($winAmount > $bonusLimit) {
+                    $winAmount = $bonusLimit;
+                    $trimBonusAmount = GeneralHelper::formatAmount($winAmount - $bonusLimit);
+                    //create transaction
+                    Transaction::create([
+                        'sum' => 0,
+                        'bonus_sum' => -1 * $trimBonusAmount,
+                        'comment' => 'Trim',
+                        'type' => 12,
+                        'user_id' => $user->id,
+                    ]);
+                    if ($winAmount <= 0) {
+                        $winAmount = 0;
                     }
-
-                    $bonusAmount = -1 * $user->bonus_balance;
-                    $transaction->bonus_sum = $bonusAmount;
-                    $transaction->sum = $winAmount;
-                    $transaction->comment = 'Bonus to real transfer';
-                    $transaction->type = 7;
-                    $transaction->user()->associate($this->user);
-                    $transaction->save();
-
-                    User::where('id', $user->id)->update([
-                        'balance' => DB::raw("balance + $winAmount"),
-                        'bonus_balance' => 0,
-                        'bonus_id' => null
-                    ]);
-
-
-                    UserBonus::where('id', $activeBonus->id)->update([
-                        'total_amount' => DB::raw("total_amount + $winAmount"),
-                    ]);
-
-                    $activeBonus->delete();
-                    $response = [
-                        'success' => true,
-                        'message' => 'Done. Close'
-                    ];
                 }
+
+                $bonusAmount = -1 * $user->bonus_balance;
+                $transaction->bonus_sum = $bonusAmount;
+                $transaction->sum = $winAmount;
+                $transaction->comment = 'Bonus to real transfer';
+                $transaction->type = 7;
+                $transaction->user()->associate($this->user);
+                $transaction->save();
+
+                User::where('id', $user->id)->update([
+                    'balance' => DB::raw("balance + $winAmount"),
+                    'bonus_balance' => 0,
+                    'bonus_id' => null
+                ]);
+
+                UserBonus::where('id', $activeBonus->id)->update([
+                    'total_amount' => DB::raw("total_amount + $winAmount"),
+                ]);
+
+                $activeBonus->delete();
+
+                $response = [
+                    'success' => true,
+                    'message' => 'Bonus to real transfer'
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'The condition is not satisfied'
+                ];
             }
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
-            $error = 1;
-            $errorCode = $e->getCode();
+            $errorCode  =$e->getCode();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
             $response = [
@@ -445,43 +382,46 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
             ];
 
+            if ($errorCode === self::SPECIAL) {
+                $response['success'] = true;
+            }
         }
 
-        BonusLog::updateOrCreate(
-            [
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['close']
-            ],
-            ['status' => json_encode($response)]
-        );
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
 
-        if ($error === 1) {
-            throw new \Exception($errorMessage);
-        }
-
-        return true;
+        return $response;
     }
 
-    /**
-     * @param bool $reason
-     * @return bool
-     * @throws \Exception
-     */
+
     public function cancel($reason = false)
     {
+        $date = new \DateTime();
         $user = $this->user;
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
-        $slotTypeId = config('appAdditional.slotTypeId');
         $expired = 0;
+        $slotTypeId = config('appAdditional.slotTypeId');
 
-        DB::beginTransaction();
+
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['cancel'])
+            ->first();
+
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['cancel'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
         try {
-            //check to enters to games
-//            if ($this->hasBonusTransactions()) {
-//                throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-//            }
-
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
                 $expired = 1;
@@ -586,7 +526,6 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ];
             }
         } catch (\Exception $e) {
-            DB::rollBack();
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
 
@@ -594,29 +533,13 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'success' => false,
                 'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
             ];
-
-            BonusLog::updateOrCreate(
-                [
-                    'bonus_id' => $activeBonus->id,
-                    'operation_id' => $configBonus['operation']['cancel']
-                ],
-                ['status' => json_encode($response)]
-            );
-
-            throw new \Exception($errorMessage);
         }
 
-        DB::commit();
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
 
-        BonusLog::updateOrCreate(
-            [
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['cancel']
-            ],
-            ['status' => json_encode($response)]
-        );
-
-        return true;
+        return $response;
     }
 
     /**

@@ -80,7 +80,8 @@ class AuthController extends Controller
         $betatest = Cookie::get('betatest');
 
         if ((int)$betatest !== 1) {
-            return redirect()->back()->withErrors(['Registration is closed']);
+            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
+             Registration are temporary disabled. Sorry for the inconvenience.']);
         }
 
         $validator = $this->validator($request->all());

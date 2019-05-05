@@ -7,6 +7,7 @@ use Log;
 use App\User;
 use Validator;
 use App\Transaction;
+use Helpers\BonusHelper;
 use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
@@ -115,8 +116,16 @@ class TransactionController extends Controller
                 ]);
 
                 $depositNotifications = 1;
-                if (!is_null($user->bonus_id) and (int)$user->bonus_id === 1) {
-                    $depositNotifications = 2;
+                if (!is_null($user->bonus_id)) {
+                    if ((int)$user->bonus_id === 1) {
+                        $depositNotifications = 2;
+                    } else {
+                        //check this
+                        //real active if deposit got
+                        $class = BonusHelper::getClass($user->bonus_id);
+                        $bonusObject = new $class($user);
+                        $bonusObject->realActivation(['amount' => $amountTransactionFormat]);
+                    }
                 }
 
                 //to do include notifications

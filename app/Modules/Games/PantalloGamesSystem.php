@@ -225,6 +225,8 @@ class PantalloGamesSystem implements GamesSystem
     public function callback($request)
     {
         $date = new \DateTime();
+        $freeSpinsActiveBonus = 0;
+        $closeBonus = 0;
 
         $debugGame = new DebugGame();
         $debugGame->start();
@@ -323,7 +325,7 @@ class PantalloGamesSystem implements GamesSystem
                 }
             }
 
-            $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
+//            $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
 
 //            if (!is_null($params['user']->bonus_n_active)) {
 //                $typeBonus = $params['user']->bonus_n_active_id;
@@ -335,8 +337,26 @@ class PantalloGamesSystem implements GamesSystem
 
             if (!is_null($params['user']->bonus)) {
                 $modePlay = 1;
-                //get bonus and set limit bonus
+                $bonusClasses = BonusHelper::getClass((int)$params['user']->bonus);
+                $bonusObject = new $bonusClasses($params['user']);
+
+                if ($action === 'debit') {
+                    if (!isset($requestParams['is_freeround_win']) or
+                        $requestParams['is_freeround_win'] != 1) {
+                        $bonusClose = $bonusObject->close();
+                        if ($bonusClose['success'] === true) {
+                            $modePlay = 0;
+                            $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
+                                ->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')
+                                ->where([
+                                    ['users.id', '=', $params['session']->user_id],
+                                ])->first();
+                        }
+                    }
+                }
             }
+
+            $balanceBefore = GeneralHelper::formatAmount($params['user']->balance);
 
             //get type games
             //mode if isset ids games
@@ -411,13 +431,12 @@ class PantalloGamesSystem implements GamesSystem
 
 //                    throw new \Exception('Games session is not found.' .
 //                        ' This user is not playing currently.', 500);
-                    $gamesSession = (object) ['id' => 'temporarySessionGame'];
+                    $gamesSession = (object)['id' => 'temporarySessionGame'];
                 }
 
                 $gamesSessionId = $gamesSession->id;
 
                 //part 2
-                //dd(2);
                 //to do log what player is gaming
                 $lastActionGameUpdate = [
                     'last_action' => $date,
@@ -425,6 +444,7 @@ class PantalloGamesSystem implements GamesSystem
 
                 LastActionGame::where('user_id', $params['user']->id)->update($lastActionGameUpdate);
             }
+
 
             switch ($action) {
                 case 'balance':
@@ -661,6 +681,7 @@ class PantalloGamesSystem implements GamesSystem
                             //this mean for bonus active
                             if ($modePlay === 1) {
                                 $amountFreeSpins = $amount;
+                                $freeSpinsActiveBonus = 1;
 
 //                                $startDateBonus = $params['user']->start_bonus_n_active;
 //                                //to do sum one query
@@ -691,6 +712,13 @@ class PantalloGamesSystem implements GamesSystem
                         }
 
                         $transaction = Transaction::create($createParams);
+                        //event free spins
+                        if ($freeSpinsActiveBonus === 1) {
+                            $bonusObject->realActivation([
+                                'amount' => $amount,
+                                'transactionId' => $transaction->id
+                            ]);
+                        }
 
                         //edit balance user
                         $updateUser = [];
