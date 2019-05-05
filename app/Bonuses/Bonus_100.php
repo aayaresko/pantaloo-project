@@ -81,19 +81,25 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         try {
             //baned country
-            if (!is_null($user->country)) {
-                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
-                if (in_array($user->country, $banedBonusesCountries)) {
-                    throw new \Exception('Bonus is not prohibited in your country. Read the rules.');
-                }
-            }
+//            if (!is_null($user->country)) {
+//                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+//                if (in_array($user->country, $banedBonusesCountries)) {
+//                    throw new \Exception('You cannot activate this bonus in accordance with clause 1.12 of the bonus terms & conditions.');
+//                }
+//            }
 
             if ($allowedDate < $currentDate) {
-                throw new \Exception('You can\'t use this bonus. Read terms.');
+                throw new \Exception('You cannot activate this bonus in accordance with' .
+                    ' clause 5.4 of the bonus terms & conditions.');
             }
 
             if ($this->active_bonus) {
-                throw new \Exception('You already use bonus');
+                if ($this->active_bonus->bonus_id != static::$id) {
+                    throw new \Exception('You cannot activate this bonus as there is ' .
+                        'already an active bonus.');
+                } else {
+                    throw new \Exception('This bonus is already active.');
+                }
             }
 
             $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
@@ -101,12 +107,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 ->count();
 
             if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
-                throw new \Exception('You can\'t use this bonus');
+                throw new \Exception('You cannot activate this bonus in accordance with ' .
+                    'clause 2.6; 3.6; 4.6 of the bonus terms & conditions.');
             }
 
 
             if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
-                throw new \Exception('You already used this bonus');
+                throw new \Exception('This bonus is already used.');
             }
 
             $date = $user->created_at;
@@ -118,12 +125,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'data' => [
                     'wagered_sum' => 0,
                     'transaction_id' => 0,
+                    'wagered_amount' => 0,
+                    'wagered_bonus_amount' => 0,
                     'dateStart' => $currentDate,
                 ],
                 'activated' => 0,
                 'expires_at' => $date,
             ]);
 
+            User::where('id', $user->id)->update([
+                'bonus_id' => static::$id
+            ]);
 
             $response = [
                 'success' => true,
@@ -153,7 +165,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
     public function realActivation($params)
     {
         $amount = $params['amount'];
-        
+
         $user = $this->user;
         $date = new \DateTime();
         $configBonus = config('bonus');
@@ -181,10 +193,10 @@ class Bonus_100 extends \App\Bonuses\Bonus
             if ((int)$activeBonus->activated === 1) {
                 throw new \Exception('The bonus has already been activated real.');
             }
-            
+
             //check amount float
             $deposit = $amount;
-            
+
             if ($deposit->sum < $this->minSum) {
 
                 $cancelBonus = $this->cancel('Invalid deposit sum');
@@ -272,16 +284,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
         }
 
         try {
-            if ($activeBonus->activated == 0) {
-                throw new \Exception('Bonus is not activated');
-            }
-
-            if ($mode == 1) {
-                if ($this->hasBonusTransactions()) {
-                    throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-                }
-            }
-
 
             $now = Carbon::now();
             if ($activeBonus->expires_at->format('U') < $now->format('U')) {
@@ -290,6 +292,16 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     throw new \Exception('Method cancel not working');
                 } else {
                     throw new \Exception('Expired', self::SPECIAL);
+                }
+            }
+
+            if ($activeBonus->activated == 0) {
+                throw new \Exception('Bonus is not activated');
+            }
+
+            if ($mode == 1) {
+                if ($this->hasBonusTransactions()) {
+                    throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
                 }
             }
 
@@ -314,7 +326,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 $winAmount = $user->bonus_balance;
                 User::where('id', $user->id)->update([
                     'balance' => DB::raw("balance+$winAmount"),
-                    'bonus_balance' => 0
+                    'bonus_balance' => 0,
+                    'bonus_id' => null
                 ]);
 
                 $activeBonus->delete();
@@ -385,7 +398,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
             $transaction->save();
 
             User::where('id', $user->id)->update([
-                'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+                'bonus_balance' => DB::raw("bonus_balance+$bonusAmount"),
+                'bonus_id' => null
             ]);
 
             $updateUser = User::where('id', $user->id)->first();
@@ -417,6 +431,69 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return $response;
     }
 
+    public function wagerUpdate($transaction)
+    {
+        $transactionAmount = abs((float)$transaction['sum']);
+        $transactionBonusSum = abs((float)$transaction['bonus_sum']);
+
+        $date = new \DateTime();
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['wagerUpdate'])//to do config
+            ->first();
+
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['wagerUpdate'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
+        try {
+            $dataBonus = $activeBonus->data;
+            $currentWagerAmount = isset($dataBonus['wagered_amount']) ? (float)$dataBonus['wagered_amount'] : 0;
+            $currentWagerAmountBonus = isset($dataBonus['wagered_bonus_amount']) ? (float)$dataBonus['wagered_bonus_amount'] : 0;
+
+            $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+            $currentWagerBonus = GeneralHelper::formatAmount($currentWagerAmountBonus + $transactionBonusSum);
+
+            $dataUpdateBonus = [];
+
+            $dataBonus['wagered_amount'] = $currentWager;
+            $dataBonus['wagered_bonus_amount'] = $currentWagerBonus;
+
+            $dataUpdateBonus['data'] = json_encode($dataBonus);
+
+            UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+        }
+
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
+
+        return $response;
+    }
+
 
     public function getStatus()
     {
@@ -430,10 +507,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
     public function getPlayedSum()
     {
         //TO DO - ADD to where date
-        if ($this->active_bonus->activated == 1) {
-            $sum = -1 * $this->user->transactions()
-                    ->where('id', '>', $this->get('transaction_id'))
-                    ->where('type', 1)->sum('bonus_sum');
+        $activeBonus = $this->active_bonus;
+        if ($activeBonus->activated == 1) {
+            $dataBonus = $activeBonus->data;
+            $sum = (float)$dataBonus['wagered_bonus_amount'];
+//            $sum = -1 * $this->user->transactions()
+//                    ->where('id', '>', $this->get('transaction_id'))
+//                    ->where('type', 1)->sum('bonus_sum');
             return $sum;
         }
         return 0;

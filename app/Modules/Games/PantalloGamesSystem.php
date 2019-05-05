@@ -31,6 +31,8 @@ class PantalloGamesSystem implements GamesSystem
      * Why constant - in doc for integration write such make
      */
     const PASSWORD = 'rf3js1Q';
+    //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
+    const TEMPORARY = 'temporarySessionGame';
 
     /**
      * @param $request
@@ -88,7 +90,7 @@ class PantalloGamesSystem implements GamesSystem
             unset($loginResponse['id']);
             $loginResponse['system_id'] = $idLogin;
             $loginResponse['user_id'] = $userId;
-
+            //dd($loginResponse['sessionid']);
             GamesPantalloSession::updateOrCreate(
                 ['sessionid' => $loginResponse['sessionid']], $loginResponse);
 
@@ -103,6 +105,12 @@ class PantalloGamesSystem implements GamesSystem
                 'play_for_fun' => 0,
                 'homeurl' => url(''),
             ], true);
+
+            //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
+            if ($getGame->gamesession_id == '') {
+                $getGame->gamesession_id = self::TEMPORARY;
+            }
+            //FIX THIS WHEN PROVIDER FIX
 
             GamesPantalloSessionGame::create([
                 'session_id' => $idLogin,
@@ -421,6 +429,7 @@ class PantalloGamesSystem implements GamesSystem
             if ($action !== 'balance') {
                 //part 1
                 $gamesSessionIdThem = $requestParams['gamesession_id'];
+                //to do last
                 $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
                     ->where([
                         'session_id' => $params['session']->system_id,
@@ -429,9 +438,18 @@ class PantalloGamesSystem implements GamesSystem
 
                 if (is_null($gamesSession)) {
 
-//                    throw new \Exception('Games session is not found.' .
-//                        ' This user is not playing currently.', 500);
-                    $gamesSession = (object)['id' => 'temporarySessionGame'];
+                    //FIX THIS WHEN PROVIDER FIX
+                    $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
+                        ->where([
+                            'session_id' => $params['session']->system_id,
+                            'gamesession_id' => self::TEMPORARY,
+                        ])->orderBy('id', 'DESC')->first();
+                    
+                    if (is_null($gamesSession)) {
+                        throw new \Exception('Games session is not found.' .
+                            ' This user is not playing currently.', 500);
+                    }
+                    //FIX THIS WHEN PROVIDER FIX
                 }
 
                 $gamesSessionId = $gamesSession->id;
@@ -533,6 +551,12 @@ class PantalloGamesSystem implements GamesSystem
 
                         $transaction = Transaction::create($createParams);
 
+                        if ($modePlay === 1) {
+                            if ($typeOpenGame) {
+                                $bonusObject->wagerUpdate($createParams);
+                            }
+                        }
+//
                         //edit balance user
                         $updateUser = [];
                         $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");

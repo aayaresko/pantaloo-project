@@ -82,8 +82,12 @@ class MoneyController extends Controller
 
         //to do once in 10 seconds and use other table for notifications
 
+        //to do fix this
         $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
-            ->where('type_id', 1)
+            ->where(function ($query) {
+                $query->where('type_id', '=', 1)
+                    ->orWhere('type_id', '=', 2);
+            })
             ->where('status', 0)
             ->first();
 
@@ -91,6 +95,7 @@ class MoneyController extends Controller
             SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
                 'status' => 1
             ]);
+
             $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
             $sum = $extraSystemNotification->depositAmount;
         } else {

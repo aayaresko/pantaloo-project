@@ -73,7 +73,11 @@ class TransactionController extends Controller
 
             $transactionParticipants = [];
             foreach ($rawTransaction['details'] as $detail) {
-                array_push($transactionParticipants, $detail['address']);
+
+                if ($detail['category'] == 'receive') {
+                    array_push($transactionParticipants, $detail['address']);
+                }
+
             }
 
             $user = User::whereIn('bitcoin_address', $transactionParticipants)->first();

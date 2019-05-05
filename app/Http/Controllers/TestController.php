@@ -48,6 +48,33 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])->where('user_id', 2478)
+            ->where('type_id', 2)
+            ->first();
+
+        dd($notificationTransactionDeposit);
+        $user = User::where('id', 2480)->first();
+
+        $class = BonusHelper::getClass($user->bonus_id);
+
+        $bonusObject = new $class($user);
+
+        DB::beginTransaction();
+        $bonusClose = $bonusObject->close(1);
+        if ($bonusClose['success'] === false) {
+            DB::rollBack();
+            dd($bonusClose);
+        }
+        DB::commit();
+
+        dd($bonusClose);
+        $userBonus = UserBonus::where('id', 5963)->first();
+
+        dd(2);
+        $user = $request->user();
+        $user = User::where('id', $user->id)->first();
+        dd($user);
         $class = BonusHelper::getClass(1);
         $a = new $class();
         //dd(BonusHelper::getClass(1)::id);
