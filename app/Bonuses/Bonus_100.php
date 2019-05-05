@@ -164,7 +164,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function realActivation($params)
     {
-        $amount = $params['amount'];
+        $amount = (float)$params['amount'];
 
         $user = $this->user;
         $date = new \DateTime();
@@ -197,7 +197,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
             //check amount float
             $deposit = $amount;
 
-            if ($deposit->sum < $this->minSum) {
+            if ($deposit < $this->minSum) {
 
                 $cancelBonus = $this->cancel('Invalid deposit sum');
                 if ($cancelBonus['success'] === false) {
@@ -208,7 +208,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             } else {
                 //TO DO round
-                $bonusSum = GeneralHelper::formatAmount($deposit->sum * ($this->percent / 100));
+                $bonusSum = GeneralHelper::formatAmount($deposit * ($this->percent / 100));
                 //check limit
                 if ($bonusSum > self::$maxAmount) {
                     $bonusSum = self::$maxAmount;
@@ -226,11 +226,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     'bonus_balance' => DB::raw("bonus_balance+$bonusSum"),
                 ]);
 
-                $this->set('transaction_id', $transaction->id);
-                $this->set('wagered_sum', $this->playFactor * $bonusSum);
+                $this->dataBonus['transaction_id'] = $transaction->id;
+                $this->dataBonus['wagered_sum'] = $this->playFactor * $bonusSum;
 
-                $activeBonus->activated = 1;
-                $activeBonus->save();
+                $dataUpdateBonus['data'] = json_encode($this->dataBonus);
+                $dataUpdateBonus['activated'] = 1;
+
+                UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
 
                 $response = [
                     'success' => true,
@@ -260,7 +262,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return $response;
     }
 
-    public function close($mode)
+    public function close($mode = 0)
     {
         $user = $this->user;
         $date = new \DateTime();
@@ -314,7 +316,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 }
             }
 
-            if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
+            $wageredSum = $this->dataBonus['wagered_sum'];
+
+            if ($this->getPlayedSum() >= $wageredSum) {
                 $transaction = new Transaction();
                 $transaction->bonus_sum = -1 * $user->bonus_balance;
                 $transaction->sum = $user->bonus_balance;
@@ -324,6 +328,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 $transaction->save();
 
                 $winAmount = $user->bonus_balance;
+                //trim balance?**************************
                 User::where('id', $user->id)->update([
                     'balance' => DB::raw("balance+$winAmount"),
                     'bonus_balance' => 0,
@@ -457,19 +462,24 @@ class Bonus_100 extends \App\Bonuses\Bonus
         }
 
         try {
-            $dataBonus = $activeBonus->data;
-            $currentWagerAmount = isset($dataBonus['wagered_amount']) ? (float)$dataBonus['wagered_amount'] : 0;
-            $currentWagerAmountBonus = isset($dataBonus['wagered_bonus_amount']) ? (float)$dataBonus['wagered_bonus_amount'] : 0;
+            //if was be deposit
+            if (isset($this->dataBonus['wagered_deposit']) and (int)$this->dataBonus['wagered_deposit'] === 1) {
+                $currentWagerAmount = isset($this->dataBonus['wagered_amount']) ? (float)$this->dataBonus['wagered_amount'] : 0;
+                $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+            } else {
+                $currentWager = 0;
+            }
 
-            $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+            $currentWagerAmountBonus = isset($this->dataBonus['wagered_bonus_amount']) ?
+                (float)$this->dataBonus['wagered_bonus_amount'] : 0;
             $currentWagerBonus = GeneralHelper::formatAmount($currentWagerAmountBonus + $transactionBonusSum);
 
             $dataUpdateBonus = [];
 
-            $dataBonus['wagered_amount'] = $currentWager;
-            $dataBonus['wagered_bonus_amount'] = $currentWagerBonus;
+            $this->dataBonus['wagered_amount'] = $currentWager;
+            $this->dataBonus['wagered_bonus_amount'] = $currentWagerBonus;
 
-            $dataUpdateBonus['data'] = json_encode($dataBonus);
+            $dataUpdateBonus['data'] = json_encode($this->dataBonus);
 
             UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
 
@@ -509,8 +519,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //TO DO - ADD to where date
         $activeBonus = $this->active_bonus;
         if ($activeBonus->activated == 1) {
-            $dataBonus = $activeBonus->data;
-            $sum = (float)$dataBonus['wagered_bonus_amount'];
+            $sum = (float)$this->dataBonus['wagered_bonus_amount'];
 //            $sum = -1 * $this->user->transactions()
 //                    ->where('id', '>', $this->get('transaction_id'))
 //                    ->where('type', 1)->sum('bonus_sum');
@@ -524,7 +533,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         if ($this->active_bonus->activated == 1) {
             $played_sum = $this->getPlayedSum();
 
-            return floor($played_sum / $this->get('wagered_sum') * 100);
+            return floor($played_sum / $this->dataBonus['wagered_sum'] * 100);
         } else {
             return 0;
         }

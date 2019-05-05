@@ -226,21 +226,20 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         try {
-            $dataBonus = $activeBonus->data;
-            $freeSpinWinOld = $dataBonus['free_spin_win'];
+            $freeSpinWinOld = $this->dataBonus['free_spin_win'];
             $freeSpinWin = GeneralHelper::formatAmount($amount + (float)$freeSpinWinOld);
-            $dataBonus['free_spin_win'] = $freeSpinWin;
-            $dataBonus['wagered_sum'] = $freeSpinWin * $this->playFactor;
+            $this->dataBonus['free_spin_win'] = $freeSpinWin;
+            $this->dataBonus['wagered_sum'] = $freeSpinWin * $this->playFactor;
 
 
             $dataUpdateBonus = [];
             if ((int)$activeBonus->activated == 0) {
                 //transaction_id
-                $dataBonus['transaction_id'] = $transactionId;
+                $this->dataBonus['transaction_id'] = $transactionId;
                 $dataUpdateBonus['activated'] = 1;
             }
 
-            $dataUpdateBonus['data'] = json_encode($dataBonus);
+            $dataUpdateBonus['data'] = json_encode($this->dataBonus);
 
             UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
 
@@ -305,7 +304,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             }
 
             //get wageredSum
-            $wageredSum = $this->get('wagered_sum');
+            $wageredSum = $this->dataBonus['wagered_sum'];
             if ($wageredSum == 0) {
                 throw new \Exception('Wagered sum less than zero');
             }
@@ -316,36 +315,33 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
             }
 
-            $dataBonus = $activeBonus->data;
-            if (!isset($dataBonus['wagered_deposit']) or (int)$dataBonus['wagered_deposit'] < 2) {
 
-                $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])
-                    ->where('user_id', $user->id)
-                    ->where('type_id', 2)
-                    ->first();
+            $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])
+                ->where('user_id', $user->id)
+                ->where('type_id', 2)
+                ->first();
 
-                if ((float)$notificationTransactionDeposit->sum_deposits < $this->minDeposit) {
-                    throw new \Exception('Deposit is not found');
-                } else {
-                    //to do is be new play gaming then go way down!!!!!!!!!!!!
-                    //check sum
-                    $playedAmount = (float)$dataBonus['wagered_amount'];
+            if ((float)$notificationTransactionDeposit->sum_deposits < $this->minDeposit) {
+                throw new \Exception('Deposit is not found');
+            } else {
+                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
+                    $this->dataBonus['wagered_deposit'] = 1;
+                    UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+                }
+
+                $playedAmount = (float)$this->dataBonus['wagered_amount'];
+
 //                    $playedAmount = -1 * $this->user->transactions()
 //                            ->where('id', '>', $this->get('transaction_id'))
 //                            ->where('type', 1)
 //                            ->sum('sum');
 
-                    if ($playedAmount <= (float)$notificationTransactionDeposit->sum_deposits) {
-                        $dataBonus['wagered_deposit'] = 1;
-                        UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($dataBonus)]);
-                        throw new \Exception('Deposit not won back');
-                    } else {
-                        $dataBonus['wagered_deposit'] = 2;
-                        UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($dataBonus)]);
-                    }
+                if ($playedAmount < (float)$notificationTransactionDeposit->sum_deposits) {
+                    throw new \Exception('Deposit not won back');
                 }
             }
 
+            //get wager
             $wageredSumCurrent = $this->getPlayedSum();
 
             if ($wageredSumCurrent >= $wageredSum) {
@@ -596,19 +592,25 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         try {
-            $dataBonus = $activeBonus->data;
-            $currentWagerAmount = isset($dataBonus['wagered_amount']) ? (float)$dataBonus['wagered_amount'] : 0;
-            $currentWagerAmountBonus = isset($dataBonus['wagered_bonus_amount']) ? (float)$dataBonus['wagered_bonus_amount'] : 0;
+            //if was be deposit
+            if (isset($this->dataBonus['wagered_deposit']) and (int)$this->dataBonus['wagered_deposit'] === 1) {
+                $currentWagerAmount = isset($this->dataBonus['wagered_amount']) ?
+                    (float)$this->dataBonus['wagered_amount'] : 0;
+                $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+            } else {
+                $currentWager = 0;
+            }
 
-            $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+            $currentWagerAmountBonus = isset($this->dataBonus['wagered_bonus_amount']) ?
+                (float)$this->dataBonus['wagered_bonus_amount'] : 0;
             $currentWagerBonus = GeneralHelper::formatAmount($currentWagerAmountBonus + $transactionBonusSum);
 
             $dataUpdateBonus = [];
 
-            $dataBonus['wagered_amount'] = $currentWager;
-            $dataBonus['wagered_bonus_amount'] = $currentWagerBonus;
+            $this->dataBonus['wagered_amount'] = $currentWager;
+            $this->dataBonus['wagered_bonus_amount'] = $currentWagerBonus;
 
-            $dataUpdateBonus['data'] = json_encode($dataBonus);
+            $dataUpdateBonus['data'] = json_encode($this->dataBonus);
 
             UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
 
@@ -667,9 +669,8 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $activeBonus = $this->active_bonus;
         if ($activeBonus->activated == 1) {
-            $dataBonus = $activeBonus->data;
 
-            $playedSum = (float)$dataBonus['wagered_bonus_amount'];
+            $playedSum = (float)$this->dataBonus['wagered_bonus_amount'];
 
 //            $playedSum = -1 * $this->user->transactions()
 //                    ->where('id', '>', $this->get('transaction_id'))
@@ -688,7 +689,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         if ($this->active_bonus->activated == 1) {
             $played_sum = $this->getPlayedSum();
-            $percent = floor($played_sum / $this->get('wagered_sum') * 100);
+            $percent = floor($played_sum / $this->dataBonus['wagered_sum'] * 100);
             return $percent;
         }
         return 0;

@@ -352,6 +352,7 @@ class PantalloGamesSystem implements GamesSystem
                     if (!isset($requestParams['is_freeround_win']) or
                         $requestParams['is_freeround_win'] != 1) {
                         $bonusClose = $bonusObject->close();
+
                         if ($bonusClose['success'] === true) {
                             $modePlay = 0;
                             $params['user'] = User::select(array_merge($userFields, $additionalFieldsUser))
@@ -462,8 +463,7 @@ class PantalloGamesSystem implements GamesSystem
 
                 LastActionGame::where('user_id', $params['user']->id)->update($lastActionGameUpdate);
             }
-
-
+            //dd(2);
             switch ($action) {
                 case 'balance':
                     $response = [
@@ -553,10 +553,10 @@ class PantalloGamesSystem implements GamesSystem
 
                         if ($modePlay === 1) {
                             if ($typeOpenGame) {
-                                $bonusObject->wagerUpdate($createParams);
+                                $wagerUpdate = $bonusObject->wagerUpdate($createParams);
                             }
                         }
-//
+
                         //edit balance user
                         $updateUser = [];
                         $updateUser['balance'] = DB::raw("balance+{$createParams['sum']}");
