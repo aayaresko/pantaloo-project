@@ -2,6 +2,7 @@
 
 namespace App\Modules\Games;
 
+use App\Events\BonusGameEvent;
 use DB;
 use Log;
 use App\User;
@@ -149,6 +150,9 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             DB::commit();
+
+            //event(new BonusGameEvent($user, 1));
+
         } catch (\Throwable $e) {
             DB::rollBack();
             dump($playerExists);

@@ -2,6 +2,9 @@
 
 namespace App\Bonuses;
 
+use App\Events\CloseBonusEvent;
+use App\Events\OpenBonusEvent;
+use App\Events\WagerDoneEvent;
 use DB;
 use Log;
 use App\User;
@@ -164,6 +167,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             if ($freeRound['success'] === false) {
                 throw new \Exception('Problem with provider free spins');
             }
+
+            event(new OpenBonusEvent($user, 'welcome bonus'));
 
             $response = [
                 'success' => true,
@@ -385,6 +390,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ]);
 
                 $activeBonus->delete();
+
+                event(new CloseBonusEvent($user, 'welcome bonus'));
+                event(new WagerDoneEvent($user));
 
                 $response = [
                     'success' => true,
