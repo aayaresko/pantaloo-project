@@ -48,6 +48,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd($request->user());
         dd(2);
 //        dd(User::where('id', 2481)->first());
 //        $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])->where('user_id', 2478)
