@@ -122,13 +122,16 @@ class TransactionController extends Controller
 
                 $depositNotifications = 1;
                 if (!is_null($user->bonus_id)) {
+                    $class = BonusHelper::getClass($user->bonus_id);
+                    $bonusObject = new $class($user);
                     if ((int)$user->bonus_id === 1) {
                         $depositNotifications = 2;
+                        //to do check status
+                        $bonusObject->setDeposit($amountTransactionFormat);
                     } else {
                         //check this
                         //real active if deposit got
-                        $class = BonusHelper::getClass($user->bonus_id);
-                        $bonusObject = new $class($user);
+                        //to do check status
                         $bonusObject->realActivation(['amount' => $amountTransactionFormat]);
                     }
                 }

@@ -25,18 +25,10 @@ class BonusController extends Controller
         });
 
         $active_bonus = Auth::user()->bonuses()->first();
-
-        if ($active_bonus) {
-            $class = $active_bonus->bonus->getClass();
-            $bonus_obj = new $class(Auth::user());
-        } else {
-            $bonus_obj = false;
-        }
-
+        
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
-            'bonus_obj' => $bonus_obj
         ]);
     }
 
