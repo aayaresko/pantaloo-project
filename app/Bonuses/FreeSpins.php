@@ -350,6 +350,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                 $bonusBalance = (float)$user->bonus_balance;
                 //check max amount
+                $winAmount = $bonusBalance;
                 if ($bonusBalance > $bonusLimit) {
                     $winAmount = $bonusLimit;
                     $trimBonusAmount = GeneralHelper::formatAmount($bonusBalance - $bonusLimit);
