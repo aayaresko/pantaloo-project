@@ -48,6 +48,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $ip = GeneralHelper::visitorIpCloudFire();
+        dd($ip);
         dd($request->user());
         dd(2);
 //        dd(User::where('id', 2481)->first());

@@ -161,7 +161,276 @@ return array (
   'free' => 'gratis',
   'spins' => 'giri',
   'welcome_bonus' => 'bonus di benvenuto',
-  'bonus.term' => '<h2>BENVENUTI TERMINI E CONDIZIONI BONUS</h2><div><br></div><div>I nuovi giocatori ricevono 50 giri gratuiti come bonus di benvenuto. Per richiedere i 50 giri gratuiti devi confermare il tuo indirizzo email.</div><div></div><span><br>Per attivare il tuo bonus di benvenuto, devi andare alla sezione "OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVA" e aprire il gioco entro 5 giorni dal momento della registrazione, altrimenti scadranno.<br><br>Il bonus di benvenuto è concesso una sola volta.<br><br>Le vincite massime che verranno pagate risultanti da un bonus di benvenuto senza deposito saranno 20 mBTC. Le vincite eccedenti tale importo verranno perse.<br><br>Tutte le vincite derivanti da un bonus di benvenuto verranno accreditate sul saldo del conto bonus di un giocatore ed è soggetta ai nostri termini e condizioni standard, inclusi i termini dei bonus e i requisiti di scommessa.<br><br>Prima che il denaro bonus venga convertito in denaro che può essere prelevato, il denaro del bonus deve essere convertito per 50 volte (requisiti minimi di scommessa) prima che il giocatore possa richiedere un prelievo.<br><br>Al momento della scommessa, i fondi sul conto principale verranno utilizzati prima dell\'utilizzo del bonus.<br><br>Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON possono essere utilizzati per scommettere il bonus. "Giocare per divertimento" (modalità demo / pratica / gioco libero) su qualsiasi gioco non conta per i requisiti di scommessa (fatturato).<br><br>Solo le scommesse effettuate con denaro bonus verranno conteggiate per il totale dei requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.<br><br>CasinoBit.io si riserva il diritto di cancellare o modificare questi termini e condizioni in qualsiasi momento senza alcun preavviso.<br><br>Si applicano i termini e le condizioni generali del bonus.<br><br><br><br><br></span><h2>110% 1 ° DEPOSITO TERMINI E CONDIZIONI BONUS</h2><h2></h2><span><br>Per attivare il tuo 1 ° DEPOSITO BONUS, devi andare alla sezione "OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVA" ed effettuare il deposito. Il bonus sarà aggiunto automaticamente al conto del giocatore al momento del primo deposito.<br><br>L\'importo massimo per il 1 ° DEPOSITO BONUS è 1000 mBTC.<br><br>È richiesto un deposito minimo di 3 mBTC per poter beneficiare del 1 ° DEPOSITO BONUS.<br><br>Se il primo deposito è inferiore al suddetto minimo, il giocatore non riceverà il 1 ° DEPOSITO BONUS.<br><br>1 ° DEPOSITO BONUS è concesso una sola volta.<br><br>Il Bonus sul primo deposito è rivendicabile solo insieme al primo deposito di un giocatore. Un 1 ° BONUS DEPOSITO che non è stato riscattato insieme al primo deposito (a causa di un importo di deposito insufficiente, a causa dell\'eliminazione dei bonus da parte del giocatore, o di altri motivi che esulano dal controllo di casinobit.io) non può essere richiesto in una data successiva .<br><br>Prima che il denaro bonus venga convertito in denaro che può essere prelevato, il denaro del bonus deve essere convertito per 50 volte (requisiti minimi di scommessa) prima che il giocatore possa richiedere un prelievo.<br><br>Il 1 ° DEPOSITO BONUS è disponibile per 30 giorni dopo la registrazione. Se il giocatore non soddisfa i requisiti di scommessa entro il periodo di 30 giorni, il suo bonus e le eventuali vincite in sospeso scadrà e sarà rimosso dal conto.<br><br>Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON possono essere usati per scommettere il bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e tenta di piazzare scommesse oltre il massimo consentito, il bonus e le vincite verranno persi.<br><br>Solo le scommesse effettuate con denaro bonus verranno conteggiate per il totale dei requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.<br><br>Se il bonus viene annullato / annullato in qualsiasi momento, l\'importo del bonus iniziale e le eventuali vincite verranno annullate / annullate.<br><br>Se hai diritto a un bonus e detto bonus non viene aggiunto automaticamente dopo l\'attivazione al momento del deposito, ti preghiamo di contattare immediatamente il nostro team di supporto dal vivo, PRIMA di effettuare qualsiasi scommessa. Se un giocatore non soddisfa questo requisito, il bonus in questione non verrà aggiunto.<br><br>CasinoBit.io si riserva il diritto di cancellare o modificare questi termini e condizioni in qualsiasi momento senza alcun preavviso.<br><br>Si applicano i termini e le condizioni generali del bonus.<br><br><br><br><br></span><h2>80% 2 ° DEPOSITO BONUS TERMINI E CONDIZIONI</h2><h2></h2><span><br>Per attivare il tuo 2 ° DEPOSITO BONUS, devi andare alla sezione "OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVA" ed effettuare il deposito. Il bonus verrà aggiunto automaticamente al conto giocatore al momento del secondo deposito.<br><br>L\'importo massimo per il 2 ° DEPOSITO BONUS è 1000 mBTC.<br><br>È richiesto un deposito minimo di 3 mBTC per poter beneficiare del 2 ° DEPOSITO BONUS.<br><br>Se il secondo deposito è inferiore al suddetto minimo, il giocatore non riceverà il 2 ° DEPOSITO BONUS.<br><br>2 ° DEPOSITO BONUS è concesso una sola volta.<br><br>Il 2 ° DEPOSITO BONUS è solo rivendicabile insieme al secondo deposito di un giocatore. Un BONUS DEPOSITO 2ND che non è stato riscattato insieme al secondo deposito (a causa di un importo di deposito insufficiente, a causa dell\'eliminazione dei bonus da parte del giocatore, o di altri motivi che esulano dal controllo di casinobit.io) non può essere richiesto in una data successiva .<br><br>Prima che il denaro bonus venga convertito in denaro che può essere prelevato, il denaro del bonus deve essere convertito per 50 volte (requisiti minimi di scommessa) prima che il giocatore possa richiedere un prelievo.<br><br>Il 2 ° DEPOSITO BONUS è disponibile per 30 giorni dopo la registrazione. </span><span>Se il giocatore non soddisfa i requisiti di scommessa entro il periodo di 30 giorni, il suo bonus e le eventuali vincite in sospeso scadrà e sarà rimosso dal conto.<br><br>Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON possono essere usati per scommettere il bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e tenta di piazzare scommesse oltre il massimo consentito, il bonus e le vincite verranno persi.<br><br>Solo le scommesse effettuate con denaro bonus verranno conteggiate per il totale dei requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.<br><br>Se il bonus viene annullato / annullato in qualsiasi momento, l\'importo del bonus iniziale e le eventuali vincite verranno annullate / annullate.<br><br>Se hai diritto a un bonus e detto bonus non viene aggiunto automaticamente dopo l\'attivazione al momento del deposito, ti preghiamo di contattare immediatamente il nostro team di supporto dal vivo, PRIMA di effettuare qualsiasi scommessa. Se un giocatore non soddisfa questo requisito, il bonus in questione non verrà aggiunto.<br><br>CasinoBit.io si riserva il diritto di cancellare o modificare questi termini e condizioni in qualsiasi momento senza alcun preavviso.<br><br></span><div>Si applicano i termini e le condizioni generali del bonus.</div><div><br></div><div><h2>55% 3 ° DEPOSITO BONUS TERMINI E CONDIZIONI</h2></div><div><br></div><div><span>Per attivare il tuo 3RD DEPOSITO BONUS, devi andare alla sezione "OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVARE" ed effettuare il deposito. Il bonus verrà aggiunto automaticamente al conto del giocatore al momento del versamento del terzo deposito<br><br><br>L\'importo massimo per il 3RD DEPOSITO BONUS è 1000 mBTC.<br><br>È richiesto un deposito minimo di 3 mBTC per poter beneficiare del 3 ° DEPOSITO BONUS.<br><br>Se il terzo deposito è inferiore al suddetto minimo, il giocatore non riceverà il 3 ° DEPOSITO BONUS.<br><br>3RD DEPOSITO BONUS è concesso una sola volta.<br><br>Il 3RD DEPOSITO BONUS è solo rivendicabile insieme al terzo deposito di un giocatore. Un BONUS DEL DEPOSITO 3RD che non è stato riscattato insieme al terzo deposito (a causa di un importo di deposito insufficiente, a causa dell\'eliminazione dei bonus da parte del giocatore o di altri motivi che esulano dal controllo di casinobit.io) non può essere richiesto in una data successiva .<br><br>Prima che il denaro bonus venga convertito in denaro che può essere prelevato, il denaro del bonus deve essere convertito per 50 volte (requisiti minimi di scommessa) prima che il giocatore possa richiedere un prelievo.<br><br>Il 3RD DEPOSIT BONUS è disponibile per 30 giorni dopo la registrazione. Se il giocatore non soddisfa i requisiti di scommessa entro il periodo di 30 giorni, il suo bonus e le eventuali vincite in sospeso scadrà e sarà rimosso dal conto.<br><br>Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON possono essere usati per scommettere il bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e tenta di piazzare scommesse oltre il massimo consentito, il bonus e le vincite verranno persi.<br><br>Solo le scommesse effettuate con denaro bonus verranno conteggiate per il totale dei requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.<br><br>Se il bonus viene annullato / annullato in qualsiasi momento, l\'importo del bonus iniziale e le eventuali vincite verranno annullate / annullate.<br><br>Se hai diritto a un bonus e detto bonus non viene aggiunto automaticamente dopo l\'attivazione al momento del deposito, ti preghiamo di contattare immediatamente il nostro team di supporto dal vivo, PRIMA di effettuare qualsiasi scommessa. Se un giocatore non soddisfa questo requisito, il bonus in questione non verrà aggiunto.<br><br>CasinoBit.io si riserva il diritto di cancellare o modificare questi termini e condizioni in qualsiasi momento senza alcun preavviso.<br><br>Si applicano i termini e le condizioni generali del bonus.<br></span></div><div><br></div><h2><span>TERMINI E CONDIZIONI GENERALI DI BONUS<br><br></span></h2><div>I giocatori possono richiedere solo il bonus di benvenuto, il primo bonus di deposito, il secondo bonus di deposito e il bonus di deposito 2 una volta.</div><div></div><div>Solo un bonus può essere richiesto alla volta. I bonus relativi ai depositi non possono essere "impilati". La gestione di CasinoBit.io si riserva il diritto di annullare qualsiasi bonus e / o vincita ottenuti da comportamenti fraudolenti.</div><div></div><div>Per richiedere il Bonus di benvenuto o qualsiasi Bonus di deposito, l\'utente deve effettuare un deposito minimo di 3 mBTC.</div><div></div><div>Quando si accetta un bonus sul deposito, si ricorda che il deposito è bloccato con il bonus accettato. Ciò significa che hai due opzioni, o per completare il requisito di scommessa del bonus, o annullare il bonus. Se si sceglie di annullare il bonus, il bonus e tutte le vincite attribuite al bonus andranno perse. Scommettere con entrambi i soldi bonus e il denaro depositato verrà conteggiato ai fini del requisito di scommessa.</div><div></div><div>I giocatori hanno 30 giorni dal momento dell\'attivazione del bonus per scommettere qualsiasi bonus. Se il giocatore non soddisfa i requisiti di scommessa entro il periodo di 30 giorni, il suo bonus e le eventuali vincite in sospeso scadrà e sarà rimosso dal conto.</div><div></div><div>Tutti i bonus (salvo diversamente specificato) devono essere scommessi 50 volte prima che i fondi possano essere ritirati.</div><div></div><div>Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON possono essere usati per scommettere il bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e tenta di piazzare scommesse oltre il massimo consentito, il bonus e le vincite verranno persi.</div><div></div><div>Le scommesse a basso rischio su qualsiasi gioco (ossia scommesse in proporzioni su diversi risultati nella stessa mano per creare "azione" con un rischio minimo) non si qualificano per il completamento del requisito di scommessa. Esempi di scommesse sul rischio minimo includono scommesse su rosso e nero simultaneamente nella Roulette, e scommesse giocatore e banchiere simultaneamente in Baccarat. I giocatori che si trovano ad adottare queste pratiche rischiano di aver confiscato il bonus e le vincite.</div><div></div><div>Solo le scommesse effettuate con denaro bonus verranno conteggiate per il totale dei requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.</div><div></div><div>Qualsiasi vincita "libera rotazione" o "bonus" risultante da fondi bonus dopo che il bonus è stato scommesso, perso o perso, sarà rimosso.</div><div></div><div>Qualsiasi bonus può essere rimosso prima che vengano soddisfatte le condizioni di scommessa. Contatta il supporto di CasinoBit.io per saperne di più</div><div></div><div>Tutti i prelievi saranno soggetti a un audit interno prima di essere elaborati. CasinoBit.io si riserva tutti i diritti per annullare bonus o eventuali vincite per controlli falliti. Il giocatore con il presente acconsente in anticipo allo stesso.</div><div></div><div>Se, a seguito di tale revisione, sembra che un giocatore (i) stia partecipando a strategie, sfruttando qualsiasi software o errore di sistema o insuccesso, o partecipando a qualsiasi forma di attività che CasinoBit.io, a sua esclusiva e completa discrezione, ritiene abusivo ("Abuso di promozione"), CasinoBit.io si riserva il diritto di revocare il diritto di tale Giocatore a ricevere o beneficiare della promozione (e / o trattenere il pagamento dei proventi di tale abuso al Giocatore / s in questione). Solo le scommesse completamente risolte (cioè le scommesse che si traducono in una vincita o perdita) saranno conteggiate per le scommesse.</div><div></div><div>Per i prelievi di bonus senza deposito, ci riserviamo il diritto di richiedere un KYC. Per quanto riguarda il KYC (Know Your Customer), possono essere necessari i seguenti documenti per la verifica: una carta d\'identità approvata dal governo (carta d\'identità, passaporto e patente di guida) con una foto, nonché una prova di residenza come una bolletta (che è non più vecchio di 2 mesi).</div><div></div><div>I giocatori con indirizzi e-mail usa e getta non hanno diritto a nessun bonus. Se un giocatore nonostante questo riceverebbe giri gratuiti, tutte le vincite dagli spin saranno confiscate.</div><div></div><div>Tutte le offerte dei clienti sono limitate a una per persona, famiglia, indirizzo di casa, indirizzo email, numero di telefono, IP e computer condiviso, ad es. biblioteca pubblica o luogo di lavoro.</div><div></div><div>Se viene scoperto che i giocatori di un gruppo utilizzano gli stessi modelli di scommessa e sono connessi (ma non limitati a) posizione, modello bancario o IP, la gestione di CasinoBit.io a sua discrezione ha il mandato di confiscare le vincite bonus e / o di depositare .</div><div></div><div>Si prega di notare che non è consentito utilizzare i fondi bonus puramente per progredire attraverso le fasi bonus e poi le fasi finali completate con scommesse cash quando i fondi bonus sono stati rilasciati o persi. Se viene adottata tale tattica, CasinoBit.io si riserva il diritto di confiscare le vincite.</div><div></div><div>Tutti gli account identificati per essere collegati a un account che già rivendicano questa promozione non saranno idonei e tutti i bonus accreditati su entrambi i conti verranno persi.</div><div></div><div>Account multipli non sono consentiti. Creare più di un account con CasinoBit.io per richiedere eventuali bonus è considerato abuso di bonus e può comportare la confisca dei fondi.</div><div></div><div>In caso di controversie, la decisione di CasinoBit.io sarà definitiva.</div><div></div><div></div><div>Il CasinoBit.io e le Condizioni pubblicati sul Sito Web (e aggiornati di volta in volta) sono in inglese ed è la versione inglese di questi Termini e Condizioni che costituiscono la base solo dei presenti Termini e Condizioni. Le traduzioni in altre lingue possono essere fatte come un servizio e fatte in buona fede. Tuttavia, in caso di differenze tra la versione inglese e una traduzione, la versione inglese ha la priorità su qualsiasi traduzione.</div><div></div><div>CasinoBit.io si riserva il diritto di cancellare o modificare questi termini e condizioni in qualsiasi momento senza alcun preavviso.</div><div><br></div><br><br><br><br>',
+  'bonus.term' => '<h3>1. TERMINI E CONDIZIONI DI BENVENUTO BONUS</h3><br><span><span>1.1 
+Il nuovo giocatore riceve 50 giri gratuiti come bonus di benvenuto. Per 
+attivare 50 Giri Gratis, il giocatore deve confermare il suo indirizzo 
+email.<br><br>1.2 Per attivare il bonus di benvenuto, il giocatore deve 
+passare alla sezione "OTTIENI BONUS" nel profilo, fare clic sul pulsante
+ "ATTIVARE" entro 5 giorni dal momento della registrazione, altrimenti 
+il ​​bonus scadrà.<br><br>1.3 Il Bonus di benvenuto può essere ricevuto 
+solo una volta per persona / account, famiglia, famiglia, indirizzo, 
+indirizzo e-mail, indirizzi IP e ambienti in cui i computer sono 
+condivisi (università, fraternità, scuola, biblioteca pubblica, posto di
+ lavoro, ecc.). CasinoBit.io si riserva il diritto di chiudere un 
+account e confiscare i fondi esistenti se viene trovata la prova di 
+abuso / frode.<br><br>1.4 Tutte le vincite risultanti da 50 Giri Gratis 
+saranno accreditate sul saldo del conto bonus del giocatore ed è 
+soggetta ai nostri Termini e Condizioni standard, inclusi i Termini e 
+condizioni del Bonus, e i requisiti di scommessa.<br><br>1.5 Le vincite 
+massime che verranno accreditate sul saldo del conto reale del giocatore
+ risultante dal Bonus di benvenuto saranno di 20 mBTC. Le vincite 
+eccedenti tale importo verranno perse.<br><br>1.6 Le vincite ricevute 
+dai Free Spins devono essere giocate 50 volte entro 10 giorni dal 
+momento della registrazione prima che vengano accreditate sul saldo del 
+conto reale del giocatore. Altrimenti, saranno persi.<br><br>1.7 Le 
+vincite ricevute dal Bonus di benvenuto non verranno accreditate sul 
+conto reale del giocatore fino a quando il giocatore non avrà depositato
+ un minimo di 5 mBTC (il giocatore può ancora utilizzare i bonus di 
+deposito) e scommesso l\'importo del deposito almeno una volta in Giochi 
+di slot entro 10 giorni dal momento della registrazione. Altrimenti, il 
+bonus sarà chiuso. Il deposito deve essere effettuato dopo l\'attivazione
+ del bonus.<br><br>1.8 Solo le scommesse effettuate utilizzando il saldo
+ del conto bonus verranno conteggiate per il totale dei requisiti di 
+scommessa.<br><br>1.9 Fino a quando non saranno soddisfatti i requisiti 
+di scommessa, saranno utilizzati i fondi sul saldo del conto reale del 
+giocatore prima dell\'utilizzo del saldo del conto bonus.<br><br>1.10 Le 
+scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi 
+dal vivo o altri giochi NON possono essere utilizzati per scommettere il
+ bonus. "Giocare per divertimento" (modalità demo / pratica / gioco 
+libero) su qualsiasi gioco non conta per i requisiti di scommessa.<br><br>1.11
+ Fino a quando non saranno soddisfatti i requisiti di scommessa, la 
+puntata massima sarà di 1,3 mBTC per scommessa. Ciò include la funzione 
+Gamble (raddoppia le vincite delle puntate) che può essere trovata in 
+alcuni giochi. La mancata osservanza di questa condizione può comportare
+ la perdita delle vincite.<br><br>1.12 I giocatori dei seguenti paesi 
+sono soggetti al Bonus di benvenuto: Afghanistan (AF), Albania (AL), 
+Algeria (DZ), Angola (AO), Austria (AT) e Serbia (RS), Bahrain (BH), 
+Bangladesh ( BD), Bielorussia (BY), Benin (BJ) Bolivia (BO), 
+Bosnia-Erzegovina (BA), Botswana (BW), Burkina Faso (BF), Bulgaria (BG),
+ Bulgaria (BG), Burundi (BI), Camerun (CM), Capo Verde (CV), Repubblica 
+centrafricana (CA), Ciad (TD), Comore (KM), Repubblica del Congo (CG), 
+Repubblica democratica del Congo (CD), Croazia (HR), Cipro (CY) , 
+Repubblica ceca (CZ), Costa d\'Avorio (CI), Danimarca (DK), Djibouti 
+(DJ), Egitto (EG), Egitto (EG), Guinea equatoriale (GQ), Eritrea (ER), 
+Etiopia (ET) , Finlandia (FI), Francia (FR), Gabon (GA), Gambia (GM), 
+Georgia (GE), Ghana (GH), Grecia (GR), Guinea (GN), Guinea-Bissau (GW), 
+Guyana ( GY), Haiti (HT), Honduras (HN) Ungheria (HU), India (IN), 
+Indonesia (ID), Iran, Iraq (IQ), Repubblica islamica di (IR), Giordania 
+(JO), Kazakistan (KZ) , Kenya (KE), Kuwait (KW), Lettonia (LV), Libano 
+(LB), Lesotho (LS), Liberia (LR), Lituania (LT), Macedonia (MK), Madag 
+ascar (MG), Malawi (MW), Malaysia (MY), Mali (ML), Mauritania (MR), 
+Mauritius (MU), Mauritius (MU), Moldavia (MD), Mongolia (MN), Montenegro
+ (ME), Marocco (MA), Mozambico (MZ), Namibia (NA), Nepal (NP), Nicaragua
+ (NI), Niger (NE), Nigeria (NG), Corea del Nord (DPRK), Oman (OM), 
+Pakistan (PK) , Filippine (PH), Polonia (PL), Portogallo (PT), Romania 
+(RO), Federazione russa (RU), Ruanda (RW), Sao Tome e Principe (ST), 
+Senegal (SN), Seychelles (SC), Sierra Leone (SL), Slovacchia (SK), 
+Slovenia (SI), Somalia (SO), Sudan del Sud (SS), Stato della Palestina 
+(PS), Sudan (SD), Svizzera (SZ), Repubblica araba siriana (SY) , 
+Thailandia (TH), Togo (TG), Tunisia (TN), Uganda (UG), Ucraina (UA), 
+Emirati Arabi Uniti (AE), Repubblica unita di Tanzania (TZ), Vietnam 
+(VN), Yemen (YE) , Zambia (ZM), Zimbabwe (ZW).<br><br>1.13 CasinoBit.io 
+si riserva il diritto di cancellare o modificare i Termini e le 
+Condizioni del Bonus in qualsiasi momento senza alcun preavviso.<br><br>1.14 Si applicano i Termini e condizioni generali del Bonus.</span><br><br></span><h3>2. 110% 1 ° DEPOSITO TERMINI E CONDIZIONI BONUS</h3><br><span><span>2.1
+ Per attivare il tuo 1 ° DEPOSITO BONUS, devi andare alla sezione 
+"OTTIENI BONUS" nel tuo profilo, cliccare su "ATTIVARE" ed effettuare un
+ deposito. Il bonus verrà aggiunto automaticamente al conto giocatore al
+ momento del primo deposito.<br><br>2.2 L\'importo massimo del bonus del 1 ° DEPOSITO BONUS è 1000 mBTC.<br><br>2.3 È richiesto il deposito minimo di 3 mBTC per beneficiare del 1 ° DEPOSITO BONUS.</span><br><br></span><br><span>2.4 Se il primo deposito è inferiore al suddetto minimo, il giocatore non riceverà il 1 ° DEPOSITO BONUS.<br><br>2.5
+ Il 1 ° DEPOSITO BONUS può essere ricevuto solo una volta per persona / 
+account, famiglia, famiglia, indirizzo, indirizzo e-mail, indirizzi IP e
+ ambienti in cui i computer sono condivisi (università, fraternità, 
+scuola, biblioteca pubblica, posto di lavoro, ecc.) CasinoBit .io si 
+riserva il diritto di chiudere un account e confiscare i fondi esistenti
+ se viene trovata la prova di abuso / frode.<br><br>2.6 Il Bonus sul 
+primo deposito è rivendicabile solo insieme al primo deposito di un 
+giocatore. Il 1 ° DEPOSITO BONUS che non è stato riscattato insieme al 
+primo deposito (a causa di un importo di deposito insufficiente, a causa
+ di un giocatore che rinuncia ai bonus, o per qualsiasi altra ragione al
+ di fuori del controllo di casinobit.io) non può essere richiesto in un 
+secondo momento.<br><br>2.7 Prima che il denaro bonus venga convertito 
+in fondi che possono essere ritirati, deve essere convertito 50 volte 
+(requisiti minimi di scommessa) prima che un giocatore possa richiedere 
+un prelievo.<br><br>2.8 Il 1 ° DEPOSITO BONUS è disponibile per 30 
+giorni dopo la registrazione. Se un giocatore non soddisfa i requisiti 
+di scommessa entro un periodo di 30 giorni, il suo bonus e le eventuali 
+vincite in sospeso scadrà e sarà rimosso dal conto.<br><br>2.9 Le 
+scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi 
+dal vivo o altri giochi NON possono essere usati per scommettere il 
+bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e 
+tenta di piazzare scommesse oltre il massimo consentito, il bonus e le 
+vincite verranno persi.<br><br>2.10 Solo le scommesse effettuate con 
+denaro bonus verranno conteggiate per il totale delle richieste di 
+scommessa. Il denaro bonus inizia quando il tuo saldo reale è esaurito.<br><br>2.11
+ Se il bonus viene annullato / annullato in qualsiasi momento, l\'importo
+ del bonus iniziale e le eventuali vincite verranno annullate / 
+annullate.<br><br>2.12 Se hai diritto a un bonus e hai detto che il 
+bonus non viene aggiunto automaticamente dopo l\'attivazione sul tuo 
+deposito, contatta subito il nostro team di supporto dal vivo PRIMA di 
+effettuare qualsiasi scommessa. Se un giocatore non soddisfa questo 
+requisito, il bonus in questione non verrà aggiunto.<br><br>2.13 
+CasinoBit.io si riserva il diritto di cancellare o modificare questi 
+termini e condizioni in qualsiasi momento senza alcun preavviso.<br><br></span><div><span>2.14 Si applicano i termini e le condizioni generali del bonus.<br></span></div><div><br></div><h3>3. 80% 2 ° DEPOSITO TERMINI E CONDIZIONI BONUS</h3><br><span><span>3.1
+ Per attivare il tuo 2 ° DEPOSITO BONUS, devi andare nella sezione 
+"OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVARE" ed effettuare 
+un deposito. Il bonus verrà aggiunto automaticamente al conto di un 
+giocatore al momento del secondo deposito.<br><br>3.2 La quantità massima di bonus del 2 ° DEPOSITO BONUS è 1000 mBTC.<br><br>3.3 Il deposito minimo di 3 mBTC è richiesto per essere idoneo per il 2 ° DEPOSITO BONUS.<br><br>3.4 Se il secondo deposito è inferiore al suddetto minimo, il giocatore non riceverà il 2 ° DEPOSITO BONUS.<br><br>3.5
+ Il 2 ° DEPOSITO BONUS può essere ricevuto solo una volta per persona / 
+account, famiglia, famiglia, indirizzo, indirizzo e-mail, indirizzi IP e
+ ambienti in cui i computer sono condivisi (università, fraternità, 
+scuola, biblioteca pubblica, posto di lavoro, ecc.). CasinoBit.io si 
+riserva il diritto di chiudere un account e confiscare i fondi esistenti
+ se vengono trovate prove di abuso / frode.<br><br>3.6 Il 2 ° DEPOSITO 
+BONUS è solo rivendicabile insieme al secondo deposito di un giocatore. 
+Il 2 ° DEPOSITO BONUS che non è stato riscattato insieme al secondo 
+deposito (a causa di un importo di deposito insufficiente, a causa di un
+ giocatore che ha escluso i bonus, o per altri motivi al di fuori del 
+controllo di casinobit.io) non può essere richiesto in un secondo 
+momento.<br><br>3.7 Prima che il denaro bonus venga convertito in fondi 
+che possono essere ritirati, deve essere convertito 50 volte (requisiti 
+minimi di scommessa) prima che un giocatore possa richiedere un 
+prelievo.<br><br>3.8 Il 2 ° DEPOSITO BONUS è disponibile per 30 giorni 
+dopo la registrazione. Se un giocatore non soddisfa i requisiti di 
+scommessa entro un periodo di 30 giorni, il suo bonus e le eventuali 
+vincite in sospeso scadrà e sarà rimosso dal conto.<br><br>3.9 Le 
+scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, giochi 
+dal vivo o altri giochi NON possono essere usati per scommettere il 
+bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e 
+tenta di piazzare scommesse oltre il massimo consentito, il bonus e le 
+vincite verranno persi.<br><br>3.10 Solo le scommesse effettuate 
+utilizzando denaro bonus verranno conteggiate per il totale dei 
+requisiti di scommessa. Il denaro bonus inizia quando il tuo saldo reale
+ è esaurito.<br><br>3.11 Se il bonus viene annullato / annullato in 
+qualsiasi momento, l\'importo del bonus iniziale e le eventuali vincite 
+verranno annullate / annullate.<br><br>3.12 Se hai diritto a un bonus e 
+hai detto che il bonus non viene aggiunto automaticamente dopo 
+l\'attivazione sul tuo deposito, contatta subito il nostro team di 
+supporto dal vivo PRIMA di effettuare qualsiasi scommessa. Se un 
+giocatore non soddisfa questo requisito, il bonus in questione non verrà
+ aggiunto.<br><br>3.13 CasinoBit.io si riserva il diritto di cancellare o
+ modificare questi termini e condizioni in qualsiasi momento senza alcun
+ preavviso.<br><br>3.14 Si applicano i termini e le condizioni generali del bonus.</span><br><br></span><h3>4. 55% 3 ° TERMINE, TERMINI E CONDIZIONI DI BONUS</h3><span><span>4.1
+ Per attivare il tuo 3RD DEPOSITO BONUS, devi andare alla sezione 
+"OTTIENI BONUS" nel tuo profilo, fare clic su "ATTIVA" e effettuare un 
+deposito. Il bonus verrà aggiunto automaticamente al conto di un 
+giocatore al momento del versamento del terzo deposito.<br><br>4.2 L\'importo massimo del bonus per il 3RD DEPOSITO BONUS è 1000 mBTC.<br><br>4.3 Un deposito minimo di 3 mBTC è richiesto per essere idoneo per il 3RD DEPOSITO BONUS.<br><br>4.4 Se il terzo deposito è inferiore al suddetto minimo, un giocatore non riceverà il 3 ° DEPOSITO BONUS.<br><br>4.5
+ Il 3RD DEPOSITO BONUS può essere ricevuto solo una volta per persona / 
+account, famiglia, famiglia, indirizzo, indirizzo e-mail, indirizzi IP e
+ ambienti in cui i computer sono condivisi (università, fraternità, 
+scuola, biblioteca pubblica, posto di lavoro, ecc.). CasinoBit.io si 
+riserva il diritto di chiudere un account e confiscare i fondi esistenti
+ se vengono trovate prove di abuso / frode.<br><br>4.6 Il 3RD DEPOSITO 
+BONUS è solo rivendicabile insieme al terzo deposito di un giocatore. Il
+ 3RD DEPOSITO BONUS che non è stato riscattato insieme al terzo deposito
+ (a causa di un importo di deposito insufficiente, a causa di un 
+giocatore che rinuncia ai bonus, o per altri motivi al di fuori del 
+controllo di casinobit.io) non può essere richiesto in un secondo 
+momento.<br><br>4.7 Prima che il denaro bonus venga convertito in fondi 
+che possono essere ritirati, deve essere girato 40 volte (requisiti 
+minimi di scommessa) prima che aplayer possa richiedere un prelievo.<br><br>4.8
+ Il 3RD DEPOSIT BONUS è disponibile per 30 giorni dopo la registrazione.
+ Se un giocatore non soddisfa i requisiti di scommessa entro un periodo 
+di 30 giorni, il suo bonus e le eventuali vincite in sospeso scadrà e 
+sarà rimosso dal conto.<br><br>4.9 Le scommesse possono essere fatte 
+SOLO in SLOT. Giochi da tavolo, giochi dal vivo o altri giochi NON 
+possono essere usati per scommettere il bonus o mentre il bonus è 
+attivo. Se un giocatore ha un bonus attivo e tenta di piazzare scommesse
+ oltre il massimo consentito, il bonus e le vincite verranno persi.<br><br>4.10
+ Solo le scommesse effettuate utilizzando denaro bonus verranno 
+conteggiate per il totale delle richieste di scommessa. Il denaro bonus 
+inizia quando il tuo saldo reale è esaurito.<br><br>4.11 Se il bonus 
+viene annullato / annullato in qualsiasi momento, l\'importo del bonus 
+iniziale e le eventuali vincite verranno annullate / annullate.<br><br>4.12
+ Se hai diritto a un bonus e hai detto che il bonus non viene aggiunto 
+automaticamente dopo l\'attivazione al momento del deposito, contatta 
+subito il nostro team di supporto dal vivo PRIMA di effettuare qualsiasi
+ scommessa. Se un giocatore non soddisfa questo requisito, il bonus in 
+questione non verrà aggiunto.<br><br>4.13 CasinoBit.io si riserva il 
+diritto di cancellare o modificare questi termini e condizioni in 
+qualsiasi momento senza alcun preavviso.<br><br>4.14 Si applicano i termini e le condizioni generali del bonus.</span><br><br><br></span><h3>5. TERMINI E CONDIZIONI GENERALI DI BONUS</h3><br><span>5.1
+ I giocatori possono richiedere il bonus di benvenuto, il primo bonus di
+ deposito, il secondo bonus di deposito e il bonus di 3 ° deposito una 
+sola volta.<br><br>5.2 È possibile richiedere un solo bonus alla volta. I
+ bonus relativi al deposito non possono essere "impilati". La direzione 
+di CasinoBit.io si riserva il diritto di annullare bonus e / o vincite 
+ottenute tramite comportamenti fraudolenti.<br><br>5.3 Quando si accetta
+ un bonus sul deposito, si ricorda che il deposito è bloccato con il 
+bonus accettato. Ciò significa che hai due opzioni, o per completare il 
+requisito di scommessa del bonus, o annullare il bonus. Se si sceglie di
+ annullare il bonus, il bonus e tutte le vincite attribuite al bonus 
+andranno perse. Scommettere con entrambi i soldi bonus e il denaro 
+depositato verrà conteggiato ai fini del requisito di scommessa.<br><br>5.4
+ I giocatori hanno 30 giorni dal momento dell\'attivazione del bonus per 
+scommettere qualsiasi bonus. Se il giocatore non soddisfa i requisiti di
+ scommessa entro 30 giorni, il suo bonus e le eventuali vincite in 
+sospeso scadrà e sarà rimosso dal conto.<br><br>5.5 Tutti i bonus (se non diversamente specificato) devono essere scommessi 40 volte prima che i fondi possano essere ritirati.<br><br>5.6
+ Le scommesse possono essere fatte SOLO in SLOT. Giochi da tavolo, 
+giochi dal vivo o altri giochi NON possono essere usati per scommettere 
+il bonus o mentre il bonus è attivo. Se un giocatore ha un bonus attivo e
+ tenta di piazzare scommesse oltre il massimo consentito, il bonus e le 
+vincite verranno persi.<br><br>5.7 Le scommesse a basso rischio su 
+qualsiasi gioco (ossia scommesse in proporzioni su diversi risultati 
+nella stessa mano per creare "azione" con un rischio minimo) non si 
+qualificano per il completamento del requisito di scommessa. Esempi di 
+scommesse sul rischio minimo includono scommesse su rosso e nero 
+simultaneamente nella Roulette, e scommesse giocatore e banchiere 
+simultaneamente in Baccarat. I giocatori che si trovano ad adottare 
+queste pratiche rischiano di aver confiscato il bonus e le vincite.<br><br>5.8
+ Solo le scommesse effettuate con denaro bonus verranno conteggiate per 
+il totale dei requisiti di scommessa. Il denaro bonus inizia quando il 
+tuo saldo reale è esaurito.<br><br>5.9 Le eventuali vincite "free spin" o
+ "bonus" risultanti dai fondi bonus dopo che il bonus è stato scommesso,
+ perso o perso, saranno rimossi.<br><br>5.10 Qualsiasi bonus può essere 
+rimosso prima che vengano soddisfatte le condizioni di scommessa. Si 
+prega di contattare il supporto CasinoBit.io per saperne di più.<br><br>5.11
+ Tutti i prelievi saranno sottoposti a un audit interno prima di essere 
+elaborati. CasinoBit.io si riserva tutti i diritti per annullare bonus o
+ eventuali vincite per controlli falliti. Un giocatore con il presente 
+acconsente in anticipo allo stesso.<br><br>5.12 Se, a seguito di tale 
+revisione, sembra che un giocatore partecipi alle strategie, approfitti 
+di eventuali errori o errori di software o di sistema, o partecipi a 
+qualsiasi forma di attività che CasinoBit.io, a sua esclusiva e totale 
+discrezione, ritenga essere abusivo ("Abuso di promozione"), 
+CasinoBit.io si riserva il diritto di revocare il diritto di tale 
+giocatore a ricevere o beneficiare della promozione (e / o trattenere il
+ pagamento dei proventi di tale abuso al / i giocatore / i in questione 
+). Solo le scommesse completamente risolte (cioè le scommesse che si 
+traducono in una vincita o perdita) saranno conteggiate per le 
+scommesse.<br><br>5.13 Per i prelievi di bonus senza deposito, ci 
+riserviamo il diritto di richiedere un KYC. Per quanto riguarda il KYC 
+(Know Your Customer), per la verifica potrebbero essere necessari i 
+seguenti documenti: Una carta d\'identità approvata dal governo (carta 
+d\'identità, passaporto e patente di guida) con una foto, nonché la prova
+ di residenza, come una bolletta ( che non ha più di 2 mesi).<br><br>5.14
+ I giocatori con indirizzi e-mail usa e getta non hanno diritto a nessun
+ bonus. Se un giocatore nonostante questo riceverebbe giri gratuiti, 
+tutte le vincite dagli spin saranno confiscate.<br><br>5.15 Tutte le 
+offerte dei clienti sono limitate a una per persona, famiglia, indirizzo
+ di casa, indirizzo email, numero di telefono, IP e computer condiviso, 
+ad es. biblioteca pubblica o luogo di lavoro.<br><br>5.16 Se viene 
+scoperto che un gruppo di giocatori utilizza gli stessi modelli di 
+scommessa e sono collegati tramite (ma non limitato a) posizione, 
+modello bancario o IP, la direzione di CasinoBit.io avrà a sua 
+discrezione il mandato di confiscare le vincite bonus e / o un deposito.<br><br>5.17
+ Si prega di notare che non è consentito utilizzare i fondi bonus 
+puramente per progredire attraverso le fasi bonus e poi le fasi finali 
+completate con scommesse cash quando i fondi bonus sono stati rilasciati
+ o persi. Se viene adottata una tale tattica, CasinoBit.io si riserva il
+ diritto di confiscare le vincite.<br><br>5.18 Tutti gli account 
+identificati per essere collegati a un account che già rivendicano 
+questa promozione non saranno idonei e tutti i bonus accreditati su 
+entrambi i conti verranno persi.<br><br>5.19 Non sono consentiti account
+ multipli. Creare più di un account con CasinoBit.io per richiedere 
+eventuali bonus è considerato abuso di bonus e può comportare la 
+confisca dei fondi.<br><br></span><div>5.20 In caso di controversie, la decisione di CasinoBit.io sarà definitiva.</div><div><br></div><div><span>5.21
+ CasinoBit.io e le Condizioni pubblicate sul Sito Web (e aggiornate di 
+volta in volta) sono in inglese, ed è la versione inglese di questi 
+Termini e Condizioni che costituisce solo la base di questi Termini e 
+Condizioni. Le traduzioni in altre lingue possono essere fatte come un 
+servizio e fatte in buona fede. Tuttavia, in caso di differenze tra la 
+versione inglese e una traduzione, la versione inglese ha la priorità su
+ qualsiasi traduzione.<br><br>5.22 CasinoBit.io si riserva il diritto di
+ cancellare o modificare questi termini e condizioni in qualsiasi 
+momento senza alcun preavviso.</span><br></div>',
   'deposit_space' => 'D e p o s i t o',
   'bonus_deposit' => 'Vorresti ricevere un BONUS al tuo prossimo deposito?',
   'open_bonus' => 'Bonus Disponibili',
