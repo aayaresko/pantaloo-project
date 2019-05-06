@@ -26,7 +26,7 @@ add('writable_dirs', []);
 
 host('cabit.ga')
     ->stage('staging')
-    ->user('root')
+    ->user('deployer')
     ->set('deploy_path', '/var/www/{{application}}');
     
 // Tasks
