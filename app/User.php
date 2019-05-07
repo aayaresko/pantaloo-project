@@ -353,4 +353,61 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Transaction', 'agent_id');
     }
+
+    public function koefs()
+    {
+        return $this->hasOne('App\Models\AgentsKoef')->orderBy('id', 'desc');
+    }
+
+    public function allKoefs()
+    {
+        return $this->hasMany('App\Models\AgentsKoef');
+    }
+
+    public function playersCount()
+    {
+        return self::where('agent_id', $this->id)->where('role', 0)->count();
+    }
+
+    public function agentsCount()
+    {
+        return self::where('agent_id', $this->id)->where('role', 1)->count();
+    }
+
+    public function benefits()
+    {
+        return $this->hasMany('App\Models\AgentSum');
+    }
+
+    public function allBenefits()
+    {
+        $sum = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $newSum = $child->allBenefits();
+            $sum += $newSum;
+        }
+        $sum += $this->benefits->sum('total_sum');
+
+        return $sum;
+    }
+
+    public function playersTotalCount()
+    {
+        $count = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $count += $child->playersTotalCount();
+        }
+        $count += $this->playersCount();
+
+        return $count;
+    }
+
+    public function profit()
+    {
+        foreach ($this->allKoefs as $koef) {
+
+        }
+
+        return 3;
+    }
 }

@@ -136,6 +136,9 @@
                         <a href="{{route('agent.transactions')}}" class="waves-effect"><i class="ti-package"></i> <span> Transactions </span> </a>
                     </li>
                     <li>
+                        <a href="{{route('agent.affiliates')}}" class="waves-effect"><i class="ti-user"></i> <span> Affiliates </span> </a>
+                    </li>
+                    <li>
                         <a href="{{route('agent.trackers')}}" class="waves-effect"><i class="ti-target"></i> <span> Links </span> </a>
                     </li>
                     <li>

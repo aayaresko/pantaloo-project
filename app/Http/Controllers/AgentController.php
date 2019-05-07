@@ -266,10 +266,10 @@ class AgentController extends Controller
 
     public function showTree()
     {
-        $prepareQuerry = DB::table('users')
-            ->select('id', 'email', 'agent_id', 'created_at');
-
-        $users = $prepareQuerry->get();
+        $users = User::with('koefs', 'benefits')
+            ->select('id', 'email', 'role', 'agent_id', 'created_at')
+            ->whereIn('role', [1, 3])
+            ->get();
 
         $ids = [];
         foreach ($users as $user) {
@@ -279,19 +279,11 @@ class AgentController extends Controller
         foreach ($users as $user){
             $parentId = ($user->agent_id and in_array($user->agent_id, $ids)) ? $user->agent_id : 0;
             $parentIdChildArr[$parentId][] = $user;
-            $user->countChild = 0;
-            $user->totalCountChild = 0;
-            $user->deep = 0;
-            $user->created_at = date('d.m.Y', strtotime($user->created_at));
+            $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();
+            $user->percent = $user->koefs->koef;
+            $user->benefit = $user->benefits->sum('total_sum');
         }
-        $tree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
-        $newTree = [];
-        foreach ($tree as &$parent) {
-            $this->getChildCount($parent);
-            if ($parent->countChild) {
-                $newTree[] = $parent;
-            }
-        }
+        $newTree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
 
         return view('admin.tree', compact('newTree'));
     }
@@ -311,29 +303,6 @@ class AgentController extends Controller
             $tree[] = $child;
         }
         return $tree;
-    }
-    /**
-     * set max deep and totalCountChild
-     * @param $child
-     * @return array
-     */
-    protected function getChildCount(&$child)
-    {
-        $sumChildCount = 0;
-        $maxDeep = 0;
-        if ($child->countChild) {
-            foreach ($child->_children as $children) {
-                $middleArr = $this->getChildCount($children);
-                $sumChildCount += $middleArr[0];
-                if($maxDeep <= $middleArr[1]) { $maxDeep = $middleArr[1] + 1; }
-            }
-            $child->deep = $maxDeep;
-            $sumChildCount += $child->countChild;
-        } else {
-            $child->deep = 0;
-        }
-        $child->totalCountChild = $sumChildCount;
-        return [$sumChildCount, $maxDeep];
     }
 
     public function commission(User $user, Request $request)

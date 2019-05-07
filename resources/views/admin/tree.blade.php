@@ -19,26 +19,8 @@
                                         :filter="filterValue"
                                         @filter-change="filterChange"
                                 >
-                                    <template slot="title">
-                                        <h2 class="leading-loose font-bold uppercase">
-                                            Belgium royal family
-                                        </h2>
-                                    </template>
-                                    <template
-                                            slot="firstName"
-                                            slot-scope="props">
-                                        <a
-                                                :href="`https://www.google.com/search?q=${props.row.firstName}+${props.row.lastName}`"
-                                                target="_blank">@{{ props.row.firstName }}</a>
-                                    </template>
-                                    <template slot="filter">
-                                        <h3 class="inline pr-2">Filter:</h3>
-                                        <input
-                                                v-model="filterValue"
-                                                class="appearance-none border py-2 px-3"
-                                                type="text"
-                                                placeholder="Filter..."
-                                        >
+                                    <template slot="role" slot-scope="props">
+                                        <span v-if="props.row.role == 3">Super</span>
                                     </template>
                                 </vue-ads-table-tree>
                             </div>
@@ -75,30 +57,6 @@
                             'vue-ads-border': true,
                             'vue-ads-w-full': true,
                         },
-                        info: {
-                            'vue-ads-text-center': true,
-                            'vue-ads-py-6': true,
-                            'vue-ads-text-sm': true,
-                        },
-                        'all/': {
-                            'hover:vue-ads-bg-grey-lighter': true,
-                        },
-                        'even/': {
-                            'vue-ads-bg-grey-lightest': true,
-                        },
-                        'odd/': {
-                            'vue-ads-bg-white': true,
-                        },
-                        '0/': {
-                            'vue-ads-bg-grey-lightest': false,
-                            'hover:vue-ads-bg-grey-lighter': false,
-                        },
-                        '0_-1/': {
-                            'vue-ads-border-b': true,
-                        },
-                        '/0_-1': {
-                            'vue-ads-border-r': true,
-                        },
                     },
                     columns: [
                         {
@@ -114,26 +72,26 @@
                             filterable: true,
                         },
                         {
-                            property: 'countChild',
-                            title: 'I уровень',
+                            property: 'userCount',
+                            title: 'Players',
                             direction: null,
                             filterable: false,
                         },
                         {
-                            property: 'totalCountChild',
-                            title: 'Всего партнеров',
+                            property: 'role',
+                            title: 'Role',
                             direction: null,
                             filterable: false,
                         },
                         {
-                            property: 'deep',
-                            title: 'Глубина',
+                            property: 'percent',
+                            title: 'Percent',
                             direction: null,
                             filterable: false,
                         },
                         {
-                            property: 'created_at',
-                            title: 'Дата рег',
+                            property: 'benefit',
+                            title: 'Benefits',
                             direction: null,
                             filterable: false,
                         },

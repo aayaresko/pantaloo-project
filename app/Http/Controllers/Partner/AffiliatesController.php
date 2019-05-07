@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Models\AgentsKoef;
 use DB;
 use App\User;
 use Validator;
@@ -279,5 +280,27 @@ class AffiliatesController extends Controller
             'transactions' => $transactions,
             'statusPayment' => $statusPayment
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function partners()
+    {
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', 1)->with('koefs', 'benefits')->get();
+        $myKoef = Auth::user()->koefs->koef;
+
+        return view('affiliates.partners', compact('affiliates', 'myKoef'));
+    }
+
+    public function changeKoef($id, Request $request)
+    {
+        $partner = User::where('agent_id', Auth::user()->id)->where('role', 1)->where('id', $id)->firstOrFail();
+        $newKoef = new AgentsKoef();
+        $newKoef->user_id = $partner->id;
+        $newKoef->koef = $request->koef;
+        $newKoef->save();
+
+        return back();
     }
 }

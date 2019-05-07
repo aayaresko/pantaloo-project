@@ -296,6 +296,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             //Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
             Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'Partner\AffiliatesController@trackers']);
+            Route::get('/partners', ['as' => 'agent.affiliates', 'uses' => 'Partner\AffiliatesController@partners']);
+            Route::post('/partners/change/{id}', 'Partner\AffiliatesController@changeKoef')->name('agent.change.koef');
 
             Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);
             Route::post('/tracker/{tracker}/update', ['as' => 'agent.updateTracker', 'uses' => 'AgentController@updateTracker']);
