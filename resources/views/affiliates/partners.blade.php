@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        My commission: {{$myKoef}}
+                        My current commission: {{$myKoef}}
                     </div>
                     <div class="col-lg-12">
                         <div class="card-box">
@@ -49,6 +49,70 @@
                                                 {{csrf_field()}}
                                                 <button type="submit">Save</button>
                                             </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Profits table</h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr role="row">
+                                    <th width="50">My Percent</th>
+                                    <th width="150">From</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @php($from = 0)
+                                @foreach(Auth::user()->allKoefs as $koef)
+                                    @php($to = $from) @php($from = $koef->created_at)
+                                    <tr role="row">
+                                        <td>{{$koef->koef}}</td>
+                                        <td>{{$koef->created_at->format('Y.m.d')}}</td>
+                                        <td>
+                                            <table class="table" >
+                                                <tr>
+                                                    <th>Partner</th>
+                                                    <th></th>
+                                                </tr>
+                                                @foreach($affiliates as $affiliate)
+                                                <tr>
+                                                    <td>{{$affiliate->email}}</td>
+                                                    <td>
+                                                        <table class="table" >
+                                                            <tr>
+                                                                <th>Partner %</th>
+                                                                <th>From - to</th>
+                                                                <th>Benefit</th>
+                                                                <th>Profit</th>
+                                                            </tr>
+                                                            @php($affiliateFrom = 0)
+                                                            @foreach($affiliate->allKoefs as $partnerKoef)
+                                                                @php($affiliateTo = $affiliateFrom) @php($affiliateFrom = $partnerKoef->created_at->format('Y-m-d'))
+                                                                @if($affiliateTo and $affiliateTo < $from) @continue @endif
+                                                                <tr>
+                                                                    <td>{{$partnerKoef->koef}}</td>
+                                                                    <td>{{$affiliateFrom}} - {{$affiliateTo ?: 'now'}}</td>
+                                                                    <td>1000</td>
+                                                                    <td>1000</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </table>
                                         </td>
                                     </tr>
                                 @endforeach

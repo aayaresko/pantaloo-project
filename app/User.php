@@ -361,7 +361,7 @@ class User extends Authenticatable
 
     public function allKoefs()
     {
-        return $this->hasMany('App\Models\AgentsKoef');
+        return $this->hasMany('App\Models\AgentsKoef')->orderBy('id', 'desc');
     }
 
     public function playersCount()
@@ -400,14 +400,5 @@ class User extends Authenticatable
         $count += $this->playersCount();
 
         return $count;
-    }
-
-    public function profit()
-    {
-        foreach ($this->allKoefs as $koef) {
-
-        }
-
-        return 3;
     }
 }
