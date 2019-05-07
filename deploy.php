@@ -31,7 +31,7 @@ host('188.166.192.94')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
-    ->addSshOption('StrictHostKeyChecking', 'no');
+    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', '/var/www/{{application}}');
     
 // Tasks
