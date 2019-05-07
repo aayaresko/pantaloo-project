@@ -48,6 +48,26 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $user = User::where('id', 148)->first();
+
+        $class = BonusHelper::getClass($user->bonus_id);
+
+        $bonusObject = new $class($user);
+        DB::beginTransaction();
+        $act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+
+        dd($act);
         dd($request->user());
         dd(2);
 //        dd(User::where('id', 2481)->first());

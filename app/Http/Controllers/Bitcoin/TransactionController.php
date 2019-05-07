@@ -127,7 +127,10 @@ class TransactionController extends Controller
                     if ((int)$user->bonus_id === 1) {
                         $depositNotifications = 2;
                         //to do check status
-                        $bonusObject->setDeposit($amountTransactionFormat);
+                        $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
+//                        if ($setDeposit['success'] === false) {
+//                            throw new \Exception($setDeposit['message']);
+//                        }
                     } else {
                         //check this
                         //real active if deposit got
