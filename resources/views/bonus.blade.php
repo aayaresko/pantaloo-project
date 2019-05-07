@@ -37,7 +37,12 @@
                                                 $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
 
                                                 $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
-                                                $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
+
+                                                if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
+                                                    $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
+                                                } else {
+                                                    $depositWager = 0;
+                                                }
 
                                             @endphp
                                             <p class="text">Bonus Wager:

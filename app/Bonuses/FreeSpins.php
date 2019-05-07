@@ -327,7 +327,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Deposit is not found');
             } else {
                 $playedAmount = (float)$this->dataBonus['wagered_amount'];
-                
+
                 if ($playedAmount < $totalDeposit) {
                     throw new \Exception('Deposit not won back');
                 }
@@ -698,16 +698,58 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     public function setDeposit($amount)
     {
+        $date = new \DateTime();
+        $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
-            $this->dataBonus['wagered_deposit'] = 1;
-        }
-        
-        $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
-        
-        $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['setDeposit'])
+            ->first();
 
-        UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['setDeposit'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
+        try {
+            $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
+
+            $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
+
+            //update status deposit check
+            if ($this->dataBonus['total_deposit'] >= $this->minDeposit) {
+                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
+                    $this->dataBonus['wagered_deposit'] = 1;
+                }
+            }
+
+            UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+        }
+
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
+
+        return $response;
     }
 }
