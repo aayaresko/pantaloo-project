@@ -1299,18 +1299,19 @@ html.cropped {
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
+  /*border: 1px solid #9350c2;*/
 
 }
 /* line 86, ../scss/_middle.scss */
 .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 100%;
+  height: 100%;
+  background: url("../media/images/mBIT.svg") no-repeat center;
+  background-size: contain;
   margin: 0 auto;
-  margin-top: 22px;
+  /*margin-top: 22px;*/
 }
 
 /* line 98, ../scss/_middle.scss */
@@ -4247,17 +4248,21 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
+  /*border: 1px solid #9350c2;*/
+  /*background: url("../media/images/mBIT.svg") no-repeat center;*/
+
 }
 /* line 2336, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 100%;
+  height: 100%;
+  background: url("../media/images/mBIT.svg") no-repeat center;
+  -webkit-background-size: contain;
+  background-size: contain;
   margin: 0 auto;
-  margin-top: 22px;
+  /*margin-top: 22px;*/
 }
 /* line 2346, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance {
@@ -5935,17 +5940,19 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
-    border: 1px solid #9350c2;
+    /*border: 1px solid #9350c2;*/
   }
   /* line 508, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
     content: '';
     display: block;
-    width: 125px;
-    height: 73px;
-    background: url("../media/images/sprite.png") 0 -216px;
+    width: 100%;
+    height: 100%;
+    background: url("../media/images/mBIT.svg") no-repeat center;
     margin: 0 auto;
-    margin-top: 58px;
+    -webkit-background-size: contain;
+    background-size: contain;
+    /*margin-top: 58px;*/
   }
   /* line 518, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
@@ -6825,17 +6832,20 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
-    border: 1px solid #9350c2;
+    /*border: 1px solid #9350c2;*/
+
   }
   /* line 1246, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
     content: '';
     display: block;
-    width: 53px;
-    height: 31px;
-    background: url("../media/images/sprite.png") -57px 0;
+    width: 100%;
+    height: 100%;
+    background: url("../media/images/mBIT.svg") no-repeat center;
+    -webkit-background-size: contain;
+    background-size: contain;
     margin: 0 auto;
-    margin-top: 22px;
+   /* margin-top: 22px;*/
   }
   /* line 1257, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing {
@@ -6966,11 +6976,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 1362, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
-    width: 53px;
+    /*width: 53px;
     height: 31px;
     background-position: -57px 0;
     margin: 0 auto;
-    margin-top: 22px;
+    margin-top: 22px;*/
   }
   /* line 1370, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
