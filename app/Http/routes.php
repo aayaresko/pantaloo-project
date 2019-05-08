@@ -11,6 +11,8 @@
 |
 */
 
+use App\Jobs\IntercomCreateUpdateUser;
+
 Route::get('beta/test', function () {
     return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
 });
@@ -25,6 +27,16 @@ $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
+
+Route::get('/intercom/update', function() {
+    $user = \Illuminate\Support\Facades\Auth::user();
+    if ($user){
+        dispatch(new IntercomCreateUpdateUser($user));
+        return 1;
+    } else {
+        return 0;
+    }
+});
 
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
