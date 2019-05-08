@@ -56,7 +56,7 @@ class IntercomEventsResolver
         $response = new \stdClass();
 
         $response->event_name = self::eventNameFormat($event_name, $timestamp) . $eventData['event_name_addon'];
-        dump($eventData);
+        //dump($eventData);
         $response->event_time = $timestamp;
         $response->event_data = $eventData['event_data'];
 

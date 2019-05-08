@@ -126,7 +126,7 @@ class IntercomEventHandler
             'email' => $email,
             'event_name' => $dt . ' ' . $name,
         ];
-        dump($data);
+        //dump($data);
         dispatch(new IntercomSendEvent($data));
     }
 

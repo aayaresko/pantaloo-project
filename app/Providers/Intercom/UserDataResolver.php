@@ -25,7 +25,7 @@ class UserDataResolver
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
             ]];
-        dump($response);
+        //dump($response);
         return $response;
     }
 
