@@ -23,7 +23,6 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
-    public static $maxAmount = 2000;
 
     protected $percent = 55;
     protected $minSum = 3;
@@ -32,6 +31,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
     protected $playFactor = 50;
     protected $expireDays = 30;
     protected $timeActiveBonusDays = 30;
+    protected $maxAmount = 2000;
 
     const SPECIAL = 1313;
 
@@ -222,8 +222,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 //TO DO round
                 $bonusSum = GeneralHelper::formatAmount($deposit * ($this->percent / 100));
                 //check limit
-                if ($bonusSum > self::$maxAmount) {
-                    $bonusSum = self::$maxAmount;
+
+                if ($bonusSum > $this->maxAmount) {
+                    $bonusSum = $this->maxAmount;
                 }
 
                 $transaction = new Transaction();

@@ -863,6 +863,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
     document.jsBridge= {!!  app(\App\Providers\JsBridge\JsBridge::class)  !!}
+    $( document ).ready(function() {
+
+        let intercomUpdate = function() {
+            $.ajax({
+                type: "GET",
+                url: '/intercom/update',
+                data: {},
+                dateType: 'json',
+                success: function(data)
+                {
+                    //console.log(data);
+                },
+                error: function (data) {
+                }
+            });
+        };
+
+        //events
+        Intercom('onShow', function() {
+            intercomUpdate();
+        });
+
+        Intercom('onUnreadCountChange', function() {
+            intercomUpdate();
+        });
+    });
 </script>
 
 </body>
