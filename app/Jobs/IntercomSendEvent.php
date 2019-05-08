@@ -40,8 +40,6 @@ class IntercomSendEvent extends Job implements ShouldQueue
 
         $res = $intercom->send_event($this->data);
 
-        dump($res);
-
         // var_dump
         ob_start();
         var_dump($res);
