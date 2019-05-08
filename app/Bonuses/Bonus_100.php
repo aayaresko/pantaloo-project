@@ -90,7 +90,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             if ($allowedDate < $currentDate) {
                 throw new \Exception('You cannot activate this bonus in accordance with' .
-                    ' clause 5.4 of the bonus terms & conditions.');
+                    ' clause 1.6 of the bonus terms & conditions.');
             }
 
             if ($this->active_bonus) {
@@ -108,7 +108,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
                 throw new \Exception('You cannot activate this bonus in accordance with ' .
-                    'clause 2.6; 3.6; 4.6 of the bonus terms & conditions.');
+                    'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
             }
 
 

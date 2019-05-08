@@ -74,7 +74,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
-                        ' accordance with clause 1.12 of the bonus terms & conditions.');
+                        ' accordance with clause 1.19 of the bonus terms & conditions.');
                 }
             }
 
@@ -98,7 +98,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($allowedDate < $currentDate) {
                 throw new \Exception('You cannot activate this bonus in accordance ' .
-                    'with clause 1.2 of the bonus terms & conditions.');
+                    'with clause 2.2 of the bonus terms & conditions.');
             }
 
             $date = Carbon::now();
