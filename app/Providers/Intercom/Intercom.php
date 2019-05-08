@@ -19,17 +19,16 @@ class Intercom
         $this->client = new IntercomClient($token);
     }
 
-    public function create_or_update_user(User $user){
-
+    public function create_or_update_user(User $user)
+    {
         $result = $this->client->users->create(UserDataResolver::getData($user));
-        //dump($result);
+        return $result;
     }
 
-    public function send_event($data){
-        //dump($data);
+    public function send_event($data)
+    {
         $result = $this->client->events->create($data);
-        //dump($result);
-
+        return $result;
     }
 
 }
