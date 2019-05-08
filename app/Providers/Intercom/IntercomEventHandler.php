@@ -126,7 +126,7 @@ class IntercomEventHandler
     {
 
 
-        //dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
+        dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
 
         $timestamp = time();
         $dt = Carbon::createFromTimestamp($timestamp);

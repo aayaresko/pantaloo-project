@@ -38,12 +38,5 @@ class IntercomCreateUpdateUser extends Job implements ShouldQueue
 
         $res = $intercom->create_or_update_user($this->user);
 
-        // var_dump
-        ob_start();
-        var_dump($res);
-        $debug_dump = ob_get_clean();
-
-        Log::info($debug_dump);
-
     }
 }

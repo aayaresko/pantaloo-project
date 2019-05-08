@@ -35,12 +35,5 @@ class IntercomSendEvent extends Job implements ShouldQueue
         Log::info('Handle job send event "' . $this->data['event_name'] . '"');
 
         $res = $intercom->send_event($this->data);
-
-        // var_dump
-        ob_start();
-        var_dump($res);
-        $debug_dump = ob_get_clean();
-
-        Log::info($debug_dump);
     }
 }
