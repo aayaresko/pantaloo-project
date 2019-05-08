@@ -19,7 +19,7 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
-    public static $maxAmount = 1000;
+    public static $maxAmount = 2000;
 
     protected $percent = 55;
     protected $minSum = 3;
