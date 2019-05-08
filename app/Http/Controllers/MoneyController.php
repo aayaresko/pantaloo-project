@@ -378,7 +378,9 @@ class MoneyController extends Controller
             $transaction->withdraw_status = -1;
             $transaction->save();
 
-            event(new WithdrawalFrozenEvent($transaction->user(), $transaction->comment));
+            $user = User::where('id', $transaction->user_id)->first();
+
+            event(new WithdrawalFrozenEvent($user, $transaction->comment));
 
             return redirect()->route('pending')->with('msg', 'Transaction was frozen');
         } else return redirect()->back()->withErrors(['Invalid type']);
