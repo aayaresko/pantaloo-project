@@ -3,7 +3,7 @@
 
 namespace App\Providers\Intercom;
 
-use App\Bonuses\Bonus;
+use App\Bonus;
 use App\ModernExtraUsers;
 use App\User;
 use App\UserBonus;

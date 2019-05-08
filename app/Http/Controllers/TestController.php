@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bonus;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -48,7 +49,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
+        dd(Bonus::findOrFail(2));
         $ip = GeneralHelper::visitorIpCloudFire();
         dd($ip);
 
