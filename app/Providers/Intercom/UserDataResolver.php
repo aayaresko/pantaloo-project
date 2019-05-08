@@ -7,6 +7,7 @@ use App\Bonus;
 use App\ModernExtraUsers;
 use App\User;
 use App\UserBonus;
+use Illuminate\Support\Facades\Log;
 
 
 class UserDataResolver
@@ -25,7 +26,9 @@ class UserDataResolver
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
             ]];
-        //dump($response);
+        foreach ($response['custom_attributes'] as $k=>$v){
+            Log::info($k . ' => ' . $v);
+        }
         return $response;
     }
 
