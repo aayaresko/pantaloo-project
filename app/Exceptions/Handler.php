@@ -34,8 +34,9 @@ class Handler extends ExceptionHandler
     public function report(Exception $e)
     {
 
-        if (function_exists('appoptics_log_error')) {
-            dump(appoptics_log_error('app', $e->getMessage(), $e->getCode(), null, $e->getTrace()));
+        if (function_exists('appoptics_log_exception')) {
+            appoptics_log_exception('app', $e);
+//            dump(appoptics_log_error('app', $e->getMessage(), $e->getCode(), null, $e->getTrace()));
         } else {
             dump($e);
         }
