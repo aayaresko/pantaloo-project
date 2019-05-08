@@ -125,10 +125,6 @@ class FreeSpins extends \App\Bonuses\Bonus
                 'expires_at' => $date,
             ]);
 
-            User::where('id', $user->id)->update([
-                'bonus_id' => static::$id
-            ]);
-
             //get all games for free
             $request = new Request;
 
@@ -169,6 +165,10 @@ class FreeSpins extends \App\Bonuses\Bonus
                 throw new \Exception('Problem with provider free spins');
             }
 
+            User::where('id', $user->id)->update([
+                'bonus_id' => static::$id
+            ]);
+            
             event(new OpenBonusEvent($user, 'welcome bonus'));
 
             $response = [

@@ -49,9 +49,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
         $currentDate = new Carbon();
 
-        if ($allowedDate < $currentDate) {
-            return false;
-        }
+//        if ($allowedDate < $currentDate) {
+//            return false;
+//        }
         //hide if user
 
         //hide if deposit count
@@ -92,10 +92,10 @@ class Bonus_100 extends \App\Bonuses\Bonus
 //                }
 //            }
 
-            if ($allowedDate < $currentDate) {
-                throw new \Exception('You cannot activate this bonus in accordance with' .
-                    ' clause 1.6 of the bonus terms & conditions.');
-            }
+//            if ($allowedDate < $currentDate) {
+//                throw new \Exception('You cannot activate this bonus in accordance with' .
+//                    ' clause 1.6 of the bonus terms & conditions.');
+//            }
 
             if ($this->active_bonus) {
                 if ($this->active_bonus->bonus_id != static::$id) {
@@ -104,6 +104,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 } else {
                     throw new \Exception('This bonus is already active.');
                 }
+            }
+
+            if ((int)$user->email_confirmed === 0) {
+                throw new \Exception('To activate this bonus, you need to confirm your email address first.
+                 Did not receive the activation mail? You can resend it in the Settings section of your profile.');
             }
 
             $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
@@ -120,7 +125,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('This bonus is already used.');
             }
 
-            $date = $user->created_at;
+            //$date = $user->created_at;
+            $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
             $bonusUser = UserBonus::create([
