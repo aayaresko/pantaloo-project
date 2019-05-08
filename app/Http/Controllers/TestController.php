@@ -46,6 +46,11 @@ class TestController extends Controller
         dd(2);
     }
 
+    public function phpinfo(Request $request){
+        phpinfo();
+        exit();
+    }
+
     public function test(Request $request)
     {
         //dd(2);

@@ -350,6 +350,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     //testing
     Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
     Route::get('/test/test1', ['as' => 'test.test1', 'uses' => 'TestController@test1']);
+    Route::get('/test/phpinfo', ['as' => 'test.phpinfo', 'uses' => 'TestController@phpinfo']);
 
     Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestController@testTypes']);
     Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);
