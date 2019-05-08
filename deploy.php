@@ -44,7 +44,7 @@ host('46.28.205.63')
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('http_user','www-data')
-    ->set('writable_mode', 'chown')
+    ->set('branch', 'master')
     ->set('deploy_path', '/var/www/{{application}}');
     
 // Tasks
