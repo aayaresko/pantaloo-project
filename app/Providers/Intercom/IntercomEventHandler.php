@@ -16,6 +16,7 @@ use App\Events\WagerDoneEvent;
 use App\Events\WithdrawalApprovedEvent;
 use App\Events\WithdrawalFrozenEvent;
 use App\Events\WithdrawalRequestedEvent;
+use App\Jobs\IntercomCreateUpdateUser;
 use App\Jobs\IntercomSendEvent;
 use App\User;
 use Carbon\Carbon;
@@ -109,8 +110,11 @@ class IntercomEventHandler
 
     }
 
+
+
     private function sendEvent($email, $name)
     {
+        dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
 
         $timestamp = time();
         $dt = Carbon::createFromTimestamp($timestamp);
@@ -122,7 +126,7 @@ class IntercomEventHandler
             'email' => $email,
             'event_name' => $dt . ' ' . $name,
         ];
-        dump($data);
+        //dump($data);
         dispatch(new IntercomSendEvent($data));
     }
 

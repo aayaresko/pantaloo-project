@@ -22,13 +22,13 @@ class Intercom
     public function create_or_update_user(User $user){
 
         $result = $this->client->users->create(UserDataResolver::getData($user));
-        dump($result);
+        //dump($result);
     }
 
     public function send_event($data){
-        dump($data);
+        //dump($data);
         $result = $this->client->events->create($data);
-        dump($result);
+        //dump($result);
 
     }
 

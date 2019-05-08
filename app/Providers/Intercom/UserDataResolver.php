@@ -3,7 +3,10 @@
 
 namespace App\Providers\Intercom;
 
+use App\Bonuses\Bonus;
+use App\ModernExtraUsers;
 use App\User;
+use App\UserBonus;
 
 
 class UserDataResolver
@@ -14,7 +17,7 @@ class UserDataResolver
     public static function getData(User $user)
     {
         $response = [
-            'email' => 'example2@example.com',
+            'email' => $user->email,
             'custom_attributes' => [
                 'Current bonus' => self::getCurrentBonus($user),
                 'Wager status' => self::getWagerStatus($user),
@@ -22,13 +25,16 @@ class UserDataResolver
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
             ]];
-        dump($response);
+        //dump($response);
         return $response;
     }
 
     private static function getCurrentBonus(User $user)
     {
-        return 'dummy';
+        $userBonus = UserBonus::where('user_id', $user->id)->first();
+        $bonus = is_null($userBonus) ? null : Bonus::findOrFail($userBonus->bonus_id);
+
+        return is_null($bonus) ? '' : $bonus->name;
     }
 
     private static function getWagerStatus(User $user)
@@ -38,16 +44,18 @@ class UserDataResolver
 
     private static function getBalanceRealBonus(User $user)
     {
-        return 'dummy';
+        return $user->getRealBalance() . '/' .$user->getBonusBalance();
     }
 
     private static function getAccountStatus(User $user)
     {
-        return 'dummy';
+        $blockUser = ModernExtraUsers::where('user_id', $user->id)
+            ->where('code', 'block')->first();
+        return is_null($blockUser) ? 'open' : 'banned';
     }
 
     private static function getEmailVerified(User $user)
     {
-        return 'dummy';
+        return $user->email_confirmed ? 'confirmed' : 'not confirmed';
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\WithdrawalApprovedEvent;
+use App\Events\WithdrawalFrozenEvent;
+use App\Events\WithdrawalRequestedEvent;
 use DB;
 use Validator;
 use App\Bitcoin\Service;
@@ -298,6 +301,8 @@ class MoneyController extends Controller
 
         $lang = config('currentLang');
 
+        event(new WithdrawalRequestedEvent($user));
+
         return redirect()->route('withdraw', ['lang' => $lang])->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
 
@@ -357,6 +362,8 @@ class MoneyController extends Controller
             $transaction->withdraw_status = 3;
             $transaction->save();
 
+            event(new WithdrawalApprovedEvent($transaction->user()));
+
             $this->dispatch(new Withdraw($transaction));
 
             return redirect()->route('pending')->with('msg', 'Transfer was complete!');
@@ -368,6 +375,8 @@ class MoneyController extends Controller
         if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
             $transaction->withdraw_status = -1;
             $transaction->save();
+
+            event(new WithdrawalFrozenEvent($transaction->user(), $transaction->comment));
 
             return redirect()->route('pending')->with('msg', 'Transaction was frozen');
         } else return redirect()->back()->withErrors(['Invalid type']);

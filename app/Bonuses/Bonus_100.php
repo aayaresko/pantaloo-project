@@ -2,6 +2,10 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusDepositEvent;
+use App\Events\CloseBonusEvent;
+use App\Events\DepositWagerDoneEvent;
+use App\Events\OpenBonusEvent;
 use DB;
 use App\User;
 use App\Bonus;
@@ -137,6 +141,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'bonus_id' => static::$id
             ]);
 
+            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent .'%'));
+
             $response = [
                 'success' => true,
                 'message' => 'Done'
@@ -233,6 +239,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 $dataUpdateBonus['activated'] = 1;
 
                 UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
+
+                event(new BonusDepositEvent($user, $bonusSum));
 
                 $response = [
                     'success' => true,
@@ -336,6 +344,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 ]);
 
                 $activeBonus->delete();
+
+                event(new CloseBonusEvent($user, 'deposit bonus ' . $this->percent . '%'));
+                event(new DepositWagerDoneEvent($user));
 
                 $response = [
                     'success' => true,

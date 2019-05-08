@@ -14,6 +14,9 @@ use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
 use \Illuminate\Http\Request;
 use App\Models\LastActionGame;
+use App\Events\OpenBonusEvent;
+use App\Events\WagerDoneEvent;
+use App\Events\CloseBonusEvent;
 use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
@@ -112,6 +115,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'free_spin_win' => 0,
                     'wagered_sum' => 0,
                     'transaction_id' => 0,
+                    'total_deposit' => 0,
                     'wagered_deposit' => 0,
                     'wagered_amount' => 0,
                     'wagered_bonus_amount' => 0,
@@ -164,6 +168,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             if ($freeRound['success'] === false) {
                 throw new \Exception('Problem with provider free spins');
             }
+
+            event(new OpenBonusEvent($user, 'welcome bonus'));
 
             $response = [
                 'success' => true,
@@ -315,28 +321,14 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
             }
 
+            $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
 
-            $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])
-                ->where('user_id', $user->id)
-                ->where('type_id', 2)
-                ->first();
-
-            if ((float)$notificationTransactionDeposit->sum_deposits < $this->minDeposit) {
+            if ($totalDeposit < $this->minDeposit) {
                 throw new \Exception('Deposit is not found');
             } else {
-                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
-                    $this->dataBonus['wagered_deposit'] = 1;
-                    UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
-                }
-
                 $playedAmount = (float)$this->dataBonus['wagered_amount'];
 
-//                    $playedAmount = -1 * $this->user->transactions()
-//                            ->where('id', '>', $this->get('transaction_id'))
-//                            ->where('type', 1)
-//                            ->sum('sum');
-
-                if ($playedAmount < (float)$notificationTransactionDeposit->sum_deposits) {
+                if ($playedAmount < $totalDeposit) {
                     throw new \Exception('Deposit not won back');
                 }
             }
@@ -386,6 +378,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ]);
 
                 $activeBonus->delete();
+
+                event(new CloseBonusEvent($user, 'welcome bonus'));
+                event(new WagerDoneEvent($user));
 
                 $response = [
                     'success' => true,
@@ -699,5 +694,62 @@ class FreeSpins extends \App\Bonuses\Bonus
     public function getStatus()
     {
 
+    }
+
+    public function setDeposit($amount)
+    {
+        $date = new \DateTime();
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+
+        $rawLog = DB::connection('logs')->table('bonus_logs')
+            ->where('bonus_id', '=', $activeBonus->id)
+            ->where('operation_id', '=', $configBonus['operation']['setDeposit'])
+            ->first();
+
+        if ($rawLog) {
+            $rawLogId = $rawLog->id;
+        } else {
+            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+                'bonus_id' => $activeBonus->id,
+                'operation_id' => $configBonus['operation']['setDeposit'],
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+        }
+
+        try {
+            $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
+
+            $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
+
+            //update status deposit check
+            if ($this->dataBonus['total_deposit'] >= $this->minDeposit) {
+                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
+                    $this->dataBonus['wagered_deposit'] = 1;
+                }
+            }
+
+            UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+        }
+
+        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+            'status' => json_encode($response)
+        ]);
+
+        return $response;
     }
 }

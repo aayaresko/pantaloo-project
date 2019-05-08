@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bitcoin;
 
+use App\Events\DepositEvent;
 use DB;
 use Log;
 use App\User;
@@ -121,13 +122,19 @@ class TransactionController extends Controller
 
                 $depositNotifications = 1;
                 if (!is_null($user->bonus_id)) {
+                    $class = BonusHelper::getClass($user->bonus_id);
+                    $bonusObject = new $class($user);
                     if ((int)$user->bonus_id === 1) {
                         $depositNotifications = 2;
+                        //to do check status
+                        $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
+//                        if ($setDeposit['success'] === false) {
+//                            throw new \Exception($setDeposit['message']);
+//                        }
                     } else {
                         //check this
                         //real active if deposit got
-                        $class = BonusHelper::getClass($user->bonus_id);
-                        $bonusObject = new $class($user);
+                        //to do check status
                         $bonusObject->realActivation(['amount' => $amountTransactionFormat]);
                     }
                 }
@@ -143,6 +150,8 @@ class TransactionController extends Controller
                         'depositAmount' => $amountTransaction
                     ])
                 ]);
+
+                event(new DepositEvent($user, $amountTransaction));
 
                 $response = [
                     'success' => true,

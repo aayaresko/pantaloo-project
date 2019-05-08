@@ -29,6 +29,8 @@ abstract class Bonus
         }
     }
 
+    abstract public function bonusAvailable();
+
 
     abstract public function activate();
 
@@ -41,14 +43,11 @@ abstract class Bonus
     abstract public function wagerUpdate($transaction);
 
 
-    abstract public function hasBonusTransactions($minutes);
+    abstract public function getPlayedSum();
 
+    abstract public function hasBonusTransactions($minutes);
 
     abstract public function getStatus();
 
     abstract public function getPercent();
-
-    abstract public function getPlayedSum();
-
-    abstract public function bonusAvailable();
 }
