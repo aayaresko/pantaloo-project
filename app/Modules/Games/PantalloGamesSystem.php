@@ -286,6 +286,7 @@ class PantalloGamesSystem implements GamesSystem
 
             $userFields = [
                 'users.id as id',
+                'users.email',
                 'users.balance as balance',
                 'users.bonus_balance as bonus_balance',
                 DB::raw('(users.balance + users.bonus_balance) as full_balance'),
