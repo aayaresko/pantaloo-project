@@ -48,7 +48,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        //dd(2);
         $user = User::where('id', 148)->first();
 
         $class = BonusHelper::getClass($user->bonus_id);
