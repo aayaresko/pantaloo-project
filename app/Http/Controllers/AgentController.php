@@ -281,7 +281,7 @@ class AgentController extends Controller
             $parentIdChildArr[$parentId][] = $user;
             $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();
             $user->percent = $user->koefs->koef;
-            $user->benefit = $user->benefits->sum('total_sum');
+            $user->benefit = (string) $user->benefits->sum('total_sum');
         }
         $newTree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
 

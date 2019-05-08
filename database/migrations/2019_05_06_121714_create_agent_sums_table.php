@@ -16,6 +16,9 @@ class CreateAgentSumsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->decimal('total_sum', 14, 5);
+            $table->decimal('agent_percent');
+            $table->decimal('parent_percent')->nullable();
+            $table->decimal('parent_profit')->nullable();
             $table->timestamps();
         });
     }

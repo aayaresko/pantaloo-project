@@ -65,7 +65,7 @@ class TransactionSum extends Command
                     $transactions = $user->transactions()
                         ->select(DB::raw('sum(`sum`) as total'))
                         ->where('transactions.sum', '<>', 0)
-                        ->where('agent_commission', '<>', 0)
+                     //   ->where('agent_commission', '<>', 0)
                         ->whereIn('type', [1, 2])
                         ->where('created_at', '<', $nowStr)
                         ->where('created_at', '>=', $nowSubStr)
@@ -84,6 +84,11 @@ class TransactionSum extends Command
                     $newAgentSum = new AgentSum();
                     $newAgentSum->user_id = $agent->id;
                     $newAgentSum->total_sum = $totalAgentSumPerDay;
+                    $newAgentSum->agent_percent = $agent->koefs->koef;
+                    if ($agent->agent_id) {
+                        $newAgentSum->parent_percent = $agent->parentKoef->koef;
+                        $newAgentSum->parent_profit = $newAgentSum->total_sum * ($newAgentSum->parent_percent - $newAgentSum->agent_percent) / 100;
+                    }
                     $newAgentSum->created_at = $now;
                     $newAgentSum->save();
                 }

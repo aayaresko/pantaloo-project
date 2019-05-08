@@ -401,4 +401,25 @@ class User extends Authenticatable
 
         return $count;
     }
+
+    public function parentKoef()
+    {
+        return $this->hasOne('App\Models\AgentsKoef', 'user_id', 'agent_id')->orderBy('id', 'desc');
+    }
+
+    public function profit()
+    {
+        return $this->benefits->sum('parent_profit');
+    }
+
+    public function totalProfit()
+    {
+        $count = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $count += $child->totalProfit();
+        }
+        $count += $this->profit();
+
+        return $count;
+    }
 }
