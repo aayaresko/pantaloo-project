@@ -28,15 +28,6 @@ $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
 
-Route::get('/intercom/update', function() {
-    $user = \Illuminate\Support\Facades\Auth::user();
-    if ($user){
-        dispatch(new IntercomCreateUpdateUser($user));
-        return 1;
-    } else {
-        return 0;
-    }
-});
 
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
@@ -138,11 +129,14 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     Route::group(['middleware' => ['auth']], function () use ($languages) {
 
+        Route::get('/intercom/update', ['as' => 'intercom', 'uses' => 'IntercomController@update']);
+
         Route::group([
             'prefix' => '{lang}',
             'where' => ['lang' => '(' . implode("|", $languages) . ')'],
             'middleware' => 'language.switch'
         ], function () {
+
             Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
 
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
