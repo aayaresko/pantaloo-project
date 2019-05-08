@@ -114,6 +114,8 @@ class IntercomEventHandler
 
     private function sendEvent($email, $name)
     {
+
+
         dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
 
         $timestamp = time();
@@ -126,7 +128,9 @@ class IntercomEventHandler
             'email' => $email,
             'event_name' => $dt . ' ' . $name,
         ];
-        //dump($data);
+
+        Log::info('Add job send event "' . $data['event_name'] . '"');
+
         dispatch(new IntercomSendEvent($data));
     }
 

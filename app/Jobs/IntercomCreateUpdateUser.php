@@ -33,6 +33,8 @@ class IntercomCreateUpdateUser extends Job implements ShouldQueue
      */
     public function handle(Intercom $intercom)
     {
+        Log::info('Handle job update user "' . $this->user->email . '"');
+
         $intercom->create_or_update_user($this->user);
 
     }
