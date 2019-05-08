@@ -26,9 +26,9 @@ class Intercom
     }
 
     public function send_event($data){
-        dump($data);
+        //dump($data);
         $result = $this->client->events->create($data);
-        dump($result);
+        //dump($result);
 
     }
 
