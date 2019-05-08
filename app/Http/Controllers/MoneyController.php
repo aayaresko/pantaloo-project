@@ -362,7 +362,9 @@ class MoneyController extends Controller
             $transaction->withdraw_status = 3;
             $transaction->save();
 
-            event(new WithdrawalApprovedEvent($transaction->user()));
+            $user = User::where('id', $transaction->user_id);
+
+            event(new WithdrawalApprovedEvent($user));
 
             $this->dispatch(new Withdraw($transaction));
 

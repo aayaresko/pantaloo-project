@@ -32,16 +32,19 @@ host('188.166.192.94')
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no')
+    ->set('http_user','www-data')
     ->set('deploy_path', '/var/www/{{application}}');
 
 host('46.28.205.63')
     ->stage('prod')
     ->user('administrator')
-    ->identityFile(__DIR__.'deployer/id_rsa_deployer')
+    ->identityFile(__DIR__.'/deployer/id_rsa_deployer')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no')
+    ->set('http_user','www-data')
+    ->set('writable_mode', 'chown')
     ->set('deploy_path', '/var/www/{{application}}');
     
 // Tasks
