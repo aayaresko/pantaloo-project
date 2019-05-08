@@ -33,6 +33,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+
+        if (function_exists('appoptics_log_exception')) {
+            appoptics_log_exception('app', $e);
+        }
+        
         parent::report($e);
     }
 

@@ -47,6 +47,16 @@ class TestController extends Controller
         dd(2);
     }
 
+    public function phpinfo(Request $request){
+        phpinfo();
+        exit();
+    }
+
+    public function error(Request $request){
+        throw new Exception("Custom error!");
+        return 1;
+    }
+
     public function test(Request $request)
     {
         dd(Bonus::findOrFail(2));
