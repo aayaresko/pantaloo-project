@@ -42,7 +42,33 @@ class UserDataResolver
 
     private static function getWagerStatus(User $user)
     {
-        return 'dummy';
+        $userBonus = UserBonus::where('user_id', $user->id)->first();
+
+        //to do FIX THIS!
+        //to do helper - delete this lines and from view bonus
+        $dataBonus = $userBonus->data;
+
+        $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
+        $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
+
+        $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
+
+        if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
+            $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
+        } else {
+            $depositWager = 0;
+        }
+
+        $curreny  = config('app.currencyCode');
+
+        $depositWagerString = '-';
+        $bonusWagerString = $bonusWagerUser . ' / ' . $bonusWager . $curreny;
+        if ($userBonus->bonus_id == 1) {
+            $depositWagerString = $depositWagerUser . ' / ' . $depositWager . $curreny;
+        }
+
+
+        return "bw: {$bonusWagerString}  dw:{$depositWagerString}";
     }
 
     private static function getBalanceRealBonus(User $user)
