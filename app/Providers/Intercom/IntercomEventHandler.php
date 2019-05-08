@@ -20,6 +20,7 @@ use App\Jobs\IntercomCreateUpdateUser;
 use App\Jobs\IntercomSendEvent;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Intercom\IntercomClient;
 
 class IntercomEventHandler

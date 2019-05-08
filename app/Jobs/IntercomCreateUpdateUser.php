@@ -8,6 +8,7 @@ use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Intercom\IntercomClient;
 
 class IntercomCreateUpdateUser extends Job implements ShouldQueue
