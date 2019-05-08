@@ -122,7 +122,7 @@ class IntercomEventHandler
 
 
 
-    private function sendEvent($email, $name, $data=[])
+    private function sendEvent($email, $name, $metadata=[])
     {
 
 
@@ -137,7 +137,7 @@ class IntercomEventHandler
             'created_at' => $timestamp,
             'email' => $email,
             'event_name' => $name,
-            "metadata" => $data
+            "metadata" => $metadata
         ];
 
         Log::info('Add job send event "' . $data['event_name'] . '"');
