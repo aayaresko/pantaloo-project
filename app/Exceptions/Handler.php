@@ -33,6 +33,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        dump($e);
+        appoptics_log_error('app', $e->getMessage(), $e->getCode(), null, $e->getTrace());
         parent::report($e);
     }
 
