@@ -126,7 +126,7 @@ class IntercomEventHandler
     {
 
 
-        dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
+        //dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
 
         $timestamp = time();
         $dt = Carbon::createFromTimestamp($timestamp);
@@ -136,11 +136,14 @@ class IntercomEventHandler
         $data = [
             'created_at' => $timestamp,
             'email' => $email,
-            'event_name' => $name,
-            "metadata" => $metadata
+            'event_name' => $name
         ];
 
-        Log::info('Add job send event "' . $data['event_name'] . '"');
+        if ($metadata){
+            $data['metadata'] = $metadata;
+        }
+
+        //Log::info('Add job send event "' . $data['event_name'] . '"');
 
         dispatch(new IntercomSendEvent($data));
     }
