@@ -18,7 +18,7 @@ class IpCountryBlock
      */
     public function handle($request, Closure $next)
     {
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
 
         //TO DO LIBRARY OR HALPER
         $iso_code = $_SERVER["HTTP_CF_IPCOUNTRY"];

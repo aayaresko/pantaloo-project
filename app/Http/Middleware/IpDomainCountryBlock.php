@@ -17,7 +17,7 @@ class IpDomainCountryBlock
      */
     public function handle($request, Closure $next)
     {
-//    	$ip = GeneralHelper::visitorIpCloudFire();
+//    	$ip = GeneralHelper::visitorIpCloudFlare();
 
 //    	if($ip and $ip == '188.239.72.9')
 //    	if($ip)

@@ -122,7 +122,7 @@ class IntegratedGamesController extends Controller
             $orderCategoty[0] = 'games_categories.' . $orderCategoty[0];
         }
 
-        $ipVisitor = GeneralHelper::visitorIpCloudFire();
+        $ipVisitor = GeneralHelper::visitorIpCloudFlare();
         $codeCountry = geoip($ipVisitor)['iso_code'];
 
 
@@ -318,7 +318,7 @@ class IntegratedGamesController extends Controller
         }
 
         //check this query
-        $ipVisitor = GeneralHelper::visitorIpCloudFire();
+        $ipVisitor = GeneralHelper::visitorIpCloudFlare();
         $codeCountry = geoip($ipVisitor)['iso_code'];
         //for testing
         //$codeCountry = 'UA';

@@ -35,7 +35,7 @@ class AdminPanelPolicy
         $adminPanel = config('adminPanel');
         $allowed_ips = isset($adminPanel['allowed_ips']) ? $adminPanel['allowed_ips'] : [];
 
-        $visitor_ip = GeneralHelper::visitorIpCloudFire();
+        $visitor_ip = GeneralHelper::visitorIpCloudFlare();
 
         $ip_allowed = $allowed_ips == [] || in_array($visitor_ip, $allowed_ips);
 

@@ -20,7 +20,7 @@ class SetCountryCode
         try {
             if (!$request->session()->has('iso_code')) {
 
-                $ip = GeneralHelper::visitorIpCloudFire();
+                $ip = GeneralHelper::visitorIpCloudFlare();
 
                 //to do this job edit session way
                 $ip = geoip($ip);
