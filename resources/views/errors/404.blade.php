@@ -15,7 +15,7 @@
                     <h3>Woops ... !</h3>
                     <p>Sorry, we arent able to find what you where looking for</p>
                     <a href="#" class="btn-back" onclick="window.history.back();return false">Back</a>
-                    <a href="#" class="btn-back notArrow">home</a>
+                    <a href="https://casinobit.io/" class="btn-back notArrow">home</a>
                 </div>
             </div>
     </div>
