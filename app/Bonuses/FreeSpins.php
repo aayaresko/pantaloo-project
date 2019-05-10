@@ -66,15 +66,23 @@ class FreeSpins extends \App\Bonuses\Bonus
         $date = new \DateTime();
         $configBonus = config('bonus');
         $slotTypeId = config('appAdditional.slotTypeId');
+        $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
 
         try {
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
 
+            $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
+
+            //baned country
+            if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
+                throw new \Exception('You cannot activate this bonus in' .
+                    ' accordance with clause 1.19 of the bonus terms & conditions.');
+            }
+
             //baned country
             if (!is_null($user->country)) {
-                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
                         ' accordance with clause 1.19 of the bonus terms & conditions.');

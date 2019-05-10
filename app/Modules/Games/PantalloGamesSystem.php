@@ -1145,7 +1145,6 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
         try {
             $pantalloGames = new PantalloGames;
             $userName = $this->getUserName($user);
@@ -1185,20 +1184,18 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => true,
             ];
 
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
-
-            if (isset($removeFreeRounds)) {
-                $response['removeFreeRounds'] = $removeFreeRounds;
-            }
 
             $response = [
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
+
+            if (isset($removeFreeRounds)) {
+                $response['removeFreeRounds'] = $removeFreeRounds;
+            }
         }
 
         $debugGameResult = $debugGame->end();

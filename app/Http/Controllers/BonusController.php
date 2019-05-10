@@ -6,6 +6,7 @@ use DB;
 use App\User;
 use App\Bonus;
 use App\Http\Requests;
+use Helpers\BonusHelper;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,25 +39,15 @@ class BonusController extends Controller
         //get user by request
         $userRequest = Auth::user();
 
-        //to do fix me !!!!
-
-//        if(isset($_SERVER["HTTP_CF_IPCOUNTRY"])){
-//            //If it is exists, use it.
-//            $userCountry = $_SERVER["HTTP_CF_IPCOUNTRY"];
-//            if (in_array($userCountry, ['AF','AL','DZ','AO','AT','CS','BH','BD','BY','BJ','BO','BA','BW','BF','BG','BI','CM','CV','CF','TD','KM','CG','CD','HR','CY','CZ','CI','DK','DJ','EG','GQ','ER','ET','FI','FR','GA','GM','GE','GH','GR','GN','GW','GY','HT','HN','HU','IN','ID','IR','IQ','JO','KZ','KE','KW','LV','LB','LS','LR','LT','MK','MG','MW','MY','ML','MR','MU','MD','MN','MA','MZ','NA','NI','NP','NE','NG','KP','OM','PK','PH','PL','PT','RO','RU','RW','ST','SN','SC','SL','SK','SI','SO','SD','CH','SY','TH','TG','TN','UG','UA','AE','TZ','VN','YE','ZM','ZW'])){
-//                return redirect()->back()->withErrors(['Sorry, welcome bonus is not available in your country']);
-//            }
-//        }
-
         //to do - check this - and edit this way
         if (!$bonus->public) {
             return redirect()->back()->withErrors(['No access']);
         }
 
-        
         DB::beginTransaction();
 
-        $class = $bonus->getClass();
+        $class = BonusHelper::getClass($bonus->id);
+        dd($class);
 
         $user = User::where('id', $userRequest->id)->lockForUpdate()->first();
 
