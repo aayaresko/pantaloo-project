@@ -398,7 +398,7 @@ class TestController extends Controller
 
 
         dd(Bonus::findOrFail(2));
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         dd($ip);
 
         //dd(2);
@@ -491,11 +491,11 @@ class TestController extends Controller
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
         dd(2);
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         dump($ip);
-        $iso_code = \geoip($ip)['iso_code'];
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
         dd($iso_code);
-        dd(GeneralHelper::visitorIpCloudFire());
+        dd(GeneralHelper::visitorIpCloudFlare());
         $amount = 5;
         $lastTransaction = Transaction::where('sum', 0)
             ->where(function ($query) {
@@ -1059,7 +1059,7 @@ class TestController extends Controller
         $request->merge(['available' => 50]);
         $request->merge(['timeFreeRound' => strtotime("30 day", 0)]);
         dd(2);
-        //dd(GeneralHelper::visitorIpCloudFire());
+        //dd(GeneralHelper::visitorIpCloudFlare());
 //        dd(2);
 //        $user = User::where('email', 'tafuzijos@blackbird.ws')->first();
 //        dd($user);
@@ -1127,7 +1127,7 @@ class TestController extends Controller
             }
         }
         dd(2);
-        dd(GeneralHelper::visitorIpCloudFire());
+        dd(GeneralHelper::visitorIpCloudFlare());
         $transactions = [385460];
         $setAmount = 60;
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
@@ -1196,11 +1196,15 @@ class TestController extends Controller
 
         dd($getTransaction);
         dd(2);
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         //dump($ip);
         //$ip = '165.227.71.60';
         //to do this job edit session way
+
+        // !!! No more torann/geoip !!!
+        // Use GeneralHelper::visitorCountryCloudFlare
         $ip = geoip($ip);
+
         dd($ip);
         DB::enableQueryLog();
         $user = User::where('id', 1031)->first();

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\User;
+use Helpers\GeneralHelper;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SetUserCountry extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
-    private $user;
+
+    protected $user;
+    protected $country;
 
     /**
      * Create a new job instance.
@@ -21,6 +24,7 @@ class SetUserCountry extends Job implements ShouldQueue
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->country = GeneralHelper::visitorCountryCloudFlare();
     }
 
     /**
@@ -30,9 +34,7 @@ class SetUserCountry extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $res = geoip($this->user->ip);
-
-        $this->user->country = $res['iso_code'];
+        $this->user->country = $this->country;
         $this->user->save();
     }
 }

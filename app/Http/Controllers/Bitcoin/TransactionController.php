@@ -46,7 +46,7 @@ class TransactionController extends Controller
         try {
             //validate
             //add balidate ip
-            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipSender = GeneralHelper::visitorIpCloudFlare();
             $ipExpected = config('app.bitcoinHost');
             if ($ipSender != $ipExpected) {
                 throw new \Exception('Not allowed IP');
@@ -210,7 +210,7 @@ class TransactionController extends Controller
         try {
             //validate
             //add balidate ip
-            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipSender = GeneralHelper::visitorIpCloudFlare();
             $ipExpected = config('app.bitcoinHost');
             if ($ipSender != $ipExpected) {
                 throw new \Exception('Not allowed IP');
