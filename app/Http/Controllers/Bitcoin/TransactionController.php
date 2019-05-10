@@ -81,7 +81,7 @@ class TransactionController extends Controller
 
             }
 
-            $user = User::whereIn('bitcoin_address', $transactionParticipants)->first();
+            $user = User::whereIn('bitcoin_address', $transactionParticipants)->lockForUpdate()->first();
 
             if (is_null($user)) {
                 throw new \Exception('User with current address is not found');
