@@ -8,9 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <header style="min-height: 130px">
-
-    </header>
     <div class="notFoundWrapper">
             <div class="pageWrap">
                 <img src="/media/images/404img.png">
@@ -18,11 +15,9 @@
                     <h3>Woops ... !</h3>
                     <p>Sorry, we arent able to find what you where looking for</p>
                     <a href="#" class="btn-back" onclick="window.history.back();return false">Back</a>
+                    <a href="#" class="btn-back notArrow">home</a>
                 </div>
             </div>
     </div>
-    <footer style="min-height: 171px">
-
-    </footer>
 </body>
 </html>
