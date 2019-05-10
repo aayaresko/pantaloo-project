@@ -17,7 +17,7 @@
             <div class="panel-body">
                 <span class="msg-img"></span>
                 <div class="msg-title">Prohibited Visit</div>
-                <div class="msg-text"><p>Due to local regulatory rules, viewing and using this website is prohibited from your current location.</p>RefNo: {{ \Helpers\GeneralHelper::visitorIpCloudFire() }}</div>
+                <div class="msg-text"><p>Due to local regulatory rules, viewing and using this website is prohibited from your current location.</p>RefNo: {{ \Helpers\GeneralHelper::visitorIpCloudFlare() }}</div>
             </div>
         </div>
     </div>

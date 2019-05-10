@@ -54,7 +54,7 @@
                                                         <table class="table table-hover">
                                                             <tr><th>Link</th><th>Language</th><th>Copy</th></tr>
                                                         @foreach(\App\Domain::all() as $domain)
-                                                            <tr><td><input type="text" class="form-control" value="http://{{$domain->domain}}/?ref={{$tracker->ref}}"></td><td>{{strtoupper($domain->lang)}}</td><td><a href="#" class="btn btn-primary clipboard">Copy</a></td></tr>
+                                                            <tr><td><input type="text" class="form-control" value="https://{{$domain->domain}}/?ref={{$tracker->ref}}"></td><td>{{strtoupper($domain->lang)}}</td><td><a href="#" class="btn btn-primary clipboard">Copy</a></td></tr>
                                                         @endforeach
                                                         </table>
                                                     </div>

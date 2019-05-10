@@ -18,7 +18,7 @@ class GeneralMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
 
 
         //if (!$request->cookies->has('betatest') &&

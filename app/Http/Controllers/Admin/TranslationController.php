@@ -65,7 +65,6 @@ class TranslationController extends Controller
             'name' => 'required|string'
         ]);
 
-        DB::beginTransaction();
         try {
             $currentLanguage = $request->name;
             $currentTranslation = $this->getTranslation($currentLanguage);
@@ -77,11 +76,9 @@ class TranslationController extends Controller
             $this->changeFileTranslation($currentLanguage, $currentTranslation);
 
         } catch (\Exception $e) {
-            DB::rollBack();
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
-
-        DB::commit();
+        
         return response()->json(['success' => true]);
     }
 
