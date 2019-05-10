@@ -847,15 +847,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     };
     @else
         @php
-            $hmac = hash_hmac('sha256', $user->id, env('INTERCOM_KEY'));
+            $hmac = hash_hmac('sha256', $user->email, env('INTERCOM_KEY'));
         @endphp
 
         window.intercomSettings = {
         app_id: "ebzyh5ul",
-        user_id: "{{ $user->id }}", // User ID
         user_hash: '{{ $hmac }}', // HMAC using SHA-256
         email: "{{ $user->email }}", // Email address
-        created_at: "{{ strtotime($user->created_at) }}", // Signup Date,
     };
     @endif
 </script>
