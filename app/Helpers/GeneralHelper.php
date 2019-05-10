@@ -62,7 +62,7 @@ class GeneralHelper
      */
     static public function visitorIpCloudFlare()
     {
-        return isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : Request::ip;
+        return isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : Request::ip();
     }
 
     /**
