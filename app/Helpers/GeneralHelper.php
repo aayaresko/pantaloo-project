@@ -2,7 +2,8 @@
 
 namespace Helpers;
 
-use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Request;
 
 class GeneralHelper
 {
