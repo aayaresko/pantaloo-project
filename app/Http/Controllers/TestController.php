@@ -57,6 +57,10 @@ class TestController extends Controller
         return 1;
     }
 
+    public function http404(Request $request){
+        return view('errors.404');
+    }
+
     public function test(Request $request)
     {
         dd(2);
