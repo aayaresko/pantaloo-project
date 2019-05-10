@@ -42,10 +42,6 @@ class TestController extends Controller
 {
     const PASSWORD = 'rf3js1Q';
 
-    public function test1(Request $request)
-    {
-        dd(2);
-    }
 
     public function phpinfo(Request $request){
         phpinfo();
@@ -57,9 +53,43 @@ class TestController extends Controller
         return 1;
     }
 
+    public function test1(Request $request)
+    {
+        DB::beginTransaction();
+
+        $user = User::where('id', $request->user()->id)->first();
+
+        $bonus_obj = new \App\Bonuses\FreeSpins($user);
+
+        $bonusActivate = $bonus_obj->activate();
+
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusActivate['message']]);
+        }
+
+        DB::commit();
+        dd($bonusActivate);
+    }
+
     public function test(Request $request)
     {
-        dd(2);
+
+        DB::beginTransaction();
+
+        $user = User::where('id', $request->user()->id)->first();
+
+        $bonus_obj = new \App\Bonuses\FreeSpins($user);
+        sleep(10);
+        $bonusActivate = $bonus_obj->activate();
+
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusActivate['message']]);
+        }
+
+        DB::commit();
+        dd($bonusActivate);
         $userOffice = [
             2532,
 2528,

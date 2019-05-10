@@ -1005,12 +1005,17 @@ class PantalloGamesSystem implements GamesSystem
         $available = $request->available;
         $timeFreeRound = $request->timeFreeRound;
         $gamesIds = $request->gamesIds;
+        $mode = $request->mode;
+
+        $validTo = new \DateTime();
+        $validTo->modify("+$timeFreeRound second");
 
         $debugGame = new DebugGame();
         $debugGame->start();
 
         $user = $request->user();
         $userId = $user->id;
+        //and input
 
         //start log
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -1021,7 +1026,6 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        //DB::beginTransaction();
         try {
             $userName = $this->getUserName($user);
 
@@ -1042,14 +1046,37 @@ class PantalloGamesSystem implements GamesSystem
 
             $player = $playerResponse->response;
 
-            $issetFreeRound = GamesPantalloFreeRounds::select(['id', 'free_round_id'])
-                ->where('user_id', $user->id)->first();
+            if ($mode == 0) {
+                $issetFreeRound = GamesPantalloFreeRounds::select(['id', 'free_round_id'])
+                    ->where('user_id', $user->id)->first();
 
-            if (is_null($issetFreeRound)) {
+                if (is_null($issetFreeRound)) {
+                    $freeRounds = $pantalloGames->addFreeRounds([
+                        'playerids' => $player->id,
+                        'gameids' => $gamesIds,
+                        'available' => $available,
+                        'validTo' => $validTo->format('Y-m-d')
+                    ], true);
 
-                $validTo = new \DateTime();
-                $validTo->modify("+$timeFreeRound second");
+                    $freeRoundsResponse = json_decode($freeRounds->response);
 
+                    $freeRoundsId = $freeRoundsResponse->freeround_id;
+                    $freeRoundCreated = $freeRoundsResponse->created;
+
+                    DB::connection('logs')->table('games_pantallo_free_rounds')->insert([
+                        'user_id' => $user->id,
+                        'round' => $available,
+                        'valid_to' => $validTo,
+                        'created' => $freeRoundCreated,
+                        'free_round_id' => $freeRoundsId,
+                        'created_at' => $date,
+                        'updated_at' => $date
+                    ]);
+                } else {
+                    dd('problem');
+                    $freeRoundsId = $issetFreeRound->free_round_id;
+                }
+            } else {
                 $freeRounds = $pantalloGames->addFreeRounds([
                     'playerids' => $player->id,
                     'gameids' => $gamesIds,
@@ -1071,20 +1098,13 @@ class PantalloGamesSystem implements GamesSystem
                     'created_at' => $date,
                     'updated_at' => $date
                 ]);
-            } else {
-                dd('problem');
-                $freeRoundsId = $issetFreeRound->free_round_id;
             }
-            
+
             $response = [
                 'success' => true,
                 'freeRoundId' => $freeRoundsId
             ];
-
-            //DB::commit();
-
         } catch (\Throwable $e) {
-            //DB::rollBack();
             //rollback free rounds
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
@@ -1093,15 +1113,6 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
-
-            if (isset($freeRoundsId)) {
-                $removeFreeRounds = $pantalloGames->removeFreeRounds([
-                    'playerids' => $player->id,
-                    'freeround_id' => $freeRoundsId
-                ], true);
-                $response['removeFreeRounds'] = $removeFreeRounds;
-                $response['freeRoundsResponse'] = $freeRoundsResponse;
-            }
         }
 
         $debugGameResult = $debugGame->end();

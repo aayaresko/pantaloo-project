@@ -130,6 +130,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             //add user for request - for lib
             $request->merge(['user' => $user]);
+
             $request->setUserResolver(function () use ($user) {
                 return $user;
             });
@@ -157,6 +158,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $request->merge(['gamesIds' => $gamesIds]);
             $request->merge(['available' => $this->freeSpins]);
             $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
+            $request->merge(['mode' => 0]);
 
             $pantalloGamesSystem = new PantalloGamesSystem();
             $freeRound = $pantalloGamesSystem->freeRound($request);
