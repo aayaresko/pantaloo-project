@@ -47,7 +47,6 @@ class BonusController extends Controller
         DB::beginTransaction();
 
         $class = BonusHelper::getClass($bonus->id);
-        dd($class);
 
         $user = User::where('id', $userRequest->id)->lockForUpdate()->first();
 
