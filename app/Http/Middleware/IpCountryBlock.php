@@ -18,13 +18,7 @@ class IpCountryBlock
      */
     public function handle($request, Closure $next)
     {
-        $ip = GeneralHelper::visitorIpCloudFlare();
-
-        //TO DO LIBRARY OR HALPER
-        $iso_code = $_SERVER["HTTP_CF_IPCOUNTRY"];
-//        if ($iso_code == 'XX') {
-//            $iso_code = \geoip($ip)['iso_code'];
-//        }
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
 
         $registrationStatus = !in_array($iso_code, ['US', 'UA', 'CA', 'IL', 'XX']) ? 1 : 0;
 

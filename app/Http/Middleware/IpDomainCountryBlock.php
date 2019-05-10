@@ -17,19 +17,6 @@ class IpDomainCountryBlock
      */
     public function handle($request, Closure $next)
     {
-//    	$ip = GeneralHelper::visitorIpCloudFlare();
-
-//    	if($ip and $ip == '188.239.72.9')
-//    	if($ip)
-//	    {
-//		    $geo2 = geoip($ip);
-//
-//		    if($geo2 and isset($geo2->iso_code) and in_array($geo2->iso_code, ['US']))
-//		    {
-//			    return abort(403);
-//		    }
-//	    }
-
         return $next($request);
     }
 }

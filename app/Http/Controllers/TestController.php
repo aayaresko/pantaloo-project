@@ -493,7 +493,7 @@ class TestController extends Controller
         dd(2);
         $ip = GeneralHelper::visitorIpCloudFlare();
         dump($ip);
-        $iso_code = \geoip($ip)['iso_code'];
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
         dd($iso_code);
         dd(GeneralHelper::visitorIpCloudFlare());
         $amount = 5;
@@ -1200,7 +1200,11 @@ class TestController extends Controller
         //dump($ip);
         //$ip = '165.227.71.60';
         //to do this job edit session way
+
+        // !!! No more torann/geoip !!!
+        // Use GeneralHelper::visitorCountryCloudFlare
         $ip = geoip($ip);
+
         dd($ip);
         DB::enableQueryLog();
         $user = User::where('id', 1031)->first();
