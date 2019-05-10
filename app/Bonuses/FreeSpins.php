@@ -72,6 +72,10 @@ class FreeSpins extends \App\Bonuses\Bonus
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
 
+            //temporary
+            //throw new \Exception('Bonus is temporarily unavailable');
+            //temporary
+
             //baned country
             if (!is_null($user->country)) {
                 $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
