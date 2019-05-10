@@ -77,12 +77,12 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $betatest = Cookie::get('betatest');
-
-        if ((int)$betatest !== 1) {
-            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
-             Registration are temporary disabled. Sorry for the inconvenience.']);
-        }
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
+//             Registration are temporary disabled. Sorry for the inconvenience.']);
+//        }
 
         $validator = $this->validator($request->all());
 

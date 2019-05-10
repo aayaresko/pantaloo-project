@@ -172,7 +172,7 @@ return array (
   'confirm_password' => 'Подтвердите пароль',
   'confirmation' => 'Подтверждение',
   'update' => 'Обновить',
-  'email_confirmation' => 'Email подтверждён',
+  'email_confirmation' => 'Подтверждение email&nbsp;',
   'email' => 'Email',
   'send_mail' => 'Отправить e-mail',
   'language' => 'Язык',

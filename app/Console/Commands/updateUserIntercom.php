@@ -50,18 +50,20 @@ class updateUserIntercom extends Command
      */
     public function handle()
     {
-        $user = User::findOrFail(146);
+//        $user = User::findOrFail(146);
+////
+////        event(new AccountStatusEvent($user, 'old_status', 'new_status'));
+////        event(new BonusDepositEvent($user, 100500));
+////        event(new BonusGameEvent($user, 'game name'));
+////        event(new CloseBonusEvent($user, 'bonus name'));
+////        event(new DepositEvent($user, 1000));
+////        event(new DepositWagerDoneEvent($user));
+////        event(new OpenBonusEvent($user, 'bonus name'));
+////        event(new WagerDoneEvent($user));
+////        event(new WithdrawalApprovedEvent($user));
+////        event(new WithdrawalFrozenEvent($user, 'comment'));
+////        event(new WithdrawalRequestedEvent($user));
 
-        event(new AccountStatusEvent($user, 'old_status', 'new_status'));
-        event(new BonusDepositEvent($user, 100500));
-        event(new BonusGameEvent($user, 'game name'));
-        event(new CloseBonusEvent($user, 'bonus name'));
-        event(new DepositEvent($user, 1000));
-        event(new DepositWagerDoneEvent($user));
-        event(new OpenBonusEvent($user, 'bonus name'));
-        event(new WagerDoneEvent($user));
-        event(new WithdrawalApprovedEvent($user));
-        event(new WithdrawalFrozenEvent($user, 'comment'));
-        event(new WithdrawalRequestedEvent($user));
+        dump(env('INTERCOM_TOKEN'));
     }
 }

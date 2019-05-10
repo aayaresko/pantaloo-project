@@ -57,8 +57,32 @@ class TestController extends Controller
         return 1;
     }
 
+    public function http404(Request $request){
+        return view('errors.404');
+    }
+
     public function test(Request $request)
     {
+        dd(2);
+        $user = User::where('id', 2550)->first();
+        $class = BonusHelper::getClass(2);
+        //dd($class);
+        $bonusObject = new $class($user);
+        //dd($bonusObject);
+        DB::beginTransaction();
+        //$act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        $act = $bonusObject->realActivation(['amount' => 3]);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+        dd($act);
         dd(2);
         $userOffice = [
             2532,
