@@ -6,7 +6,7 @@ use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
-class EmailCheckerServiceProvider extends ServiceProvider implements DeferrableProvider
+class EmailCheckerServiceProvider extends ServiceProvider
 {
     /**
      * Register the application services.
@@ -20,7 +20,7 @@ class EmailCheckerServiceProvider extends ServiceProvider implements DeferrableP
         });
     }
 
-    public function provides(){
-        return [EmailChecker::class];
-    }
+//    public function provides(){
+//        return [EmailChecker::class];
+//    }
 }

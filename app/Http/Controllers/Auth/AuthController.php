@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Providers\EmailChecker\EmailChecker;
 use App\Validators\TemporaryMailCheck;
 use DB;
 use App\User;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 
 
 class AuthController extends Controller
@@ -85,6 +85,16 @@ class AuthController extends Controller
 //        }
 
         $validator = $this->validator($request->all());
+
+        $validator->after(function ($validator) {
+
+            $emailChecker = new EmailChecker();
+
+            if ($emailChecker->isInvalidEmail('versus12345@0clickemail.com')) {
+
+                $validator->errors()->add('email', 'Something is wrong with this field!');
+            }
+        });
 
         if ($validator->fails()) {
             $this->throwValidationException(

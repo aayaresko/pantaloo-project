@@ -173,7 +173,7 @@ return [
         browner12\helpers\HelperServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \App\Providers\JsBridgeServiceProvider::class,
-        \App\Providers\EmailChecker\EmailChecker::class,
+        //\App\Providers\EmailChecker\EmailChecker::class,
     ],
 
     /*
