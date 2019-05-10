@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Bonus;
+use DB;
 use App\User;
-use Illuminate\Http\Request;
-
+use App\Bonus;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BonusController extends Controller
 {
     public function index()
     {
-        //to do if bounus be actived for this user
+        //to do if bonus be activated for this user
         $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
 
         //check bonus
@@ -53,11 +53,17 @@ class BonusController extends Controller
 
         $bonus_obj = new $class($user);
 
-        try {
-            $bonus_obj->activate();
-        } catch (\Exception $e) {
-           return redirect()->back()->withErrors([$e->getMessage()]);
+
+        DB::beginTransaction();
+
+        $bonusActivate = $bonus_obj->activate();
+
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusActivate['message']]);
         }
+
+        DB::commit();
 
         return redirect()->back()->with('popup',
             ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
@@ -73,17 +79,25 @@ class BonusController extends Controller
         $class = $user_bonus->bonus->getClass();
         $bonus_obj = new $class(Auth::user());
 
-        try {
-            $bonus_obj->cancel('Closed by user');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors([$e->getMessage()]);
+        DB::beginTransaction();
+        $bonusClose = $bonus_obj->cancel('Closed by user');
+
+        if ($bonusClose['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusClose['message']]);
         }
+        DB::commit();
 
         return redirect()->back();
     }
 
+    /*
+     * ADMIN PANEL
+     *
+     */
     public function userBonuses(User $user)
     {
+        //FIX THIS METHOD
         $bonuses = Bonus::all();
 
         $active_bonus = $user->bonuses()->first();
@@ -105,33 +119,39 @@ class BonusController extends Controller
 
     public function adminActivate(User $user, Bonus $bonus)
     {
+        //TO DO FIX THIS
         $class = $bonus->getClass();
-        $bonus_obj = new $class($user);
+        $bonusObject = new $class($user);
 
-        try {
-            $bonus_obj->activate();
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors([$e->getMessage()]);
+        DB::beginTransaction();
+        $bonusActivate = $bonusObject->activate();
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([$bonusActivate['message']]);
         }
+        DB::commit();
 
         return redirect()->back()->with('msg', 'Bonus was activated!');
     }
 
     public function adminCancel(User $user)
     {
-        $user_bonus = $user->bonuses()->first();
+        $userBonus = $user->bonuses()->first();
 
-        if (!$user_bonus) {
+        if (!$userBonus) {
             return redirect()->back();
         }
-        $class = $user_bonus->bonus->getClass();
-        $bonus_obj = new $class($user);
 
-        try {
-            $bonus_obj->cancel('Closed by admin');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors([$e->getMessage()]);
+        $class = BonusHelper::getClass($user->bonus_id);
+        $bonusObject = new $class($user);
+
+        DB::beginTransaction();
+        $bonusCancel = $bonusObject->cancel('Closed by admin');
+        if ($bonusCancel['success'] === false) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([$bonusCancel['message']]);
         }
+        DB::commit();
 
         return redirect()->back()->with('msg', 'Bonus was canceled');
     }

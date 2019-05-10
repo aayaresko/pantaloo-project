@@ -9,14 +9,15 @@ use App\Invoice;
 use App\Jobs\Withdraw;
 use App\Transaction;
 use App\User;
+use Helpers\PayTrio;
 use App\Jobs\BonusHandler;
 use Helpers\BonusHelper;
 use App\UserBonus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
-use Helpers\PayTrio;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class MoneyController extends Controller
@@ -79,23 +80,54 @@ class MoneyController extends Controller
             ]);
         }*/
 
-        //to do once in 10 seconds and use other table for natifications
-        $transaction = $user->transactions()
-            ->where('type', 3)->where('notification', 0)->first();
+        //to do once in 10 seconds and use other table for notifications
 
-        if ($transaction) {
-            $sum = $transaction->sum;
-            $transaction->notification = 1;
-            $transaction->save();
+        //to do fix this
+        $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+            ->where(function ($query) {
+                $query->where('type_id', '=', 1)
+                    ->orWhere('type_id', '=', 2);
+            })
+            ->where('status', 0)
+            ->first();
+
+        if ($notificationTransactionDeposit) {
+            SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
+                'status' => 1
+            ]);
+
+            $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
+            $sum = $extraSystemNotification->depositAmount;
         } else {
             $sum = false;
         }
 
+//        $transaction = $user->transactions()
+//            ->where('type', 3)->where('notification', 0)->first();
+//
+//        if ($transaction) {
+//            $sum = $transaction->sum;
+//            $transaction->notification = 1;
+//            $transaction->save();
+//        } else {
+//            $sum = false;
+//        }
+
         //to do check active bonus
         //to do not use dispatch
-        $checkFrequencyBonus = config('bonus.checkFrequency');
-        if (rand(1, $checkFrequencyBonus) === 1) {
-            BonusHelper::bonusCheck($user, 1);
+        if ($user->bonus_id) {
+            $checkFrequencyBonus = config('bonus.checkFrequency');
+            if (rand(1, $checkFrequencyBonus) === 1) {
+                $class = BonusHelper::getClass($user->bonus_id);
+                $bonusObject = new $class($user);
+
+                DB::beginTransaction();
+                $bonusClose = $bonusObject->close(1);
+                if ($bonusClose['success'] === false) {
+                    DB::rollBack();
+                }
+                DB::commit();
+            }
         }
 
         return response()->json([
@@ -103,11 +135,11 @@ class MoneyController extends Controller
             'balance' => $user->getBalance(),
             'deposit' => $sum,
             'free_spins' => $user->free_spins,
-	        'balance_info' => [
-	        	'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
-	        	'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
-	        	'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
-	        ]
+            'balance_info' => [
+                'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
+                'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
+                'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
+            ]
         ]);
     }
 
@@ -206,11 +238,22 @@ class MoneyController extends Controller
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
         //check bonus
-        BonusHelper::bonusCheck($user, 1);
+        if ($user->bonus_id) {
+            $class = BonusHelper::getClass($user->bonus_id);
+            $bonusObject = new $class($user);
 
-        if($user->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
+            DB::beginTransaction();
+            $bonusClose = $bonusObject->close(0);
+            if ($bonusClose['success'] === false) {
+                DB::rollBack();
+            }
+            DB::commit();
+        }
+        //check bonus
 
-        if($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        if ($user->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
+
+        if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
 
         if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
 
@@ -220,7 +263,7 @@ class MoneyController extends Controller
                 return redirect()->back()->withErrors(['You do not have any deposits.']);
             }
         }
-        
+
         $this->validate($request, [
             'address' => 'required',
             'sum' => 'required|numeric|min:1'

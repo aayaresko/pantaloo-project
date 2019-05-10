@@ -62,7 +62,7 @@ return [
         ],
         [
             'code' => 3,
-            'value' => 'Deposit',
+            'value' => 'DepositEvent',
             'filter' => 1
         ],
         [
@@ -103,6 +103,11 @@ return [
         [
             'code' => 11,
             'value' => 'System',
+            'filter' => 0
+        ],
+        [
+            'code' => 12,
+            'value' => 'Trim bonus amount',
             'filter' => 0
         ],
     ]

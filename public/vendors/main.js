@@ -12,8 +12,8 @@ $(document).ready(function(){
 	bonusSlider();
 	controlsInit();
 	blockFilter();
-    resizeIframe();
-    $(window).on('resize', resizeIframe);
+    // resizeIframe();
+    // $(window).on('resize', resizeIframe);
 	// preloader();
 });
 
@@ -183,23 +183,22 @@ function logOut(){
 }
 
 function lettering(){
-	$('.word-split').each(function(index){
+	$('.word-split').each(function(){
 		// fix th lang on home page headers
-		if (($('html').attr('lang') == 'th') && index == 2) {
+		if (($(this).html() == 'Casinobit') || ($('html').attr('lang') != 'th')) {
 			$(this).lettering();
-		} else if ($('html').attr('lang') != 'th') {
-			$(this).lettering();
-		}
+		} 
 	})
 }
 
 function ParallaxSections(){
-	if ( $(window).width() > 1080 ){
+	// if ( $(window).width() > 1080 ){
 		$('.sections-container').fullpage({
 			menu: '.sections-nav',
-			anchors: ['block-1', 'block-2', 'block-3', 'block-4']
+			anchors: ['', 'blackjack', 'roulette', 'slots'],
+			responsiveWidth: 1080
 		});
-	}
+	// }
 }
 
 function gamesSlider(){
@@ -241,9 +240,8 @@ function blockFilter() {
 
 
 $(document).ready(function(){
+
 	
-
-
 
 function getCurrentScreen(){
 
@@ -255,7 +253,7 @@ function getCurrentScreen(){
 
 	if($(window).width() > 1080){
 
-		if(pageCount.match('block-4')){
+		if (pageCount.match('slots')) {
 			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
 		}else{
 			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
@@ -275,6 +273,8 @@ getCurrentScreen()
 $(window).on('mousewheel', getCurrentScreen);
 
 });
+
+
 
 // let pageCount = location.href;
 

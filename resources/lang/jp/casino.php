@@ -161,7 +161,312 @@ return array (
   'free' => 'フリー',
   'spins' => 'スピン',
   'welcome_bonus' => 'ウェルカム ボーナス',
-  'bonus.term' => '<h3>WELCOME BONUS TERMS AND CONDITIONS</h3><span><br>New players receive 50 Free Spins as Welcome Bonus. In order to claim the 50 free spins you have to confirm your email address.<br><br>To activate your Welcome Bonus, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and open the game within 5 days from the moment of registration, otherwise they will expire.<br><br>Welcome Bonus is granted only once.<br><br>The maximum winnings that will be paid out resulting from a Welcome Bonus without deposit will be 20 mBTC. Any winnings exceeding this amount will be forfeited.<br><br>All winnings from a Welcome Bonus will be credited to a player\'s bonus account balance and is subject to our standard terms and conditions, including bonus terms and wagering requirements.<br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 40 times (minimum wagering requirements) before the player can request a withdrawal.<br><br>When wagering, funds on the main account will be used prior to the use of bonus money.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games, or any other games CANNOT be used to wager the bonus. “Playing for fun” (demo/practice mode/free play) on any game does not count towards any wagering (turnover) requirements.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>200% 1ST DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 1ST DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the first deposit.</span><br><span><br>Maximum amount for the 1ST DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 1ST DEPOSIT BONUS.<span><br><br></span></span><span>If the First Deposit is below the aforementioned minimum, the player will not receive the 1ST DEPOSIT BONUS.<br><br>1ST DEPOSIT BONUS is granted only once.<span><br><br></span></span>The First Deposit Bonus is only claimable along with a player’s first deposit. A 1ST DEPOSIT BONUS that was not redeemed along with the first deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 40 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 1ST DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>150% 2ND DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 2ND DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the second deposit.</span><span><br><br></span><span>Maximum amount for the 2ND DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 2ND DEPOSIT BONUS.<span><br><br></span></span><span>If the second deposit is below the aforementioned minimum, the player will not receive the 2ND DEPOSIT BONUS.<br><br>2ND DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 2ND DEPOSIT BONUS is only claimable along with a player’s second deposit. A 2ND DEPOSIT BONUS that was not redeemed along with the second deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 40 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 2ND DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span><span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<span><br><br></span></span>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>100% 3RD DEPOSIT BONUS TERMS AND CONDITIONS</h3><span><span><br>To activate your 3RD DEPOSIT BONUS, you must go to the section "GET BONUS" in your profile, click "ACTIVATE" and make deposit. Bonus will be added automatically to the player account at the moment of making the third deposit</span><span><br><br></span><span>Maximum amount for the 3RD DEPOSIT BONUS is 1000 mBTC.<span><br><br></span></span><span>A minimum deposit of 3 mBTC is required to be eligible for the 3RD DEPOSIT BONUS.<span><br><br></span></span><span>If the third deposit is below the aforementioned minimum, the player will not receive the 3RD DEPOSIT BONUS.<br><br>3RD DEPOSIT BONUS is granted only once.<span><br><br></span></span>The 3RD DEPOSIT BONUS is only claimable along with a player’s third deposit. A 3RD DEPOSIT BONUS that was not redeemed along with the third deposit (due to an insufficient deposit amount, due to player opting out of bonuses, or any other reasons that are outside the control of casinobit.io) cannot be claimed at a later date.<span><br><br>Before the bonus money is converted into money that can be withdrawn, the bonus money must be turned over 40 times (minimum wagering requirements) before the player can request a withdrawal.<span><br><br></span></span><span>The 3RD DEPOSIT BONUS is available for 30 days after registration. If player does not meet the wagering requirements within the 30 day period, their bonus and any pending winnings will expire and be removed from the account.<span><br><br></span></span>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br>If the bonus is forfeited/cancelled at any time, the initial bonus amount and any winnings will be forfeited/cancelled.<br><br>If you are eligible for a bonus and said bonus does not get added automatically after activation upon deposit, please contact our Live Support team right away, BEFORE placing any bet. If a player fails to meet this requirement, the bonus in question will not be added.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.<br><br>General bonus terms and conditions apply.<br><br><br><br><br></span><h3>GENERAL BONUS TERMS AND CONDITIONS</h3><span><br>Players may only claim the Welcome Bonus, 1st Deposit Bonus, 2nd Deposit Bonus and 2rd Deposit Bonus once.<br><br>Only one bonus can be claimed at a time. Deposit related bonuses cannot be "stacked". CasinoBit.io management reserve the right to void any bonuses and/or winnings obtained by fraudulent behavior.<br><br>To claim the Welcome Bonus or any Deposit Bonus, the user must make a minimum deposit of 3 mBTC.<br><br>When accepting a deposit bonus, kindly remember that your deposit is locked with the accepted bonus. This means that you have two options, either to complete the wagering requirement of the bonus, or cancel the bonus. If you choose to cancel the bonus, the bonus and all winnings attributed to the bonus will be lost. Wagering with both the bonus money and your deposited cash will count towards the wagering requirement.<br><br>Players have 30 days from the moment of bonus activation to wager any bonus. If player does not meet the wagering requirements within the 30 days period, their bonus and any pending winnings will expire and be removed from the account.<br><br>All bonuses (unless otherwise specified) need to be wagered 40 times before the funds can be withdrawn.<br><br>Wagering can ONLY be done in SLOTS. Table Games, Live Games or any other games CANNOT be used to wager the bonus or while the bonus is active. If a player has an active bonus and attempts to place bets over the maximum allowed, the bonus and winnings will be forfeited.<br><br>Minimal risk bets on any games (i.e. betting in proportions on different outcomes in the same hand to create "action" with minimal risk) do not qualify for completing the wagering requirement. Examples of minimal risk bets include betting on red and black simultaneously in Roulette, and betting player and banker simultaneously in Baccarat. Players who are found to be adopting these practices risk of having their bonus and winnings confiscated.<br><br>Only bets made using bonus money will count towards the total wagering requirement. Bonus money begins when your real balance is depleted.<br><br>Any "free spin" or "bonus" winnings resulting from bonus funds after the bonus has been wagered, lost or forfeited shall be removed.<br><br>Any bonus can be removed prior to any wagering conditions being met. Please contact CasinoBit.io support to learn more.<br><br>All withdrawals will be subject to an internal audit before being processed. CasinoBit.io reserves all rights to void Bonuses or any winnings for failed audits. Player hereby consents in advance to same.<br><br>If, upon such a review, it appears that a Player(s) are participating in strategies, taking advantage of any software or system bug or failure, or participating in any form of activity that CasinoBit.io, in its sole and complete discretion, deems to be abusive (\'Promotion Abuse\'), CasinoBit.io reserves the right to revoke the entitlement of such a Player to receive or benefit from the promotion (and/or withhold the pay out of the proceeds of such abuse to the Player/s in question). Only fully settled bets (i.e. bets that result in a win or loss) will be counted towards wagering.<br><br>For no deposit bonus withdrawals, we reserve the right to request a KYC. Regarding the KYC (Know Your Customer), the following documents may be needed for verification: One government approved identity card (ID card, passport and driver\'s license) with a picture, as well as proof of residency such as a utility bill (which is not older than 2 months).<br><br>Players with disposable email addresses are not eligible for any bonus. If a player despite this would receive free spins, all winnings from the spins will be confiscated.<br><br>All customer offers are limited to one per person, family, household address, email address, telephone number, IP, and shared computer, e.g. public library or workplace.<br><br>If it\'s discovered that a group players are using the same betting patterns and are connected via (but not limited to) location, banking pattern or IP, CasinoBit.io management will at it\'s own discretion have the mandate to confiscate bonus winnings and/or deposit.<br><br>Kindly note that it\'s not allowed to use bonus funds purely to progress through the bonus stages and then final stages completed with cash bets when bonus funds have been released or forfeited. If such tactic is adopted, CasinoBit.io reserves the right to confiscate the winnings.<br><br>Any accounts that are identified to be linked to an account already claiming this promotion will not be eligible and any bonuses credited to both accounts will be forfeited.<br><br>Multiple accounts are not permitted. Creating more than one accounts with CasinoBit.io in order to claim any bonuses is deemed as bonus abuse and may result in confiscated funds.<br><br>In the event of any dispute, the decision of CasinoBit.io will be final.<br><br>The CasinoBit.io and Conditions as published on the Website (and updated from time to time) are in English and it is the English version of these Terms and Conditions that form the basis of these Terms and Conditions only. Translations into other languages may be made as a service and are made in good faith. However, in the event of differences between the English version and a translation, the English version has priority over any translation.<br><br>CasinoBit.io reserves the right to cancel or amend these terms &amp; conditions at any point without any prior notice.</span>',
+  'bonus.term' => '<h3>
+
+ウェルカムボーナスの利用規約</h3><br><br>
+
+新規プレイヤーにはウェルカムボーナスとしてフリースピン
+50 回分が付与されます。フリースピンを受け取るにはメールアドレスを認証する必要があります。
+
+&nbsp;
+
+ウェルカムボーナスを入手するには、マイアカウントの [ボーナス] セクションに移動して [利用する] をクリックし、登録から 5 日以内に取得してください。これを過ぎるとボーナスは失効します。
+
+&nbsp;
+
+フリースピンが利用可能になったら 24 時間以内に使い切ってください。残ったフリースピンはすべて無効となります。
+
+&nbsp;
+
+ウェルカムボーナスのご利用は 1 回のみです。
+
+&nbsp;
+
+ウェルカムボーナスを使って獲得した勝利金の出金限度額は 60mBTC です (入金がない場合)。超過分は没収されます。
+
+&nbsp;
+
+ウェルカムボーナスを使って獲得した勝利金はボーナスアカウントの残高に加算され、ボーナス条件および賭け条件を含む当社の一般利用規約が適用されます。
+
+&nbsp;
+
+ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 50 倍の取引 (最低賭け条件) を達成しなければなりません。
+
+&nbsp;
+
+ベットの際はボーナスマネーの前にリアルマネー(ビットコイン）が優先的に使用されます。
+
+&nbsp;
+
+ボーナスマネーはスロットでのみベットが可能です。テーブルゲーム、ライブゲーム、またはその他のゲームでボーナスマネーをベットすることはできません。「リアル以外のプレイ」 (デモ/練習モード/無料プレイ) は賭け (ターンオーバー) 条件にカウントされません。
+
+　　　　　　　　　　　　　　　　　
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。
+
+<span><br>
+</span><span><br><br><br><br></span><h3>110% 初回入金ボーナスの利用規約</h3><br>
+
+初回入金ボーナスを入手するには、マイアカウントの [ボーナス] セクションに移動して [利用する] をクリックして入金します。初回入金時にアカウントに自動でボーナスが付与されます。
+
+&nbsp;
+
+<span>初回入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>初回入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>初回の入金額が上記の最低入金額を下回る場合は、初回入金ボーナスは付与されません。<span><br>
+<br>
+</span>初回入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+初回入金ボーナスは初回の入金時のみ獲得できます。初回の入金時に初回入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません。 
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 50 倍のベット (最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>初回入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。<span><br><br><br><br><br></span><h3>80% セカンド入金ボーナスの利用規約<br></h3>
+
+セカンド入金ボーナスを入手するには、プロフィールの [ボーナス] セクションに移動して [利用する] をクリックして入金します。2 回目の入金時にアカウントに自動でボーナスが付与されます。
+
+<span><br>
+<br>
+</span>
+
+<span>セカンド入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>セカンド入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>2 回目の入金額が上記の最低入金額を下回る場合は、セカンド入金ボーナスは付与されません。<span><br>
+<br>
+</span>セカンド入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+セカンド入金ボーナスは 2 回目の入金時のみ獲得することができます。2 回目の入金時にセカンド入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません 。
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 50 倍のベット (最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>セカンド入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+<span>ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。<span><br>
+<br>
+</span></span>
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+&nbsp;
+
+一般ボーナス利用規約が適用されます。<span><br><br></span><h3>55% サード入金ボーナスの利用規約</h3><br>
+
+サード入金ボーナスを入手するには、マイアカウントの [[ボーナス] セクションに移動して [利用する] をクリックして入金します。3 回目の入金時にアカウントに自動でボーナスが付与されます。
+
+<span><br>
+<br>
+</span>
+
+<span>サード入金ボーナスの上限額は 1000 mBTC です。<span><br>
+<br>
+</span></span>
+
+<span>サード入金ボーナスを獲得するには最低でも 3mBTC を入金する必要があります。<span><br>
+<br>
+</span></span>
+
+<span>3 回目の入金額が上記の最低入金額を下回る場合は、サード入金ボーナスは付与されません。<span><br>
+<br>
+</span>サード入金ボーナスのご利用は 1 回のみです。<span><br>
+<br>
+</span></span>
+
+サード入金ボーナスは 3 回目の入金時のみ獲得することができます。3 回目の入金時にサード入金ボーナスを獲得できなかった場合 (入金額の不足、ボーナスの受け取り拒否、Casinobit.io が対応できないその他の理由)、後日改めて獲得することはできません。 。
+
+<span><span><br>
+</span>ボーナスマネーを出金可能な資金に換金するには、出金を依頼する前にボーナスマネーの 50 倍のベット(最低賭け条件) を達成しなければなりません。<span><br>
+<br>
+</span></span>
+
+<span>サード入金ボーナスは登録から 30 日間ご利用になれます。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。<span><br>
+<br>
+</span></span>
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。
+
+&nbsp;
+
+ボーナスが没収/取り消されると、当初のボーナスおよび勝利金は没収/取り消されます。
+
+&nbsp;
+
+ボーナスの獲得資格があるにもかかわらず、入金時に利用したはずのボーナスが自動的に付与されない場合は、ベットを始める前に当社のサポートチームまでご連絡ください。この条件を満たさない場合、当該ボーナスは付与されません。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。
+
+<br><br>
+
+一般ボーナス利用規約が適用されます。
+
+<span><br><br><br></span><h3>一般ボーナス利用規約</h3><br><div>
+
+ウェルカムボーナス、初回入金ボーナス、セカンド入金ボーナス、サード入金ボーナスのご利用はそれぞれ 1 回のみです。
+
+&nbsp;
+
+ボーナスは一度に 1 つしか利用できません。入金関連のボーナスを「重複」して利用することはできません。CasinoBit.io のマネジメントは不正行為により獲得したボーナスや勝利金を無効にする権利を留保します。
+
+&nbsp;
+
+ウェルカムボーナスまたは入金ボーナスを獲得するには、最低でも 3mBTC を入金しなければなりません。
+
+&nbsp;
+
+入金ボーナスの入金分は一時的に出金できなくなるのでご注意ください。「ベット条件を達成する」または「ボーナスをキャンセル」することで入金分を出金することができます。ボーナスをキャンセルした場合、ボーナスとボーナスを使って獲得した勝利金は没収されます。ボーナスマネーと入金分を使ったベットがともに賭け条件にカウントされます。
+
+&nbsp;
+
+どのボーナスも有効になってから 30 日間ベットが可能です。30 日以内に賭け条件を達成できない場合は、ボーナスと保留中の勝利金は失効し、アカウントから削除されます。
+
+&nbsp;
+
+どのボーナスも (別途記載のない限り) 出金するにはボーナス額の 50 倍のベットを行う必要があります。
+
+&nbsp;
+
+ボーナスはスロットでのみベットが可能です。有効なボーナスを使ってテーブルゲーム、ライブゲーム、またはその他のゲームにベットすることはできません。有効なボーナスの上限額を超えるベットを試みた場合、ボーナスと勝利金は没収されます。
+
+&nbsp;
+
+オポジットベット（両張り） (同じハンドで両方の結果にベットして最小のリスクしか負わないベット方法) は賭け条件にはカウントされません(例: ルーレットでレッドとブラックに同時にベットする、バカラでプレイヤーとバンカーに同時にベットするなど)。このようなベットを行っていることが発覚した場合、ボーナスと勝利金が没収されることがあります。
+
+&nbsp;
+
+ボーナスマネーによるベットのみが賭け条件の合計にカウントされます。リアルマネー(ビットコイン）の残高がなくなるとボーナスマネーが使用されます。</div><div>&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+ボーナスの資金から獲得した「フリースピン」または「ボーナス」の勝利金は、ボーナスがベット、損失、没収されるとなくなります。
+
+&nbsp;
+
+賭け条件を達成する前にボーナスを放棄することができます。詳しくは CasinoBit.io サポートまでお問い合わせください。
+
+&nbsp;
+
+出金処理の前に内部監査が行われます。CasinoBit.io は監査失格となったボーナスまたは勝利金を無効にするあらゆる権利を留保します。プレイヤーはこれに同意するものとします。
+
+&nbsp;
+
+監査の際に、プレイヤーがソフトウェアやシステムのバグや欠陥を悪用する戦略、またはその他 CasinoBit.io がその単独の完全な裁量により悪用と見なす行為 (「ボーナス乱用」) を行っていたことが発覚した場合、CasinoBit.io はプレイヤーのプロモーションへの参加資格またはプロモーションからの得た利益を無効にする権利を留保します (当該プレイヤーの出金処理の保留含む)。精算済みのベット (勝敗が決定したベット) のみベットとしてカウントされます。
+
+&nbsp;
+
+当社は入金不要ボーナスの出金に当たって、プレイヤーに対して KYC (Known Your Customer)&nbsp; を要求する権利を留保します。KYCには、次の本人確認書類が必要になる場合があります。官公署発行の写真付き身分証明書 (身分証明書、パスポート、運転免許証)、公共料金の請求書などの住所が証明できる書類 (2 か月以内のもの)。
+
+&nbsp;
+
+使い捨ての電子メールアドレスで登録を行ったプレイヤーにはボーナスの獲得資格はありません。このようなプレイヤーがフリースピンを受け取った場合、スピンにより獲得した勝利金はすべて没収されます。
+
+&nbsp;
+
+すべてのオファーは 1 人、 1 つの家族、世帯、電子メールアドレス、電話番号、IP、共有 PC (図書館、職場など) につき 1 回のみご利用になれます。
+
+&nbsp;
+
+プレイヤーが集団で同じベッティングパターンを使用し、場所、銀行、IP (を含むがこれに限定されない) を介してつながっていることが発覚した場合、CasinoBit.io のマネジメントは独自の裁量でボーナスの勝利金や入金を没収することができます。
+
+&nbsp;
+
+ボーナス資金をボーナスステージ達成のためにのみ使用し、ボーナス資金が換金または没収されてから、最終ステージをキャッシュによるベットで達成することは禁止されているのでご注意ください。そのような行為を行った場合、CasinoBit.io は勝利金を没収する権利を留保します。
+
+&nbsp;
+
+このプロモーションをすでに利用しているアカウントと関連するアカウントはボーナスを獲得することはできません。また、両方のアカウントに付与されたボーナスはすべて没収されます。
+
+&nbsp;
+
+複数のアカウントを所持することは禁止されています。ボーナスを獲得するために CasinoBit.io で複数のアカウントを開設することはボーナスの乱用と見なされ、資金が没収されることがあります。
+
+&nbsp;
+
+紛争が発生した場合、CasinoBit.io の決定が最終的なものとなります。
+
+&nbsp;
+
+&nbsp;
+
+ウェブサイト上で公開されている (そして随時更新される) CasinoBit.io および規約のオリジナルは英語で作成されており、英語版のみがこれらの利用規約の根拠となります。他の言語への翻訳はサービスであり、誠意を持って行われますが、英語版と翻訳版の間に相違がある場合は、英語版が最優先されます。
+
+&nbsp;
+
+CasinoBit.io は事前の通知なしに随時これらの利用規約を取り消しまたは変更する権利を留保します。</div><br><br><br><br><br><br><br><br><br><br>',
   'deposit_space' => '入金',
   'bonus_deposit' => '次回の入金でボーナスを手に入れませんか?',
   'open_bonus' => '実施中のボーナス',

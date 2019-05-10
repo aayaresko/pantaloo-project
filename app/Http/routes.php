@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('beta/test', function () {
+    return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
+});
+
+
+
 //for optimization add array keep all language in config
 $languages = Helpers\GeneralHelper::getListLanguage();
 Config::set('getListLanguage', $languages);
@@ -28,31 +34,31 @@ Route::group(['middleware' => ['landing', 'ip.country.block']], function () use 
 });
 
 Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () use ($partner) {
-	//sub-domain
-	Route::group(['domain' => $partner], function () {
+    //sub-domain
+    Route::group(['domain' => $partner], function () {
 
-		Route::get('/', ['as' => 'affiliates.index', 'uses' => 'Partner\AffiliatesController@index']);
-		Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'Partner\AffiliatesController@feedback']);
-		Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
-		Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@register']);
+        Route::get('/', ['as' => 'affiliates.index', 'uses' => 'Partner\AffiliatesController@index']);
+        Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'Partner\AffiliatesController@feedback']);
+        Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
+        Route::post('/affiliates/register', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@register']);
 
-		Route::get('/password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'Auth\Affiliates\PasswordController@showResetForm']);
-		Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'Auth\Affiliates\PasswordController@sendResetLinkEmail']);
+        Route::get('/password/reset/{token?}', ['as' => 'affiliates.passwordResetPage', 'uses' => 'Auth\Affiliates\PasswordController@showResetForm']);
+        Route::post('/affiliates/password/email', ['as' => 'affiliates.passwordEmail', 'uses' => 'Auth\Affiliates\PasswordController@sendResetLinkEmail']);
 
-		Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
-		Route::post('affiliates/sendToken/{userEmail}', ['as' => 'affiliates.sendToken', 'uses' => 'Auth\Affiliates\AuthController@confirmEmail']);
-		Route::post('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
+        Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
+        Route::post('affiliates/sendToken/{userEmail}', ['as' => 'affiliates.sendToken', 'uses' => 'Auth\Affiliates\AuthController@confirmEmail']);
+        Route::post('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
 
-		//redefine routes affiliates
-		Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
-			Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
-		});
-	});
+        //redefine routes affiliates
+        Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+            Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
+        });
+    });
 
-	//delete this after only ine panel partner
-	Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
-		Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
-	});
+    //delete this after only ine panel partner
+    Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+        Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
+    });
 });
 
 Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($languages) {
@@ -68,8 +74,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     // Registration Routes...
     Route::get('register', 'Auth\AuthController@showRegistrationForm');
-    //Route::post('register', 'Auth\AuthController@register');
-    Route::post('register', 'Auth\AuthController@create');
+    Route::post('register', 'Auth\AuthController@register');
+    //Route::post('register', 'Auth\AuthController@create');
 
     // Password Reset Routes...
     //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');

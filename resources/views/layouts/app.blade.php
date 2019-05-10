@@ -25,7 +25,12 @@
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
-    <link rel="icon" href="/favicon.png">
+   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+   <link rel="manifest" href="/site.webmanifest">
+   <meta name="msapplication-TileColor" content="#8932ff">
+   <meta name="theme-color" content="#ffffff">
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -336,13 +341,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
-                {{--<h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>--}}
+                <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
 
-                @if ($registrationStatus === 1)
-                    <h5 class="popup-title">Registrations are temporary disabled. We are sorry for the inconvenience.</h5>
-                @else
-                    <h5 class="popup-title">Registrations are not available in you region.</h5>
-                @endif
+                {{--@if ($registrationStatus === 1)--}}
+                    {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
+                        {{--Registration are temporary disabled. Sorry for the inconvenience.</h5>--}}
+                {{--@else--}}
+                    {{--<h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>--}}
+                {{--@endif--}}
 
             </div>
 
@@ -358,12 +364,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
 
-                    {{--<div class="row">--}}
-                        {{--<div class="col-sm-12">--}}
-                            {{--<input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>--}}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="password" class="pass-input red" placeholder="{{ trans('casino.password') }}" name="password">
+                        </div>
+                    </div>
+                    <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
 
                     {{--<div class="row">--}}
                         {{--<div class="col-sm-12">--}}
@@ -374,33 +380,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         {{--</div>--}}
                     {{--</div>--}}
 
-                    {{--<div class="row">--}}
-                        {{--<div class="col-sm-12">--}}
-                            {{--<div class="block-thumbnail">--}}
-                                {{--<label for="agree"><input type="checkbox" name="agree" id="agree">--}}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="block-thumbnail">
+                                <label for="agree"><input type="checkbox" name="agree" id="agree">
                                     {{--fix in future this--}}
-                                    {{--@if(app()->getLocale() === 'jp')--}}
-                                        {{--<a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}--}}
-                                    {{--@else--}}
-                                        {{--{{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>--}}
-                                    {{--@endif--}}
-                                {{--</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{----}}
+                                    @if(app()->getLocale() === 'jp')
+                                        <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
+                                    @else
+                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                    @endif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn"><span class="btn-entry">Get Notified</span></button>
-                                {{--<button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>--}}
+                                {{--<button class="send-btn"><span class="btn-entry">Get Notified</span></button>--}}
+                                <button class="send-btn"><span class="btn-entry">{{ trans('casino.registration') }}</span></button>
                             </div>
                         </div>
                     </div>
 
                 </form>
             </div>
+            @else
+                <h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>
             @endif
 
         </div>

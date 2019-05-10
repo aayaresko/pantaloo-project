@@ -11,7 +11,8 @@ return [
         'active' => 1,
         'realActivation' => 2,
         'close' => 3,
-        'cancel' => 4
+        'cancel' => 4,
+        'wagerUpdate' => 5,
     ],
 
     'classes' => [
@@ -21,6 +22,6 @@ return [
         4 => 'App\Bonuses\Bonus_100',
     ],
 
-    'checkFrequency' => 3
+    'checkFrequency' => 10
 
 ];

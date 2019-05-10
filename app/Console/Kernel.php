@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\UpdateTransactions;
+use App\Console\Commands\updateUserIntercom;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,7 +26,8 @@ class Kernel extends ConsoleKernel
         Commands\BitcoinSend::class,
         Commands\BonusTest::class,
         Commands\BonusJobs::class,
-        Commands\TransactionSum::class
+        Commands\TransactionSum::class,
+        updateUserIntercom::class
     ];
 
     /**
