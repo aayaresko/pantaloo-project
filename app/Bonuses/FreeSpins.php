@@ -9,6 +9,7 @@ use App\BonusLog;
 use Carbon\Carbon;
 use App\UserBonus;
 use App\Transaction;
+use GuzzleHttp\Client;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
@@ -76,9 +77,17 @@ class FreeSpins extends \App\Bonuses\Bonus
             //throw new \Exception('Bonus is temporarily unavailable');
             //temporary
 
+            $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+            $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
+
+            //baned country
+            if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
+                throw new \Exception('You cannot activate this bonus in' .
+                    ' accordance with clause 1.19 of the bonus terms & conditions.');
+            }
+
             //baned country
             if (!is_null($user->country)) {
-                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
                         ' accordance with clause 1.19 of the bonus terms & conditions.');
@@ -108,9 +117,30 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'with clause 2.2 of the bonus terms & conditions.');
             }
 
+            //IpQuality
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+            $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+            //5 to do config
+            $client = new Client(['timeout' => 5]);
+            $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+            $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+            //89.39.107.197
+            if ($ipCurrent != '89.39.107.197') {
+                if (isset($responseIpQualityJson['success'])) {
+                    if ($responseIpQualityJson['success'] == true) {
+                        if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                            throw new \Exception('Free spins are not available while using VPN/Proxy');
+                        }
+                    }
+                }
+            }
+            //IpQuality
+
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
-
 
             $bonusUser = UserBonus::create([
                 'user_id' => $user->id,
@@ -172,7 +202,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             User::where('id', $user->id)->update([
                 'bonus_id' => static::$id
             ]);
-            
+
             event(new OpenBonusEvent($user, 'welcome bonus'));
 
             $response = [
