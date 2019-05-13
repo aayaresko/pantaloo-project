@@ -543,6 +543,10 @@ header.header.active .promo-actions-block .promo-action-btn {
 .reg-modified {
   display: none;
 }
+.pagination {
+  margin: 34px 0;
+  margin-top: 0;
+}
 /* line 242, ../scss/_navigation.scss */
 .header .navigation .navigation-list li a {
   color: #fff;
@@ -1295,21 +1299,17 @@ html.cropped {
   margin-top: -40px;
   height: 81px;
   width: 81px;
-  border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
 
 }
 /* line 86, ../scss/_middle.scss */
 .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 78px;
+  height: 66px;
+  background: url("../assets/images/mBIT.svg") no-repeat center;
   margin: 0 auto;
-  margin-top: 22px;
+  margin-top: 5px;
 }
 
 /* line 98, ../scss/_middle.scss */
@@ -4232,20 +4232,15 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: -40px;
   height: 81px;
   width: 81px;
-  border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
 }
 /* line 2336, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 78px;
+  height: 66px;
+  background: url("../assets/images/mBIT.svg") no-repeat center;
   margin: 0 auto;
-  margin-top: 22px;
 }
 /* line 2346, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance {
@@ -4254,6 +4249,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   letter-spacing: 2px;
   display: inline-block;
   vertical-align: middle;
+ margin-bottom: 8px;
 }
 /* line 2352, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance .value {
@@ -4762,7 +4758,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 .footer.footer-static .bitcoin-block .bitcoin-icon, .footer.footer-home .bitcoin-block .bitcoin-icon {
-    background: url("../assets/images/bitcoin-icon.png") no-repeat scroll 0 0 transparent;
+    background: url("../assets/images/mBIT.svg") no-repeat scroll 0 0 transparent;
+    background-size: cover;
     width: 33px;
     height: 29px;
     top: 0;
@@ -5906,47 +5903,45 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .cabinet-block .cabinet-entry .main-content .credits-block {
     display: block;
     position: relative;
-    padding-left: 250px;
+    padding-left: 100px;
     margin: 0 auto;
-    margin-bottom: 170px;
-    max-width: 636px;
+    margin-bottom: 70px;
+    max-width: 260px;
   }
   /* line 498, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon {
     display: block;
     position: absolute;
     left: 0;
-    top: 50%;
-    width: 189px;
-    height: 189px;
-    margin-top: -95px;
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border: 1px solid #9350c2;
+    top: -36px;
+    width: 81px;
+    height: 81px;
+    margin-top: 0;
   }
   /* line 508, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
     content: '';
     display: block;
-    width: 125px;
-    height: 73px;
-    background: url("../media/images/sprite.png") 0 -216px;
+    width: 78px;
+    height: 68px;
+    background: url("../assets/images/mBIT.svg") no-repeat;
+    background-size: cover;
     margin: 0 auto;
-    margin-top: 58px;
+    margin-top: 22px;
   }
   /* line 518, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
     font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-    font-size: 47px;
-    letter-spacing: 6px;
+    font-size: 16px;
+    letter-spacing: 2px;
     display: inline-block;
     vertical-align: middle;
+    margin-bottom: 8px;
   }
   /* line 524, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance .value {
-    font-size: 105px;
-    letter-spacing: 25px;
+    font-size: 36px;
+    letter-spacing: 5px;
     display: inline-block;
     vertical-align: middle;
   }
@@ -6014,7 +6009,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 585, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content {
-    text-align: right;
+    text-align: center;
   }
   /* line 587, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block {
@@ -6024,7 +6019,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 590, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block .descr {
     text-align: left;
-    font-size: 38px;
+    font-size: 23px;
     letter-spacing: 1px;
   }
   /* line 596, ../scss/_responsive.scss */
@@ -6032,14 +6027,14 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     font-family: 'MyriadPro-BoldCond', arial, sans-serif;
     display: block;
     margin: 0 auto;
-    max-width: 800px;
     background-color: #fff;
     color: #000;
-    font-size: 40px;
     border-radius: 41px;
     -webkit-border-radius: 41px;
     -moz-border-radius: 41px;
-    margin-top: 140px;
+    max-width: 450px;
+    font-size: 20px;
+    margin-top: 25px;
   }
   /* line 610, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .btn-history-block {
@@ -6171,11 +6166,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding-bottom: 38px;
     margin: 0 auto;
   }
-  /* line 709, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
-    font-size: 90px;
-    margin-bottom: 28px;
-  }
+
   /* line 713, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .sub-text {
     font-size: 40px;
@@ -6240,12 +6231,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 760, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
-    padding-top: 84px;
+    padding-top: 45px;
     padding-left: 0;
     padding-right: 0;
     text-align: center;
     border: none;
-    font-size: 34px;
+    font-size: 18px;
   }
   /* line 767, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a:before {
@@ -6940,45 +6931,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     background-position: 94px 0;
     margin-top: -7px;
   }
-  /* line 1354, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block {
-    padding-left: 100px;
-    max-width: 260px;
-    margin-bottom: 70px;
-  }
-  /* line 1358, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon {
-    margin-top: -40px;
-    height: 81px;
-    width: 81px;
-  }
-  /* line 1362, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
-    width: 53px;
-    height: 31px;
-    background-position: -57px 0;
-    margin: 0 auto;
-    margin-top: 22px;
-  }
-  /* line 1370, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-  /* line 1373, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .balance .value {
-    font-size: 36px;
-    letter-spacing: 5px;
-  }
-  /* line 1378, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn {
-    /*right: 0;
-    font-size: 14px;
-    max-width: 142px;
-    padding: 9px 0;
-    padding-bottom: 5px;
-    padding-left: 36px;*/
-  }
+ 
+
   /* line 1385, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn:before {
     left: 13px;
@@ -7000,16 +6954,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content {
     text-align: left;
   }
-  /* line 1404, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block .descr {
-    font-size: 23px;
-  }
-  /* line 1407, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .generated-key {
-    max-width: 450px;
-    font-size: 20px;
-    margin-top: 25px;
-  }
+
   /* line 1415, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block {
     padding: 0;
@@ -7096,11 +7041,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     margin-top: 70px;
     margin-bottom: 70px;
   }
-  /* line 1495, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
-    font-size: 18px;
-    padding-top: 45px;
-  }
+
   /* line 1498, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a:before {
     width: 22px;
