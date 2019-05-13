@@ -16,9 +16,11 @@ use App\Events\WagerDoneEvent;
 use App\Events\WithdrawalApprovedEvent;
 use App\Events\WithdrawalFrozenEvent;
 use App\Events\WithdrawalRequestedEvent;
+use App\Jobs\IntercomCreateUpdateUser;
 use App\Jobs\IntercomSendEvent;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Intercom\IntercomClient;
 
 class IntercomEventHandler
@@ -26,38 +28,42 @@ class IntercomEventHandler
     public function onOpenBonus(OpenBonusEvent $event)
     {
         $name = "open '{$event->bonusName}'";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onCloseBonus(CloseBonusEvent $event)
     {
         $name = "close '{$event->bonusName}'";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onDeposit(DepositEvent $event){
-        $name = "внесено '{$event->value}'";
-        $this->sendEvent($event->user->email, $name);
+        $name = "внесены средства";
+        $this->sendEvent($event->user->email, $name, [
+            'value' => $event->value
+        ]);
     }
 
     public function onBonusDeposit(BonusDepositEvent $event){
-        $name = "начислено бонусов '{$event->value}'";
-        $this->sendEvent($event->user->email, $name);
+        $name = "начислены бонусы";
+        $this->sendEvent($event->user->email, $name, [
+            'value' => $event->value
+        ]);
     }
 
     public function onWagerDone(WagerDoneEvent $event){
         $name = "wager done";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onDepositWagerDone(DepositWagerDoneEvent $event){
         $name = "deposit wager done";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onBonusGame(BonusGameEvent $event){
         $name = "50 free spin in {$event->gameName}";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     // onWithdrawalRequested
@@ -67,22 +73,27 @@ class IntercomEventHandler
 
     public function onWithdrawalRequested(WithdrawalRequestedEvent $event){
         $name = "withdrawal requested";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onWithdrawalApproved(WithdrawalApprovedEvent $event){
         $name = "withdrawal approved";
-        $this->sendEvent($event->user->email, $name);
+        $this->sendEvent($event->user->email, $name, []);
     }
 
     public function onWithdrawalFrozen(WithdrawalFrozenEvent $event){
-        $name = "withdrawal frozen: {$event->comment}";
-        $this->sendEvent($event->user->email, $name);
+        $name = "withdrawal frozen";
+        $this->sendEvent($event->user->email, $name, [
+            'comment' => $event->comment
+        ]);
     }
 
     public function onAccountStatus(AccountStatusEvent $event){
-        $name = "account status change from {$event->old_status} to {$event->new_status}";
-        $this->sendEvent($event->user->email, $name);
+        $name = "account status change";
+        $this->sendEvent($event->user->email, $name, [
+            'old_status' => $event->old_status,
+            'new_status' => $event->new_status,
+        ]);
     }
 
 
@@ -109,8 +120,13 @@ class IntercomEventHandler
 
     }
 
-    private function sendEvent($email, $name)
+
+
+    private function sendEvent($email, $name, $metadata=[])
     {
+
+
+        dispatch(new IntercomCreateUpdateUser(User::where('email', $email)->first()   ));
 
         $timestamp = time();
         $dt = Carbon::createFromTimestamp($timestamp);
@@ -120,9 +136,15 @@ class IntercomEventHandler
         $data = [
             'created_at' => $timestamp,
             'email' => $email,
-            'event_name' => $dt . ' ' . $name,
+            'event_name' => $name
         ];
-        dump($data);
+
+        if ($metadata){
+            $data['metadata'] = $metadata;
+        }
+
+        //Log::info('Add job send event "' . $data['event_name'] . '"');
+
         dispatch(new IntercomSendEvent($data));
     }
 

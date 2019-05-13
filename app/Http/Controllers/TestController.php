@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bonus;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -46,10 +47,381 @@ class TestController extends Controller
         dd(2);
     }
 
+    public function phpinfo(Request $request){
+        phpinfo();
+        exit();
+    }
+
+    public function error(Request $request){
+        throw new Exception("Custom error!");
+        return 1;
+    }
+
+    public function http404(Request $request){
+        return view('errors.404');
+    }
+
     public function test(Request $request)
     {
-        $ip = GeneralHelper::visitorIpCloudFire();
+        dd(2);
+        $user = User::where('id', 2550)->first();
+        $class = BonusHelper::getClass(2);
+        //dd($class);
+        $bonusObject = new $class($user);
+        //dd($bonusObject);
+        DB::beginTransaction();
+        //$act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        $act = $bonusObject->realActivation(['amount' => 3]);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+        dd($act);
+        dd(2);
+        $userOffice = [
+            2532,
+2528,
+2520,
+2518,
+2516,
+2515,
+2514,
+2512,
+2501,
+2500,
+2499,
+2494,
+2493,
+2491,
+2489,
+2488,
+2486,
+2484,
+2483,
+2480,
+2479,
+2477,
+2476,
+2474,
+2473,
+2472,
+2471,
+2470,
+2468,
+2467,
+2466,
+2465,
+2456,
+2451,
+2446,
+2445,
+2444,
+2443,
+2442,
+2441,
+2438,
+2399,
+1162,
+1055,
+1041,
+1031,
+1024,
+1021,
+1011,
+1007,
+998,
+975,
+971,
+456,
+442,
+432,
+427,
+402,
+379,
+376,
+372,
+370,
+368,
+366,
+365,
+345,
+332,
+328,
+323,
+318,
+308,
+307,
+306,
+44,
+2411,
+348,
+349,
+350,
+351,
+352,
+353,
+354,
+359,
+361,
+362,
+363,
+364,
+367,
+369,
+371,
+373,
+374,
+375,
+377,
+378,
+380,
+381,
+382,
+383,
+384,
+385,
+386,
+387,
+330,
+319,
+2426,
+2428,
+389,
+390,
+391,
+394,
+396,
+398,
+399,
+405,
+338,
+340,
+341,
+342,
+343,
+344,
+346,
+256,
+257,
+258,
+259,
+260,
+261,
+264,
+275,
+276,
+277,
+278,
+281,
+282,
+283,
+284,
+285,
+286,
+287,
+288,
+289,
+290,
+292,
+293,
+294,
+295,
+296,
+299,
+162,
+167,
+169,
+214,
+215,
+219,
+220,
+222,
+224,
+240,
+241,
+242,
+243,
+244,
+247,
+248,
+249,
+250,
+251,
+252,
+253,
+254,
+38,
+39,
+40,
+41,
+42,
+64,
+85, 136, 146, 956
+        ];
+        $startDate = '2019-04-01 00:00:00';
+        $endDate = '2019-04-30 00:00:00';
+
+
+        echo '<h2>TOTAL</h2>';
+        $select1 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
+            ->where('created_at', '>', $startDate)
+            ->where('created_at', '<', $endDate);
+
+        dump('withdraw 4');
+        $a1 = clone $select1;
+        dump($a1->where('type', 4)->first()->toArray());
+
+        dump('deposit 3');
+        $a2 = clone $select1;
+        dump($a2->where('type', 3)->first()->toArray());
+
+        dump('debit 1');
+        $a3 = clone $select1;
+        dump($a3->where('type', 1)->first()->toArray());
+
+        dump('credit 2');
+        $a4 = clone $select1;
+        dump($a4->where('type', 2)->first()->toArray());
+
+        dump('free 9');
+        $a4 = clone $select1;
+        dump($a4->where('type', 9)->first()->toArray());
+
+        dump('free 10');
+        $a5 = clone $select1;
+        dump($a5->where('type', 10)->first()->toArray());
+
+        echo '<br>';
+        echo '<h2>WITHOUT USERS</h2>';
+
+        $select2 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
+            ->whereNotIn('user_id', $userOffice)
+            ->where('created_at', '>', $startDate)
+            ->where('created_at', '<', $endDate);
+
+        dump('withdraw 4');
+        $a12 = clone $select2;
+        dump($a12->where('type', 4)->first()->toArray());
+
+        dump('deposit 3');
+        $a22 = clone $select2;
+        dump($a22->where('type', 3)->first()->toArray());
+
+        dump('debit 1');
+        $a32 = clone $select2;
+        dump($a32->where('type', 1)->first()->toArray());
+
+        dump('credit 2');
+        $a42 = clone $select2;
+        dump($a42->where('type', 2)->first()->toArray());
+
+        dump('free 9');
+        $a42 = clone $select2;
+        dump($a42->where('type', 9)->first()->toArray());
+
+        dump('free 10');
+        $a52 = clone $select2;
+        dump($a52->where('type', 10)->first()->toArray());
+        dd('OK');
+        //total
+        //withdraw 4
+        //    "sum_sum" => "-1711.37109"
+        //        "sum_bonus_sum" => "0.00000"
+        //deposit 3
+        //      "sum_sum" => "107072092.43374"
+        //        "sum_bonus_sum" => "0.00000"
+        //1 debit
+        //     "sum_sum" => "-16164.44604"
+        //        "sum_bonus_sum" => "-115667.70096"
+        //2 credit
+        //        "sum_sum" => "17793.30904"
+        //        "sum_bonus_sum" => "105050.02266"
+        //9 debit free
+        //    "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "0.00000"
+        //10 debit free
+        //"sum_sum" => "0.00000"
+        //"sum_bonus_sum" => "16698.47000"
+
+
+        //total_user
+        //withdraw 4
+        //    "sum_sum" => "-1710.37109"
+        //    "sum_bonus_sum" => "0.00000"
+
+        //deposit 3
+        //    "sum_sum" => "2142.13374"
+        //    "sum_bonus_sum" => "0.00000"
+        //1 debit
+        //"sum_sum" => "-15647.16570"
+        //"sum_bonus_sum" => "-115185.88430"
+        //2 credit
+        //  "sum_sum" => "17004.45200"
+        //    "sum_bonus_sum" => "104606.50600"
+        //9 debit free
+        //    "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "0.00000"
+        //10 debit free
+        //   "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "16472.77000"
+
+
+
+
+
+        dd(22);
+        $user = User::where('id', 2535)->first();
+        $class = BonusHelper::getClass(4);
+        //dd($class);
+        $bonusObject = new $class($user);
+        //dd($bonusObject);
+        DB::beginTransaction();
+        //$act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        $act = $bonusObject->realActivation(['amount' => 20000]);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+        dd($act);
+
+
+        dd(Bonus::findOrFail(2));
+        $ip = GeneralHelper::visitorIpCloudFlare();
         dd($ip);
+
+        //dd(2);
+        $user = User::where('id', 148)->first();
+
+        $class = BonusHelper::getClass($user->bonus_id);
+
+        $bonusObject = new $class($user);
+        DB::beginTransaction();
+        $act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+
+        dd($act);
+
         dd($request->user());
         dd(2);
 //        dd(User::where('id', 2481)->first());
@@ -119,11 +491,11 @@ class TestController extends Controller
             $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
         });
         dd(2);
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         dump($ip);
-        $iso_code = \geoip($ip)['iso_code'];
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
         dd($iso_code);
-        dd(GeneralHelper::visitorIpCloudFire());
+        dd(GeneralHelper::visitorIpCloudFlare());
         $amount = 5;
         $lastTransaction = Transaction::where('sum', 0)
             ->where(function ($query) {
@@ -687,7 +1059,7 @@ class TestController extends Controller
         $request->merge(['available' => 50]);
         $request->merge(['timeFreeRound' => strtotime("30 day", 0)]);
         dd(2);
-        //dd(GeneralHelper::visitorIpCloudFire());
+        //dd(GeneralHelper::visitorIpCloudFlare());
 //        dd(2);
 //        $user = User::where('email', 'tafuzijos@blackbird.ws')->first();
 //        dd($user);
@@ -755,7 +1127,7 @@ class TestController extends Controller
             }
         }
         dd(2);
-        dd(GeneralHelper::visitorIpCloudFire());
+        dd(GeneralHelper::visitorIpCloudFlare());
         $transactions = [385460];
         $setAmount = 60;
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
@@ -824,11 +1196,15 @@ class TestController extends Controller
 
         dd($getTransaction);
         dd(2);
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         //dump($ip);
         //$ip = '165.227.71.60';
         //to do this job edit session way
+
+        // !!! No more torann/geoip !!!
+        // Use GeneralHelper::visitorCountryCloudFlare
         $ip = geoip($ip);
+
         dd($ip);
         DB::enableQueryLog();
         $user = User::where('id', 1031)->first();

@@ -11,6 +11,8 @@
 |
 */
 
+use App\Jobs\IntercomCreateUpdateUser;
+
 Route::get('beta/test', function () {
     return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
 });
@@ -25,6 +27,7 @@ $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
+
 
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
@@ -126,11 +129,14 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     Route::group(['middleware' => ['auth']], function () use ($languages) {
 
+        Route::get('/intercom/update', ['as' => 'intercom', 'uses' => 'IntercomController@update']);
+
         Route::group([
             'prefix' => '{lang}',
             'where' => ['lang' => '(' . implode("|", $languages) . ')'],
             'middleware' => 'language.switch'
         ], function () {
+
             Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
 
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
@@ -353,6 +359,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     //testing
     Route::get('/test/test', ['as' => 'test.test', 'uses' => 'TestController@test']);
     Route::get('/test/test1', ['as' => 'test.test1', 'uses' => 'TestController@test1']);
+    Route::get('/test/phpinfo', ['as' => 'test.phpinfo', 'uses' => 'TestController@phpinfo']);
+    Route::get('/test/error', ['as' => 'test.error', 'uses' => 'TestController@error']);
+    Route::get('/test/http404', ['as' => 'test.http404', 'uses' => 'TestController@http404']);
 
     Route::get('/test/types/{category}', ['as' => 'test.test', 'uses' => 'TestController@testTypes']);
     Route::get('/test/game/{game}', ['as' => 'test.test', 'uses' => 'TestController@game']);

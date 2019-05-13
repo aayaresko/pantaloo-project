@@ -8,6 +8,7 @@ use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Intercom\IntercomClient;
 
 class IntercomCreateUpdateUser extends Job implements ShouldQueue
@@ -33,7 +34,9 @@ class IntercomCreateUpdateUser extends Job implements ShouldQueue
      */
     public function handle(Intercom $intercom)
     {
-        $intercom->create_or_update_user($this->user);
+        Log::info('Handle job update user "' . $this->user->email . '"');
+
+        $res = $intercom->create_or_update_user($this->user);
 
     }
 }

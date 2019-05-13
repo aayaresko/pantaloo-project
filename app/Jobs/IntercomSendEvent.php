@@ -7,6 +7,7 @@ use App\Providers\Intercom\Intercom;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class IntercomSendEvent extends Job implements ShouldQueue
 {
@@ -31,6 +32,8 @@ class IntercomSendEvent extends Job implements ShouldQueue
      */
     public function handle(Intercom $intercom)
     {
-        $intercom->send_event($this->data);
+        Log::info('Handle job send event "' . $this->data['event_name'] . '"');
+
+        $res = $intercom->send_event($this->data);
     }
 }

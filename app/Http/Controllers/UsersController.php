@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AccountStatusEvent;
 use DB;
 use App\Domain;
 use App\Jobs\SetUserCountry;
@@ -211,12 +212,18 @@ class UsersController extends Controller
                     'code' => 'block',
                     'value' => $block
                 ]);
+                $oldStatus = 'open';
             } else {
                 ModernExtraUsers::where('user_id', $user->id)
                     ->where('code', 'block')->update([
                         'value' => $block
                     ]);
+                $oldStatus = (int)$blockUser->value ? 'open' : 'block';
             }
+
+            $newStatus = $block ? 'block' : 'open';
+
+            event(new AccountStatusEvent($user, $oldStatus, $newStatus));
 
             if ($block === 1) {
                 //to do necessary update this code for all drivers etc

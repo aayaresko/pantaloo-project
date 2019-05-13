@@ -46,6 +46,7 @@ body {
   position: relative;
   line-height: 1.2357143;
   background-color: rgba(6,3,8,1);
+  margin: 0px;
 }
 
 /* line 9, ../scss/_tipography.scss */
@@ -1299,18 +1300,19 @@ html.cropped {
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
+  /*border: 1px solid #9350c2;*/
 
 }
 /* line 86, ../scss/_middle.scss */
 .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 100%;
+  height: 100%;
+  background: url("../media/images/mBIT.svg") no-repeat center;
+  background-size: contain;
   margin: 0 auto;
-  margin-top: 22px;
+  /*margin-top: 22px;*/
 }
 
 /* line 98, ../scss/_middle.scss */
@@ -4247,17 +4249,21 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
-  border: 1px solid #9350c2;
+  /*border: 1px solid #9350c2;*/
+  /*background: url("../media/images/mBIT.svg") no-repeat center;*/
+
 }
 /* line 2336, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .bitcoin-icon:after {
   content: '';
   display: block;
-  width: 53px;
-  height: 31px;
-  background: url("../media/images/mBIT.png") no-repeat center;
+  width: 100%;
+  height: 100%;
+  background: url("../media/images/mBIT.svg") no-repeat center;
+  -webkit-background-size: contain;
+  background-size: contain;
   margin: 0 auto;
-  margin-top: 22px;
+  /*margin-top: 22px;*/
 }
 /* line 2346, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance {
@@ -5046,11 +5052,81 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: 5px;
 }
 
+.notFoundWrapper{
+  min-height: 100vh;
+  background: url("../media/images/bg/content-bg-light.jpg") no-repeat center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageWrap{
+  text-align: center;
+}
+
+.pageWrap h3{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  font-family: 'MyriadPro-Bold', sans-serif;
+  margin-top: 0px;
+}
+
+.pageWrap p {
+  color: #b8a7cd;
+  font-family: "Myriad Pro";
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  font-family: 'MyriadPro-medium', sans-serif;
+}
+
+.btn-back{
+  display: inline-block;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHUAAAAsCAYAAABbhfeDAAAIKUlEQVR4nO2c728cRxnHv8/s3vnOl7jGyTmQ6BxdJVwwBoTiYCqMopo3aYTyBpH2baWKf4QX/AtQVbyBighVqtRKJkiVIzd+U9kCIYyBCMU4p1h1HAfH9tl3uzvPg2Z/3d7Z51yviX2h+1jjtfdmnp15PvvMzs0+M/TOjZvoRn7+hzfxzo2bfQDOARgGMARgEEABQK4rpYDqslwvCndYpxqAKoAtAI8BPASwDqB+VCFj/3ZiS3fWuPjrGzdHBRjtccOepHR6g/aHqdhy/m6YVj9vG+hXP/u9/0ffQzL/wv9N4YdhiqRa5JcBXAZw1pxSGvlMncq2ppLFOE9MRSUYVOJ7a1j2CJ3UdDBHKy5z8LMjj8nrJU+2lkOiLs9ZdCfqGagKyZYmbLhK1uqWVLYzvOIq2Q+zPAKw8PXt7L2n6frxn37qH2NPDWoggdGlGcj+MJ8B8FrY1SKzT2XbwbilaUwxSkk67GtJGjPQCTkEsjQbW6hRJvrs80CWRNnGuQCyJPPJsUC2OsmkgAEIDViCkSzTpYIHvOSoSt2S5V2bl7ayfi/++t0Bx3TJt0e3s5tP02lz2FodGYKSxhTUi3IFgnE/c41GMjWasDQmIBiQ+MERFG6C0MY7v8SQOxZLqNTvUSnnqVdPu7L4JKMXtzK+pd/852ln6Rs72bmjdDU8VZJgAkO7w3INQNmcyuxgSjmYEpYLuh08adwMSCF/YTFenNc0ndXWK3mP5tfyeh7A+D9OO4Vv7mRn2um3JfLUqAESNJyHcR2CErkYtKo0DRfTHBo26cmHddcp5GcrFujCS571RmaPiutZPbtvSXn5lHN9bDf74eFQwz849lQCnYPx0BIcKdIuXWVPJpONjDw5amAK+Xjg9ms1/bU6Fdaz3q1dW/D3U861b+0e9Nj4meqFFbaGcUUEZTgyiF1cFQ+TB8FIkzFSyMcHOcc0OezY8OB9tGdJ+W8F58q3q83PWJtDqmaglCniDLOYQRFxFdPkA22AQQJgCvnkIOeZJr/qWNV/97kfmGfsX/P1pe/u98Wj4qaBkg0yX1vAOzLFDk1HjW42Zgo5Op4k5AKr6RHH3ljNenfCr5vvR5/F3W+mSC+z4BzXMaLrmDI1iaFKUJMUcm9BPq3V1Fc8tbppMf6cq5uJIX+Cwo4GSOFMEdw9TEDjQlzhaIImhdxzkG3QhSHPmthQ+n7Iz4eqOJhAuMjAWaeGsuthwgsHTp4/Km5OOvz6Y7rrOLH4z+Q4hWWDvBKkOD/iPBpRGWlJOJivRRcn8oVtSNSzoa81X6SL46P46VCdEhg8SskyUf4gJerQJkUTNWJ+JEjwj43P4nwt1z1KCqwmzmqrbPj98vp7F5Hofv2JebeGcWYZSHoNx/dycDcpabkrU08+UU9WhIEhrcY/U3ol5Lhqul/z+mxUGHnXxViy4r5RKLxwCrlnIeehxrKMj2sko7/4ye8+sbUEk/TuPsqeRokShmo2RAq5VyGbueIz2irft7xl89LFdL/DPlRXShxdsAVMCrn3IfeLKrHAQB023e+QD9XD+bhQa4NSyD0PuU9wnpVfzyHjqSYExYz4isItRkwCSiH3NGSLqBgOegfNM9WPUtAsg5HyoPLUUJxC7n3IQoPhO/GCzZBcADUMQaHmBqWQXwzIIBQ4uG7uwFuaqPFR1FQK+cWALOHEixHT/ZoQxX4hqYpgIFLDKeQXCrIGqmH3W7M1i4k57ecg7nQgUoQmxSnkXofsmojEwFWrpvs1MItC2BCNkSaYqqEohdzbkGvCG2H0+JYZKD0Oqawx6FITPE4YI4Xc05D3IGvhQOmx8dSHIbCKeQOiYhXNxkgh9zbkLeEKB/88NAOldd/oGaygjooWE5zdKJxC7n3ILriyBm8lHCitm2nCur9mgzAKRcvsBZP6Yb0boaMp5J6FvE28vCdslmnc/c3cW3U7pGsW4oyqjCxpTa9GX21EGhdKIfcmZAa2H4peSnCMX5KblVWPyPYNvyga00hIBC2F3HuQt8GLFfHMC/JHv73z1ipaYpQWzEIclcGiZnoFEsQpHSYp5N6A7EIefCbeYjjqXYhQxdOEXFX3VIHXYQnIwrx49EY7qK2SQj4ZyJvC82vimaCz9R+p/L33YqgJQAzcNiur0CfzYCqCm7vhTiWF/Pwh77DM/gvOfKjqdnIxrB2tdvMXU1bVpu7XSybqGxmetVwqgGmyG7BJSSE/W8h7kE9XxZnVgUWXfqjymzoRdmhLy84E1p415+V0ASRlbeOW8owxvzjYpKSQu4e8D/n0gXi3ngib6d2VH1j5udYl63YL0+BkzZpxcvq6uQLb+Mj2UCWmrrriTiSF3BnkXZHZB+TO7gZAK99XuRnjoZEnRxIPlFolW7M+rPXpa77HZuSDjKc2FNMUHTEqflaSQm6GrIEHO8Lz/xF33o8GB1Yuq9yMzy7hyQ2oaEPVvEKvWzN7fd4V84yt2/qOrWnVZjWhmCai13THIV9WyCLYrkEW/wtvcRP+0gojS5dUfi4Kakh6cgNqe6a+9Nftud2sZwZPrzlK4Ch9P8PqLzbTuBIao3Cu+Djl/x2yJqk4IsvbpJceiR95j3BvpdvfU7l4UNTaXcdQn8LUl1OObdY+vr+T9fwtdxzFcBRWSOjjDFPZFiqR4DyBiiTxBlndSEc7mrRKj0LWnUAWmIgT2WJgwyVZq0EqT0SvOJD98LL+ljvfoZy/+Ekf0V1HQq9ffrcbO14M122km2M9Pzlyc6w/Lrzd9sLd7ni2emvh7dWrl9/9JN3Grq08123s2gqA/wE9G1Fl1aQi2QAAAABJRU5ErkJggg==') no-repeat center;
+  background-size: cover;
+  padding: 10px 28px 10px 40px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(28, 1, 44, 0.2);
+  margin: 20px 10px;
+  position: relative;
+  font-family: 'MyriadPro-Bold', sans-serif;
+  transition: opacity 0.2s linear;
+}
+
+.btn-back:hover{
+  opacity: 0.7;
+}
 
 
+.btn-back:before{
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 14px;
+  left: 25px;
+  width: 7px;
+  height: 11px;
+  background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALCAYAAABcUvyWAAAA80lEQVQoU2NkQAIe8pOTGRn/pzP9+5/JCBP3Vp6oExKl3+3kpiQ3tffEA7CEj0yftKq+1NSyJgdTJiZGqd+//15mdFGayS8vwzG7utNZjYePXR+k8P///4sYww1nrm2c4i0rLMpl+p+BgeHfv//zvrN/ymZ8cOH5YR4BLhuQyhdPPm08t/tRWlyj9SvGd8++bGFkZPAGSdy5+vpQd8meW68+sOQyvn37n4/l349lTMwQyQfX3x6pT918B+yqb9++Sf//zbSCkZkJbOTzhx/3wv3x8+dPHYb/TNuZmBhl/v77fxYuAXbmn//J/xn+pzIyM2YCAP2yYKjLnXbmAAAAAElFTkSuQmCC") no-repeat center;
+}
 
+.btn-back.notArrow{
+  padding: 10px 32px 10px 32px;
+}
 
-
+.btn-back.notArrow:before{
+  display: none;
+}
 
 
 
@@ -5360,21 +5436,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     order: 7;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
@@ -5935,17 +5997,19 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
-    border: 1px solid #9350c2;
+    /*border: 1px solid #9350c2;*/
   }
   /* line 508, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
     content: '';
     display: block;
-    width: 125px;
-    height: 73px;
-    background: url("../media/images/sprite.png") 0 -216px;
+    width: 100%;
+    height: 100%;
+    background: url("../media/images/mBIT.svg") no-repeat center;
     margin: 0 auto;
-    margin-top: 58px;
+    -webkit-background-size: contain;
+    background-size: contain;
+    /*margin-top: 58px;*/
   }
   /* line 518, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
@@ -6825,17 +6889,20 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
-    border: 1px solid #9350c2;
+    /*border: 1px solid #9350c2;*/
+
   }
   /* line 1246, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon:after {
     content: '';
     display: block;
-    width: 53px;
-    height: 31px;
-    background: url("../media/images/sprite.png") -57px 0;
+    width: 100%;
+    height: 100%;
+    background: url("../media/images/mBIT.svg") no-repeat center;
+    -webkit-background-size: contain;
+    background-size: contain;
     margin: 0 auto;
-    margin-top: 22px;
+   /* margin-top: 22px;*/
   }
   /* line 1257, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .games-listing {
@@ -6966,11 +7033,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 1362, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
-    width: 53px;
+    /*width: 53px;
     height: 31px;
     background-position: -57px 0;
     margin: 0 auto;
-    margin-top: 22px;
+    margin-top: 22px;*/
   }
   /* line 1370, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {

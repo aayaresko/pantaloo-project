@@ -2,6 +2,9 @@
 
 namespace Helpers;
 
+
+use Illuminate\Support\Facades\Request;
+
 class GeneralHelper
 {
     /**
@@ -54,17 +57,23 @@ class GeneralHelper
     }
 
     /**
-     * @return mixed
+     * Return user ip from CloudFlare headers if set
+     *
+     * @return string
      */
-    static public function visitorIpCloudFire()
+    static public function visitorIpCloudFlare()
     {
-        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
+        return isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : Request::ip();
+    }
 
-        return $ip;
+    /**
+     * Return country iso code from CloudFlare
+     *
+     * @return string
+     */
+    static public function visitorCountryCloudFlare()
+    {
+        return isset($_SERVER["HTTP_CF_IPCOUNTRY"]) ? $_SERVER["HTTP_CF_IPCOUNTRY"] : 'XX';
     }
 
 

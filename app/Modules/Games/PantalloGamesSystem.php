@@ -2,6 +2,7 @@
 
 namespace App\Modules\Games;
 
+use App\Events\BonusGameEvent;
 use DB;
 use Log;
 use App\User;
@@ -149,6 +150,9 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             DB::commit();
+
+            //event(new BonusGameEvent($user, 1));
+
         } catch (\Throwable $e) {
             DB::rollBack();
             dump($playerExists);
@@ -282,6 +286,7 @@ class PantalloGamesSystem implements GamesSystem
 
             $userFields = [
                 'users.id as id',
+                'users.email',
                 'users.balance as balance',
                 'users.bonus_balance as bonus_balance',
                 DB::raw('(users.balance + users.bonus_balance) as full_balance'),
@@ -1016,7 +1021,7 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
+        //DB::beginTransaction();
         try {
             $userName = $this->getUserName($user);
 
@@ -1037,38 +1042,49 @@ class PantalloGamesSystem implements GamesSystem
 
             $player = $playerResponse->response;
 
-            $validTo = new \DateTime();
-            $validTo->modify("+$timeFreeRound second");
+            $issetFreeRound = GamesPantalloFreeRounds::select(['id', 'free_round_id'])
+                ->where('user_id', $user->id)->first();
 
-            $freeRounds = $pantalloGames->addFreeRounds([
-                'playerids' => $player->id,
-                'gameids' => $gamesIds,
-                'available' => $available,
-                'validTo' => $validTo->format('Y-m-d')
-            ], true);
+            if (is_null($issetFreeRound)) {
 
-            $freeRoundsResponse = json_decode($freeRounds->response);
+                $validTo = new \DateTime();
+                $validTo->modify("+$timeFreeRound second");
 
-            $freeRoundsId = $freeRoundsResponse->freeround_id;
-            $freeRoundCreated = $freeRoundsResponse->created;
+                $freeRounds = $pantalloGames->addFreeRounds([
+                    'playerids' => $player->id,
+                    'gameids' => $gamesIds,
+                    'available' => $available,
+                    'validTo' => $validTo->format('Y-m-d')
+                ], true);
 
-            GamesPantalloFreeRounds::create([
-                'user_id' => $user->id,
-                'round' => $available,
-                'valid_to' => $validTo,
-                'created' => $freeRoundCreated,
-                'free_round_id' => $freeRoundsId
-            ]);
+                $freeRoundsResponse = json_decode($freeRounds->response);
 
+                $freeRoundsId = $freeRoundsResponse->freeround_id;
+                $freeRoundCreated = $freeRoundsResponse->created;
+
+                DB::connection('logs')->table('games_pantallo_free_rounds')->insert([
+                    'user_id' => $user->id,
+                    'round' => $available,
+                    'valid_to' => $validTo,
+                    'created' => $freeRoundCreated,
+                    'free_round_id' => $freeRoundsId,
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
+            } else {
+                dd('problem');
+                $freeRoundsId = $issetFreeRound->free_round_id;
+            }
+            
             $response = [
                 'success' => true,
                 'freeRoundId' => $freeRoundsId
             ];
 
-            DB::commit();
+            //DB::commit();
 
         } catch (\Throwable $e) {
-            DB::rollBack();
+            //DB::rollBack();
             //rollback free rounds
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();

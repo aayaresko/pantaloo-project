@@ -2,6 +2,10 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusDepositEvent;
+use App\Events\CloseBonusEvent;
+use App\Events\DepositWagerDoneEvent;
+use App\Events\OpenBonusEvent;
 use DB;
 use App\User;
 use App\Bonus;
@@ -19,7 +23,6 @@ use App\Models\Pantallo\GamesPantalloSessionGame;
 class Bonus_100 extends \App\Bonuses\Bonus
 {
     public static $id = 4;
-    public static $maxAmount = 1000;
 
     protected $percent = 55;
     protected $minSum = 3;
@@ -28,6 +31,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
     protected $playFactor = 50;
     protected $expireDays = 30;
     protected $timeActiveBonusDays = 30;
+    protected $maxAmount = 2000;
 
     const SPECIAL = 1313;
 
@@ -45,9 +49,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
         $currentDate = new Carbon();
 
-        if ($allowedDate < $currentDate) {
-            return false;
-        }
+//        if ($allowedDate < $currentDate) {
+//            return false;
+//        }
         //hide if user
 
         //hide if deposit count
@@ -88,10 +92,10 @@ class Bonus_100 extends \App\Bonuses\Bonus
 //                }
 //            }
 
-            if ($allowedDate < $currentDate) {
-                throw new \Exception('You cannot activate this bonus in accordance with' .
-                    ' clause 5.4 of the bonus terms & conditions.');
-            }
+//            if ($allowedDate < $currentDate) {
+//                throw new \Exception('You cannot activate this bonus in accordance with' .
+//                    ' clause 1.6 of the bonus terms & conditions.');
+//            }
 
             if ($this->active_bonus) {
                 if ($this->active_bonus->bonus_id != static::$id) {
@@ -102,13 +106,18 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 }
             }
 
+            if ((int)$user->email_confirmed === 0) {
+                throw new \Exception('To activate this bonus, you need to confirm your email address first.
+                 Did not receive the activation mail? You can resend it in the Settings section of your profile.');
+            }
+
             $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
                 ->where('type_id', 1)
                 ->count();
 
             if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
                 throw new \Exception('You cannot activate this bonus in accordance with ' .
-                    'clause 2.6; 3.6; 4.6 of the bonus terms & conditions.');
+                    'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
             }
 
 
@@ -116,7 +125,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('This bonus is already used.');
             }
 
-            $date = $user->created_at;
+            //$date = $user->created_at;
+            $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
             $bonusUser = UserBonus::create([
@@ -136,6 +146,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
             User::where('id', $user->id)->update([
                 'bonus_id' => static::$id
             ]);
+
+            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent .'%'));
 
             $response = [
                 'success' => true,
@@ -210,8 +222,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 //TO DO round
                 $bonusSum = GeneralHelper::formatAmount($deposit * ($this->percent / 100));
                 //check limit
-                if ($bonusSum > self::$maxAmount) {
-                    $bonusSum = self::$maxAmount;
+
+                if ($bonusSum > $this->maxAmount) {
+                    $bonusSum = $this->maxAmount;
                 }
 
                 $transaction = new Transaction();
@@ -233,6 +246,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 $dataUpdateBonus['activated'] = 1;
 
                 UserBonus::where('id', $activeBonus->id)->update($dataUpdateBonus);
+
+                event(new BonusDepositEvent($user, $bonusSum));
 
                 $response = [
                     'success' => true,
@@ -336,6 +351,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 ]);
 
                 $activeBonus->delete();
+
+                event(new CloseBonusEvent($user, 'deposit bonus ' . $this->percent . '%'));
+                event(new DepositWagerDoneEvent($user));
 
                 $response = [
                     'success' => true,
