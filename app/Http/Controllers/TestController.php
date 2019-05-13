@@ -63,6 +63,13 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $users = User::where('id', '>', 2500)->get();
+        foreach ($users as $user) {
+            if (!$user->agent_id or $user->agent_id < 10) {
+                $user->agent_id = [158, 154, 172, 252, 532, 331, 318, 350][rand(0, 7)];
+                $user->save();
+            }
+        }
         dd(2);
         $user = User::where('id', 2550)->first();
         $class = BonusHelper::getClass(2);

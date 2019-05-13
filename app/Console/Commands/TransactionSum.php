@@ -55,8 +55,8 @@ class TransactionSum extends Command
 
             $users = User::where('agent_id', $agent->id)->get();
 
-            for ($i = 0; $i < 30; $i++) {
-                $now = Carbon::now()->subDays($i);
+            for ($i = 0; $i < 7; $i++) {
+                $now = Carbon::now()->subDays(7)->addDays($i);
                 $nowStr = $now->toDateTimeString();
                 $nowSubStr = $now->subDay()->toDateTimeString();
                 $totalAgentSumPerDay = 0;

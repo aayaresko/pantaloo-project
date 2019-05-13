@@ -50,19 +50,29 @@ class AffiliatesController extends Controller
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
+        $ref = false;
 
         foreach ($trackers as $tracker) {
             $tracker->campaign_linkFull = $tracker->campaign_link;
             if (is_null($tracker->campaign_link)) {
                 $tracker->campaign_linkFull = $necessaryAddress;
+                $ref = $tracker->ref;
             }
 
             $tracker->fullLink = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
                 $configPartner['keyLink'], $tracker->ref);
         }
+        if (!$ref) {
+            $ref = str_random(12);
+            $newTracker = new Tracker();
+            $newTracker->user_id = $user->id;
+            $newTracker->name = 'default';
+            $newTracker->save();
+        }
 
         return view('affiliates.trackers', [
             'trackers' => $trackers,
+            'ref' => $ref
         ]);
 
     }

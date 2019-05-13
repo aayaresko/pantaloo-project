@@ -145,6 +145,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <h4>Link for partners(affiliates): https://partner.casinobit.io/?ref={{$ref}}</h4>
+                </div>
             </div>
         </div>
     </div>
