@@ -2,6 +2,7 @@
 
 namespace Helpers;
 
+use DB;
 use Log;
 use App\UserBonus;
 
@@ -11,34 +12,21 @@ use App\UserBonus;
  */
 class BonusHelper
 {
-
     /**
-     * @param $user
-     * @param int $mode
-     * @return bool
+     * @param $id
+     * @return mixed
+     * @throws \Exception
      */
-    static public function bonusCheck($user, $mode = 0)
+    static public function getClass($id)
     {
-        $notActiveBonus = UserBonus::where('user_id', $user->id)->first();
+        $bonusClasses = config('bonus.classes');
 
-        if (!is_null($notActiveBonus)) {
-            $class = $notActiveBonus->bonus->getClass();
-            $bonus_obj = new $class($user);
-            try {
-                $bonus_obj->realActivation();
-                if ($mode === 1) {
-                    $bonus_obj->close();
-                }
-            } catch (\Exception $e) {
-                Log::alert([
-                    'code' => 'bonusMessage',
-                    'id' => $notActiveBonus->id,
-                    'error' => $e->getMessage()
-                ]);
-                return false;
-            }
+        foreach ($bonusClasses as $class) {
+            if ($class::$id == $id) {
+                return $class;
+            };
         }
-        return true;
-    }
 
+        return false;
+    }
 }

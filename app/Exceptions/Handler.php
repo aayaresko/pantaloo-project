@@ -33,6 +33,16 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        if ($this->isHttpException($e)) {
+            if ($e->getStatusCode() == 404) {
+                return response()->view('errors.' . '404', [], 404);
+            }
+        }
+
+        if (function_exists('appoptics_log_exception')) {
+            appoptics_log_exception('app', $e);
+        }
+        
         parent::report($e);
     }
 

@@ -240,9 +240,8 @@ function blockFilter() {
 
 
 $(document).ready(function(){
+
 	
-
-
 
 function getCurrentScreen(){
 
@@ -273,7 +272,11 @@ getCurrentScreen()
 
 $(window).on('mousewheel', getCurrentScreen);
 
+		
+
 });
+
+
 
 // let pageCount = location.href;
 

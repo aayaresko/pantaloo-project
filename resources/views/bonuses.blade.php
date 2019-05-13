@@ -12,6 +12,7 @@
 
             <div class="container">
                 <div class="row">
+
                     <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus1 clearfix">
 

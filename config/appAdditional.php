@@ -138,7 +138,28 @@ return [
         '213.169.83.245'
     ],
 
+    'depositNotifications' => [
+        1 => 'usual bonus notifications',
+        2 => 'free spins bonus notifications',
+    ],
+
     'emailsShowAllGames' => [
         'tuzomi@mail-list.top'
-    ]
+    ],
+
+
+    'banedBonusesCountries' => [
+        'AF', 'AL', 'DZ', 'AO', 'AT', 'CS', 'BH', 'BD', 'BY', 'BJ', 'BO', 'BA', 'BW',
+        'BF', 'BG', 'BI', 'CM', 'CV', 'CF', 'TD', 'KM', 'CG', 'CD', 'HR', 'CY', 'CZ',
+        'CI', 'DK', 'DJ', 'EG', 'GQ', 'ER', 'ET', 'FI', 'FR', 'GA', 'GM', 'GE', 'GH',
+        'GR', 'GN', 'GW', 'GY', 'HT', 'HN', 'HU', 'IN', 'ID', 'IR', 'IQ', 'JO', 'KZ',
+        'KE', 'KW', 'LV', 'LB', 'LS', 'LR', 'LT', 'MK', 'MG', 'MW', 'MY', 'ML', 'MR',
+        'MU', 'MD', 'MN', 'MA', 'MZ', 'NA', 'NI', 'NP', 'NE', 'NG', 'KP', 'OM', 'PK',
+        'PH', 'PL', 'PT', 'RO', 'RU', 'RW', 'ST', 'SN', 'SC', 'SL', 'SK', 'SI', 'SO',
+        'SD', 'CH', 'SY', 'TH', 'TG', 'TN', 'UG', 'UA', 'AE', 'TZ', 'VN', 'YE', 'ZM',
+        'ZW', 'XX'],
+    
+    'ipQualityScoreUrl' => 'https://www.ipqualityscore.com/api/json/ip',
+
+    'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
 ];

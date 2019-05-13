@@ -12,6 +12,7 @@ class EncryptCookies extends BaseEncrypter
      * @var array
      */
     protected $except = [
-        'laravel_session'
+        'laravel_session',
+        'betatest'
     ];
 }

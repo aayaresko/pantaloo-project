@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Bitcoin;
 
+use App\Events\DepositEvent;
 use DB;
 use Log;
+use App\User;
 use Validator;
 use App\Transaction;
+use Helpers\BonusHelper;
 use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Modules\Others\DebugGame;
+use App\Models\SystemNotification;
 use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
@@ -23,7 +27,6 @@ class TransactionController extends Controller
      */
     public function walletNotify(Request $request)
     {
-        dd(2);
         $date = new \DateTime();
 
         $debugGame = new DebugGame();
@@ -43,7 +46,7 @@ class TransactionController extends Controller
         try {
             //validate
             //add balidate ip
-            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipSender = GeneralHelper::visitorIpCloudFlare();
             $ipExpected = config('app.bitcoinHost');
             if ($ipSender != $ipExpected) {
                 throw new \Exception('Not allowed IP');
@@ -54,7 +57,6 @@ class TransactionController extends Controller
             ]);
 
             if ($validator->fails()) {
-                ;
                 $error = $validator->errors()->first();
                 throw new \Exception($error);
             }
@@ -63,18 +65,23 @@ class TransactionController extends Controller
             $txid = $request->txid;
             $service = new Service();
 
-            $response = [
-                'success' => true,
-                'message' => ['TXID:' . $txid]
-            ];
-
             //get transaction
             $rawTransaction = $service->getTransaction($txid);
+
             if (!$rawTransaction) {
                 throw new \Exception('Transactions is not found in node');
             }
 
-            $user = User::where('bitcoin_address', $rawTransaction['address'])->first();
+            $transactionParticipants = [];
+            foreach ($rawTransaction['details'] as $detail) {
+
+                if ($detail['category'] == 'receive') {
+                    array_push($transactionParticipants, $detail['address']);
+                }
+
+            }
+
+            $user = User::whereIn('bitcoin_address', $transactionParticipants)->first();
 
             if (is_null($user)) {
                 throw new \Exception('User with current address is not found');
@@ -83,37 +90,76 @@ class TransactionController extends Controller
 
             $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
 
-            if ($transactionSystem) {
+            if (!is_null($transactionSystem)) {
                 //update
                 //check must if transaction has 1 confirmation
                 //confirmations must be 1
-                Transaction::where('id', $transactionSystem->id)->create([
+                Transaction::where('id', $transactionSystem->id)->update([
                     'confirmations' => $rawTransaction['confirmations']
                 ]);
 
-                throw new \Exception('Transaction exists. And Updated');
+                $response = [
+                    'success' => true,
+                    'message' => ['Transaction exists. And Updated']
+                ];
+            } else {
+                $amountTransaction = $rawTransaction['amount'] * 1000;
+
+                $transaction = Transaction::create([
+                    'sum' => $amountTransaction,
+                    'bonus_sum' => 0,
+                    'type' => 3,
+                    'user_id' => $user->id,
+                    'ext_id' => $rawTransaction['txid'],
+                    'confirmations' => $rawTransaction['confirmations']
+                ]);
+
+                $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
+
+                User::where('id', $user->id)->update([
+                    'balance' => DB::raw("balance+{$amountTransactionFormat}")
+                ]);
+
+                $depositNotifications = 1;
+                if (!is_null($user->bonus_id)) {
+                    $class = BonusHelper::getClass($user->bonus_id);
+                    $bonusObject = new $class($user);
+                    if ((int)$user->bonus_id === 1) {
+                        $depositNotifications = 2;
+                        //to do check status
+                        $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
+//                        if ($setDeposit['success'] === false) {
+//                            throw new \Exception($setDeposit['message']);
+//                        }
+                    } else {
+                        //check this
+                        //real active if deposit got
+                        //to do check status
+                        $bonusObject->realActivation(['amount' => $amountTransactionFormat]);
+                    }
+                }
+
+                //to do include notifications
+                SystemNotification::create([
+                    'user_id' => $user->id,
+                    //to do config - mean deposit transactions
+                    'type_id' => $depositNotifications,
+                    'value' => $amountTransaction,
+                    'extra' => json_encode([
+                        'transactionId' => $transaction->id,
+                        'depositAmount' => $amountTransaction
+                    ])
+                ]);
+
+                event(new DepositEvent($user, $amountTransaction));
+
+                $response = [
+                    'success' => true,
+                    'message' => ['TXID:' . $txid, "TRANSACTION:{$transaction->id}"]
+                ];
             }
-
-            $amountTransaction = $rawTransaction['amount'] * 1000;
-
-            $transaction = Transaction::create([
-                'sum' => $amountTransaction,
-                'bonus_sum' => 0,
-                'type' => 3,
-                'user_id' => $user->id,
-                'ext_id' => $rawTransaction['txid'],
-                'confirmations' => $rawTransaction['confirmations']
-            ]);
-            array_push($response['message'], "TRANSACTION:{$transaction->id}");
-
-            $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
-
-            User::where('id', $user->id)->update([
-                'balance' => DB::raw("balance+{$amountTransactionFormat}")
-            ]);
-
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
@@ -145,12 +191,11 @@ class TransactionController extends Controller
      */
     public function blockNotify(Request $request)
     {
-        dd(2);
         $date = new \DateTime();
 
         $debugGame = new DebugGame();
         $debugGame->start();
-        $countTransaction = 500;
+        $countTransaction = 1000;
 
         $userId = 0;//system user
 
@@ -165,7 +210,7 @@ class TransactionController extends Controller
         try {
             //validate
             //add balidate ip
-            $ipSender = GeneralHelper::visitorIpCloudFire();
+            $ipSender = GeneralHelper::visitorIpCloudFlare();
             $ipExpected = config('app.bitcoinHost');
             if ($ipSender != $ipExpected) {
                 throw new \Exception('Not allowed IP');
@@ -199,6 +244,8 @@ class TransactionController extends Controller
 
             Transaction::where('type', 3)
                 ->where('confirmations', '=', $minConfirmBtc - 1)
+                ->where('ext_id', '<>', '')
+                ->where('ext_id', '<>', null)
                 ->select(['id', 'ext_id'])
                 ->chunk($countTransaction, function ($transactions) use ($service, &$params) {
 
@@ -228,7 +275,7 @@ class TransactionController extends Controller
                 ]
             )->update(['confirmations' => DB::raw('confirmations + 1')]);
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
 

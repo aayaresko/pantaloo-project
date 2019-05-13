@@ -23,7 +23,7 @@
             @if(Auth::guest())
             <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                 <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -34,9 +34,7 @@
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.welcome') }}</span>
                 <h1 class="game-name word-split">{{ trans('casino.casinobit') }}</h1>
-                <div class="descr-block">
-                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
-                </div>
+                
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
@@ -50,7 +48,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -61,9 +59,7 @@
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
                 <h1 class="game-name word-split">{{ trans('casino.blackjack') }}</h1>
-                <div class="descr-block">
-                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
-                </div>
+                
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_id' => 10002, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
                 </div>
@@ -77,7 +73,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -88,9 +84,7 @@
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
                 <h1 class="game-name word-split">{{ trans('casino.roulette') }}</h1>
-                <div class="descr-block">
-                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
-                </div>
+                
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_id' => 10003, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
@@ -104,7 +98,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">200%</span>
+				<span class="number-value">110%</span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -115,9 +109,7 @@
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
                 <h1 class="game-name word-split">{{ trans('casino.slots') }}</h1>
-                <div class="descr-block">
-                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
-                </div>
+               
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_id' => 10001, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
@@ -130,9 +122,7 @@
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.welcome') }}</span>
                 <h1 class="game-name word-split">{{ trans('casino.casinobit') }} </h1>
-                <div class="descr-block">
-                    <span class="descr">{!! trans('casino.video_live_games') !!}</span>
-                </div>
+                
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>

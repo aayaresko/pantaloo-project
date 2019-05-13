@@ -30,7 +30,7 @@ return [
         ]
     ],
 
-    'prefixName' => 'CBit',
+    'prefixName' => env('PANTALLO_PREFIX_NAME', 'CBit'),
 
     'usePrefixAfter' => '2019-04-25 00:00:00'
 ];

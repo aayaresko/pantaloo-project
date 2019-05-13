@@ -1,0 +1,166 @@
+@font-face {
+font-family: "MyriadProCondRegular";
+src: url("../fonts/MyriadProCondRegular/MyriadProCondRegular.eot");
+src: url("../fonts/MyriadProCondRegular/MyriadProCondRegular.eot?#iefix")format("embedded-opentype"),
+url("../fonts/MyriadProCondRegular/MyriadProCondRegular.woff") format("woff"),
+url("../fonts/MyriadProCondRegular/MyriadProCondRegular.ttf") format("truetype");
+font-style: normal;
+font-weight: normal;
+}
+@font-face {
+font-family: "MyriadProCondBold";
+src: url("../fonts/MyriadProCondBold/MyriadProCondBold.eot");
+src: url("../fonts/MyriadProCondBold/MyriadProCondBold.eot?#iefix")format("embedded-opentype"),
+url("../fonts/MyriadProCondBold/MyriadProCondBold.woff") format("woff"),
+url("../fonts/MyriadProCondBold/MyriadProCondBold.ttf") format("truetype");
+font-style: normal;
+font-weight: normal;
+}
+@font-face {
+font-family: "MyriadProCondItalic";
+src: url("../fonts/MyriadProCondItalic/MyriadProCondItalic.eot");
+src: url("../fonts/MyriadProCondItalic/MyriadProCondItalic.eot?#iefix")format("embedded-opentype"),
+url("../fonts/MyriadProCondItalic/MyriadProCondItalic.woff") format("woff"),
+url("../fonts/MyriadProCondItalic/MyriadProCondItalic.ttf") format("truetype");
+font-style: normal;
+font-weight: normal;
+}
+@font-face {
+font-family: "MyriadProCondBoldItalic";
+src: url("../fonts/MyriadProCondBoldItalic/MyriadProCondBoldItalic.eot");
+src: url("../fonts/MyriadProCondBoldItalic/MyriadProCondBoldItalic.eot?#iefix")format("embedded-opentype"),
+url("../fonts/MyriadProCondBoldItalic/MyriadProCondBoldItalic.woff") format("woff"),
+url("../fonts/MyriadProCondBoldItalic/MyriadProCondBoldItalic.ttf") format("truetype");
+font-style: normal;
+font-weight: normal;
+}
+*{
+margin: 0px;
+padding: 0px;
+}
+img{
+max-width: 100%;
+}
+.lanMainWrapper{
+background: url(../img/bg.jpg) no-repeat center;
+-webkit-background-size: cover;
+background-size: cover;
+}
+.lanHeader{
+text-align: center;
+padding: 35px 20px;
+}
+.lanContent{
+min-height: calc(100vh - 163px - 95px);
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+max-width: 915px;
+margin: auto;
+padding: 0px 20px;
+
+}
+.lanContent h1{
+font-size: 65px;
+color: #fff;
+text-transform: uppercase;
+margin-bottom: 35px;
+font-family: "MyriadProCondBold", sans-serif;
+letter-spacing: calc(100vw / 35);
+text-align: center;
+}
+.lanContent p{
+font-size: 17px;
+color: #c1c1c1;
+font-family: "MyriadProCondRegular", sans-serif;
+max-width: 480px;
+letter-spacing: 0.5px;
+}
+.footerLinks{
+list-style: none;
+display: -webkit-flex;
+display: -moz-flex;
+display: -ms-flex;
+display: -o-flex;
+display: flex;
+justify-content: center;
+align-items: flex-end;
+flex-wrap: wrap;
+padding-bottom: 20px;
+min-height: 75px;
+background: linear-gradient(to top, rgba(16,16,16,1) 0%, rgba(16,16,16,1) 33%, rgba(16,16,16,0) 100%);
+}
+.footerLinks li{
+margin: 0px 10px;
+color: #726577;
+font-family: "MyriadProCondRegular", sans-serif;
+font-size: 13px;
+letter-spacing: 1px;
+text-transform: uppercase;
+text-align: center;
+}
+.footerLinks a{
+font-size: 13px;
+color: #726577;
+text-decoration: none;
+transition: color 0.3s ease;
+}
+.footerLinks a:hover{
+color: #fff;
+}
+#uls, #reg-terms {
+background-color: #fff;
+max-width: 900px;
+margin: 0 auto;
+color: #000;
+padding: 50px;
+position: relative;
+border-radius: 10px;
+max-height: 900px;
+overflow-x: auto;
+font-size: 18px;
+font-family: "MyriadProCondRegular", sans-serif;
+}
+#uls h3, #reg-terms h3 {
+text-transform: uppercase;
+font-size: 48px;
+margin-top: 0;
+line-height: 46px;
+margin-bottom: 25px;
+}
+.mfp-content .mfp-close {
+width: 33px;
+height: 33px;
+line-height: 33px;
+position: absolute;
+right: 50px;
+top: 50px;
+text-decoration: none;
+text-align: center;
+opacity: 0.65;
+padding: 0 0 18px 10px;
+color: #FFF;
+font-style: normal;
+font-size: 28px;
+padding: 0px;
+color: #5924a2;
+border: 1px solid #5924a2;
+border-radius: 50%;
+}
+.hidden {
+display: none!important;
+}
+
+@media(max-width: 768px){
+	#uls h3, #reg-terms h3{
+		font-size: 30px;
+		padding-right: 35px;
+	}
+	#uls, #reg-terms{
+		padding: 50px 10px;
+	}
+	.mfp-content .mfp-close {
+		right: 10px;
+	}
+}

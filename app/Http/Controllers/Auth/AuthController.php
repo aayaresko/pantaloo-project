@@ -25,6 +25,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 
+
 class AuthController extends Controller
 {
     /*
@@ -74,55 +75,98 @@ class AuthController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
+//             Registration are temporary disabled. Sorry for the inconvenience.']);
+//        }
+
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        return redirect($this->redirectPath());
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
      * @param array $data
      * @return User
      */
-    //protected function create(array $data)
-    protected function create(Request $request)
+//    protected function create(array $data)
+    protected function create(array $data)
+//    protected function create(Request $request)
     {
+//        //temporary
+//        $data = $request->toArray();
+
+//        $errors = [];
+//        $validator = Validator::make($data, [
+//            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+//            'agree' => 'accepted'
+//        ]);
+//
+//        // Check if mail provider is not temporary mail services
+//        $validator->after(function ($validator) use ($data) {
+//            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+//                $validator->errors()->add('email', 'Try use other mail service!');
+//            }
+//        });
+//
+//        if ($validator->fails()) {
+//            $validatorErrors = $validator->errors()->toArray();
+//            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+//                array_push($errors, $item);
+//            });
+//
+//            return redirect()->back()->withErrors($errors);
+//        }
+//
+//        $email = $data['email'];
+//        $currentDate = new \DateTime();
+//
+//        DB::table('new_affiliates')->insert([
+//            [
+//                'email' => $email,
+//                'type_id' => 1,
+//                'created_at' => $currentDate,
+//                'updated_at' => $currentDate
+//            ],
+//        ]);
+//
+//        return redirect()->back()->with('popup',
+//            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
+
         //temporary
-        $data = $request->toArray();
-        $errors = [];
-        $validator = Validator::make($data, [
-            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
-            'agree' => 'accepted'
-        ]);
 
-        // Check if mail provider is not temporary mail services
-        $validator->after(function ($validator) use ($data) {
-            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
-                $validator->errors()->add('email', 'Try use other mail service!');
-            }
-        });
-
-        if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
-
-            return redirect()->back()->withErrors($errors);
-        }
-
-        $email = $data['email'];
-        $currentDate = new \DateTime();
-
-        DB::table('new_affiliates')->insert([
-            [
-                'email' => $email,
-                'type_id' => 1,
-                'created_at' => $currentDate,
-                'updated_at' => $currentDate
-            ],
-        ]);
-
-        return redirect()->back()->with('popup',
-            ['Success', 'Register a CasinoBit', 'Thank you for understanding! We will contact you!']);
-
-
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Registration is closed']);
+//        }
+//
+//        $validator =  Validator::make($data, [
+//            'name' => 'required|max:255',
+//            'email' => 'required|email|max:255|unique:users',
+//            'password' => 'required|min:6|confirmed',
+//            'agree' => 'required',
+//        ]);
+//
+//        if ($validator->fails()) {
+//            $errors = $validator->errors();
+//            return redirect()->back()->withErrors($errors);
+//        }
+        //start
         $service = new Service();
         $address = $service->getNewAddress('common');
 

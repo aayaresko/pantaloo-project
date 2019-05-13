@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bonus;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use App\ModernExtraUsers;
 use DB;
 use Auth;
 use Response;
+use App\Models\SystemNotification;
 use Log;
 use App\Bitcoin\Service;
 use App\Transaction;
@@ -21,8 +23,10 @@ use Helpers\GeneralHelper;
 use App\Models\GamesType;
 use App\Models\GamesList;
 use App\Models\GamesListExtra;
+use App\Models\LastActionGame;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
+//use App\Models\SystemNotification;
 use GuzzleHttp\Client;
 use Cookie;
 use App\Jobs\BonusHandler;
@@ -30,6 +34,7 @@ use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
+use Helpers\BonusHelper;
 use App\Modules\Games\PantalloGamesSystem;
 
 
@@ -42,8 +47,783 @@ class TestController extends Controller
         dd(2);
     }
 
+    public function phpinfo(Request $request){
+        phpinfo();
+        exit();
+    }
+
+    public function error(Request $request){
+        throw new Exception("Custom error!");
+        return 1;
+    }
+
+    public function http404(Request $request){
+        return view('errors.404');
+    }
+
     public function test(Request $request)
     {
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', 13333)->first();
+        dd($issetFreeRound);
+
+        $date = new \DateTime();
+
+        $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                    'user_id' => 13333,
+                    'round' => 50,
+                    'valid_to' => $date,
+                    'created' => 0,//fake
+                    'free_round_id' => time(),//fake
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
+
+        dd($rawId);
+        $a = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', $user->id)->first();
+        dd($a);
+        $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+        dump($ipCurrent);
+        $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+        $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+        $client = new Client(['timeout' => 5]);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+        $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+        if (isset($responseIpQualityJson['success'])) {
+            if ($responseIpQualityJson['success'] == true) {
+                if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                    throw new \Exception('Free spins are not available while using VPN/Proxy');
+                }
+            }
+        }
+        dd(2222);
+
+        $client = new Client();
+
+        $res = $client->request('GET', 'https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd(json_decode($res->getBody()->getContents()));
+        dd($response->send());
+        dd(file_get_contents('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146'));
+        $client = new Client();
+        $response = $client->get('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd($response);
+        dd(2);
+        $user = User::where('id', 2550)->first();
+        $class = BonusHelper::getClass(2);
+        //dd($class);
+        $bonusObject = new $class($user);
+        //dd($bonusObject);
+        DB::beginTransaction();
+        //$act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        $act = $bonusObject->realActivation(['amount' => 3]);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+        dd($act);
+        dd(2);
+        $userOffice = [
+            2532,
+2528,
+2520,
+2518,
+2516,
+2515,
+2514,
+2512,
+2501,
+2500,
+2499,
+2494,
+2493,
+2491,
+2489,
+2488,
+2486,
+2484,
+2483,
+2480,
+2479,
+2477,
+2476,
+2474,
+2473,
+2472,
+2471,
+2470,
+2468,
+2467,
+2466,
+2465,
+2456,
+2451,
+2446,
+2445,
+2444,
+2443,
+2442,
+2441,
+2438,
+2399,
+1162,
+1055,
+1041,
+1031,
+1024,
+1021,
+1011,
+1007,
+998,
+975,
+971,
+456,
+442,
+432,
+427,
+402,
+379,
+376,
+372,
+370,
+368,
+366,
+365,
+345,
+332,
+328,
+323,
+318,
+308,
+307,
+306,
+44,
+2411,
+348,
+349,
+350,
+351,
+352,
+353,
+354,
+359,
+361,
+362,
+363,
+364,
+367,
+369,
+371,
+373,
+374,
+375,
+377,
+378,
+380,
+381,
+382,
+383,
+384,
+385,
+386,
+387,
+330,
+319,
+2426,
+2428,
+389,
+390,
+391,
+394,
+396,
+398,
+399,
+405,
+338,
+340,
+341,
+342,
+343,
+344,
+346,
+256,
+257,
+258,
+259,
+260,
+261,
+264,
+275,
+276,
+277,
+278,
+281,
+282,
+283,
+284,
+285,
+286,
+287,
+288,
+289,
+290,
+292,
+293,
+294,
+295,
+296,
+299,
+162,
+167,
+169,
+214,
+215,
+219,
+220,
+222,
+224,
+240,
+241,
+242,
+243,
+244,
+247,
+248,
+249,
+250,
+251,
+252,
+253,
+254,
+38,
+39,
+40,
+41,
+42,
+64,
+85, 136, 146, 956
+        ];
+        $startDate = '2019-04-01 00:00:00';
+        $endDate = '2019-04-30 00:00:00';
+
+
+        echo '<h2>TOTAL</h2>';
+        $select1 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
+            ->where('created_at', '>', $startDate)
+            ->where('created_at', '<', $endDate);
+
+        dump('withdraw 4');
+        $a1 = clone $select1;
+        dump($a1->where('type', 4)->first()->toArray());
+
+        dump('deposit 3');
+        $a2 = clone $select1;
+        dump($a2->where('type', 3)->first()->toArray());
+
+        dump('debit 1');
+        $a3 = clone $select1;
+        dump($a3->where('type', 1)->first()->toArray());
+
+        dump('credit 2');
+        $a4 = clone $select1;
+        dump($a4->where('type', 2)->first()->toArray());
+
+        dump('free 9');
+        $a4 = clone $select1;
+        dump($a4->where('type', 9)->first()->toArray());
+
+        dump('free 10');
+        $a5 = clone $select1;
+        dump($a5->where('type', 10)->first()->toArray());
+
+        echo '<br>';
+        echo '<h2>WITHOUT USERS</h2>';
+
+        $select2 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
+            ->whereNotIn('user_id', $userOffice)
+            ->where('created_at', '>', $startDate)
+            ->where('created_at', '<', $endDate);
+
+        dump('withdraw 4');
+        $a12 = clone $select2;
+        dump($a12->where('type', 4)->first()->toArray());
+
+        dump('deposit 3');
+        $a22 = clone $select2;
+        dump($a22->where('type', 3)->first()->toArray());
+
+        dump('debit 1');
+        $a32 = clone $select2;
+        dump($a32->where('type', 1)->first()->toArray());
+
+        dump('credit 2');
+        $a42 = clone $select2;
+        dump($a42->where('type', 2)->first()->toArray());
+
+        dump('free 9');
+        $a42 = clone $select2;
+        dump($a42->where('type', 9)->first()->toArray());
+
+        dump('free 10');
+        $a52 = clone $select2;
+        dump($a52->where('type', 10)->first()->toArray());
+        dd('OK');
+        //total
+        //withdraw 4
+        //    "sum_sum" => "-1711.37109"
+        //        "sum_bonus_sum" => "0.00000"
+        //deposit 3
+        //      "sum_sum" => "107072092.43374"
+        //        "sum_bonus_sum" => "0.00000"
+        //1 debit
+        //     "sum_sum" => "-16164.44604"
+        //        "sum_bonus_sum" => "-115667.70096"
+        //2 credit
+        //        "sum_sum" => "17793.30904"
+        //        "sum_bonus_sum" => "105050.02266"
+        //9 debit free
+        //    "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "0.00000"
+        //10 debit free
+        //"sum_sum" => "0.00000"
+        //"sum_bonus_sum" => "16698.47000"
+
+
+        //total_user
+        //withdraw 4
+        //    "sum_sum" => "-1710.37109"
+        //    "sum_bonus_sum" => "0.00000"
+
+        //deposit 3
+        //    "sum_sum" => "2142.13374"
+        //    "sum_bonus_sum" => "0.00000"
+        //1 debit
+        //"sum_sum" => "-15647.16570"
+        //"sum_bonus_sum" => "-115185.88430"
+        //2 credit
+        //  "sum_sum" => "17004.45200"
+        //    "sum_bonus_sum" => "104606.50600"
+        //9 debit free
+        //    "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "0.00000"
+        //10 debit free
+        //   "sum_sum" => "0.00000"
+        //    "sum_bonus_sum" => "16472.77000"
+
+
+
+
+
+        dd(22);
+        $user = User::where('id', 2535)->first();
+        $class = BonusHelper::getClass(4);
+        //dd($class);
+        $bonusObject = new $class($user);
+        //dd($bonusObject);
+        DB::beginTransaction();
+        //$act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        $act = $bonusObject->realActivation(['amount' => 20000]);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+        dd($act);
+
+
+        dd(Bonus::findOrFail(2));
+        $ip = GeneralHelper::visitorIpCloudFlare();
+        dd($ip);
+
+        //dd(2);
+        $user = User::where('id', 148)->first();
+
+        $class = BonusHelper::getClass($user->bonus_id);
+
+        $bonusObject = new $class($user);
+        DB::beginTransaction();
+        $act = $bonusObject->setDeposit(2);
+        //$act = $bonusObject->setDeposit(3);
+        //$act = $bonusObject->close(1);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            if ($act['success'] === false) {
+                throw new \Exception($act['message']);
+            }
+            dd($act);
+        }
+        DB::commit();
+
+        dd($act);
+
+        dd($request->user());
+        dd(2);
+//        dd(User::where('id', 2481)->first());
+//        $notificationTransactionDeposit = SystemNotification::select([DB::raw('COALESCE(SUM(value), 0) as sum_deposits')])->where('user_id', 2478)
+//            ->where('type_id', 2)
+//            ->first();
+//
+//        dd($notificationTransactionDeposit);
+        $user = User::where('id', 2482)->first();
+
+        $class = BonusHelper::getClass($user->bonus_id);
+
+        $bonusObject = new $class($user);
+
+        DB::beginTransaction();
+        //$act = $bonusObject->realActivation(['amount' => 4]);
+        $act = $bonusObject->close(1);
+        dd($act);
+        if ($act['success'] === false) {
+            DB::rollBack();
+            dd($act);
+        }
+        DB::commit();
+
+        dd($act);
+        $userBonus = UserBonus::where('id', 5963)->first();
+
+        dd(2);
+        $user = $request->user();
+        $user = User::where('id', $user->id)->first();
+        dd($user);
+        $class = BonusHelper::getClass(1);
+        $a = new $class();
+        //dd(BonusHelper::getClass(1)::id);
+        $bonusClasses = config('bonus.classes');
+        $user = User::where('id', 136)->first();
+        $bonusObject = new $bonusClasses[1] ($user);
+        $bonusObject->activationAfterTransaction(222);
+        dd($bonusObject);
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
+        $userBonus = UserBonus::where('id', 2225)->first();
+        dd($userBonus->data);
+        $date = new \DateTime();
+        $userBonus = UserBonus::where('id', 2225)->update([
+            'data' => json_encode(['wagered_sum' => 0])
+        ]);
+        dd(2);
+        $date = new \DateTime();
+        $bonusUser = UserBonus::create([
+            'expires_at' => $date,
+            'user_id' => 136,
+            'bonus_id' => 1,
+            'activated' => 1,
+            'data' => [
+                'free_spin_win' => 0,
+                'wagered_sum' => 0,
+                'transaction_id' => 0,
+                'dateStart' => $date,
+                'lastCheck' => $date
+            ]
+        ]);
+        dd(2);
+        Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
+            $m->to('alexproc1313@gmail.com', 'alexproc')->subject('Confirm email');
+        });
+        dd(2);
+        $ip = GeneralHelper::visitorIpCloudFlare();
+        dump($ip);
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
+        dd($iso_code);
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $amount = 5;
+        $lastTransaction = Transaction::where('sum', 0)
+            ->where(function ($query) {
+            $query->where('transactions.sum', '<>', 0)
+                ->orWhere('transactions.bonus_sum', '<>', 0);
+        })->first();
+
+        $lastTransaction->sum = -2;
+        dump($lastTransaction->toArray());
+
+        if (!is_null($lastTransaction)) {
+            //to do! fix this
+            $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+            $percentageSum = abs($lastTransaction->sum) / $totalSum;
+            $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+            $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+            $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+        } else {
+            //to do throw if transactions not found
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        }
+        dd($createParams);
+        dd(2);
+
+        $modePlay = 1;
+        $amount = -5;
+        $transactionHas = (object) ['sum' => 10, 'bonus_sum' => 2];
+
+
+        if ($modePlay === 0) {
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        } else {
+            //to do!! fix this
+            $createParams['sum'] = (-1) * $transactionHas->sum;
+            $createParams['bonus_sum'] = (-1) * $transactionHas->bonus_sum;
+        }
+        dd($createParams);
+
+        $modePlay = 1;
+
+        $balance = 1;
+        $amount = -2;
+
+        if ($modePlay === 0) {
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        } else {
+            //to do fix this
+            if ((float)$balance < abs($amount)) {
+                $createParams['sum'] = -1 * $balance;
+                $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
+                        abs($amount) - abs($createParams['sum']));
+
+//                            } elseif ((float)$params['user']->balance < 0) {
+//                                $createParams['sum'] = 0;
+//                                $createParams['bonus_sum'] = $amount;
+            } else {
+                $createParams['sum'] = $amount;
+                $createParams['bonus_sum'] = 0;
+            }
+        }
+
+
+        dd($createParams);
+        $amount = 5;
+        $lastTransaction = Transaction::where('sum', 0)->first();
+        $lastTransaction->bonus_sum = '2.0';
+        $lastTransaction->sum = '1.0';
+        dump($lastTransaction->toArray());
+        if (!is_null($lastTransaction)) {
+            //to do! fix this
+            if ((float)$lastTransaction->bonus_sum > 0) {
+
+                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                $percentageSum = abs($lastTransaction->sum) / $totalSum;
+                $createParams['sum'] = GeneralHelper::formatAmount($amount * $percentageSum);
+
+                $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+                $createParams['bonus_sum'] = GeneralHelper::formatAmount($amount * $percentageBonusSum);
+            } else {
+                $createParams['sum'] = $amount;
+                $createParams['bonus_sum'] = 0;
+            }
+        } else {
+            //to do throw if transactions not found
+            $createParams['sum'] = $amount;
+            $createParams['bonus_sum'] = 0;
+        }
+        dd($createParams);
+        dd($t);
+        //dd(LastActionGame::where('user_id', 136)->first());
+        $activeBonus = UserBonus::where('id', 1129)->first();
+        dd($activeBonus->data);
+        $activeBonus->data = ['lastCheck'=> new \DateTime()];
+        $activeBonus->save();
+
+        dd($activeBonus->data);
+        $bonusData = $activeBonus->date;
+        $bonusData['test'] = 1;
+        //$bonusLastAction = $bonusData['lastCheck'];
+        $bonusData['lastCheck'] = new \DateTime();
+        UserBonus::where('id', 1129)->update(['data' => json_encode($bonusData)]);
+        dd(2);
+        $activeBonus = UserBonus::where('id', 1129)->first();
+        dd($activeBonus->data);
+        $notificationTransactionDeposit = SystemNotification::where('user_id', 136)
+            ->where('type_id', 1)
+            ->where('created_at', '>', $activeBonus->created_at)
+            ->first();
+        dd($notificationTransactionDeposit);
+        if (is_null($notificationTransactionDeposit)) {
+            $conditions = 1;
+            $response = [
+                'success' => true,
+                'message' => 'Deposit is not found'
+            ];
+        }
+
+        dd(2);
+        $lastTransaction = Transaction::leftJoin('games_pantallo_transactions',
+            'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+            ->where([
+                ['games_pantallo_transactions.action_id', '=', 1],
+                ['transactions.user_id', '=', 136],
+                //['games_pantallo_transactions.games_session_id', '=', $gamesSessionId]
+            ])->where(function ($query) {
+                $query->where('transactions.sum', '<>', 0)
+                    ->orWhere('transactions.bonus_sum', '<>', 0);
+            })
+            ->select([
+                'transactions.id',
+                'transactions.*',
+                'games_pantallo_transactions.id as ids',
+                'action_id',
+                'transactions.sum',
+                'transactions.bonus_sum',
+                'games_pantallo_transactions.amount as amount',
+                'games_pantallo_transactions.game_id as game_id',
+                'games_pantallo_transactions.balance_after as balance_after'
+            ])->orderBy('id', 'DESC')->first();
+
+        dump($lastTransaction->toArray());
+        if (!is_null($lastTransaction)) {
+            if ((float)$lastTransaction->bonus_sum <> 0 and (float)$lastTransaction->sum <> 0) {
+                $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
+
+                $percentageSum = abs($lastTransaction->sum) / $totalSum;
+                $createParams['sum'] = GeneralHelper::formatAmount(2 * $percentageSum);
+
+                $percentageBonusSum = abs($lastTransaction->bonus_sum) / $totalSum;
+                $createParams['bonus_sum'] = GeneralHelper::formatAmount(2 * $percentageBonusSum);
+            } elseif (0 == 0) {
+                $createParams['sum'] = 0;
+                $createParams['bonus_sum'] = 2;
+            } else {
+                $createParams['sum'] = 2;
+                $createParams['bonus_sum'] = 0;
+            }
+        } else {
+            $createParams['sum'] = 0;
+            $createParams['bonus_sum'] = 2;
+        }
+
+
+        dd($createParams);
+        $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->whereIn('games_types_games.type_id', [10001])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $slotsGameIds = array_map(function ($item) {
+            return $item->id;
+        }, $slotsGames);
+
+
+        $typeOpenGame = LastActionGame::select(['id'])
+            ->where('user_id', 136)
+            ->whereIn('game_id', $slotsGameIds)
+            ->first();
+        dd($typeOpenGame);
+
+        $typeOpenGame = GamesPantalloSessionGame::join('games_pantallo_session',
+            'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+            ->where([
+                ['games_pantallo_session.user_id', '=', 136],
+            ])
+            ->whereIn('game_id', $slotsGameIds)
+            ->select([
+                'games_pantallo_session_game.id',
+            ])
+            ->orderBy('id', 'desc')
+            ->first();
+        dd($typeOpenGame);
+        $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->where([
+                ['games_types_games.extra', '=', 1],
+                ['games_list.active', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->whereIn('games_types_games.type_id', [10001])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $slotsGameIds = array_map(function ($item) {
+            return $item->id;
+        }, $slotsGames);
+
+        //to do! use table last action
+        $typeOpenGame = LastActionGame::select(['id', 'game_id'])
+            ->where('user_id', 136)
+            ->whereIn('game_id', $slotsGameIds)
+            ->first();
+        dd($typeOpenGame);
+        DB::enableQueryLog();
+
+        $deposit = SystemNotification::where('user_id', 136)->where('type_id', 1)->count();
+        dump($deposit);
+        dd(DB::getQueryLog());
+
+        dd($deposit);
+        SystemNotification::create([
+            'user_id' => 136,
+            //to do config - mean deposit transactions
+            'type_id' => 1,
+            'extra' => json_encode([
+                'transactionId' => 1,
+                'depositAmount' => 200.200
+            ])
+        ]);
+        dd(2);
+        $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
+            ->where([
+                'game_id' => '',
+            ])->first();
+        dd($gamesSession);
+
+        $transactions = [888048];
+        $setAmount = 60;
+        $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
+        dump($getTransactions);
+        foreach ($getTransactions as $transaction) {
+            $absTransactionSum = (-1) * $transaction->sum;
+            if ($absTransactionSum > $setAmount) {
+                Transaction::where('id', $transaction->id)->update([
+                    'sum' => -1 * $setAmount
+                ]);
+                $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
+                $date = new \DateTime();
+                Transaction::insert([
+                    [
+                        'type' => '11',
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'deleted_at' => $date,
+                        'sum' => -1 * $difference,
+                        'user_id' => $transaction->user_id,
+                        'comment' => 'system'
+                    ],
+                ]);
+            }
+        }
+        dd('ok');
         dd(2);
         $transaction = Transaction::leftJoin('games_pantallo_transactions',
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
@@ -53,6 +833,7 @@ class TestController extends Controller
             ])
             ->toSql();
         dd($transaction);
+
         $service = new Service();
         /*dd(count(        Transaction::where('type', 3)
             ->where('confirmations', '<', 6)
@@ -326,7 +1107,7 @@ class TestController extends Controller
         $request->merge(['available' => 50]);
         $request->merge(['timeFreeRound' => strtotime("30 day", 0)]);
         dd(2);
-        //dd(GeneralHelper::visitorIpCloudFire());
+        //dd(GeneralHelper::visitorIpCloudFlare());
 //        dd(2);
 //        $user = User::where('email', 'tafuzijos@blackbird.ws')->first();
 //        dd($user);
@@ -394,7 +1175,7 @@ class TestController extends Controller
             }
         }
         dd(2);
-        dd(GeneralHelper::visitorIpCloudFire());
+        dd(GeneralHelper::visitorIpCloudFlare());
         $transactions = [385460];
         $setAmount = 60;
         $getTransactions = Transaction::whereIn('id', $transactions)->where('type', 4)->get();
@@ -463,11 +1244,15 @@ class TestController extends Controller
 
         dd($getTransaction);
         dd(2);
-        $ip = GeneralHelper::visitorIpCloudFire();
+        $ip = GeneralHelper::visitorIpCloudFlare();
         //dump($ip);
         //$ip = '165.227.71.60';
         //to do this job edit session way
+
+        // !!! No more torann/geoip !!!
+        // Use GeneralHelper::visitorCountryCloudFlare
         $ip = geoip($ip);
+
         dd($ip);
         DB::enableQueryLog();
         $user = User::where('id', 1031)->first();
