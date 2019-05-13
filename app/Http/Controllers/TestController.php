@@ -81,7 +81,6 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
         dd(2);
         DB::beginTransaction();
 
@@ -98,6 +97,56 @@ class TestController extends Controller
 
         DB::commit();
         dd($bonusActivate);
+
+
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', 13333)->first();
+        dd($issetFreeRound);
+
+        $date = new \DateTime();
+
+        $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                    'user_id' => 13333,
+                    'round' => 50,
+                    'valid_to' => $date,
+                    'created' => 0,//fake
+                    'free_round_id' => time(),//fake
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
+
+        dd($rawId);
+        $a = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', $user->id)->first();
+        dd($a);
+        $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+        dump($ipCurrent);
+        $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+        $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+        $client = new Client(['timeout' => 5]);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+        $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+        if (isset($responseIpQualityJson['success'])) {
+            if ($responseIpQualityJson['success'] == true) {
+                if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                    throw new \Exception('Free spins are not available while using VPN/Proxy');
+                }
+            }
+        }
+        dd(2222);
+
+        $client = new Client();
+
+        $res = $client->request('GET', 'https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd(json_decode($res->getBody()->getContents()));
+        dd($response->send());
+        dd(file_get_contents('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146'));
+        $client = new Client();
+        $response = $client->get('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd($response);
 
         dd(2);
         $user = User::where('id', 2550)->first();

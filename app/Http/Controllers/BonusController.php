@@ -46,13 +46,14 @@ class BonusController extends Controller
 
         DB::beginTransaction();
 
+
         $class = BonusHelper::getClass($bonus->id);
 
         $user = User::where('id', $userRequest->id)->lockForUpdate()->first();
 
-        $bonus_obj = new $class($user);
+        $bonusObj = new $class($user);
 
-        $bonusActivate = $bonus_obj->activate();
+        $bonusActivate = $bonusObj->activate();
 
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
@@ -63,6 +64,33 @@ class BonusController extends Controller
 
         return redirect()->back()->with('popup',
             ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
+
+
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
+//
+//        $user = Auth::user();
+//
+//        $class = $bonus->getClass();
+//
+//        $bonus_obj = new $class($user);
+//
+//
+//        DB::beginTransaction();
+//
+//        $bonusActivate = $bonus_obj->activate();
+//
+//        if ($bonusActivate['success'] === false) {
+//            DB::rollBack();
+//            redirect()->back()->withErrors([$bonusActivate['message']]);
+//        }
+//
+//        DB::commit();
+//
+//        return redirect()->back()->with('popup',
+//            ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
     }
 
     public function cancel()

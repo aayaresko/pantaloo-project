@@ -450,7 +450,7 @@ class PantalloGamesSystem implements GamesSystem
                             'session_id' => $params['session']->system_id,
                             'gamesession_id' => self::TEMPORARY,
                         ])->orderBy('id', 'DESC')->first();
-                    
+
                     if (is_null($gamesSession)) {
                         throw new \Exception('Games session is not found.' .
                             ' This user is not playing currently.', 500);
@@ -1046,11 +1046,28 @@ class PantalloGamesSystem implements GamesSystem
 
             $player = $playerResponse->response;
 
+            $validTo = new \DateTime();
+            $validTo->modify("+$timeFreeRound second");
+            //prepare
+
+            //act
+            //to do check double code
             if ($mode == 0) {
-                $issetFreeRound = GamesPantalloFreeRounds::select(['id', 'free_round_id'])
+                $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
                     ->where('user_id', $user->id)->first();
 
                 if (is_null($issetFreeRound)) {
+
+                    $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                        'user_id' => $user->id,
+                        'round' => $available,
+                        'valid_to' => $validTo,
+                        'created' => 0,//fake
+                        'free_round_id' => time(),//fake
+                        'created_at' => $date,
+                        'updated_at' => $date
+                    ]);
+
                     $freeRounds = $pantalloGames->addFreeRounds([
                         'playerids' => $player->id,
                         'gameids' => $gamesIds,
@@ -1063,20 +1080,27 @@ class PantalloGamesSystem implements GamesSystem
                     $freeRoundsId = $freeRoundsResponse->freeround_id;
                     $freeRoundCreated = $freeRoundsResponse->created;
 
-                    DB::connection('logs')->table('games_pantallo_free_rounds')->insert([
-                        'user_id' => $user->id,
-                        'round' => $available,
-                        'valid_to' => $validTo,
-                        'created' => $freeRoundCreated,
-                        'free_round_id' => $freeRoundsId,
-                        'created_at' => $date,
-                        'updated_at' => $date
-                    ]);
+                    DB::connection('logs')->table('games_pantallo_free_rounds')
+                        ->where('id', $rawId)
+                        ->update([
+                            'created' => $freeRoundCreated,
+                            'free_round_id' => $freeRoundsId,
+                        ]);
                 } else {
                     dd('problem');
                     $freeRoundsId = $issetFreeRound->free_round_id;
                 }
             } else {
+                $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                    'user_id' => $user->id,
+                    'round' => $available,
+                    'valid_to' => $validTo,
+                    'created' => 0,//fake
+                    'free_round_id' => time(),//fake
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
+
                 $freeRounds = $pantalloGames->addFreeRounds([
                     'playerids' => $player->id,
                     'gameids' => $gamesIds,
@@ -1089,15 +1113,13 @@ class PantalloGamesSystem implements GamesSystem
                 $freeRoundsId = $freeRoundsResponse->freeround_id;
                 $freeRoundCreated = $freeRoundsResponse->created;
 
-                DB::connection('logs')->table('games_pantallo_free_rounds')->insert([
-                    'user_id' => $user->id,
-                    'round' => $available,
-                    'valid_to' => $validTo,
-                    'created' => $freeRoundCreated,
-                    'free_round_id' => $freeRoundsId,
-                    'created_at' => $date,
-                    'updated_at' => $date
-                ]);
+                DB::connection('logs')->table('games_pantallo_free_rounds')
+                    ->where('id', $rawId)
+                    ->update([
+                        'created' => $freeRoundCreated,
+                        'free_round_id' => $freeRoundsId,
+                    ]);
+
             }
 
             $response = [
@@ -1113,6 +1135,16 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
+//
+//             check this
+            if (isset($freeRoundsId)) {
+                $removeFreeRounds = $pantalloGames->removeFreeRounds([
+                    'playerids' => $player->id,
+                    'freeround_id' => $freeRoundsId
+                ], true);
+                $response['removeFreeRounds'] = $removeFreeRounds;
+                $response['freeRoundsResponse'] = $freeRoundsResponse;
+            }
         }
 
         $debugGameResult = $debugGame->end();

@@ -9,6 +9,7 @@ use App\BonusLog;
 use Carbon\Carbon;
 use App\UserBonus;
 use App\Transaction;
+use GuzzleHttp\Client;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
@@ -73,6 +74,10 @@ class FreeSpins extends \App\Bonuses\Bonus
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
 
+            //temporary
+            //throw new \Exception('Bonus is temporarily unavailable');
+            //temporary
+
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
 
             //baned country
@@ -112,9 +117,31 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'with clause 2.2 of the bonus terms & conditions.');
             }
 
+            //IpQuality
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+            $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+            //5 to do config
+            $client = new Client(['timeout' => 5]);
+            $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+            $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+            //89.39.107.197
+            //temporary for test
+            if ($ipCurrent != '89.39.107.197') {
+                if (isset($responseIpQualityJson['success'])) {
+                    if ($responseIpQualityJson['success'] == true) {
+                        if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                            throw new \Exception('Free spins are not available while using VPN/Proxy');
+                        }
+                    }
+                }
+            }
+            //IpQuality
+
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
-
 
             $bonusUser = UserBonus::create([
                 'user_id' => $user->id,
@@ -166,7 +193,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $request->merge(['gamesIds' => $gamesIds]);
             $request->merge(['available' => $this->freeSpins]);
             $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
-            $request->merge(['mode' => 0]);
+            $request->merge(['mode' => 0]);//only once
 
             $pantalloGamesSystem = new PantalloGamesSystem();
             $freeRound = $pantalloGamesSystem->freeRound($request);
@@ -178,7 +205,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             User::where('id', $user->id)->update([
                 'bonus_id' => static::$id
             ]);
-            
+
             event(new OpenBonusEvent($user, 'welcome bonus'));
 
             $response = [
