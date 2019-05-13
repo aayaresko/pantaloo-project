@@ -20,7 +20,9 @@ class IpCountryBlock
     {
         $iso_code = GeneralHelper::visitorCountryCloudFlare();
 
-        $registrationStatus = !in_array($iso_code, ['US', 'UA', 'CA', 'IL', 'XX']) ? 1 : 0;
+        $disableRegistrationCountry = config('appAdditional.disableRegistration');
+
+        $registrationStatus = !in_array($iso_code, $disableRegistrationCountry) ? 1 : 0;
 
         View::share('registrationStatus', $registrationStatus);
 

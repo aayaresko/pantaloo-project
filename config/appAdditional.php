@@ -147,6 +147,7 @@ return [
         'tuzomi@mail-list.top'
     ],
 
+    'disableRegistration' => ['US', 'UA', 'CA', 'IL', 'XX'],
 
     'banedBonusesCountries' => [
         'AF', 'AL', 'DZ', 'AO', 'AT', 'CS', 'BH', 'BD', 'BY', 'BJ', 'BO', 'BA', 'BW',
