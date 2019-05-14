@@ -4,6 +4,8 @@
 namespace App\Providers\EmailChecker;
 
 
+use GuzzleHttp\Client;
+
 class EmailChecker
 {
     public $timeout = 1;
@@ -15,12 +17,22 @@ class EmailChecker
 
     public function isInvalidEmail($email)
     {
-        $url = $this->prepareUrl($email);
+        if (!empty($email)) {
+            $url = $this->prepareUrl($email);
 
+            $client = new Client();
+            $response = $client->request('GET', $url);
+
+            if ($response->getStatusCode() == 200) {
+                $result = json_decode($response->getBody());
+                return !$result->valid;
+            }
+        }
         return true;
     }
 
-    private function prepareUrl($email){
+    private function prepareUrl($email)
+    {
 
         // Create parameters array.
         $parameters = array(
