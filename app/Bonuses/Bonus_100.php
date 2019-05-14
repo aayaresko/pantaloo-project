@@ -97,6 +97,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
 //                    ' clause 1.6 of the bonus terms & conditions.');
 //            }
 
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipFormatCurrent = inet_pton($ipCurrent);
+
             if ($this->active_bonus) {
                 if ($this->active_bonus->bonus_id != static::$id) {
                     throw new \Exception('You cannot activate this bonus as there is ' .
@@ -125,6 +128,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 throw new \Exception('This bonus is already used.');
             }
 
+            //check ip
+            $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
+                ->where('ip_address', $ipFormatCurrent)
+                ->withTrashed()->count();
+
+            if ($currentBonusByIp > 0) {
+                throw new \Exception('You cannot activate this bonus in accordance' .
+                    ' with clause 1.18 of the bonus terms & conditions');
+            }
+            //check ip
+
             //$date = $user->created_at;
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
@@ -138,7 +152,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     'wagered_amount' => 0,
                     'wagered_bonus_amount' => 0,
                     'dateStart' => $currentDate,
+                    'ip_address' => $ipCurrent
                 ],
+                'ip_address' => $ipFormatCurrent,
                 'activated' => 0,
                 'expires_at' => $date,
             ]);
