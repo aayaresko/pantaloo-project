@@ -176,8 +176,8 @@ class AuthController extends Controller
 //            return redirect()->back()->withErrors($errors);
 //        }
         //start
-//        $service = new Service();
-//        $address = $service->getNewAddress('common');
+        $service = new Service();
+        $address = $service->getNewAddress('common');
 
         $user = User::create([
             'name' => $data['name'],
@@ -185,7 +185,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password'])
         ]);
 
-        //$user->bitcoin_address = $address;
+        $user->bitcoin_address = $address;
         $user->balance = 0;
 
         if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
