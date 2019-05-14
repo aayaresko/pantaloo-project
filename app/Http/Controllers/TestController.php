@@ -44,6 +44,7 @@ class TestController extends Controller
 
 
     public function phpinfo(Request $request){
+        dd(777);
         phpinfo();
         exit();
     }

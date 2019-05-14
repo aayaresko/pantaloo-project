@@ -30,7 +30,7 @@ set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpS
 
 //set('slack_color', 'blue');
 //set('slack_success_color', 'green');
-
+set('git_tty', false);
 
 // Hosts
 
