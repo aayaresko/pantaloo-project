@@ -61,7 +61,7 @@
                 <h1 class="game-name word-split">{{ trans('casino.blackjack') }}</h1>
                 
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10002, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
+                    <a href="{{ route('games', ['name' => 'blackjack', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
                 </div>
             </div>
         </section>
@@ -86,7 +86,7 @@
                 <h1 class="game-name word-split">{{ trans('casino.roulette') }}</h1>
                 
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10003, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['name' => 'roulette', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
@@ -111,7 +111,7 @@
                 <h1 class="game-name word-split">{{ trans('casino.slots') }}</h1>
                
                 <div class="main-btn-block">
-                    <a href="{{ route('games', ['type_id' => 10001, 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
+                    <a href="{{ route('games', ['name' => 'slots', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
                 </div>
             </div>
         </section>
