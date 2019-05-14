@@ -188,21 +188,23 @@ class AuthController extends Controller
 
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
+        } elseif(isset($data['ref']) and $data['ref']) {
+            $tracker = Tracker::where('ref', $data['ref'])->first();
+        }
 
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
+        if ($tracker) {
+            $user->tracker()->associate($tracker);
+            $user->agent_id = $tracker->user_id;
 
-                //set count for this registration
-                $appAdditional = config('appAdditional');
-                $eventStatistic = $appAdditional['eventStatistic'];
-                StatisticalData::create([
-                    'event_id' => $eventStatistic['register'],
-                    'value' => 'register',
-                    'tracker_id' => $tracker->id
-                ]);
-                //set count for this registration
-            }
+            //set count for this registration
+            $appAdditional = config('appAdditional');
+            $eventStatistic = $appAdditional['eventStatistic'];
+            StatisticalData::create([
+                'event_id' => $eventStatistic['register'],
+                'value' => 'register',
+                'tracker_id' => $tracker->id
+            ]);
+            //set count for this registration
         }
 
         //this temporary decision

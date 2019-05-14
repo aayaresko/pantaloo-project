@@ -52,7 +52,9 @@ class TransactionSum extends Command
                 $newAgent->koef = 0;
                 $newAgent->save();
             }
+        }
 
+        foreach ($agents as $agent) {
             $users = User::where('agent_id', $agent->id)->get();
 
             for ($i = 0; $i < 7; $i++) {

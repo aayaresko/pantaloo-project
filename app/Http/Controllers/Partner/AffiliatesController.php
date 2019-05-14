@@ -24,6 +24,8 @@ use App\Http\Controllers\Controller;
  */
 class AffiliatesController extends Controller
 {
+    const PLAYER_ROLE = 0;
+    const AGENT_ROLE = 1;
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -297,7 +299,7 @@ class AffiliatesController extends Controller
      */
     public function partners()
     {
-        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', 1)->with('koefs', 'benefits')->get();
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
         $myKoef = Auth::user()->koefs->koef;
 
         return view('affiliates.partners', compact('affiliates', 'myKoef'));
@@ -305,12 +307,19 @@ class AffiliatesController extends Controller
 
     public function changeKoef($id, Request $request)
     {
-        $partner = User::where('agent_id', Auth::user()->id)->where('role', 1)->where('id', $id)->firstOrFail();
+        $partner = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->where('id', $id)->firstOrFail();
         $newKoef = new AgentsKoef();
         $newKoef->user_id = $partner->id;
         $newKoef->koef = $request->koef;
         $newKoef->save();
 
         return back();
+    }
+
+    public function users()
+    {
+        $users = User::where('agent_id', Auth::user()->id)->where('role', self::PLAYER_ROLE)->get();
+
+        return view('affiliates.users', compact($users));
     }
 }

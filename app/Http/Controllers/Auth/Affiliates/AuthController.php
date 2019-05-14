@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use App\Models\AgentsKoef;
 use App\Validators\TemporaryMailCheck;
 use DB;
 use Hash;
@@ -140,9 +141,10 @@ class AuthController extends Controller
                 ]
             ]);
         }
-
-        $service = new Service();
-        $address = $service->getNewAddress('common');
+//
+//        $service = new Service();
+//        $address = $service->getNewAddress('common');
+        $address = '11';
 
         if (isset($data['name'])) {
             $name = $data['name'];
@@ -165,15 +167,16 @@ class AuthController extends Controller
             $user->ip = $ip;
         }
 
+        $tracker = false;
         $tracker_id = Cookie::get('tracker_id');
-
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
-
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
-            }
+        } elseif($request->ref) {
+            $tracker = Tracker::where('ref', $request->ref)->first();
+        }
+        if ($tracker) {
+            $user->tracker()->associate($tracker);
+            $user->agent_id = $tracker->user_id;
         }
 
         $currency = Currency::find(1);
@@ -185,6 +188,10 @@ class AuthController extends Controller
         $user->role = 1;
 
         $user->save();
+        $newKoef = new AgentsKoef();
+        $newKoef->user_id = $user->id;
+        $newKoef->koef = 0;
+        $newKoef->save();
 
         $this->dispatch(new SetUserCountry($user));
 

@@ -16,7 +16,8 @@ class CreateUserSumsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->decimal('sum', 14, 5);
-            $table->integer('parent_id');
+            $table->decimal('percent')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }

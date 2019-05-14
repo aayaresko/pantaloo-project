@@ -167,6 +167,7 @@
                                             <div class="form-group">
                                                 <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
                                             </div>
+                                            <input type="hidden" name="ref" value="{{request()->ref}}">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <!-- <div class="col-sm-6 col-sm-offset-3"> -->
