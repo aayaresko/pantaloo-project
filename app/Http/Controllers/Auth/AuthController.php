@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Providers\EmailChecker\EmailChecker;
 use App\Validators\TemporaryMailCheck;
 use DB;
 use App\User;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 
 
 class AuthController extends Controller
@@ -85,6 +85,15 @@ class AuthController extends Controller
 //        }
 
         $validator = $this->validator($request->all());
+
+        $validator->after(function ($validator) use ($request) {
+
+            $emailChecker = new EmailChecker();
+
+            if ($emailChecker->isInvalidEmail($request->email)) {
+                $validator->errors()->add('email', 'Please try another email service!');
+            }
+        });
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -167,8 +176,8 @@ class AuthController extends Controller
 //            return redirect()->back()->withErrors($errors);
 //        }
         //start
-        $service = new Service();
-        $address = $service->getNewAddress('common');
+//        $service = new Service();
+//        $address = $service->getNewAddress('common');
 
         $user = User::create([
             'name' => $data['name'],
@@ -176,7 +185,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password'])
         ]);
 
-        $user->bitcoin_address = $address;
+        //$user->bitcoin_address = $address;
         $user->balance = 0;
 
         if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
