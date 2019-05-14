@@ -410,11 +410,15 @@ class IntegratedGamesController extends Controller
         //end validate
 
         $providerClass = new $providers[$providerId]['lib']();
-        $link = $providerClass->loginPlayer($request);
+        $linkRequest = $providerClass->loginPlayer($request);
 
-        if ($link['success'] === true) {
-            $link = $link['message']['gameLink'];
+        if ($linkRequest['success'] === true) {
+            $link = $linkRequest['message']['gameLink'];
+        } else {
+            //throw exception
+            throw new \Exception('Problem is by getting game link');
         }
+
         return view('load.integrated_games_link')->with(['link' => $link]);
     }
 }

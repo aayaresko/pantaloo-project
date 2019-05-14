@@ -155,13 +155,13 @@ class PantalloGamesSystem implements GamesSystem
 
         } catch (\Throwable $e) {
             DB::rollBack();
-            dump($playerExists);
-            dump($player);
-            dump('login');
-            dump($login);
-            dump('getGame');
-            dump($getGame);
-            dump($e);
+//            dump($playerExists);
+//            dump($player);
+//            dump('login');
+//            dump($login);
+//            dump('getGame');
+//            dump($getGame);
+//            dump($e);
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -1054,7 +1054,7 @@ class PantalloGamesSystem implements GamesSystem
             //to do check double code
             if ($mode == 0) {
                 $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
-                    ->where('user_id', $user->id)->first();
+                    ->where('user_id', $user->id)->where('deleted', 0)->first();
 
                 if (is_null($issetFreeRound)) {
 
@@ -1086,9 +1086,10 @@ class PantalloGamesSystem implements GamesSystem
                             'created' => $freeRoundCreated,
                             'free_round_id' => $freeRoundsId,
                         ]);
+
                 } else {
-                    dd('problem');
                     $freeRoundsId = $issetFreeRound->free_round_id;
+                    dd('problem with active');
                 }
             } else {
                 $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
@@ -1108,6 +1109,7 @@ class PantalloGamesSystem implements GamesSystem
                     'validTo' => $validTo->format('Y-m-d')
                 ], true);
 
+
                 $freeRoundsResponse = json_decode($freeRounds->response);
 
                 $freeRoundsId = $freeRoundsResponse->freeround_id;
@@ -1119,7 +1121,6 @@ class PantalloGamesSystem implements GamesSystem
                         'created' => $freeRoundCreated,
                         'free_round_id' => $freeRoundsId,
                     ]);
-
             }
 
             $response = [
@@ -1135,15 +1136,31 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
-//
-//             check this
+
+//          check this
             if (isset($freeRoundsId)) {
                 $removeFreeRounds = $pantalloGames->removeFreeRounds([
                     'playerids' => $player->id,
                     'freeround_id' => $freeRoundsId
                 ], true);
-                $response['removeFreeRounds'] = $removeFreeRounds;
-                $response['freeRoundsResponse'] = $freeRoundsResponse;
+
+                try {
+                    if ($removeFreeRounds->error == 0
+                        and in_array($player->id, $removeFreeRounds->response->successfull_removals)) {
+
+                        //if response good to delete from databases
+                        DB::connection('logs')->table('games_pantallo_free_rounds')
+                            ->where('id', $rawId)
+                            ->update([
+                                'deleted' => 1,
+                            ]);
+                    }
+
+                    $response['freeRoundsResponse'] = $freeRoundsResponse;
+                    $response['removeFreeRounds'] = $removeFreeRounds;
+                } catch (\Exception $ex) {
+                    $response['removeFreeRounds'] = $ex->getMessage();
+                }
             }
         }
 
