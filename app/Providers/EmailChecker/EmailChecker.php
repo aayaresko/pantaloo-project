@@ -45,7 +45,7 @@ class EmailChecker
             'fast' => $this->fast
         );
 
-        $key = env('IPQUALITYSCORE_API_KEY');
+        $key = env('IP_QUALITY_SCORE');
 
         $formatted_parameters = http_build_query($parameters);
 
