@@ -163,7 +163,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'bonus_id' => static::$id
             ]);
 
-            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent .'%'));
+            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent . '%'));
 
             $response = [
                 'success' => true,
