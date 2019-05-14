@@ -8,7 +8,7 @@ require 'recipe/slack.php';
 set('application', 'casinobit');
 
 // Project repository
-set('repository', 'git@github.com:webmaxstudio/casinobit.git');
+set('repository', 'git@github.com:up-tech/casinobit.io.git');
 
 set('default_stage', 'staging');
 
@@ -34,10 +34,11 @@ set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpS
 
 // Hosts
 
-host('188.166.192.94')
+host('STAGE')
+    ->hostname('deployer.zerostage.ga')
     ->stage('staging')
     ->user('deployer')
-    ->identityFile(__DIR__.'/deployer/id_rsa_deployer')
+    //->identityFile(__DIR__.'/deployer/id_rsa_deployer')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
@@ -45,10 +46,11 @@ host('188.166.192.94')
     ->set('http_user','www-data')
     ->set('deploy_path', '/var/www/{{application}}');
 
-host('46.28.205.63')
+host('PROD')
+    ->hostname('46.28.205.63')
     ->stage('prod')
     ->user('administrator')
-    ->identityFile(__DIR__.'/deployer/id_rsa_deployer')
+    //->identityFile(__DIR__.'/deployer/id_rsa_deployer')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
