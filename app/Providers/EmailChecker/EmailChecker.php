@@ -5,30 +5,35 @@ namespace App\Providers\EmailChecker;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class EmailChecker
 {
     public $timeout = 1;
     public $fast = false;
 
-    public function __construct()
-    {
-    }
-
-    public function isInvalidEmail($email)
+    public function isInvalidEmail($email, $default = false)
     {
         if (!empty($email)) {
             $url = $this->prepareUrl($email);
 
             $client = new Client();
-            $response = $client->request('GET', $url);
+            try {
+                $response = $client->request('GET', $url, [
+                    'timeout' => $this->timeout + 2
+                ]);
 
-            if ($response->getStatusCode() == 200) {
-                $result = json_decode($response->getBody());
-                return !$result->valid;
+                if ($response->getStatusCode() == 200) {
+                    $result = json_decode($response->getBody());
+                    return !$result->valid;
+                }
+            } catch (RequestException $e) {
+                // Timeout
+                return $default;
             }
         }
-        return true;
+        // Empty email
+        return $default;
     }
 
     private function prepareUrl($email)
