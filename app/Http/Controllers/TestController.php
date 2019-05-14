@@ -56,7 +56,10 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
-        dd(2);
+
+        $user = User::where('id', 136)->first();
+
+        dd($user);
         DB::beginTransaction();
 
         $user = User::where('id', $request->user()->id)->first();
@@ -81,6 +84,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        DB::beginTransaction();
+        $user = User::where('id', 136)->lockForUpdate()->first();
+        sleep(20);
+        DB::commit();
+        dd($user);
         dd(2);
         DB::beginTransaction();
 
