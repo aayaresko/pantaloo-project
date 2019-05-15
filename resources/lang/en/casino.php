@@ -1,6 +1,6 @@
 <?php
 return array (
-  'title' => 'Casinobit | Bitcoin casino',
+  'title' => 'Casinobit: Bitcoin Casino - №1 Bitcoin Gambling Platform ➤ 110% Bonus',
   'play' => 'Play',
   'free_demo' => 'Free demo',
   'admin' => 'Admin',
@@ -29,8 +29,7 @@ return array (
   'remember_me' => 'Remember me',
   'have_not_account' => 'I don\'t have an account',
   'enter_now' => 'Enter Now',
-  'home_description' => 'Welcome to CasinoBit where you will find the best bitcoin games and will be able to play online.
-&nbsp;&nbsp;&nbsp;&nbsp; CasinoBit is the big world of gaming systems. Here you will find the best Bitcoin games and you can play online.',
+  'home_description' => 'Play & Win with Casinobit ♠ New Bitcoin Casino Online ✔ 50 Free Spins ✔ Anonymous BTC Gambling Site ✔ Welcome Bonus 110% ✔ Provably Fair ✔ 1000+ Games',
   'home_keywords' => 'bitcoin games, lotto, bitcoin',
   'blackjack' => 'Blackjack',
   'roulette' => 'Roulette',
