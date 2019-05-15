@@ -63,6 +63,21 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $users = User::where('bitcoin_address', null)->get();
+        dd($users);
+        dump(count($users));
+        foreach ($users as $user) {
+            if (is_null($user->bitcoin_address)) {
+                $service = new Service();
+                $address = $service->getNewAddress('common');
+                User::where('id', $user->id)->update([
+                    'bitcoin_address' => $address
+                ]);
+            }
+        }
+        dd($users);
+        $service = new Service();
+        $address = $service->getNewAddress('common');
         dd(GeneralHelper::visitorCountryCloudFlare());
         $ip = GeneralHelper::visitorIpCloudFlare();
         $ipFormatCurrent = inet_pton($ip);
