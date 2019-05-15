@@ -80,17 +80,20 @@ class FreeSpins extends \App\Bonuses\Bonus
             $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
 
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipFormatCurrent = inet_pton($ipCurrent);
+
             //baned country
             if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
                 throw new \Exception('You cannot activate this bonus in' .
-                    ' accordance with clause 1.19 of the bonus terms & conditions.');
+                    ' accordance with clause 2.3 of the bonus terms & conditions.');
             }
 
             //baned country
             if (!is_null($user->country)) {
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
-                        ' accordance with clause 1.19 of the bonus terms & conditions.');
+                        ' accordance with clause 2.3 of the bonus terms & conditions.');
                 }
             }
 
@@ -117,8 +120,18 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'with clause 2.2 of the bonus terms & conditions.');
             }
 
+            //check ip
+            $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
+                ->where('ip_address', $ipFormatCurrent)
+                ->withTrashed()->count();
+
+            if ($currentBonusByIp > 0) {
+                throw new \Exception('You cannot activate this bonus in accordance' .
+                    ' with clause 1.18 of the bonus terms & conditions');
+            }
+            //check ip
+
             //IpQuality
-            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
             $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
@@ -154,7 +167,9 @@ class FreeSpins extends \App\Bonuses\Bonus
                     'wagered_amount' => 0,
                     'wagered_bonus_amount' => 0,
                     'dateStart' => $currentDate,
+                    'ip_address' => $ipCurrent
                 ],
+                'ip_address' => $ipFormatCurrent,
                 'activated' => 0,
                 'expires_at' => $date,
             ]);

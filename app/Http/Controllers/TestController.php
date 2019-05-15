@@ -63,6 +63,22 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(GeneralHelper::visitorCountryCloudFlare());
+        $ip = GeneralHelper::visitorIpCloudFlare();
+        $ipFormatCurrent = inet_pton($ip);
+        $currentBonusByIp = UserBonus::where('bonus_id', 1)
+            ->where('ip_address', $ipFormatCurrent)
+            ->withTrashed()->count();
+        dd($currentBonusByIp);
+        dump(inet_pton(GeneralHelper::visitorIpCloudFlare()));
+        dd(inet_pton ('198.16.74.45') == inet_pton(GeneralHelper::visitorIpCloudFlare()));
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+        $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+        $client = new Client(['timeout' => 5]);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . '2a02:2788:c8:a63:9d65:9cce:fdad:703c');
+        $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
         dd(GeneralHelper::visitorIpCloudFlare());
         $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
             ->where('user_id', 13333)->first();

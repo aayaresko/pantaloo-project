@@ -633,36 +633,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             dateType: 'json',
             success: function(data)
             {
-                $('span.deposit-value').html(data.balance);
-                $('span.value').html(data.balance);
+                if (data.success == true) {
+                    $('span.deposit-value').html(data.balance);
+                    $('span.value').html(data.balance);
 
-                if(data.free_spins > 0)
-                {
-                    $('span.free_spins_balance').show();
-                    $('b.spins_sum').html(data.free_spins);
-                }
-                else
-                {
-                    $('span.free_spins_balance').hide();
-                }
+                    if(data.free_spins > 0)
+                    {
+                        $('span.free_spins_balance').show();
+                        $('b.spins_sum').html(data.free_spins);
+                    }
+                    else
+                    {
+                        $('span.free_spins_balance').hide();
+                    }
 
-                if(data.deposit)
-                {
-                    ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
-                    $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
-                    $('.simple-popup').addClass('active');
-                    $('.simple-popup .popup-entry').addClass('active');
-                    //alert('We got deposit from you ' + data.deposit);
-                }
+                    if(data.deposit)
+                    {
+                        ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+                        $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
+                        $('.simple-popup').addClass('active');
+                        $('.simple-popup .popup-entry').addClass('active');
+                        //alert('We got deposit from you ' + data.deposit);
+                    }
 
-                if(data.balance_info)
-                {
-                    $(".balancebox-getbalance").html(data.balance_info.balance);
-                    $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
-                    $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
-                }
+                    if(data.balance_info)
+                    {
+                        $(".balancebox-getbalance").html(data.balance_info.balance);
+                        $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
+                        $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
+                    }
 
-                setTimeout(setBalance, 1000);
+                    setTimeout(setBalance, 1000);
+                } else {
+                    setTimeout(setBalance, 5000);
+                }
             },
             error: function (data) {
                 //alert(data);

@@ -17,8 +17,6 @@ Route::get('beta/test', function () {
     return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
 });
 
-
-
 //for optimization add array keep all language in config
 $languages = Helpers\GeneralHelper::getListLanguage();
 Config::set('getListLanguage', $languages);
