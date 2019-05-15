@@ -1997,7 +1997,7 @@ html.cropped {
 
 /* line 616, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-heading .popup-title {
-  font-size: 66px;
+  font-size: 40px;
   text-transform: uppercase;
   display: -webkit-flex;
   /* Safari */
@@ -2036,7 +2036,7 @@ html.cropped {
 /* line 640, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
   font-family: 'MyriadPro-Bold', arial, sans-serif;
-  font-size: 38px;
+  font-size: 20px;
   color: #fff;
   background: #c10c54;
   background: -webkit-linear-gradient(bottom left, #c10c54 0%, #ad1487 100%);
@@ -2044,7 +2044,7 @@ html.cropped {
   background: linear-gradient(to top right, #c10c54 0%, #ad1487 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c10c54', endColorstr='#ad1487', GradientType=1 );
   display: block;
-  height: 65px;
+  height: 50px;
   border-radius: 27px;
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
@@ -2162,11 +2162,12 @@ html.cropped {
 .log-popup .popup-container .popup-entry .popup-form .forget-link {
   position: absolute;
   color: #fff;
-  right: -110px;
+  left: 100%;
   font-size: 15px;
   text-decoration: underline;
   top: 50%;
   margin-top: -25px;
+  white-space: nowrap;
 }
 /* line 750, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .forget-link:hover {
@@ -2178,10 +2179,7 @@ html.cropped {
   margin-bottom: 34px;
 }
 /* line 757, ../scss/_middle.scss */
-.log-popup .popup-container .popup-entry .popup-form .block-thumbnail label, .reg-popup .popup-container .popup-entry .popup-form .block-thumbnail label {
-  font-size: 19px;
-  color: #858585;
-}
+
 /* line 761, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .block-thumbnail label input[type="checkbox"], .reg-popup .popup-container .popup-entry .popup-form .block-thumbnail label input[type="checkbox"] {
   margin-right: 20px;
@@ -2270,7 +2268,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 805, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
   font-family: 'MyriadPro-Bold', arial, sans-serif;
-  font-size: 35px;
+  font-size: 20px;
   color: #fff;
   background: #c10c54;
   background: -webkit-linear-gradient(bottom left, #c10c54 0%, #ad1487 100%);
@@ -2278,7 +2276,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: linear-gradient(to top right, #c10c54 0%, #ad1487 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c10c54', endColorstr='#ad1487', GradientType=1 );
   display: block;
-  height: 65px;
+  height: 50px;
   border-radius: 27px;
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
@@ -5188,13 +5186,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .log-popup .popup-container .popup-entry .popup-form {
     padding-top: 20px;
   }
-  /* line 89, ../scss/_responsive.scss */
-  body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
-  body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-    font-size: 26px;
-    padding: 19px 36px;
-    
-  }
+
 
   html[lang="vn"] body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
   html[lang="vn"] body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry{
@@ -7286,6 +7278,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .log-popup .popup-container .popup-entry .popup-form .forget-link {
     position: relative;
     right: auto;
+    left: auto;
     top: auto;
     margin: 0;
     display: inline-block;
@@ -7866,7 +7859,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body input[type="email"],
   body input[type="password"] {
     height: 44px;
-    font-size: 18px;
+    /* font-size: 18px; */
     margin-bottom: 20px;
     padding-left: 22px;
   }
@@ -7940,11 +7933,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding: 4px;
   }
   /* line 2077, ../scss/_responsive.scss */
-  body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
-  body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-    font-size: 16px;
-    height: 54px;
-  }
+
   /* line 2086, ../scss/_responsive.scss */
   body .log-popup .popup-container .popup-entry .popup-form label {
     margin-bottom: 10px;
