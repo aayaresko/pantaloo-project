@@ -19,9 +19,9 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr role="row">
-                                    <th>User email</th>
-                                    <th>User benefit</th>
-                                    <th>User profit</th>
+                                    <th>Player email</th>
+                                    <th>Benefit</th>
+                                    <th>Profit</th>
                                 </tr>
                                 </thead>
 
@@ -29,8 +29,8 @@
                                 @foreach($users as $user)
                                     <tr role="row">
                                         <td>{{$user->email}}</td>
-                                        <td>{{$user->totalSum()}}</td>
-                                        <td>{{$user->totalProfit()}}</td>
+                                        <td>{{$user->totalPlayerSum()}}</td>
+                                        <td>{{$user->totalPlayerProfit()}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

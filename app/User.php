@@ -422,4 +422,24 @@ class User extends Authenticatable
 
         return $count;
     }
+
+    public function playerSum()
+    {
+        return $this->hasOne('App\Models\UserSum');
+    }
+
+    public function totalPlayerSum()
+    {
+        return $this->playerSum()->sum('sum') ?: 0;
+    }
+
+    public function totalPlayerProfit()
+    {
+        $profit = 0;
+        foreach ($this->playerSum()->get() as $playerSum) {
+            $profit += $playerSum->sum * $playerSum->percent / 100;
+        }
+
+        return $profit;
+    }
 }

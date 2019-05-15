@@ -319,7 +319,8 @@ class AffiliatesController extends Controller
     public function users()
     {
         $users = User::where('agent_id', Auth::user()->id)->where('role', self::PLAYER_ROLE)->get();
+        $myKoef = Auth::user()->koefs->koef;
 
-        return view('affiliates.users', compact($users));
+        return view('affiliates.users', compact('myKoef', 'users'));
     }
 }
