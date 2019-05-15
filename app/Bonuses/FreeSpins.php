@@ -86,14 +86,14 @@ class FreeSpins extends \App\Bonuses\Bonus
             //baned country
             if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
                 throw new \Exception('You cannot activate this bonus in' .
-                    ' accordance with clause 1.19 of the bonus terms & conditions.');
+                    ' accordance with clause 2.3 of the bonus terms & conditions.');
             }
 
             //baned country
             if (!is_null($user->country)) {
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
-                        ' accordance with clause 1.19 of the bonus terms & conditions.');
+                        ' accordance with clause 2.3 of the bonus terms & conditions.');
                 }
             }
 
