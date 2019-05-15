@@ -23,7 +23,8 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
-        "deployer/recipes": "^6.2"
+        "deployer/recipes": "^6.2",
+        "laravel/homestead": "^8.4"
     },
     "autoload": {
         "classmap": [
