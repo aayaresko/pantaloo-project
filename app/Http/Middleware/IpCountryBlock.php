@@ -18,11 +18,11 @@ class IpCountryBlock
      */
     public function handle($request, Closure $next)
     {
-        $iso_code = GeneralHelper::visitorCountryCloudFlare();
-
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
+        $iso_code = GeneralHelper::visitorCountryCloudFlare();
+        $ip =  GeneralHelper::visitorIpCloudFlare();
 
-        $registrationStatus = !in_array($iso_code, $disableRegistrationCountry) ? 1 : 0;
+        $registrationStatus = !in_array($iso_code, $disableRegistrationCountry) || $ip == '127.0.0.1' ? 1 : 0;
 
         View::share('registrationStatus', $registrationStatus);
 

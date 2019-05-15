@@ -10,7 +10,7 @@
         "nbobtc/bitcoind-php": "~2.0",
         "simplesoftwareio/simple-qrcode": "^1.4",
         "jenssegers/agent": "^2.3",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/guzzle": "^6.3",
         "browner12/helpers": "^1.0",
         "geoip2/geoip2": "^2.4",
         "tymon/jwt-auth": "^0.5.12",
