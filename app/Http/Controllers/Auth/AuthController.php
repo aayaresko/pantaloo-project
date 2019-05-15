@@ -84,6 +84,20 @@ class AuthController extends Controller
 //             Registration are temporary disabled. Sorry for the inconvenience.']);
 //        }
 
+        //to do create normal controller for auth
+        $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
+        $disableRegistrationCountry = config('appAdditional.disableRegistration');
+
+        if (in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+            return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
+        }
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
+//             Registration are temporary disabled. Sorry for the inconvenience.']);
+//        }
+
         $validator = $this->validator($request->all());
 
         $validator->after(function ($validator) use ($request) {

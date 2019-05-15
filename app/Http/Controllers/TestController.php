@@ -63,7 +63,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
+        dd(GeneralHelper::visitorCountryCloudFlare());
         $ip = GeneralHelper::visitorIpCloudFlare();
         $ipFormatCurrent = inet_pton($ip);
         $currentBonusByIp = UserBonus::where('bonus_id', 1)
