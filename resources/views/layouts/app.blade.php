@@ -389,7 +389,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     @if(app()->getLocale() === 'jp')
                                         <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
                                     @else
-                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>  {{ trans('casino.years_old') }}
                                     @endif
                                 </label>
                             </div>
