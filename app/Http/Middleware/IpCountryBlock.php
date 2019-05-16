@@ -22,7 +22,7 @@ class IpCountryBlock
         $ip =  GeneralHelper::visitorIpCloudFlare();
 
         $registrationStatus = !in_array($iso_code, ['US', 'UA', 'IL', 'XX']) || $ip == '127.0.0.1' || GeneralHelper::isTestMode() ? 1 : 0;
-        
+
         View::share('registrationStatus', $registrationStatus);
 
         return $next($request);
