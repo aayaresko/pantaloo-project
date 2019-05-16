@@ -2,6 +2,8 @@
 return array (
   'title' => 'Casinobit: Bitcoin Casino - №1 Bitcoin Gambling Platform ➤ 110% Bonus',
   'play' => 'Play',
+  'support_title' => 'title_en',
+  'support_subtitle' => 'subtitle_en',
   'free_demo' => 'Free demo',
   'admin' => 'Admin',
   'deposit' => 'Deposit',

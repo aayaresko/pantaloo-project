@@ -1,6 +1,8 @@
 <?php
 return array (
   'title' => 'Casinobit | Биткоин-казино',
+  'support_title' => 'title_ru',
+  'support_subtitle' => 'subtitle_ru',
   'play' => 'Играть',
   'free_demo' => 'Бесплатно',
   'admin' => 'Панель управления',

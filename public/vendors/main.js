@@ -267,10 +267,15 @@ function getCurrentScreen(){
 
 
 
-getCurrentScreen()
+	getCurrentScreen();
 
 
-$(window).on('mousewheel', getCurrentScreen);
+	$(window).on('mousewheel', getCurrentScreen);
+
+	$(".faqWrapper h4").on('click', function(){
+		$(this).next().toggleClass('showFaq');
+		$(this).toggleClass("rotateArrow")
+	});
 
 		
 
