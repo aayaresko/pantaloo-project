@@ -22,6 +22,25 @@
                             <p class="text">
                                 {{ trans('casino.support_how_do_create_my_account_value') }}
                             </p>
+                            <h5>{{ trans('casino.accept_currency')}}</h5>
+                            <p class="text">
+                                {{ trans('casino.accept_currency_value') }}
+                            </p>
+
+                            <h5>{{ trans('casino.support.buy_bitcoins')}}</h5>
+                            <p class="text">
+                                {{ trans('casino.support.buy_bitcoins_value') }}
+                            </p>
+
+                            <h5>{{ trans('casino.withdrawal')}}</h5>
+                            <p class="text">
+                                {{ trans('casino.withdrawal_value') }}
+                            </p>
+
+                            <h5>{{ trans('casino.use_game_list')}}</h5>
+                            <p class="text">                   
+                                {{ trans('casino.use_game_list_value') }}
+                            </p>
                         </div>
 
                         <div class="textWrapper">

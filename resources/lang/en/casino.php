@@ -74,6 +74,17 @@ return array (
   'support.forgotten_password_value' => 'The quickest way is to create a new password by clicking the ‘Forgot Password?’ link. We will send an email that will direct you to a new link. Then you can enter a new password for you CasinoBit.io account. Alternatively, you can contact our customer support either via the Live Chat option on the site or by emailing us at support@casinobit.io. We will be more than happy to assist you further.',
   'support.buy_bitcoins' => 'Where can I purchase bitcoins?',
   'support.buy_bitcoins_value' => 'There are plenty of places that allow you to buy and sell bitcoins. Online exchanges include Coinbase, Bitstamp, and Bitpanda.',
+
+  'withdrawal' => 'How long will my withdrawal take?',
+  'withdrawal_value' => 'Within one hour.
+  CasinoBit.io endeavours to pay out funds immediately, however some withdrawals may take longer than others.',
+  'use_game_list' => 'Which games can I use my Free Spins on?',
+  'use_game_list_value' => 'You can use Free Spins to play Slots.
+    1) Activate your Welcome Bonus.
+    2) Go to the “Games” page.
+    3) Click on the “FREE-SPIN GAMES” button to filter out the games.
+    4) Pick the free-spin game you like most and have fun.',
+
   'support.games_fair' => 'Are the games fair?',
   'support.games_fair_value' => 'Our games are 100% fair. To make sure our words are true, each player can check our provability fair widget. All the games are regulated under the license of Curacao.',
   'account' => 'Account',
@@ -124,7 +135,9 @@ return array (
   'support_account_where_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell bitcoins. Online exchanges include Coinbase, Bitstamp, and Bitpanda.',
   'support_most_popular' => 'Most Popular',
   'support_how_do_create_my_account' => 'How do I create my CasinoBit.io account?',
-  'support_how_do_create_my_account_value' => 'To get started, click the \'Registration\' button in the upper left corner and fill in all the required fields. We will send you an email with a verification link to verify your email address. Once all this is done, your account will be fully active.',
+  'support_how_do_create_my_account_value' => 'To get started, click the “Registration” button in the upper right corner and fill in all the required fields. We will send you an email with a confirmation link to verify your email address. Once all this is done, your account will become fully active.',
+  'accept_currency' => 'What currencies does CasinoBit.io accept?',
+  'accept_currency_value' => 'We accept bitcoins only.',
   'support_can_i_purchase_bitcoins_value' => 'There are plenty of places that allow you to buy and sell bitcoins. Online exchanges include Coinbase, Bitstamp, and Bitpanda.',
   'support_what_currencies_cryptocurrencies' => 'What currencies and cryptocurrencies do you accept?',
   'support_what_currencies_cryptocurrencies_value' => 'We accept bitcoins only.',
