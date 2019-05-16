@@ -22,8 +22,8 @@ add('shared_dirs', []);
 // Writable dirs by web server 
 add('writable_dirs', []);
 
-before('deploy', 'slack:notify');
-after('success', 'slack:notify:success');
+//before('deploy', 'slack:notify');
+//after('success', 'slack:notify:success');
 
 //set('slack_webhook', 'https://hooks.slack.com/services/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');
 set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpSfQ');
