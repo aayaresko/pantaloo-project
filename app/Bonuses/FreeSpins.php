@@ -78,13 +78,15 @@ class FreeSpins extends \App\Bonuses\Bonus
             //temporary
 
             $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+            $disableRegistration = config('appAdditional.disableRegistration');
+
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
 
             $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipFormatCurrent = inet_pton($ipCurrent);
 
             //baned country
-            if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
+            if (in_array($codeCountryCurrent, array_merge($banedBonusesCountries, $disableRegistration))) {
                 throw new \Exception('You cannot activate this bonus in' .
                     ' accordance with clause 2.3 of the bonus terms & conditions.');
             }

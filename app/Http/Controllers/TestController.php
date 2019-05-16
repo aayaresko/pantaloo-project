@@ -63,6 +63,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+        $disableRegistration = config('appAdditional.disableRegistration');
+        dd(array_merge($banedBonusesCountries, $disableRegistration));
+        dd(2);
         $users = User::where('bitcoin_address', null)->get();
         dd($users);
         dump(count($users));
