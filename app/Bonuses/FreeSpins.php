@@ -644,7 +644,13 @@ class FreeSpins extends \App\Bonuses\Bonus
             if (isset($this->dataBonus['wagered_deposit']) and (int)$this->dataBonus['wagered_deposit'] === 1) {
                 $currentWagerAmount = isset($this->dataBonus['wagered_amount']) ?
                     (float)$this->dataBonus['wagered_amount'] : 0;
+                
                 $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+
+                $totalDeposit = (float)$this->dataBonus['total_deposit'];
+                if ($totalDeposit < $currentWager) {
+                    $currentWager = $totalDeposit;
+                }
             } else {
                 $currentWager = 0;
             }
@@ -776,10 +782,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
 
             //update status deposit check
-            if ($this->dataBonus['total_deposit'] >= $this->minDeposit) {
-                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
-                    $this->dataBonus['wagered_deposit'] = 1;
-                }
+            if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
+                $this->dataBonus['wagered_deposit'] = 1;
             }
 
             UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);

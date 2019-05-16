@@ -7,6 +7,7 @@ use App\Bonus;
 use App\ModernExtraUsers;
 use App\User;
 use App\UserBonus;
+use Helpers\BonusHelper;
 use Illuminate\Support\Facades\Log;
 
 
@@ -47,28 +48,13 @@ class UserDataResolver
         $bonusWagerString = $depositWagerString = '-';
 
         if ($userBonus) {
-
-            //to do FIX THIS!
-            //to do helper - delete this lines and from view bonus
-            $dataBonus = $userBonus->data;
-
-            $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
-            $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
-
-            $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
-
-            if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
-                $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
-            } else {
-                $depositWager = 0;
-            }
-
-            $curreny = config('app.currencyCode');
+            $bonusStatistics = BonusHelper::bonusStatistics($userBonus);
+            $currency = config('app.currencyCode');
 
             $depositWagerString = '-';
-            $bonusWagerString = $bonusWagerUser . ' / ' . $bonusWager . $curreny;
+            $bonusWagerString = $bonusStatistics['bonusWager']['real'] . ' / ' . $bonusStatistics['bonusWager']['necessary'] . $currency;
             if ($userBonus->bonus_id == 1) {
-                $depositWagerString = $depositWagerUser . ' / ' . $depositWager . $curreny;
+                $depositWagerString = $bonusStatistics['depositWager']['real'] . ' / ' . $bonusStatistics['depositWager']['necessary'] . $currency;
             }
         }
 

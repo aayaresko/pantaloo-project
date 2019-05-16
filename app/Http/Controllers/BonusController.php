@@ -27,10 +27,13 @@ class BonusController extends Controller
         });
 
         $active_bonus = Auth::user()->bonuses()->first();
+
+        $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
         
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
+            'bonusStatistics' => $bonusStatistics
         ]);
     }
 
