@@ -6,6 +6,7 @@ namespace App\Providers\EmailChecker;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Helpers\GeneralHelper;
 
 class EmailChecker
 {
@@ -14,6 +15,9 @@ class EmailChecker
 
     public function isInvalidEmail($email, $default = false)
     {
+        if (GeneralHelper::isTestMode()){
+            return false;
+        }
         if (!empty($email)) {
             $url = $this->prepareUrl($email);
 

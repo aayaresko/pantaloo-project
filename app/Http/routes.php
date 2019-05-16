@@ -13,8 +13,11 @@
 
 use App\Jobs\IntercomCreateUpdateUser;
 
-Route::get('beta/test', function () {
-    return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
+Route::get('testmode', function (\Illuminate\Http\Request $request) {
+    $testmode = !$request->cookie('testmode', false);
+
+    //return the response
+    return redirect('')->withCookie(cookie('testmode', $testmode));
 });
 
 //for optimization add array keep all language in config

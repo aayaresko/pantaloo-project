@@ -3,6 +3,8 @@
 namespace Helpers;
 
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 
 class GeneralHelper
@@ -177,5 +179,9 @@ class GeneralHelper
             }
         }
         return $lang;
+    }
+
+    public static function isTestMode(){
+        return Cookie::get('testmode', false);
     }
 }
