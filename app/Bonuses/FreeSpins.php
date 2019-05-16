@@ -78,19 +78,22 @@ class FreeSpins extends \App\Bonuses\Bonus
             //throw new \Exception('Bonus is temporarily unavailable');
             //temporary
 
+            $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+            $disableRegistration = config('appAdditional.disableRegistration');
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
 
             $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipFormatCurrent = inet_pton($ipCurrent);
 
             //baned country
-            if (in_array($codeCountryCurrent, $banedBonusesCountries)) {
+            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent,
+                    array_merge($banedBonusesCountries, $disableRegistration))) {
                 throw new \Exception('You cannot activate this bonus in' .
                     ' accordance with clause 2.3 of the bonus terms & conditions.');
             }
 
             //baned country
-            if (!is_null($user->country)) {
+            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
                 if (in_array($user->country, $banedBonusesCountries)) {
                     throw new \Exception('You cannot activate this bonus in' .
                         ' accordance with clause 2.3 of the bonus terms & conditions.');
@@ -125,7 +128,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 ->where('ip_address', $ipFormatCurrent)
                 ->withTrashed()->count();
 
-            if ($currentBonusByIp > 0) {
+            if (!GeneralHelper::isTestMode() && $currentBonusByIp > 0) {
                 throw new \Exception('You cannot activate this bonus in accordance' .
                     ' with clause 1.18 of the bonus terms & conditions');
             }
@@ -141,8 +144,8 @@ class FreeSpins extends \App\Bonuses\Bonus
             $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
             //89.39.107.197
-            //temporary for test
-            if ($ipCurrent != '89.39.107.197') {
+
+            if (!GeneralHelper::isTestMode() && $ipCurrent != '89.39.107.197') {
                 if (isset($responseIpQualityJson['success'])) {
                     if ($responseIpQualityJson['success'] == true) {
                         if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
@@ -644,7 +647,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             if (isset($this->dataBonus['wagered_deposit']) and (int)$this->dataBonus['wagered_deposit'] === 1) {
                 $currentWagerAmount = isset($this->dataBonus['wagered_amount']) ?
                     (float)$this->dataBonus['wagered_amount'] : 0;
-                
+
                 $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
 
                 $totalDeposit = (float)$this->dataBonus['total_deposit'];

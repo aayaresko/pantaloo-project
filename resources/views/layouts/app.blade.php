@@ -20,8 +20,8 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.6" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -29,6 +29,7 @@
    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
    <link rel="manifest" href="/site.webmanifest">
+   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8932ff">
    <meta name="msapplication-TileColor" content="#8932ff">
    <meta name="theme-color" content="#ffffff">
 
@@ -40,7 +41,7 @@
     })(window,document,'script','dataLayer','GTM-5MGSS83');</script>
     <!-- End Google Tag Manager -->
 </head>
-<body>
+<body {!! Cookie::get('testmode') ? 'style="border:#cccc00 dashed"' : '' !!}>
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MGSS83"
@@ -388,7 +389,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     @if(app()->getLocale() === 'jp')
                                         <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
                                     @else
-                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>  {{ trans('casino.years_old') }}
                                     @endif
                                 </label>
                             </div>
