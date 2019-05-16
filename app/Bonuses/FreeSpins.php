@@ -332,6 +332,7 @@ class FreeSpins extends \App\Bonuses\Bonus
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $bonusLimit = self::$maxAmount;
+        $whoClose = ($mode == 0) ? 'by game' : 'by balance';
 
         $rawLog = DB::connection('logs')->table('bonus_logs')
             ->where('bonus_id', '=', $activeBonus->id)
@@ -436,15 +437,15 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                 event(new CloseBonusEvent($user, 'welcome bonus'));
                 event(new WagerDoneEvent($user));
-
+                
                 $response = [
                     'success' => true,
-                    'message' => 'Bonus to real transfer'
+                    'message' => 'Bonus to real transfer. Close:' . $whoClose
                 ];
             } else {
                 $response = [
                     'success' => false,
-                    'message' => 'The condition is not satisfied'
+                    'message' => 'The condition is not satisfied' . $whoClose
                 ];
             }
         } catch (\Exception $e) {
@@ -453,7 +454,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $errorMessage = $e->getMessage();
             $response = [
                 'success' => false,
-                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage . $whoClose
             ];
 
             if ($errorCode === self::SPECIAL) {

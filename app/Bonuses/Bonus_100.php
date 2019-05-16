@@ -299,6 +299,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $whoClose = ($mode == 0) ? 'by game' : 'by balance';
 
         $rawLog = DB::connection('logs')->table('bonus_logs')
             ->where('bonus_id', '=', $activeBonus->id)
@@ -373,7 +374,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
                 $response = [
                     'success' => true,
-                    'message' => 'Done. Close'
+                    'message' => 'Done. Close' . $whoClose
                 ];
             } else {
                 throw new \Exception('The condition is not satisfied');
@@ -385,7 +386,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
             $errorMessage = $e->getMessage();
             $response = [
                 'success' => false,
-                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage . $whoClose
             ];
 
             if ($errorCode === self::SPECIAL) {
