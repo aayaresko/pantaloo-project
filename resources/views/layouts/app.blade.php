@@ -358,6 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     {{csrf_field()}}
                     <input type="hidden" name="password_confirmation" value="">
                     <input type="hidden" name="name" value="no_name">
+                    <input type="hidden" name="ref" value="{{request()->ref}}">
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="email" class="email-input red" placeholder="{{ trans('casino.email_address') }}" name="email">

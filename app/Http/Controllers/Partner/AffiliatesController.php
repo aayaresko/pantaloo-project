@@ -308,8 +308,11 @@ class AffiliatesController extends Controller
     public function changeKoef($id, Request $request)
     {
         $partner = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->where('id', $id)->firstOrFail();
-        $newKoef = new AgentsKoef();
-        $newKoef->user_id = $partner->id;
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
         $newKoef->koef = $request->koef;
         $newKoef->save();
 
@@ -318,7 +321,7 @@ class AffiliatesController extends Controller
 
     public function users()
     {
-        $users = User::where('agent_id', Auth::user()->id)->where('role', self::PLAYER_ROLE)->get();
+        $users = User::where('agent_id', Auth::user()->id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
         $myKoef = Auth::user()->koefs->koef;
 
         return view('affiliates.users', compact('myKoef', 'users'));

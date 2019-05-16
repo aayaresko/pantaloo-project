@@ -12,7 +12,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        My current commission: {{$myKoef}}
+                        My current <a href="#" class="show-history_percent" title="percent history">commission:</a> {{$myKoef}}
+                        <ul id="show-history_percent" style="display: none">
+                            @foreach(Auth::user()->allKoefs as $koef)
+                            <li>{{$koef->koef}} ({{$koef->created_at->format('d.m.Y')}})</li>
+                            @endforeach
+                        </ul>
                     </div>
                     <div class="col-lg-12">
                         <div class="card-box">
@@ -80,6 +85,9 @@
             $('.toggle-change').click(function () {
                 $(this).parent().find('form').toggle();
             });
+            $('.show-history_percent').click(function () {
+                $('#show-history_percent').toggle();
+            })
         });
     </script>
 @endsection

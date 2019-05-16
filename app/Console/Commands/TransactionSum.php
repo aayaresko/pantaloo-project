@@ -76,6 +76,7 @@ class TransactionSum extends Command
                         $trSum = new UserSum();
                         $trSum->user_id = $user->id;
                         $trSum->parent_id = $agent->id;
+                        $trSum->percent = $agent->koefs->koef;
                         $trSum->sum = $transactions->total;
                         $trSum->created_at = $now;
                         $trSum->save();

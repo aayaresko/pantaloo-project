@@ -146,7 +146,7 @@ class User extends Authenticatable
 
         $available = $profit - $this->payments()->sum('sum');
 
-        if($available <= 0) return 0;
+        if($available <= 0) return 2;
 
         return round($available, 5, PHP_ROUND_HALF_DOWN);
     }
@@ -441,5 +441,22 @@ class User extends Authenticatable
         }
 
         return $profit;
+    }
+
+    public function todayPlayerSum()
+    {
+         $total = $this->transactions()
+            ->select(DB::raw('sum(`sum`) as total'))
+            ->where('transactions.sum', '<>', 0)
+            ->whereIn('type', [1, 2])
+            ->where('created_at', '>=', Carbon::now()->toDateString())
+            ->first();
+
+         return $total->total ?: 0;
+    }
+
+    public function countries()
+    {
+        return $this->hasOne('App\Country', 'code', 'country');
     }
 }
