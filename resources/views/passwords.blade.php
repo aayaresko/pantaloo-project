@@ -101,140 +101,39 @@
                         </div>
 
                         <div id="tabs-3">
+                            <div class="middle-block">
                             @if(Auth::user()->isConfirmed())
-                                Email confirmed
+                                <!-- Email confirmed -->
+                                <div class="emailWrapper confirmd">
+                                    ivanov.alexander@gmail.com
+                                </div>
+                                <p class="emailConfInfo">
+                                    Confirmed!
+                                </p>
+                                <p class="supportContact">
+                                    If you need to change your email address, please
+                                    <a href="#">contact support.</a>
+                                </p>
+
+                               <!-- end Email confirmed -->
                             @else
-                                <div class="row">
-                                    <div class="col-sm-12">
-
-                                        <div class="single-section">
-                                            <h3 class="section-title">{{ trans('casino.email_confirmation') }}</h3>
-                                            <form method="POST" action="{{ route('email.confirm') }}">
-                                                {{ csrf_field() }}
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td><span class="text">{{trans('casino.email')}}</span></td>
-                                                        <td>
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="field-block email">
-                                                                        <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                <br>
-                                                <div class="btn-block">
-                                                    <button class="update-btn">{{trans('casino.send_mail')}}</button>
-                                                </div>
-                                            </form>
-                                        </div>
+    
+                                <form method="POST" action="{{ route('email.confirm') }}">
+                                    {{ csrf_field() }}
+                                    <div class="emailWrapper notConfirmd">
+                                        <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">         
                                     </div>
-                                </div>
+                                    <p class="emailConfInfo">
+                                        Email not confirmed! <span>Don't receive email?</span><button class="update-btn">{{trans('casino.send_mail')}}</button>
+                                    </p>
+                                    <p class="supportContact">If you need to change your email address, please
+                                        <a href="#">contact support.</a>
+                                    </p>
+                                </form>
+                                       
                             @endif
-                        </div>
-                    </div>
-
-                    <div class="setting-accordion">
-                        <h3 class="setting-title">{{ trans('casino.change_password') }}</h3>
-                        <div>
-                            <form action="{{ route('password') }}" method="POST">
-                                {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="col-sm-12">
-
-                                        <div class="single-section">
-                                            <h3 class="section-title">{{ trans('casino.change_password') }}</h3>
-                                            <table>
-                                                <tbody>
-                                                <tr>
-                                                    <td><span class="text">{{ trans('casino.old_password') }}</span></td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <div class="field-block">
-                                                                    <input type="text" name="old_password" placeholder="{{ trans('casino.old_password') }}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="text">{{ trans('casino.new_password') }}</span></td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <div class="field-block">
-                                                                    <input type="text" name="password" placeholder="{{ trans('casino.password') }}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="text">{{ trans('casino.confirm_password') }}</span></td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <div class="field-block">
-                                                                    <input type="text" name="password_confirmation" placeholder="{{ trans('casino.confirmation') }}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="btn-block">
-                                            <button class="update-btn">{{trans('UPDATE')}}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <h3 class="setting-title">{{trans('Confirm email')}}</h3>
-                        <div>
-                            @if(Auth::user()->isConfirmed())
-                                Email confirmed
-                            @else
-                                <div class="row">
-                                    <div class="col-sm-12">
-
-                                        <div class="single-section">
-                                            <h3 class="section-title">{{trans('Email confirmation')}}</h3>
-                                            <form method="POST" action="{{route('email.confirm')}}">
-                                                {{csrf_field()}}
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td><span class="text">{{trans('Email')}}</span></td>
-                                                        <td>
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="field-block email">
-                                                                        <input type="email" name="email" placeholder="{{trans('Email')}}" value="{{Auth::user()->email}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                <br>
-                                                <div class="btn-block">
-                                                    <button class="update-btn">{{ mb_convert_case(trans('casino.update') , MB_CASE_UPPER) }}</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                            <!-- enif -->
+                            </div>
                         </div>
                     </div>
                 </div>

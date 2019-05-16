@@ -18,20 +18,18 @@ $(document).ready(function(){
 });
 
 function controlsInit(){
-	if( $(window).width() > 1080 ){
+	
 		$('.setting-tabs').each(function(){
-			$(this).tabs({
-				show: { effect: "blind", duration: 800 }
-			});
+			$(this).tabs();
 		})
-	} else {
-		$('.setting-accordion').each(function(){
-			$(this).accordion({
-				active: false,
-				collapsible: true
-			});
-		})
-	}
+	
+		// $('.setting-accordion').each(function(){
+		// 	$(this).accordion({
+		// 		active: true,
+		// 		collapsible: false
+		// 	});
+		// })
+	
 }
 
 function mobMenuInit(){
