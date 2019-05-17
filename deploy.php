@@ -82,7 +82,10 @@ task('get_revision', function(){
 });
 
 task('copy_env', function(){
-    run('sh deployer/initenv.sh');
+//    run('sh deployer/initenv.sh');
+    cd('{{release_path}}');
+    $result = run('sh deployer/initenv.sh');
+    var_dump($result);
 });
 
 before('deploy:vendors', 'copy_env');
