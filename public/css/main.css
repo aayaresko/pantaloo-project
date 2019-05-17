@@ -59,6 +59,17 @@ a {
   font-size: 15px;
   color: #b8a7cd;
 }
+a:hover {
+  color: #b8a7cd;
+  text-decoration: none;
+}
+#registr .block-thumbnail a {
+  text-decoration: underline;
+  text-decoration-color: #765d86;
+}
+#registr .block-thumbnail a:hover {
+  text-decoration: none;
+}
 /* line 9, ../scss/_tipography.scss */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'MyriadPro-Bold', arial, sans-serif;
