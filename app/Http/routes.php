@@ -20,6 +20,12 @@ Route::get('testmode', function (\Illuminate\Http\Request $request) {
     return redirect('')->withCookie(cookie('testmode', $testmode));
 });
 
+Route::get('robots.txt', function(\Illuminate\Http\Request $request){
+    return view('robots', [
+        'host' => $request->getHost()
+    ]);
+});
+
 //for optimization add array keep all language in config
 $languages = Helpers\GeneralHelper::getListLanguage();
 Config::set('getListLanguage', $languages);
