@@ -80,3 +80,9 @@ task('get_revision', function(){
     set('revision', $revision);
     set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
 });
+
+task('copy_env', function(){
+    run('sh deployer/initenv.sh');
+});
+
+before('deploy:vendors', 'copy_env');
