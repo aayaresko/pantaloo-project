@@ -77,7 +77,7 @@ task('snapshot', [
 
 task('get_revision', function(){
     $revision = substr(runLocally('git rev-parse HEAD'),0,7);
-    writeln($revision);
+    writeln($revision.'.zerostage.ga');
     set('revision', $revision);
     set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
 });
