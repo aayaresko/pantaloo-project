@@ -265,12 +265,29 @@ function getCurrentScreen(){
 
 }
 
+	getCurrentScreen()
+
+	$(window).on('mousewheel', getCurrentScreen);
 
 
-getCurrentScreen()
+	// $("#reg-terms h3").on("click", function () {
+    //     $(this).next().slideToggle(500);
+    // });
 
 
-$(window).on('mousewheel', getCurrentScreen);
+    $('.popUpBtnBonus').on('click', function(e){
+        // e.preventDefault();
+        if($('#terms').prop('checked') == false){
+            alert("Not checked!");
+            return;
+        }
+    });
+          
+    $('#terms').on('change', function(){
+
+        $('.popUpBtnBonus').magnificPopup();   
+
+    });
 
 		
 

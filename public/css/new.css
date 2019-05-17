@@ -333,7 +333,7 @@ body .cabinet-block{
 }
 
 #uls p, #reg-terms p{
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
 }
 
 #uls .text, #reg-terms .text {
