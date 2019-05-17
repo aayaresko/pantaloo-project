@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Providers\EmailChecker\EmailChecker;
-use App\Validators\TemporaryMailCheck;
 use DB;
 use App\User;
 use Validator;
@@ -21,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Validators\TemporaryMailCheck;
+use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -75,8 +75,26 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function register(Request $request)
     {
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'agree' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+
 //        $betatest = Cookie::get('betatest');
 //
 //        if ((int)$betatest !== 1) {
@@ -91,31 +109,87 @@ class AuthController extends Controller
         if (in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
-//        $betatest = Cookie::get('betatest');
-//
-//        if ((int)$betatest !== 1) {
-//            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
-//             Registration are temporary disabled. Sorry for the inconvenience.']);
-//        }
 
-        $validator = $this->validator($request->all());
+        $emailChecker = new EmailChecker();
 
-        $validator->after(function ($validator) use ($request) {
-
-            $emailChecker = new EmailChecker();
-
-            if ($emailChecker->isInvalidEmail($request->email)) {
-                $validator->errors()->add('email', 'Please try another email service!');
-            }
-        });
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+        if ($emailChecker->isInvalidEmail($request->email)) {
+            return redirect()->back()->withErrors(['Please try another email service!']);
         }
+        //end validation
 
-        Auth::guard($this->getGuard())->login($this->create($request->all()));
+        //act
+        try {
+            $service = new Service();
+            $address = $service->getNewAddress('common');
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password'])
+            ]);
+
+            $user->bitcoin_address = $address;
+            $user->balance = 0;
+
+            $ip = GeneralHelper::visitorIpCloudFlare();
+            $user->ip = $ip;
+
+            $tracker_id = Cookie::get('tracker_id');
+
+            if ($tracker_id) {
+                $tracker = Tracker::find($tracker_id);
+
+                if ($tracker) {
+                    $user->tracker()->associate($tracker);
+                    $user->agent_id = $tracker->user_id;
+
+                    //set count for this registration
+                    $appAdditional = config('appAdditional');
+                    $eventStatistic = $appAdditional['eventStatistic'];
+                    StatisticalData::create([
+                        'event_id' => $eventStatistic['register'],
+                        'value' => 'register',
+                        'tracker_id' => $tracker->id
+                    ]);
+                    //set count for this registration
+                }
+            }
+
+            //this temporary decision
+            $data['currency'] = 1;
+            $currency = Currency::find($data['currency']);
+
+            if ($currency) {
+                $user->currency_id = $currency->id;
+            }
+
+            $user->save();
+
+            //send email
+            //to do check this
+            $token = hash_hmac('sha256', str_random(40), config('app.key'));
+            $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
+
+            $activation = UserActivation::where('user_id', $user->id)->first();
+
+            if (!$activation) $activation = new UserActivation();
+
+            $activation->user()->associate($user);
+            $activation->token = $token;
+            $activation->activated = 0;
+
+            $activation->save();
+
+            Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
+                $m->to($user->email, $user->name)->subject('Confirm email');
+            });
+
+            $this->dispatch(new SetUserCountry($user));
+
+            Auth::guard($this->getGuard())->login($user);
+        } catch (\Exception $ex) {
+            return redirect()->back()->withErrors(['Something went wrong']);
+        }
 
         return redirect($this->redirectPath());
     }
@@ -126,9 +200,8 @@ class AuthController extends Controller
      * @param array $data
      * @return User
      */
-//    protected function create(array $data)
+
     protected function create(array $data)
-//    protected function create(Request $request)
     {
 //        //temporary
 //        $data = $request->toArray();
