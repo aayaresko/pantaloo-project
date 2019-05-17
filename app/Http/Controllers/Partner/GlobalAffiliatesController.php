@@ -117,9 +117,18 @@ class GlobalAffiliatesController extends Controller
 
             foreach ($items as $user) {
                 $result = collect();
-                $transactionItems = Transaction::where($param['whereTransaction'])
-                    ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = $user->id)")->get();
 
+
+                $userIds = User::where('users.agent_id', $user->id)
+                    ->select('users.id')
+                    ->distinct()
+                    ->join('transactions as t', 't.user_id', '=', 'users.id')
+                    ->where('t.type', 3)
+                    ->pluck('id')->toArray();
+
+                $transactionItems = Transaction::where($param['whereTransaction'])
+                    ->whereIn('user_id', $userIds)->get();
+                
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
@@ -153,8 +162,15 @@ class GlobalAffiliatesController extends Controller
 
             foreach ($items as $user) {
                 $result = collect();
+                $userIds = User::where('users.agent_id', $user->id)
+                    ->select('users.id')
+                    ->distinct()
+                    ->join('transactions as t', 't.user_id', '=', 'users.id')
+                    ->where('t.type', 3)
+                    ->pluck('id')->toArray();
+
                 $transactionItems = Transaction::where($param['whereTransaction'])
-                    ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = $user->id)")->get();
+                    ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);

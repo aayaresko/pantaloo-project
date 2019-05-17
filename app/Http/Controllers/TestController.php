@@ -63,7 +63,17 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        $transactionItems = Transaction::where([
+            ['transactions.created_at', '>=', '2019-04-01 00:14:32'],
+            ['transactions.created_at', '<=', '2019-04-30 00:14:32'],
+        ])
+            ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
+        dd($transactionItems);
+        $user =User::where('id', 14)->first();
 
+        $deposit = $user->transactions()->where('type', 3)->count();
+        dd($deposit);
         $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
         $disableRegistration = config('appAdditional.disableRegistration');
         dd(array_merge($banedBonusesCountries, $disableRegistration));
