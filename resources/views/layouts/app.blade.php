@@ -9,7 +9,6 @@
     <title>@yield('title', trans('casino.title'))</title>
 
     <meta name="description" content="@yield('description', '')">
-    <meta name="keywords" content="@yield('keywords', '')">
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">

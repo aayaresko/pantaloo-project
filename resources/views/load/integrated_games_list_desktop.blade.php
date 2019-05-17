@@ -29,5 +29,9 @@
 </div>
 
 <div class="paginationGame">
+   <button class="moreGames">load more</button>
+</div>
+
+<div class="paginationGame">
     {{$gameList->render()}}
 </div>

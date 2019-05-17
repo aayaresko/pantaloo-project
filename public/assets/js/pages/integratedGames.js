@@ -57,6 +57,15 @@ let events = function () {
         getListGames();
     });
 
+    $('body').on('click', '.moreGames', function (e) {
+        console.log(location.host + '/integratedGamesJson?page=2')
+        let url = new URL(location.origin +'/integratedGamesJson?page=2');
+        let page = Number(url.searchParams.get('page'));
+        listGameParams.page = page;
+        
+        getListGames();
+    });
+
 
     $('.type_of_game').on('change', function (e) {
         e.preventDefault();
@@ -108,6 +117,12 @@ function handleImage(img) {
     $(img).attr("src", dummy);
 }
 
+
+let mobile = false
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    mobile = true
+}
+
 function getListGames() {
     $('.preloaderCommon').show();
     $.ajax({
@@ -121,8 +136,12 @@ function getListGames() {
             //$(".insertGamesMobile").empty();
             //insert
             $('html,body').scrollTop(0);
-            $(".insertGames").html(response.desktop);
-            $(".insertGamesMobile").html(response.mobile);
+
+            if (mobile) {
+                $(".insertGames").html(response.mobile);              
+            } else {
+                $(".insertGames").html(response.desktop);
+            }                 
             $('.preloaderCommon').hide();
             //resizeIframe();
         }
@@ -148,10 +167,7 @@ function getGame(url) {
     //console.log(statusGameRoom);
     
 
-    let mobile = false
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        mobile = true
-    }
+    
 
     if(!mobile) {
         $('.video-popup').addClass('popup-slot');
