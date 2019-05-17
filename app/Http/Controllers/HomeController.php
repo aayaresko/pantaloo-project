@@ -45,7 +45,9 @@ class HomeController extends Controller
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
         //save parameters
-        $url = url("/$lang") . $_SERVER['REQUEST_URI'];
+        $secure = env('APP_ENV') !== 'local';
+
+        $url = url("/$lang", [], $secure) . $_SERVER['REQUEST_URI'];
         return redirect($url);
     }
 }
