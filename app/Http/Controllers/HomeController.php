@@ -46,7 +46,7 @@ class HomeController extends Controller
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
 
-        $url = url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'];
+        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'], '/');
         return redirect($url);
     }
 }
