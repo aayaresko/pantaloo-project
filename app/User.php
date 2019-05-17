@@ -283,7 +283,7 @@ class User extends Authenticatable
         ];
 
         $transactions = $this->transactions()->where('created_at', '>=', $from)->where('created_at', '<=', $to)->get();
-
+        //to do fix this
         $deposit = $this->transactions()->where('type', 3)->count();
 
         foreach ($transactions as $transaction)
