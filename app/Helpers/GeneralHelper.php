@@ -87,6 +87,7 @@ class GeneralHelper
     static public function statistics($transactions, $cpumBtcLimit)
     {
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
+        $deposit = 0;
 
         $stat = [
             'deposits' => 0,
@@ -114,6 +115,10 @@ class GeneralHelper
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
 
+                if ($deposit == 0) {
+                    $deposit = 1;
+                }
+
             } elseif ($transaction->type == 1 or $transaction->type == 2) {
 
                 if ($transaction->type == 1) {
@@ -124,17 +129,25 @@ class GeneralHelper
                     $stat['wins'] = $stat['wins'] + $transaction->sum;
                 }
 
-                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
-
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
+
+
+                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
 
                 $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum *
                     $transaction->agent_commission / 100;
+
 
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1) * $transaction->sum - (-1) *
                     $transaction->sum * $transaction->agent_commission / 100;
             }
         }
+
+        if ($deposit == 0) {
+            $stat['revenue'] = 0;
+            $stat['profit'] = 0;
+        }
+
 
         if ($stat['bet_count'] != 0) {
             $stat['avg_bet'] = $stat['bets'] / $stat['bet_count'];
@@ -181,7 +194,8 @@ class GeneralHelper
         return $lang;
     }
 
-    public static function isTestMode(){
+    public static function isTestMode()
+    {
         return Cookie::get('testmode', false);
     }
 }
