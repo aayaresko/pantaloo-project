@@ -117,8 +117,7 @@ class GlobalAffiliatesController extends Controller
 
             foreach ($items as $user) {
                 $result = collect();
-
-
+                
                 $userIds = User::where('users.agent_id', $user->id)
                     ->select('users.id')
                     ->distinct()
@@ -128,7 +127,7 @@ class GlobalAffiliatesController extends Controller
 
                 $transactionItems = Transaction::where($param['whereTransaction'])
                     ->whereIn('user_id', $userIds)->get();
-                
+
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 $result->push($statistics);
