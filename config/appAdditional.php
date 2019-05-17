@@ -164,4 +164,11 @@ return [
 
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
+    
+    'rawLogKey' => [
+        'freeSpins1' => 20, //plus id bonus
+        'depositBonus2' => 30,
+        'depositBonus3' => 40,
+        'depositBonus4' => 50,
+    ]
 ];

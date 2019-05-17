@@ -56,7 +56,9 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
-
+        //dd('appAdditional.rawLogKey.freeSpins' . 1);
+        dd(config('appAdditional.rawLogKey.freeSpins' . 1));
+        dd(config('appAdditional.rawLogKey.bonuses'));
         $user = User::where('id', 136)->first();
 
         dd($user);
