@@ -21,7 +21,7 @@ class IpCountryBlock
         $iso_code = GeneralHelper::visitorCountryCloudFlare();
         $ip =  GeneralHelper::visitorIpCloudFlare();
 
-        $registrationStatus = !in_array($iso_code, ['US', 'UA', 'CA', 'IL', 'XX']) || $ip == '127.0.0.1' ? 1 : 0;
+        $registrationStatus = !in_array($iso_code, ['US', 'UA', 'IL', 'XX']) || $ip == '127.0.0.1' || GeneralHelper::isTestMode() ? 1 : 0;
 
         View::share('registrationStatus', $registrationStatus);
 

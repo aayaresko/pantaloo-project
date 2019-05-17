@@ -40,7 +40,7 @@
     })(window,document,'script','dataLayer','GTM-5MGSS83');</script>
     <!-- End Google Tag Manager -->
 </head>
-<body>
+<body {!! Cookie::get('testmode') ? 'style="border:#cccc00 dashed"' : '' !!}>
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MGSS83"
