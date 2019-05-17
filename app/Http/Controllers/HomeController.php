@@ -47,6 +47,6 @@ class HomeController extends Controller
         $lang = config('currentLang');
 
         $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'], '/');
-        return redirect($url);
+        return redirect($url, 301);
     }
 }
