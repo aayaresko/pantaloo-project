@@ -18,7 +18,6 @@
 
 
 .bookof {
-  font-family: "MyriadPro-BoldCond", sans-serif;
   background-image: url(../media/images/bg/bg-1.png);
   background-repeat: no-repeat;
   padding: 18px 0 43px 0;
@@ -75,7 +74,6 @@
 .bookof .sub-text {
   font-size: 48px;
   text-transform: uppercase;
-  font-family: "MyriadPro-Cond", sans-serif;
   position: relative;
   left: 4px;
   display: block;
@@ -99,7 +97,6 @@
   transform: rotate(-90deg);
   width: 250px;
   font-size: 30px;
-  font-family: "MyriadPro-Cond", sans-serif;
   text-transform: uppercase;
   position: absolute;
   top: 93px;
@@ -112,7 +109,6 @@
 }
 
 .usl-link {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   text-decoration: none;
   text-transform: uppercase;
   font-size: 14px;
@@ -120,7 +116,6 @@
   margin-left: 20px;
   position: relative;
   top: -8px;
-  letter-spacing: 1px;
   transform: all .25s;
 }
 .usl-link:hover {
@@ -133,12 +128,14 @@
 }
 
 .btn-play-action {
+  font-family: 'MyriadPro-Bold',
+  arial,
+  sans-serif;
   display: inline-block;
   height: 33px;
   width: 124px;
   position: relative;
   margin-top: -3px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -197,6 +194,9 @@
   top: -17px;
 }
 .actions .ac-wrap .usl-link {
+  font-family: 'MyriadPro-Bold',
+  arial,
+  sans-serif;
   margin-left: 0;
   display: inline-block;
   text-align: center;
@@ -225,7 +225,6 @@
   background-image: url(../assets/images/bonuses/promo-4-bg-min.jpg);
 }
 .actions .block-bonus {
-  font-family: "MyriadPro-BoldCond", sans-serif;
   background-repeat: no-repeat;
   box-shadow: 2.5px 4.33px 25px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
@@ -278,13 +277,11 @@
   line-height: 70px;
 }
 .actions .block-bonus .number-block .lett {
-  font-family: "MyriadPro-Cond", sans-serif;
   position: absolute;
   top: 0;
   font-size: 36px;
 }
 .actions .block-bonus .number-block .descr {
-  font-family: "MyriadPro-Cond", sans-serif;
   text-transform: uppercase;
   position: relative;
   font-size: 36px;
@@ -326,12 +323,10 @@ body .cabinet-block{
   border-radius: 10px;
   max-height: 900px;
   overflow-x: auto;
-  font-size: 18px;
 }
 #uls h3, #reg-terms h3 {
-  font-family: "MyriadPro-Cond", sans-serif;
   text-transform: uppercase;
-  font-size: 48px;
+  font-size: 17px;
   /* margin-top: 0; */
   line-height: 46px;
   margin-bottom: 25px;
@@ -345,7 +340,6 @@ body .cabinet-block{
   position: relative;
   padding-left: 30px;
   font-size: 18px;
-  font-family: "MyriadPro-Cond", sans-serif;
   margin-bottom: 25px;
 }
 #uls .text .num, #reg-terms .text .num {
@@ -358,7 +352,6 @@ body .cabinet-block{
   color: #5924a2;
   font-size: 24px;
   text-transform: uppercase;
-  font-family: "MyriadPro-Cond", sans-serif;
   margin-left: -38px;
 }
 

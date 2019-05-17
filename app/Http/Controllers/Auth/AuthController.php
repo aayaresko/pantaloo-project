@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Providers\EmailChecker\EmailChecker;
 use App\Validators\TemporaryMailCheck;
 use DB;
 use App\User;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 
 
 class AuthController extends Controller
@@ -84,7 +84,30 @@ class AuthController extends Controller
 //             Registration are temporary disabled. Sorry for the inconvenience.']);
 //        }
 
+        //to do create normal controller for auth
+        $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
+        $disableRegistrationCountry = config('appAdditional.disableRegistration');
+
+        if (in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+            return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
+        }
+//        $betatest = Cookie::get('betatest');
+//
+//        if ((int)$betatest !== 1) {
+//            return redirect()->back()->withErrors(['Due to high demand we are experiencing technical difficulties.
+//             Registration are temporary disabled. Sorry for the inconvenience.']);
+//        }
+
         $validator = $this->validator($request->all());
+
+        $validator->after(function ($validator) use ($request) {
+
+            $emailChecker = new EmailChecker();
+
+            if ($emailChecker->isInvalidEmail($request->email)) {
+                $validator->errors()->add('email', 'Please try another email service!');
+            }
+        });
 
         if ($validator->fails()) {
             $this->throwValidationException(

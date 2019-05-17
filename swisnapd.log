@@ -1,0 +1,81 @@
+[1;34m[0m
+ [1;34m======================[1;32m SolarWinds Snap Agent Installer [1;34m=======================[0m
+[1;34m  This script will walk you through the installation of SolarWinds Snap Agent.[0m
+[1;34m[0m
+[1;34m  For detailed instructions, FAQ, and full documentation:[0m
+[1;33m   http://docs.appoptics.com[0m
+[1;34m[0m
+[1;34m  If you have any questions or problems, please contact us:[0m
+[1;33m   email: support@appoptics.com[0m
+[1;34m ===============================================================[0m
+
+[1;33mAre you ready to install SolarWinds Snap Agent? (Y/n)[0m
+ [1;34m======================[1;32m SolarWinds Snap Agent Install [1;34m=======================[0m
+[1;32m *  INFO[0m:  Installing the SolarWinds Snap Agent package ...
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+OK
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  javascript-common libargon2-1 libjs-bootstrap libjs-jquery
+  libjs-jquery-metadata libjs-jquery-tablesorter libjs-twitter-bootstrap
+  libltdl7 libpcre2-8-0 libsodium23 libzip4 php-codecoverage php-deepcopy
+  php-doctrine-instantiator php-file-iterator
+  php-phpdocumentor-reflection-docblock php-phpspec-prophecy php-symfony-yaml
+  php-text-template php-timer php-token-stream
+  phpunit-code-unit-reverse-lookup phpunit-comparator phpunit-diff
+  phpunit-environment phpunit-exporter phpunit-global-state
+  phpunit-mock-object phpunit-object-enumerator phpunit-recursion-context
+  phpunit-resource-operations phpunit-version
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  solarwinds-snap-agent
+0 upgraded, 1 newly installed, 0 to remove and 22 not upgraded.
+Need to get 134 MB of archives.
+After this operation, 498 MB of additional disk space will be used.
+Get:1 https://packagecloud.io/solarwinds/swisnap/debian stretch/main amd64 solarwinds-snap-agent amd64 2.4.2.236 [134 MB]
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = "en_US:en",
+	LC_ALL = (unset),
+	LC_CTYPE = "UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_US.UTF-8").
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+Fetched 134 MB in 9s (14.4 MB/s)
+Selecting previously unselected package solarwinds-snap-agent.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 34673 files and directories currently installed.)
+Preparing to unpack .../solarwinds-snap-agent_2.4.2.236_amd64.deb ...
+Unpacking solarwinds-snap-agent (2.4.2.236) ...
+Setting up solarwinds-snap-agent (2.4.2.236) ...
+ [1;34m======================[1;32m SolarWinds Snap Agent Post Install [1;34m=======================
+[1;34m  This script will complete post installation of SolarWinds Snap Agent.[0m
+[1;32m *  INFO[0m: (1) Configuring user and group settings ...
+[1;32m *  INFO[0m: Group solarwinds already exists. No need to create it.
+[1;32m *  INFO[0m: System user solarwinds already exists. No need to create it.
+[1;32m *  INFO[0m: (2) Setting user access rights ...
+[1;33m *  WARN[0m: Unable to find docker group. Docker plugin will not work without solarwinds user being added to docker group.
+Failed to stop swisnapd.service: Unit swisnapd.service not loaded.
+[1;32m *  INFO[0m: (3) Checking if system uses systemd or SysV(/etc/init.d) to manage the services.
+[1;32m *  INFO[0m: Detected that system uses systemd to manage the services.
+[1;32m *  INFO[0m: (4) Reloading configuration for swisnapd service ...
+[1;32m *  INFO[0m: (5) Enabling swisnapd service to be loaded at boot time ...
+Created symlink /etc/systemd/system/multi-user.target.wants/swisnapd.service → /lib/systemd/system/swisnapd.service.
+[1;32m *  INFO[0m: (6) Starting swisnapd service ...
+[1;32m *  INFO[0m: (7) Checking if swisnapd service is running ...
+[1;34mPost installation of [1;32mSolarWinds Snap Agent[1;34m has [1;32mSUCCEEDED[1;34m.[0m
+[1;34m======================[1;32m SolarWinds Snap Agent Post Install Completed [1;34m=======================[0m
+ [1;34m================== [1;32m Congratulations ! [1;34m=======================[0m
+[1;34mThe [1;32mSolarWinds Snap Agent[1;34m is now installed. Package version: [1;32msolarwinds-snap-agent 2.4.2.236[1;34m.[0m
+[1;32mYou should begin seeing metrics in your AppOptics account any moment now.[0m
+[1;33m *  WARN[0m: Unable to find docker group. Docker plugin will not work without solarwinds user being added to docker group.
+
+ [1;34m================== [1;32mInstallation Summary [1;34m=======================[0m
+
+   [1;34mSolarWinds Snap Agent is now running as a system service named [1;32mswisnapd[0m
+   [1;34mThe SolarWinds Snap Agent configuration file is [1;32m/opt/SolarWinds/Snap/etc/config.yaml[0m
+   [1;34mEnable plugins by copying and editing example configurations in [1;32m/opt/SolarWinds/Snap/etc/plugins.d[0m
+

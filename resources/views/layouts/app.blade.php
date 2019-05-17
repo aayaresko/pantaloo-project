@@ -20,8 +20,8 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
+    <link href="/css/new.css?v=1.0.6" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link rel="canonical" href="#" />
 
@@ -29,6 +29,7 @@
    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
    <link rel="manifest" href="/site.webmanifest">
+   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8932ff">
    <meta name="msapplication-TileColor" content="#8932ff">
    <meta name="theme-color" content="#ffffff">
 
@@ -40,7 +41,7 @@
     })(window,document,'script','dataLayer','GTM-5MGSS83');</script>
     <!-- End Google Tag Manager -->
 </head>
-<body>
+<body {!! Cookie::get('testmode') ? 'style="border:#cccc00 dashed"' : '' !!}>
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MGSS83"
@@ -389,7 +390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     @if(app()->getLocale() === 'jp')
                                         <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
                                     @else
-                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                        {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>  {{ trans('casino.years_old') }}
                                     @endif
                                 </label>
                             </div>
@@ -633,36 +634,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             dateType: 'json',
             success: function(data)
             {
-                $('span.deposit-value').html(data.balance);
-                $('span.value').html(data.balance);
+                if (data.success == true) {
+                    $('span.deposit-value').html(data.balance);
+                    $('span.value').html(data.balance);
 
-                if(data.free_spins > 0)
-                {
-                    $('span.free_spins_balance').show();
-                    $('b.spins_sum').html(data.free_spins);
-                }
-                else
-                {
-                    $('span.free_spins_balance').hide();
-                }
+                    if(data.free_spins > 0)
+                    {
+                        $('span.free_spins_balance').show();
+                        $('b.spins_sum').html(data.free_spins);
+                    }
+                    else
+                    {
+                        $('span.free_spins_balance').hide();
+                    }
 
-                if(data.deposit)
-                {
-                    ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
-                    $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
-                    $('.simple-popup').addClass('active');
-                    $('.simple-popup .popup-entry').addClass('active');
-                    //alert('We got deposit from you ' + data.deposit);
-                }
+                    if(data.deposit)
+                    {
+                        ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+                        $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
+                        $('.simple-popup').addClass('active');
+                        $('.simple-popup .popup-entry').addClass('active');
+                        //alert('We got deposit from you ' + data.deposit);
+                    }
 
-                if(data.balance_info)
-                {
-                    $(".balancebox-getbalance").html(data.balance_info.balance);
-                    $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
-                    $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
-                }
+                    if(data.balance_info)
+                    {
+                        $(".balancebox-getbalance").html(data.balance_info.balance);
+                        $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
+                        $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
+                    }
 
-                setTimeout(setBalance, 1000);
+                    setTimeout(setBalance, 1000);
+                } else {
+                    setTimeout(setBalance, 5000);
+                }
             },
             error: function (data) {
                 //alert(data);
@@ -848,15 +853,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     };
     @else
         @php
-            $hmac = hash_hmac('sha256', $user->id, env('INTERCOM_KEY'));
+            $hmac = hash_hmac('sha256', $user->email, env('INTERCOM_KEY'));
         @endphp
 
         window.intercomSettings = {
         app_id: "ebzyh5ul",
-        user_id: "{{ $user->id }}", // User ID
         user_hash: '{{ $hmac }}', // HMAC using SHA-256
         email: "{{ $user->email }}", // Email address
-        created_at: "{{ strtotime($user->created_at) }}", // Signup Date,
     };
     @endif
 </script>

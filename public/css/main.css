@@ -1,6 +1,13 @@
 @charset "UTF-8";
 /*=====================FONTS======================*/
 @font-face {
+  font-family: 'Myriad Pro Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Myriad Pro Regular'), url('../fonts/MYRIADPRO-REGULAR.woff') format('woff');
+}
+
+@font-face {
   font-family: 'MyriadPro-Cond';
   src: url("../fonts/MyriadPro-Cond/MyriadPro-Cond.eot?#iefix") format("embedded-opentype"), url("../fonts/MyriadPro-Cond/MyriadPro-Cond.otf") format("opentype"), url("../fonts/MyriadPro-Cond/MyriadPro-Cond.woff") format("woff"), url("../fonts/MyriadPro-Cond/MyriadPro-Cond.ttf") format("truetype"), url("../fonts/MyriadPro-Cond/MyriadPro-Cond.svg#MyriadPro-Cond") format("svg");
   font-weight: normal;
@@ -40,36 +47,36 @@ html{
 }
 
 body {
-  font-family: "MyriadPro-Cond", arial, sans-serif;
+  font-family: 'Myriad Pro Regular', arial, sans-serif;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   position: relative;
   line-height: 1.2357143;
   background-color: rgba(6,3,8,1);
   margin: 0px;
 }
-
+a {
+  font-size: 15px;
+  color: #b8a7cd;
+}
 /* line 9, ../scss/_tipography.scss */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
 }
 
 /* line 12, ../scss/_tipography.scss */
 h1 {
   font-size: 72px;
-  letter-spacing: 2px;
 }
 
 /* line 16, ../scss/_tipography.scss */
 h2 {
   font-size: 52px;
-  letter-spacing: 2px;
 }
 
 /* line 20, ../scss/_tipography.scss */
 h3 {
   font-size: 36px;
-  letter-spacing: 2px;
   line-height: 1.1757143;
 }
 
@@ -112,16 +119,16 @@ input[type="password"] {
   border: 1px solid #a87bb4;
   /*border-top: 2px solid transparent;*/
   width: 100%;
+  padding-top: 4px;
   border-radius: 24px;
   -webkit-border-radius: 24px;
   -moz-border-radius: 24px;
   color: #fff;
-  font-size: 22px;
+  font-size: 15px;
   background: transparent;
   padding-left: 35px;
   outline: none;
   margin-bottom: 30px;
-  letter-spacing: 2px;
 }
 /* line 16, ../scss/_navigation.scss */
 input[type="email"].red,
@@ -267,22 +274,18 @@ header.header.active .promo-actions-block .promo-action-btn {
   margin-right: 10px;
   position: relative;
 }
-.header.usr .header-right-part .usr-block .wlc-usr {
-  letter-spacing: 1px;
-}
+
 /* line 85, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .welcome-msg, .mobile-menu .wlc-usr .welcome-msg {
   font-size: 13px;
   color: #b97bb8;
   text-transform: uppercase;
   display: block;
-  letter-spacing: 2px;
 }
 /* line 92, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .wlc-usr .usr-name, .mobile-menu .usr-block .wlc-usr .usr-name {
   color: #fff;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  letter-spacing: 2px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   text-transform: uppercase;
   text-decoration: none;
   -webkit-transition: 0.2s linear;
@@ -381,7 +384,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   position: absolute;
   top: -14px;
   left: 19px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 18px;
   height: 20px;
   width: 20px;
@@ -409,8 +412,7 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 152, ../scss/_navigation.scss */
 .header.usr .header-right-part .usr-block .deposit-block .deposit-value {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  letter-spacing: 2px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 20px;
   position: absolute;
   right: -36px;
@@ -545,11 +547,16 @@ header.header.active .promo-actions-block .promo-action-btn {
 .reg-modified {
   display: none;
 }
+.pagination {
+  margin: 34px 0;
+  margin-top: 0;
+}
 /* line 242, ../scss/_navigation.scss */
 .header .navigation .navigation-list li a {
+  font-family: 'Myriad Pro Regular', arial, sans-serif;
+  font-size: 15px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -571,10 +578,9 @@ header.header.active .promo-actions-block .promo-action-btn {
   height: 51px;
   display: block;
   padding: 18px 26px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
   margin-top: -4px;
   text-decoration: none;
   -webkit-transition: 0.2s linear;
@@ -583,7 +589,11 @@ header.header.active .promo-actions-block .promo-action-btn {
   -o-transition: 0.2s linear;
   transition: 0.2s linear;
   min-width: 152px;
+  font-size: 15px;
   text-align: center;
+}
+.select2-dropdown {
+  z-index: 99999;
 }
 /* line 272, ../scss/_navigation.scss */
 .header .promo-actions-block .promo-action-btn:before, .header .promo-actions-block .promo-action-btn:after {
@@ -689,14 +699,15 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header .header-right-part .login-block .login-btn,
  body .header .header-right-part .login-block .reg-btn {
   display: block;
+  font-family: 'Myriad Pro Regular',
+  arial,
+  sans-serif;
   height: 32px;
   padding: 8px 0;
   padding-left: 46px;
   position: relative;
-  font-family: 'Arial narrow', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -780,10 +791,9 @@ html[lang="th"] .main-title-block {
   min-width: 124px;
   position: relative;
   margin-top: -3px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -795,8 +805,8 @@ html[lang="th"] .main-title-block {
 /* line 392, ../scss/_navigation.scss */
 .header .header-right-part .registration-block .reg-btn:before {
   content: '';
-  width: 124px;
-  height: 49px;
+  width: 130px;
+  height: 50px;
   position: absolute;
   top: 50%;
   margin-top: -24.5px;
@@ -845,11 +855,10 @@ html[lang="th"] .main-title-block {
 }
 /* line 435, ../scss/_navigation.scss */
 .sections-nav li a {
-  font-family: 'PFDinDisplayPro-Medium', arial, sans-serif;
+  font-family: 'Myriad Pro Regular', arial, sans-serif;
   color: #7773c6;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 2px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -988,11 +997,11 @@ html[lang="th"] .main-title-block {
 
 /* line 569, ../scss/_navigation.scss */
 /* .mobile-menu .popup-entry .auth-block-mobile .login-block .login-btn .text {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 44px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 5px;
+  
   position: relative;
   padding-left: 83px;
 } */
@@ -1031,15 +1040,13 @@ html[lang="th"] .main-title-block {
   font-size: 40px;
   color: #ea8ae5;
   text-transform: uppercase;
-  letter-spacing: 14px;
   display: block;
   margin-top: 50px;
 }
 /* line 641, ../scss/_navigation.scss */
 .mobile-menu .popup-entry .block-heading .title {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 80px;
-  letter-spacing: 100px;
   text-transform: uppercase;
   margin-bottom: 40px;
 }
@@ -1069,10 +1076,9 @@ html[lang="th"] .main-title-block {
 .mobile-menu .games-listing li a,
 .mobile-menu .navigation-list li a {
   display: block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 1px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -1081,6 +1087,10 @@ html[lang="th"] .main-title-block {
   text-decoration: none;
   position: relative;
   padding-left: 40px;
+  font-size: 13px;
+  top: 2px;
+}
+.mobile-menu .langbox li a {
   font-size: 13px;
 }
 .mobile-menu .logout-btn {
@@ -1278,13 +1288,13 @@ html.cropped {
   top: 27%;
   left: 7%;
   z-index: 9999999999;
+  animation-delay: 0.4s;
 }
 /* line 71, ../scss/_middle.scss */
 .bitcoin-block .bitcoin-msg {
   padding-left: 90px;
   position: relative;
   font-size: 20px;
-  letter-spacing: 2px;
   line-height: 27px;
   display: inline-block;
 }
@@ -1297,10 +1307,6 @@ html.cropped {
   margin-top: -40px;
   height: 81px;
   width: 81px;
-  border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  /*border: 1px solid #9350c2;*/
 
 }
 /* line 86, ../scss/_middle.scss */
@@ -1335,9 +1341,8 @@ html.cropped {
 /* line 111, ../scss/_middle.scss */
 .msg-popup .top-text {
   display: block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 19px;
-  letter-spacing: 1px;
 }
 /* line 116, ../scss/_middle.scss */
 .msg-popup .top-text .number-value {
@@ -1350,9 +1355,9 @@ html.cropped {
 /* line 124, ../scss/_middle.scss */
 .msg-popup .middle-text {
   display: block;
-  font-size: 18px;
+  padding: 0 2px;
+  font-size: 15px;
   color: #b9a2d6;
-  letter-spacing: 2px;
 }
 /* line 130, ../scss/_middle.scss */
 .msg-popup .registration-btn {
@@ -1363,9 +1368,8 @@ html.cropped {
   background-size: cover;
   width: 100%;
   padding: 12px 0;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 19px;
-  letter-spacing: 2px;
   left: 0;
   color: #fff;
   z-index: 99999;
@@ -1388,7 +1392,6 @@ html.cropped {
   font-family: 'PFDinDisplayPro-Light', arial, sans-serif;
   font-size: 19px;
   text-transform: uppercase;
-  letter-spacing: 12px;
   position: absolute;
   right: 23px;
   top: 50%;
@@ -1421,9 +1424,8 @@ html.cropped {
 }
 /* line 184, ../scss/_middle.scss */
 .main-title-block .category-title {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'Myriad Pro Regular', arial, sans-serif;
   font-size: 25px;
-  letter-spacing: 15px;
   text-transform: uppercase;
 }
 /* line 190, ../scss/_middle.scss */
@@ -1448,7 +1450,6 @@ html.cropped {
 .main-title-block .descr-block .descr {
   font-size: 17px;
   color: #808080;
-  letter-spacing: 5px;
 }
 /* line 209, ../scss/_middle.scss */
 .main-title-block .main-btn-block {
@@ -1495,6 +1496,7 @@ html.cropped {
 /* line 234, ../scss/_middle.scss */
 .main-title-block .main-btn-block .play-btn .btn-entry {
   font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  letter-spacing: 6px;
   font-size: 38px;
   color: #000;
   background-color: #fff;
@@ -1504,7 +1506,6 @@ html.cropped {
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
   padding: 13px 36px;
-  letter-spacing: 6px;
   text-transform: uppercase;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
@@ -1551,7 +1552,6 @@ html.cropped {
   -moz-transform: rotate(90deg) translate(-50%, 50%);
   -o-transform: rotate(90deg) translate(-50%, 50%);
   -ms-transform: rotate(90deg) translate(-50%, 50%);
-  letter-spacing: 17px;
   font-size: 24px;
 }
 /* line 289, ../scss/_middle.scss */
@@ -1641,10 +1641,9 @@ html.cropped {
 /* line 340, ../scss/_middle.scss */
 .mobile-container .welcome-mob .games-listing li a {
   display: block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -1822,9 +1821,7 @@ html.cropped {
   font-size: 90px;
 }
 /* line 483, ../scss/_middle.scss */
-.mobile-container .game-entry .main-title-block .category-title {
-  letter-spacing: 17px;
-}
+
 /* line 486, ../scss/_middle.scss */
 .mobile-container .game-entry .main-title-block .main-btn-block {
   margin-top: 89px;
@@ -1876,7 +1873,7 @@ html.cropped {
 }
 /* line 513, ../scss/_middle.scss */
 .mobile-container .free-games-block .top-text {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 82px;
   display: block;
   line-height: 89px;
@@ -1910,11 +1907,10 @@ html.cropped {
 }
 /* line 542, ../scss/_middle.scss */
 .mobile-container .free-games-block .registration-btn .text {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 44px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 5px;
   position: relative;
 }
 /* line 550, ../scss/_middle.scss */
@@ -1995,14 +1991,13 @@ html.cropped {
 /* line 599, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-heading .subtitle {
   font-size: 27px;
-  letter-spacing: 10px;
   text-transform: uppercase;
 }
 /* line 604, ../scss/_middle.scss */
 
 /* line 616, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-heading .popup-title {
-  font-size: 66px;
+  font-size: 40px;
   text-transform: uppercase;
   display: -webkit-flex;
   /* Safari */
@@ -2040,8 +2035,8 @@ html.cropped {
 }
 /* line 640, ../scss/_middle.scss */
 .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  font-size: 38px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
+  font-size: 20px;
   color: #fff;
   background: #c10c54;
   background: -webkit-linear-gradient(bottom left, #c10c54 0%, #ad1487 100%);
@@ -2049,12 +2044,11 @@ html.cropped {
   background: linear-gradient(to top right, #c10c54 0%, #ad1487 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c10c54', endColorstr='#ad1487', GradientType=1 );
   display: block;
-  height: 65px;
+  height: 50px;
   border-radius: 27px;
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
   padding: 13px 36px;
-  letter-spacing: 6px;
   text-transform: uppercase;
   position: relative;
   -webkit-transition: 0.2s linear;
@@ -2139,14 +2133,13 @@ html.cropped {
 /* line 708, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-heading .subtitle {
   font-size: 27px;
-  letter-spacing: 10px;
   text-transform: uppercase;
 }
 
 /* line 725, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-heading .popup-title {
   max-width: 312px;
-  font-size: 66px;
+  font-size: 40px;
   text-transform: uppercase;
   display: -webkit-flex;
   /* Safari */
@@ -2169,11 +2162,12 @@ html.cropped {
 .log-popup .popup-container .popup-entry .popup-form .forget-link {
   position: absolute;
   color: #fff;
-  right: -115px;
-  font-size: 19px;
+  left: 100%;
+  font-size: 15px;
   text-decoration: underline;
   top: 50%;
   margin-top: -25px;
+  white-space: nowrap;
 }
 /* line 750, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .forget-link:hover {
@@ -2185,11 +2179,7 @@ html.cropped {
   margin-bottom: 34px;
 }
 /* line 757, ../scss/_middle.scss */
-.log-popup .popup-container .popup-entry .popup-form .block-thumbnail label, .reg-popup .popup-container .popup-entry .popup-form .block-thumbnail label {
-  font-size: 19px;
-  color: #858585;
-  letter-spacing: 2px;
-}
+
 /* line 761, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .block-thumbnail label input[type="checkbox"], .reg-popup .popup-container .popup-entry .popup-form .block-thumbnail label input[type="checkbox"] {
   margin-right: 20px;
@@ -2206,10 +2196,9 @@ html.cropped {
 /* line 772, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .block-thumbnail .btn-block .account-btn {
   display: inline-block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 17px;
   color: #fff;
-  letter-spacing: 2px;
   background: url("../media/images/bg/outlined-border.png") center no-repeat;
   background-size: cover;
   padding: 22px 47px;
@@ -2278,8 +2267,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 805, ../scss/_middle.scss */
 .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  font-size: 35px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
+  font-size: 20px;
   color: #fff;
   background: #c10c54;
   background: -webkit-linear-gradient(bottom left, #c10c54 0%, #ad1487 100%);
@@ -2287,12 +2276,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: linear-gradient(to top right, #c10c54 0%, #ad1487 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c10c54', endColorstr='#ad1487', GradientType=1 );
   display: block;
-  height: 65px;
+  height: 50px;
   border-radius: 27px;
   -webkit-border-radius: 27px;
   -moz-border-radius: 27px;
   padding: 13px 25px;
-  letter-spacing: 2px;
   text-transform: uppercase;
   position: relative;
   -webkit-transition: 0.2s linear;
@@ -2388,7 +2376,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 887, ../scss/_middle.scss */
 .simple-popup .popup-entry .side-title, .fixed-popup .popup-fixed-entry .side-title {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   left: 35px;
   bottom: 50%;
   position: absolute;
@@ -2398,7 +2386,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   transform-origin: 0px 0px;
   color: #76588d;
   text-transform: uppercase;
-  letter-spacing: 3px;
+
 }
 /* line 900, ../scss/_middle.scss */
 .simple-popup .popup-entry .close-icon, .fixed-popup .popup-fixed-entry .close-icon {
@@ -2454,13 +2442,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 .simple-popup .popup-entry .popup-heading .popup-title, .fixed-popup .popup-fixed-entry .popup-heading .popup-title {
   font-size: 39px;
   text-transform: uppercase;
-  letter-spacing: 8px;
 }
 /* line 944, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-heading .subtitle, .fixed-popup .popup-fixed-entry .popup-heading .subtitle {
   color: #ac94be;
   font-size: 23px;
-  letter-spacing: 3px;
 }
 /* line 950, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block, .fixed-popup .popup-fixed-entry .popup-text-block {
@@ -2470,7 +2456,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 952, ../scss/_middle.scss */
 .simple-popup .popup-entry .popup-text-block .text, .fixed-popup .popup-fixed-entry .popup-text-block .text {
   font-size: 23px;
-  letter-spacing: 2px;
+  
   line-height: 37px;
 }
 /* line 958, ../scss/_middle.scss */
@@ -2481,13 +2467,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 961, ../scss/_middle.scss */
 .simple-popup .popup-entry .btn-block .push-btn, .fixed-popup .popup-fixed-entry .btn-block .push-btn {
   display: inline-block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
-  font-size: 31px;
+  font-size: 17px;
   text-transform: uppercase;
   text-decoration: none;
   padding: 0 51px;
-  padding-top: 13px;
+  padding-top: 7px;
   padding-bottom: 7px;
   border-radius: 55px;
   -webkit-border-radius: 55px;
@@ -2505,7 +2491,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   -webkit-box-shadow: 3px 3px 12px 4px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 3px 3px 12px 4px rgba(0, 0, 0, 0.1);
   box-shadow: 3px 3px 12px 4px rgba(0, 0, 0, 0.1);
-  letter-spacing: 2px;
+  
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -2536,7 +2522,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-family: 'PFDinDisplayPro-Light', arial, sans-serif;
   font-size: 19px;
   text-transform: uppercase;
-  letter-spacing: 12px;
   position: absolute;
   right: 23px;
   top: 50%;
@@ -2569,25 +2554,20 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1033, ../scss/_middle.scss */
 .slots-block .block-heading .page-title {
-  font-size: 57px;
+  font-size: 40px;
+  letter-spacing: 0.1em;
   color: #fff;
   text-transform: uppercase;
-  /*letter-spacing: 31px;*/
   margin-bottom: 0;
 }
 
 .slots-block .block-heading .tittlePage{
-  /*transform: translateX(3%);*/
   display: inline-block;
-  letter-spacing: 0.3em;
-  margin-right: -0.2em;
 }
 
 /* line 1040, ../scss/_middle.scss */
 .slots-block .block-heading .subtitle {
-  font-size: 23px;
-  color: #6b6b6b;
-  letter-spacing: 5px;
+  font-size: 17px;
   display: inline-block;
 }
 /* line 1046, ../scss/_middle.scss */
@@ -2662,11 +2642,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 .slots-block .block-container .games-entry .single-game a .title {
   margin-top: 24px;
   display: block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   font-size: 15px;
   /*text-transform: uppercase;*/
-  /*letter-spacing: 3px;*/
 }
 /* line 1090, ../scss/_middle.scss */
 .slots-block .block-container .games-entry .single-game a:hover {
@@ -2686,7 +2665,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1104, ../scss/_middle.scss */
 .slots-block .btn-block .live-btn {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   display: inline-block;
   border: 1px solid #b188de;
   border-radius: 42px;
@@ -2697,7 +2676,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 39px;
   padding-left: 87px;
   padding-right: 215px;
-  letter-spacing: 6px;
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
@@ -2777,7 +2755,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1175, ../scss/_middle.scss */
 .live-block .btn-block .slots-btn {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   border-radius: 42px;
   -webkit-border-radius: 42px;
   -moz-border-radius: 42px;
@@ -2797,7 +2775,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   color: #000;
   position: relative;
   text-decoration: none;
-  letter-spacing: 8px;
   margin-right: 4%;
 }
 /* line 1192, ../scss/_middle.scss */
@@ -2817,7 +2794,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1206, ../scss/_middle.scss */
 .live-block .btn-block .live-btn {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   display: inline-block;
   border: 1px solid #b188de;
   border-radius: 42px;
@@ -2828,7 +2805,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 39px;
   padding-left: 87px;
   padding-right: 215px;
-  letter-spacing: 6px;
+  
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
@@ -2907,14 +2884,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 57px;
   color: #b8b8b8;
   text-transform: uppercase;
-  letter-spacing: 31px;
   margin-bottom: 0;
 }
 /* line 1282, ../scss/_middle.scss */
 .live-block .block-heading .subtitle {
   font-size: 23px;
   color: #6b6b6b;
-  letter-spacing: 5px;
+  
 }
 /* line 1288, ../scss/_middle.scss */
 .live-block .map-block {
@@ -2997,7 +2973,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 1348, ../scss/_middle.scss */
 .live-block .map-block .game-item .region {
   font-size: 24px;
-  letter-spacing: 6px;
+  
   margin-bottom: 5px;
   display: block;
   text-transform: uppercase;
@@ -3125,7 +3101,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 1469, ../scss/_middle.scss */
 .live-block .live-listing-block .live-listing li .text-container .region {
   font-size: 55px;
-  letter-spacing: 20px;
   text-transform: uppercase;
   margin-top: 0;
   max-width: 270px;
@@ -3245,12 +3220,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 1552, ../scss/_middle.scss */
 .video-popup .video-container .left-info .region {
   font-size: 27px;
-  letter-spacing: 12px;
   text-transform: uppercase;
 }
 /* line 1557, ../scss/_middle.scss */
 .video-popup .video-container .left-info .game-name {
-  letter-spacing: 5px;
+  
   font-size: 19px;
   color: #9295c0;
   text-transform: uppercase;
@@ -3272,7 +3246,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* padding-left: 50px; */
   /*font-size: 12px;*/
   /*color: #fff;*/
-/*  letter-spacing: 6px;*/
+/*  */
 /*  text-transform: uppercase;*/
   /*text-decoration: none;*/
   width: 33px;
@@ -3369,7 +3343,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-transform: uppercase;
   font-size: 13px;
   padding: 13px 22px 7px 40px;
-  letter-spacing: 1px;
+  
   position: relative;
   text-decoration: none;
   -webkit-transition: 0.2 linear;
@@ -3460,23 +3434,21 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1665, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
-  font-size: 54px;
+  font-size: 40px;
   text-transform: uppercase;
-  letter-spacing: 37px;
+  letter-spacing: 0.1em;
   margin-top: 0;
   margin-bottom: 18px;
 }
 /* line 1672, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .page-heading .sub-text {
   display: block;
-  font-size: 24px;
-  letter-spacing: 4px;
+  font-size: 15px;
 }
 /* line 1678, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .page-heading .bonuses-btn {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   display: inline-block;
-  letter-spacing: 2px;
   color: #fff;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -3532,9 +3504,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1728, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .descr {
-  font-size: 20px;
-  opacity: .6;
-  letter-spacing: 3px;
+  font-size: 15px;
 }
 /* line 1733, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .generated-key {
@@ -3572,7 +3542,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 40px;
   text-transform: uppercase;
   color: #fff;
-  letter-spacing: 3px;
+  
   text-decoration: underline;
 }
 /* line 1768, ../scss/_middle.scss */
@@ -3595,9 +3565,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 1781, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block .text {
   display: inline-block;
-  font-size: 20px;
-  opacity: .6;
-  letter-spacing: 2px;
+  font-size: 15px;
   margin-bottom: 26px;
 }
 /* line 1788, ../scss/_middle.scss */
@@ -3606,7 +3574,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   width: 100%;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  color: rgba(255, 255, 255, 0.6);
+  color: #fff;
   outline: none;
   border-radius: 22px;
   -webkit-border-radius: 22px;
@@ -3620,10 +3588,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   position: relative;
   border: none;
   outline: none;
-  font-size: 23px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-size: 17px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  
   background: #ca10b1;
   background: -moz-linear-gradient(top, #ca10b1 0%, #660d6b 83%, #3b114f 100%);
   background: -webkit-gradient(left top, left bottom, color-stop(0%, #ca10b1), color-stop(83%, #660d6b), color-stop(100%, #3b114f));
@@ -3651,8 +3619,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-family: 'FontAwesome';
   position: absolute;
   content: '\f105';
-  font-size: 25px;
+  font-size: 24px;
   right: 38px;
+  top: 1px;
 }
 /* line 1830, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block button.withdraw:hover {
@@ -3660,9 +3629,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1836, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .bottom-block h3.title {
-  font-family: "MyriadPro-Cond", arial, sans-serif;
   font-size: 25px;
-  letter-spacing: 5px;
   margin-top: 40px;
 }
 /* line 1842, ../scss/_middle.scss */
@@ -3671,11 +3638,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1845, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .bottom-block table thead th {
-  font-family: "MyriadPro-Cond", arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
   opacity: .6;
-  letter-spacing: 2px;
+  
   border-bottom: 1px solid #bd8dc9;
   padding: 15px 0;
 }
@@ -3683,7 +3649,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .bottom-block table tbody tr td {
   padding: 15px 0;
   font-size: 17px;
-  letter-spacing: 2px;
+  
   border-bottom: 1px solid #46245e;
 }
 /* line 1862, ../scss/_middle.scss */
@@ -3772,7 +3738,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 1930, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block .bonuses-listing .item .single-bonus .title {
   font-size: 24px;
-  letter-spacing: 14px;
   text-transform: uppercase;
   margin-bottom: 40px;
 }
@@ -3780,12 +3745,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 .cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block .bonuses-listing .item .single-bonus .text {
   color: #9c7dab;
   font-size: 19px;
-  letter-spacing: 3px;
+  
   margin-bottom: 23px;
 }
 /* line 1942, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block .bonuses-listing .item .single-bonus .push-button {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   display: inline-block;
   background: #ca10b1;
   background: -moz-linear-gradient(top, #ca10b1 0%, #660d6b 83%, #3b114f 100%);
@@ -3861,9 +3826,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 2008, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section .section-title {
-  font-size: 26px;
-  font-family: "MyriadPro-Cond", arial, sans-serif;
-  letter-spacing: 5px;
+  font-size: 17px;
   margin-bottom: 40px;
 }
 /* line 2014, ../scss/_middle.scss */
@@ -3910,18 +3873,14 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 2046, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section .text {
   margin-right: 20px;
-  font-size: 17px;
-  letter-spacing: 2px;
-  opacity: .7;
+  font-size: 15px;
 }
 /* line 2052, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section .descr {
   position: absolute;
   bottom: -20px;
   padding-left: 39px;
-  letter-spacing: 2px;
-  font-size: 13px;
-  opacity: .5;
+  font-size: 15px;
 }
 /* line 2060, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section select {
@@ -3940,7 +3899,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: transparent;
   font-size: 19px;
   color: #fff;
-  letter-spacing: 2px;
+  
   outline: none;
   padding-left: 39px;
   padding-right: 45px;
@@ -3957,33 +3916,33 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   -moz-border-radius: 18px;
   background: transparent;
   height: 39px;
-  font-size: 19px;
+  font-size: 15px;
   color: #fff;
   padding-left: 29px;
-  letter-spacing: 2px;
+  
   outline: none;
   width: 100%;
   margin: 0;
   padding-right: 30px;
 }
 /* line 2095, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="text"]::-webkit-input-placeholder,
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="email"]::-webkit-input-placeholder {
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="text"]::-webkit-input-placeholder,
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="email"]::-webkit-input-placeholder {
   color: #fff;
 }
 /* line 2098, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="text"]::-moz-placeholder,
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="email"]::-moz-placeholder {
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="text"]::-moz-placeholder,
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="email"]::-moz-placeholder {
   color: #fff;
 }
 /* line 2101, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="text"]:-moz-placeholder,
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="email"]:-moz-placeholder {
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="text"]:-moz-placeholder,
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="email"]:-moz-placeholder {
   color: #fff;
 }
 /* line 2104, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="text"]:-ms-input-placeholder,
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section input[type="email"]:-ms-input-placeholder {
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="text"]:-ms-input-placeholder,
+.cabinet-block .cabinet-entry .main-content .main-content-entry  input[type="email"]:-ms-input-placeholder {
   color: #fff;
 }
 /* line 2109, ../scss/_middle.scss */
@@ -3997,8 +3956,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   padding-bottom: 8px;
   padding-left: 39px;
   padding-right: 75px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  letter-spacing: 2px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
+  
   text-transform: uppercase;
   background: #ca10b1;
   background: -moz-linear-gradient(top, #ca10b1 0%, #660d6b 83%, #3b114f 100%);
@@ -4067,8 +4026,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 2178, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion .ui-accordion-content .single-section .section-title {
   font-size: 59px;
-  font-family: "MyriadPro-Cond", arial, sans-serif;
-  letter-spacing: 5px;
   margin-bottom: 40px;
 }
 /* line 2184, ../scss/_middle.scss */
@@ -4103,7 +4060,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 2208, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion .ui-accordion-content .single-section .text {
   font-size: 40px;
-  letter-spacing: 2px;
+  
   opacity: .7;
   display: block;
   margin-bottom: 40px;
@@ -4113,7 +4070,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   position: absolute;
   bottom: -40px;
   padding-left: 39px;
-  letter-spacing: 2px;
+  
   font-size: 23px;
   opacity: .5;
 }
@@ -4134,7 +4091,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: transparent;
   font-size: 34px;
   color: #fff;
-  letter-spacing: 2px;
+  
   outline: none;
   padding-left: 39px;
   padding-right: 45px;
@@ -4153,7 +4110,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 34px;
   color: #fff;
   padding-left: 29px;
-  letter-spacing: 2px;
+  
   outline: none;
   width: 100%;
   margin: 0;
@@ -4190,8 +4147,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   padding-bottom: 8px;
   padding-left: 39px;
   padding-right: 75px;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-  letter-spacing: 2px;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
+  
   text-transform: uppercase;
   background: #ca10b1;
   background: -moz-linear-gradient(top, #ca10b1 0%, #660d6b 83%, #3b114f 100%);
@@ -4246,12 +4203,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: -40px;
   height: 81px;
   width: 81px;
-  border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  /*border: 1px solid #9350c2;*/
-  /*background: url("../media/images/mBIT.svg") no-repeat center;*/
-
 }
 /* line 2336, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .bitcoin-icon:after {
@@ -4267,27 +4218,27 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 2346, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 16px;
-  letter-spacing: 2px;
+  
   display: inline-block;
   vertical-align: middle;
+ margin-bottom: 8px;
 }
 /* line 2352, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .balance .value {
   font-size: 36px;
-  letter-spacing: 5px;
+  
   display: inline-block;
   vertical-align: middle;
 }
 /* line 2359, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .credits-block .add-credits-btn {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   position: absolute;
   font-size: 13px;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   display: inline-block;
   max-width: 170px;
   padding: 19px 20px 16px 28px;
@@ -4352,7 +4303,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   padding-left: 64px;
   font-size: 19px;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   text-decoration: none;
   position: relative;
@@ -4425,7 +4376,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 2468, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li.active a {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   border-bottom: 1px solid white;
   color: #fff;
 }
@@ -4466,24 +4417,19 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 2503, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
-  font-size: 44px;
+  font-size: 40px;
   text-transform: uppercase;
-  letter-spacing: 8px;
+  letter-spacing: 0.1em;
   line-height: 60px;
   margin-bottom: 25px;
 }
 /* line 2510, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-entry .page-heading .descr {
   font-size: 24px;
-  letter-spacing: 3px;
+  
 }
 /* line 2516, ../scss/_middle.scss */
-.page-content-block .page-content-container .page-content-entry .page-entry .text {
-  font-size: 18px;
-  color: #fff;
-  opacity: .6;
-  letter-spacing: 1px;
-}
+
 /* line 2524, ../scss/_middle.scss */
 .page-content-block .page-content-container .btn-block.mobile {
   display: none;
@@ -4518,7 +4464,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   color: #fff;
   font-size: 17px;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  
   display: inline-block;
   padding: 14px 7px;
   text-decoration: none;
@@ -4527,7 +4473,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 2556, ../scss/_middle.scss */
 .page-content-block .page-content-container .page-content-navigation .side-nav-listing li.active a {
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   opacity: 1;
   border-bottom: 1px solid #fff;
 }
@@ -4670,8 +4616,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 64, ../scss/_footer.scss */
 .footer .msg-block .msg {
-  font-size: 24px;
-  letter-spacing: 2px;
+  font-size: 20px;
+  
   font-weight: bold;
 }
 /* line 69, ../scss/_footer.scss */
@@ -4696,10 +4642,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 /* line 82, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a {
   display: block;
-  font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+  font-family: 'MyriadPro-Bold', arial, sans-serif;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -4709,7 +4654,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   position: relative;
   padding-left: 45px;
   z-index: 99999999999999999;
-  font-size: 18px;
+  font-size: 15px;
 }
 /* line 93, ../scss/_footer.scss */
 .footer .games-listing-block .games-listing li a:before {
@@ -4780,7 +4725,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 .footer.footer-static .bitcoin-block .bitcoin-icon, .footer.footer-home .bitcoin-block .bitcoin-icon {
-    background: url("../assets/images/bitcoin-icon.png") no-repeat scroll 0 0 transparent;
+    background: url("../assets/images/mBIT.svg") no-repeat scroll 0 0 transparent;
+    background-size: cover;
     width: 33px;
     height: 29px;
     top: 0;
@@ -5003,14 +4949,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin: 3px 5px;
   text-transform: initial;
   top: 0px;
-  letter-spacing: 1px;
   font-size: 13px;
-  font-family: "MyriadPro-Cond", arial, sans-serif;
 }
 
 
 
 .footerLinks li a {
+  font-size: 13px;
   color: #726577;
   text-decoration: underline;
 }
@@ -5071,7 +5016,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-weight: 700;
   line-height: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.75px;
   font-family: 'MyriadPro-Bold', sans-serif;
   margin-top: 0px;
 }
@@ -5095,7 +5039,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-weight: bold;
   line-height: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.45px;
   text-decoration: none;
   box-shadow: 0 6px 18px rgba(28, 1, 44, 0.2);
   margin: 20px 10px;
@@ -5231,7 +5174,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .reg-popup .popup-container .popup-entry .popup-heading .subtitle,
   body .log-popup .popup-container .popup-entry .popup-heading .subtitle {
     font-size: 20px;
-    letter-spacing: 5px;
+    
   }
   /* line 83, ../scss/_responsive.scss */
   body .reg-popup .popup-container .popup-entry .popup-heading .popup-title,
@@ -5243,13 +5186,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .log-popup .popup-container .popup-entry .popup-form {
     padding-top: 20px;
   }
-  /* line 89, ../scss/_responsive.scss */
-  body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
-  body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-    font-size: 26px;
-    padding: 19px 36px;
-    letter-spacing: 3px;
-  }
+
 
   html[lang="vn"] body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
   html[lang="vn"] body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry{
@@ -5280,7 +5217,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 111, ../scss/_responsive.scss */
   body .msg-popup .middle-text {
     font-size: 15px;
-    letter-spacing: 1px;
+    
   }
   /* line 115, ../scss/_responsive.scss */
   body .msg-popup .registration-btn {
@@ -5540,7 +5477,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     font-family: 'Arial narrow', arial, sans-serif;
     color: #fff;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    
     -webkit-transition: 0.2s linear;
     -moz-transition: 0.2s linear;
     -ms-transition: 0.2s linear;
@@ -5630,17 +5567,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .slots-block .block-heading {
     margin-top: 120px;
   }
-  /* line 213, ../scss/_responsive.scss */
-  body .slots-block .block-heading .page-title {
-    color: #fff;
-    font-size: 101px;
-    /*letter-spacing: 58px;*/
-    margin-bottom: 40px;
-  }
-  /* line 219, ../scss/_responsive.scss */
-  body .slots-block .block-heading .subtitle {
-    font-size: 41px;
-  }
+
+
   /* line 223, ../scss/_responsive.scss */
   body .slots-block .block-container {
     margin-top: 90px;
@@ -5701,11 +5629,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 19px;
     -webkit-border-radius: 19px;
     -moz-border-radius: 19px;
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     color: #fff;
     font-size: 24px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    
     text-decoration: none;
     display: inline-block;
     position: relative;
@@ -5888,11 +5816,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 19px;
     -webkit-border-radius: 19px;
     -moz-border-radius: 19px;
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     color: #fff;
     font-size: 24px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    
     text-decoration: none;
     display: inline-block;
     position: relative;
@@ -5980,24 +5908,20 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .cabinet-block .cabinet-entry .main-content .credits-block {
     display: block;
     position: relative;
-    padding-left: 250px;
+    padding-left: 100px;
     margin: 0 auto;
-    margin-bottom: 170px;
-    max-width: 636px;
+    margin-bottom: 70px;
+    max-width: 260px;
   }
   /* line 498, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon {
     display: block;
     position: absolute;
     left: 0;
-    top: 50%;
-    width: 189px;
-    height: 189px;
-    margin-top: -95px;
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    /*border: 1px solid #9350c2;*/
+    top: -21px;
+    width: 81px;
+    height: 81px;
+    margin-top: 0;
   }
   /* line 508, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
@@ -6013,27 +5937,27 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 518, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
-    font-size: 47px;
-    letter-spacing: 6px;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
+    font-size: 16px;
+    
     display: inline-block;
     vertical-align: middle;
+    margin-bottom: 8px;
   }
   /* line 524, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .balance .value {
-    font-size: 105px;
-    letter-spacing: 25px;
+    font-size: 36px;
+    
     display: inline-block;
     vertical-align: middle;
   }
   /* line 531, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn {
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     position: absolute;
     font-size: 13px;
     color: #fff;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
     display: inline-block;
     max-width: 170px;
     padding: 19px 20px 16px 28px;
@@ -6090,7 +6014,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 585, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content {
-    text-align: right;
+    text-align: center;
   }
   /* line 587, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block {
@@ -6100,22 +6024,22 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 590, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block .descr {
     text-align: left;
-    font-size: 38px;
-    letter-spacing: 1px;
+    font-size: 23px;
+    
   }
   /* line 596, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .generated-key {
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     display: block;
     margin: 0 auto;
-    max-width: 800px;
     background-color: #fff;
     color: #000;
-    font-size: 40px;
     border-radius: 41px;
     -webkit-border-radius: 41px;
     -moz-border-radius: 41px;
-    margin-top: 140px;
+    max-width: 450px;
+    font-size: 20px;
+    margin-top: 25px;
   }
   /* line 610, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .btn-history-block {
@@ -6216,7 +6140,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 678, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonuses-listing .owl-stage-outer .owl-stage .owl-item .item .title {
     font-size: 61px;
-    letter-spacing: 37px;
     margin-bottom: 80px;
   }
   /* line 683, ../scss/_responsive.scss */
@@ -6227,7 +6150,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 687, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonuses-listing .owl-stage-outer .owl-stage .owl-item .item .push-button {
     font-size: 35px;
-    letter-spacing: 4px;
   }
   /* line 693, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonuses-listing .owl-stage-outer .owl-stage:after {
@@ -6247,15 +6169,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding-bottom: 38px;
     margin: 0 auto;
   }
-  /* line 709, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
-    font-size: 90px;
-    margin-bottom: 28px;
-  }
-  /* line 713, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .page-heading .sub-text {
-    font-size: 40px;
-  }
+
+
   /* line 716, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .bonuses-btn {
     font-size: 25px;
@@ -6316,12 +6231,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 760, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
-    padding-top: 84px;
+    padding-top: 45px;
     padding-left: 0;
     padding-right: 0;
     text-align: center;
     border: none;
-    font-size: 34px;
+    font-size: 18px;
   }
   /* line 767, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a:before {
@@ -6381,24 +6296,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     /*padding-bottom: 100px;*/
     border-bottom: 1px solid #d30582;
   }
-  /* line 822, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
-    font-size: 74px;
-    line-height: 110px;
-  }
-  /* line 826, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-heading .descr {
-    font-size: 51px;
-  }
+
   /* line 831, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-entry .col-sm-6 {
     width: 100%;
   }
-  /* line 834, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-entry .text {
-    font-size: 38px;
-    margin-bottom: 110px;
-  }
+
   /* line 840, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .btn-block.mobile {
     display: block;
@@ -6407,7 +6310,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 844, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .btn-block.mobile .live-btn {
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     display: inline-block;
     border: 1px solid #b188de;
     border-radius: 42px;
@@ -6418,7 +6321,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     font-size: 39px;
     padding-left: 87px;
     padding-right: 215px;
-    letter-spacing: 6px;
+    
     color: #fff;
     display: block;
     width: 100%;
@@ -6615,12 +6518,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1009, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading .subtitle {
     font-size: 16px;
-    letter-spacing: 5px;
+    
   }
   /* line 1013, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading .title {
     font-size: 40px;
-    letter-spacing: 20px;
   }
  
   /* line 1027, ../scss/_responsive.scss */
@@ -6628,11 +6530,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     margin-top: 120px;
   }
   /* line 1029, ../scss/_responsive.scss */
-  body .slots-block .block-heading .page-title {
-    font-size: 68px;
-    /*letter-spacing: 20px;*/
-    margin-bottom: 10px;
-  }
   /* line 1034, ../scss/_responsive.scss */
   body .slots-block .block-heading .subtitle {
     font-size: 23px;
@@ -6684,7 +6581,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1072, ../scss/_responsive.scss */
   body .slots-block .btn-block .live-btn {
     font-size: 17px;
-    letter-spacing: 2px;
+    
     padding: 17px;
     padding-bottom: 13px;
     padding-left: 40px;
@@ -6723,7 +6620,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1107, ../scss/_responsive.scss */
   body .live-block.mobile .block-heading .page-title {
     font-size: 68px;
-    letter-spacing: 20px;
     margin-bottom: 10px;
   }
   /* line 1112, ../scss/_responsive.scss */
@@ -6761,7 +6657,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1138, ../scss/_responsive.scss */
   body .live-block .live-listing-block .live-listing li .text-container .region {
     font-size: 30px;
-    letter-spacing: 5px;
+    
   }
   /* line 1142, ../scss/_responsive.scss */
   body .live-block .live-listing-block .live-listing li .text-container .category {
@@ -6774,7 +6670,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1151, ../scss/_responsive.scss */
   body .live-block .btn-block .slots-btn {
     font-size: 17px;
-    letter-spacing: 2px;
+    
     padding: 17px;
     padding-bottom: 13px;
     padding-left: 63px;
@@ -6789,7 +6685,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1164, ../scss/_responsive.scss */
   body .live-block .btn-block .live-btn {
     font-size: 17px;
-    letter-spacing: 2px;
+    
     padding: 17px;
     padding-bottom: 13px;
     padding-left: 40px;
@@ -6821,7 +6717,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .mobile-container .welcome-mob .side-name {
     top: 289px;
     font-size: 16px;
-    letter-spacing: 8px;
+    
     left: 45px;
   }
   /* line 1199, ../scss/_responsive.scss */
@@ -6832,7 +6728,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1202, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .category-title {
     font-size: 24px;
-    letter-spacing: 8px;
+    
   }
   /* line 1206, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .game-name {
@@ -6875,7 +6771,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding-left: 90px;
     position: relative;
     font-size: 28px;
-    letter-spacing: 2px;
+    
   }
   /* line 1236, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .bitcoin-block .bitcoin-msg .bitcoin-icon {
@@ -6977,7 +6873,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1311, ../scss/_responsive.scss */
   body .mobile-container .free-games-block .registration-btn .text {
     font-size: 22px;
-    letter-spacing: 2px;
+    
   }
   /* line 1315, ../scss/_responsive.scss */
   body .mobile-container .free-games-block .registration-btn:before {
@@ -6991,12 +6887,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /*  padding-top: 170px;*/
     padding-top: 120px;
   }
-  /* line 1329, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
-    font-size: 50px;
-    letter-spacing: 18px;
-    margin-bottom: 15px;
-  }
+
   /* line 1334, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .sub-text {
     font-size: 22px;
@@ -7019,45 +6910,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     background-position: 94px 0;
     margin-top: -7px;
   }
-  /* line 1354, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block {
-    padding-left: 100px;
-    max-width: 260px;
-    margin-bottom: 70px;
-  }
-  /* line 1358, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon {
-    margin-top: -40px;
-    height: 81px;
-    width: 81px;
-  }
-  /* line 1362, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .bitcoin-icon:after {
-    /*width: 53px;
-    height: 31px;
-    background-position: -57px 0;
-    margin: 0 auto;
-    margin-top: 22px;*/
-  }
-  /* line 1370, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .balance {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-  /* line 1373, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .balance .value {
-    font-size: 36px;
-    letter-spacing: 5px;
-  }
-  /* line 1378, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn {
-    /*right: 0;
-    font-size: 14px;
-    max-width: 142px;
-    padding: 9px 0;
-    padding-bottom: 5px;
-    padding-left: 36px;*/
-  }
+ 
+
   /* line 1385, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn:before {
     left: 13px;
@@ -7079,16 +6933,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content {
     text-align: left;
   }
-  /* line 1404, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .text-block .descr {
-    font-size: 23px;
-  }
-  /* line 1407, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-entry .left-content .generated-key {
-    max-width: 450px;
-    font-size: 20px;
-    margin-top: 25px;
-  }
+
   /* line 1415, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block {
     padding: 0;
@@ -7154,7 +6999,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion .ui-accordion-content .single-section .descr {
     bottom: -20px;
     padding-left: 39px;
-    letter-spacing: 2px;
+    
     font-size: 13px;
   }
   /* line 1478, ../scss/_responsive.scss */
@@ -7175,11 +7020,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     margin-top: 70px;
     margin-bottom: 70px;
   }
-  /* line 1495, ../scss/_responsive.scss */
-  body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
-    font-size: 18px;
-    padding-top: 45px;
-  }
+
   /* line 1498, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a:before {
     width: 22px;
@@ -7223,7 +7064,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1533, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .btn-block.mobile .live-btn {
     font-size: 17px;
-    letter-spacing: 2px;
+    
     padding: 17px;
     padding-bottom: 13px;
     padding-left: 40px;
@@ -7260,13 +7101,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding-bottom: 20px;
   /*  margin-bottom: 20px;*/
   }
-  /* line 1569, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 20px;
-    letter-spacing: 3px;
-  }
+
   /* line 1575, ../scss/_responsive.scss */
   body .page-content-block .page-content-container .page-content-entry .page-heading .descr {
     font-size: 16px;
@@ -7443,6 +7278,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .log-popup .popup-container .popup-entry .popup-form .forget-link {
     position: relative;
     right: auto;
+    left: auto;
     top: auto;
     margin: 0;
     display: inline-block;
@@ -7629,7 +7465,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1825, ../scss/_responsive.scss */
   body .mobile-container .game-entry .main-title-block .category-title {
     font-size: 20px;
-    letter-spacing: 9px;
   }
   /* line 1829, ../scss/_responsive.scss */
   body .mobile-container .game-entry .main-title-block .game-name {
@@ -7661,7 +7496,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .live-block.mobile .block-heading .page-title {
     font-size: 36px;
     color: #fff;
-    letter-spacing: 5px;
+    
   }
   /* line 1857, ../scss/_responsive.scss */
   body .live-block.mobile .block-heading .subtitle {
@@ -7732,13 +7567,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1914, ../scss/_responsive.scss */
   body .video-popup .video-container .left-info .region {
     font-size: 18px;
-    letter-spacing: 3px;
+    
     margin-top: 0;
   }
   /* line 1919, ../scss/_responsive.scss */
   body .video-popup .video-container .left-info .game-name {
     font-size: 14px;
-    letter-spacing: 2px;
+    
   }
   /* line 1924, ../scss/_responsive.scss */
   body .video-popup .video-container .right-nav {
@@ -7765,7 +7600,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1945, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .page-title {
     font-size: 30px;
-    letter-spacing: 5px;
+    
   }
   /* line 1949, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .page-heading .sub-text {
@@ -7790,13 +7625,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 1973, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonuses-listing .owl-stage-outer .owl-stage .owl-item .item .title {
     font-size: 22px;
-    letter-spacing: 5px;
+    
     margin-bottom: 17px;
   }
   /* line 1978, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .bonuses-listing .owl-stage-outer .owl-stage .owl-item .item .text {
     font-size: 16px;
-    letter-spacing: 2px;
+    
     margin-bottom: 30px;
   }
   /* line 1983, ../scss/_responsive.scss */
@@ -8024,7 +7859,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body input[type="email"],
   body input[type="password"] {
     height: 44px;
-    font-size: 18px;
+    /* font-size: 18px; */
     margin-bottom: 20px;
     padding-left: 22px;
   }
@@ -8050,10 +7885,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding: 8px 0;
     padding-left: 46px;
     position: relative;
-    font-family: 'MyriadPro-BoldCond', arial, sans-serif;
+    font-family: 'MyriadPro-Bold', arial, sans-serif;
     color: #fff;
     text-transform: uppercase;
-    letter-spacing: 2px;
     -webkit-transition: 0.2s linear;
     -moz-transition: 0.2s linear;
     -ms-transition: 0.2s linear;
@@ -8062,7 +7896,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     text-decoration: none;
     height: 41px;
     padding: 13px 0;
-    font-family: "MyriadPro-Cond", arial, sans-serif;
     font-size: 16px;
   }
   .login-block-reg {
@@ -8081,7 +7914,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   body .reg-popup .popup-container .popup-entry .popup-heading .subtitle,
   body .log-popup .popup-container .popup-entry .popup-heading .subtitle {
     font-size: 16px;
-    letter-spacing: 2px;
+    
   }
   /* line 2068, ../scss/_responsive.scss */
   body .reg-popup .popup-container .popup-entry .popup-heading .popup-title,
@@ -8100,11 +7933,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     padding: 4px;
   }
   /* line 2077, ../scss/_responsive.scss */
-  body .reg-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry,
-  body .log-popup .popup-container .popup-entry .popup-form .send-btn-block .send-btn .btn-entry {
-    font-size: 16px;
-    height: 54px;
-  }
+
   /* line 2086, ../scss/_responsive.scss */
   body .log-popup .popup-container .popup-entry .popup-form label {
     margin-bottom: 10px;
@@ -8146,7 +7975,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 2126, ../scss/_responsive.scss */
   body .mobile-menu .popup-entry .block-heading .title {
     font-size: 30px;
-    letter-spacing: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
   }
@@ -8212,7 +8040,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 2188, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .category-title {
     font-size: 14px;
-    font-family: "MyriadPro-Cond", arial, sans-serif;
   }
   /* line 2192, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .game-name {
@@ -8221,7 +8048,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   }
   /* line 2196, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .descr-block .descr {
-    letter-spacing: 3px;
+    
   }
   /* line 2199, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .main-btn-block {
@@ -8283,7 +8110,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 2240, ../scss/_responsive.scss */
   body .mobile-container .game-entry .main-title-block .category-title {
     font-size: 16px;
-    letter-spacing: 5px;
+    
   }
   /* line 2244, ../scss/_responsive.scss */
   body .mobile-container .game-entry .main-title-block .game-name {
@@ -8304,7 +8131,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     border-radius: 27px;
     -webkit-border-radius: 27px;
     -moz-border-radius: 27px;
-    letter-spacing: 2px;
+    
   }
   /* line 2258, ../scss/_responsive.scss */
   body .mobile-container .game-entry .main-title-block .main-btn-block .play-btn:after {
@@ -8328,13 +8155,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* line 2277, ../scss/_responsive.scss */
   body .slots-block .block-heading .page-title {
     font-size: 36px;
-    /*letter-spacing: 8px;*/
+    /**/
     line-height: 42px;
   }
   /* line 2282, ../scss/_responsive.scss */
   body .slots-block .block-heading .subtitle {
     font-size: 17px;
-    letter-spacing: 3px;
+    
   }
   /* line 2287, ../scss/_responsive.scss */
   body .slots-block .games-listing-block .games-listing li {
@@ -8508,6 +8335,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     width: 100%;
     height: 22px;
     line-height: 22px;
+}
+.games-block .games-block__wrap .games-block__name span:first-child,
+.slots-block .block-container .games-entry .single-game a .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .games-block__image {

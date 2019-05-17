@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\AgentsKoef;
 use App\Models\AgentSum;
+use App\Models\SystemNotification;
 use App\Models\UserSum;
 use App\User;
 use Carbon\Carbon;
@@ -50,6 +51,9 @@ class TransactionCount extends Command
             $totalAgentSumPerDay = 0;
 
             foreach ($users as $user) {
+                if (!SystemNotification::where('user_id', $user->id)->first()) {
+                    continue;
+                }
                 $transactions = $user->transactions()
                     ->select(DB::raw('sum(`sum`) as total'))
                     ->where('transactions.sum', '<>', 0)
