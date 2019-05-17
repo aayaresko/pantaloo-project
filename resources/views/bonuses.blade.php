@@ -6,7 +6,7 @@
 
 
 @section('content')
-    <div class="cabinet-block act page-bonuses"
+    <div class="cabinet-block act page-bonuses pageBonus"
          style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="actions">
 
@@ -15,7 +15,6 @@
 
                     <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus1 clearfix">
-
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt="" />
@@ -33,8 +32,12 @@
                                     <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
-
                         </section>
+                        <div class="bonusOverlay">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                            <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
+                        </div> 
                     </div>
 
                     <div class="col-md-6 col-sm-6 npr ac-wrap">
