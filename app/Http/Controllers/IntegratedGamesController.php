@@ -86,11 +86,15 @@ class IntegratedGamesController extends Controller
         // Set flag
         $need_redirect = true;
 
+        // flag checking entered value
+        $entered_value = false;
+
         // Check slug
         if ($type_name) {
             $type_name = str_replace('-', ' ', $type_name);
             foreach ($defaultTypes as $defaultType) {
                 if ($defaultType['name'] == $type_name) {
+                    $entered_value = true;
                     $title = $defaultType['name'];
                     $need_redirect = false;         // Has correct slug, reset redirect flag
                     app(jsBridge::class)['games_type_id'] = $defaultType['id'];
@@ -102,6 +106,7 @@ class IntegratedGamesController extends Controller
             $type_id = $request->has('type_id') ? $request->type_id : $type_name;
             foreach ($defaultTypes as $defaultType) {
                 if ($defaultType['id'] == $type_id) {
+                    $entered_value = true;
                     return redirect()->route('games', [
                         'lang' => $lang,
                         'type_name' => str_replace(' ', '-', $defaultType['name']),
@@ -109,6 +114,7 @@ class IntegratedGamesController extends Controller
                 }
             }
         }
+
 
         $orderType = ['games_types.rating', 'desc'];
         if (isset($settings['types'])) {
@@ -241,6 +247,12 @@ class IntegratedGamesController extends Controller
                 ->where('bonus_id', $idFreeSpinsBonus)->first();
             $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
         }
+
+
+        if ($entered_value == false && $type_name != '') {
+            abort(404);
+        }
+
 
         return view('integrated_games')->with([
             'title' => $title,
