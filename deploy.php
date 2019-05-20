@@ -70,3 +70,8 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
+task('reload:php-fpm', function () {
+    run('sudo /usr/sbin/service php7.1-fpm reload');
+});
+
+after('deploy', 'reload:php-fpm');
