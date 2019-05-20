@@ -326,4 +326,17 @@ class AffiliatesController extends Controller
 
         return view('affiliates.users', compact('myKoef', 'users'));
     }
+
+    public function partnerShow($id, User $user)
+    {
+        $partner = $user->findOrFail($id);
+        if (Auth::user()->id == $partner->agent_id) {
+            $users = $user->where('agent_id', $id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
+            $affiliates = $user->where('agent_id', $id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
+
+            return view('affiliates.partner', compact('partner', 'users', 'affiliates'));
+        }
+
+        abort(403);
+    }
 }

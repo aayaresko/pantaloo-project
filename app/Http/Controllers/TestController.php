@@ -63,6 +63,15 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $transactions = User::where('users.agent_id', 331)
+            ->select('users.id')
+            ->distinct()
+            ->join('transactions as t', 't.user_id', '=', 'users.id')
+            ->where('t.type', 3)
+            ->pluck('id')->toArray();
+
+            Transaction::whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
+        dd($transactions);
         $users = User::where('id', '>', 2500)->get();
         foreach ($users as $user) {
             if (!$user->agent_id or $user->agent_id < 10) {

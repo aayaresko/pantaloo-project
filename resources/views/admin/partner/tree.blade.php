@@ -22,6 +22,9 @@
                                     <template slot="role" slot-scope="props">
                                         <span v-if="props.row.role == 3">Super</span>
                                     </template>
+                                    <template slot="email" slot-scope="props">
+                                        <a :href="'/admin/agent/tree/' + props.row.id">@{{props.row.email}}</a>
+                                    </template>
                                 </vue-ads-table-tree>
                             </div>
                         </div>

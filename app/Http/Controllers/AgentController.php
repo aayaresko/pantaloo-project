@@ -285,7 +285,7 @@ class AgentController extends Controller
         }
         $newTree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
 
-        return view('admin.tree', compact('newTree'));
+        return view('admin.partner.tree', compact('newTree'));
     }
     /**
      * @param $list
@@ -348,5 +348,13 @@ class AgentController extends Controller
         return view('admin.agentPayments', [
             'payments' => $payments
         ]);
+    }
+
+    public function showAffiliate($id, User $user)
+    {
+        $partner = $user->findOrFail($id);
+        $users = $user->where('agent_id', $id)->with('countries')->where('role', 0)->get();
+
+        return view('admin.partner.show', compact('partner', 'users'));
     }
 }

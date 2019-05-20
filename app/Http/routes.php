@@ -266,6 +266,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::group(['middleware' => ['can:accessAdminAffiliatePublic']], function () {
                 Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
                 Route::get('/agent/tree', ['as' => 'admin.agents.tree', 'uses' => 'AgentController@showTree']);
+                Route::get('/agent/tree/{id}', ['as' => 'admin.agents.show', 'uses' => 'AgentController@showAffiliate']);
                 Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
             });
 
@@ -310,6 +311,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             //Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
             Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'Partner\AffiliatesController@trackers']);
             Route::get('/partners', ['as' => 'agent.affiliates', 'uses' => 'Partner\AffiliatesController@partners']);
+            Route::get('/partners/{id}', ['as' => 'agent.affiliates.show', 'uses' => 'Partner\AffiliatesController@partnerShow']);
             Route::get('/users', ['as' => 'agent.users', 'uses' => 'Partner\AffiliatesController@users']);
             Route::post('/partners/change/{id}', 'Partner\AffiliatesController@changeKoef')->name('agent.change.koef');
 
