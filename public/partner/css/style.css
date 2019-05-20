@@ -8,7 +8,7 @@ body, html {
 	height: 100% !important;
 }
 h2, h3, h4 {
-	font-family: 'Raleway', sans-serif;
+	/* font-family: 'Raleway', sans-serif; */
 }
 h2 {
 	text-transform: uppercase;
@@ -197,7 +197,7 @@ a:focus, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:acti
 	background: rgba(0,0,0,0.2);
 }
 .intro h1 {
-	font-family: 'Raleway', sans-serif;
+	/* font-family: 'Raleway', sans-serif; */
 	color: #fff;
 	font-size: 82px;
 	font-weight: 700;
