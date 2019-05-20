@@ -278,8 +278,11 @@ function getCurrentScreen(){
     $('.popUpBtnBonus').on('click', function(e){
         // e.preventDefault();
         if($('#terms').prop('checked') == false){
-            alert("Not checked!");
-            return;
+            $(".errorMessage").addClass("showErrorMsg");
+	
+			$(this).prev().addClass("showErrorMsg");
+
+			return;
         }
     });
           

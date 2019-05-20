@@ -27,6 +27,20 @@
  <div class="hidden">
     <div id="uls">
         {!! trans('casino.bonus.term') !!}
+        <div class="popUpTermForm">
+            <form action="">
+                <input type="checkbox" id="terms">
+                <label for="terms"><span>I accept terms</span><p class="errorMessage">Error</p></label>
+                <!-- <a class="popUpBtnBonus" href="#activatedPoUp">Activate bonus</a> -->
+                @if(Auth::check())
+                    <a href="{{route('bonus.activate', '1')}}"
+                        class="popUpBtnBonus">{{ trans('casino.activate') }}</a>
+                @else
+                    <a href="#"
+                        class="popUpBtnBonus">{{ trans('casino.join_now') }}</a>
+                @endif
+            </form>
+        </div>
     </div>
 </div>
 
