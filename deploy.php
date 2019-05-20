@@ -70,6 +70,27 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
+task('snapshot', [
+    'get_revision',
+    'deploy'
+]);
+
+task('get_revision', function(){
+    $revision = substr(runLocally('git rev-parse HEAD'),0,7);
+    writeln($revision.'.zerostage.ga');
+    set('revision', $revision);
+    set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
+});
+
+task('copy_env', function(){
+//    run('sh deployer/initenv.sh');
+    cd('{{release_path}}');
+    $result = run('sh deployer/initenv.sh');
+    var_dump($result);
+});
+
+before('deploy:vendors', 'copy_env');
+
 task('reload:php-fpm', function () {
     run('sudo /usr/sbin/service php7.1-fpm reload');
 });
