@@ -129,7 +129,7 @@
     </div>
 
     <div class='tempateBonusActive' style="display:none">
-        <div class="popUpTermForm">
+        <div class="popUpTermForm" style="display: none">
             <input type="checkbox" id="terms">
             <label for="terms"><span>I accept terms</span>
                 <p class="errorMessage">Error</p></label>
