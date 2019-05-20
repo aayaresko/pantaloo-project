@@ -22,8 +22,10 @@
                                         {{csrf_field()}}
                                         <h4>Campaign Name</h4>
                                         <input type="text" class="form-control" name="name" value="">
-                                        <h4>Campaign Link</h4>
-                                        <input type="text" class="form-control" name="campaign_link" value="">
+                                        <h4>Select Language</h4>
+                                        <select name="campaign_link" class="form-control">
+                                            <option value="{{url('/en')}}">English</option>
+                                        </select>
                                         {{--<h4>Ref</h4>--}}
                                         {{--<input type="text" class="form-control" name="ref" value="">--}}
                                         <br>

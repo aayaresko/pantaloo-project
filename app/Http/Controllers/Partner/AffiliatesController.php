@@ -69,6 +69,7 @@ class AffiliatesController extends Controller
             $newTracker = new Tracker();
             $newTracker->user_id = $user->id;
             $newTracker->name = 'default';
+            $newTracker->ref = $ref;
             $newTracker->save();
         }
 
