@@ -37,7 +37,7 @@ set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpS
 host('188.166.192.94')
     ->stage('staging')
     ->user('deployer')
-    ->identityFile(__DIR__.'/deployer/id_rsa_deployer')
+    //->identityFile(__DIR__.'/deployer/id_rsa_deployer')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
@@ -48,7 +48,7 @@ host('188.166.192.94')
 host('46.28.205.63')
     ->stage('prod')
     ->user('administrator')
-    ->identityFile(__DIR__.'/deployer/id_rsa_deployer')
+    //->identityFile(__DIR__.'/deployer/id_rsa_deployer')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
@@ -70,3 +70,29 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
+task('snapshot', [
+    'get_revision',
+    'deploy'
+]);
+
+task('get_revision', function(){
+    $revision = substr(runLocally('git rev-parse HEAD'),0,7);
+    writeln($revision.'.zerostage.ga');
+    set('revision', $revision);
+    set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
+});
+
+task('copy_env', function(){
+//    run('sh deployer/initenv.sh');
+    cd('{{release_path}}');
+    $result = run('sh deployer/initenv.sh');
+    var_dump($result);
+});
+
+before('deploy:vendors', 'copy_env');
+
+task('reload:php-fpm', function () {
+    run('sudo /usr/sbin/service php7.1-fpm reload');
+});
+
+after('deploy', 'reload:php-fpm');

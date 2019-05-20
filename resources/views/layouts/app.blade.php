@@ -22,7 +22,7 @@
     <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
     <link href="/css/new.css?v=1.0.6" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
-    <link rel="canonical" href="#" />
+    <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}" />
 
    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

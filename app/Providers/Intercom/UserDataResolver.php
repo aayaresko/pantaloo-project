@@ -7,6 +7,7 @@ use App\Bonus;
 use App\ModernExtraUsers;
 use App\User;
 use App\UserBonus;
+use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Log;
 
 
@@ -25,6 +26,7 @@ class UserDataResolver
                 'Balance Real/Bonus' => self::getBalanceRealBonus($user),
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
+                'IP' => GeneralHelper::visitorIpCloudFlare(),
             ]];
         foreach ($response['custom_attributes'] as $k=>$v){
             Log::info($k . ' => ' . $v);

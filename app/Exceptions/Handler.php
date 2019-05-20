@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
         }
 
         if (function_exists('appoptics_log_exception')) {
-            appoptics_log_exception('app', $e);
+            //appoptics_log_exception('app', $e);
         }
 
         parent::report($e);

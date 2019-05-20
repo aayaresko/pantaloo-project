@@ -15,7 +15,9 @@
         "geoip2/geoip2": "^2.4",
         "tymon/jwt-auth": "^0.5.12",
         "intercom/intercom-php": "^4.0",
-        "php-http/guzzle6-adapter": "^2.0"
+        "php-http/guzzle6-adapter": "^2.0",
+        "deployer/recipes": "^6.2",
+        "deployer/deployer": "^6.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
