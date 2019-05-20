@@ -17,7 +17,8 @@
         "intercom/intercom-php": "^4.0",
         "php-http/guzzle6-adapter": "^2.0",
         "deployer/recipes": "^6.2",
-        "deployer/deployer": "^6.4"
+        "deployer/deployer": "^6.4",
+        "sentry/sentry-laravel": "1.0.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -39,6 +39,10 @@ class Handler extends ExceptionHandler
             }
         }
 
+        if (app()->bound('sentry') && $this->shouldReport($e)){
+            app('sentry')->captureException($e);
+        }
+
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
             return abort('404');
         }
