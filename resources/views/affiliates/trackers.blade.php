@@ -25,6 +25,11 @@
                                         <h4>Select Language</h4>
                                         <select name="campaign_link" class="form-control">
                                             <option value="{{url('/en')}}">English</option>
+                                            <option value="{{url('/de')}}">Deutsch</option>
+                                            <option value="{{url('/fr')}}">Français</option>
+                                            <option value="{{url('/it')}}">Italiano</option>
+                                            <option value="{{url('/ru')}}">Русский</option>
+                                            <option value="{{url('/th')}}">ไทย</option>
                                         </select>
                                         {{--<h4>Ref</h4>--}}
                                         {{--<input type="text" class="form-control" name="ref" value="">--}}
@@ -148,7 +153,35 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h4>Link for partners(affiliates): https://partner.casinobit.io/?ref={{$ref}}</h4>
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <h4>Links for partner</h4>
+                            <div class="table-wrap">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                            colspan="1">
+                                            Campaign Name
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                            colspan="1">
+                                            URL
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($trackers as $tracker)
+                                        <tr>
+                                            <td>{{$tracker->name}}</td>
+                                            <td>{{ env('PARTNER_ADDRESS') . '?ref=' . $tracker->ref }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -280,6 +280,7 @@ class AgentController extends Controller
             $parentId = ($user->agent_id and in_array($user->agent_id, $ids)) ? $user->agent_id : 0;
             $parentIdChildArr[$parentId][] = $user;
             $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();
+            $user->userTotalCount = $user->playersTotalCount();
             $user->percent = $user->koefs->koef;
             $user->benefit = (string) $user->benefits->sum('total_sum');
         }

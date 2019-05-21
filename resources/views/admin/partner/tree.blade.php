@@ -81,6 +81,12 @@
                             filterable: false,
                         },
                         {
+                            property: 'userTotalCount',
+                            title: 'Total players',
+                            direction: null,
+                            filterable: false,
+                        },
+                        {
                             property: 'role',
                             title: 'Role',
                             direction: null,
