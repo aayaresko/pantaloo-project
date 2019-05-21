@@ -63,6 +63,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($this->shouldReport($e) && !$this->isHttpException($e) && !config('app.debug')) {
+            $e = new HttpException(500, 'Whoops!');
+        }
+
         if ($e instanceof \Illuminate\Session\TokenMismatchException) {
             return redirect()
                 ->back()
