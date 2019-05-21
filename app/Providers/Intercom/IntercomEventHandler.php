@@ -96,6 +96,11 @@ class IntercomEventHandler
         ]);
     }
 
+    public function onBonusCancel(AccountStatusEvent $event){
+        $name = "bonus cancel '{$event->bonusName}'";
+        $this->sendEvent($event->user->email, $name, []);
+    }
+
 
     /**
      * Register the listeners for the subscriber.
@@ -117,6 +122,8 @@ class IntercomEventHandler
         $events->listen('App\Events\WithdrawalApprovedEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalApproved');
         $events->listen('App\Events\WithdrawalFrozenEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalFrozen');
         $events->listen('App\Events\AccountStatusEvent', 'App\Providers\Intercom\IntercomEventHandler@onAccountStatus');
+
+        $events->listen('App\Events\BonusCancelEvent', 'App\Providers\Intercom\IntercomEventHandler@onBonusCancel');
 
     }
 
