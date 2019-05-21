@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use Helpers\GeneralHelper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,7 +30,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception $e
+     * @param \Exception $e
      * @return void
      */
     public function report(Exception $e)
@@ -39,7 +41,19 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if (app()->bound('sentry') && $this->shouldReport($e)){
+        if (app()->bound('sentry') && $this->shouldReport($e)) {
+            if (Auth::check()) {
+                Sentry\configureScope(function (Sentry\State\Scope $scope): void {
+                    $user = Auth::user();
+                    $scope->setUser([
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
+                    ]);
+                });
+            } else {
+
+            }
             app('sentry')->captureException($e);
         }
 
@@ -57,8 +71,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception $e
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $e
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
