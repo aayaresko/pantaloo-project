@@ -64,6 +64,24 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
+        $gameIdOur = 77777;
+        $user = User::where('id', 4689)->first();
+
+        if (!is_null($user->bonus_id)) {
+            $userBonus = UserBonus::where('user_id', $user->id)->first();
+
+            $userBonusData = $userBonus->data;
+            //if no game free round
+            if (!isset($userBonusData['firstGame'])) {
+                //set this game
+                $userBonusData['firstGame'] = $gameIdOur;
+                UserBonus::where('user_id', $user->id)->update([
+                    'data' => json_encode($userBonusData)
+                ]);
+            }
+        }
+        $userBonus = UserBonus::where('user_id', $user->id)->first();
+        dd($userBonus);
         $ipFormatCurrent = inet_pton('103.111.177.167');
         $a = $bonuses = UserBonus::where('ip_address', $ipFormatCurrent)->first();
         $user = User::where('id', $a->user_id)->first();

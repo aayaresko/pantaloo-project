@@ -2,12 +2,12 @@
 
 namespace App\Modules\Games;
 
-use App\Events\BonusGameEvent;
 use DB;
 use Log;
 use App\User;
 use Validator;
 use App\RawLog;
+use App\UserBonus;
 use App\Transaction;
 use Helpers\BonusHelper;
 use App\Models\GamesList;
@@ -95,7 +95,6 @@ class PantalloGamesSystem implements GamesSystem
             GamesPantalloSession::updateOrCreate(
                 ['sessionid' => $loginResponse['sessionid']], $loginResponse);
 
-            DB::beginTransaction();
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
@@ -106,6 +105,14 @@ class PantalloGamesSystem implements GamesSystem
                 'play_for_fun' => 0,
                 'homeurl' => url(''),
             ], true);
+
+            DB::beginTransaction();
+
+            if (!is_null($user->bonus_id)) {
+//                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
+//                $bonusObject = new $bonusClasses($user);
+//                $bonusClose = $bonusObject->setGame($game);
+            }
 
             //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
             if ($getGame->gamesession_id == '') {
@@ -150,8 +157,6 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             DB::commit();
-
-            //event(new BonusGameEvent($user, 1));
 
         } catch (\Throwable $e) {
             DB::rollBack();
