@@ -28,7 +28,7 @@ class UserDataResolver
                 'Email verified' => self::getEmailVerified($user),
                 'IP' => GeneralHelper::visitorIpCloudFlare(),
             ]];
-        foreach ($response['custom_attributes'] as $k=>$v){
+        foreach ($response['custom_attributes'] as $k => $v) {
             Log::info($k . ' => ' . $v);
         }
         return $response;
@@ -79,14 +79,14 @@ class UserDataResolver
 
     private static function getBalanceRealBonus(User $user)
     {
-        return $user->getRealBalance() . '/' .$user->getBonusBalance();
+        return $user->getRealBalance() . '/' . $user->getBonusBalance();
     }
 
     private static function getAccountStatus(User $user)
     {
         $blockUser = ModernExtraUsers::where('user_id', $user->id)
             ->where('code', 'block')->first();
-        return is_null($blockUser) ? 'open' : 'banned';
+        return is_null($blockUser) || $blockUser == 0 ? 'open' : 'banned';
     }
 
     private static function getEmailVerified(User $user)

@@ -218,9 +218,9 @@ class UsersController extends Controller
                     ->where('code', 'block')->update([
                         'value' => $block
                     ]);
-                $oldStatus = (int)$blockUser->value ? 'open' : 'block';
             }
 
+            $oldStatus = $block ? 'open' : 'block';
             $newStatus = $block ? 'block' : 'open';
 
             event(new AccountStatusEvent($user, $oldStatus, $newStatus));
