@@ -124,12 +124,26 @@ class GlobalAffiliatesController extends Controller
                     ->join('transactions as t', 't.user_id', '=', 'users.id')
                     ->where('t.type', 3)
                     ->pluck('id')->toArray();
+                //to do fix this
+                $userIdsFull = User::where('users.agent_id', $user->id)
+                    ->select('users.id')
+                    ->distinct()
+                    ->pluck('id')->toArray();
+
+                $transactionItemsFull = Transaction::where($param['whereTransaction'])
+                    ->whereIn('user_id', $userIdsFull)->get();
+                //to do fix this
 
                 $transactionItems = Transaction::where($param['whereTransaction'])
                     ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
+
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
+                //to do fix this
+                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
+                $statistics['bonus'] = $statisticsFull['bonus'];
+                //to do fix this
                 $result->push($statistics);
 
                 $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
@@ -167,12 +181,25 @@ class GlobalAffiliatesController extends Controller
                     ->join('transactions as t', 't.user_id', '=', 'users.id')
                     ->where('t.type', 3)
                     ->pluck('id')->toArray();
+                //to do fix this
+                $userIdsFull = User::where('users.agent_id', $user->id)
+                    ->select('users.id')
+                    ->distinct()
+                    ->pluck('id')->toArray();
 
+                $transactionItemsFull = Transaction::where($param['whereTransaction'])
+                    ->whereIn('user_id', $userIdsFull)->get();
+                //to do fix this
                 $transactionItems = Transaction::where($param['whereTransaction'])
                     ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
+
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
+                //to do fix this
+                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
+                $statistics['bonus'] = $statisticsFull['bonus'];
+                //to do fix this
                 $result->push($statistics);
 
                 $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
