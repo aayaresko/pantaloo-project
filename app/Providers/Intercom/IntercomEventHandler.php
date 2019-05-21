@@ -6,6 +6,7 @@ namespace App\Providers\Intercom;
 
 use App\Bonus;
 use App\Events\AccountStatusEvent;
+use App\Events\BonusCancelEvent;
 use App\Events\BonusDepositEvent;
 use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
@@ -96,7 +97,7 @@ class IntercomEventHandler
         ]);
     }
 
-    public function onBonusCancel(AccountStatusEvent $event){
+    public function onBonusCancel(BonusCancelEvent $event){
         $name = "bonus cancel '{$event->bonusName}'";
         $this->sendEvent($event->user->email, $name, []);
     }
