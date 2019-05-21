@@ -227,6 +227,10 @@
                         <li>
                             <a href="{{route('globalAffiliates.index')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Finance </span> </a>
                         </li>
+
+                        <li>
+                            <a href="{{route('admin.agents.tree')}}" class="waves-effect"><i class="fa fa-tree"></i> <span> Tree </span> </a>
+                        </li>
                     @endcan
 
                     @can('accessAdminTranslatorPublic')
