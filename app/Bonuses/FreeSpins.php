@@ -86,20 +86,6 @@ class FreeSpins extends \App\Bonuses\Bonus
             $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipFormatCurrent = inet_pton($ipCurrent);
 
-            //baned country
-
-            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, array_merge($banedBonusesCountries, $disableRegistration))) {
-                throw new \Exception('You cannot activate this bonus in' .
-                    ' accordance with clause 2.3 of the bonus terms & conditions.');
-            }
-
-            //baned country
-            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
-                if (in_array($user->country, $banedBonusesCountries)) {
-                    throw new \Exception('You cannot activate this bonus in' .
-                        ' accordance with clause 2.3 of the bonus terms & conditions.');
-                }
-            }
 
             if ($this->active_bonus) {
                 if ($this->active_bonus->bonus_id != static::$id) {
@@ -112,6 +98,20 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
                 throw new \Exception('This bonus is already used.');
+            }
+
+            //baned country
+            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, array_merge($banedBonusesCountries, $disableRegistration))) {
+                throw new \Exception('You cannot activate this bonus in' .
+                    ' accordance with clause 2.3 of the bonus terms & conditions.');
+            }
+
+            //baned country
+            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
+                if (in_array($user->country, $banedBonusesCountries)) {
+                    throw new \Exception('You cannot activate this bonus in' .
+                        ' accordance with clause 2.3 of the bonus terms & conditions.');
+                }
             }
 
             if ((int)$user->email_confirmed === 0) {
