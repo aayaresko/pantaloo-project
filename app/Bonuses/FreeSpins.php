@@ -63,7 +63,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     }
 
 
-    public function activate()
+    public function activate($params = [])
     {
         $user = $this->user;
         $date = new \DateTime();
@@ -102,14 +102,15 @@ class FreeSpins extends \App\Bonuses\Bonus
             }
 
             //baned country
-            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, array_merge($banedBonusesCountries, $disableRegistration))) {
+            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent,
+                    array_merge($banedBonusesCountries, $disableRegistration))) {
                 throw new \Exception('You cannot activate this bonus in' .
                     ' accordance with clause 2.3 of the bonus terms & conditions.');
             }
 
             //baned country
             if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
-                if (in_array($user->country, $banedBonusesCountries)) {
+                if (in_array($user->country, array_merge($banedBonusesCountries, $disableRegistration))) {
                     throw new \Exception('You cannot activate this bonus in' .
                         ' accordance with clause 2.3 of the bonus terms & conditions.');
                 }

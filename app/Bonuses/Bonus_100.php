@@ -74,7 +74,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return true;
     }
 
-    public function activate()
+    public function activate($params = [])
     {
         $user = $this->user;
         $date = new \DateTime();
