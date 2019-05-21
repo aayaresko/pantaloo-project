@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+        Commands\Optimization\ClearRawLog::class,
         Commands\BitcoinGetTransactions::class,
         Commands\Games\PantalloLogOutPlayer::class,
         Commands\Games\PantalloGetGames::class,
@@ -26,7 +27,8 @@ class Kernel extends ConsoleKernel
         Commands\BitcoinSend::class,
         Commands\BonusTest::class,
         Commands\BonusJobs::class,
-        updateUserIntercom::class
+        updateUserIntercom::class,
+
     ];
 
     /**
