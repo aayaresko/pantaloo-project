@@ -2,6 +2,7 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusCancelEvent;
 use DB;
 use Log;
 use App\User;
@@ -592,6 +593,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                 if ((float)$updateUser->bonus_balance === (float)0) {
                     $activeBonus->delete();
                 }
+
+                event(new BonusCancelEvent($updateUser, 'welcome bonus'));
 
                 $response = [
                     'success' => true,
