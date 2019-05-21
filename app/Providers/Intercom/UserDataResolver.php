@@ -86,7 +86,7 @@ class UserDataResolver
     {
         $blockUser = ModernExtraUsers::where('user_id', $user->id)
             ->where('code', 'block')->first();
-        return is_null($blockUser) || $blockUser == 0 ? 'open' : 'banned';
+        return is_null($blockUser) || $blockUser->value == 0 ? 'open' : 'banned';
     }
 
     private static function getEmailVerified(User $user)
