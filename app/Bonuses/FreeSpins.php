@@ -88,7 +88,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
-            
+
             $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
             $disableRegistration = config('appAdditional.disableRegistration');
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
@@ -333,7 +333,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $date = new \DateTime();
-        
+
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $bonusLimit = self::$maxAmount;
@@ -818,65 +818,67 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
 
     }
-    
+
     public function setGame($game, $key)
     {
-//        $user = $this->user;
-//        $date = new \DateTime();
-//        $configBonus = config('bonus');
-//        $activeBonus = $this->active_bonus;
-//
-//        if (!isset($this->dataBonus[$key])) {
-//            $rawLog = DB::connection('logs')->table('bonus_logs')
-//                ->where('bonus_id', '=', $activeBonus->id)
-//                ->where('operation_id', '=', $configBonus['operation']['setGame'])
-//                ->first();
-//
-//            if ($rawLog) {
-//                $rawLogId = $rawLog->id;
-//            } else {
-//                $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-//                    'bonus_id' => $activeBonus->id,
-//                    'operation_id' => $configBonus['operation']['setGame'],
-//                    'created_at' => $date,
-//                    'updated_at' => $date
-//                ]);
-//            }
-//
-//            try {
-//                if (!isset($this->dataBonus[$key])) {
-//                    //set this game
-//                    $this->dataBonus['firstGame'] = $game->id;
-//                    UserBonus::where('user_id', $user->id)->update([
-//                        'data' => json_encode($this->dataBonus)
-//                    ]);
-//                    event(new BonusGameEvent($user, $game->name));
-//                }
-//                $response = [
-//                    'success' => true,
-//                    'message' => 'Done'
-//                ];
-//
-//            } catch (\Exception $e) {
-//                $errorLine = $e->getLine();
-//                $errorMessage = $e->getMessage();
-//                $response = [
-//                    'success' => false,
-//                    'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
-//                ];
-//            }
-//
-//            DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-//                'status' => json_encode($response)
-//            ]);
-//
-//            return $response;
-//        }
-//
-//        return [
-//            'success' => false,
-//            'message' => 'The game has been installed'
-//        ];
+        $user = $this->user;
+        $date = new \DateTime();
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+
+        if (!isset($this->dataBonus[$key])) {
+
+            $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+                'type_id' => $rawLogKey + $configBonus['operation']['setGame'],
+                'user_id' => $userId,
+                'request' => GeneralHelper::fullRequest(),
+                'created_at' => $date,
+                'updated_at' => $date
+            ]);
+
+            try {
+                if (!isset($this->dataBonus[$key])) {
+                    //set this game
+                    $this->dataBonus[$key] = $game->id;
+                    UserBonus::where('user_id', $user->id)->update([
+                        'data' => json_encode($this->dataBonus)
+                    ]);
+
+                    //event
+                    event(new BonusGameEvent($user, $game->real_name));
+                }
+                $response = [
+                    'success' => true,
+                    'message' => 'Done'
+                ];
+
+            } catch (\Exception $e) {
+                $errorLine = $e->getLine();
+                $errorMessage = $e->getMessage();
+                $response = [
+                    'success' => false,
+                    'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                ];
+            }
+
+            $debugResult = $debugGame->end();
+
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'response' => json_encode($response),
+                'extra' => json_encode($debugResult)
+            ]);
+
+            return $response;
+        }
+
+        return [
+            'success' => false,
+            'message' => 'The game has been installed'
+        ];
     }
 
 }

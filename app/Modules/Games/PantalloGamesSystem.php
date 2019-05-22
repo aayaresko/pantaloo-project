@@ -58,7 +58,10 @@ class PantalloGamesSystem implements GamesSystem
         ]);
 
         try {
-            $game = GamesList::where('id', $request->gameId)->first();
+            $game = GamesList::join('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->where('games_list.id', $request->gameId)
+                ->select(['games_list.*', 'games_list_extra.name as real_name'])->first();
+
             $gameId = $game->system_id;
 
             $userName = $this->getUserName($user);
@@ -106,13 +109,14 @@ class PantalloGamesSystem implements GamesSystem
                 'homeurl' => url(''),
             ], true);
 
-            DB::beginTransaction();
-
+            //to do user for update
             if (!is_null($user->bonus_id)) {
-//                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
-//                $bonusObject = new $bonusClasses($user);
-//                $bonusClose = $bonusObject->setGame($game);
+                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
+                $bonusObject = new $bonusClasses($user);
+                $setGame = $bonusObject->setGame($game, 'firstGame');
             }
+
+            DB::beginTransaction();
 
             //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
             if ($getGame->gamesession_id == '') {
@@ -336,8 +340,10 @@ class PantalloGamesSystem implements GamesSystem
             //DOUBLE FIX this!
             $methodWithGameId = ['debit', 'credit'];
             if (in_array($action, $methodWithGameId, true)) {
-                $params['game'] = GamesList::select(['id', 'system_id'])
-                    ->where('system_id', $requestParams['game_id'])->first();
+                $params['game'] = GamesList::join('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->where('games_list.system_id', $requestParams['game_id'])
+                    ->select(['games_list.id', 'games_list.system_id', 'games_list_extra.name as real_name'])->first();
+
                 if (is_null($params['game'])) {
                     throw new \Exception('Game is not found');
                 }
@@ -552,6 +558,8 @@ class PantalloGamesSystem implements GamesSystem
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = 0;
+                                //set game
+                                $setGame = $bonusObject->setGame($params['game'], 'realGame');
                             } else {
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
@@ -738,6 +746,8 @@ class PantalloGamesSystem implements GamesSystem
                                 $createParams['type'] = 10;
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amountFreeSpins;
+
+                                $setGame = $bonusObject->setGame($params['game'], 'realGame');
                             } else {
                                 $createParams['type'] = 10;
                                 $createParams['sum'] = 0;
