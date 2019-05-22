@@ -119,8 +119,12 @@ class AuthController extends Controller
 
         //act
         try {
-            $service = new Service();
-            $address = $service->getNewAddress('common');
+            if (GeneralHelper::isTestMode()){
+                $address = 'bitcoinTestAddress';
+            } else {
+                $service = new Service();
+                $address = $service->getNewAddress('common');
+            }
 
             $user = User::create([
                 'name' => $data['name'],
