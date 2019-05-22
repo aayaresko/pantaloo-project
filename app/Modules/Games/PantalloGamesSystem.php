@@ -201,7 +201,6 @@ class PantalloGamesSystem implements GamesSystem
     public function logoutPlayer($user)
     {
         $date = new \DateTime();
-
         $userId = $user->id;
 
         DB::beginTransaction();

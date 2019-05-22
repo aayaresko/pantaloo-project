@@ -97,8 +97,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
             'updated_at' => $date
         ]);
 
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
+        }
+
         try {
-            //baned country
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipFormatCurrent = inet_pton($ipCurrent);
+
+            if ($mode == 0) {
+                //baned country
 //            if (!is_null($user->country)) {
 //                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
 //                if (in_array($user->country, $banedBonusesCountries)) {
@@ -111,49 +120,46 @@ class Bonus_100 extends \App\Bonuses\Bonus
 //                    ' clause 1.6 of the bonus terms & conditions.');
 //            }
 
-            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
-            $ipFormatCurrent = inet_pton($ipCurrent);
-
-            if ($this->active_bonus) {
-                if ($this->active_bonus->bonus_id != static::$id) {
-                    throw new \Exception('You cannot activate this bonus as there is ' .
-                        'already an active bonus.');
-                } else {
-                    throw new \Exception('This bonus is already active.');
+                if ($this->active_bonus) {
+                    if ($this->active_bonus->bonus_id != static::$id) {
+                        throw new \Exception('You cannot activate this bonus as there is ' .
+                            'already an active bonus.');
+                    } else {
+                        throw new \Exception('This bonus is already active.');
+                    }
                 }
-            }
 
-            if ((int)$user->email_confirmed === 0) {
-                throw new \Exception('To activate this bonus, you need to confirm your email address first.
+                if ((int)$user->email_confirmed === 0) {
+                    throw new \Exception('To activate this bonus, you need to confirm your email address first.
                  Did not receive the activation mail? You can resend it in the Settings section of your profile.');
+                }
+
+                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                    ->where('type_id', 1)
+                    ->count();
+
+                if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
+                    throw new \Exception('You cannot activate this bonus in accordance with ' .
+                        'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
+                }
+
+
+                if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
+                    throw new \Exception('This bonus is already used.');
+                }
+
+                //check ip
+                $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
+                    ->where('ip_address', $ipFormatCurrent)
+                    ->withTrashed()->count();
+
+                if ($currentBonusByIp > 0) {
+                    throw new \Exception('You cannot activate this bonus in accordance' .
+                        ' with clause 1.18 of the bonus terms & conditions');
+                }
+                //check ip
             }
 
-            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
-                ->where('type_id', 1)
-                ->count();
-
-            if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
-                throw new \Exception('You cannot activate this bonus in accordance with ' .
-                    'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
-            }
-
-
-            if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
-                throw new \Exception('This bonus is already used.');
-            }
-
-            //check ip
-            $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
-                ->where('ip_address', $ipFormatCurrent)
-                ->withTrashed()->count();
-
-            if ($currentBonusByIp > 0) {
-                throw new \Exception('You cannot activate this bonus in accordance' .
-                    ' with clause 1.18 of the bonus terms & conditions');
-            }
-            //check ip
-
-            //$date = $user->created_at;
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
@@ -184,6 +190,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'message' => 'Done',
                 'details' => [
                     'bonus_id' => $bonusUser->id,
+                    'mode' => $mode
                 ]
             ];
 
