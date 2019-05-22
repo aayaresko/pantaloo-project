@@ -164,13 +164,17 @@ return [
 
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
-    
+
     'rawLogKey' => [
         //to do others form pantallo scripts
         'freeSpins1' => 20, //plus id bonus
         'depositBonus2' => 30,
         'depositBonus3' => 40,
         'depositBonus4' => 50,
+    ],
+    
+    'optimization' => [
+        'clearRawLog' => '30 day'
     ]
 
 ];

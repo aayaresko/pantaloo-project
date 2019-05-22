@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\RawLog;
 use App\ModernExtraUsers;
 use DB;
+use App\Events\OpenBonusEvent;
+use App\BonusLog;
 use Auth;
 use Response;
 use App\Models\SystemNotification;
@@ -57,6 +59,7 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        dd(2);
         //dd('appAdditional.rawLogKey.freeSpins' . 1);
         dd(config('appAdditional.rawLogKey.freeSpins' . 1));
         dd(config('appAdditional.rawLogKey.bonuses'));
@@ -87,6 +90,84 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
+        //$user = User::where('email', 'bluebell_999@yahoo.com')->first();
+        $user = User::where('email', 'marleestewart14@hotmail.com')->first();
+        dump($user);
+
+        $configBonus = config('bonus');
+        $slotTypeId = config('appAdditional.slotTypeId');
+
+        $currentDate = new Carbon();
+
+
+        $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+        $ipFormatCurrent = inet_pton($ipCurrent);
+
+
+        $request = new Request;
+        $date = Carbon::now();
+        $date->modify('+' . 10 . 'days');
+
+        $bonusUser = UserBonus::create([
+            'user_id' => $user->id,
+            'bonus_id' => 1,
+            'data' => [
+                'free_spin_win' => 0,
+                'wagered_sum' => 0,
+                'transaction_id' => 0,
+                'total_deposit' => 0,
+                'wagered_deposit' => 0,
+                'wagered_amount' => 0,
+                'wagered_bonus_amount' => 0,
+                'dateStart' => $currentDate,
+                'ip_address' => $ipCurrent
+            ],
+            'ip_address' => $ipFormatCurrent,
+            'activated' => 0,
+            'expires_at' => $date,
+        ]);
+
+        //get all games for free
+        $request = new Request;
+
+        //add user for request - for lib
+        $request->merge(['user' => $user]);
+        $request->setUserResolver(function () use ($user) {
+            return $user;
+        });
+
+        //get games for free spins
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [$slotTypeId])
+            ->where([
+                ['games_list.active', '=', 1],
+                ['games_list.free_round', '=', 1],
+                ['games_types_games.extra', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item->system_id;
+        }, $freeRoundGames));
+
+        $request->merge(['gamesIds' => $gamesIds]);
+        $request->merge(['available' => 50]);
+        $request->merge(['timeFreeRound' => strtotime("10 day", 0)]);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->freeRound($request);
+
+        if ($freeRound['success'] === false) {
+            throw new \Exception('Problem with provider free spins');
+        }
+
 
         dd(2);
         DB::beginTransaction();
@@ -113,6 +194,61 @@ class TestController extends Controller
 
 
 
+        User::where('id', $user->id)->update([
+            'bonus_id' => static::$id
+        ]);
+
+        event(new OpenBonusEvent($user, 'welcome bonus'));
+
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
+
+        BonusLog::updateOrCreate(
+            [
+                'bonus_id' => $bonusUser->id,
+                'operation_id' => $configBonus['operation']['active']
+            ],
+            ['status' => json_encode($response)]
+        );
+
+
+        dd('ok');
+        $gameIdOur = 77777;
+        $user = User::where('id', 4689)->first();
+
+        if (!is_null($user->bonus_id)) {
+            $userBonus = UserBonus::where('user_id', $user->id)->first();
+
+            $userBonusData = $userBonus->data;
+            //if no game free round
+            if (!isset($userBonusData['firstGame'])) {
+                //set this game
+                $userBonusData['firstGame'] = $gameIdOur;
+                UserBonus::where('user_id', $user->id)->update([
+                    'data' => json_encode($userBonusData)
+                ]);
+            }
+        }
+        $userBonus = UserBonus::where('user_id', $user->id)->first();
+        dd($userBonus);
+        $ipFormatCurrent = inet_pton('103.111.177.167');
+        $a = $bonuses = UserBonus::where('ip_address', $ipFormatCurrent)->first();
+        $user = User::where('id', $a->user_id)->first();
+        dd($user);
+        dd(2);
+        $transactionItems = Transaction::where([
+            ['transactions.created_at', '>=', '2019-04-01 00:14:32'],
+            ['transactions.created_at', '<=', '2019-04-30 00:14:32'],
+        ])
+            ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
+        dd($transactionItems);
+
+        $user =User::where('id', 14)->first();
+
+        $deposit = $user->transactions()->where('type', 3)->count();
+        dd($deposit);
 
         $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
         $disableRegistration = config('appAdditional.disableRegistration');

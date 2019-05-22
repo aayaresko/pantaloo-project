@@ -124,12 +124,14 @@ class GeneralHelper
                     $stat['wins'] = $stat['wins'] + $transaction->sum;
                 }
 
-                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
-
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
+
+
+                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
 
                 $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum *
                     $transaction->agent_commission / 100;
+
 
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1) * $transaction->sum - (-1) *
                     $transaction->sum * $transaction->agent_commission / 100;
@@ -181,7 +183,19 @@ class GeneralHelper
         return $lang;
     }
 
-    public static function isTestMode(){
+    public static function isTestMode()
+    {
         return Cookie::get('testmode', false);
+    }
+
+    public static function isSecureProtocol(){
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $isSecure = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
+        }
+        return $isSecure;
     }
 }
