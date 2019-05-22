@@ -312,7 +312,8 @@ class GlobalAffiliatesController extends Controller
     {
         $this->validate($request, [
             'current_password' => 'required|min:6',
-            'new_password' => 'required|min:6'
+            'new_password' => 'required|min:6',
+            'password_confirmation' => 'required_with:new_password|same:new_password|min:6'
         ]);
         $validation = Validator::make($request->all(), [
             // Here's how our new validation rule is used.
