@@ -27,14 +27,12 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus1 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus1 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
 
@@ -55,14 +53,13 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus2 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus2 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus2 }}'>{{ trans('casino.bonus_terms') }}</a>
+                                   
                                 </div>
                             </div>
                         </section>
@@ -84,14 +81,12 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus3 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus3 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus3 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
                         </section>
@@ -110,14 +105,12 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus4 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus4 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus4 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
                         </section>
@@ -128,25 +121,36 @@
         </div>
     </div>
 
-    <div class='tempateBonusActive' style="display:none">
-        <div class="popUpTermForm" style="display: none">
+    <div class="hidden">
+
+    <div class='tempateBonusActive'>
+        
+            @if(Auth::check())
+            <div class="popUpTermForm">
             <input type="checkbox" id="terms">
             <label for="terms"><span>I accept terms</span>
                 <p class="errorMessage">Error</p></label>
-            @if(Auth::check())
-                <a class='bonusActiveTerms' href="https://casinobit.io/bonus/1/activate"
-                   class="popUpBtnBonus">{{ trans('casino.activate') }}</a>
+                <a class='bonusActiveTerms popUpBtnBonus' href="https://casinobit.io/bonus/1/activate">{{ trans('casino.activate') }}</a>
+            </div>
             @else
+            <div class="popUpTermForm" style="justify-content: flex-end;">
                 <a href="#"
-                   class="popUpBtnBonus">{{ trans('casino.join_now') }}</a>
+                   class="joinNowBtnBonus mfp-close closeBtn">{{ trans('casino.join_now') }}</a>
+            </div>
             @endif
-        </div>
+       
     </div>
+
+    </div>
+
     @include('footer_main')
 @endsection
 
 @section('js')
     <script>
+
+        $(function(){
+
         function bonusTerms() {
             $('.block-bonus-buttons .usl-link').on('click', function (e) {
                 let linkBonus = $(this).attr('data-bonus-url');
@@ -160,6 +164,29 @@
                 $("#uls .popUpTermForm").remove();
             });
         }
+
         bonusTerms();
+
+
+        $('#uls').on('click','.popUpBtnBonus', function(e){
+            
+            if($('#terms').prop('checked') == false){
+
+                $(".errorMessage").addClass("showErrorMsg");
+        
+                $(this).prev().addClass("showErrorMsg");
+
+                e.preventDefault();
+            }
+        });
+
+        $("#uls").on("click", '.mfp-close' ,function(){
+
+            $(".errorMessage").removeClass('showErrorMsg');
+
+        });
+            
+    });
+
     </script>
 @endsection

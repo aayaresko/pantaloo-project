@@ -270,27 +270,27 @@ function getCurrentScreen(){
 	$(window).on('mousewheel', getCurrentScreen);
 
 
-	// $("#reg-terms h3").on("click", function () {
-    //     $(this).next().slideToggle(500);
-    // });
+	$("#reg-terms h3").on("click", function () {
+        $(this).next().slideToggle(500);
+    });
 
 
-    $('.popUpBtnBonus').on('click', function(e){
-        // e.preventDefault();
-        if($('#terms').prop('checked') == false){
-            $(".errorMessage").addClass("showErrorMsg");
+    // $('.popUpBtnBonus').on('click', function(e){
+    //     // e.preventDefault();
+    //     if($('#terms').prop('checked') == false){
+    //         $(".errorMessage").addClass("showErrorMsg");
 	
-			$(this).prev().addClass("showErrorMsg");
+	// 		$(this).prev().addClass("showErrorMsg");
 
-			return;
-        }
-    });
+	// 		return;
+    //     }
+    // });
           
-    $('#terms').on('change', function(){
+    // $('#terms').on('change', function(){
 
-        $('.popUpBtnBonus').magnificPopup();   
+    //     $('.popUpBtnBonus').magnificPopup();   
 
-    });
+    // });
 
 		
 
