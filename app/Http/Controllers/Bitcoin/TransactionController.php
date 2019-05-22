@@ -42,7 +42,6 @@ class TransactionController extends Controller
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
         try {
             //validate
             //add balidate ip
@@ -81,6 +80,8 @@ class TransactionController extends Controller
 
             }
 
+            DB::beginTransaction();
+            
             $user = User::whereIn('bitcoin_address', $transactionParticipants)->lockForUpdate()->first();
 
             if (is_null($user)) {
