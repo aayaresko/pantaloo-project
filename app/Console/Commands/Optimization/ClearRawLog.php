@@ -43,8 +43,8 @@ class ClearRawLog extends Command
 
         $outdated = new \DateTime();
         $outdated->modify('- ' . $configClearRawLog);
-  
-        //RawLog::where('created_at', '<', $outdated)->delte();
+        dd($outdated);
+        //RawLog::where('created_at', '<', $outdated)->delete();
 
     }
 }
