@@ -172,4 +172,5 @@ return [
         'depositBonus3' => 40,
         'depositBonus4' => 50,
     ]
+
 ];
