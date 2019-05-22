@@ -34,7 +34,7 @@
                                         </tr>
                                         @foreach($transactions as $transaction)
                                             <tr>
-                                                <td>{{ $transaction->created_at->format('d M Y H:i') }}</td>
+                                                <td>{{ $transaction->created_at->format(trans('dateformat.date_format')) }}</td>
                                                 <td>{{ $transaction->sum }}</td>
                                                 @php
                                                     $status = $statusPayment[$transaction->withdraw_status];
