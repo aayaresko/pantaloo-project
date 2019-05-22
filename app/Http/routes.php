@@ -35,8 +35,6 @@ Route::group(['middleware' => ['landing', 'ip.country.block']], function () use 
         Route::get('/general/{lang?}', ['as' => 'general', 'uses' => 'Landing\LandingController@generalLending']);
     });
 });
-Route::get('affiliates/settings', ['as' => 'affiliates.settings', 'uses' => 'Partner\AffiliatesController@settings']);
-Route::get('affiliates/changepassword', 'Partner\AffiliatesController@changePassword');
 
 Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () use ($partner) {
     //sub-domain
@@ -53,6 +51,8 @@ Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () u
         Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
         Route::post('affiliates/sendToken/{userEmail}', ['as' => 'affiliates.sendToken', 'uses' => 'Auth\Affiliates\AuthController@confirmEmail']);
         Route::post('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
+        Route::get('affiliates/settings', ['as' => 'affiliates.settings', 'uses' => 'Partner\AffiliatesController@settings']);
+        Route::get('affiliates/changepassword', 'Partner\AffiliatesController@changePassword');
 
         //redefine routes affiliates
         Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
@@ -249,8 +249,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/faq/{question}/edit', ['as' => 'faqEdit', 'uses' => 'QuestionController@edit']);
                 Route::post('/faq/{question}/update', ['as' => 'faqUpdate', 'uses' => 'QuestionController@update']);
                 Route::get('/faq/{question}/delete', ['as' => 'faqDelete', 'uses' => 'QuestionController@delete']);
-                Route::get('/settings', ['as' => 'globalAffiliates.settings', 'uses' => 'Partner\GlobalAffiliatesController@settings']);
-                Route::get('/changepassword', 'Partner\GlobalAffiliatesController@changePassword');
 
 
                 //Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
@@ -275,6 +273,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
                 Route::get('/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
                 Route::get('/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+                Route::get('/settings', ['as' => 'globalAffiliates.settings', 'uses' => 'Partner\GlobalAffiliatesController@settings']);
+                Route::get('/changepassword', 'Partner\GlobalAffiliatesController@changePassword');
 
                 Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);
