@@ -110,7 +110,57 @@ img {
 .aligned {
   text-align: center;
 }
-
+.paginationGame {
+  position: relative;
+  z-index: 999999;
+}
+.noGamesFound {
+  display: none;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+.moreGames {
+  /* width: 133px; */
+  height: 40px;
+  margin-bottom: 60px;
+  position: relative;
+ text-shadow: 0 -1px 0 #492092;
+ color: #fff;
+ font-size: 15px;
+ font-weight: 700;
+ line-height: 32px;
+ text-transform: uppercase;
+ border-radius: 45px;
+ position: relative;
+ border: none;
+ background: #310f4f;
+ cursor: pointer;
+ outline: none;
+  outline: none;
+ padding: 6px 40px 6px 20px;
+ transition: .2s;
+ background-image: linear-gradient(14deg, #421f91 0%, #a92e9f  100%);
+}
+.moreGames:after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border-radius: inherit;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAPCAYAAADphp8SAAABE0lEQVQ4jZ2RMUtDQRCEhyBoL0IajaWY0kC6gP/Awso/YWURUEQhrZhCwSIWomClhba2llqlFysLUyjYGOSzcC+uy734dGG5u72beTNvBCjTS8Ah8Mh3PQAHQDOHyZHs87PegWGYbf1GdOke7wB1YMJ6EegCdzlV/rBtBANgocByYafNtFNS/ysJoIq+as3WI0l9aTQfVzOSjkcnS+fN1NwDF8BUCRXnhtlN1lZDIpslSNYDZiVddGxwXYJkErgC+oYZAr0odbYEUcXWrhG1k7X/9JyzVcWl5qslqTkmrZqkW9vvSXpKqfluuC+1gfmgYgP4sPsbj41ENeAsJPICvIZZL9ot+gct4AR4duABcAos5zCffvoHFp88FIoAAAAASUVORK5CYII=') no-repeat center;
+}
+.moreGames:hover{
+  box-shadow: inset 0 0 10px #000;
+}
+.noGames {
+  font-weight: 600;
+  font-size: 17px;
+  margin: 20px 0;
+  text-transform: uppercase;
+}
 /*=====================NAVIGATION======================*/
 /* line 2, ../scss/_navigation.scss */
 input[type="email"],
@@ -362,6 +412,8 @@ header.header.active .promo-actions-block .promo-action-btn {
 
 .insertGames{
   position: relative;
+  max-width: 1470px;
+  margin: 0 auto;
   z-index: 99999;
 }
 
@@ -4784,8 +4836,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 
 .block-filter {
   position: relative;
-  padding: 0 90px 0 55px;
-  margin: 50px 0;
+  max-width: 1480px;
+  padding-left: 50px;
+  margin: 50px auto;
 }
 
 .block-filter select {
@@ -4808,9 +4861,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 .select2-container {
-  width: 224px !important;
+  width: 253px !important;
   text-align: left;
-  margin: 0 15px;
+  margin: 0 14px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -4864,8 +4917,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 .block-filter input[type='text'] {
- background: #25153e;
-border: none;
+  padding: 0;
+  background: #25153e;
+  border: none;
   border-radius: 5px;
   width: 100%;
   height: 40px;
@@ -4885,7 +4939,7 @@ border: none;
 }
 .block-filter .input-search {
   position: relative;
-  width: 224px;
+  width: 253px;
   margin-right: 15px;
 }
 
@@ -5261,7 +5315,7 @@ border: none;
 @media (max-width: 1368px) {
 
  .select2-container--default .select2-results>.select2-results__options {
-   max-height: 246px;
+   max-height: 260px;
  }
 }
 
@@ -7780,6 +7834,9 @@ border: none;
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+  .noGamesFound {
+    margin-top: 50px;
+  }
 .footer.footer-home .bitcoin-block{
   top: -112px;
 }

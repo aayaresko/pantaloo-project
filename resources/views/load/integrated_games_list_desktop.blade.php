@@ -1,6 +1,4 @@
-<div class="block-container">
-    <div class="games-entry">
-        @foreach($gameList as $game)
+      @foreach($gameList as $game)
             <div class="single-game ng-scope" data-slot_id="{{$game->id}}">
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
@@ -25,13 +23,3 @@
                 </div>
             </div>
         @endforeach
-    </div>
-</div>
-
-<div class="paginationGame">
-   <button class="moreGames">load more</button>
-</div>
-
-<div class="paginationGame">
-    {{$gameList->render()}}
-</div>
