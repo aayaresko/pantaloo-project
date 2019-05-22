@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Optimization;
 
+use Log;
 use App\RawLog;
 use Illuminate\Console\Command;
 
@@ -38,13 +39,16 @@ class ClearRawLog extends Command
      */
     public function handle()
     {
+        Log::info('ClearRawLog START');
+        $maxExecutionTime = 2000;
+        ini_set('max_execution_time', $maxExecutionTime);
         $configOptimization = config('appAdditional.optimization');
         $configClearRawLog = $configOptimization['clearRawLog'];
 
         $outdated = new \DateTime();
         $outdated->modify('- ' . $configClearRawLog);
-        dd($outdated);
-        //RawLog::where('created_at', '<', $outdated)->delete();
 
+        RawLog::where('created_at', '<', $outdated)->delete();
+        Log::info('ClearRawLog END');
     }
 }
