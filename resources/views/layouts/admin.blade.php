@@ -226,6 +226,9 @@
                         <li>
                             <a href="{{route('globalAffiliates.index')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Finance </span> </a>
                         </li>
+                        <li>
+                            <a href="{{route('globalAffiliates.settings')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Settings </span> </a>
+                        </li>
                     @endcan
 
                     @can('accessAdminTranslatorPublic')

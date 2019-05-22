@@ -16,6 +16,7 @@ use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Hash;
 
 /**
  * Class AffiliatesController
@@ -258,6 +259,33 @@ class AffiliatesController extends Controller
         ];
 
         return view('affiliates.dashboard', $data);
+    }
+
+    public function settings(Request $request)
+    {
+        return view('affiliates.change_password');
+    }
+    public function changePassword(Request $request,User $user,Hash $hash,Validator $validator)
+    {
+        $this->validate($request, [
+            'current_password' => 'required|min:6',
+            'new_password' => 'required|min:6'
+        ]);
+        $validation = Validator::make($request->all(), [
+            // Here's how our new validation rule is used.
+            'current_password' => 'required|min:6',
+            'new_password' => 'required|min:6',
+            'password_confirmation' => 'required_with:new_password|same:new_password|min:6'
+        ]);
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation->errors());
+        }else{
+            $user_id = Auth::User()->id;
+            $obj_user = User::find($user_id);
+            $obj_user->password = Hash::make($request->new_password);
+            $obj_user->save();
+            return redirect()->back()->with('msg','Password changed successfully!');
+        }
     }
 
     /**
