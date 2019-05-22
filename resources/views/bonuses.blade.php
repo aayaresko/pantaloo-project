@@ -35,10 +35,14 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="bonusOverlay">
+                        <div class="bonusOverlay unavailable">
                             <div class="icon"></div>
                             <h3>Temporarily unavailable</h3>
-                            <a href="#uls" class="usl-link">{{ trans('casino.bonus_terms') }}</a>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
                         </div> 
                     </div>
 
@@ -66,6 +70,15 @@
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                 </div>
 
@@ -93,6 +106,15 @@
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                     <div class="col-md-6 col-sm-6 npr ac-wrap">
                         <section class="block-bonus block-bonus4 clearfix">
@@ -117,6 +139,15 @@
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -188,6 +219,8 @@
             $(".errorMessage").removeClass('showErrorMsg');
 
         });
+
+        // $('.bonusOverlay').prev().addClass()
             
     });
 

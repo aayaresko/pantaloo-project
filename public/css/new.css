@@ -425,7 +425,7 @@ body .cabinet-block{
 @media (max-width: 992px) {
 
   .actions .npr {
-    padding: 0;
+    /* padding: 0; */
   }
 
   .block-bonus1 {
