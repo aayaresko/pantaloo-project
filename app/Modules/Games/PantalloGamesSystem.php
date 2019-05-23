@@ -329,7 +329,7 @@ class PantalloGamesSystem implements GamesSystem
 //                })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
-                ])->first();
+                ])->lockForUpdate()->first();
 
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
