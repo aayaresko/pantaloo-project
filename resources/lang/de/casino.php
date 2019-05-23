@@ -1,6 +1,8 @@
 <?php
 return array (
   'title' => 'Casinobit | bitcoin casino',
+  'error_msg' => 'You have to except the Bonus Terms and Conditions to proceed',
+  'bonus_status' => 'Activated',
   'play' => 'Spiele',
   'free_demo' => 'Kostenlose Demo',
   'admin' => 'Admin',

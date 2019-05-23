@@ -1,6 +1,8 @@
 <?php
 return array (
   'title' => 'Casinobit: Bitcoin Casino - №1 Bitcoin Gambling Platform ➤ 110% Bonus',
+  'error_msg' => 'You have to except the Bonus Terms and Conditions to proceed',
+  'bonus_status' => 'Activated',
   'play' => 'Play',
   'support_title' => 'title_en',
   'support_subtitle' => 'subtitle_en',

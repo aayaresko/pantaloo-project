@@ -46,14 +46,14 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="bonusOverlay unavailable">
+                        <!-- <div class="bonusOverlay unavailable">
                             <div class="icon"></div>
                             <h3>Temporarily unavailable</h3>
-                        </div>
+                        </div> -->
 
                         <div class="bonusOverlay activated">
                             <div class="icon"></div>
-                            <h3>Activated</h3>
+                            <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
 
@@ -88,14 +88,14 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="bonusOverlay unavailable">
+                        <!-- <div class="bonusOverlay unavailable">
                             <div class="icon"></div>
                             <h3>Temporarily unavailable</h3>
-                        </div>
+                        </div> -->
 
                         <div class="bonusOverlay activated">
                             <div class="icon"></div>
-                            <h3>Activated</h3>
+                            <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
                 </div>
@@ -131,14 +131,14 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="bonusOverlay unavailable">
+                        <!-- <div class="bonusOverlay unavailable">
                             <div class="icon"></div>
                             <h3>Temporarily unavailable</h3>
-                        </div>
+                        </div> -->
 
                         <div class="bonusOverlay activated">
                             <div class="icon"></div>
-                            <h3>Activated</h3>
+                            <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
 
@@ -173,14 +173,14 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="bonusOverlay unavailable">
+                        <!-- <div class="bonusOverlay unavailable">
                             <div class="icon"></div>
                             <h3>Temporarily unavailable</h3>
-                        </div>
+                        </div> -->
 
                         <div class="bonusOverlay activated">
                             <div class="icon"></div>
-                            <h3>Activated</h3>
+                            <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                 <div class="popUpTermForm">
                     <input type="checkbox" id="terms">
                     <label for="terms"><span>I accept terms</span>
-                        <p class="errorMessage">Error</p></label>
+                        <p class="errorMessage">{{ trans('casino.error_msg') }}</p></label>
                     <a class='bonusActiveTerms popUpBtnBonus'
                        href="https://casinobit.io/bonus/1/activate">{{ trans('casino.activate') }}</a>
                 </div>

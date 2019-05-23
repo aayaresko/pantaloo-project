@@ -5604,6 +5604,18 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 
 
+.block-bonus.activatedBonus + .bonusOverlay{
+  display: flex;
+}
+
+.block-bonus.activatedBonus{
+  filter: blur(2px);
+}
+
+
+.block-bonus.activatedBonus .block-bonus-buttons{
+  display: none;  
+}
 
 
 
@@ -7049,6 +7061,12 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 
 @media (max-width: 991px) {
+
+  .errorMessage.showErrorMsg{
+    display: block;
+    margin-left: 0px;
+    margin-top: 10px;
+  }
 
   /* #uls, #reg-terms, .activBonusPoUpWrap{
     max-width: 700px;

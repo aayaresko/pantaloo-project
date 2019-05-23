@@ -1,6 +1,8 @@
 <?php
 return array (
   'title' => 'Casinobit | คาสิโน bitcoin',
+  'error_msg' => 'You have to except the Bonus Terms and Conditions to proceed',
+  'bonus_status' => 'Activated',
   'play' => 'เล่น',
   'free_demo' => 'การสาธิตฟรี',
   'admin' => 'ผู้ดูแลระบบ',
