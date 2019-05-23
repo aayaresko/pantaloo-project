@@ -59,7 +59,7 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
-        dd(2);
+        dd(config('app.debu1g'));
         //dd('appAdditional.rawLogKey.freeSpins' . 1);
         dd(config('appAdditional.rawLogKey.freeSpins' . 1));
         dd(config('appAdditional.rawLogKey.bonuses'));
