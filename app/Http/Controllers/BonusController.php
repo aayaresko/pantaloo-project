@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\Bonus;
+use App\UserBonus;
 use App\Http\Requests;
 use Helpers\BonusHelper;
 use Helpers\GeneralHelper;
@@ -180,8 +181,16 @@ class BonusController extends Controller
         return redirect()->back()->with('msg', 'Bonus was canceled');
     }
 
-    public function promo()
+    public function promo(Request $request)
     {
-        return view('bonuses');
+        $user = $request->user();
+
+        $activeBonus = null;
+        if (!is_null($user)) {
+            $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
+            $activeBonus->bonus_id = 4;
+        }
+
+        return view('bonuses')->with(['activeBonus' => $activeBonus]);
     }
 }
