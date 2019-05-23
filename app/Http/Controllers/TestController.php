@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bonus;
+use App\Models\UserSum;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -65,6 +66,53 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $now = Carbon::now()->startOfDay();
+
+        $exsicts = DB::table('transactions')
+            ->select('id')
+            ->where('id', '>', 1418300)
+            ->where('created_at', '<', $now->toDateTimeString())
+            ->where('created_at', '>=', $now->subDay()->toDateTimeString())
+            ->limit(1)
+            ->get();
+        dd($exsicts);
+
+
+
+        for ($i = 0; $i < 93; $i++) {
+            $now = Carbon::now()->subDays(99)->addDays($i);
+            $transactionsUser = Transaction::where('created_at', '>', $now->subDay()->toDateString())
+                ->where('created_at', '<', $now->toDateString())
+                ->get()
+                ->groupBy('user_id');
+            foreach ($transactionsUser as $userId => $transactions) {
+                $userSum = new UserSum();
+                $userSum->user_id = $userId;
+                $userSum->deposits = 0;
+                $userSum->created_at = $now;
+                $userSum->bets = 0;
+                $userSum->wins = 0;
+                $userSum->bonus = 0;
+                $userSum->bet_count = 0;
+                foreach ($transactions as $transaction) {
+                    if ($transaction->type == 3) {
+                        $userSum->deposits += $transaction->sum;
+                    } elseif ($transaction->type == 1 or $transaction->type == 2) {
+                        if ($transaction->type == 1) {
+                            $userSum->bets += $transaction->sum;
+                            $userSum->bet_count += 1;
+                        } else {
+                            $userSum->wins += $transaction->sum;
+                        }
+
+                        $userSum->bonus += $transaction->bonus_sum;
+                    }
+                }
+                $userSum->save();
+            }
+        }
+        dd($userSum);
+
         $transactions = User::where('users.agent_id', 331)
             ->select('users.id')
             ->distinct()

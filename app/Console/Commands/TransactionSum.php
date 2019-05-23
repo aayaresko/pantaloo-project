@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\AgentsKoef;
 use App\Models\AgentSum;
 use App\Models\UserSum;
+use App\Transaction;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -43,6 +44,7 @@ class TransactionSum extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit','2048M');
         $agents = User::whereIn('role', [1, 3])->get();
         foreach ($agents as $agent) {
             $newAgent = AgentsKoef::where('user_id', $agent->id)->first();
@@ -53,49 +55,95 @@ class TransactionSum extends Command
                 $newAgent->save();
             }
         }
+        $trim = 93;
+        $lastId = 0;
+        for ($i = 0; $i < $trim; $i++) {
+            $now = Carbon::now()->subDays($trim)->addDays($i)->startOfDay();
+            $this->info($now->toDateString() . " Last id: $lastId");
+            $exsicts = DB::table('transactions')
+                ->select('id')
+                ->where('id', '>', $lastId)  //otimize time string. Do not delete
+                ->where('created_at', '<', $now->toDateTimeString())
+                ->where('created_at', '>', $now->subDay()->toDateTimeString())
+                ->limit(1)
+                ->get();
+            if (!$exsicts) continue;
 
-        foreach ($agents as $agent) {
-            $users = User::where('agent_id', $agent->id)->get();
+            $transactionsUser = Transaction::where('created_at', '<', $now->toDateTimeString())
+                ->where('id', '>', $lastId)
+                ->where('created_at', '>', $now->subDay()->toDateTimeString())
+                ->get()
+                ->groupBy('user_id');
+            foreach ($transactionsUser as $userId => $transactions) {
+                $userSum = new UserSum();
+                $userSum->user_id = $userId;
+                $userSum->deposits = 0;
+                $userSum->created_at = $now;
+                $userSum->bets = 0;
+                $userSum->wins = 0;
+                $userSum->bonus = 0;
+                $userSum->bet_count = 0;
+                foreach ($transactions as $transaction) {
+                    if ($transaction->type == 3) {
+                        $userSum->deposits += $transaction->sum;
+                    } elseif ($transaction->type == 1 or $transaction->type == 2) {
+                        if ($transaction->type == 1) {
+                            $userSum->bets += $transaction->sum;
+                            $userSum->bet_count += 1;
+                        } else {
+                            $userSum->wins += $transaction->sum;
+                        }
 
-            for ($i = 0; $i < 7; $i++) {
-                $now = Carbon::now()->subDays(7)->addDays($i);
-                $nowStr = $now->toDateTimeString();
-                $nowSubStr = $now->subDay()->toDateTimeString();
-                $totalAgentSumPerDay = 0;
-
-                foreach ($users as $user) {
-                    $transactions = $user->transactions()
-                        ->select(DB::raw('sum(`sum`) as total'))
-                        ->where('transactions.sum', '<>', 0)
-                     //   ->where('agent_commission', '<>', 0)
-                        ->whereIn('type', [1, 2])
-                        ->where('created_at', '<', $nowStr)
-                        ->where('created_at', '>=', $nowSubStr)
-                        ->first();
-                    if ($transactions->total) {
-                        $trSum = new UserSum();
-                        $trSum->user_id = $user->id;
-                        $trSum->parent_id = $agent->id;
-                        $trSum->percent = $agent->koefs->koef;
-                        $trSum->sum = $transactions->total;
-                        $trSum->created_at = $now;
-                        $trSum->save();
-                        $totalAgentSumPerDay += $transactions->total;
+                        $userSum->bonus += $transaction->bonus_sum;
                     }
                 }
-                if ($totalAgentSumPerDay) {
-                    $newAgentSum = new AgentSum();
-                    $newAgentSum->user_id = $agent->id;
-                    $newAgentSum->total_sum = $totalAgentSumPerDay;
-                    $newAgentSum->agent_percent = $agent->koefs->koef;
-                    if ($agent->agent_id) {
-                        $newAgentSum->parent_percent = $agent->parentKoef->koef;
-                        $newAgentSum->parent_profit = $newAgentSum->total_sum * ($newAgentSum->parent_percent - $newAgentSum->agent_percent) / 100;
-                    }
-                    $newAgentSum->created_at = $now;
-                    $newAgentSum->save();
-                }
+                $userSum->save();
+                $lastId = $transaction->id;
             }
         }
+
+//        foreach ($agents as $agent) {
+//            $users = User::where('agent_id', $agent->id)->get();
+//
+//            for ($i = 0; $i < 7; $i++) {
+//                $now = Carbon::now()->subDays(7)->addDays($i);
+//                $nowStr = $now->toDateTimeString();
+//                $nowSubStr = $now->subDay()->toDateTimeString();
+//                $totalAgentSumPerDay = 0;
+//
+//                foreach ($users as $user) {
+//                    $transactions = $user->transactions()
+//                        ->select(DB::raw('sum(`sum`) as total'))
+//                        ->where('transactions.sum', '<>', 0)
+//                     //   ->where('agent_commission', '<>', 0)
+//                        ->whereIn('type', [1, 2])
+//                        ->where('created_at', '<', $nowStr)
+//                        ->where('created_at', '>=', $nowSubStr)
+//                        ->first();
+//                    if ($transactions->total) {
+//                        $trSum = new UserSum();
+//                        $trSum->user_id = $user->id;
+//                        $trSum->parent_id = $agent->id;
+//                        $trSum->percent = $agent->koefs->koef;
+//                        $trSum->sum = $transactions->total;
+//                        $trSum->created_at = $now;
+//                        $trSum->save();
+//                        $totalAgentSumPerDay += $transactions->total;
+//                    }
+//                }
+//                if ($totalAgentSumPerDay) {
+//                    $newAgentSum = new AgentSum();
+//                    $newAgentSum->user_id = $agent->id;
+//                    $newAgentSum->total_sum = $totalAgentSumPerDay;
+//                    $newAgentSum->agent_percent = $agent->koefs->koef;
+//                    if ($agent->agent_id) {
+//                        $newAgentSum->parent_percent = $agent->parentKoef->koef;
+//                        $newAgentSum->parent_profit = $newAgentSum->total_sum * ($newAgentSum->parent_percent - $newAgentSum->agent_percent) / 100;
+//                    }
+//                    $newAgentSum->created_at = $now;
+//                    $newAgentSum->save();
+//                }
+//            }
+//        }
     }
 }
