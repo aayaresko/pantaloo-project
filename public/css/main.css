@@ -2331,7 +2331,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   -moz-transform: translate(0, -100%);
   -o-transform: translate(0, -100%);
   -ms-transform: translate(0, -100%);
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
   -ms-transition: 0.3s linear;
