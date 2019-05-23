@@ -6,7 +6,7 @@
 
 
 @section('content')
-    <div class="cabinet-block act page-bonuses"
+    <div class="cabinet-block act page-bonuses pageBonus"
          style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="actions">
 
@@ -15,7 +15,6 @@
 
                     <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus1 clearfix">
-
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt=""/>
@@ -27,18 +26,24 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus1 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus1 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
-
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
 
                     <div class="col-md-6 col-sm-6 npr ac-wrap">
@@ -55,17 +60,25 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus2 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus2 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus2 }}'>{{ trans('casino.bonus_terms') }}</a>
+                                   
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                 </div>
 
@@ -84,17 +97,24 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus3 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus3 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus3 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                     <div class="col-md-6 col-sm-6 npr ac-wrap">
                         <section class="block-bonus block-bonus4 clearfix">
@@ -110,17 +130,24 @@
                             <div class="block-bonus-right">
                                 <div class="block-bonus-buttons">
                                     @if(Auth::check())
-                                        <a href="{{ $bonus4 }}"
-                                           class="btn-play-action"><span>{{ trans('casino.activate') }}</span></a>
+                                        <a href="#uls"
+                                           class="btn-play-action usl-link" data-bonus-url='{{ $bonus4 }}'><span>{{ trans('casino.activate') }}</span></a>
                                     @else
                                         <a href="#"
                                            class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
                                     @endif
-                                    <a href="#uls" class="usl-link"
-                                       data-bonus-url='{{ $bonus4 }}'>{{ trans('casino.bonus_terms') }}</a>
                                 </div>
                             </div>
                         </section>
+                        <div class="bonusOverlay unavailable">
+                            <div class="icon"></div>
+                            <h3>Temporarily unavailable</h3>
+                        </div> 
+
+                        <div class="bonusOverlay activated">
+                            <div class="icon"></div>
+                            <h3>Activated</h3>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -128,38 +155,28 @@
         </div>
     </div>
 
-    <div class='tempateBonusActive' style="display:none">
-        <div class="popUpTermForm" style="display: none">
+    <div class="hidden">
+
+    <div class='tempateBonusActive'>
+        
+            @if(Auth::check())
+            <div class="popUpTermForm">
             <input type="checkbox" id="terms">
             <label for="terms"><span>I accept terms</span>
                 <p class="errorMessage">Error</p></label>
-            @if(Auth::check())
-                <a class='bonusActiveTerms' href="https://casinobit.io/bonus/1/activate"
-                   class="popUpBtnBonus">{{ trans('casino.activate') }}</a>
+                <a class='bonusActiveTerms popUpBtnBonus' href="https://casinobit.io/bonus/1/activate">{{ trans('casino.activate') }}</a>
+            </div>
             @else
+            <div class="popUpTermForm" style="justify-content: flex-end;">
                 <a href="#"
-                   class="popUpBtnBonus">{{ trans('casino.join_now') }}</a>
+                   class="joinNowBtnBonus mfp-close closeBtn">{{ trans('casino.join_now') }}</a>
+            </div>
             @endif
-        </div>
+       
     </div>
+
+    </div>
+
     @include('footer_main')
 @endsection
 
-@section('js')
-    <script>
-        function bonusTerms() {
-            $('.block-bonus-buttons .usl-link').on('click', function (e) {
-                let linkBonus = $(this).attr('data-bonus-url');
-                $('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
-
-                let tempateBonusActive = $('.tempateBonusActive').html();
-                $('#uls').append(tempateBonusActive);
-            });
-
-            $('.usl-link').on('mfpClose', function (e) {
-                $("#uls .popUpTermForm").remove();
-            });
-        }
-        bonusTerms();
-    </script>
-@endsection
