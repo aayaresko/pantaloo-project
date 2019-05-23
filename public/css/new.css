@@ -424,10 +424,6 @@ body .cabinet-block{
 }
 @media (max-width: 992px) {
 
-  .actions .npr {
-    /* padding: 0; */
-  }
-
   .block-bonus1 {
     margin-bottom: 0px;
   }
@@ -492,6 +488,10 @@ body .cabinet-block{
   .actions {
     margin-left: -5px;
     padding-bottom: 180px;
+  }
+
+  .actions .npr {
+    padding: 0;
   }
   
 
