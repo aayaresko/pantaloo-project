@@ -22,7 +22,7 @@
 
     <!-- Stylesheet
         ================================================== -->
-    <link rel="stylesheet" type="text/css" href="/partner/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/partner/css/style.css?v=996736">
     <link rel="stylesheet" type="text/css" href="/partner/css/nivo-lightbox/nivo-lightbox.css">
     <link rel="stylesheet" type="text/css" href="/partner/css/nivo-lightbox/default.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">

@@ -163,4 +163,8 @@ return [
     'ipQualityScoreUrl' => 'https://www.ipqualityscore.com/api/json/ip',
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
+
+    'optimization' => [
+        'clearRawLog' => '30 day'
+    ]
 ];

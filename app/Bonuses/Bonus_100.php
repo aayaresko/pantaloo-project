@@ -2,6 +2,7 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusCancelEvent;
 use App\Events\BonusDepositEvent;
 use App\Events\CloseBonusEvent;
 use App\Events\DepositWagerDoneEvent;
@@ -73,7 +74,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return true;
     }
 
-    public function activate()
+    public function activate($params = [])
     {
         $user = $this->user;
         $date = new \DateTime();
@@ -446,6 +447,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
             if ((float)$updateUser->bonus_balance === (float)0) {
                 $activeBonus->delete();
             }
+
+            event(new BonusCancelEvent($updateUser, $this->getPercent() . '%'));
 
             $response = [
                 'success' => true,

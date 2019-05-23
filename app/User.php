@@ -267,7 +267,6 @@ class User extends Authenticatable
     public function stat(Carbon $from, Carbon $to)
     {
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
-        $deposit = 0;
 
         $stat = [
             'deposits' => 0,
@@ -284,6 +283,8 @@ class User extends Authenticatable
         ];
 
         $transactions = $this->transactions()->where('created_at', '>=', $from)->where('created_at', '<=', $to)->get();
+        //to do fix this
+        $deposit = $this->transactions()->where('type', 3)->count();
 
         foreach ($transactions as $transaction)
         {
@@ -297,9 +298,6 @@ class User extends Authenticatable
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
 
-                if ($deposit == 0) {
-                    $deposit = 1;
-                }
             }
             elseif($transaction->type == 1 or $transaction->type == 2)
             {

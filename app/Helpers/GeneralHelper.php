@@ -87,7 +87,6 @@ class GeneralHelper
     static public function statistics($transactions, $cpumBtcLimit)
     {
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
-        $deposit = 0;
 
         $stat = [
             'deposits' => 0,
@@ -115,10 +114,6 @@ class GeneralHelper
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
 
-                if ($deposit == 0) {
-                    $deposit = 1;
-                }
-
             } elseif ($transaction->type == 1 or $transaction->type == 2) {
 
                 if ($transaction->type == 1) {
@@ -142,12 +137,6 @@ class GeneralHelper
                     $transaction->sum * $transaction->agent_commission / 100;
             }
         }
-
-        if ($deposit == 0) {
-            $stat['revenue'] = 0;
-            $stat['profit'] = 0;
-        }
-
 
         if ($stat['bet_count'] != 0) {
             $stat['avg_bet'] = $stat['bets'] / $stat['bet_count'];
@@ -197,5 +186,16 @@ class GeneralHelper
     public static function isTestMode()
     {
         return Cookie::get('testmode', false);
+    }
+
+    public static function isSecureProtocol(){
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $isSecure = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
+        }
+        return $isSecure;
     }
 }

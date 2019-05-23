@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+        Commands\Optimization\ClearRawLog::class,
         Commands\BitcoinGetTransactions::class,
         Commands\Games\PantalloLogOutPlayer::class,
         Commands\Games\PantalloGetGames::class,
@@ -52,5 +53,8 @@ class Kernel extends ConsoleKernel
         //get games pantallo with image
         $schedule->command('games:PantalloGetGames getImage')->dailyAt('00:30');
         $schedule->command('transaction:count')->dailyAt('00:00');
+        //optimizations
+        //clear raw log
+        $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
     }
 }

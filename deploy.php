@@ -22,8 +22,8 @@ add('shared_dirs', []);
 // Writable dirs by web server 
 add('writable_dirs', []);
 
-before('deploy', 'slack:notify');
-after('success', 'slack:notify:success');
+//before('deploy', 'slack:notify');
+//after('success', 'slack:notify:success');
 
 //set('slack_webhook', 'https://hooks.slack.com/services/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');
 set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpSfQ');
@@ -70,3 +70,29 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
+task('snapshot', [
+    'get_revision',
+    'deploy'
+]);
+
+task('get_revision', function(){
+    $revision = substr(runLocally('git rev-parse HEAD'),0,7);
+    writeln($revision.'.zerostage.ga');
+    set('revision', $revision);
+    set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
+});
+
+task('copy_env', function(){
+//    run('sh deployer/initenv.sh');
+    cd('{{release_path}}');
+    $result = run('sh deployer/initenv.sh');
+    var_dump($result);
+});
+
+before('deploy:vendors', 'copy_env');
+
+task('reload:php-fpm', function () {
+    run('sudo /usr/sbin/service php7.1-fpm reload');
+});
+
+after('deploy', 'reload:php-fpm');

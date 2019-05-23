@@ -2,6 +2,7 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusCancelEvent;
 use DB;
 use Log;
 use App\User;
@@ -17,6 +18,7 @@ use \Illuminate\Http\Request;
 use App\Models\LastActionGame;
 use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
+use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
 use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
@@ -61,7 +63,7 @@ class FreeSpins extends \App\Bonuses\Bonus
     }
 
 
-    public function activate()
+    public function activate($params = [])
     {
         $user = $this->user;
         $date = new \DateTime();
@@ -85,20 +87,6 @@ class FreeSpins extends \App\Bonuses\Bonus
             $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipFormatCurrent = inet_pton($ipCurrent);
 
-            //baned country
-
-            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, array_merge($banedBonusesCountries, $disableRegistration))) {
-                throw new \Exception('You cannot activate this bonus in' .
-                    ' accordance with clause 2.3 of the bonus terms & conditions.');
-            }
-
-            //baned country
-            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
-                if (in_array($user->country, $banedBonusesCountries)) {
-                    throw new \Exception('You cannot activate this bonus in' .
-                        ' accordance with clause 2.3 of the bonus terms & conditions.');
-                }
-            }
 
             if ($this->active_bonus) {
                 if ($this->active_bonus->bonus_id != static::$id) {
@@ -111,6 +99,21 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
                 throw new \Exception('This bonus is already used.');
+            }
+
+            //baned country
+            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent,
+                    array_merge($banedBonusesCountries, $disableRegistration))) {
+                throw new \Exception('You cannot activate this bonus in' .
+                    ' accordance with clause 2.3 of the bonus terms & conditions.');
+            }
+
+            //baned country
+            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
+                if (in_array($user->country, array_merge($banedBonusesCountries, $disableRegistration))) {
+                    throw new \Exception('You cannot activate this bonus in' .
+                        ' accordance with clause 2.3 of the bonus terms & conditions.');
+                }
             }
 
             if ((int)$user->email_confirmed === 0) {
@@ -592,6 +595,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                     $activeBonus->delete();
                 }
 
+                event(new BonusCancelEvent($updateUser, 'welcome bonus'));
+
                 $response = [
                     'success' => true,
                     'message' => 'Done.Expire'
@@ -803,5 +808,65 @@ class FreeSpins extends \App\Bonuses\Bonus
         ]);
 
         return $response;
+    }
+
+    public function setGame($game, $key)
+    {
+//        $user = $this->user;
+//        $date = new \DateTime();
+//        $configBonus = config('bonus');
+//        $activeBonus = $this->active_bonus;
+//
+//        if (!isset($this->dataBonus[$key])) {
+//            $rawLog = DB::connection('logs')->table('bonus_logs')
+//                ->where('bonus_id', '=', $activeBonus->id)
+//                ->where('operation_id', '=', $configBonus['operation']['setGame'])
+//                ->first();
+//
+//            if ($rawLog) {
+//                $rawLogId = $rawLog->id;
+//            } else {
+//                $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
+//                    'bonus_id' => $activeBonus->id,
+//                    'operation_id' => $configBonus['operation']['setGame'],
+//                    'created_at' => $date,
+//                    'updated_at' => $date
+//                ]);
+//            }
+//
+//            try {
+//                if (!isset($this->dataBonus[$key])) {
+//                    //set this game
+//                    $this->dataBonus['firstGame'] = $game->id;
+//                    UserBonus::where('user_id', $user->id)->update([
+//                        'data' => json_encode($this->dataBonus)
+//                    ]);
+//                    event(new BonusGameEvent($user, $game->name));
+//                }
+//                $response = [
+//                    'success' => true,
+//                    'message' => 'Done'
+//                ];
+//
+//            } catch (\Exception $e) {
+//                $errorLine = $e->getLine();
+//                $errorMessage = $e->getMessage();
+//                $response = [
+//                    'success' => false,
+//                    'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+//                ];
+//            }
+//
+//            DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
+//                'status' => json_encode($response)
+//            ]);
+//
+//            return $response;
+//        }
+//
+//        return [
+//            'success' => false,
+//            'message' => 'The game has been installed'
+//        ];
     }
 }
