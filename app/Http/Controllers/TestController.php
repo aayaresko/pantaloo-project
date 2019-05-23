@@ -66,8 +66,7 @@ class TestController extends Controller
     public function test(Request $request)
     {
         dd(2);
-        //$user = User::where('email', 'bluebell_999@yahoo.com')->first();
-        $user = User::where('email', 'marleestewart14@hotmail.com')->first();
+        $user = User::where('email', 'jackdaniels528@rocketmail.com')->first();
         dump($user);
 
         $configBonus = config('bonus');
