@@ -228,7 +228,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $request->merge(['gamesIds' => $gamesIds]);
             $request->merge(['available' => $this->freeSpins]);
             $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
-            $request->merge(['mode' => 0]);//only once
+            $request->merge(['mode' => $mode]);//only once
 
             $pantalloGamesSystem = new PantalloGamesSystem();
             $freeRound = $pantalloGamesSystem->freeRound($request);
