@@ -65,26 +65,27 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(2);
-        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
-            ['users.created_at', '>', '2019-04-01 11:23:43'],
-            //['user_bonuses.bonus_id', '>', 0],
-            ['users.bonus_id', '=', DB::raw('user_bonuses.bonus_id')],
-            ['user_bonuses.deleted_at', '<>', null],
-        ])->select(['users.id', 'users.created_at', 'user_bonuses.id as ids', 'user_bonuses.deleted_at'])->get()->toArray();
-        $a = 0;
-        foreach ($users as $user) {
-            $userBonus = UserBonus::where('user_id', $user['id'])->first();
-            if (is_null($userBonus)) {
-                dump($user['id']);
-                $a = $a + 1;
-                //User::where('id', $user['id'])->update(['bonus_id' => null]);
-            }
-        }
-        dd($a);
-        $user = User::where('email', 'jackdaniels528@rocketmail.com')->first();
-        dump($user);
+//        dd(2);
+//        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
+//            ['users.created_at', '>', '2019-04-01 11:23:43'],
+//            //['user_bonuses.bonus_id', '>', 0],
+//            ['users.bonus_id', '=', DB::raw('user_bonuses.bonus_id')],
+//            ['user_bonuses.deleted_at', '<>', null],
+//        ])->select(['users.id', 'users.created_at', 'user_bonuses.id as ids', 'user_bonuses.deleted_at'])->get()->toArray();
+//        $a = 0;
+//        foreach ($users as $user) {
+//            $userBonus = UserBonus::where('user_id', $user['id'])->first();
+//            if (is_null($userBonus)) {
+//                dump($user['id']);
+//                $a = $a + 1;
+//                //User::where('id', $user['id'])->update(['bonus_id' => null]);
+//            }
+//        }
+//        dd($a);
+        $user = User::where('email', 'amillardsuzellemarie@gmail.com')->first();
+        dd($user);
 
+        $bonusId = 1;
         $configBonus = config('bonus');
         $slotTypeId = config('appAdditional.slotTypeId');
 
@@ -159,7 +160,7 @@ class TestController extends Controller
         }
 
         User::where('id', $user->id)->update([
-            'bonus_id' => static::$id
+            'bonus_id' => $bonusId
         ]);
 
         event(new OpenBonusEvent($user, 'welcome bonus'));
