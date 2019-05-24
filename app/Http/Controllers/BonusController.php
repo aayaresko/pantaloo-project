@@ -188,7 +188,6 @@ class BonusController extends Controller
         $activeBonus = null;
         if (!is_null($user)) {
             $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
-            $activeBonus->bonus_id = 4;
         }
 
         return view('bonuses')->with(['activeBonus' => $activeBonus]);
