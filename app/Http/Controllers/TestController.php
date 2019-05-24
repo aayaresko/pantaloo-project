@@ -59,6 +59,8 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        dd(GeneralHelper::visitorIpCloudFlare());
+        throw new \Exception('FDSF');
         dd(config('app.debu1g'));
         //dd('appAdditional.rawLogKey.freeSpins' . 1);
         dd(config('appAdditional.rawLogKey.freeSpins' . 1));
