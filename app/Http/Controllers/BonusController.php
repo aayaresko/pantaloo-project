@@ -28,7 +28,10 @@ class BonusController extends Controller
 
         $active_bonus = Auth::user()->bonuses()->first();
 
-        $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        $bonusStatistics = null;
+        if ($active_bonus) {
+            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        }
         
         return view('bonus', [
             'bonuses' => $bonuses,
