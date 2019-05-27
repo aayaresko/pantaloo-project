@@ -371,135 +371,167 @@
     </div>
 </div>
 <div class="reg-popup">
-    <button class="close-icon"></button>
-    <div class="popup-container">
-        <div class="popup-entry">
-            <div class="popup-heading">
-                <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
+    <div class="regPopUpWrapper">
+        <div class="regPopUpBgTop"></div>
+        <button class="close-icon">×</button>
+        <!-- <div class="popup-container"> -->
+            <div class="popup-entry">
+                <div class="popup-heading">
+                    <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
 
-                {{--@if ($registrationStatus === 1)--}}
-                {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
-                {{--Registration are temporary disabled. Sorry for the inconvenience.</h5>--}}
-                {{--@else--}}
-                {{--<h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>--}}
-                {{--@endif--}}
+                    {{--@if ($registrationStatus === 1)--}}
+                    {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
+                    {{--Registration are temporary disabled. Sorry for the inconvenience.</h5>--}}
+                    {{--@else--}}
+                    {{--<h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>--}}
+                    {{--@endif--}}
+
+                </div>
+
+                @if ($registrationStatus === 0)
+                    <div class="popup-form">
+                        <form id="registr" action="/register" method="POST">
+                            {{csrf_field()}}
+                            <input type="hidden" name="password_confirmation" value="">
+                            <input type="hidden" name="name" value="no_name">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>{{ trans('casino.email_address') }} <span>*</span></label>
+                                    <input type="email" class="email-input" name="email" required>
+                                    <!-- <p class="errorMessage">Email required</p> -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    
+                                    <label>{{ trans('casino.password') }} <span>*</span></label>
+                                    <div class="pasInputWrapper">
+                                        <input type="password" class="pass-input" name="password" required>
+                                        <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
+                                    </div>
+                                    <p class="errorMessage registrError"></p>
+                                </div>
+                            </div>
+                            <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
+
+                            {{--<div class="row">--}}
+                            {{--<div class="col-sm-12">--}}
+                            {{--<div class="block-thumbnail block-thumbnail-radio">--}}
+                            {{--<label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>--}}
+                            {{--<label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="block-thumbnail">
+                                        <input type="checkbox" name="agree" id="agree" required>
+                                        <label for="agree" class="termLabel">
+                                   
+                                            {{--fix in future this--}}
+                                            @if(app()->getLocale() === 'jp')
+                                           
+                                                <a href="#reg-terms"
+                                                class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
+                                          
+                                            @else
+                                           
+                                                {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms"
+                                                                                            class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>  {{ trans('casino.years_old') }}
+                                         
+                                            @endif
+                                        
+                                        </label>                                      
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="send-btn-block">
+                                        {{--<button class="send-btn"><span class="btn-entry">Get Notified</span></button>--}}
+                                        <button class="send-btn regBtn">
+                                            <!-- <span class="btn-entry"></span> -->
+                                            {{ trans('casino.registration') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                @else
+                    <h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>
+                @endif
 
             </div>
-
-            @if ($registrationStatus === 1)
-                <div class="popup-form">
-                    <form id="registr" action="/register" method="POST">
-                        {{csrf_field()}}
-                        <input type="hidden" name="password_confirmation" value="">
-                        <input type="hidden" name="name" value="no_name">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input type="email" class="email-input red"
-                                       placeholder="{{ trans('casino.email_address') }}" name="email">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input type="password" class="pass-input red"
-                                       placeholder="{{ trans('casino.password') }}" name="password">
-                            </div>
-                        </div>
-                        <input type="radio" name="currency" id="currency-btc" value="1" checked hidden/>
-
-                        {{--<div class="row">--}}
-                        {{--<div class="col-sm-12">--}}
-                        {{--<div class="block-thumbnail block-thumbnail-radio">--}}
-                        {{--<label for="currency-btc"><input type="radio" name="currency" id="currency-btc" value="1" checked />{{translate('BTC')}}</label>--}}
-                        {{--<label for="currency-usd"><input type="radio" name="currency" id="currency-usd" value="2" />{{translate('USD')}}</label>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="block-thumbnail">
-                                    <label for="agree"><input type="checkbox" name="agree" id="agree">
-                                        {{--fix in future this--}}
-                                        @if(app()->getLocale() === 'jp')
-                                            <a href="#reg-terms"
-                                               class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a> {{ trans('casino.accept_the_terms_text') }}
-                                        @else
-                                            {{ trans('casino.accept_the_terms_text') }} <a href="#reg-terms"
-                                                                                           class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>  {{ trans('casino.years_old') }}
-                                        @endif
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="send-btn-block">
-                                    {{--<button class="send-btn"><span class="btn-entry">Get Notified</span></button>--}}
-                                    <button class="send-btn"><span
-                                                class="btn-entry">{{ trans('casino.registration') }}</span></button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            @else
-                <h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>
-            @endif
-
+        <div class="popUpFooter">
+            <span>Have an account?<a href="#" class="login-btn">Sign in</a></span>
         </div>
+        <!-- </div> -->
     </div>
 </div>
 <div class="log-popup">
-    <button class="close-icon"></button>
-    <div class="popup-container">
-        <div class="popup-entry">
-            <div class="popup-heading">
-                <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
-            </div>
-            <div class="popup-form">
-                <form id="login" action="/login" method="POST">
-                    {{csrf_field()}}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="email" name="email" class="email-input blue"
-                                   placeholder="{{ trans('casino.email_address') }}">
+    <div class="regPopUpWrapper">
+        <div class="regPopUpBgTop"></div>
+        <button class="close-icon">×</button>
+        <!-- <div class="popup-container"> -->
+            <div class="popup-entry">
+                <div class="popup-heading">
+                    <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
+                </div>
+                <div class="popup-form">
+                    <form id="login" action="/login" method="POST">
+                        {{csrf_field()}}
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <label>{{ trans('casino.email_address') }} <span>*</span></label>
+                                <input type="email" name="email" class="email-input" required>
+                                <!-- <p class="errorMessage loginErrorEmail"></p> -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="password" name="password" class="pass-input blue"
-                                   placeholder="{{ trans('casino.password') }}">
-                            <a href="{{ url("/{$currentLang}/password/reset") }}"
-                               class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                    
+                                    <label >{{ trans('casino.password') }} <span>*</span></label>
+                                    <div class="pasInputWrapper">
+                                        <input type="password" name="password" class="pass-input" required>
+                                        <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
+
+                                        <a href="{{ url("/{$currentLang}/password/reset") }}"
+                                        class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                                        <p class="errorMessage loginError"></p>
+                                    </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="block-thumbnail">
-                                <label for="remember"><input type="checkbox" name="remember"
-                                                             id="remember">{{ trans('casino.remember_me') }}</label>
-                                <div class="btn-block">
-                                    <a href="{{ url('/register') }}"
-                                       class="account-btn">{{ trans('casino.have_not_account') }}</a>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="block-thumbnail">
+                                <input type="checkbox" name="remember" id="remember">
+                                <label for="remember" class="remem">{{ trans('casino.remember_me') }}</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="send-btn-block">
-                                <button class="send-btn"><span class="btn-entry">{{trans('casino.enter_now')}}</span>
-                                </button>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="send-btn-block">
+                                    <button class="send-btn loginBtn"><span class="btn-entry">{{trans('casino.enter_now')}}</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        <!-- </div> -->
+    
+    <div class="popUpFooter">
+        <span>Don’t have an account?<a href="{{ url('/register') }}"
+                                        class="account-btn">Creat</a></span>
+    </div>
     </div>
 </div>
 
