@@ -79,11 +79,15 @@ let events = function () {
 
         let lastUrlSegment = splitedUrl.pop()
 
+        if ($(this).find(":selected").val() == 'free_spins') {
+            freeSpinGames();
+            return false;
+        }
+
             
         if (gameTypeLink === undefined) {
             if (lastUrlSegment.split('#')[0] == 'games') {
-                // alert('lol')
-                window.location.reload
+                window.location.reload();
             } else {
                 // history.pushState({ 'page': 'games'}, "", splitedUrl.join("/").split('#')[0])
                 window.location = splitedUrl.join("/").split('#')[0]
@@ -130,8 +134,9 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-    $('body').on('click', '.getFreeSpins', function (e) {
-        e.preventDefault();
+
+    function freeSpinGames() {
+        // e.preventDefault();
         listGameParams.typeId = 0;
         listGameParams.categoryId = 0;
         listGameParams.page = 1;
@@ -140,8 +145,7 @@ let events = function () {
         setDefaultFilter(1);
         setDefaultTitle();
         $('html,body').scrollTop(0);
-        //listGameParams.freeSpins = 0;
-    });
+    }
 
 
 };
@@ -216,12 +220,12 @@ function getListGames(append) {
                     $(".insertGames .games-entry").append(device);
                 } else {     
                     $(".insertGames .games-entry").html(device);
-                    // console.log(location);
-                    // TODO
                     if ((location.href).indexOf("games/") <= 0) {
                          history.pushState({}, "", 'games')
                     } else {
-                        location.hash = '';
+                        // location.hash = '';
+                        history.pushState({}, "", window.location.href.split('#')[0])
+                        
                     }              
                      currPage = 2
                 }
@@ -347,10 +351,10 @@ function setDefaultFilter(full = 0)
     }
     // console.log(type_id);
     
-    if (type_id !== null) {
+    if ((type_id !== null) && !full){
         //$('.type_of_game').val(type_id).trigger('change');
         $('.type_of_game').val(type_id).trigger('change.select2');
-    } else {
+    } else {  
         type_id = 0;
     }
 
