@@ -9,7 +9,7 @@ require 'recipe/slack.php';
 set('application', 'casinobit');
 
 // Project repository
-set('repository', 'git@github.com:webmaxstudio/casinobit.git');
+set('repository', 'git@github.com:up-tech/casinobit.io.git');
 
 set('default_stage', 'staging');
 
