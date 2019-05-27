@@ -5392,7 +5392,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 
 .send-btn-block{
   text-align: center;
-  margin: 20px 0px 75px 0px;
+  margin: 15px 0px 75px 0px;
 }
 
 .popUpBtnBonus:before,
@@ -5706,6 +5706,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 .regPopUpWrapper{
   max-width: 300px;
+  min-height: 330px;
   width: 100%;
   position: relative;
   top: 50%;
@@ -5726,6 +5727,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   background: url('../assets/images/form_bg.png') no-repeat center;
   background-size: cover;
   border-radius: 5px;
+}
+
+.regPopUpWrapper.notAllowedCountry .regPopUpBgTop{
+  background: url("../assets/images/form_bg_not_allowed.png") no-repeat center;
 }
 
 .regPopUpWrapper .close-icon{
@@ -5802,7 +5807,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   position: absolute;
   width: 15px;
   height: 15px;
-  top: 2px;
+  top: 1px;
   left: 0px;
   background-color: #5e2f93;
   border-radius: 2px;
@@ -5842,6 +5847,8 @@ input:checked + .remem:before{
   font-size: 13px;
   color: #fff;
   border-radius: 0px 0px 5px 5px;
+  padding: 20px 20px;
+  line-height: 19px;
 }
 
 .popUpFooter a{
@@ -5892,9 +5899,31 @@ input:checked + .remem:before{
 }
 
 
+.regPopUpWrapper.notAllowedCountry .popup-entry{
+  position: relative;
+}
+
+.regPopUpWrapper.notAllowedCountry .icon{
+  margin: 30px auto 30px;
+  width: 34px;
+  height: 60px;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAApCAYAAABUdSs8AAAC6UlEQVRYhbWXzUtVQRjGf90MISrIhFoFfayCSCpwIZQtIgkygr4hojKoRUU7F0J3EQgtW/QPFFTLipDsA5I+0FyUoGkhIgpmkB9cWkTKG6/MkdNhZs7MvfrALO6c5z7vc955Z945K0SECBwCGoE6YDOwzvy1BIwBfcBb4AXwN0hWDeSMtSJSFJERCce4iLSLSG2efl7wGyIyGRE4ixkRaS3HwGoR6aggcBZdrmzYaqAG6Aa2xxRHACaAelMri8gaqAYGgK1LHDzBJLADmEomChlC5zIGV2wE3qQn0gauAfs8f74FdAQEeQ+0eZ7vAoqLv1JFN+cpopZU4Xz08PpFpMrwjucUZm16FxQdpN8icjNTuVo33RbugHmRNPeCiMw6tO8lBtRxyUF67timKzOZ0Ddf4+Ded2jP6yGnhMOeNKmxyw5hzcSYiPyyvHkyTorItEf/nJLuegiLREeADSKyyfHsaIDuAyW+CyAqrgT0jWScDtT8rOTRQLJ4MpEezRF6Y5iGEYOznuC+erJhqmA5DX3Qc3zQ83wEGIrQK6jrH4Fuh0WkJmAJqkXkS6DmeMF0qTx8NbegqQDuH2A30BPAnVAD33JI46aNlizPWoDrlvl5oCFnuRS9mrKrnhTpabfKkeoTKd4lz5J0evQbMAeJC10RW821RZ86tEfSzei1x0RPRrDJwz2V4b70cM+nDdR7iIoPhncgh6c4Zri+O+Wo7VJqa7FpDJsOFoLvOZxmm4G6QPFK8V+LzxZM+zIHn8nuKtu1XD+vdubs33JxEHiV/q+tDyhpbhmCt2WDL8CxdxuXOPWPXQeVr6m0LFHwIV/zyutsdyoMXjLXtrIN6HhUgYE9efohBjA9IRYXQ7RDDeh3wGCEgduBusEGdKwXkZ8BwZ9EaFoPIh+2Af3mM96GPvPxGYxYA4q9wCfL/DSwBZiNEYu5ESfoBZos8/tjgy8gZr0y40xq3Y+Uq1NVRgYSPDTrrVl8VpYC8A+tP0WjgklxPwAAAABJRU5ErkJggg==') no-repeat center;
+  background-size: contain;
+}
+
+.regPopUpWrapper.notAllowedCountry .popup-title{
+  font-size: 25px;
+  font-family: 'MyriadPro-Bold' , sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
 
-
+.regPopUpWrapper.notAllowedCountry .subTitle{
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+}
 
 
 

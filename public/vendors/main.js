@@ -118,9 +118,12 @@ function animationInit(){
 		$(this).click(function(e){
 			// ga('send','pageview','/login');
 			$(".reg-popup").removeClass('active');
-			$('.log-popup').addClass('active');
+			setTimeout(function(){
+				$('.log-popup').addClass('active');
+			},300);
+
 			return false;
-		})
+		});
 	});
 
 

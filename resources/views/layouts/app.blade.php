@@ -371,24 +371,28 @@
     </div>
 </div>
 <div class="reg-popup">
-    <div class="regPopUpWrapper">
-        <div class="regPopUpBgTop"></div>
-        <button class="close-icon">×</button>
+    
+        
         <!-- <div class="popup-container"> -->
-            <div class="popup-entry">
-                <div class="popup-heading">
-                    <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
+            
+                
 
-                    {{--@if ($registrationStatus === 1)--}}
-                    {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
-                    {{--Registration are temporary disabled. Sorry for the inconvenience.</h5>--}}
-                    {{--@else--}}
-                    {{--<h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>--}}
-                    {{--@endif--}}
+            @if ($registrationStatus === 1)
+            <div class="regPopUpWrapper">
+            <div class="regPopUpBgTop"></div>
+            <button class="close-icon">×</button>
+                <div class="popup-entry">
+                    <div class="popup-heading">
+                        <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
 
-                </div>
+                        {{--@if ($registrationStatus === 1)--}}
+                        {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
+                        {{--Registration are temporary disabled. Sorry for the inconvenience.</h5>--}}
+                        {{--@else--}}
+                        {{--<h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>--}}
+                        {{--@endif--}}
 
-                @if ($registrationStatus === 0)
+                    </div>
                     <div class="popup-form">
                         <form id="registr" action="/register" method="POST">
                             {{csrf_field()}}
@@ -463,16 +467,31 @@
 
                         </form>
                     </div>
-                @else
-                    <h5 class="popup-title">REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.</h5>
-                @endif
-
+                </div>
+                <div class="popUpFooter">
+                    <span>Have an account?<a href="#" class="login-btn">Sign in</a></span>
+                </div>
             </div>
-        <div class="popUpFooter">
-            <span>Have an account?<a href="#" class="login-btn">Sign in</a></span>
-        </div>
+             @else
+             <div class="regPopUpWrapper notAllowedCountry">
+                <div class="regPopUpBgTop"></div>
+                <button class="close-icon">×</button>
+                <div class="popup-entry">
+                    <div class="icon"></div>
+                    <h5 class="popup-title">It's not about you…  </h5>
+                    <p class="subTitle">CasinoBit.io isn’t available in your country. We’re so sorry!</p>
+                </div>
+                <div class="popUpFooter">
+                    <span>You can become an affiliate though.
+Just send an email to<a href="mailto:affiliates@casinobit.io">affiliates@casinobit.io</a></span>
+                </div>
+            </div>
+             @endif
+
+            
+       
         <!-- </div> -->
-    </div>
+   
 </div>
 <div class="log-popup">
     <div class="regPopUpWrapper">
