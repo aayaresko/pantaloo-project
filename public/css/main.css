@@ -4600,13 +4600,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   opacity: 1;
 }*/
 
-.fp-enabled .footer.footer-home .footer-copyrights {
+/* .fp-enabled .footer.footer-home .footer-copyrights {
     opacity: 0;
-}
+} */
 
-.fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
+/* .fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
   opacity: 1;
-}
+} */
 
 
 .fp-enabled .section:after{
@@ -5515,7 +5515,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 .errorMessage.showErrorMsg{
-  display: inline-block;
+  display: block;
+  margin-top: 10px;
+  margin-left: -25px;
 }
 
 .popUpTermForm label.showErrorMsg:before{

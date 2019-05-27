@@ -130,7 +130,7 @@ function animationInit(){
 		
 		$.ajax({
 			method: 'POST',
-			src: '/123456',
+			url: '/123456',
 			data: loginForm.serialize()
 		}).done(function () {
 			console.log("Succeses");
@@ -151,7 +151,7 @@ function animationInit(){
 
 		$.ajax({
 			method: 'POST',
-			src: '/123456',
+			url: '/123456',
 			data: regForm.serialize()
 		}).done(function () {
 			console.log("Succeses");
@@ -292,33 +292,32 @@ function blockFilter() {
 
 $(document).ready(function(){
 
-	
 
-function getCurrentScreen(){
+// function getCurrentScreen(){
 
-	let fullpageWrapper = $('.fullpage-wrapper');
+// 	let fullpageWrapper = $('.fullpage-wrapper');
 
-	fullpageWrapper.length
+// 	fullpageWrapper.length
 
-	let pageCount = location.href;
+// 	let pageCount = location.href;
 
-	if($(window).width() > 1080){
+// 	if($(window).width() > 1080){
 
-		if (pageCount.match('slots')) {
-			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
-		}else{
-			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
-		}
+// 		if (pageCount.match('slots')) {
+// 			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+// 		}else{
+// 			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
+// 		}
 
-	}else{
-		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
-	}
+// 	}else{
+// 		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+// 	}
 
-	}
+// 	}
 
-	getCurrentScreen()
+	// getCurrentScreen()
 
-	$(window).on('mousewheel', getCurrentScreen);
+	// $(window).on('mousewheel', getCurrentScreen);
 
 
 	$("#reg-terms h3").on("click", function () {
