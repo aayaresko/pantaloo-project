@@ -886,7 +886,7 @@
     };
     @else
             @php
-                $hmac = hash_hmac('sha256', $user->email, env('INTERCOM_KEY'));
+                $hmac = hash_hmac('sha256', $user->email, config('intercom.intercom_key'));
             @endphp
 
         window.intercomSettings = {
