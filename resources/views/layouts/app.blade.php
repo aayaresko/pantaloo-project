@@ -371,7 +371,7 @@
     </div>
 </div>
 <div class="reg-popup">
-    <a href="#" class="close-icon"></a>
+    <button class="close-icon"></button>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
@@ -454,7 +454,7 @@
     </div>
 </div>
 <div class="log-popup">
-    <a href="#" class="close-icon"></a>
+    <button class="close-icon"></button>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
