@@ -55,6 +55,7 @@ class TestController extends Controller
     }
 
     public function error(Request $request){
+        dd('hello!!!');
         throw new Exception("Custom error!");
         return 1;
     }

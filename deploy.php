@@ -1,4 +1,5 @@
 <?php
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
@@ -13,13 +14,13 @@ set('repository', 'git@github.com:webmaxstudio/casinobit.git');
 set('default_stage', 'staging');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', true);
 
-// Shared files/dirs between deploys 
+// Shared files/dirs between deploys
 add('shared_files', []);
 add('shared_dirs', []);
 
-// Writable dirs by web server 
+// Writable dirs by web server
 add('writable_dirs', []);
 
 //before('deploy', 'slack:notify');
@@ -42,7 +43,7 @@ host('188.166.192.94')
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no')
-    ->set('http_user','www-data')
+    ->set('http_user', 'www-data')
     ->set('deploy_path', '/var/www/{{application}}');
 
 host('46.28.205.63')
@@ -53,10 +54,10 @@ host('46.28.205.63')
     ->multiplexing(true)
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no')
-    ->set('http_user','www-data')
+    ->set('http_user', 'www-data')
     ->set('branch', 'master')
     ->set('deploy_path', '/var/www/{{application}}');
-    
+
 // Tasks
 
 task('build', function () {
@@ -75,18 +76,18 @@ task('snapshot', [
     'deploy'
 ]);
 
-task('get_revision', function(){
-    $revision = substr(runLocally('git rev-parse HEAD'),0,7);
-    writeln($revision.'.zerostage.ga');
+task('get_revision', function () {
+    $revision = substr(runLocally('git rev-parse HEAD'), 0, 7);
+    writeln($revision . '.zerostage.ga');
     set('revision', $revision);
     set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
 });
 
-task('copy_env', function(){
+task('copy_env', function () {
 //    run('sh deployer/initenv.sh');
     cd('{{release_path}}');
     $result = run('sh deployer/initenv.sh');
-    var_dump($result);
+    writeln($result);
 });
 
 before('deploy:vendors', 'copy_env');
@@ -95,4 +96,10 @@ task('reload:php-fpm', function () {
     run('sudo /usr/sbin/service php7.1-fpm reload');
 });
 
-after('deploy', 'reload:php-fpm');
+before('deploy', 'configure');
+
+task('configure', function () {
+    if (get('target') != 'prod') {
+        after('deploy', 'reload:php-fpm');
+    }
+});
