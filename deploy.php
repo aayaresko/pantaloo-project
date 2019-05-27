@@ -96,6 +96,7 @@ task('reload:php-fpm', function () {
     run('sudo /usr/sbin/service php7.1-fpm reload');
 });
 
+before('deploy:symlink', 'deploy:public_disk');
 before('deploy', 'configure');
 
 task('configure', function () {
