@@ -124,10 +124,10 @@ class MoneyController extends Controller
                 if (rand(1, $checkFrequencyBonus) === 1) {
                     DB::beginTransaction();
                     //get user for lock
-                    $currentUser = User::where('user_id', $user->id)
+                    $currentUser = User::where('id', $user->id)
                         ->lockForUpdate()->first();
 
-                    $class = BonusHelper::getClass($user->bonus_id);
+                    $class = BonusHelper::getClass($currentUser->bonus_id);
                     $bonusObject = new $class($currentUser);
 
                     $bonusClose = $bonusObject->close(1);

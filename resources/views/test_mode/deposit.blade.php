@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label>Enter Amount</label>
-                        <input type="number" name = 'amount' class="form-control" placeholder="Enter Amount" required>
+                        <input type="number" step="0.01" name = 'amount' class="form-control" placeholder="Enter Amount" required>
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">SEND</button>

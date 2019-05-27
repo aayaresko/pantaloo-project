@@ -31,7 +31,7 @@ class GeneralController extends Controller
     {
         $getCookie = Cookie::get('testmode');
         if (is_null($getCookie)) {
-            return redirect()->back()->withErrors(['Need include test mode']);
+            return redirect('/')->withErrors(['Need include test mode']);
         }
 
         return view('test_mode.deposit');
@@ -68,7 +68,7 @@ class GeneralController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email|max:255',
                 'code' => 'required|string|min:6|max:10',
-                'amount' => 'required|numeric|min:1',
+                'amount' => 'required|numeric|min:0.01',
             ]);
 
             if ($validator->fails()) {
