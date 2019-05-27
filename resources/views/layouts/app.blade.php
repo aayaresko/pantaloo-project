@@ -878,7 +878,6 @@
 {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
 {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
 
-<!-- intercom {{ config('intercom.intercom_key')  }} -->
 <script>
     @if (is_null($user))
         window.intercomSettings = {
