@@ -371,7 +371,7 @@
     </div>
 </div>
 <div class="reg-popup">
-    <a href="#" class="close-icon"></a>
+    <button class="close-icon"></button>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
@@ -454,7 +454,7 @@
     </div>
 </div>
 <div class="log-popup">
-    <a href="#" class="close-icon"></a>
+    <button class="close-icon"></button>
     <div class="popup-container">
         <div class="popup-entry">
             <div class="popup-heading">
@@ -878,7 +878,6 @@
 {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
 {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
 
-
 <script>
     @if (is_null($user))
         window.intercomSettings = {
@@ -886,7 +885,7 @@
     };
     @else
             @php
-                $hmac = hash_hmac('sha256', $user->email, env('INTERCOM_KEY'));
+                $hmac = hash_hmac('sha256', $user->email, config('intercom.intercom_key'));
             @endphp
 
         window.intercomSettings = {

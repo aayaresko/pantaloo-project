@@ -547,7 +547,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $transaction->save();
 
                 User::where('id', $user->id)->update([
-                    'bonus_balance' => DB::raw("bonus_balance+$bonusAmount")
+                    'bonus_balance' => DB::raw("bonus_balance+$bonusAmount"),
+                    'bonus_id' => null
                 ]);
 
                 $updateUser = User::where('id', $user->id)->first();
@@ -571,6 +572,8 @@ class FreeSpins extends \App\Bonuses\Bonus
 //                    }
 //                }
 
+                event(new BonusCancelEvent($updateUser, 'welcome bonus'));
+                //TO DO FIX DOUBLE CODE
                 $response = [
                     'success' => true,
                     'message' => 'Done'
@@ -597,7 +600,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 event(new BonusCancelEvent($updateUser, 'welcome bonus'));
-
+                //TO DO FIX DOUBLE CODE
                 $response = [
                     'success' => true,
                     'message' => 'Done.Expire'

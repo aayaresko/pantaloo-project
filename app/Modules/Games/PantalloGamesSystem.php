@@ -58,6 +58,7 @@ class PantalloGamesSystem implements GamesSystem
         ]);
 
         try {
+            //to do check game in available****
             $game = GamesList::where('id', $request->gameId)->first();
             $gameId = $game->system_id;
 
