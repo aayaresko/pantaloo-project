@@ -46,12 +46,11 @@
 
         <div class="block-filter clearfix">
             <form action="#" method="post" id="gamesFiterForm">
-                <div class="input-search">
-                    <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
-                    <input type="submit" value=""/>
-                </div>
+                
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
-
+                        @if ($freeSpins === 1)
+                            <option class="getFreeSpins" value="free_spins" >Free Spin Games</option>
+                        @endif
                         <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesTypes as $gamesType)
                             @php
@@ -74,11 +73,13 @@
                             <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
-                    @if ($freeSpins === 1)
-                        <div class="block-bonus-buttons" style="display: inline-block">
-                            <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
-                        </div>
-                    @endif
+                   <div class="input-search">
+                       <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
+                       <input type="submit" value=""/>
+                   </div>
+                   <!-- <div class="block-bonus-buttons" style="display: inline-block">
+                       <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
+                   </div> -->
                 
             </form>
         </div>

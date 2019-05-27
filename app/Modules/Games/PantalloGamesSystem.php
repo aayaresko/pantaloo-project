@@ -58,6 +58,7 @@ class PantalloGamesSystem implements GamesSystem
         ]);
 
         try {
+            //to do check game in available****
             $game = GamesList::join('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                 ->where('games_list.id', $request->gameId)
                 ->select(['games_list.*', 'games_list_extra.name as real_name'])->first();
