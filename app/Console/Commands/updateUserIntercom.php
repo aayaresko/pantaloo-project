@@ -16,6 +16,8 @@ use App\Events\WithdrawalRequestedEvent;
 use App\Providers\Intercom\Intercom;
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class updateUserIntercom extends Command
 {
@@ -50,6 +52,19 @@ class updateUserIntercom extends Command
      */
     public function handle()
     {
+
+        $path = getcwd() . '/resources/lang';
+        $langs = array_diff(scandir($path), ['.', '..']);
+        foreach ($langs as $lang) {
+            $cpath = $path . DIRECTORY_SEPARATOR . $lang;
+            //$files = array_diff(scandir($cpath), ['.', '..']);
+            $files = ['casino.php'];
+            foreach ($files as $file){
+                $data = File::getRequire($cpath . DIRECTORY_SEPARATOR . $file);
+                $datafile = preg_replace("/\.php$/", ".data", 'lang' .DIRECTORY_SEPARATOR . $lang.DIRECTORY_SEPARATOR.$file);
+                Storage::put($datafile, serialize($data));
+            }
+        }
 //        $user = User::findOrFail(146);
 ////
 ////        event(new AccountStatusEvent($user, 'old_status', 'new_status'));
@@ -64,6 +79,6 @@ class updateUserIntercom extends Command
 ////        event(new WithdrawalFrozenEvent($user, 'comment'));
 ////        event(new WithdrawalRequestedEvent($user));
 
-        dump(env('INTERCOM_TOKEN'));
+
     }
 }
