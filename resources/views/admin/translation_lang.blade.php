@@ -44,8 +44,8 @@
                                             <td>{!! $translationsDefault[$key] !!}</td>
                                         @endif
                                         <td>
-                                            <a href="#" class="editable"
-                                               data-pk="{{ $key }}">{!! $translationCurrent !!}</a>
+                                            <div href="#" class="editable"
+                                               data-pk="{{ $key }}">{!! $translationCurrent !!}</div>
                                         </td>
                                     </tr>
                                 @endforeach
