@@ -140,7 +140,7 @@ function animationInit(){
 		}).fail(function(){
 			console.log("error");
 			loginForm.find('input').addClass("showErrorMsg");
-
+			
 			let loginResult = $(".loginError").addClass("showErrorMsg");
 			loginResult.html("These credentials do not match our records.");
 		});
