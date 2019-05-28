@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.settings') }}
-@endsection
+@section('title', trans('casino.settings'))
+
 
 @section('content')
 <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
