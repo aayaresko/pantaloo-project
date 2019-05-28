@@ -4,6 +4,7 @@ return array (
   'error_msg' => 'You have to except the Bonus Terms and Conditions to proceed',
   'bonus_status' => 'Activated',
   'play' => 'Play',
+  'game_room_description' => 'with Bitcoin at Casinobit! Join our casino and win 200% bonus after first deposit',
   'support_title' => 'title_en',
   'support_subtitle' => 'subtitle_en',
   'free_demo' => 'Free demo',

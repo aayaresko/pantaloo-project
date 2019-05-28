@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.bonus') }}
-@endsection
+@section('title', trans('casino.bonus'))
+
 
 @section('content')
     <div class="cabinet-block"

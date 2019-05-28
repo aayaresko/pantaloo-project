@@ -67,6 +67,10 @@ let events = function () {
         getListGames(append);
     });
 
+    $('a.getFreeSpins').on('click', function (e) {
+        e.preventDefault();
+        $('.type_of_game').val($('.js-example-basic-single option:first-child').val()).trigger('change');
+    })
 
     $('.type_of_game').on('change', function (e) {
         e.preventDefault();

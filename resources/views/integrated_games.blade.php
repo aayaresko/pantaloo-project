@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
-@section('title')
-    Games
+@php
+if ($title == 'games') {
+    $gameRoomTitle = 'casino.games';
+} else {
+    $gameRoomTitle = 'casino.type_' . str_replace(' ', '_', $title);
+}
+@endphp
+
+@section('title', trans($gameRoomTitle))
+
+
+@section('description')
+{{ trans('casino.play') }} {{trans($gameRoomTitle)}} {{ trans('casino.game_room_description') }}
 @endsection
 
 @section('content')
@@ -11,7 +22,7 @@
             <div class="game-entry colorGame" id="fs_section_img">
                 {{--<img src="media/images/logo.png" alt="game">--}}
                 <div class="gameLoadingWrapper">
-                    <h1 class="gameLoading">
+                    <p class="gameLoading">
                         <span class="let1">l</span>
                         <span class="let2">o</span>
                         <span class="let3">a</span>
@@ -19,7 +30,7 @@
                         <span class="let5">i</span>
                         <span class="let6">n</span>
                         <span class="let7">g</span>
-                    </h1>
+                    </p>
                 </div>
             </div>
             <div class="left-info">
@@ -77,9 +88,12 @@
                        <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
                        <input type="submit" value=""/>
                    </div>
-                   <!-- <div class="block-bonus-buttons" style="display: inline-block">
-                       <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
-                   </div> -->
+                   @if ($freeSpins === 1)
+                      <div class="block-bonus-buttons" style="display: inline-block">
+                          <a href="#" class="getFreeSpins"><span>Free Spin Games</span></a>
+                      </div>
+                   @endif
+                  
                 
             </form>
         </div>
