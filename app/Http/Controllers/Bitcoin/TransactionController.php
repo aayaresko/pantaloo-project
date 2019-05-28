@@ -42,8 +42,8 @@ class TransactionController extends Controller
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
         try {
+            //to do valdiate secret key
             //validate
             //add balidate ip
             $ipSender = GeneralHelper::visitorIpCloudFlare();
@@ -81,6 +81,8 @@ class TransactionController extends Controller
 
             }
 
+            DB::beginTransaction();
+            
             $user = User::whereIn('bitcoin_address', $transactionParticipants)->lockForUpdate()->first();
 
             if (is_null($user)) {
@@ -100,7 +102,7 @@ class TransactionController extends Controller
 
                 $response = [
                     'success' => true,
-                    'message' => ['Transaction exists. And Updated']
+                    'msg' => ['Transaction exists. And Updated']
                 ];
             } else {
                 $amountTransaction = $rawTransaction['amount'] * 1000;
@@ -155,7 +157,7 @@ class TransactionController extends Controller
 
                 $response = [
                     'success' => true,
-                    'message' => ['TXID:' . $txid, "TRANSACTION:{$transaction->id}"]
+                    'msg' => ['TXID:' . $txid, "TRANSACTION:{$transaction->id}"]
                 ];
             }
             DB::commit();
@@ -232,7 +234,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => true,
-                'message' => ['BLOCKHASH:' . $blockhash]
+                'msg' => ['BLOCKHASH:' . $blockhash]
             ];
 
             //to do get block use this command and check block hash

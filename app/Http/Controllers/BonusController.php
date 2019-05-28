@@ -29,7 +29,10 @@ class BonusController extends Controller
 
         $active_bonus = Auth::user()->bonuses()->first();
 
-        $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        $bonusStatistics = null;
+        if ($active_bonus) {
+            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        }
         
         return view('bonus', [
             'bonuses' => $bonuses,
@@ -152,7 +155,7 @@ class BonusController extends Controller
         $bonusObject = new $class($user);
 
         DB::beginTransaction();
-        $bonusActivate = $bonusObject->activate();
+        $bonusActivate = $bonusObject->activate(['mode' => 1]);
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
             return redirect()->back()->withErrors([$bonusActivate['message']]);

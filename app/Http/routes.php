@@ -11,14 +11,13 @@
 |
 */
 
-use App\Jobs\IntercomCreateUpdateUser;
-
-Route::get('testmode', function (\Illuminate\Http\Request $request) {
-    $testmode = !$request->cookie('testmode', false);
-
-    //return the response
-    return redirect('')->withCookie(cookie('testmode', $testmode));
+Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
+    Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
+    Route::get('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDepositView']);
+    Route::post('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDeposit']);
 });
+
+
 
 Route::get('robots.txt', function(\Illuminate\Http\Request $request){
     return view('robots', [
