@@ -478,12 +478,14 @@
                 <button class="close-icon">×</button>
                 <div class="popup-entry">
                     <div class="icon"></div>
-                    <h5 class="popup-title">It's not about you…  </h5>
-                    <p class="subTitle">CasinoBit.io isn’t available in your country. We’re so sorry!</p>
+                    <h5 class="popup-title">{{ trans('casino.not_allowed_title')}}</h5>
+                    <p class="subTitle">{{ trans('casino.not_allowed_subtitle')}}</p>
+                    <div class="send-btn-block">
+                        <a href="mailto:" class="contactUsBtn">{{ trans('casino.contact_us') }}</a>
+                    </div>
                 </div>
                 <div class="popUpFooter">
-                    <span>You can become an affiliate though.
-Just send an email to<a href="mailto:affiliates@casinobit.io">affiliates@casinobit.io</a></span>
+                    <span>{{ trans('casino.affiliate_info') }}<a href="mailto:affiliates@casinobit.io">affiliates@casinobit.io</a></span>
                 </div>
             </div>
              @endif
