@@ -99,10 +99,7 @@ task('reload:php-fpm', function () {
 });
 
 before('deploy:symlink', 'deploy:public_disk');
-before('deploy', 'configure');
 
-task('configure', function () {
-    if (get('target') != 'prod') {
-        after('deploy', 'reload:php-fpm');
-    }
-});
+task('reload:php-fpm')->onHosts('STAGE');
+after('deploy', 'reload:php-fpm');
+
