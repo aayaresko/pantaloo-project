@@ -62,8 +62,6 @@ let events = function () {
     $('body').on('click', '.moreGames', function (e) {
         let append = true;
         listGameParams.page = currPage;
-        history.pushState({}, "", '#page=' + currPage)
-        currPage++
         getListGames(append);
     });
 
@@ -138,8 +136,16 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-
+    
     function freeSpinGames() {
+        // TODO
+        if ((location.href).indexOf("games/") >= 0) {
+            let splitedUrl = window.location.href.split("/")
+            splitedUrl.pop()
+            // console.log(splitedUrl.join('/').split('#')[0]);
+            history.pushState({}, "", splitedUrl.join('/').split('#')[0])
+            
+        } 
         // e.preventDefault();
         listGameParams.typeId = 0;
         listGameParams.categoryId = 0;
@@ -222,6 +228,8 @@ function getListGames(append) {
 
                 if (append) {                  
                     $(".insertGames .games-entry").append(device);
+                    history.pushState({}, "", '#page=' + currPage)
+                    currPage++
                 } else {     
                     $(".insertGames .games-entry").html(device);
                     if ((location.href).indexOf("games/") <= 0) {
