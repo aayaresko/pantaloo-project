@@ -14,4 +14,6 @@ return [
 
     ],
 
+    'error_types' => E_ALL & ~E_NOTICE & ~E_DEPRECATED,
+
 ];
