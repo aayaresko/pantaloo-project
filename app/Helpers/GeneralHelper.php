@@ -203,7 +203,7 @@ class GeneralHelper
 
         $return = [];
 
-        if (preg_match("/(?<lang>[^\/]+)\/(?<file>[^\/]+)\.php$/", $filename, $matches)) {
+        if (preg_match("/(?<lang>\w+)(\/|\\)(?<file>\w+)\.php$/", $filename, $matches)) {
 
             $lang = $matches['lang'];
             $file = $matches['file'];
