@@ -31,11 +31,12 @@ set('slack_webhook', 'https://uptech.ryver.com/application/webhook/gGsMghs9n9kpS
 
 //set('slack_color', 'blue');
 //set('slack_success_color', 'green');
-
+set('git_tty', false);
 
 // Hosts
 
-host('188.166.192.94')
+host('STAGE')
+    ->hostname('deployer.zerostage.ga')
     ->stage('staging')
     ->user('deployer')
     //->identityFile(__DIR__.'/deployer/id_rsa_deployer')
@@ -46,7 +47,8 @@ host('188.166.192.94')
     ->set('http_user', 'www-data')
     ->set('deploy_path', '/var/www/{{application}}');
 
-host('46.28.205.63')
+host('PROD')
+    ->hostname('46.28.205.63')
     ->stage('prod')
     ->user('administrator')
     //->identityFile(__DIR__.'/deployer/id_rsa_deployer')

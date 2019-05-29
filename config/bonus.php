@@ -14,6 +14,7 @@ return [
         'cancel' => 4,
         'wagerUpdate' => 5,
         'setDeposit' => 6,
+        'setGame' => 7,
     ],
 
     'classes' => [

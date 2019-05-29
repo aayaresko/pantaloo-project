@@ -29,28 +29,14 @@
                                         <div class="single-bonus">
                                             <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
                                             <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
-                                            @php
-                                                $dataBonus = $active_bonus->data;
 
-                                                $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
-                                                $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
-
-                                                $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
-
-                                                if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
-                                                    $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
-                                                } else {
-                                                    $depositWager = 0;
-                                                }
-
-                                            @endphp
                                             <p class="text">Bonus Wager:
-                                                {{ $bonusWagerUser . ' / ' . $bonusWager }} {{ config('app.currencyCode') }}</p>
+                                                {{ $bonusStatistics['bonusWager']['real'] . ' / ' . $bonusStatistics['bonusWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
 
                                             @if ($active_bonus->bonus_id == 1)
 
                                                 <p class="text">Deposit Wager:
-                                                    {{ $depositWagerUser . ' / ' . $depositWager }} {{ config('app.currencyCode') }}</p>
+                                                    {{ $bonusStatistics['depositWager']['real'] . ' / ' . $bonusStatistics['depositWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
 
                                             @endif
 
