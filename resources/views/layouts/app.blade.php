@@ -120,7 +120,7 @@
                     @foreach ($languages as $language)
                         @if(app()->getLocale() == $language) @continue @endif
                         <li>
-                            <a href="{{ url("/$language") }}"
+                            <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
                                class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                 <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
                                 <span>{{ $language }}</span>
@@ -243,7 +243,7 @@
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
                             <li>
-                                <a href="{{ url("/$language") }}"
+                                <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
                                    class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                     <img src="{{ asset("assets/images/languages/$language.png") }}"
                                          alt="{{ $language }}"/> <span>{{ $language }}</span>
