@@ -52,16 +52,27 @@ class updateUserIntercom extends Command
      */
     public function handle()
     {
+        $newKey = $this->ask('Type new key and press enter');
 
         $path = getcwd() . '/resources/lang';
         $langs = array_diff(scandir($path), ['.', '..']);
+
         foreach ($langs as $lang) {
+
             $cpath = $path . DIRECTORY_SEPARATOR . $lang;
+
             //$files = array_diff(scandir($cpath), ['.', '..']);
             $files = ['casino.php'];
-            foreach ($files as $file){
-                $data = File::getRequire($cpath . DIRECTORY_SEPARATOR . $file);
-                $datafile = preg_replace("/\.php$/", ".data", 'lang' .DIRECTORY_SEPARATOR . $lang.DIRECTORY_SEPARATOR.$file);
+
+            foreach ($files as $file) {
+
+//              $data = File::getRequire($cpath . DIRECTORY_SEPARATOR . $file);
+                $datafile = preg_replace("/\.php$/", ".data", 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file);
+
+                $data = unserialize(Storage::get($datafile));
+
+                $data[$newKey] = isset($data[$newKey]) ? $data[$newKey] : $newKey;
+
                 Storage::put($datafile, serialize($data));
             }
         }
