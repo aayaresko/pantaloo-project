@@ -44,21 +44,24 @@ class TransactionSum extends Command
      */
     public function handle()
     {
-        ini_set('memory_limit','2048M');
+        ini_set('memory_limit','4096M');
         $agents = User::whereIn('role', [1, 3])->get();
         foreach ($agents as $agent) {
             $newAgent = AgentsKoef::where('user_id', $agent->id)->first();
             if (!$newAgent) {
+                $koefTransaction = Transaction::where('agent_id', $agent->id)->where('agent_commission', '>', 0)->first();
                 $newAgent = new AgentsKoef();
                 $newAgent->user_id = $agent->id;
-                $newAgent->koef = 0;
+                $newAgent->koef = $koefTransaction ? $koefTransaction->agent_commission : 40;
+                $newAgent->created_at = Carbon::now()->subDays(100);
                 $newAgent->save();
             }
         }
-        $trim = 93;
+        $trim = 100;
         $lastId = 0;
         for ($i = 0; $i < $trim; $i++) {
             $now = Carbon::now()->subDays($trim)->addDays($i)->startOfDay();
+
             $this->info($now->toDateString() . " Last id: $lastId");
             $exsicts = DB::table('transactions')
                 ->select('id')
@@ -74,6 +77,7 @@ class TransactionSum extends Command
                 ->where('created_at', '>', $now->subDay()->toDateTimeString())
                 ->get()
                 ->groupBy('user_id');
+            $now->addDay();
             foreach ($transactionsUser as $userId => $transactions) {
                 $userSum = new UserSum();
                 $userSum->user_id = $userId;
@@ -99,6 +103,22 @@ class TransactionSum extends Command
                 }
                 $userSum->save();
                 $lastId = $transaction->id;
+
+                if ($agent_id = @User::find($userId)->agent_id and $agent = $agents->where('id', $agent_id)->first()) {
+                    $agentSum = AgentSum::where('user_id', $agent_id)->where('created_at', $now->toDateTimeString())->first();
+                    if (!$agentSum) {
+                        $agentSum = new AgentSum();
+                        $agentSum->user_id = $agent_id;
+                        $agentSum->created_at = $now;
+                    }
+                    $agentSum->total_sum += $userSum->bets + $userSum->wins;
+                    $agentSum->agent_percent = $agent->koefs->koef;
+                    if ($agent->agent_id) {
+                        $agentSum->parent_percent = $agent->parentKoef->koef;
+                        $agentSum->parent_profit = $agentSum->total_sum * ($agentSum->parent_percent - $agentSum->agent_percent) / 100;
+                    }
+                    $agentSum->save();
+                }
             }
         }
 

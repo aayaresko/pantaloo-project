@@ -435,12 +435,12 @@ class User extends Authenticatable
 
     public function playerSum()
     {
-        return $this->hasOne('App\Models\UserSum');
+        return $this->hasMany('App\Models\UserSum');
     }
 
     public function totalPlayerSum()
     {
-        return $this->playerSum()->sum('sum') ?: 0;
+        return $this->playerSum()->sum('bets') + $this->playerSum()->sum('wins');
     }
 
     public function totalPlayerProfit()
