@@ -203,7 +203,9 @@ class GeneralHelper
 
         $return = [];
 
-        if (preg_match("/(?<lang>\w+)(\/|\\)(?<file>\w+)\.php$/", $filename, $matches)) {
+        $filename = str_replace(DIRECTORY_SEPARATOR, ':', $filename);
+
+        if (preg_match("/(?<lang>\w+):(?<file>\w+)\.php$/", $filename, $matches)) {
 
             $lang = $matches['lang'];
             $file = $matches['file'];
