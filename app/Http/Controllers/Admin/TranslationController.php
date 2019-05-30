@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use File;
+use Validator;
 use App\Models\Language;
 use App\Models\Translation;
 use Helpers\GeneralHelper;
@@ -79,7 +80,7 @@ class TranslationController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
-        
+
         return response()->json(['success' => true]);
     }
 
@@ -108,10 +109,17 @@ class TranslationController extends Controller
     public function getTransactions(Request $request)
     {
         $param['columns'] = [];
-        $param['columnsAlias'] = [];
+        $param['columnsAlias'] = [
+            'translator_translations.group as group',
+            'translator_translations.item as item',
+            'translator_translations.text as text',
+            'cur_lang.group as cur_group',
+            'cur_lang.item as cur_item',
+            'cur_lang.text as cur_text'
+        ];
 
-        $param['currentLang'] = $request->currentLang;
         $param['defaultLang'] = $request->defaultLang;
+        $param['currentLang'] = $request->currentLang;
 
         $param['whereCompare'] = [
             ['translator_translations.locale', '=', $param['defaultLang']]
@@ -122,78 +130,69 @@ class TranslationController extends Controller
 
         $countSum = Translation::select([DB::raw('COUNT(*) as `count`')])
             ->where($whereCompare)
-            ->first()->toArray();
+            ->first();
 
         $totalData = $countSum->count;
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
         $start = $request->input('start');
-
-        $order = $param['columns'][$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
+        $param['start'] = $start;
 
         if (empty($request->input('search.value'))) {
             /* SORT */
-            $items = Translation::leftJoin('translator_translations', 'translator_translations.item', '=', 'games_list.id')
-                ->leftJoin('translator_translations', function ($join) use ($param) {
-                    $join->on('translator_translations.item', '=', 'translator_translations.item')
-                        ->where('translator_translations.locale', '=', $param['currentLang']);
+            $items = Translation::leftJoin('translator_translations as cur_lang',
+                function ($join) use ($param) {
+                    $join->on('translator_translations.item', '=', 'cur_lang.item')
+                        ->on('translator_translations.group', '=', 'cur_lang.group')
+                        ->where('cur_lang.locale', '=', $param['currentLang']);
                 })
                 ->where($whereCompare)
                 ->offset($start)
                 ->limit($limit)
-                ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
-            dd($items);
+                ->select($param['columnsAlias'])
+                ->get();
         } else {
             /* SEARCH */
             $search = $request->input('search.value');
 
-            if (is_numeric($search)) {
-                array_push($whereCompare, [$param['columns'][0], 'LIKE', "%{$search}%"]);
-            } else {
-                array_push($whereCompare, [$param['columns'][1], 'LIKE', "%{$search}%"]);
-            }
+            array_push($whereCompare, ['translator_translations.text', 'LIKE', "%{$search}%"]);
 
-            $items = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
-                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            $items = Translation::leftJoin('translator_translations as cur_lang',
+                function ($join) use ($param) {
+                    $join->on('translator_translations.item', '=', 'cur_lang.item')
+                        ->on('translator_translations.group', '=', 'cur_lang.group')
+                        ->where('cur_lang.locale', '=', $param['currentLang']);
+                })
                 ->where($whereCompare)
-                ->groupBy('games_types_games.game_id')
                 ->offset($start)
                 ->limit($limit)
-                ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
+                ->select($param['columnsAlias'])
+                ->get();
 
-            $countSum = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
-                ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
-                ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
-                ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
-                ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+
+            $countSum = Translation::select([DB::raw('COUNT(*) as `count`')])
                 ->where($whereCompare)
-                ->groupBy('games_types_games.game_id')
-                ->get()->toArray();
+                ->first();
 
-            $totalFiltered = count($countSum);
+            $totalFiltered = $countSum->count;
         }
         /* END */
 
         /* TO VIEW */
         $data = $items;
-        $configIntegratedGames = config('integratedGames.common');
-        $param['providers'] = $configIntegratedGames['providers'];
 
         $data->map(function ($item, $key) use ($param) {
-            $idProvider = $item->provider;
-            $item->provider = $param['providers'][$idProvider]['code'];
-            $item->edit = view('admin.parts.buttons', ['id' => $item->id])->render();
-            $item->image = view('admin.parts.imageTable', ['image' => $item->image])->render();
-            $item->mobile = view('admin.parts.switch', ['switch' => $item->mobile])->render();
-            $item->active = view('admin.parts.switch', ['switch' => $item->active])->render();
+            $item->cur_text = view('admin.parts.ckeditor_inline',
+                [
+                    'html' => $item->cur_text,
+                    'group' => $item->group,
+                    'item' => $item->item,
+                    'key' => $key,
+                ]
+            )->render();
 
+            $item->key = $param['start'] + ($key + 1);
             return $item;
         });
 
@@ -227,5 +226,73 @@ class TranslationController extends Controller
             'defaultLang' => $defaultLang,
             'currentLang' => $lang
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function saveModern(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'currentLang' => 'required|string',
+                'group' => 'required|string',
+                'item' => 'required|string',
+                'text' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'msg' => $validator->errors()->first()
+                ]);
+            }
+
+            $request->text = $this->ckeditorFeatureValue($request->text);
+
+            //get value
+            $trans = Translation::where([
+                ['locale', '=', $request->currentLang],
+                ['group', '=', $request->group],
+                ['item', '=', $request->item]
+            ])->select(['id'])->first();
+
+            if (is_null($trans)) {
+                //create
+                Translation::create([
+                    'locale' => $request->currentLang,
+                    'group' => $request->group,
+                    'item' => $request->item,
+                    'text' => $request->text,
+                ]);
+            } else {
+                //update
+                Translation::where('id', $trans->id)->update([
+                    'text' => $request->text,
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'success' => false,
+                'msg' => $ex->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'msg' => 'Done'
+        ]);
+    }
+
+    protected function ckeditorFeatureValue($value)
+    {
+        preg_match("/^<p>[^<>]+<\/p>$/", $value, $regular);
+
+        if (!empty($regular)) {
+            $value = strip_tags($value);
+        }
+
+        return $value;
     }
 }

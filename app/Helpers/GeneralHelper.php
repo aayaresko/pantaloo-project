@@ -44,8 +44,8 @@ class GeneralHelper
      */
     static public function getListLanguage($key = null)
     {
-        return  ['en'];
         $modeTrans = config('translator.source');
+
         if (!is_null($key)) {
             $modeTrans = $key;
         }

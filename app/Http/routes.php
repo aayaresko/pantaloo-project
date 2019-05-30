@@ -135,7 +135,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
 
     Route::group(['middleware' => ['auth']], function () use ($languages) {
-        Route::get('/translation/getTransactions', ['as' => 'translations.getTransactions', 'uses' => 'Admin\TranslationController@getTransactions']);
+
         Route::get('/intercom/update', ['as' => 'intercom', 'uses' => 'IntercomController@update']);
 
         Route::group([
@@ -291,8 +291,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 //                Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
 
                 Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslationsModern', 'uses' => 'Admin\TranslationController@changeTranslationModern']);
-                Route::post('/translations/save', ['as' => 'translations.saveModern', 'uses' => 'Admin\TranslationController@save']);
                 Route::get('/translation/getTransactions', ['as' => 'translations.getTransactions', 'uses' => 'Admin\TranslationController@getTransactions']);
+                Route::post('/translations/save', ['as' => 'translations.saveModern', 'uses' => 'Admin\TranslationController@saveModern']);
             });
 
             Route::get('/', 'UsersController@index');

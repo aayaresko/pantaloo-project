@@ -5,7 +5,7 @@
 @endsection
 
 @section('preCss')
-    <link href="/adminPanel/css/general.css" rel="stylesheet" type="text/css" />
+    <link href="/adminPanel/css/general.css" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
@@ -16,16 +16,18 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            <table id = 'dateTable' class="table table-striped table-bordered dataTable no-footer datatable" aria-describedby="datatable_info">
+                            <table id='dateTable'
+                                   class="table table-striped table-bordered dataTable no-footer datatable"
+                                   aria-describedby="datatable_info">
                                 <thead>
                                 <tr role="row">
-                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">
+                                    <th width="1%">
                                         №
                                     </th>
                                     @if ($defaultLang <> $currentLang)
-                                        <th tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">{{ $defaultLang }}</th>
+                                        <th>{{ $defaultLang }}</th>
                                     @endif
-                                    <th tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">{{ $currentLang }}</th>
+                                    <th>{{ $currentLang }}</th>
                                 </tr>
                                 </thead>
 
@@ -33,31 +35,16 @@
                                 <tr role="row">
                                     <td></td>
                                     @if ($defaultLang <> $currentLang)
-                                        <td width="50%"></td>
+                                        <td></td>
                                     @endif
-                                    <td width="50%"></td>
+                                    <td></td>
                                 </tr>
-
-                                    {{--@php--}}
-                                        {{--$index = 0;--}}
-                                    {{--@endphp--}}
-                                    {{--@foreach($translationsCurrent as $key => $translationCurrent)--}}
-                                        {{--<tr role="row" id="row_{{ $key }}">--}}
-                                            {{--<td>{{ ++$index }}</td>--}}
-                                            {{--@if ($defaultLang <> $currentLang)--}}
-                                                {{--<td>{!! $translationsDefault[$key] !!}</td>--}}
-                                            {{--@endif--}}
-                                            {{--<td width="50%">hgf1</td>--}}
-                                        {{--</tr>--}}
-                                    {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -65,61 +52,62 @@
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/inline/ckeditor.js"></script>
-
     <script>
-
-        // let editor;
-        //
-        // InlineEditor
-        //     .create( document.querySelector( '.editor' ))
-        //     .then( newEditor => {
-        //         editor = newEditor;
-        //     } )
-        //     .catch( error => {
-        //         console.error( error );
-        //     } );
-        //
-        // $('.editor').each(function () {
-        //
-        // });
-
-
-        {{--$.fn.editable.defaults.params = function (params) {--}}
-            {{--params._token = '{{ csrf_token() }}';--}}
-            {{--return params;--}}
-        {{--};--}}
-        {{--$.fn.editable.defaults.mode = 'inline';--}}
-
-        {{--var dataTable = $('.datatable').DataTable({--}}
-            {{--"fnDrawCallback": function (oSettings) {--}}
-                {{--$('.editable').editable({--}}
-                    {{--type: 'wysihtml5',--}}
-                    {{--name: '{{ $currentLang }}',--}}
-                    {{--pk: $(this).data('pk'),--}}
-                    {{--url: '{{ route('translations.save') }}',--}}
-                    {{--title: 'Enter translation',--}}
-                    {{--inputclass: 'editableStyle',--}}
-                    {{--wysihtml5: {--}}
-                        {{--html: true,--}}
-                        {{--image: false,--}}
-                    {{--},--}}
-                    {{--placement: 'bottom',--}}
-                    {{--success: function (data) {--}}
-                        {{--if(data.success == true) {--}}
-                            {{--//alert('Ok');--}}
-                        {{--} else {--}}
-                            {{--//alert('False');--}}
-                            {{--return 'Something went wrong';--}}
-                        {{--}--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--}--}}
-        {{--});--}}
+        let editorArray = [];
+        let key = '';
+        $('body').on('click', '.ckEditor', function (e) {
+            $('.panelEditor').hide();
+            key = $(this).attr("data-group") + $(this).attr("data-item");
+            if (!(key in editorArray)) {
+                InlineEditor
+                    .create(this)
+                    .then(newEditor => {
+                        editorArray[key] = newEditor;
+                        //show panel editor
+                        $(this).trigger('focus');
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+            //show form
+            $(this).next().show();
+        });
 
 
+        $('body').on('click', '.saveTrans', function (e) {
+            let bottom = $(this);
+            bottom.prop('disabled', true);
+            let parent = $(this).parent();
+            let group = parent.parent().find('.ckEditor').attr("data-group");
+            let item = parent.parent().find('.ckEditor').attr("data-item");
+            let key = group + item;
+            let objectEditor = editorArray[key];
+            console.log(objectEditor.getData());
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'post',
+                url: '/admin/translations/save',
+                data: {
+                    currentLang: currentLang,
+                    group: group,
+                    item: item,
+                    text: objectEditor.getData()
+                },
+                success: (json) => {
+                    parent.find('.statusEditor').val(json.msg);
+                    bottom.prop('disabled', false);
 
-        let currentLang = '{{ $defaultLang }}';
-        let defaultLang = '{{ $currentLang }}';
+                },
+                error: (json) => {
+                    parent.find('.statusEditor').val('Some is wrong');
+                    bottom.prop('disabled', false);
+                }
+            });
+        });
+
+        let currentLang = '{{ $currentLang }}';
+        let defaultLang = '{{ $defaultLang }}';
 
         let globalTable;
         let optionsDefault = {currentLang: currentLang, defaultLang: defaultLang};
@@ -134,9 +122,12 @@
             let table = $('#dateTable').DataTable({
                 "order": [[0, "asc"]],
                 "columnDefs": [
+                    {"orderable": false, "targets": 0},
                     {"orderable": false, "targets": 1},
-                    @if ($defaultLang <> $currentLang)
-                        {"orderable": false, "targets": 2},
+                        @if ($defaultLang <> $currentLang)
+                    {
+                        "orderable": false, "targets": 2
+                    },
                     @endif
                 ],
                 "processing": true,
@@ -150,12 +141,19 @@
                         console.log('problem with dataTables');
                     }
                 },
+                "drawCallback": function (settings) {
+                    editorArray = [];
+                },
                 "columns": [
-                    {"data": "id"},
-                    {"data": "default_lang"},
-                    @if ($defaultLang <> $currentLang)
-                        {"data": "current_lang"},
-                    @endif
+                    {"data": "key"},
+                        @if ($defaultLang <> $currentLang)
+                    {
+                        "data": "text"
+                    },
+                        @endif
+                    {
+                        "data": "cur_text"
+                    },
                 ],
             });
 
