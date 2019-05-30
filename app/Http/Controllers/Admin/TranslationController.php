@@ -10,6 +10,8 @@ use App\Models\Translation;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Storage;
 
 class TranslationController extends Controller
 {
@@ -96,8 +98,8 @@ class TranslationController extends Controller
 
     private function changeFileTranslation($code, $data)
     {
-        file_put_contents(base_path() . "/resources/lang/{$code}/casino.php",
-            '<?php' . PHP_EOL . 'return ' . var_export($data, true) . PHP_EOL . '?>');
+        $datafile = 'lang' . DIRECTORY_SEPARATOR . $code . DIRECTORY_SEPARATOR . 'casino.data';
+        Storage::put($datafile, serialize($data));
         return true;
     }
 

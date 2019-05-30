@@ -44,8 +44,8 @@
                                             <td>{!! $translationsDefault[$key] !!}</td>
                                         @endif
                                         <td>
-                                            <a href="#" class="editable"
-                                               data-pk="{{ $key }}">{!! $translationCurrent !!}</a>
+                                            <div href="#" class="editable" style="cursor: pointer"
+                                               data-pk="{{ $key }}">{!! $translationCurrent !!}</div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -101,4 +101,10 @@
             }
         });
     </script>
+    <style>
+        .wysihtml5-sandbox{
+            width: 900px!important;
+            height: 500px!important;
+        }
+    </style>
 @endsection

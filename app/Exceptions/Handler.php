@@ -35,35 +35,30 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-//        if ($this->isHttpException($e)) {
-//            if ($e->getStatusCode() == 404) {
-//                return response()->view('errors.' . '404', [], 404);
-//            }
-//        }
-//
-//        if (app()->bound('sentry') && $this->shouldReport($e)) {
-//            if (Auth::check()) {
-//                Sentry\configureScope(function (Sentry\State\Scope $scope): void {
-//                    $user = Auth::user();
-//                    $scope->setUser([
-//                        'id' => $user->id,
-//                        'email' => $user->email,
-//                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
-//                    ]);
-//                });
-//            } else {
-//
-//            }
-//            app('sentry')->captureException($e);
-//        }
-//
-//        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-//            return abort('404');
-//        }
-//
-////        if (function_exists('appoptics_log_exception')) {
-////            appoptics_log_exception('app', $e);
-////        }
+        if ($this->isHttpException($e)) {
+            if ($e->getStatusCode() == 404) {
+                return response()->view('errors.' . '404', [], 404);
+            }
+        }
+
+        if (app()->bound('sentry') && $this->shouldReport($e)) {
+            if (Auth::check()) {
+                \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
+                    $user = Auth::user();
+                    $scope->setUser([
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
+                    ]);
+                });
+            }
+            app('sentry')->captureException($e);
+        }
+
+        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            return abort('404');
+        }
+
 
         parent::report($e);
     }

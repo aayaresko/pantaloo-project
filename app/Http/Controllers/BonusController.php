@@ -28,16 +28,21 @@ class BonusController extends Controller
         });
 
         $active_bonus = Auth::user()->bonuses()->first();
+
+        $bonusStatistics = null;
+        if ($active_bonus) {
+            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        }
         
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
+            'bonusStatistics' => $bonusStatistics
         ]);
     }
 
     public function activate(Bonus $bonus)
     {
-
         //get user by request
         $userRequest = Auth::user();
 
@@ -48,13 +53,14 @@ class BonusController extends Controller
 
         DB::beginTransaction();
 
+
         $class = BonusHelper::getClass($bonus->id);
 
         $user = User::where('id', $userRequest->id)->lockForUpdate()->first();
 
-        $bonus_obj = new $class($user);
+        $bonusObj = new $class($user);
 
-        $bonusActivate = $bonus_obj->activate();
+        $bonusActivate = $bonusObj->activate();
 
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
@@ -149,7 +155,7 @@ class BonusController extends Controller
         $bonusObject = new $class($user);
 
         DB::beginTransaction();
-        $bonusActivate = $bonusObject->activate();
+        $bonusActivate = $bonusObject->activate(['mode' => 1]);
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
             return redirect()->back()->withErrors([$bonusActivate['message']]);

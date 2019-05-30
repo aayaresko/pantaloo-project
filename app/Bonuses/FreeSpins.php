@@ -20,6 +20,7 @@ use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
 use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
+use App\Modules\Others\DebugGame;
 use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
@@ -67,96 +68,110 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $date = new \DateTime();
+
         $configBonus = config('bonus');
         $slotTypeId = config('appAdditional.slotTypeId');
+
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['active'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
+        }
 
         try {
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
 
-            //temporary
-            //throw new \Exception('Bonus is temporarily unavailable');
-            //temporary
-
             $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
             $disableRegistration = config('appAdditional.disableRegistration');
-
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
 
             $ipCurrent = GeneralHelper::visitorIpCloudFlare();
             $ipFormatCurrent = inet_pton($ipCurrent);
 
-
-            if ($this->active_bonus) {
-                if ($this->active_bonus->bonus_id != static::$id) {
-                    throw new \Exception('You cannot activate this bonus ' .
-                        'as there is already an active bonus.');
-                } else {
-                    throw new \Exception('This bonus is already active.');
+            if ($mode == 0) {
+                if ($this->active_bonus) {
+                    if ($this->active_bonus->bonus_id != static::$id) {
+                        throw new \Exception('You cannot activate this bonus ' .
+                            'as there is already an active bonus.');
+                    } else {
+                        throw new \Exception('This bonus is already active.');
+                    }
                 }
-            }
 
-            if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
-                throw new \Exception('This bonus is already used.');
-            }
+                if ($this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
+                    throw new \Exception('This bonus is already used.');
+                }
 
-            //baned country
-            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent,
-                    array_merge($banedBonusesCountries, $disableRegistration))) {
-                throw new \Exception('You cannot activate this bonus in' .
-                    ' accordance with clause 2.3 of the bonus terms & conditions.');
-            }
-
-            //baned country
-            if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
-                if (in_array($user->country, array_merge($banedBonusesCountries, $disableRegistration))) {
+                //baned country
+                if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent,
+                        array_merge($banedBonusesCountries, $disableRegistration))) {
                     throw new \Exception('You cannot activate this bonus in' .
                         ' accordance with clause 2.3 of the bonus terms & conditions.');
                 }
-            }
 
-            if ((int)$user->email_confirmed === 0) {
-                throw new \Exception('To activate this bonus, you need to confirm your email address first.
+                //baned country
+                if (!GeneralHelper::isTestMode() && !is_null($user->country)) {
+                    if (in_array($user->country, array_merge($banedBonusesCountries, $disableRegistration))) {
+                        throw new \Exception('You cannot activate this bonus in' .
+                            ' accordance with clause 2.3 of the bonus terms & conditions.');
+                    }
+                }
+
+                if ((int)$user->email_confirmed === 0) {
+                    throw new \Exception('To activate this bonus, you need to confirm your email address first.
                  Did not receive the activation mail? You can resend it in the Settings section of your profile.');
-            }
+                }
 
-            if ($allowedDate < $currentDate) {
-                throw new \Exception('You cannot activate this bonus in accordance ' .
-                    'with clause 2.2 of the bonus terms & conditions.');
-            }
+                if ($allowedDate < $currentDate) {
+                    throw new \Exception('You cannot activate this bonus in accordance ' .
+                        'with clause 2.2 of the bonus terms & conditions.');
+                }
 
-            //check ip
-            $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
-                ->where('ip_address', $ipFormatCurrent)
-                ->withTrashed()->count();
+                //check ip
+                $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
+                    ->where('ip_address', $ipFormatCurrent)
+                    ->withTrashed()->count();
 
-            if (!GeneralHelper::isTestMode() && $currentBonusByIp > 0) {
-                throw new \Exception('You cannot activate this bonus in accordance' .
-                    ' with clause 1.18 of the bonus terms & conditions');
-            }
-            //check ip
+                if (!GeneralHelper::isTestMode() && $currentBonusByIp > 0) {
+                    throw new \Exception('You cannot activate this bonus in accordance' .
+                        ' with clause 1.18 of the bonus terms & conditions');
+                }
+                //check ip
 
-            //IpQuality
-            $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
-            $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+                //IpQuality
+                $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+                $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
-            //5 to do config
-            $client = new Client(['timeout' => 5]);
-            $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
-            $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+                //5 to do config
+                $client = new Client(['timeout' => 5]);
+                $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+                $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
-            //89.39.107.197
-            if (!GeneralHelper::isTestMode() && $ipCurrent != '89.39.107.197') {
-                if (isset($responseIpQualityJson['success'])) {
-                    if ($responseIpQualityJson['success'] == true) {
-                        if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
-                            throw new \Exception('Free spins are not available while using VPN/Proxy');
+
+                if (!GeneralHelper::isTestMode()) {
+                    if (isset($responseIpQualityJson['success'])) {
+                        if ($responseIpQualityJson['success'] == true) {
+                            if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                                throw new \Exception('Free spins are not available while using VPN/Proxy');
+                            }
                         }
                     }
                 }
+                //IpQuality
             }
-            //IpQuality
 
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
@@ -185,6 +200,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             //add user for request - for lib
             $request->merge(['user' => $user]);
+
             $request->setUserResolver(function () use ($user) {
                 return $user;
             });
@@ -212,6 +228,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $request->merge(['gamesIds' => $gamesIds]);
             $request->merge(['available' => $this->freeSpins]);
             $request->merge(['timeFreeRound' => strtotime("$this->expireDays day", 0)]);
+            $request->merge(['mode' => $mode]);//only once
 
             $pantalloGamesSystem = new PantalloGamesSystem();
             $freeRound = $pantalloGamesSystem->freeRound($request);
@@ -228,17 +245,12 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             $response = [
                 'success' => true,
-                'message' => 'Done'
-            ];
-
-            BonusLog::updateOrCreate(
-                [
+                'message' => 'Done',
+                'details' => [
                     'bonus_id' => $bonusUser->id,
-                    'operation_id' => $configBonus['operation']['active']
-                ],
-                ['status' => json_encode($response)]
-            );
-
+                    'mode' => $mode
+                ]
+            ];
         } catch (\Exception $e) {
             $errorLine = $e->getLine();
             $errorMessage = $e->getMessage();
@@ -249,13 +261,12 @@ class FreeSpins extends \App\Bonuses\Bonus
             ];
         }
 
-//         DB::connection('logs')->table('bonus_logs')->insertGetId([
-//            'bonus_id' => $bonusUser->id,
-//            'operation_id' => $configBonus['operation']['active'],
-//            'status' => json_encode($response),
-//            'created_at' => $date,
-//            'updated_at' => $date
-//        ]);
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
+        ]);
 
         return $response;
     }
@@ -266,25 +277,23 @@ class FreeSpins extends \App\Bonuses\Bonus
         $amount = $params['amount'];
         $transactionId = $params['transactionId'];
 
+        $user = $this->user;
         $date = new \DateTime();
+
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['realActivation'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['realActivation'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['realActivation'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             $freeSpinWinOld = $this->dataBonus['free_spin_win'];
@@ -318,8 +327,11 @@ class FreeSpins extends \App\Bonuses\Bonus
             ];
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;
@@ -329,25 +341,23 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $user = $this->user;
         $date = new \DateTime();
+
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $bonusLimit = self::$maxAmount;
+        $whoClose = ($mode == 0) ? 'by game' : 'by balance';
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['close'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['close'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['close'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             $now = Carbon::now();
@@ -439,12 +449,12 @@ class FreeSpins extends \App\Bonuses\Bonus
 
                 $response = [
                     'success' => true,
-                    'message' => 'Bonus to real transfer'
+                    'message' => 'Bonus to real transfer. Close:' . $whoClose
                 ];
             } else {
                 $response = [
                     'success' => false,
-                    'message' => 'The condition is not satisfied'
+                    'message' => 'The condition is not satisfied' . $whoClose
                 ];
             }
         } catch (\Exception $e) {
@@ -453,7 +463,7 @@ class FreeSpins extends \App\Bonuses\Bonus
             $errorMessage = $e->getMessage();
             $response = [
                 'success' => false,
-                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage . $whoClose
             ];
 
             if ($errorCode === self::SPECIAL) {
@@ -461,8 +471,11 @@ class FreeSpins extends \App\Bonuses\Bonus
             }
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;
@@ -473,27 +486,23 @@ class FreeSpins extends \App\Bonuses\Bonus
     {
         $date = new \DateTime();
         $user = $this->user;
+
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
         $expired = 0;
         $slotTypeId = config('appAdditional.slotTypeId');
 
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['cancel'])
-            ->first();
-
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['cancel'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['cancel'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             $now = Carbon::now();
@@ -615,8 +624,11 @@ class FreeSpins extends \App\Bonuses\Bonus
             ];
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;
@@ -627,32 +639,35 @@ class FreeSpins extends \App\Bonuses\Bonus
         $transactionAmount = abs((float)$transaction['sum']);
         $transactionBonusSum = abs((float)$transaction['bonus_sum']);
 
+        $user = $this->user;
         $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['wagerUpdate'])//to do config
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['wagerUpdate'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['wagerUpdate'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             //if was be deposit
             if (isset($this->dataBonus['wagered_deposit']) and (int)$this->dataBonus['wagered_deposit'] === 1) {
                 $currentWagerAmount = isset($this->dataBonus['wagered_amount']) ?
                     (float)$this->dataBonus['wagered_amount'] : 0;
+
                 $currentWager = GeneralHelper::formatAmount($currentWagerAmount + $transactionAmount);
+
+                $totalDeposit = (float)$this->dataBonus['total_deposit'];
+                if ($totalDeposit < $currentWager) {
+                    $currentWager = $totalDeposit;
+                }
             } else {
                 $currentWager = 0;
             }
@@ -684,8 +699,67 @@ class FreeSpins extends \App\Bonuses\Bonus
             ];
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
+        ]);
+
+        return $response;
+    }
+
+
+    public function setDeposit($amount)
+    {
+        $user = $this->user;
+        $date = new \DateTime();
+        $configBonus = config('bonus');
+        $activeBonus = $this->active_bonus;
+
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['setDeposit'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
+        try {
+            $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
+
+            $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
+
+            //update status deposit check
+            if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
+                $this->dataBonus['wagered_deposit'] = 1;
+            }
+
+            UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+
+            $response = [
+                'success' => true,
+                'message' => 'Done'
+            ];
+
+        } catch (\Exception $e) {
+            $errorLine = $e->getLine();
+            $errorMessage = $e->getMessage();
+            $response = [
+                'success' => false,
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+            ];
+        }
+
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;
@@ -756,120 +830,66 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     }
 
-    public function setDeposit($amount)
+    public function setGame($game, $key)
     {
+        $user = $this->user;
         $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['setDeposit'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['setDeposit'],
+        if (!isset($this->dataBonus[$key])) {
+
+            $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+                'type_id' => $rawLogKey + $configBonus['operation']['setGame'],
+                'user_id' => $userId,
+                'request' => GeneralHelper::fullRequest(),
                 'created_at' => $date,
                 'updated_at' => $date
             ]);
-        }
 
-        try {
-            $totalDeposit = isset($this->dataBonus['total_deposit']) ? (float)$this->dataBonus['total_deposit'] : 0;
+            try {
+                if (!isset($this->dataBonus[$key])) {
+                    //set this game
+                    $this->dataBonus[$key] = $game->id;
+                    UserBonus::where('user_id', $user->id)->update([
+                        'data' => json_encode($this->dataBonus)
+                    ]);
 
-            $this->dataBonus['total_deposit'] = GeneralHelper::formatAmount($totalDeposit + (float)$amount);
-
-            //update status deposit check
-            if ($this->dataBonus['total_deposit'] >= $this->minDeposit) {
-                if (!isset($this->dataBonus['wagered_deposit']) or (int)$this->dataBonus['wagered_deposit'] === 0) {
-                    $this->dataBonus['wagered_deposit'] = 1;
+                    //event
+                    event(new BonusGameEvent($user, $game->real_name));
                 }
+                $response = [
+                    'success' => true,
+                    'message' => 'Done'
+                ];
+
+            } catch (\Exception $e) {
+                $errorLine = $e->getLine();
+                $errorMessage = $e->getMessage();
+                $response = [
+                    'success' => false,
+                    'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                ];
             }
 
-            UserBonus::where('id', $activeBonus->id)->update(['data' => json_encode($this->dataBonus)]);
+            $debugResult = $debugGame->end();
 
-            $response = [
-                'success' => true,
-                'message' => 'Done'
-            ];
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'response' => json_encode($response),
+                'extra' => json_encode($debugResult)
+            ]);
 
-        } catch (\Exception $e) {
-            $errorLine = $e->getLine();
-            $errorMessage = $e->getMessage();
-            $response = [
-                'success' => false,
-                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
-            ];
+            return $response;
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
-        ]);
-
-        return $response;
+        return [
+            'success' => false,
+            'message' => 'The game has been installed'
+        ];
     }
 
-    public function setGame($game, $key)
-    {
-//        $user = $this->user;
-//        $date = new \DateTime();
-//        $configBonus = config('bonus');
-//        $activeBonus = $this->active_bonus;
-//
-//        if (!isset($this->dataBonus[$key])) {
-//            $rawLog = DB::connection('logs')->table('bonus_logs')
-//                ->where('bonus_id', '=', $activeBonus->id)
-//                ->where('operation_id', '=', $configBonus['operation']['setGame'])
-//                ->first();
-//
-//            if ($rawLog) {
-//                $rawLogId = $rawLog->id;
-//            } else {
-//                $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-//                    'bonus_id' => $activeBonus->id,
-//                    'operation_id' => $configBonus['operation']['setGame'],
-//                    'created_at' => $date,
-//                    'updated_at' => $date
-//                ]);
-//            }
-//
-//            try {
-//                if (!isset($this->dataBonus[$key])) {
-//                    //set this game
-//                    $this->dataBonus['firstGame'] = $game->id;
-//                    UserBonus::where('user_id', $user->id)->update([
-//                        'data' => json_encode($this->dataBonus)
-//                    ]);
-//                    event(new BonusGameEvent($user, $game->name));
-//                }
-//                $response = [
-//                    'success' => true,
-//                    'message' => 'Done'
-//                ];
-//
-//            } catch (\Exception $e) {
-//                $errorLine = $e->getLine();
-//                $errorMessage = $e->getMessage();
-//                $response = [
-//                    'success' => false,
-//                    'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
-//                ];
-//            }
-//
-//            DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-//                'status' => json_encode($response)
-//            ]);
-//
-//            return $response;
-//        }
-//
-//        return [
-//            'success' => false,
-//            'message' => 'The game has been installed'
-//        ];
-    }
 }

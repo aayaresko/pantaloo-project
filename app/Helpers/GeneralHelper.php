@@ -224,4 +224,25 @@ class GeneralHelper
         }
         return $isSecure;
     }
+
+    public static function getTranslateDataByFileName($filename){
+
+        $return = [];
+
+        $filename = str_replace(DIRECTORY_SEPARATOR, ':', $filename);
+
+        if (preg_match("/(?<lang>\w+):(?<file>\w+)\.php$/", $filename, $matches)) {
+
+            $lang = $matches['lang'];
+            $file = $matches['file'];
+
+            $datafile = 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file . '.data';
+
+            if (\Illuminate\Support\Facades\Storage::exists($datafile)) {
+                $return = unserialize(\Illuminate\Support\Facades\Storage::get($datafile));
+            }
+        }
+
+        return $return;
+    }
 }

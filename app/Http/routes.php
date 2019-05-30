@@ -11,14 +11,13 @@
 |
 */
 
-use App\Jobs\IntercomCreateUpdateUser;
-
-Route::get('testmode', function (\Illuminate\Http\Request $request) {
-    $testmode = !$request->cookie('testmode', false);
-
-    //return the response
-    return redirect('')->withCookie(cookie('testmode', $testmode));
+Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
+    Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
+    Route::get('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDepositView']);
+    Route::post('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDeposit']);
 });
+
+
 
 Route::get('robots.txt', function(\Illuminate\Http\Request $request){
     return view('robots', [
@@ -353,12 +352,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
     Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
 
-    /* Pantallo Games */
-    Route::group(['prefix' => 'games'], function () {
-        Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
-        Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
-        Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
-    });
+//    /* Pantallo Games */
+//    Route::group(['prefix' => 'games'], function () {
+//        Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+//        Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+//        Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
+//    });
 
     //Route::get('/test/freespin', ['as' => 'test.freespin', 'uses' => 'PantalloGamesController@freeRound']);
 
@@ -387,6 +386,13 @@ Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
 Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
     Route::get('walletNotify', 'Bitcoin\TransactionController@walletNotify')->name('walletNotify');
     Route::get('blockNotify', 'Bitcoin\TransactionController@blockNotify')->name('blockNotify');
+});
+
+/* Pantallo Games */
+Route::group(['middleware' => ['games'], 'prefix' => 'games'], function () {
+    Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+    Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+    Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
 });
 
 Route::group(['middleware' => ['api', 'ip.country.block']], function () {
