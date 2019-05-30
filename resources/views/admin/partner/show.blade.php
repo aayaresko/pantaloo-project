@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Affiliates
+    Affiliate: {{$partner->email}}
 @endsection
 
 @section('content')
@@ -11,11 +11,45 @@
             <div class="container">
                 <div class="card">
                     <div class="card-block">
+                        @if (!$partner->agent_id)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-box">
+                                    <form action="{{route('admin.agents.makeSuper', $partner->id)}}" method="post" class="form-inline">
+                                        <select name="country[]" id="select2Country" multiple="multiple">
+                                            @foreach(App\Country::all() as $country)
+                                                <option value="{{$country->id}}" @if(in_array($country->id, $countriesIds)) selected @endif>{{$country->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        {{csrf_field()}}
+                                        <button type="submit" class="btn btn-success">Make as superaffiliate</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if ($partner->role == 1)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-box">
+                                    <form action="{{route('admin.agents.setAffiliate', $partner->id)}}" method="post" class="form-inline">
+                                        <select name="affiliate" class="form-control">
+                                            @foreach($superAffiliates as $affiliate)
+                                                <option value="{{$affiliate->id}}" @if($affiliate->id == Auth::user()->agent_id)) selected @endif>{{$affiliate->email}}</option>
+                                            @endforeach
+                                        </select>
+                                        {{csrf_field()}}
+                                        <button type="submit" class="btn btn-success">Set parent</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card-box">
                                     <h3>User table</h3>
-                                    <table class="table table-striped table-bordered">
+                                    <table class="table table-striped table-bordered" id="userTable">
                                         <thead>
                                         <tr role="row">
                                             <th>ID</th>
@@ -50,5 +84,13 @@
             </div>
         </div>
     </div>
-@endsection
 
+@endsection
+@section('js')
+    <script>
+        $('#select2Country').select2({
+            placeholder: 'Select countries'
+        });
+        $('#userTable').DataTable();
+    </script>
+@endsection

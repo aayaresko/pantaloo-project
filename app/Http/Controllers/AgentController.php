@@ -18,6 +18,8 @@ use App\Bitcoin\Service;
 
 class AgentController extends Controller
 {
+    const SUPER_AFFILIATE_ROLE = 3;
+
     public function login()
     {
         if (Auth::check()) {
@@ -354,8 +356,28 @@ class AgentController extends Controller
     public function showAffiliate($id, User $user)
     {
         $partner = $user->findOrFail($id);
+        $countriesIds = $partner->affiliateCountries->pluck('id')->toArray();
         $users = $user->where('agent_id', $id)->with('countries')->where('role', 0)->get();
+        $superAffiliates = $user->where('role', 3)->get();
 
-        return view('admin.partner.show', compact('partner', 'users'));
+        return view('admin.partner.show', compact('partner', 'users', 'countriesIds', 'superAffiliates'));
+    }
+
+    public function makeSuper($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        $partner->affiliateCountries()->sync($request->country);
+        $partner->role = self::SUPER_AFFILIATE_ROLE;
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    public function setAffiliate($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        $partner->agent_id = $request->affiliate;
+        $partner->save();
+
+        return redirect()->back()->with('msg', "Success");
     }
 }

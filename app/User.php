@@ -469,4 +469,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Country', 'code', 'country');
     }
+
+    public function affiliateCountries()
+    {
+        return $this->belongsToMany('App\Country', 'affiliate_countries');
+    }
 }

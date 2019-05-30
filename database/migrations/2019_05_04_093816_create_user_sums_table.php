@@ -23,6 +23,7 @@ class CreateUserSumsTable extends Migration
             $table->integer('bet_count');
             $table->decimal('percent')->nullable();
             $table->integer('parent_id')->nullable();
+            $table->integer('casino_fit')->nullable();
             $table->timestamps();
         });
     }

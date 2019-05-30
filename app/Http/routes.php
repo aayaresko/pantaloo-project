@@ -273,6 +273,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
                 Route::get('/agent/tree', ['as' => 'admin.agents.tree', 'uses' => 'AgentController@showTree']);
                 Route::get('/agent/tree/{id}', ['as' => 'admin.agents.show', 'uses' => 'AgentController@showAffiliate']);
+                Route::post('/agent/tree/{id}/makeSuper', ['as' => 'admin.agents.makeSuper', 'uses' => 'AgentController@makeSuper']);
+                Route::post('/agent/tree/{id}/setAffiliate', ['as' => 'admin.agents.setAffiliate', 'uses' => 'AgentController@setAffiliate']);
                 Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
             });
 
