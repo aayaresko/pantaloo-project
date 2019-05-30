@@ -52,6 +52,7 @@ class TestController extends Controller
     }
 
     public function error(Request $request){
+        dd(12234);
         throw new Exception("Custom error!");
         return 1;
     }
