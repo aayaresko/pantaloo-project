@@ -138,7 +138,7 @@ let events = function () {
 
     
     function freeSpinGames() {
-        // TODO
+        
         if ((location.href).indexOf("games/") >= 0) {
             let splitedUrl = window.location.href.split("/")
             splitedUrl.pop()
@@ -163,6 +163,25 @@ let events = function () {
 function handleImage(img) {
     $(img).attr("src", dummy);
 }
+
+// window.onpopstate = function(event) {
+//     console.log(event.state.page);
+//     console.log(currPage);
+//     //TODO
+//     //  getListGames();
+
+//     if (event.state.page == undefined) {
+//         event.state.page = 1
+//     }
+// if (event.state.page < currPage-1) {
+   
+//      console.log("url page less than curr");
+//      $('.single-game').slice(-15).remove();
+//       console.log($('.single-game').length);
+//       currPage--
+// }  
+ 
+// };
 
 // $('#resetGames').on('click', function(e){
 //     e.preventDefault()
@@ -228,7 +247,7 @@ function getListGames(append) {
 
                 if (append) {                  
                     $(".insertGames .games-entry").append(device);
-                    history.pushState({}, "", '#page=' + currPage)
+                    history.pushState({page: currPage}, "", '#page=' + currPage)
                     currPage++
                 } else {     
                     $(".insertGames .games-entry").html(device);
