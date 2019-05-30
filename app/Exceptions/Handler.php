@@ -35,28 +35,34 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if ($this->isHttpException($e)) {
-            if ($e->getStatusCode() == 404) {
-                return response()->view('errors.' . '404', [], 404);
-            }
-        }
+        $appDebug = is_null(config('app.debug')) ? true : config('app.debug');
 
-        if (app()->bound('sentry') && $this->shouldReport($e)) {
-            if (Auth::check()) {
-                \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
-                    $user = Auth::user();
-                    $scope->setUser([
-                        'id' => $user->id,
-                        'email' => $user->email,
-                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
-                    ]);
-                });
+        if (!$appDebug) {
+            if ($this->isHttpException($e)) {
+                if ($e->getStatusCode() == 404) {
+                    return response()->view('errors.' . '404', [], 404);
+                }
             }
-            app('sentry')->captureException($e);
-        }
 
-        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-            return abort('404');
+            if (app()->bound('sentry') && $this->shouldReport($e)) {
+                if (Auth::check()) {
+                    \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
+                        $user = Auth::user();
+                        $scope->setUser([
+                            'id' => $user->id,
+                            'email' => $user->email,
+                            'ip_address' => GeneralHelper::visitorIpCloudFlare()
+                        ]);
+                    });
+                } else {
+
+                }
+                app('sentry')->captureException($e);
+            }
+
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+                return abort('404');
+            }
         }
 
         parent::report($e);
