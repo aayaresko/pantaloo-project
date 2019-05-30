@@ -9,6 +9,7 @@ let listGameParamsDefault = {
 
 let statusGameRoom = 0;
 let statusTypes = 0;
+let currPage = 2;
 
 let listGameParams = JSON.parse(JSON.stringify(listGameParamsDefault));
 
@@ -57,14 +58,59 @@ let events = function () {
         getListGames();
     });
 
+    
+    $('body').on('click', '.moreGames', function (e) {
+        let append = true;
+        listGameParams.page = currPage;
+        history.pushState({}, "", '#page=' + currPage)
+        currPage++
+        getListGames(append);
+    });
+
 
     $('.type_of_game').on('change', function (e) {
         e.preventDefault();
         listGameParams.typeId = Number($(this).val());
         listGameParams.page = 1;
         listGameParams.freeSpins = 0;
-        getListGames();
-        setDefaultTitle();
+        // $('.tittlePage').text($(this).find(":selected").text())
+        let gameTypeLink = $(this).find(":selected").data("link");
+        let splitedUrl = window.location.href.split("/");
+
+        let lastUrlSegment = splitedUrl.pop()
+
+        if ($(this).find(":selected").val() == 'free_spins') {
+            freeSpinGames();
+            return false;
+        }
+
+            
+        if (gameTypeLink === undefined) {
+            if (lastUrlSegment.split('#')[0] == 'games') {
+                window.location.reload();
+            } else {
+                // history.pushState({ 'page': 'games'}, "", splitedUrl.join("/").split('#')[0])
+                window.location = splitedUrl.join("/").split('#')[0]
+
+            }
+
+           
+        } else {
+            if (lastUrlSegment.split('#')[0] == 'games') {
+                // history.pushState({ 'page': gameTypeLink}, "", window.location.href.split('#')[0] + '/' + gameTypeLink);
+                window.location = window.location.href.split('#')[0] + '/' + gameTypeLink;
+            } else {
+                // history.pushState({ 'page': gameTypeLink}, "", splitedUrl.join("/").split('#')[0] + '/' + gameTypeLink);
+                window.location = splitedUrl.join("/").split('#')[0] + '/' + gameTypeLink;
+            }
+        }
+        // console.log(gameTypeLink);
+        // console.log(location);
+        // console.log(lastUrlSegment);
+        
+        
+        // getListGames();
+        // setDefaultTitle();
         $('html,body').scrollTop(0);
     });
 
@@ -75,7 +121,7 @@ let events = function () {
         listGameParams.page = 1;
         listGameParams.freeSpins = 0;
         getListGames();
-        setDefaultTitle();
+        // setDefaultTitle();
         $('html,body').scrollTop(0);
     });
 
@@ -84,12 +130,13 @@ let events = function () {
         listGameParams.search = $(this).find('input[name="search"]').val();
         listGameParams.page = 1;
         getListGames();
-        setDefaultTitle();
+        // setDefaultTitle();
         $('html,body').scrollTop(0);
     });
 
-    $('body').on('click', '.getFreeSpins', function (e) {
-        e.preventDefault();
+
+    function freeSpinGames() {
+        // e.preventDefault();
         listGameParams.typeId = 0;
         listGameParams.categoryId = 0;
         listGameParams.page = 1;
@@ -98,8 +145,7 @@ let events = function () {
         setDefaultFilter(1);
         setDefaultTitle();
         $('html,body').scrollTop(0);
-        //listGameParams.freeSpins = 0;
-    });
+    }
 
 
 };
@@ -108,7 +154,27 @@ function handleImage(img) {
     $(img).attr("src", dummy);
 }
 
-function getListGames() {
+// $('#resetGames').on('click', function(e){
+//     e.preventDefault()
+//     console.log('lol');
+    
+//     $('#gamesFiterForm')[0].reset()
+//     listGameParams.search = ''
+//     listGameParams.typeId = 0;
+//     listGameParams.categoryId = 0;
+//     $('.select2-selection__rendered').html($('.js-example-basic-single option:first-child').html());
+//     // $('.type_of_game').val($('.js-example-basic-single option:first-child').val()).trigger('change');
+//     $('.filter_provider').val($('.js-example-basic-single option:first-child').val()).trigger('change');
+    
+// })
+
+
+let mobile = false
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    mobile = true
+}
+
+function getListGames(append) {
     $('.preloaderCommon').show();
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -116,13 +182,78 @@ function getListGames() {
         url: '/integratedGamesJson',
         data: listGameParams,
         success: function (response) {
+
+            // if (response)
+            // console.log(response);
+            // console.log(response.desktop.length);
+
+           
+            
             //clear
             //$(".insertGames").empty();
             //$(".insertGamesMobile").empty();
             //insert
-            $('html,body').scrollTop(0);
-            $(".insertGames").html(response.desktop);
-            $(".insertGamesMobile").html(response.mobile);
+            // $('html,body').scrollTop(0);
+
+            function parsePesponse(device) {
+                var parser = new DOMParser();
+
+                var games = parser.parseFromString(device, 'text/html')
+                // console.log('lol');
+
+                let gamesToShow = 15;
+                if (mobile) {
+                    gamesToShow = 10;
+                }
+                                     
+                
+                if ($(games).find('.single-game').length < gamesToShow) {
+                    $('.moreGames').hide()
+                    // alert('lol');
+                } else {
+                    $('.moreGames').show()
+                }
+
+              
+
+                if (append) {                  
+                    $(".insertGames .games-entry").append(device);
+                } else {     
+                    $(".insertGames .games-entry").html(device);
+                    if ((location.href).indexOf("games/") <= 0) {
+                         history.pushState({}, "", 'games')
+                    } else {
+                        // location.hash = '';
+                        history.pushState({}, "", window.location.href.split('#')[0])
+                        
+                    }              
+                     currPage = 2
+                }
+
+                if (device.length == 0 && $('.games-entry').is(':empty') === true) {
+                    console.log('No games found');
+                    $('.noGamesFound').show()
+                } else {
+                    $('.noGamesFound').hide()
+                }
+                // console.log($('.games-entry').html());
+
+            }
+
+            
+           
+                
+            
+            
+            // console.log($(games).find('.single-game').length);
+
+            if (mobile) {
+                parsePesponse(response.mobile)
+                
+            } else {
+                parsePesponse(response.desktop)
+               
+            }                 
             $('.preloaderCommon').hide();
             //resizeIframe();
         }
@@ -148,10 +279,7 @@ function getGame(url) {
     //console.log(statusGameRoom);
     
 
-    let mobile = false
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        mobile = true
-    }
+    
 
     if(!mobile) {
         $('.video-popup').addClass('popup-slot');
@@ -208,7 +336,8 @@ function setDefaultFilter(full = 0)
     let type_id, category_id;
     let url_string = window.location.href;
     let url = new URL(url_string);
-
+    // console.log(url);
+    
     if (document.jsBridge.games_type_id){
         url.searchParams.set("type_id", document.jsBridge.games_type_id);
     }
@@ -220,11 +349,12 @@ function setDefaultFilter(full = 0)
         type_id = url.searchParams.get("type_id");
         category_id = url.searchParams.get("category_id");
     }
-
-    if (type_id !== null) {
+    // console.log(type_id);
+    
+    if ((type_id !== null) && !full){
         //$('.type_of_game').val(type_id).trigger('change');
         $('.type_of_game').val(type_id).trigger('change.select2');
-    } else {
+    } else {  
         type_id = 0;
     }
 

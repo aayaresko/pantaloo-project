@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div class="slots-block desk top-shadow">
+    <div class="slots-block top-shadow">
         <div class="bg mainBackGround"></div>
         <span class="side-title"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
@@ -45,10 +45,12 @@
         </div>
 
         <div class="block-filter clearfix">
-            <form action="#" method="post">
-                <div class="pull-left">
+            <form action="#" method="post" id="gamesFiterForm">
+                
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
-
+                        @if ($freeSpins === 1)
+                            <option class="getFreeSpins" value="free_spins" >Free Spin Games</option>
+                        @endif
                         <option value="0" selected>{{ trans('casino.all') }}</option>
                         @foreach($gamesTypes as $gamesType)
                             @php
@@ -57,11 +59,12 @@
                                     $nameType = trans($codeLangType);
                                 } else {
                                     $nameType = $gamesType->name;
-                                }
+                                }                                                            
+                                $def_name = str_replace(' ', '-', $gamesType->default_name);                                                            
                             $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
                             $gamesType->nameType = $nameType;
                             @endphp
-                            <option value="{{ $gamesType->id }}">{{ $nameType }}</option>
+                            <option  data-link="{{$def_name}}" value="{{ $gamesType->id }}">{{ $nameType }}</option>
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
@@ -70,80 +73,40 @@
                             <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
                     </select>
-                    @if ($freeSpins === 1)
-                        <div class="block-bonus-buttons" style="display: inline-block">
-                            <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
-                        </div>
-                    @endif
-                </div>
-                <div class="pull-right">
-                    <div class="input-search">
-                        <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
-                        <input type="submit" value=""/>
-                    </div>
-                </div>
+                   <div class="input-search">
+                       <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
+                       <input type="submit" value=""/>
+                   </div>
+                   <!-- <div class="block-bonus-buttons" style="display: inline-block">
+                       <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
+                   </div> -->
+                
             </form>
         </div>
 
         <div class="insertGames">
+            <div class="block-container">
+                <div class="noGamesFound">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAADTUlEQVRYhc2YXYhNURTHf/cYXjz4SPKieKCcUuMrTjQkcpKPByIlHkb5TCnmjo9HxKhBMsYkiQdfJUS2KBT2eBAPbEkyD5IXIZ5kXA/bvc7dd59z97mHufN/22vttc/vnrv23mudXKFQwEVSqEnADKAJGAeMBH4BH4HXwAOgG1BOC/5REPqJ/lw1QCnUGqAVmOD4zCfAfuC6y+RqgA0JYLOBLmC8I1hR04FraNBm4GXK+DJ5MXB54H4NcFFNB14AqzOsUfkGpVDtwDbL3ALwEBDAY3TuDQBGo/NyPjDVEncOGAEcqQWwLAelULuAfZZ5F4GdQei/Mx1SlO2JRuAQMM+yxirggml0zkEpVGCBKwDLg9C/krjKXz1Hv8lNwHHDdx79D7x3XAsoz0HbrpuSAi6qDmCxxe60s6PyAKRQzeg8iWphEPrP0rOVdAPYbNgmod+wszwplAe0GfaLQejfygBXVAf6uInqQJoFPPSvGh6x9QLrsnGVqdkYTwaGuAZ7QGjY7geh/z0rVUQvgR7Dtsw12APmGrZLGYFsOmOMnfPQo/K2eJSVxiJzzTGugR4wLDL+ib4h/rW+GONBroHWu7g/yQM+R8YNwKj/8JyhxviHa6AHvDFsMzPjVMpcs8c10APuGrYVWWksWmuM77gGesBtw9YkhRqcGemvJgJjDZvz/e6hK5BoHg4ETmfnKqnLGD+lclfHygtCvxdoMewrpFALspIBW9CNVlStaRbwAILQPwV8MnxCCtVYOxtLgWOG7QKVOZ+o6Dm4yOJ/JoVakhIMYD1w1WJPVaxCBDAI/W5gj2XONSnUWSmUS9s5Dd2zdMb4twMH0wBW9MVSqKPA1pj594DL6G7tK5BDH8LTgJXYmyab2oA81Ni4S6F2A3sdH1ar2oB8NUDrXRyE/j5gDvAqA8AVoD3B34LD3+3y6WMjsBF94LpIAofRqQC6xM8nzG8LQj/WXxWw9FShfPTRMQv94ah423wDPqDz8ybw1hJeM6QzYJyMxj1JNUH2ZT3YSnLOtUihKvx9XbCmhqxHRZ0Ksl4lvzNk7AfMPlCxqonbOC1SqFy9m6Zqb3JHvQEJQj8J8kTdASEW8mQQ+pv6BSCUIA+hC+fOIPQ3APwG1srnNRTffbMAAAAASUVORK5CYII=" alt="">
+                    <br>
+                    <p class="noGames">No games found</p>
+                    <p>Try to change search parameters or</p>
+                    <a href="{{ route('games', ['lang' => $currentLang]) }}" id="resetGames">reset filter</a>
+                </div>
+                <div class="games-entry">
+                    <!-- games insert here by js -->
+                </div>
+            </div>
+
         </div>
+        <div class="paginationGame">
+           <button class="moreGames">load more</button>
+        </div>
+       
     </div>
 
 
-    <div class="slots-block mobile top-shadow">
-        <div class="bg"
-             style="background: url('media/images/bg/slots-light.jpg') center no-repeat; background-size: cover;"></div>
-        <div class="block-heading">
-            <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
-            <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
-        </div>
-        <div class="btn-block">
-            <a href="#" class="live-btn">Live Games</a>
-        </div>
-        <div class="games-listing-block hidden-mob">
-            <ul class="games-listing">
-                <li><a href="#" class="bjack">BlackJack</a></li>
-                <li><a href="#" class="roulette">Roulette</a></li>
-                <li><a href="#" class="baccarat">Baccarat</a></li>
-                <li><a href="#" class="bonumbers">Bet On Numbers</a></li>
-                <li><a href="#" class="keno">Keno</a></li>
-            </ul>
-        </div>
-
-        <div class="block-filter clearfix">
-            <form action="#" method="post">
-                <div class="pull-left">
-                    <select class="js-example-basic-single type_of_game" name="type_of_game">
-                        <option value="0" selected>All</option>
-                        @foreach($gamesTypes as $gamesType)
-                            <option value="{{ $gamesType->id }}">{{ $gamesType->nameType }}</option>
-                        @endforeach
-                    </select>
-                    <select class="js-example-basic-single filter_provider" name="filter_provider">
-                        <option value="0" selected>{{ trans('casino.all') }}</option>
-                        @foreach($gamesCategories as $gamesCategory)
-                            <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
-                        @endforeach
-                    </select>
-                    @if ($freeSpins === 1)
-                        <div class="block-bonus-buttons" style="display: inline-block">
-                            <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
-                        </div>
-                    @endif
-                </div>
-                <div class="pull-right">
-                    <div class="input-search">
-                        <input type="text" name="search" placeholder="Search game"/>
-                        <input type="submit" value=""/>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="insertGamesMobile">
-
-        </div>
-    </div>
+   
 
      @include('footer_main')
 @endsection

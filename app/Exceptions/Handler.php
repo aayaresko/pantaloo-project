@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
 
         if (app()->bound('sentry') && $this->shouldReport($e)) {
             if (Auth::check()) {
-                Sentry\configureScope(function (Sentry\State\Scope $scope): void {
+                \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
                     $user = Auth::user();
                     $scope->setUser([
                         'id' => $user->id,
@@ -51,8 +51,6 @@ class Handler extends ExceptionHandler
                         'ip_address' => GeneralHelper::visitorIpCloudFlare()
                     ]);
                 });
-            } else {
-
             }
             app('sentry')->captureException($e);
         }
@@ -60,10 +58,6 @@ class Handler extends ExceptionHandler
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
             return abort('404');
         }
-
-//        if (function_exists('appoptics_log_exception')) {
-//            appoptics_log_exception('app', $e);
-//        }
 
         parent::report($e);
     }
@@ -83,7 +77,7 @@ class Handler extends ExceptionHandler
                 //->withInput($request->except('password', '_token'))
                 ->withErrors('You have been inactive for too long, please reload the page.');
         }
-        
+
         if ($this->shouldReport($e) && !$this->isHttpException($e) && !config('app.debug')) {
             $e = new HttpException(500, 'Whoops!');
         }

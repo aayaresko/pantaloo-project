@@ -25,8 +25,8 @@ return [
 
     'listGames' => [
         'pagination' => [
-            'desktop' => 20,
-            'mobile' => 20
+            'desktop' => 15,
+            'mobile' => 10
         ]
     ],
 
@@ -110,5 +110,11 @@ return [
             'value' => 'Trim bonus amount',
             'filter' => 0
         ],
+        [
+            'code' => 13,
+            'value' => 'Test deposit',
+            'filter' => 0
+        ],
+
     ]
 ];
