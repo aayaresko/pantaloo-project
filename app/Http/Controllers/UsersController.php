@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AccountStatusEvent;
 use DB;
-use App\Domain;
-use App\Jobs\SetUserCountry;
-use App\UserActivation;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use App\Http\Requests;
 use App\User;
+use App\Domain;
+use Carbon\Carbon;
+use App\Http\Requests;
+use Mockery\Exception;
+use App\UserActivation;
 use App\ModernExtraUsers;
+use App\Jobs\SetUserCountry;
+use Illuminate\Http\Request;
+use App\Events\AccountStatusEvent;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Mockery\Exception;
+use Illuminate\Support\Facades\Config;
 
 class UsersController extends Controller
 {
@@ -42,6 +42,7 @@ class UsersController extends Controller
                 return view('admin.users', ['users' => $users]);
             case 3:
                 return redirect('/admin/agent/list');
+
                 break;
             case 10:
                 return redirect('/admin/translations');
@@ -73,11 +74,13 @@ class UsersController extends Controller
 
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
 
-        $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
+        $link = url('/').'/activate/'.$token.'/email/'.$user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (!$activation) $activation = new UserActivation();
+        if (! $activation) {
+            $activation = new UserActivation();
+        }
 
         $activation->user()->associate($user);
         $activation->token = $token;
@@ -140,7 +143,7 @@ class UsersController extends Controller
     {
         $errors = [];
 
-        if (!Hash::check($request->old_password, Auth::user()->password)) {
+        if (! Hash::check($request->old_password, Auth::user()->password)) {
             $errors[] = 'Wrong password';
         }
 
@@ -173,7 +176,7 @@ class UsersController extends Controller
 
             $commission = $request->input('commission');
 
-            if (!is_numeric($commission)) {
+            if (! is_numeric($commission)) {
                 return redirect()->back()->withErrors(['Invalid commission']);
             }
 
@@ -190,7 +193,6 @@ class UsersController extends Controller
             } else {
                 $user->confirmation_required = 0;
             }
-
 
             //email confirm
             $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
@@ -210,13 +212,13 @@ class UsersController extends Controller
                 ModernExtraUsers::create([
                     'user_id' => $user->id,
                     'code' => 'block',
-                    'value' => $block
+                    'value' => $block,
                 ]);
                 $oldStatus = 'open';
             } else {
                 ModernExtraUsers::where('user_id', $user->id)
                     ->where('code', 'block')->update([
-                        'value' => $block
+                        'value' => $block,
                     ]);
             }
 
@@ -241,6 +243,5 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-
     }
 }

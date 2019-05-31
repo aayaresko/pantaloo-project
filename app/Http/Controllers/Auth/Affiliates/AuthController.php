@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
-use App\Validators\TemporaryMailCheck;
 use DB;
 use Hash;
 use App\User;
@@ -14,19 +13,19 @@ use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
 use Helpers\GeneralHelper;
-use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Validators\TemporaryMailCheck;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 /**
- * Class AuthController
- * @package App\Http\Controllers\Auth\Affiliates
+ * Class AuthController.
  */
 class AuthController extends Controller
 {
@@ -49,6 +48,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
     protected $loginPath = '/';
 
     /**
@@ -133,11 +133,12 @@ class AuthController extends Controller
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
                 array_push($errors, $item);
             });
+
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => $errors
-                ]
+                    'errors' => $errors,
+                ],
             ]);
         }
 
@@ -154,7 +155,7 @@ class AuthController extends Controller
             'name' => $name,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'commission' => $partnerCommission
+            'commission' => $partnerCommission,
         ]);
 
         $user->bitcoin_address = $address;
@@ -201,8 +202,8 @@ class AuthController extends Controller
             'message' => [
                 'email' => $email,
                 'title' => 'Confirm Email',
-                'body' => (string)view('affiliates.parts.confirm_email')->with(['email' => $email])
-            ]
+                'body' => (string) view('affiliates.parts.confirm_email')->with(['email' => $email]),
+            ],
         ]);
     }
 
@@ -218,8 +219,8 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => [
-                        'redirect' => '/affiliates/dashboard'
-                    ]
+                        'redirect' => '/affiliates/dashboard',
+                    ],
                 ]);
             }
         }
@@ -242,8 +243,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['These credentials do not match our records.']
-                ]
+                    'errors' => ['These credentials do not match our records.'],
+                ],
             ]);
         }
 
@@ -251,12 +252,12 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['The email has not confirmed.']
-                ]
+                    'errors' => ['The email has not confirmed.'],
+                ],
             ]);
         }
 
-        $roleUser = (int)$user->role;
+        $roleUser = (int) $user->role;
         $allowRoleKey = array_search($roleUser, $allowRoles);
         if ($allowRoleKey === false) {
             $allowRole = $allowRoles[0];
@@ -267,20 +268,21 @@ class AuthController extends Controller
         $authData = [
             'email' => $email,
             'password' => $request->input('password'),
-            'role' => $allowRole
+            'role' => $allowRole,
         ];
 
         if (Auth::attempt($authData, $remember)) {
             $user = Auth::user();
             $extraUser = ExtraUser::where('user_id', $user->id)->first();
-            if (!is_null($extraUser)) {
-                if ((int)$extraUser->block > 0) {
+            if (! is_null($extraUser)) {
+                if ((int) $extraUser->block > 0) {
                     Auth::logout();
+
                     return response()->json([
                         'status' => false,
                         'message' => [
-                            'errors' => ['The user is blocked']
-                        ]
+                            'errors' => ['The user is blocked'],
+                        ],
                     ]);
                 }
             }
@@ -291,22 +293,22 @@ class AuthController extends Controller
                         'status' => true,
                         'message' => [
                             'redirect' => '/affiliates',
-                        ]
+                        ],
                     ]);
                 case 3:
                     return response()->json([
                         'status' => true,
                         'message' => [
                             'redirect' => '/admin',
-                        ]
+                        ],
                     ]);
             }
         } else {
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['These credentials do not match our records.']
-                ]
+                    'errors' => ['These credentials do not match our records.'],
+                ],
             ]);
         }
     }
@@ -317,6 +319,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('affiliates.index');
     }
 
@@ -332,8 +335,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'User is not found.'
-                ]
+                    'errors' => 'User is not found.',
+                ],
             ];
         }
 
@@ -341,8 +344,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Something went wrong.'
-                ]
+                    'errors' => 'Something went wrong.',
+                ],
             ];
         }
 
@@ -365,11 +368,11 @@ class AuthController extends Controller
 
         $token = GeneralHelper::generateToken();
 
-        $link = url('/') . '?confirm=' . $token . '&email=' . $user->email;
+        $link = url('/').'?confirm='.$token.'&email='.$user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (!$activation) {
+        if (! $activation) {
             $activation = new UserActivation();
         }
 
@@ -384,7 +387,7 @@ class AuthController extends Controller
 
         return [
             'status' => true,
-            'message' => []
+            'message' => [],
         ];
     }
 
@@ -402,8 +405,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'User is not found'
-                ]
+                    'errors' => 'User is not found',
+                ],
             ];
         }
 
@@ -429,8 +432,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Email already confirmed'
-                ]
+                    'errors' => 'Email already confirmed',
+                ],
             ];
         }
 
@@ -449,14 +452,14 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => [
                     'messages' => 'Congratulations! E-mail was confirmed!',
-                ]
+                ],
             ];
         } else {
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Email wasn\'t confirmed. Invalid link.'
-                ]
+                    'errors' => 'Email wasn\'t confirmed. Invalid link.',
+                ],
             ];
         }
     }

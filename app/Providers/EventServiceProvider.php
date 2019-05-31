@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-
+use Illuminate\Support\Facades\Event;
 use App\Providers\Intercom\IntercomEventHandler;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {

@@ -4,7 +4,7 @@ return [
 
     'freeSpins' => [
         'afterRegistrationActive' => 432000,
-        'workTime' => 86400
+        'workTime' => 86400,
     ],
 
     'operation' => [
@@ -24,6 +24,6 @@ return [
         4 => 'App\Bonuses\Bonus_100',
     ],
 
-    'checkFrequency' => 10
+    'checkFrequency' => 10,
 
 ];

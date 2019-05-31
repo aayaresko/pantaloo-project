@@ -6,25 +6,24 @@ use DB;
 use App\User;
 use Validator;
 use App\Tracker;
-use App\ExtraUser;
 use App\Currency;
+use App\ExtraUser;
 use App\UserActivation;
 use App\Bitcoin\Service;
 use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
-use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
+use Illuminate\Http\Request;
 use App\Models\StatisticalData;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use App\Validators\TemporaryMailCheck;
+use Illuminate\Support\Facades\Cookie;
 use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 
 class AuthController extends Controller
 {
@@ -47,6 +46,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
     protected $loginPath = '/';
 
     /**
@@ -94,7 +94,6 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-
 //        $betatest = Cookie::get('betatest');
 //
 //        if ((int)$betatest !== 1) {
@@ -119,7 +118,7 @@ class AuthController extends Controller
 
         //act
         try {
-            if (GeneralHelper::isTestMode()){
+            if (GeneralHelper::isTestMode()) {
                 $address = 'bitcoinTestAddress';
             } else {
                 $service = new Service();
@@ -129,7 +128,7 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => bcrypt($data['password'])
+                'password' => bcrypt($data['password']),
             ]);
 
             $user->bitcoin_address = $address;
@@ -153,7 +152,7 @@ class AuthController extends Controller
                     StatisticalData::create([
                         'event_id' => $eventStatistic['register'],
                         'value' => 'register',
-                        'tracker_id' => $tracker->id
+                        'tracker_id' => $tracker->id,
                     ]);
                     //set count for this registration
                 }
@@ -172,11 +171,13 @@ class AuthController extends Controller
             //send email
             //to do check this
             $token = hash_hmac('sha256', str_random(40), config('app.key'));
-            $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
+            $link = url('/').'/activate/'.$token.'/email/'.$user->email;
 
             $activation = UserActivation::where('user_id', $user->id)->first();
 
-            if (!$activation) $activation = new UserActivation();
+            if (! $activation) {
+                $activation = new UserActivation();
+            }
 
             $activation->user()->associate($user);
             $activation->token = $token;
@@ -204,7 +205,6 @@ class AuthController extends Controller
      * @param array $data
      * @return User
      */
-
     protected function create(array $data)
     {
 //        //temporary
@@ -273,7 +273,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
         ]);
 
         $user->bitcoin_address = $address;
@@ -299,7 +299,7 @@ class AuthController extends Controller
                 StatisticalData::create([
                     'event_id' => $eventStatistic['register'],
                     'value' => 'register',
-                    'tracker_id' => $tracker->id
+                    'tracker_id' => $tracker->id,
                 ]);
                 //set count for this registration
             }
@@ -318,11 +318,13 @@ class AuthController extends Controller
         //send email
         //to do check this
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
-        $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
+        $link = url('/').'/activate/'.$token.'/email/'.$user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (!$activation) $activation = new UserActivation();
+        if (! $activation) {
+            $activation = new UserActivation();
+        }
 
         $activation->user()->associate($user);
         $activation->token = $token;
@@ -347,7 +349,6 @@ class AuthController extends Controller
 
     public function share()
     {
-
     }
 
     public function login(Request $request)
@@ -369,10 +370,11 @@ class AuthController extends Controller
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             $user = Auth::user();
-            $roleUser = (int)Auth::user()->role;
+            $roleUser = (int) Auth::user()->role;
 
             if (array_search($roleUser, [1, 3]) !== false) {
                 Auth::logout();
+
                 return back()->withErrors('This type of user is not allowed to login');
             }
 
@@ -381,19 +383,21 @@ class AuthController extends Controller
             $blockUser = ModernExtraUsers::where('user_id', $user->id)
                 ->where('code', 'block')->first();
 
-            if (!is_null($blockUser)) {
-                if ((int)$blockUser->value === 1) {
+            if (! is_null($blockUser)) {
+                if ((int) $blockUser->value === 1) {
                     //delete global session TO DO
                     Auth::logout();
+
                     return back()->withErrors('The user is blocked');
                 }
             }
+
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        if ($throttles && !$lockedOut) {
+        if ($throttles && ! $lockedOut) {
             $this->incrementLoginAttempts($request);
         }
 

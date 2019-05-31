@@ -17,11 +17,9 @@ Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::post('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDeposit']);
 });
 
-
-
-Route::get('robots.txt', function(\Illuminate\Http\Request $request){
+Route::get('robots.txt', function (Illuminate\Http\Request $request) {
     return view('robots', [
-        'host' => $request->getHost()
+        'host' => $request->getHost(),
     ]);
 });
 
@@ -34,7 +32,6 @@ $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
 
-
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
         Route::get('/', ['as' => 'general', 'uses' => 'Landing\LandingController@main']);
@@ -45,7 +42,6 @@ Route::group(['middleware' => ['landing', 'ip.country.block']], function () use 
 Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () use ($partner) {
     //sub-domain
     Route::group(['domain' => $partner], function () {
-
         Route::get('/', ['as' => 'affiliates.index', 'uses' => 'Partner\AffiliatesController@index']);
         Route::post('/affiliates/feedback', ['as' => 'affiliates.login', 'uses' => 'Partner\AffiliatesController@feedback']);
         Route::post('/affiliates/login', ['as' => 'affiliates.login', 'uses' => 'Auth\Affiliates\AuthController@enter']);
@@ -94,8 +90,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
     Route::group([
         'prefix' => '{lang}',
-        'where' => ['lang' => '(' . implode("|", $languages) . ')'],
-        'middleware' => 'language.switch'
+        'where' => ['lang' => '('.implode('|', $languages).')'],
+        'middleware' => 'language.switch',
     ], function () {
         Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
         Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
@@ -106,7 +102,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
         Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
         Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
-
 
         Route::get('/games/{type_name?}', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
         //Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
@@ -124,7 +119,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         //auth
         Route::get('/password/reset/{token?}', 'Auth\PasswordController@showResetForm');
         Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-
     });
 
     //Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);
@@ -132,24 +126,20 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     //Route::any('/api/demo', ['as' => 'slots.free', 'uses' => 'FreeSpinsController@callback']);
     //Route::post('/contribution/callback', ['as' => 'usd.callback', 'uses' => 'MoneyController@depositCallback'])->middleware(['ip.check']);
 
-
     Route::group(['middleware' => ['auth']], function () use ($languages) {
-
         Route::get('/intercom/update', ['as' => 'intercom', 'uses' => 'IntercomController@update']);
 
         Route::group([
             'prefix' => '{lang}',
-            'where' => ['lang' => '(' . implode("|", $languages) . ')'],
-            'middleware' => 'language.switch'
+            'where' => ['lang' => '('.implode('|', $languages).')'],
+            'middleware' => 'language.switch',
         ], function () {
-
             Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
 
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
             Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
             Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
             Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
-
         });
 
         Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
@@ -178,7 +168,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         //Route::get('/share/session', 'AuthController@share');
 
         Route::group(['prefix' => 'admin', 'middleware' => ['can:accessUserAdminPublic']], function () {
-
             Route::group(['middleware' => ['can:accessUserAdmin']], function () {
                 Route::get('/bonus/{user}', ['as' => 'admin.bonuses', 'uses' => 'BonusController@userBonuses']);
                 Route::get('/bonus/{user}/{bonus}/activate', ['as' => 'admin.bonusActivate', 'uses' => 'BonusController@adminActivate']);
@@ -188,9 +177,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 //Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'TranslationController@save']);
                 //Route::post('/translations/delete', ['as' => 'translations.delete', 'uses' => 'TranslationController@delete']);
 
-
                 Route::any('/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
-
 
                 Route::get('/users', ['as' => 'users', 'uses' => 'UsersController@index']);
                 Route::post('/user/{user}', ['as' => 'user.update', 'uses' => 'UsersController@update']);
@@ -254,10 +241,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::post('/faq/{question}/update', ['as' => 'faqUpdate', 'uses' => 'QuestionController@update']);
                 Route::get('/faq/{question}/delete', ['as' => 'faqDelete', 'uses' => 'QuestionController@delete']);
 
-
                 //Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
                 //Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
-
 
                 Route::get('/agent/payments', ['as' => 'admin.agentPayments', 'uses' => 'AgentController@payments']);
 
@@ -266,7 +251,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
                 Route::get('/balance', ['as' => 'admin.balance', 'uses' => 'AdminController@balance']);
             });
-
 
             Route::group(['middleware' => ['can:accessAdminAffiliatePublic']], function () {
                 Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
@@ -290,11 +274,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::get('/', 'UsersController@index');
 
-
             Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
             Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
         });
-
 
         Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
             Route::get('/', function () {
@@ -324,12 +306,10 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::get('/faq', ['as' => 'agent.faq', 'uses' => 'QuestionController@view']);
 
-
             //Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'AgentController@withdraw']);
             Route::get('/withdraw', ['as' => 'agent.withdraw', 'uses' => 'Partner\AffiliatesController@withdraw']);
             Route::post('/withdraw', ['as' => 'agent.withdrawDo', 'uses' => 'AgentController@withdrawDo']);
         });
-
 
         /* Pantallo Games */
         Route::group(['prefix' => 'games/pantallo'], function () {
@@ -337,7 +317,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::get('/loginPlayer', ['as' => 'games.pantallo.loginPlayer', 'uses' => 'PantalloGamesController@loginPlayer']);
             Route::get('/logoutPlayer', ['as' => 'games.pantallo.logoutPlayer', 'uses' => 'PantalloGamesController@logoutPlayer']);
         });
-
 
         Route::get('/integratedGame/{gameId}', ['as' => 'integratedGame', 'uses' => 'IntegratedGamesController@getGame']);
         Route::get('/integratedGameLink/provider/{providerId}/game/{gameId}',
@@ -381,7 +360,7 @@ Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
     Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
 
-Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
+Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin'], function () {
     Route::get('walletNotify', 'Bitcoin\TransactionController@walletNotify')->name('walletNotify');
     Route::get('blockNotify', 'Bitcoin\TransactionController@blockNotify')->name('blockNotify');
 });
@@ -390,7 +369,7 @@ Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
 Route::group(['middleware' => ['games'], 'prefix' => 'games'], function () {
     Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
     Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
-    Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
+    Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']); //check this
 });
 
 Route::group(['middleware' => ['api', 'ip.country.block']], function () {

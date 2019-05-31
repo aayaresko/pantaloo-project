@@ -33,11 +33,11 @@ class BonusController extends Controller
         if ($active_bonus) {
             $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
         }
-        
+
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
-            'bonusStatistics' => $bonusStatistics
+            'bonusStatistics' => $bonusStatistics,
         ]);
     }
 
@@ -47,12 +47,11 @@ class BonusController extends Controller
         $userRequest = Auth::user();
 
         //to do - check this - and edit this way
-        if (!$bonus->public) {
+        if (! $bonus->public) {
             return redirect()->back()->withErrors(['No access']);
         }
 
         DB::beginTransaction();
-
 
         $class = BonusHelper::getClass($bonus->id);
 
@@ -71,7 +70,6 @@ class BonusController extends Controller
 
         return redirect()->back()->with('popup',
             ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
-
 
 //        //to do - check this - and edit this way
 //        if (!$bonus->public) {
@@ -104,7 +102,7 @@ class BonusController extends Controller
     {
         $user_bonus = Auth::user()->bonuses()->first();
 
-        if (!$user_bonus) {
+        if (! $user_bonus) {
             return redirect()->back();
         }
         $class = $user_bonus->bonus->getClass();
@@ -144,7 +142,7 @@ class BonusController extends Controller
             'user' => $user,
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
-            'bonus_obj' => $bonus_obj
+            'bonus_obj' => $bonus_obj,
         ]);
     }
 
@@ -158,6 +156,7 @@ class BonusController extends Controller
         $bonusActivate = $bonusObject->activate(['mode' => 1]);
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$bonusActivate['message']]);
         }
         DB::commit();
@@ -169,7 +168,7 @@ class BonusController extends Controller
     {
         $userBonus = $user->bonuses()->first();
 
-        if (!$userBonus) {
+        if (! $userBonus) {
             return redirect()->back();
         }
 
@@ -180,6 +179,7 @@ class BonusController extends Controller
         $bonusCancel = $bonusObject->cancel('Closed by admin');
         if ($bonusCancel['success'] === false) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$bonusCancel['message']]);
         }
         DB::commit();
@@ -192,7 +192,7 @@ class BonusController extends Controller
         $user = $request->user();
 
         $activeBonus = null;
-        if (!is_null($user)) {
+        if (! is_null($user)) {
             $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
         }
 

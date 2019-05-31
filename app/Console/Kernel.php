@@ -2,11 +2,11 @@
 
 namespace App\Console;
 
-use App\Console\Commands\RemoveKeyTranslate;
 use App\Console\Commands\Translate;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\RemoveKeyTranslate;
 use App\Console\Commands\UpdateTransactions;
 use App\Console\Commands\updateUserIntercom;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel

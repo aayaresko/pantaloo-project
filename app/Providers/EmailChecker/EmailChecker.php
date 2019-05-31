@@ -1,35 +1,36 @@
 <?php
 
-
 namespace App\Providers\EmailChecker;
 
-
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Helpers\GeneralHelper;
+use GuzzleHttp\Exception\RequestException;
 
 class EmailChecker
 {
     public $timeout = 1;
+
     public $fast = false;
 
     public function isInvalidEmail($email, $default = false)
     {
-        if (GeneralHelper::isTestMode()){
+        if (GeneralHelper::isTestMode()) {
             return false;
         }
-        if (!empty($email)) {
+        if (! empty($email)) {
             $url = $this->prepareUrl($email);
 
             $client = new Client();
+
             try {
                 $response = $client->request('GET', $url, [
-                    'timeout' => $this->timeout + 2
+                    'timeout' => $this->timeout + 2,
                 ]);
 
                 if ($response->getStatusCode() == 200) {
                     $result = json_decode($response->getBody());
-                    return !$result->valid;
+
+                    return ! $result->valid;
                 }
             } catch (RequestException $e) {
                 // Timeout
@@ -44,10 +45,10 @@ class EmailChecker
     {
 
         // Create parameters array.
-        $parameters = array(
+        $parameters = [
             'timeout' => $this->timeout,
-            'fast' => $this->fast
-        );
+            'fast' => $this->fast,
+        ];
 
         $key = env('IP_QUALITY_SCORE');
 

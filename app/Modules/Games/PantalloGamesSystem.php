@@ -14,24 +14,24 @@ use App\Models\GamesList;
 use App\ModernExtraUsers;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
-use App\Modules\PantalloGames;
 use App\Models\LastActionGame;
+use App\Modules\PantalloGames;
 use App\Modules\Others\DebugGame;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloFreeRounds;
-use App\Models\Pantallo\GamesPantalloTransaction;
 use App\Models\Pantallo\GamesPantalloSessionGame;
+use App\Models\Pantallo\GamesPantalloTransaction;
 
 /**
- * Class PantalloGamesSystem
- * @package App\Modules\Games
+ * Class PantalloGamesSystem.
  */
 class PantalloGamesSystem implements GamesSystem
 {
     /**
-     * Why constant - in doc for integration write such make
+     * Why constant - in doc for integration write such make.
      */
     const PASSWORD = 'rf3js1Q';
+
     //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
     const TEMPORARY = 'temporarySessionGame';
 
@@ -54,7 +54,7 @@ class PantalloGamesSystem implements GamesSystem
             'user_id' => $userId,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
-            'updated_at' => $date
+            'updated_at' => $date,
         ]);
 
         try {
@@ -77,7 +77,7 @@ class PantalloGamesSystem implements GamesSystem
                 $player = $pantalloGames->createPlayer([
                     'user_id' => $userId,
                     'user_username' => $userName,
-                    'password' => self::PASSWORD
+                    'password' => self::PASSWORD,
                 ], true);
             } else {
                 $player = $playerExists;
@@ -87,10 +87,10 @@ class PantalloGamesSystem implements GamesSystem
             $login = $pantalloGames->loginPlayer([
                 'user_id' => $userId,
                 'user_username' => $userName,
-                'password' => self::PASSWORD
+                'password' => self::PASSWORD,
             ], true);
 
-            $loginResponse = (array)$login->response;
+            $loginResponse = (array) $login->response;
             $idLogin = $loginResponse['id'];
             unset($loginResponse['id']);
             $loginResponse['system_id'] = $idLogin;
@@ -111,8 +111,8 @@ class PantalloGamesSystem implements GamesSystem
             ], true);
 
             //to do user for update
-            if (!is_null($user->bonus_id)) {
-                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
+            if (! is_null($user->bonus_id)) {
+                $bonusClasses = BonusHelper::getClass((int) $user->bonus_id);
                 $bonusObject = new $bonusClasses($user);
                 $setGame = $bonusObject->setGame($game, 'firstGame');
             }
@@ -128,7 +128,7 @@ class PantalloGamesSystem implements GamesSystem
             GamesPantalloSessionGame::create([
                 'session_id' => $idLogin,
                 'gamesession_id' => $getGame->gamesession_id,
-                'game_id' => $game->id
+                'game_id' => $game->id,
             ]);
 
             $getLastActionGame = LastActionGame::select(['id', 'gamesession_id', 'number_games'])
@@ -141,16 +141,16 @@ class PantalloGamesSystem implements GamesSystem
                     'last_game' => $date,
                     'last_action' => $date,
                     'gamesession_id' => $getGame->gamesession_id,
-                    'number_games' => 1
+                    'number_games' => 1,
                 ]);
             } else {
                 $lastActionGameUpdate = [
                     'last_game' => $date,
                     'game_id' => $game->id,
-                    'gamesession_id' => $getGame->gamesession_id
+                    'gamesession_id' => $getGame->gamesession_id,
                 ];
 
-                $numberGames = (int)$getLastActionGame->number_games;
+                $numberGames = (int) $getLastActionGame->number_games;
                 //to do this
                 if ($getGame->gamesession_id !== $getLastActionGame->gamesession_id) {
                     $numberGames = $getLastActionGame->number_games + 1;
@@ -162,7 +162,6 @@ class PantalloGamesSystem implements GamesSystem
             }
 
             DB::commit();
-
         } catch (\Throwable $e) {
             DB::rollBack();
 //            dump($playerExists);
@@ -174,7 +173,7 @@ class PantalloGamesSystem implements GamesSystem
 //            dump($e);
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
         }
 
@@ -182,14 +181,14 @@ class PantalloGamesSystem implements GamesSystem
         $response = [
             'success' => true,
             'message' => [
-                'gameLink' => $getGame->response
-            ]
+                'gameLink' => $getGame->response,
+            ],
         ];
         $debugGameResult = $debugGame->end();
 
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
         ]);
 
         return $response;
@@ -205,6 +204,7 @@ class PantalloGamesSystem implements GamesSystem
         $userId = $user->id;
 
         DB::beginTransaction();
+
         try {
             $configCommon = config('integratedGames.common');
             $statusLogout = $configCommon['statusSession']['logout'];
@@ -216,7 +216,7 @@ class PantalloGamesSystem implements GamesSystem
             $logout = $pantalloGames->logoutPlayer([
                 'user_id' => $userId,
                 'user_username' => $userName,
-                'password' => self::PASSWORD
+                'password' => self::PASSWORD,
             ], true);
             $session = GamesPantalloSession::where([
                 ['user_id', '=', $user->id],
@@ -228,14 +228,15 @@ class PantalloGamesSystem implements GamesSystem
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
         }
 
         return [
-            'success' => true
+            'success' => true,
         ];
     }
 
@@ -257,10 +258,11 @@ class PantalloGamesSystem implements GamesSystem
             'type_id' => 2,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
-            'updated_at' => $date
+            'updated_at' => $date,
         ]);
 
         DB::beginTransaction();
+
         try {
             /*preparation parameters*/
             //validation
@@ -279,7 +281,7 @@ class PantalloGamesSystem implements GamesSystem
             $validationDate = $requestParams;
             $key = $validationDate['key'];
             unset($validationDate['key']);
-            $hash = sha1($salt . http_build_query($validationDate));
+            $hash = sha1($salt.http_build_query($validationDate));
 
             if ($key != $hash) {
                 throw new \Exception('Incorrect input date');
@@ -359,13 +361,13 @@ class PantalloGamesSystem implements GamesSystem
 //                //get bonus and set limit bonus
 //            }
 
-            if (!is_null($params['user']->bonus)) {
+            if (! is_null($params['user']->bonus)) {
                 $modePlay = 1;
-                $bonusClasses = BonusHelper::getClass((int)$params['user']->bonus);
+                $bonusClasses = BonusHelper::getClass((int) $params['user']->bonus);
                 $bonusObject = new $bonusClasses($params['user']);
 
                 if ($action === 'debit') {
-                    if (!isset($requestParams['is_freeround_win']) or
+                    if (! isset($requestParams['is_freeround_win']) or
                         $requestParams['is_freeround_win'] != 1) {
                         $bonusClose = $bonusObject->close();
 
@@ -388,7 +390,7 @@ class PantalloGamesSystem implements GamesSystem
             //DOUBLE FIX this!
             $gameIdRequest = isset($requestParams['game_id']) ? $requestParams['game_id'] : null;
 
-            if (!is_null($gameIdRequest)) {
+            if (! is_null($gameIdRequest)) {
                 //to do! table slots games
                 $slotsGame = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
                     ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
@@ -431,10 +433,9 @@ class PantalloGamesSystem implements GamesSystem
                     ->where('user_id', $params['user']->id)
                     ->whereIn('game_id', $slotsGameIds)
                     ->first();
-
             }
 
-            if (!is_null($typeOpenGame)) {
+            if (! is_null($typeOpenGame)) {
                 $balanceBefore = GeneralHelper::formatAmount($params['user']->full_balance);
             }
             //finish get games
@@ -463,7 +464,7 @@ class PantalloGamesSystem implements GamesSystem
                         ])->orderBy('id', 'DESC')->first();
 
                     if (is_null($gamesSession)) {
-                        throw new \Exception('Games session is not found.' .
+                        throw new \Exception('Games session is not found.'.
                             ' This user is not playing currently.', 500);
                     }
                     //FIX THIS WHEN PROVIDER FIX
@@ -484,8 +485,9 @@ class PantalloGamesSystem implements GamesSystem
                 case 'balance':
                     $response = [
                         'status' => 200,
-                        'balance' => $balanceBefore
+                        'balance' => $balanceBefore,
                     ];
+
                     break;
                 case 'debit':
                     $caseAction = 'debit';
@@ -497,6 +499,7 @@ class PantalloGamesSystem implements GamesSystem
 
                     if ($validator->fails()) {
                         $error = $validator->errors();
+
                         throw new \Exception($error->first(), 500);
                     }
                     //end our validate
@@ -512,10 +515,10 @@ class PantalloGamesSystem implements GamesSystem
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
                             ['system_id', '=', $externalTransactionId],
-                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]],
                         ])->select([
                             'transactions.id',
-                            'games_pantallo_transactions.balance_after as balance_after'
+                            'games_pantallo_transactions.balance_after as balance_after',
                         ])->first();
 
                     if (is_null($transaction)) {
@@ -532,8 +535,8 @@ class PantalloGamesSystem implements GamesSystem
                             'comment' => 'Pantallo games',
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
-                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
-                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                            'agent_id' => (! is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (! is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
                         if ($modePlay === 0) {
@@ -541,7 +544,7 @@ class PantalloGamesSystem implements GamesSystem
                             $createParams['bonus_sum'] = 0;
                         } else {
                             //to do!! fix this
-                            if ((float)$params['user']->balance < abs($amount)) {
+                            if ((float) $params['user']->balance < abs($amount)) {
                                 $createParams['sum'] = -1 * $params['user']->balance;
                                 $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
                                         abs($amount) - abs($createParams['sum']));
@@ -585,7 +588,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
 
-                        if (!is_null($typeOpenGame)) {
+                        if (! is_null($typeOpenGame)) {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
                         } else {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
@@ -616,8 +619,9 @@ class PantalloGamesSystem implements GamesSystem
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => (float)$balance,
+                        'balance' => (float) $balance,
                     ];
+
                     break;
                 case 'credit':
                     $caseAction = 'credit';
@@ -629,6 +633,7 @@ class PantalloGamesSystem implements GamesSystem
 
                     if ($validator->fails()) {
                         $error = $validator->errors();
+
                         throw new \Exception($error->first(), 500);
                     }
                     //end our validate
@@ -649,10 +654,10 @@ class PantalloGamesSystem implements GamesSystem
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
                             ['system_id', '=', $externalTransactionId],
-                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]],
                         ])->select([
                             'transactions.id',
-                            'games_pantallo_transactions.balance_after as balance_after'
+                            'games_pantallo_transactions.balance_after as balance_after',
                         ])->first();
 
                     if (is_null($transaction)) {
@@ -668,8 +673,8 @@ class PantalloGamesSystem implements GamesSystem
                             'comment' => 'Pantallo games',
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
-                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
-                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                            'agent_id' => (! is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (! is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
                         if ($modePlay === 0) {
@@ -694,13 +699,13 @@ class PantalloGamesSystem implements GamesSystem
                                     'transactions.bonus_sum',
                                     'games_pantallo_transactions.amount as amount',
                                     'games_pantallo_transactions.game_id as game_id',
-                                    'games_pantallo_transactions.balance_after as balance_after'
+                                    'games_pantallo_transactions.balance_after as balance_after',
                                 ])->orderBy('id', 'DESC')->first();
 
                             //to do throw exception
 
                             //if is null - this after bonus money
-                            if (!is_null($lastTransaction)) {
+                            if (! is_null($lastTransaction)) {
                                 //to do!! fix this
                                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
@@ -760,7 +765,7 @@ class PantalloGamesSystem implements GamesSystem
                         if ($freeSpinsActiveBonus === 1) {
                             $bonusObject->realActivation([
                                 'amount' => $amount,
-                                'transactionId' => $transaction->id
+                                'transactionId' => $transaction->id,
                             ]);
                         }
 
@@ -774,7 +779,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
 
-                        if (!is_null($typeOpenGame)) {
+                        if (! is_null($typeOpenGame)) {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
                         } else {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
@@ -804,8 +809,9 @@ class PantalloGamesSystem implements GamesSystem
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => (float)$balance
+                        'balance' => (float) $balance,
                     ];
+
                     break;
                 case 'rollback':
                     $caseAction = 'rollback';
@@ -819,7 +825,7 @@ class PantalloGamesSystem implements GamesSystem
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
                             ['system_id', '=', $externalTransactionId],
-                            ['games_pantallo_transactions.action_id', '<>', $typesActions[$caseAction]]
+                            ['games_pantallo_transactions.action_id', '<>', $typesActions[$caseAction]],
                         ])->select([
                             'transactions.id',
                             'transactions.sum',
@@ -828,17 +834,17 @@ class PantalloGamesSystem implements GamesSystem
                             DB::raw('(transactions.sum + transactions.bonus_sum) as real_amount'),
                             'games_pantallo_transactions.amount as amount',
                             'games_pantallo_transactions.game_id as game_id',
-                            'games_pantallo_transactions.balance_after as balance_after'
+                            'games_pantallo_transactions.balance_after as balance_after',
                         ])->first();
 
                     if (is_null($transactionHas)) {
                         throw new \Exception('Does not have a transaction', 404);
                     }
 
-                    if ((int)$transactionHas->action_id === 2 or (int)$transactionHas->action_id === 10) {
+                    if ((int) $transactionHas->action_id === 2 or (int) $transactionHas->action_id === 10) {
                         //CHECK THIS = ASK MAX
                         //without abs because only action 2
-                        if ((float)$transactionHas->real_amount > $balanceBefore) {
+                        if ((float) $transactionHas->real_amount > $balanceBefore) {
                             throw new \Exception('Insufficient funds', 403);
                         }
                     }
@@ -848,10 +854,10 @@ class PantalloGamesSystem implements GamesSystem
                         'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
                         ->where([
                             ['system_id', '=', $externalTransactionId],
-                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]]
+                            ['games_pantallo_transactions.action_id', '=', $typesActions[$caseAction]],
                         ])->select([
                             'transactions.id',
-                            'games_pantallo_transactions.balance_after as balance_after'
+                            'games_pantallo_transactions.balance_after as balance_after',
                         ])->first();
 
                     if (is_null($transaction)) {
@@ -868,8 +874,8 @@ class PantalloGamesSystem implements GamesSystem
                             'comment' => 'Pantallo games',
                             'user_id' => $params['user']->id,
                             'round_id' => $roundId,
-                            'agent_id' => (!is_null($partnerId)) ? $partnerId : 0,
-                            'agent_commission' => (!is_null($partnerCommission)) ? $partnerCommission : 0,
+                            'agent_id' => (! is_null($partnerId)) ? $partnerId : 0,
+                            'agent_commission' => (! is_null($partnerCommission)) ? $partnerCommission : 0,
                         ];
 
                         if ($modePlay === 0) {
@@ -910,7 +916,7 @@ class PantalloGamesSystem implements GamesSystem
 
                         $userAfterUpdate = User::select($userFields)->where('id', $params['user']->id)->first();
 
-                        if (!is_null($typeOpenGame)) {
+                        if (! is_null($typeOpenGame)) {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->full_balance);
                         } else {
                             $balanceAfterTransaction = GeneralHelper::formatAmount($userAfterUpdate->balance);
@@ -930,7 +936,7 @@ class PantalloGamesSystem implements GamesSystem
                             'balance_before' => $balanceBefore,
                             'balance_after' => $balanceAfterTransaction,
                             //check null for ald transaction
-                            'game_id' => !is_null($transactionHas->game_id)
+                            'game_id' => ! is_null($transactionHas->game_id)
                                 ? $transactionHas->game_id : null,
                             'games_session_id' => $gamesSessionId,
                             'real_action_id' => 3,
@@ -942,8 +948,9 @@ class PantalloGamesSystem implements GamesSystem
                     }
                     $response = [
                         'status' => 200,
-                        'balance' => (float)$balance
+                        'balance' => (float) $balance,
                     ];
+
                     break;
                 default:
                     throw new \Exception('Action is not found');
@@ -957,7 +964,7 @@ class PantalloGamesSystem implements GamesSystem
             DB::rollBack();
             $response = [
                 'status' => 500,
-                'msg' => $errorMessage . ' Line:' . $errorLine
+                'msg' => $errorMessage.' Line:'.$errorLine,
             ];
 
             if ($errorCode) {
@@ -977,7 +984,7 @@ class PantalloGamesSystem implements GamesSystem
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'user_id' => $userId,
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
         ]);
 
         return $response;
@@ -987,24 +994,28 @@ class PantalloGamesSystem implements GamesSystem
     {
         //app accuracyValues
         $response = [];
+
         return $response;
     }
 
     public function debit($params)
     {
         $response = [];
+
         return $response;
     }
 
     public function credit($params)
     {
         $response = [];
+
         return $response;
     }
 
     public function rollback($params)
     {
         $response = [];
+
         return $response;
     }
 
@@ -1038,7 +1049,7 @@ class PantalloGamesSystem implements GamesSystem
             'user_id' => $userId,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
-            'updated_at' => $date
+            'updated_at' => $date,
         ]);
 
         try {
@@ -1053,7 +1064,7 @@ class PantalloGamesSystem implements GamesSystem
                 $playerResponse = $pantalloGames->createPlayer([
                     'user_id' => $userId,
                     'user_username' => $userName,
-                    'password' => self::PASSWORD
+                    'password' => self::PASSWORD,
                 ], true);
             } else {
                 $playerResponse = $playerExists;
@@ -1072,22 +1083,21 @@ class PantalloGamesSystem implements GamesSystem
                     ->where('user_id', $user->id)->where('deleted', 0)->first();
 
                 if (is_null($issetFreeRound)) {
-
                     $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
                         'user_id' => $user->id,
                         'round' => $available,
                         'valid_to' => $validTo,
-                        'created' => 0,//fake
-                        'free_round_id' => time(),//fake
+                        'created' => 0, //fake
+                        'free_round_id' => time(), //fake
                         'created_at' => $date,
-                        'updated_at' => $date
+                        'updated_at' => $date,
                     ]);
 
                     $freeRounds = $pantalloGames->addFreeRounds([
                         'playerids' => $player->id,
                         'gameids' => $gamesIds,
                         'available' => $available,
-                        'validTo' => $validTo->format('Y-m-d')
+                        'validTo' => $validTo->format('Y-m-d'),
                     ], true);
 
                     $freeRoundsResponse = json_decode($freeRounds->response);
@@ -1101,7 +1111,6 @@ class PantalloGamesSystem implements GamesSystem
                             'created' => $freeRoundCreated,
                             'free_round_id' => $freeRoundsId,
                         ]);
-
                 } else {
                     $freeRoundsId = $issetFreeRound->free_round_id;
                     dd('problem with active');
@@ -1111,19 +1120,18 @@ class PantalloGamesSystem implements GamesSystem
                     'user_id' => $user->id,
                     'round' => $available,
                     'valid_to' => $validTo,
-                    'created' => 0,//fake
-                    'free_round_id' => time(),//fake
+                    'created' => 0, //fake
+                    'free_round_id' => time(), //fake
                     'created_at' => $date,
-                    'updated_at' => $date
+                    'updated_at' => $date,
                 ]);
 
                 $freeRounds = $pantalloGames->addFreeRounds([
                     'playerids' => $player->id,
                     'gameids' => $gamesIds,
                     'available' => $available,
-                    'validTo' => $validTo->format('Y-m-d')
+                    'validTo' => $validTo->format('Y-m-d'),
                 ], true);
-
 
                 $freeRoundsResponse = json_decode($freeRounds->response);
 
@@ -1140,7 +1148,7 @@ class PantalloGamesSystem implements GamesSystem
 
             $response = [
                 'success' => true,
-                'freeRoundId' => $freeRoundsId
+                'freeRoundId' => $freeRoundsId,
             ];
         } catch (\Throwable $e) {
             //rollback free rounds
@@ -1149,14 +1157,14 @@ class PantalloGamesSystem implements GamesSystem
 
             $response = [
                 'success' => false,
-                'message' => $errorMessage . ' Line:' . $errorLine
+                'message' => $errorMessage.' Line:'.$errorLine,
             ];
 
 //          check this
             if (isset($freeRoundsId)) {
                 $removeFreeRounds = $pantalloGames->removeFreeRounds([
                     'playerids' => $player->id,
-                    'freeround_id' => $freeRoundsId
+                    'freeround_id' => $freeRoundsId,
                 ], true);
 
                 try {
@@ -1184,12 +1192,11 @@ class PantalloGamesSystem implements GamesSystem
         //logs to any connection to db
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
         ]);
 
         return $response;
     }
-
 
     public function removeFreeRounds($request)
     {
@@ -1206,7 +1213,7 @@ class PantalloGamesSystem implements GamesSystem
             'user_id' => $userId,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
-            'updated_at' => $date
+            'updated_at' => $date,
         ]);
 
         try {
@@ -1224,7 +1231,7 @@ class PantalloGamesSystem implements GamesSystem
             $player = $playerExists->response;
 
             $getFreeRounds = GamesPantalloFreeRounds::where([
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ])->orderBy('id', 'DESC')->first();
 
             if (is_null($getFreeRounds)) {
@@ -1233,10 +1240,10 @@ class PantalloGamesSystem implements GamesSystem
 
             $removeFreeRounds = $pantalloGames->removeFreeRounds([
                 'playerids' => $player->id,
-                'freeround_id' => $getFreeRounds->free_round_id
+                'freeround_id' => $getFreeRounds->free_round_id,
             ], true);
 
-            if ((int)$removeFreeRounds->error > 0) {
+            if ((int) $removeFreeRounds->error > 0) {
                 throw new \Exception('removeFreeRounds method was worked');
             }
 
@@ -1247,14 +1254,13 @@ class PantalloGamesSystem implements GamesSystem
             $response = [
                 'success' => true,
             ];
-
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
 
             $response = [
                 'success' => false,
-                'message' => $errorMessage . ' Line:' . $errorLine
+                'message' => $errorMessage.' Line:'.$errorLine,
             ];
 
             if (isset($removeFreeRounds)) {
@@ -1267,7 +1273,7 @@ class PantalloGamesSystem implements GamesSystem
         //logs to any connection to db
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
         ]);
 
         return $response;
@@ -1286,7 +1292,7 @@ class PantalloGamesSystem implements GamesSystem
         $userName = $userNameDefault;
 
         if ($user->created_at > $usePrefixAfter) {
-            $userName = $prefixName . $userNameDefault;
+            $userName = $prefixName.$userNameDefault;
         }
 
         $prefixNameStrictly = ModernExtraUsers::select(['user_id', 'code', 'value'])
@@ -1294,8 +1300,8 @@ class PantalloGamesSystem implements GamesSystem
             ->where('code', 'prefixName')
             ->first();
 
-        if (!is_null($prefixNameStrictly)) {
-            $userName = $prefixNameStrictly->value . $userNameDefault;
+        if (! is_null($prefixNameStrictly)) {
+            $userName = $prefixNameStrictly->value.$userNameDefault;
         }
 
         return $userName;

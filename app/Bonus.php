@@ -17,12 +17,13 @@ class Bonus extends Model
             'App\Bonuses\Bonus_100',
             'App\Bonuses\Bonus_150',
             'App\Bonuses\Bonus_200',
-            'App\Bonuses\FreeSpins'
+            'App\Bonuses\FreeSpins',
         ];
 
-        foreach ($classes as $class)
-        {
-            if($class::$id == $this->id) return $class;
+        foreach ($classes as $class) {
+            if ($class::$id == $this->id) {
+                return $class;
+            }
         }
 
         throw new \Exception('Class not found');

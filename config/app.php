@@ -121,7 +121,7 @@ return [
     'currencyCode' => 'mBTC',
 
     'chatUrl' => env('CHAT_URL', 'https://chat.casinobit.io'),
-    
+
     'bitcoinHost' => env('BITCOIN_HOST'),
 
     /*
@@ -225,6 +225,6 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'JsBridge' => \App\Providers\JsBridge\JsBridge::class,
         'Sentry' => Sentry\Laravel\Facade::class,
-        'EmailChecker' => \App\Providers\EmailChecker\EmailChecker::class
+        'EmailChecker' => \App\Providers\EmailChecker\EmailChecker::class,
     ],
 ];

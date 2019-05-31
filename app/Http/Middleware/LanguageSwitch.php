@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Request;
 use App;
+use Config;
 use Cookie;
 use Closure;
-use Config;
+use Request;
 use App\User;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,7 @@ class LanguageSwitch extends CommonMiddleware
      */
     protected $except = [
         '/games/endpoint',
-        '/games/pantallo/endpoint'
+        '/games/pantallo/endpoint',
     ];
 
     /**
@@ -41,10 +41,10 @@ class LanguageSwitch extends CommonMiddleware
         $prefixLang = $request->route()->parameter('lang');
         $cookieLang = Cookie::get('lang');
 
-        if (!is_null($prefixLang)) {
+        if (! is_null($prefixLang)) {
             $lang = $prefixLang;
         } else {
-            if (!is_null($cookieLang)) {
+            if (! is_null($cookieLang)) {
                 $lang = $cookieLang;
             } else {
                 $lang = app()->getLocale();

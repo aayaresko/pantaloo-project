@@ -33,6 +33,7 @@ class TranslationController extends Controller
     public function index()
     {
         $languages = GeneralHelper::getListLanguage();
+
         return view('admin.translation_list', ['langs' => $languages]);
     }
 
@@ -50,7 +51,7 @@ class TranslationController extends Controller
             'defaultLang' => $defaultLang,
             'translationsCurrent' => $translationsCurrent,
             'translationsDefault' => $translationsDefault,
-            'currentLang' => $lang
+            'currentLang' => $lang,
         ]);
     }
 
@@ -63,23 +64,22 @@ class TranslationController extends Controller
         $this->validate($request, [
             'pk' => 'required|string',
             'value' => 'required|string',
-            'name' => 'required|string'
+            'name' => 'required|string',
         ]);
 
         try {
             $currentLanguage = $request->name;
             $currentTranslation = $this->getTranslation($currentLanguage);
             $keyChangeValue = $request->pk;
-            if (!isset($currentTranslation[$keyChangeValue])) {
+            if (! isset($currentTranslation[$keyChangeValue])) {
                 throw new \Exception('Translation not found');
             }
             $currentTranslation[$keyChangeValue] = $request->value;
             $this->changeFileTranslation($currentLanguage, $currentTranslation);
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
-        
+
         return response()->json(['success' => true]);
     }
 
@@ -89,14 +89,16 @@ class TranslationController extends Controller
      */
     private function getTranslation($code)
     {
-        $translations = File::getRequire(base_path() . "/resources/lang/{$code}/casino.php");
+        $translations = File::getRequire(base_path()."/resources/lang/{$code}/casino.php");
+
         return $translations;
     }
 
     private function changeFileTranslation($code, $data)
     {
-        $datafile = 'lang' . DIRECTORY_SEPARATOR . $code . DIRECTORY_SEPARATOR . 'casino.data';
+        $datafile = 'lang'.DIRECTORY_SEPARATOR.$code.DIRECTORY_SEPARATOR.'casino.data';
         Storage::put($datafile, serialize($data));
+
         return true;
     }
 }

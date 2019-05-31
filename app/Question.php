@@ -8,6 +8,6 @@ class Question extends Model
 {
     public function getAnswer()
     {
-        return str_replace("\n", "<br>", $this->answer);
+        return str_replace("\n", '<br>', $this->answer);
     }
 }

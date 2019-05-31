@@ -5,10 +5,10 @@ namespace App\Console\Commands\Games;
 use DB;
 use Log;
 use App\CustomField;
-use App\Models\GamesType;
 use App\Models\GamesList;
-use App\Models\GamesTypeGame;
+use App\Models\GamesType;
 use App\Models\GamesCategory;
+use App\Models\GamesTypeGame;
 use App\Models\GamesListExtra;
 use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
@@ -48,7 +48,7 @@ class PantalloGetGames extends Command
     public function handle()
     {
         //pre init
-        $this->info("Start ...");
+        $this->info('Start ...');
         Log::info('PantalloGetGames START');
         $maxExecutionTime = 2000;
         ini_set('max_execution_time', $maxExecutionTime);
@@ -57,6 +57,7 @@ class PantalloGetGames extends Command
         $getImage = $this->argument('getImage');
 
         DB::beginTransaction();
+
         try {
             $pantalloGames = new PantalloGames;
             $allGames = $pantalloGames->getGameList([], true);
@@ -69,7 +70,7 @@ class PantalloGetGames extends Command
             if (count($allGames->response) > 0) {
 
                 //image
-                if (!is_null($getImage)) {
+                if (! is_null($getImage)) {
                     //load image
                     Log::info('PantalloGetGames GET ALL IMAGES');
                     foreach ($allGames->response as $game) {
@@ -82,7 +83,7 @@ class PantalloGetGames extends Command
                 //no update for find new game - new game this is game was not updated
                 GamesList::where('provider_id', $providerId)->update([
                     'active' => 0,
-                    'updated_at' => DB::raw('updated_at')
+                    'updated_at' => DB::raw('updated_at'),
                 ]);
 
                 //get list types
@@ -107,24 +108,24 @@ class PantalloGetGames extends Command
                     $gameType = trim($game->type);
 
                     $gameCategory = strtolower($gameCategory);
-                    if (!isset($categories[$gameCategory])) {
+                    if (! isset($categories[$gameCategory])) {
                         GamesCategory::create([
                             'code' => $gameCategory,
                             'name' => $gameCategory,
                             'default_name' => $gameCategory,
-                            'active' => 1
+                            'active' => 1,
 
                         ]);
                         $categories = GamesCategory::all()->keyBy('code');
                     }
 
                     $gameType = strtolower($gameType);
-                    if (!isset($types[$gameType])) {
+                    if (! isset($types[$gameType])) {
                         GamesType::create([
                             'code' => $gameType,
                             'name' => $gameType,
                             'default_name' => $gameType,
-                            'active' => 0
+                            'active' => 0,
                         ]);
                         $types = GamesType::all()->keyBy('code');
                     }
@@ -140,7 +141,7 @@ class PantalloGetGames extends Command
                             'name' => $game->name,
                             'category_id' => $categories[$gameCategory]->id,
                             'details' => $game->details,
-                            'mobile' => (int)$game->mobile,
+                            'mobile' => (int) $game->mobile,
                             'our_image' => $imageOur,
                             'image' => $game->image,
                             'image_preview' => $game->image_preview,
@@ -148,7 +149,7 @@ class PantalloGetGames extends Command
                             'image_background' => $game->image_background,
                             'rating' => 1,
                             'active' => 1,
-                            'free_round' => $game->freerounds_supported
+                            'free_round' => $game->freerounds_supported,
                         ];
                         $game = GamesList::create($gameDate);
 
@@ -184,14 +185,14 @@ class PantalloGetGames extends Command
                         $gameDate = [
                             'name' => $game->name,
                             'details' => $game->details,
-                            'mobile' => (int)$game->mobile,
+                            'mobile' => (int) $game->mobile,
                             'our_image' => $imageOur,
                             'image' => $game->image,
                             'image_preview' => $game->image_preview,
                             'image_filled' => $game->image_filled,
                             'image_background' => $game->image_background,
                             'active' => 1,
-                            'free_round' => $game->freerounds_supported
+                            'free_round' => $game->freerounds_supported,
                         ];
 
                         //no update for find new game - new game this is game was not updated
@@ -204,7 +205,7 @@ class PantalloGetGames extends Command
                 if (is_null($firstLoad)) {
                     CustomField::create([
                         'code' => 'get_games',
-                        'value' => 'get_games'
+                        'value' => 'get_games',
                     ]);
                 }
             }
@@ -213,7 +214,7 @@ class PantalloGetGames extends Command
             Log::emergency([
                 'code' => 'PantalloGetGames',
                 'error' => $e->getMessage(),
-                'line' => $e->getLine()
+                'line' => $e->getLine(),
             ]);
             //$this->info("PantalloGetGames Error");
             dd($e->getMessage());
@@ -221,7 +222,7 @@ class PantalloGetGames extends Command
         DB::commit();
         //get games and load or update
         Log::info('PantalloGetGames success');
-        $this->info("Games loaded or updated.");
+        $this->info('Games loaded or updated.');
     }
 
     /**
@@ -241,8 +242,8 @@ class PantalloGetGames extends Command
                 $contents = file_get_contents($url);
                 $name = substr($url, strrpos($url, '/') + 1);
                 $pathImage = "/gamesPicturesDefault/{$name}";
-                $fullPathImage = '/storage' . $pathImage;
-                Storage::put('public' . $pathImage, $contents);
+                $fullPathImage = '/storage'.$pathImage;
+                Storage::put('public'.$pathImage, $contents);
             } catch (\Exception $e) {
                 $fullPathImage = $dummyPicture;
             }
@@ -250,6 +251,7 @@ class PantalloGetGames extends Command
             $name = substr($url, strrpos($url, '/') + 1);
             $fullPathImage = "/storage/gamesPicturesDefault/{$name}";
         }
+
         return $fullPathImage;
     }
 }

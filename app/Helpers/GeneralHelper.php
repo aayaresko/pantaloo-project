@@ -2,7 +2,6 @@
 
 namespace Helpers;
 
-
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
@@ -13,78 +12,82 @@ class GeneralHelper
      * @param $amount
      * @return float
      */
-    static public function formatAmount($amount)
+    public static function formatAmount($amount)
     {
-        $amount = (float)$amount;
+        $amount = (float) $amount;
         $accuracyValues = config('app.accuracyValues');
+
         return round($amount, $accuracyValues, PHP_ROUND_HALF_DOWN);
     }
 
     /**
      * @return mixed
      */
-    static public function getAccuracyValues()
+    public static function getAccuracyValues()
     {
         $accuracyValues = config('app.accuracyValues');
+
         return $accuracyValues;
     }
 
     /**
      * @return string
      */
-    static public function fullRequest()
+    public static function fullRequest()
     {
-        $request = url('/') . $_SERVER['REQUEST_URI'];
+        $request = url('/').$_SERVER['REQUEST_URI'];
+
         return $request;
     }
 
     /**
      * @return array
      */
-    static public function getListLanguage()
+    public static function getListLanguage()
     {
-        $dir = base_path() . '/resources/lang';
+        $dir = base_path().'/resources/lang';
         $languagesIndex = array_diff(scandir($dir), ['..', '.']);
         $languages = array_values($languagesIndex);
+
         return $languages;
     }
 
     /**
      * @return string
      */
-    static public function generateToken()
+    public static function generateToken()
     {
         $token = hash_hmac('sha256', str_random(40), config('app.key'));
+
         return $token;
     }
 
     /**
-     * Return user ip from CloudFlare headers if set
+     * Return user ip from CloudFlare headers if set.
      *
      * @return string
      */
-    static public function visitorIpCloudFlare()
+    public static function visitorIpCloudFlare()
     {
         return isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : Request::ip();
     }
 
     /**
-     * Return country iso code from CloudFlare
+     * Return country iso code from CloudFlare.
      *
      * @return string
      */
-    static public function visitorCountryCloudFlare()
+    public static function visitorCountryCloudFlare()
     {
-        return isset($_SERVER["HTTP_CF_IPCOUNTRY"]) ? $_SERVER["HTTP_CF_IPCOUNTRY"] : 'XX';
+        return isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? $_SERVER['HTTP_CF_IPCOUNTRY'] : 'XX';
     }
-
 
     /**
      * @param $transactions
      * @param $cpumBtcLimit
      * @return array
      */
-    static public function statistics($transactions, $cpumBtcLimit)
+    public static function statistics($transactions, $cpumBtcLimit)
     {
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
@@ -99,39 +102,32 @@ class GeneralHelper
             'revenue' => 0,
             'bonus' => 0,
             'profit' => 0,
-            'adminProfit' => 0
+            'adminProfit' => 0,
         ];
 
         foreach ($transactions as $transaction) {
-
             if ($transaction->type == 3) {
-
-                if ((int)$transaction->confirmations < $minConfirmBtc) {
+                if ((int) $transaction->confirmations < $minConfirmBtc) {
                     $stat['pending_deposits'] = $stat['pending_deposits'] + $transaction->sum;
                 } else {
                     $stat['confirm_deposits'] = $stat['confirm_deposits'] + $transaction->sum;
                 }
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
-
             } elseif ($transaction->type == 1 or $transaction->type == 2) {
-
                 if ($transaction->type == 1) {
                     $stat['bets'] = $stat['bets'] + (-1) * $transaction->sum;
                     $stat['bet_count'] = $stat['bet_count'] + 1;
-
                 } else {
                     $stat['wins'] = $stat['wins'] + $transaction->sum;
                 }
 
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
 
-
                 $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
 
                 $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum *
                     $transaction->agent_commission / 100;
-
 
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1) * $transaction->sum - (-1) *
                     $transaction->sum * $transaction->agent_commission / 100;
@@ -156,22 +152,21 @@ class GeneralHelper
     }
 
     /**
-     *
-     * to do in another place for this method
+     * to do in another place for this method.
      *
      * @param $prefixLang
      * @param $cookieLang
      * @param $currentLocale
      * @return mixed
      */
-    static public function getLang($prefixLang, $cookieLang, $currentLocale)
+    public static function getLang($prefixLang, $cookieLang, $currentLocale)
     {
         $lang = $currentLocale;
 
-        if (!is_null($prefixLang)) {
+        if (! is_null($prefixLang)) {
             $lang = $prefixLang;
         } else {
-            if (!is_null($cookieLang)) {
+            if (! is_null($cookieLang)) {
                 $lang = $cookieLang;
             } else {
                 //check ip address and check language
@@ -180,6 +175,7 @@ class GeneralHelper
                 //if we don't have this language we use en
             }
         }
+
         return $lang;
     }
 
@@ -188,29 +184,29 @@ class GeneralHelper
         return Cookie::get('testmode', false);
     }
 
-    public static function isSecureProtocol(){
+    public static function isSecureProtocol()
+    {
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $isSecure = true;
-        }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || ! empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
             $isSecure = true;
         }
+
         return $isSecure;
     }
 
-    public static function getTranslateDataByFileName($filename){
-
+    public static function getTranslateDataByFileName($filename)
+    {
         $return = [];
 
         $filename = str_replace(DIRECTORY_SEPARATOR, ':', $filename);
 
         if (preg_match("/(?<lang>\w+):(?<file>\w+)\.php$/", $filename, $matches)) {
-
             $lang = $matches['lang'];
             $file = $matches['file'];
 
-            $datafile = 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file . '.data';
+            $datafile = 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file.'.data';
 
             if (\Illuminate\Support\Facades\Storage::exists($datafile)) {
                 $return = unserialize(\Illuminate\Support\Facades\Storage::get($datafile));

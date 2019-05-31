@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\PublicToken;
-use App\Rollback;
-use App\Slots\Ezugi;
 use App\Token;
 use App\RawLog;
-use Illuminate\Http\Request;
+use App\Rollback;
+use App\PublicToken;
+use App\Slots\Ezugi;
 use App\Transaction;
-
 use App\Http\Requests;
+
+use Illuminate\Http\Request;
 
 class EzugiController extends Controller
 {
@@ -23,54 +23,60 @@ class EzugiController extends Controller
         $raw_log->save();
 
         try {
-            if($input['operatorId'] != env('EZUGI_OPERATOR_ID')) throw new \Exception('General error', 1);
+            if ($input['operatorId'] != env('EZUGI_OPERATOR_ID')) {
+                throw new \Exception('General error', 1);
+            }
             //if(!isset($input['request'])) throw new \Exception('General error', 1);
 
             //if($request->ip() != '46.4.63.60') throw new \Exception('Technical error', 1);
 
             $resp = [
                 'operatorId' => env('EZUGI_OPERATOR_ID'),
-                'timestamp' => Ezugi::GetTime()
+                'timestamp' => Ezugi::GetTime(),
             ];
 
-            if($request->input('request') == 'auth')
-            {
+            if ($request->input('request') == 'auth') {
                 $public_token = PublicToken::where('token', $input['token'])->first();
                 //if(!$token) $token = Token::where('token', $request->input('gamesessionid'))->first();
-                if(!$public_token) throw new \Exception('Token not found', 6);
+                if (! $public_token) {
+                    throw new \Exception('Token not found', 6);
+                }
 
                 $user = $public_token->user;
 
-                if(!$user) throw new \Exception('User not found', 7);
-            }
-            else
-            {
+                if (! $user) {
+                    throw new \Exception('User not found', 7);
+                }
+            } else {
                 $token = Token::where('token', $input['token'])->first();
                 //if(!$token) $token = Token::where('token', $request->input('gamesessionid'))->first();
-                if(!$token) throw new \Exception('Token not found', 6);
+                if (! $token) {
+                    throw new \Exception('Token not found', 6);
+                }
 
                 $user = $token->user;
 
-                if(!$user) throw new \Exception('User not found', 7);
+                if (! $user) {
+                    throw new \Exception('User not found', 7);
+                }
             }
 
-            $resp['uid'] = (string)$user->id;
+            $resp['uid'] = (string) $user->id;
             $raw_log->user_id = $user->id;
 
-            switch ($request->input('request'))
-            {
+            switch ($request->input('request')) {
                 case 'auth':
 
-                    if($user->id == 25) $private_token = '58c118028c36c468776592-4e8e57ab0d';
-                    else
-                    {
+                    if ($user->id == 25) {
+                        $private_token = '58c118028c36c468776592-4e8e57ab0d';
+                    } else {
                         $token = $public_token->getToken();
                         $private_token = $token->token;
                     }
 
                     $resp = [
                         'operatorId' => env('EZUGI_OPERATOR_ID'),
-                        'uid' => (string)$user->id,
+                        'uid' => (string) $user->id,
                         'nickName' => preg_replace('|[^A-z0-9]*|isUS', '', preg_replace('|@.*$|isUS', '', $user->email)),
                         'token' => $private_token,
                         'playerTokenAtLaunch' => $public_token->token,
@@ -80,8 +86,9 @@ class EzugiController extends Controller
                         'errorCode' => 0,
                         'errorDescription' => 'OK',
                         'timestamp' => Ezugi::GetTime(),
-                        'clientIP' => '127.0.0.1'
+                        'clientIP' => '127.0.0.1',
                     ];
+
                     break;
 
                 case 'debit':
@@ -96,20 +103,34 @@ class EzugiController extends Controller
                     $resp['transactionId'] = $ext_id;
 
                     $rollback = Rollback::where('ext_id', $ext_id)->first();
-                    if($rollback) throw new \Exception('Debit after rollback / General Error', 1);
+                    if ($rollback) {
+                        throw new \Exception('Debit after rollback / General Error', 1);
+                    }
 
-                    if(!is_numeric($round_id)) throw new \Exception('General error', 1);
+                    if (! is_numeric($round_id)) {
+                        throw new \Exception('General error', 1);
+                    }
 
-                    if(!is_numeric($sum)) throw new \Exception('General error', 1);
-                    if($sum < 0) throw new \Exception('General error', 1);
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('General error', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('General error', 1);
+                    if (empty($ext_id)) {
+                        throw new \Exception('General error', 1);
+                    }
 
                     $transaction = Transaction::where('ext_id', $ext_id)->first();
 
-                    if($transaction) throw new \Exception('Transaction has already processed', 0);
+                    if ($transaction) {
+                        throw new \Exception('Transaction has already processed', 0);
+                    }
 
-                    if((string)$input['uid'] != (string)$user->id) throw new \Exception('User not found', 7);
+                    if ((string) $input['uid'] != (string) $user->id) {
+                        throw new \Exception('User not found', 7);
+                    }
 
                     $transaction = new Transaction();
                     $transaction->ext_id = $ext_id;
@@ -119,18 +140,15 @@ class EzugiController extends Controller
                     $transaction->round_id = $round_id;
                     $transaction->bonus_sum = 0;
 
-                    if($user->balance < $sum)
-                    {
+                    if ($user->balance < $sum) {
                         throw new \Exception('Insufficient funds', 3);
                     }
 
-                    $transaction->sum = -1*$sum;
+                    $transaction->sum = -1 * $sum;
 
                     try {
                         $user->changeBalance($transaction);
-                    }
-                    catch (\Exception $e)
-                    {
+                    } catch (\Exception $e) {
                         throw new \Exception('Insufficient funds', 3);
                     }
 
@@ -157,17 +175,29 @@ class EzugiController extends Controller
                     $resp['bonusAmount'] = 0;
                     $resp['timestamp'] = Ezugi::GetTime();
 
-                    if(!$round_id) throw new \Exception('General error', 1);
-                    if(!is_numeric($sum)) throw new \Exception('General error', 1);
-                    if($sum < 0) throw new \Exception('General error', 1);
+                    if (! $round_id) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('General error', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('General error', 1);
+                    if (empty($ext_id)) {
+                        throw new \Exception('General error', 1);
+                    }
 
                     $transaction = Transaction::where('ext_id', $ext_id)->first();
 
-                    if($transaction) throw new \Exception('Transaction has already processed', 0);
+                    if ($transaction) {
+                        throw new \Exception('Transaction has already processed', 0);
+                    }
 
-                    if((string)$input['uid'] != (string)$user->id) throw new \Exception('User not found', 7);
+                    if ((string) $input['uid'] != (string) $user->id) {
+                        throw new \Exception('User not found', 7);
+                    }
 
                     $transaction = new Transaction();
                     $transaction->ext_id = $ext_id;
@@ -203,17 +233,27 @@ class EzugiController extends Controller
                     $resp['bonusAmount'] = 0;
                     $resp['timestamp'] = Ezugi::GetTime();
 
-                    if((string)$input['uid'] != (string)$user->id) throw new \Exception('User not found', 7);
+                    if ((string) $input['uid'] != (string) $user->id) {
+                        throw new \Exception('User not found', 7);
+                    }
 
-                    if(!$round_id) throw new \Exception('General error', 1);
-                    if(!is_numeric($sum)) throw new \Exception('General error', 1);
-                    if($sum < 0) throw new \Exception('General error', 1);
+                    if (! $round_id) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('General error', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('General error', 1);
+                    if (empty($ext_id)) {
+                        throw new \Exception('General error', 1);
+                    }
 
                     $rollback = Rollback::where('ext_id', $ext_id)->first();
 
-                    if(!$rollback) {
+                    if (! $rollback) {
                         $rollback = new Rollback();
                         $rollback->ext_id = $ext_id;
                         $rollback->save();
@@ -221,12 +261,21 @@ class EzugiController extends Controller
 
                     $transaction = Transaction::withTrashed()->where('ext_id', $ext_id)->first();
 
-                    if(!$transaction) throw new \Exception('Transaction not found', 9);
-                    elseif($transaction->trashed()) throw new \Exception('Transaction has already processed', 0);
+                    if (! $transaction) {
+                        throw new \Exception('Transaction not found', 9);
+                    } elseif ($transaction->trashed()) {
+                        throw new \Exception('Transaction has already processed', 0);
+                    }
 
-                    if($transaction->type != 1) throw new \Exception('General error', 1);
-                    if($transaction->sum != -1*$sum) throw new \Exception('General error', 1);
-                    if($user->id != $transaction->user_id) throw new \Exception('General error', 1);
+                    if ($transaction->type != 1) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if ($transaction->sum != -1 * $sum) {
+                        throw new \Exception('General error', 1);
+                    }
+                    if ($user->id != $transaction->user_id) {
+                        throw new \Exception('General error', 1);
+                    }
 
                     $user->changeBalance($transaction, true);
 
@@ -240,11 +289,11 @@ class EzugiController extends Controller
                     break;
                 default: throw new \Exception('No such method');
             }
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $code = $e->getCode();
-            if(!$code) $code = 1;
+            if (! $code) {
+                $code = 1;
+            }
 
             $resp['errorCode'] = $e->getCode();
             $resp['errorDescription'] = $e->getMessage();

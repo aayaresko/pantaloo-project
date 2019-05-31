@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Helpers\GeneralHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Helpers\GeneralHelper;
-
 
 class Translate extends Command
 {
@@ -42,12 +41,12 @@ class Translate extends Command
     {
         $newKey = $this->ask('Type new key and press enter');
 
-        $langs= GeneralHelper::getListLanguage();
+        $langs = GeneralHelper::getListLanguage();
 
         foreach ($langs as $lang) {
             $files = ['casino.php'];
             foreach ($files as $file) {
-                $datafile = preg_replace("/\.php$/", ".data", 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file);
+                $datafile = preg_replace("/\.php$/", '.data', 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
                 $data = unserialize(Storage::get($datafile));
                 $data[$newKey] = isset($data[$newKey]) ? $data[$newKey] : $newKey;
                 Storage::put($datafile, serialize($data));

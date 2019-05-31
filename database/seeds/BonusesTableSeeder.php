@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 
 class BonusesTableSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      *
@@ -26,7 +25,7 @@ class BonusesTableSeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         DB::table('bonuses')->truncate();
         /* end clear */
@@ -35,7 +34,7 @@ class BonusesTableSeeder extends Seeder
             DB::table('bonuses')->insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -44,6 +43,7 @@ class BonusesTableSeeder extends Seeder
     protected function getParams()
     {
         $currentDate = new DateTime();
+
         return [
             [
                 'id' => 1,

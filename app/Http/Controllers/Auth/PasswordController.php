@@ -34,7 +34,6 @@ class PasswordController extends Controller
     }
 
     /**
-     *
      * Display the password reset view for the given token.
      *
      * If no token is present, display the link request form.

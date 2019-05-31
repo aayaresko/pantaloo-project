@@ -4,7 +4,7 @@ return [
 
     'image' => [
         'maxSize' => 1000, //kBt
-        'mimes' => ['jpeg', 'png', 'jpg']
+        'mimes' => ['jpeg', 'png', 'jpg'],
     ],
 
     'allowed_ips' => [

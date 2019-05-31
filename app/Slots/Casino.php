@@ -1,75 +1,94 @@
 <?php
+
 namespace App\Slots;
 
-use App\Http\Requests\Request;
 use App\Slot;
 use App\Token;
-use Illuminate\Support\Facades\Auth;
 use Exception;
 use Jenssegers\Agent\Agent;
+use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
-class Casino {
-
+class Casino
+{
     public $api_version = '1.2';
+
     public $operator_id;
+
     public $private_key;
+
     public $currency = 'EUR';
+
     public $request;
+
     public $response;
+
     public $error;
+
     public $agent;
-    static public $mobile_debug = false;
+
+    public static $mobile_debug = false;
 
     //public $rate = 0.2;
 
-    function __construct($operator_id, $private_key) {
+    public function __construct($operator_id, $private_key)
+    {
         $this->operator_id = $operator_id;
         $this->private_key = $private_key;
     }
 
-    static function GetUser() {
-        if (!Auth::check())
+    public static function GetUser()
+    {
+        if (! Auth::check()) {
             throw new Exception('Auth required');
+        }
 
-        $data = array(
+        $data = [
             'user_id' => Auth::user()->id,
-            'session_id' => uniqid() . rand(),
+            'session_id' => uniqid().rand(),
             'login' => Auth::user()->id,
-            'password' => '000000'
-        );
+            'password' => '000000',
+        ];
 
         return $data;
     }
 
-    function CheckSignature($request) {
-
+    public function CheckSignature($request)
+    {
         switch ($request['request']) {
-            case 'getaccount': $params = array('apiversion', 'loginname', 'password', 'request', 'device', 'sessionid');
+            case 'getaccount': $params = ['apiversion', 'loginname', 'password', 'request', 'device', 'sessionid'];
+
                 break;
-            case 'getbalance': $params = array('apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product');
+            case 'getbalance': $params = ['apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product'];
+
                 break;
-            case 'wager': $params = array('apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'betamount', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'roundid', 'transactionid');
+            case 'wager': $params = ['apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'betamount', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'roundid', 'transactionid'];
+
                 break;
-            case 'result': $params = array('apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gamestatus', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'result', 'roundid', 'transactionid');
+            case 'result': $params = ['apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gamestatus', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'result', 'roundid', 'transactionid'];
+
                 break;
-            case 'rollback': $params = array('apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'rollbackamount', 'roundid', 'transactionid');
+            case 'rollback': $params = ['apiversion', 'loginname', 'password', 'request', 'device', 'accountid', 'gamemodel', 'gamesessionid', 'gametype', 'gpgameid', 'gpid', 'nogsgameid', 'product', 'rollbackamount', 'roundid', 'transactionid'];
+
                 break;
             default: throw new Exception('No such method');
         }
 
-        $data = array();
+        $data = [];
 
         foreach ($params as $key) {
             $data[$key] = $request->input($key);
         }
 
-        $signature = strtoupper(md5(http_build_query($data) . $this->private_key));
+        $signature = strtoupper(md5(http_build_query($data).$this->private_key));
 
-        if ($signature != $request['signature'])
+        if ($signature != $request['signature']) {
             throw new Exception('Invalid signature');
+        }
     }
 
-    function Handle($request) {
+    public function Handle($request)
+    {
         $this->request = $request;
 
         try {
@@ -77,59 +96,76 @@ class Casino {
 
             switch ($request['request']) {
                 case 'getaccount': $this->GetAccount();
+
                     break;
                 case 'getbalance': $this->GetBalance();
+
                     break;
                 case 'wager': $this->Wager();
+
                     break;
                 case 'result': $this->Result();
+
                     break;
                 case 'rollback': $this->Rollback();
+
                     break;
                 default: throw new Exception('No such method');
             }
         } catch (Exception $e) {
             $code = $e->getCode();
-            if(empty($code)) $code = 1;
+            if (empty($code)) {
+                $code = 1;
+            }
 
-            $this->error = array('code' => $code, 'msg' => $e->getMessage());
+            $this->error = ['code' => $code, 'msg' => $e->getMessage()];
         }
 
         return $this->Response();
     }
 
-    function Response($method, $data, $error = ['msg' => '', 'code' => 0]) {
-        if(!isset($error['code'])) $error['code'] = 0;
+    public function Response($method, $data, $error = ['msg' => '', 'code' => 0])
+    {
+        if (! isset($error['code'])) {
+            $error['code'] = 0;
+        }
 
         $data['APIVERSION'] = $this->api_version;
 
         $msg = '';
-        if ($error['msg'])
-            $msg = ' msg="' . $error['msg'] . '"';
-
-        $xml = '<?xml version="1.0" encoding="UTF-8" ?>' . "\n" . '<RSP request="' . $method . '" rc="' . $error['code'] . '"' . $msg . '>' . "\n";
-
-        foreach ($data as $key => $value) {
-            $xml = $xml . '<' . strtoupper($key) . '>' . $value . '</' . strtoupper($key) . '>' . "\n";
+        if ($error['msg']) {
+            $msg = ' msg="'.$error['msg'].'"';
         }
 
-        $xml = $xml . '</RSP>' . "\n";
+        $xml = '<?xml version="1.0" encoding="UTF-8" ?>'."\n".'<RSP request="'.$method.'" rc="'.$error['code'].'"'.$msg.'>'."\n";
+
+        foreach ($data as $key => $value) {
+            $xml = $xml.'<'.strtoupper($key).'>'.$value.'</'.strtoupper($key).'>'."\n";
+        }
+
+        $xml = $xml.'</RSP>'."\n";
 
         return $xml;
     }
 
-    function GetHash($query) {
-        return strtoupper(md5($this->private_key . http_build_query($query)));
+    public function GetHash($query)
+    {
+        return strtoupper(md5($this->private_key.http_build_query($query)));
     }
 
-    static function IsMobile()
+    public static function IsMobile()
     {
-        if(self::$mobile_debug) return true;
+        if (self::$mobile_debug) {
+            return true;
+        }
 
         $agent = new Agent();
 
-        if($agent->isMobile() or $agent->isTablet()) return true;
-        else return false;
+        if ($agent->isMobile() or $agent->isTablet()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function NetEnt($data)
@@ -138,7 +174,7 @@ class Casino {
 
         $url = 'https://24techpro.com/api/dispatcher/deal/openNetEntGame';
 
-        $post = 'accessPassword=' . $this->GetHash($data) . '&' . http_build_query($data);
+        $post = 'accessPassword='.$this->GetHash($data).'&'.http_build_query($data);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -154,7 +190,9 @@ class Casino {
 
         //print_r($data);
 
-        if(!isset($data['game']['url'])) throw new Exception("Problem with start_url");
+        if (! isset($data['game']['url'])) {
+            throw new Exception('Problem with start_url');
+        }
 
         return $data['game']['url'];
     }
@@ -163,7 +201,7 @@ class Casino {
     {
         $url = 'http://mobile.casinobit.co/live/dispatcher/spinner/registerCasinoToken?';
 
-        $post = 'accessPassword=' . $this->GetHash($data) . '&' . http_build_query($data);
+        $post = 'accessPassword='.$this->GetHash($data).'&'.http_build_query($data);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -176,14 +214,18 @@ class Casino {
 
         $data = json_decode($page, true);
 
-        if ($data['errorCode'] != 0)
+        if ($data['errorCode'] != 0) {
             throw new Exception('Unknown error');
+        }
 
         return str_replace('&amp;', '&', $data['url']);
     }
 
-    function SlotStartURL(Slot $slot, $type = 'slots') {
-        if(!Auth::check()) throw new Exception('Auth required');
+    public function SlotStartURL(Slot $slot, $type = 'slots')
+    {
+        if (! Auth::check()) {
+            throw new Exception('Auth required');
+        }
 
         $token = new Token();
         $token->generate();
@@ -191,12 +233,15 @@ class Casino {
         $token->slot()->associate($slot);
         $token->save();
 
-        if($slot->category) $cat_id = $slot->category->id;
-        else $cat_id = 0;
+        if ($slot->category) {
+            $cat_id = $slot->category->id;
+        } else {
+            $cat_id = 0;
+        }
 
         $result = [
             'url' => false,
-            'object' => false
+            'object' => false,
         ];
 
         switch ($cat_id) {
@@ -205,29 +250,32 @@ class Casino {
                     'operatorId' => $this->operator_id,
                     'username' => Auth::user()->id,
                     'password' => '000000',
-                    'sessionId' => $token->token
+                    'sessionId' => $token->token,
                 ]);
 
-                if(self::isMobile()) $result['url'] = $result['url'] . '&platform=mobile';
+                if (self::isMobile()) {
+                    $result['url'] = $result['url'].'&platform=mobile';
+                }
 
                 break;
             case 1:
-                $data = array(
+                $data = [
                     'operatorId' => $this->operator_id,
                     'playerId' => Auth::user()->id,
                     'sessionId' => $token->token,
                     'gameName' => $slot->name,
                     'language' => 'english',
                     'roomId' => $slot->room_id,
-                    'flashSwf' => $slot->path
-                );
+                    'flashSwf' => $slot->path,
+                ];
 
                 //$url = 'http://nogs-gl.EliteGamesinteractive.eu/game/?';
-                $result['url'] = 'https://24techpro.com/api/launcher/casbit.html?' . http_build_query($data);
-                if(self::isMobile()) {
+                $result['url'] = 'https://24techpro.com/api/launcher/casbit.html?'.http_build_query($data);
+                if (self::isMobile()) {
                     //$data['mode'] = 'demo';
-                    $result['url'] = 'http://mobile.casinobit.co:8080/novo-admin/open-game.html?' . http_build_query($data);
+                    $result['url'] = 'http://mobile.casinobit.co:8080/novo-admin/open-game.html?'.http_build_query($data);
                 }
+
                 break;
             case 2:
                 $data = [
@@ -235,32 +283,33 @@ class Casino {
                     'mode' => 'external',
                     'playerName' => Auth::user()->id,
                     'operatorId' => $this->operator_id,
-                    'sessionId' => $token->token
+                    'sessionId' => $token->token,
                 ];
 
-                $result['url'] = 'https://mobile.casinobit.co:8443/amatic-admin/launcher/opengame.html?' . http_build_query($data);
+                $result['url'] = 'https://mobile.casinobit.co:8443/amatic-admin/launcher/opengame.html?'.http_build_query($data);
+
                 break;
             case 3:
                 $result['object'] = $this->NetEnt([
                     'operatorId' => $this->operator_id,
                     'username' => Auth::user()->id,
                     'sessionId' => $token->token,
-                    'gameId' => $slot->room_id
+                    'gameId' => $slot->room_id,
                 ]);
 
                 break;
 
             case 7:
-                $data = array(
+                $data = [
                     'operatorId' => $this->operator_id,
                     'username' => Auth::user()->id,
                     'password' => '000000',
-                    'sessionId' => $token->token
-                );
+                    'sessionId' => $token->token,
+                ];
 
                 $url = 'http://24techpro.com/live/dispatcher/spinner/registerCasinoToken?';
 
-                $post = 'accessPassword=' . $this->GetHash($data) . '&' . http_build_query($data);
+                $post = 'accessPassword='.$this->GetHash($data).'&'.http_build_query($data);
 
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_URL, $url);
@@ -273,30 +322,32 @@ class Casino {
 
                 $result = json_decode($page, true);
 
-                if ($result['errorCode'] != 0)
+                if ($result['errorCode'] != 0) {
                     throw new Exception('Unknown error');
+                }
 
-                if(self::IsMobile()) $result['url'] = $result['url'] . '&platform=mobile';
+                if (self::IsMobile()) {
+                    $result['url'] = $result['url'].'&platform=mobile';
+                }
+
             break;
 
             default:
-                if(self::IsMobile())
-                {
+                if (self::IsMobile()) {
                     $data = [
                         'gameName' => strtolower($slot->name),
                         'mode' => 'external',
                         'operatorId' => $this->operator_id,
                         'sessionId' => $token->token,
-                        'userName' => Auth::user()->id
+                        'userName' => Auth::user()->id,
                     ];
-                    $result['url'] = 'http://mobile.casinobit.co/netent-admin/netent-mobile.html?' . http_build_query($data);
-                }
-                else {
+                    $result['url'] = 'http://mobile.casinobit.co/netent-admin/netent-mobile.html?'.http_build_query($data);
+                } else {
                     $result['url'] = $this->NetEnt([
                         'operatorId' => $this->operator_id,
                         'username' => Auth::user()->id,
                         'sessionId' => $token->token,
-                        'gameId' => $slot->room_id
+                        'gameId' => $slot->room_id,
                     ]);
 
                     break;
@@ -305,7 +356,7 @@ class Casino {
 
         return $result;
 
-        $post = 'accessPassword=' . $this->GetHash($data) . '&' . http_build_query($data);
+        $post = 'accessPassword='.$this->GetHash($data).'&'.http_build_query($data);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -321,12 +372,14 @@ class Casino {
         print_r($data);
         exit;
 
-        if ($data['errorCode'] != 0)
+        if ($data['errorCode'] != 0) {
             throw new Exception('Unknown error');
+        }
 
-        if(self::IsMobile()) return $data['url'] . '&platform=mobile';
-        else return $data['url'];
+        if (self::IsMobile()) {
+            return $data['url'].'&platform=mobile';
+        } else {
+            return $data['url'];
+        }
     }
 }
-
-?>

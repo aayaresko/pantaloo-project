@@ -9,22 +9,22 @@ use App\Models\GamesType;
 use Illuminate\Http\Request;
 use App\Models\GamesTypeGame;
 use App\Models\GamesListExtra;
-use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class IntegratedTypesController
- * @package App\Http\Controllers\Admin
+ * Class IntegratedTypesController.
  */
 class IntegratedTypesController extends Controller
 {
-
     protected $params;
+
     /**
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -48,6 +48,7 @@ class IntegratedTypesController extends Controller
     {
         $fields = $this->fields;
         $gamesTypes = GamesType::select($fields)->get();
+
         return view('admin.integrated_types')->with(['gamesTypes' => $gamesTypes]);
     }
 
@@ -69,9 +70,10 @@ class IntegratedTypesController extends Controller
         $gamesTypes = GamesType::select(['id', 'name'])->whereIn('id', $typesDefaultId)->get();
 
         $type = GamesType::where('id', $request->id)->select($fields)->first();
+
         return view('admin.integrated_type')->with([
             'item' => $type,
-            'defaultItems' => $gamesTypes
+            'defaultItems' => $gamesTypes,
         ]);
     }
 
@@ -88,27 +90,27 @@ class IntegratedTypesController extends Controller
             'name' => 'string|min:3|max:100',
             'rating' => 'integer',
             'ratingItems' => 'integer',
-            'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
+            'image' => "image|max:{$imageConfig['maxSize']}|mimes:".implode(',', $imageConfig['mimes']),
             'toType_id' => 'required|integer',
         ]);
 
         DB::beginTransaction();
+
         try {
             $updatedGame = $request->toArray();
             if ($request->hasFile('image')) {
                 $image = $request->image;
-                $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
+                $nameImage = $request->id.time().'.'.$image->getClientOriginalExtension();
                 $pathImage = "/typesPictures/{$nameImage}";
                 //Storage::delete('public' . $pathImage);
-                Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['image'] = '/storage' . $pathImage;
+                Storage::put('public'.$pathImage, file_get_contents($image->getRealPath()));
+                $updatedGame['image'] = '/storage'.$pathImage;
             }
 
             $active = $request->input('active');
             $defaultAll = $request->input('defaultAll');
 
-
-            if (!is_null($active)) {
+            if (! is_null($active)) {
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             } else {
                 $updatedGame['active'] = 0;
@@ -127,7 +129,7 @@ class IntegratedTypesController extends Controller
                     ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                     ->where([
                         ['games_types_games.extra', '=', 1],
-                        ['games_types_games.type_id', '=', $request->id]
+                        ['games_types_games.type_id', '=', $request->id],
                     ])
                     ->groupBy('games_types_games.game_id')->get();
 
@@ -142,24 +144,24 @@ class IntegratedTypesController extends Controller
                 unset($game);
             }
 
-            if (!is_null($defaultAll)) {
+            if (! is_null($defaultAll)) {
                 if ($defaultAll === 'on') {
                     $gamesUpdate = GamesTypeGame::select(['games_list.id'])
                         ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                         ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                         ->where([
                             ['games_types_games.type_id', '=', $request->id],
-                            ['games_types_games.extra', '=', 0]
+                            ['games_types_games.extra', '=', 0],
                         ])
                         ->groupBy('games_types_games.game_id')
                         ->get();
 
                     $gamesTypes = GamesTypeGame::select(['games_list.id',
-                        DB::raw("group_concat(games_types_games.type_id) as type")])
+                        DB::raw('group_concat(games_types_games.type_id) as type'), ])
                         ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                         ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
                         ->where([
-                            ['games_types_games.extra', '=', 0]
+                            ['games_types_games.extra', '=', 0],
                         ])
                         ->groupBy('games_types_games.game_id')
                         ->get()->keyBy('id');
@@ -205,6 +207,7 @@ class IntegratedTypesController extends Controller
             GamesType::where('id', $request->id)->update($updatedGame);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         DB::commit();

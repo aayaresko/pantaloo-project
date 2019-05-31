@@ -25,7 +25,7 @@ class GamesTagSeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         GamesTag::truncate();
         /* end clear */
@@ -34,7 +34,7 @@ class GamesTagSeeder extends Seeder
             GamesTag::insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -43,6 +43,7 @@ class GamesTagSeeder extends Seeder
     protected function getParams()
     {
         $currentDate = new DateTime();
+
         return [
             [
                 'id' => 1,
@@ -57,7 +58,7 @@ class GamesTagSeeder extends Seeder
                 'name' => 'Tag2',
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
-            ]
+            ],
         ];
     }
 }

@@ -3,8 +3,7 @@
 namespace App\Http\Middleware;
 
 /**
- * Class CommonMiddleware
- * @package App\Http\Middleware
+ * Class CommonMiddleware.
  */
 abstract class CommonMiddleware
 {
@@ -32,6 +31,3 @@ abstract class CommonMiddleware
         return false;
     }
 }
-
-
-

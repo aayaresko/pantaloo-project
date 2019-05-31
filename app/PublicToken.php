@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class PublicToken extends Model
 {
@@ -19,9 +19,11 @@ class PublicToken extends Model
 
     public function generate($user = false)
     {
-        if(!$user) $user = Auth::user();
+        if (! $user) {
+            $user = Auth::user();
+        }
 
-        $this->token = uniqid() . rand() . '-' . substr(md5(rand() . $user->id . $user->email), 0, 10);
+        $this->token = uniqid().rand().'-'.substr(md5(rand().$user->id.$user->email), 0, 10);
     }
 
     public function getToken()

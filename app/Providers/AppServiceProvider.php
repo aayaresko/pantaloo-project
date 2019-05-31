@@ -13,8 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (env('FORCE_HTTPS', true)){
-             \Illuminate\Support\Facades\URL::forceSchema('https');
+        if (env('FORCE_HTTPS', true)) {
+            \Illuminate\Support\Facades\URL::forceSchema('https');
         }
     }
 

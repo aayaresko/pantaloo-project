@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
     {
         if ($this->isHttpException($e)) {
             if ($e->getStatusCode() == 404) {
-                return response()->view('errors.' . '404', [], 404);
+                return response()->view('errors.'.'404', [], 404);
             }
         }
 
@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
                     $scope->setUser([
                         'id' => $user->id,
                         'email' => $user->email,
-                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
+                        'ip_address' => GeneralHelper::visitorIpCloudFlare(),
                     ]);
                 });
             }
@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
                 ->withErrors('You have been inactive for too long, please reload the page.');
         }
 
-        if ($this->shouldReport($e) && !$this->isHttpException($e) && !config('app.debug')) {
+        if ($this->shouldReport($e) && ! $this->isHttpException($e) && ! config('app.debug')) {
             $e = new HttpException(500, 'Whoops!');
         }
 

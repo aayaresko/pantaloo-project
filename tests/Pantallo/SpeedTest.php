@@ -14,17 +14,13 @@ class SpeedTest extends TestCase
      */
     public function testExample()
     {
-
     }
 
     protected function sendRequest()
     {
-
     }
-
 
     protected function client()
     {
-
     }
 }

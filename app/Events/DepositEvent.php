@@ -12,6 +12,7 @@ class DepositEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $value;
 
     /**

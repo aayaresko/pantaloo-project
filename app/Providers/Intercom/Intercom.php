@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Providers\Intercom;
 
-use App\Providers\Intercom\IntercomEventsResolver;
 use App\User;
 use Intercom\IntercomClient;
+use App\Providers\Intercom\IntercomEventsResolver;
 
 class Intercom
 {
@@ -22,6 +21,7 @@ class Intercom
     public function create_or_update_user(User $user)
     {
         $result = $this->client->users->create(UserDataResolver::getData($user));
+
         return $result;
     }
 
@@ -31,5 +31,4 @@ class Intercom
 
         return $result;
     }
-
 }

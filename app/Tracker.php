@@ -21,9 +21,8 @@ class Tracker extends Model
     {
         $domains = Domain::all();
         $links = collect([]);
-        foreach ($domains as $domain)
-        {
-            $links->push('http://' . $domain->domain . '/?ref=' . $this->ref);
+        foreach ($domains as $domain) {
+            $links->push('http://'.$domain->domain.'/?ref='.$this->ref);
         }
 
         return $links;
@@ -41,16 +40,16 @@ class Tracker extends Model
             'wins' => 0,
             'revenue' => 0,
             'bonus' => 0,
-            'profit' => 0
+            'profit' => 0,
         ];
 
-        foreach ($this->users as $user)
-        {
+        foreach ($this->users as $user) {
             $stat = $user->stat($from, $to);
 
-            foreach ($stat as $key => $value)
-            {
-                if(!isset($result[$key])) $result[$key] = 0;
+            foreach ($stat as $key => $value) {
+                if (! isset($result[$key])) {
+                    $result[$key] = 0;
+                }
                 $result[$key] = $result[$key] + $value;
             }
         }

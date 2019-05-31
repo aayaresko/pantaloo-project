@@ -7,19 +7,18 @@ use App\User;
 use Validator;
 use App\Banner;
 use App\Tracker;
-use Carbon\Carbon;
 use App\ExtraUser;
+use Carbon\Carbon;
 use App\Transaction;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 /**
- * Class AffiliatesController
- * @package App\Http\Controllers\Partner
+ * Class AffiliatesController.
  */
 class AffiliatesController extends Controller
 {
@@ -34,6 +33,7 @@ class AffiliatesController extends Controller
                 return redirect()->route('agent.dashboard');
             }
         }
+
         return view('affiliates.lending');
     }
 
@@ -56,14 +56,13 @@ class AffiliatesController extends Controller
                 $tracker->campaign_linkFull = $necessaryAddress;
             }
 
-            $tracker->fullLink = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
+            $tracker->fullLink = sprintf('%s?%s=%s', $tracker->campaign_linkFull,
                 $configPartner['keyLink'], $tracker->ref);
         }
 
         return view('affiliates.trackers', [
             'trackers' => $trackers,
         ]);
-
     }
 
     /**
@@ -88,7 +87,7 @@ class AffiliatesController extends Controller
             $tracker->campaign_linkFull = $necessaryAddress;
         }
 
-        $params['link'] = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
+        $params['link'] = sprintf('%s?%s=%s', $tracker->campaign_linkFull,
             $configPartner['keyLink'], $tracker->ref);
 
         $url = url('/');
@@ -98,23 +97,23 @@ class AffiliatesController extends Controller
 
             $item->html = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $params['url'] . $item->url,
+                'image' => $params['url'].$item->url,
                 'name' => $params['name'],
                 'style' => '',
             ]);
 
             $item->htmlView = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $params['url'] . $item->url,
+                'image' => $params['url'].$item->url,
                 'name' => $params['name'],
-                'style' => "style=max-height:100px",
+                'style' => 'style=max-height:100px',
             ]);
 
             return $item;
         });
 
         return view('affiliates.marketing_material')->with([
-            'banners' => $banners
+            'banners' => $banners,
         ]);
     }
 
@@ -142,38 +141,38 @@ class AffiliatesController extends Controller
                 'message' => [
                     'errors' => $errors,
                     'title' => 'Error',
-                    'body' => (string)view('affiliates.parts.body')->with(['data' => $errors])
-                ]
+                    'body' => (string) view('affiliates.parts.body')->with(['data' => $errors]),
+                ],
             ]);
         }
 
         //might add try - catch and transaction
         Feedback::create($request->toArray());
+
         return response()->json([
             'status' => true,
             'message' => [
                 'title' => 'Info',
-                'body' => (string)view('affiliates.parts.body')->with(['data' => 'We will contact you shortly'])
-            ]
+                'body' => (string) view('affiliates.parts.body')->with(['data' => 'We will contact you shortly']),
+            ],
         ]);
     }
 
     /**
-     *
-     * in future - will need rewrite this method
+     * in future - will need rewrite this method.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function dashboard(Request $request)
     {
         try {
-            $from = Carbon::createFromFormat("Y-m-d", $request->input('start'));
+            $from = Carbon::createFromFormat('Y-m-d', $request->input('start'));
         } catch (\Exception $e) {
             $from = Carbon::now();
         }
 
         try {
-            $to = Carbon::createFromFormat("Y-m-d", $request->input('end'));
+            $to = Carbon::createFromFormat('Y-m-d', $request->input('end'));
         } catch (\Exception $e) {
             $to = Carbon::now();
         }
@@ -189,7 +188,7 @@ class AffiliatesController extends Controller
         $cpaCurrencyCode = config('appAdditional.cpaCurrencyCode');
 
         $extraUser = ExtraUser::where('user_id', $currentUser->id)->first();
-        if (!is_null($extraUser)) {
+        if (! is_null($extraUser)) {
             $cpumBtcLimit = $extraUser->base_line_cpa;
         }
 
@@ -200,13 +199,13 @@ class AffiliatesController extends Controller
 //                "type = $typeDeposit and created_at >= '$from' and created_at <= '$to') as cpu"),
         ])->where('agent_id', $currentUser->id)->get();
 
-
         $result = collect();
         foreach ($users as $user) {
             $stat = $user->stat($from, $to);
             //set cpa
-            foreach ($stat as $key => $value)
+            foreach ($stat as $key => $value) {
                 $stat[$key] = round($value, 2);
+            }
 
             $stat['cpa'] = ($stat['confirm_deposits'] >= $cpumBtcLimit) ? 1 : 0;
             $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
@@ -226,9 +225,9 @@ class AffiliatesController extends Controller
 
         $trackerAll = Tracker::select([
             '*',
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
+            DB::raw('(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and '.
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
+            DB::raw('(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and '.
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
         ])->where('user_id', $currentUser->id)->get();
 
@@ -254,7 +253,7 @@ class AffiliatesController extends Controller
             'profit_total' => $result->sum('profit'),
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
-            'currencyCode' => $currencyCode
+            'currencyCode' => $currencyCode,
         ];
 
         return view('affiliates.dashboard', $data);
@@ -277,7 +276,7 @@ class AffiliatesController extends Controller
         return view('affiliates.withdraw', [
             'available' => $available,
             'transactions' => $transactions,
-            'statusPayment' => $statusPayment
+            'statusPayment' => $statusPayment,
         ]);
     }
 }

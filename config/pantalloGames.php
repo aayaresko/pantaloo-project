@@ -9,7 +9,7 @@ return [
         'currency' => env('PANTALLO_CURRENCY'),
         'url' => env('PANTALLO_URL'),
         'ssl' => '',
-        'connectTimeout' => 5
+        'connectTimeout' => 5,
     ],
 
     'additional' => [
@@ -27,10 +27,10 @@ return [
         'operation' => [
             'debit' => 'bcsub',
             'credit' => 'bcadd',
-        ]
+        ],
     ],
 
     'prefixName' => env('PANTALLO_PREFIX_NAME', 'CBit'),
 
-    'usePrefixAfter' => '2019-04-25 00:00:00'
+    'usePrefixAfter' => '2019-04-25 00:00:00',
 ];

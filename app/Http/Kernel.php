@@ -2,19 +2,19 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IpCheck;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Middleware\AgentCheck;
-use App\Http\Middleware\EmailConfirmation;
-use App\Http\Middleware\GeneralMiddleware;
-use App\Http\Middleware\IpCheck;
-use App\Http\Middleware\IpCountryBlock;
-use App\Http\Middleware\IpDomainCountryBlock;
 use App\Http\Middleware\LanguageGet;
 use App\Http\Middleware\LanguageSet;
-use App\Http\Middleware\SessionReflash;
-use App\Http\Middleware\LanguageSwitch;
-use App\Http\Middleware\SetCountryCode;
 use App\Http\Middleware\UserToAgent;
+use App\Http\Middleware\IpCountryBlock;
+use App\Http\Middleware\LanguageSwitch;
+use App\Http\Middleware\SessionReflash;
+use App\Http\Middleware\SetCountryCode;
+use App\Http\Middleware\EmailConfirmation;
+use App\Http\Middleware\GeneralMiddleware;
+use App\Http\Middleware\IpDomainCountryBlock;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -48,7 +48,7 @@ class Kernel extends HttpKernel
             //LanguageSet::class,
             //EmailConfirmation::class,
             SetCountryCode::class,
-            GeneralMiddleware::class
+            GeneralMiddleware::class,
         ],
         'landing' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -86,7 +86,7 @@ class Kernel extends HttpKernel
         'ip.check' => IpCheck::class,
         'language.switch' =>  LanguageSwitch::class,
         'session.reflash' =>  SessionReflash::class,
-	    'ip.country.block' => IpCountryBlock::class,
-	    'ip.domain.country.block' => IpDomainCountryBlock::class
+        'ip.country.block' => IpCountryBlock::class,
+        'ip.domain.country.block' => IpDomainCountryBlock::class,
     ];
 }
