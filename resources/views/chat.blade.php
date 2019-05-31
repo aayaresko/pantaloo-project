@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.frq') }}
-@endsection
+@section('title', trans('casino.frq'))
 
 @section('content')
     <div class="page-content-block"

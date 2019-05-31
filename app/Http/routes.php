@@ -79,11 +79,13 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     // Authentication Routes...
     Route::get('login', 'Auth\AuthController@showLoginForm');
     Route::post('login', 'Auth\AuthController@login');
+    Route::post('login', 'Auth\AuthController@loginModern');
     Route::get('logout', 'Auth\AuthController@logout');
 
     // Registration Routes...
     //Route::get('register', 'Auth\AuthController@showRegistrationForm');
     Route::post('register', 'Auth\AuthController@register');
+    Route::post('register', 'Auth\AuthController@registerModern');
     //Route::post('register', 'Auth\AuthController@create');
 
     // Password Reset Routes...
