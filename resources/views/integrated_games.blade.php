@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
-@section('title')
-    Games
+@php
+if ($title == 'games') {
+    $gameRoomTitle = 'casino.games';
+} else {
+    $gameRoomTitle = 'casino.type_' . str_replace(' ', '_', $title);
+}
+@endphp
+
+@section('title', trans($gameRoomTitle))
+
+
+@section('description')
+{{ trans('casino.play') }} {{trans($gameRoomTitle)}} {{ trans('casino.game_room_description') }}
 @endsection
 
 @section('content')
@@ -11,7 +22,7 @@
             <div class="game-entry colorGame" id="fs_section_img">
                 {{--<img src="media/images/logo.png" alt="game">--}}
                 <div class="gameLoadingWrapper">
-                    <h1 class="gameLoading">
+                    <p class="gameLoading">
                         <span class="let1">l</span>
                         <span class="let2">o</span>
                         <span class="let3">a</span>
@@ -19,13 +30,9 @@
                         <span class="let5">i</span>
                         <span class="let6">n</span>
                         <span class="let7">g</span>
-                    </h1>
+                    </p>
                 </div>
-            </div>
-            <div class="left-info">
-                <h2 class="region"><span class="tittlePage">{{ ucfirst($title) }}</span></h2>
-                <span class="game-name"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
-            </div>
+            </div>          
             <div class="right-nav">
                 <div class="expand-game"><img src="/images/expand.png" alt=""></div>
                 <a href="" class="exit-btn"><span class="text">Exit</span></a>
@@ -38,9 +45,8 @@
 
     <div class="slots-block top-shadow">
         <div class="bg mainBackGround"></div>
-        <span class="side-title"><span class="tittlePage">{{ ucfirst($title) }}</span></span>
         <div class="block-heading">
-            <h1 class="page-title"><span class="tittlePage">{{ ucfirst($title) }}</span></h1>
+            <h1 class="page-title"><span class="tittlePage">{{ trans($gameRoomTitle) }}</span></h1>
             <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
         </div>
 
@@ -49,9 +55,9 @@
                 
                     <select class="js-example-basic-single type_of_game" name="type_of_game">
                         @if ($freeSpins === 1)
-                            <option class="getFreeSpins" value="free_spins" >Free Spin Games</option>
+                            <option class="getFreeSpins" value="free_spins" >{{trans('casino.free_spin_games')}}</option>
                         @endif
-                        <option value="0" selected>{{ trans('casino.all') }}</option>
+                        <option value="0" selected>{{ trans('casino.all_categories') }}</option>
                         @foreach($gamesTypes as $gamesType)
                             @php
                                 $codeLangType = 'casino.type_' . str_replace(' ', '_', $gamesType->name);
@@ -68,7 +74,7 @@
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
-                        <option value="0" selected>{{ trans('casino.all') }}</option>
+                        <option value="0" selected>{{ trans('casino.all_providers') }}</option>
                         @foreach($gamesCategories as $gamesCategory)
                             <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
                         @endforeach
@@ -77,9 +83,12 @@
                        <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
                        <input type="submit" value=""/>
                    </div>
-                   <!-- <div class="block-bonus-buttons" style="display: inline-block">
-                       <a href="#" class="btn-play-action getFreeSpins"><span>Free Spin Games</span></a>
-                   </div> -->
+                   @if ($freeSpins === 1)
+                      <div class="block-bonus-buttons" style="display: inline-block">
+                          <a href="#" class="getFreeSpins"><span>{{trans('casino.free_spin_games')}}</span></a>
+                      </div>
+                   @endif
+                  
                 
             </form>
         </div>
@@ -114,7 +123,7 @@
 @section('js')
     <script>
         let dummy = "{{ $dummyPicture }}";
-        let defaultTitle = "{{ $titleDefault }}";
+        let defaultTitle = "{{ trans("casino.{$titleDefault}") }}";
     </script>
     <script src="/assets/js/pages/integratedGames.js?v={{ time() }}"></script>
 @endsection

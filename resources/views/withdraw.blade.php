@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-    {{translate('Withdraw')}}
-@endsection
+@section('title', trans('Withdraw'))
 
 @section('content')
     <div class="cabinet-block"
