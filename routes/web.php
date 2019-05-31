@@ -112,8 +112,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
 
         //auth
-        Route::get('/password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-        Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+        Route::get('/password/reset/{token?}', 'Auth\ResetPasswordController@showResetForm');
+        Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
+        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     });
 
     //Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);

@@ -29,4 +29,9 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    protected function sendResetLinkResponse($response)
+    {
+        return redirect()->back()->with('popup', ['Reset', 'Password reset', trans($response)]);
+    }
 }

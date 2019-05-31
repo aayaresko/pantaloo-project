@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class User extends Authenticatable
 {
@@ -33,7 +35,7 @@ class User extends Authenticatable
 
     public function isOnline()
     {
-        if (! $this->last_activity) {
+        if (!$this->last_activity) {
             return false;
         }
 
@@ -171,13 +173,13 @@ class User extends Authenticatable
             $transaction->agent()->associate($agent);
         }
 
-        if (! $transaction->sum) {
+        if (!$transaction->sum) {
             $transaction->sum = 0;
         }
-        if (! $transaction->bonus_sum) {
+        if (!$transaction->bonus_sum) {
             $transaction->bonus_sum = 0;
         }
-        if (! $transaction->free_spin) {
+        if (!$transaction->free_spin) {
             $transaction->free_spin = 0;
         }
 
@@ -199,7 +201,7 @@ class User extends Authenticatable
             $free_spin = $data['free_spin'];
 
             if ($cancel) {
-                if (! $transaction->id) {
+                if (!$transaction->id) {
                     throw new \Exception('Transaction id not found');
                 }
 
@@ -314,7 +316,7 @@ class User extends Authenticatable
 
         foreach ($transactions as $transaction) {
             if ($transaction->type == 3) {
-                if ((int) $transaction->confirmations < $minConfirmBtc) {
+                if ((int)$transaction->confirmations < $minConfirmBtc) {
                     $stat['pending_deposits'] = $stat['pending_deposits'] + $transaction->sum;
                 } else {
                     $stat['confirm_deposits'] = $stat['confirm_deposits'] + $transaction->sum;
@@ -386,5 +388,15 @@ class User extends Authenticatable
     public function agentTransactions()
     {
         return $this->hasMany('App\Transaction', 'agent_id');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        if (Mail::send('auth.emails.password', ['token' => $token, 'user' => $this],
+            function ($m) {
+                $m->to($this->getEmailForPasswordReset());
+            })) {
+            return Password::RESET_LINK_SENT;
+        };
     }
 }
