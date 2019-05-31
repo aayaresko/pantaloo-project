@@ -69,11 +69,11 @@ class IntegratedCategoriesController extends Controller
         $markConfig = config('appAdditional.restrictionMark');
         $allowGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
             ->where('mark', $markConfig['enable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
 
         $banGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
             ->where('mark', $markConfig['disable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
         $categoryCountries = [
             'allow' => $allowGameCountry,
             'ban' => $banGameCountry,
