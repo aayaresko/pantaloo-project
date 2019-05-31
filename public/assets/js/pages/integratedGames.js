@@ -62,11 +62,13 @@ let events = function () {
     $('body').on('click', '.moreGames', function (e) {
         let append = true;
         listGameParams.page = currPage;
-        history.pushState({}, "", '#page=' + currPage)
-        currPage++
         getListGames(append);
     });
 
+    $('a.getFreeSpins').on('click', function (e) {
+        e.preventDefault();
+        $('.type_of_game').val($('.js-example-basic-single option:first-child').val()).trigger('change');
+    })
 
     $('.type_of_game').on('change', function (e) {
         e.preventDefault();
@@ -134,8 +136,16 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-
+    
     function freeSpinGames() {
+        
+        if ((location.href).indexOf("games/") >= 0) {
+            let splitedUrl = window.location.href.split("/")
+            splitedUrl.pop()
+            // console.log(splitedUrl.join('/').split('#')[0]);
+            history.pushState({}, "", splitedUrl.join('/').split('#')[0])
+            
+        } 
         // e.preventDefault();
         listGameParams.typeId = 0;
         listGameParams.categoryId = 0;
@@ -153,6 +163,25 @@ let events = function () {
 function handleImage(img) {
     $(img).attr("src", dummy);
 }
+
+// window.onpopstate = function(event) {
+//     console.log(event.state.page);
+//     console.log(currPage);
+//     //TODO
+//     //  getListGames();
+
+//     if (event.state.page == undefined) {
+//         event.state.page = 1
+//     }
+// if (event.state.page < currPage-1) {
+   
+//      console.log("url page less than curr");
+//      $('.single-game').slice(-15).remove();
+//       console.log($('.single-game').length);
+//       currPage--
+// }  
+ 
+// };
 
 // $('#resetGames').on('click', function(e){
 //     e.preventDefault()
@@ -218,6 +247,8 @@ function getListGames(append) {
 
                 if (append) {                  
                     $(".insertGames .games-entry").append(device);
+                    history.pushState({page: currPage}, "", '#page=' + currPage)
+                    currPage++
                 } else {     
                     $(".insertGames .games-entry").html(device);
                     if ((location.href).indexOf("games/") <= 0) {

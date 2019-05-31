@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.bonuses') }}
-@endsection
+@section('title', trans('casino.bonuses'))
+
 
 
 @section('content')
     <div class="cabinet-block act page-bonuses pageBonus"
          style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="actions">
-
+            <div class="page-heading">
+                <h1 class="page-title">{{ mb_convert_case(trans('casino.bonuses'), MB_CASE_UPPER) }}</h1>
+            </div>
             <div class="container">
                 <div class="row">
 
