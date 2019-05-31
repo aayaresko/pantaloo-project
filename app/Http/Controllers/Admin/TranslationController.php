@@ -117,7 +117,8 @@ class TranslationController extends Controller
             'translator_translations.text as text',
             'cur_lang.group as cur_group',
             'cur_lang.item as cur_item',
-            'cur_lang.text as cur_text'
+            'cur_lang.text as cur_text',
+            DB::raw("CONCAT(translator_translations.group, '', translator_translations.item) as code")
         ];
 
         $param['defaultLang'] = $request->defaultLang;
@@ -130,11 +131,9 @@ class TranslationController extends Controller
         /* ACT */
         $whereCompare = $param['whereCompare'];
 
-        $countSum = Translation::select([DB::raw('COUNT(*) as `count`')])
-            ->where($whereCompare)
-            ->first();
+        $countSum = Translation::where($whereCompare)->count();
 
-        $totalData = $countSum->count;
+        $totalData = $countSum;
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -157,8 +156,8 @@ class TranslationController extends Controller
         } else {
             /* SEARCH */
             $search = $request->input('search.value');
-
-            array_push($whereCompare, ['translator_translations.text', 'LIKE', "%{$search}%"]);
+            $preSearch = "%$search%";
+            $whereRaw = "(translator_translations.text LIKE ? or cur_lang.text LIKE ?)";
 
             $items = Translation::leftJoin('translator_translations as cur_lang',
                 function ($join) use ($param) {
@@ -167,23 +166,28 @@ class TranslationController extends Controller
                         ->where('cur_lang.locale', '=', $param['currentLang']);
                 })
                 ->where($whereCompare)
+                ->whereRaw($whereRaw, [$preSearch, $preSearch])
                 ->offset($start)
                 ->limit($limit)
                 ->select($param['columnsAlias'])
                 ->get();
 
-
-            $countSum = Translation::select([DB::raw('COUNT(*) as `count`')])
+            $countSum = Translation::leftJoin('translator_translations as cur_lang',
+                function ($join) use ($param) {
+                    $join->on('translator_translations.item', '=', 'cur_lang.item')
+                        ->on('translator_translations.group', '=', 'cur_lang.group')
+                        ->where('cur_lang.locale', '=', $param['currentLang']);
+                })
                 ->where($whereCompare)
-                ->first();
+                ->whereRaw($whereRaw, [$preSearch, $preSearch])
+                ->count();
 
-            $totalFiltered = $countSum->count;
+            $totalFiltered = $countSum;
         }
         /* END */
 
         /* TO VIEW */
         $data = $items;
-
         $data->map(function ($item, $key) use ($param) {
             $item->cur_text = view('admin.parts.ckeditor_inline',
                 [
