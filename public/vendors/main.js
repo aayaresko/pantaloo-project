@@ -240,32 +240,31 @@ function blockFilter() {
 
 $(document).ready(function(){
 	
-function getCurrentScreen(){
+	function getCurrentScreen(){
 
-	let fullpageWrapper = $('.fullpage-wrapper');
+		let fullpageWrapper = $('.fullpage-wrapper');
 
-	fullpageWrapper.length
+		fullpageWrapper.length
 
-	let pageCount = location.href;
+		let pageCount = location.href;
 
-	if($(window).width() > 1080){
+		if($(window).width() > 1080){
 
-		if(pageCount.match('block-4')){
-			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+			if(pageCount.match('block-4')){
+				$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+			}else{
+				$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
+			}
+
 		}else{
-			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
+			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
 		}
 
-	}else{
-		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
 	}
-
-}
 
 	getCurrentScreen()
 
 	$(window).on('mousewheel', getCurrentScreen);
-
 
 
 	$("#btnKey").on("click", function(){
@@ -307,8 +306,7 @@ function getCurrentScreen(){
 			}else{
 				tdStatus.addClass('notConfirm')
 			}
-				
-				
+	
 		}
 
 	});
@@ -330,7 +328,52 @@ function getCurrentScreen(){
 		$(".popUpBonusUnavail").removeClass("showPoUp");
 	 });
 
-	 
+
+	 let monthNames = [ "January", "February", "March", "April", "May", "June",
+		    "July", "August", "September", "October", "November", "December" ];
+
+		$('#years').append($('<option />').attr('disabled', true).attr('selected', true).html('Year'));
+
+		$('#months').append($('<option />').attr('disabled', true).attr('selected', true).html('Month'));
+
+		for (let i = new Date().getFullYear(); i > 1900; i--){
+
+		    $('#years').append($('<option />').val(i).html(i));
+		}
+		    
+		for (let i = 1; i < 13; i++){
+
+		    $('#months').append($('<option />').val(i).html(monthNames[i - 1]));
+
+		}
+
+		updateNumberOfDays(); 
+		    
+		$('#years, #months').on("change", function(){
+		    updateNumberOfDays(); 
+		});
+
+		function updateNumberOfDays(){
+		    $('#days').html('');
+		    $('#days').append($('<option />').attr('disabled', true).attr('selected', true).html('Day'));
+		    let month=$('#months').val();
+		    let year=$('#years').val();
+		    let days=daysInMonth(month, year);
+
+		    for(let i=1; i < days+1 ; i++){
+		       $('#days').append($('<option />').val(i).html(i));
+		    }
+		    // $('#message').html(monthNames[month-1]+" in the year "+year+" has <b>"+days+"</b> days");
+		}
+
+		function daysInMonth(month, year) {
+		    return new Date(year, month, 0).getDate();
+		}
+
+
+	$('.accountFormWrapper select').select2({
+		minimumResultsForSearch: Infinity
+	});
 
 });
 

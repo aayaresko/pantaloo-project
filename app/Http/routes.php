@@ -127,6 +127,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
             Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
             Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
+            Route::get('/account', ['as' => 'account', 'uses' => 'AccountController@account']);
             Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
 
         });
