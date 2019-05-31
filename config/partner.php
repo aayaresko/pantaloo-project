@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'keyLink' => 'ref'
+    'keyLink' => 'ref',
+    'casino_fit' => 18
 ];

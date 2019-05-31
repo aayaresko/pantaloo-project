@@ -19,6 +19,7 @@ class CreateUserSumsTable extends Migration
             $table->decimal('deposits', 14, 5);
             $table->decimal('bets', 14, 5);
             $table->decimal('wins', 14, 5);
+            $table->decimal('sum', 14, 5);
             $table->decimal('bonus', 14, 5);
             $table->integer('bet_count');
             $table->decimal('percent')->nullable();

@@ -440,7 +440,7 @@ class User extends Authenticatable
 
     public function totalPlayerSum()
     {
-        return $this->playerSum()->sum('bets') + $this->playerSum()->sum('wins');
+        return $this->playerSum()->sum('sum');
     }
 
     public function totalPlayerProfit()

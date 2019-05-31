@@ -34,8 +34,9 @@
                                 <div class="card-box">
                                     <form action="{{route('admin.agents.setAffiliate', $partner->id)}}" method="post" class="form-inline">
                                         <select name="affiliate" class="form-control">
+                                            <option value="">Select parent affiliate</option>
                                             @foreach($superAffiliates as $affiliate)
-                                                <option value="{{$affiliate->id}}" @if($affiliate->id == Auth::user()->agent_id)) selected @endif>{{$affiliate->email}}</option>
+                                                <option value="{{$affiliate->id}}" @if($affiliate->id == $partner->agent_id)) selected @endif>{{$affiliate->email}}</option>
                                             @endforeach
                                         </select>
                                         {{csrf_field()}}

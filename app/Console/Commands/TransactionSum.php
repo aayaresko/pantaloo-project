@@ -59,18 +59,11 @@ class TransactionSum extends Command
         }
         $trim = 100;
         $lastId = 0;
+        $casinoFit = config('partner.casino_fit');
         for ($i = 0; $i < $trim; $i++) {
             $now = Carbon::now()->subDays($trim)->addDays($i)->startOfDay();
 
             $this->info($now->toDateString() . " Last id: $lastId");
-            $exsicts = DB::table('transactions')
-                ->select('id')
-                ->where('id', '>', $lastId)  //otimize time string. Do not delete
-                ->where('created_at', '<', $now->toDateTimeString())
-                ->where('created_at', '>', $now->subDay()->toDateTimeString())
-                ->limit(1)
-                ->get();
-            if (!$exsicts) continue;
 
             $transactionsUser = Transaction::where('created_at', '<', $now->toDateTimeString())
                 ->where('id', '>', $lastId)
@@ -101,6 +94,7 @@ class TransactionSum extends Command
                         $userSum->bonus += $transaction->bonus_sum;
                     }
                 }
+                $userSum->sum = ($userSum->bets + $userSum->wins) * (100 - $casinoFit) / 100;
                 $userSum->save();
                 $lastId = $transaction->id;
 
@@ -111,7 +105,7 @@ class TransactionSum extends Command
                         $agentSum->user_id = $agent_id;
                         $agentSum->created_at = $now;
                     }
-                    $agentSum->total_sum += $userSum->bets + $userSum->wins;
+                    $agentSum->total_sum += $userSum->sum;
                     $agentSum->agent_percent = $agent->koefs->koef;
                     if ($agent->agent_id) {
                         $agentSum->parent_percent = $agent->parentKoef->koef;
