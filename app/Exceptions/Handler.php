@@ -2,10 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\AuthenticationException;
 use Exception;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -83,6 +83,7 @@ class Handler extends ExceptionHandler
 
         return parent::render($request, $e);
     }
+
     /**
      * Convert an authentication exception into an unauthenticated response.
      *

@@ -6,49 +6,37 @@ class Curl
 {
     public static $proxy = false;
 
-
     public static $cookie = false;
-
 
     public static $user_agent = 'Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 6.0; WOW64; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; c .NET CLR 3.0.04506; .NET CLR 3.5.30707; InfoPath.1; el-GR)';
 
-
     public static $last_url;
-
 
     private static $ch;
 
-
     private static $interface = false;
-
 
     public static $verbose = false;
 
-
     public static $timeout = 10;
 
-
     public static $http_status = 0;
-
     
     public static function Version()
     {
         print_r(curl_version());
     }
-
     
     public static function SetInterface($ip)
     {
         self::$interface = $ip;
     }
-
     
     public static function Start()
     {
         self::$cookie = realpath(self::$cookie);
         self::$ch = curl_init();
     }
-
     
     public static function SetCookieFile($file)
     {
@@ -56,7 +44,6 @@ class Curl
         self::$ch = curl_init();
         //curl_setopt(self::$ch, CURLOPT_PROXY, '127.0.0.1:8888');
     }
-
     
     public static function NewSession($file)
     {
@@ -69,20 +56,17 @@ class Curl
         self::$cookie = realpath($full_path);
         self::$ch = curl_init();
     }
-
     
     public static function SaveCookie()
     {
         curl_close(self::$ch);
         self::$ch = curl_init();
     }
-
     
     public static function UseProxy($proxy_obj)
     {
         self::$proxy = $proxy_obj;
     }
-
     
     public static function OpenPage($url, $headers = [], $location = true, $header = false)
     {
@@ -120,7 +104,6 @@ class Curl
         //print_r(curl_getinfo(self::$ch));        
         return $rez;
     }
-
     
     public static function PostQuery($url, $data, $headers = [], $location = true, $header = false)
     {
@@ -148,11 +131,10 @@ class Curl
         curl_setopt(self::$ch, CURLOPT_COOKIEFILE, self::$cookie);
         curl_setopt(self::$ch, CURLOPT_COOKIEJAR, self::$cookie);
         curl_setopt(self::$ch, CURLOPT_HTTPHEADER, $headers);        
-        $res = curl_exec(self::$ch);
+        $res = curl_exec(self::$ch);
 
         return $res;
     }
-
     
     public function OpenPages($urls)
     {
@@ -181,7 +163,6 @@ class Curl
 
         return $result;
     }
-
     
     public static function Close()
     {

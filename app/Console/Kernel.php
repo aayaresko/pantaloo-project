@@ -59,6 +59,7 @@ class Kernel extends ConsoleKernel
         //clear raw log
         $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
     }
+
     /**
      * Register the Closure based commands for the application.
      *

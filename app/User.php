@@ -2,14 +2,15 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
