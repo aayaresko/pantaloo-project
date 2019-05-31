@@ -22,7 +22,6 @@ use App\Validators\TemporaryMailCheck;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 /**
  * Class AuthController.
@@ -40,7 +39,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins, DispatchesJobs;
+    use ThrottlesLogins, DispatchesJobs;
 
     /**
      * Where to redirect users after login / registration.
