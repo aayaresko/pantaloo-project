@@ -117,10 +117,59 @@ function animationInit(){
 	$('.login-btn').each(function(){
 		$(this).click(function(e){
 			// ga('send','pageview','/login');
-			$('.log-popup').addClass('active');
-			return false
-		})
-	})
+			$(".reg-popup").removeClass('active');
+			setTimeout(function(){
+				$('.log-popup').addClass('active');
+			},300);
+
+			return false;
+		});
+	});
+
+
+	$("#login").on("submit", function () {
+
+		let loginForm = $(this);
+		
+		$.ajax({
+			method: 'POST',
+			url: '/123456',
+			data: loginForm.serialize()
+		}).done(function () {
+			console.log("Succeses");
+		}).fail(function(){
+			console.log("error");
+			loginForm.find('input').addClass("showErrorMsg");
+			
+			let loginResult = $(".loginError").addClass("showErrorMsg");
+			loginResult.html("These credentials do not match our records.");
+		});
+		return false;
+	});
+
+
+	$("#registr").on("submit", function () {
+
+		let regForm = $(this);
+
+		$.ajax({
+			method: 'POST',
+			url: '/123456',
+			data: regForm.serialize()
+		}).done(function () {
+			console.log("Succeses");
+		}).fail(function(){
+			console.log("error");
+			regForm.find('input').addClass("showErrorMsg");
+
+			let registrResult = $(".registrError").addClass("showErrorMsg");
+			registrResult.html("These credentials do not match our records.");
+		});
+		return false;
+	});
+
+	
+
 	/*
 	$('.promo-action-btn').each(function(){
 		$(this).click(function(e){
@@ -149,13 +198,18 @@ function animationInit(){
 			$('.simple-popup').removeClass('active');
 		}, 300);
 	})
-	$("body").click(function(e){
-		if($(e.target).parents('.mfp-wrap').length || ($(e.target).attr('class') && $(e.target).attr('class').indexOf('mfp-') == 0)) return;
-        $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-        setTimeout(function(){
-            $('.simple-popup').removeClass('active');
-        }, 300);
+	// $("body").click(function(e){
+	// 	if($(e.target).parents('.mfp-wrap').length || ($(e.target).attr('class') && $(e.target).attr('class').indexOf('mfp-') == 0)) return;
+    //     $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+    //     setTimeout(function(){
+    //         $('.simple-popup').removeClass('active');
+    //     }, 300);
+	// });
+
+	$(".close-icon").on("click", function(){
+		$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
 	});
+
 	$(".reg-popup .popup-container, .log-popup .popup-container, .simple-popup .popup-entry").click(function(e){
 		e.stopPropagation();
 	});
@@ -241,33 +295,32 @@ function blockFilter() {
 
 $(document).ready(function(){
 
-	
 
-function getCurrentScreen(){
+// function getCurrentScreen(){
 
-	let fullpageWrapper = $('.fullpage-wrapper');
+// 	let fullpageWrapper = $('.fullpage-wrapper');
 
-	fullpageWrapper.length
+// 	fullpageWrapper.length
 
-	let pageCount = location.href;
+// 	let pageCount = location.href;
 
-	if($(window).width() > 1080){
+// 	if($(window).width() > 1080){
 
-		if (pageCount.match('slots')) {
-			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
-		}else{
-			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
-		}
+// 		if (pageCount.match('slots')) {
+// 			$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+// 		}else{
+// 			$('.fp-enabled .footer.footer-home .footer-copyrights').removeClass("showFooterLink");
+// 		}
 
-	}else{
-		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
-	}
+// 	}else{
+// 		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
+// 	}
 
-	}
+// 	}
 
-	getCurrentScreen()
+	// getCurrentScreen()
 
-	$(window).on('mousewheel', getCurrentScreen);
+	// $(window).on('mousewheel', getCurrentScreen);
 
 
 	$("#reg-terms h3").on("click", function () {
@@ -309,6 +362,26 @@ function getCurrentScreen(){
 		$(".errorMessage").removeClass('showErrorMsg');
 
 	});
+
+
+	let inputType = 1;
+
+
+	$('.showPasBtn').on("click", function(){
+
+		if(inputType == 0){
+			inputType = 1;
+			$(this).prev().attr('type', 'password');
+		}else{
+			inputType = 0;
+			$(this).prev().attr('type', 'text');
+		}
+
+	});
+
+	$(".regBtn").on("click", function(){
+		
+	})
 
 });
 
