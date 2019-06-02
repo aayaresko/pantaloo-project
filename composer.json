@@ -62,5 +62,20 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "echo committing as $(git config user.name)",
+                "php-cs-fixer fix ." // fix style
+            ],
+            // verify commit message. ex: ABC-123: Fix everything
+            "commit-msg": "grep -q '[A-Z]+-[0-9]+.*' $1",
+            "pre-push": [
+                "php-cs-fixer fix --dry-run ." // check style
+                "phpunit"
+            ],
+            "post-merge": "composer update"
+        }
     }
 }
