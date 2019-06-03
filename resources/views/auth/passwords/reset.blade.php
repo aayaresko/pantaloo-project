@@ -19,7 +19,7 @@
                         <div class="setting-tabs needShow">
                             <div id="tabs-1" class="ui-tabs-panel">
 
-                                <form method="POST" action="{{ url('/password/reset') }}">
+                                <form method="POST" action="{{ route('post.password.reset', ['lang' => $currentLang]) }}">
                                     {{csrf_field()}}
 
                                     <input type="hidden" name="token" value="{{ $token }}">

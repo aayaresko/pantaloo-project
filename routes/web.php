@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Foundation\Auth\ResetsPasswords;
+
 Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
     Route::get('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDepositView']);
@@ -72,16 +74,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::get('/', 'HomeController@multiLang')->middleware(['session.reflash', 'language.switch']);
 
     //auth
+    Route::post('register', 'Auth\RegisterController@register');
+
     // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm');
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
-
-    // Password Reset Routes...
-    //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-    //Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\PasswordController@reset');
-    //auth
 
     Route::group([
         'prefix' => '{lang}',
@@ -113,6 +111,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
         //auth
         Route::get('/password/reset/{token?}', 'Auth\ResetPasswordController@showResetForm');
+        Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('post.password.reset');
+
         Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     });
