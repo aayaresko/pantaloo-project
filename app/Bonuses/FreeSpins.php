@@ -222,7 +222,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                     ['games_types.active', '=', 1],
                     ['games_categories.active', '=', 1],
                 ])
-                ->groupBy('games_types_games.game_id')->get();
+                ->groupBy('games_types_games.game_id')->get()->all();
 
             $gamesIds = implode(',', array_map(function ($item) {
                 return $item->system_id;

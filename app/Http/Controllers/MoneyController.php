@@ -199,7 +199,7 @@ class MoneyController extends Controller
     {
         $result = [];
 
-        $transactions = Auth::user()->transactions()->where('type', 3)->where('id', '>', $transaction_id)->orderBy('id', 'Desc')->get();
+        $transactions = Auth::user()->transactions()->where('type', 3)->where('id', '>', $transaction_id)->orderBy('id', 'Desc')->get()->all();
 
         return response()->json($transactions->map(function ($item) {
             return [
@@ -215,7 +215,7 @@ class MoneyController extends Controller
     {
         $result = [];
 
-        $transactions = Auth::user()->transactions()->where('type', 3)->orderBy('id', 'Desc')->limit(10)->get();
+        $transactions = Auth::user()->transactions()->where('type', 3)->orderBy('id', 'Desc')->limit(10)->get()->all();
 
         return response()->json($transactions->map(function ($item) {
             return [
@@ -231,7 +231,7 @@ class MoneyController extends Controller
     {
         //$qr_code = 'data:image/png;base64, ' . base64_encode(QrCode::format('png')->size(100)->generate('Make me into an QrCode!'));
 
-        $deposits = Auth::user()->transactions()->deposits()->orderBy('id', 'Desc')->limit(10)->get();
+        $deposits = Auth::user()->transactions()->deposits()->orderBy('id', 'Desc')->limit(10)->get()->all();
 
         $qrcode = new BaconQrCodeGenerator;
 
@@ -245,7 +245,7 @@ class MoneyController extends Controller
 
     public function withdraw()
     {
-        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get();
+        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get()->all();
 
         return view('withdraw', ['transactions' => $transactions]);
     }
@@ -438,11 +438,11 @@ class MoneyController extends Controller
 
     public function pending()
     {
-        $frozen = Transaction::where('type', 4)->where('withdraw_status', -1)->with('user')->get();
-        $pending = Transaction::where('type', 4)->where('withdraw_status', 0)->with('user')->get();
-        $failed = Transaction::where('type', 4)->where('withdraw_status', -2)->with('user')->get();
-        $aproved = Transaction::where('type', 4)->where('withdraw_status', 1)->with('user')->get();
-        $queue = Transaction::where('type', 4)->where('withdraw_status', 3)->with('user')->get();
+        $frozen = Transaction::where('type', 4)->where('withdraw_status', -1)->with('user')->get()->all();
+        $pending = Transaction::where('type', 4)->where('withdraw_status', 0)->with('user')->get()->all();
+        $failed = Transaction::where('type', 4)->where('withdraw_status', -2)->with('user')->get()->all();
+        $aproved = Transaction::where('type', 4)->where('withdraw_status', 1)->with('user')->get()->all();
+        $queue = Transaction::where('type', 4)->where('withdraw_status', 3)->with('user')->get()->all();
 
         return view('admin.pending', ['frozen' => $frozen, 'pending' => $pending, 'failed' => $failed, 'aproved' => $aproved, 'queue' => $queue]);
     }

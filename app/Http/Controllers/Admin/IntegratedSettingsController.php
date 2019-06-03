@@ -46,7 +46,7 @@ class IntegratedSettingsController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $definitionSettings = $configIntegratedGames['listSettings'];
-        $settings = GamesListSettings::select($this->fields)->get();
+        $settings = GamesListSettings::select($this->fields)->get()->all();
 
         return view('admin.integrated_settings')->with([
             'definitionSettings' => $definitionSettings,

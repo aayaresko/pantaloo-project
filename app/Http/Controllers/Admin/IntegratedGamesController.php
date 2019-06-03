@@ -65,7 +65,7 @@ class IntegratedGamesController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $dummyPicture = $configIntegratedGames['dummyPicture'];
-        $types = GamesType::select(['id', 'code', 'name'])->get();
+        $types = GamesType::select(['id', 'code', 'name'])->get()->all();
         View::share('dummyPicture', $dummyPicture);
 
         return view('admin.integrated_games')
@@ -87,8 +87,8 @@ class IntegratedGamesController extends Controller
         View::share('maxSizeImage', $imageConfig['maxSize']);
         View::share('typesImage', $imageConfig['mimes']);
 
-        $types = GamesType::select(['id', 'code', 'name'])->get();
-        $categories = GamesCategory::select(['id', 'code', 'name'])->get();
+        $types = GamesType::select(['id', 'code', 'name'])->get()->all();
+        $categories = GamesCategory::select(['id', 'code', 'name'])->get()->all();
         //to do check this in one query - i don't have time
         $gameId = $request->id;
         $whereCompare = [
@@ -372,7 +372,7 @@ class IntegratedGamesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
+                ->select($param['columnsAlias'])->get()->all();
         } else {
             /* SEARCH */
             $search = $request->input('search.value');
@@ -393,7 +393,7 @@ class IntegratedGamesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get();
+                ->select($param['columnsAlias'])->get()->all();
 
             $countSum = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
                 ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')

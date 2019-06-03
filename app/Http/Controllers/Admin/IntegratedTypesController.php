@@ -47,7 +47,7 @@ class IntegratedTypesController extends Controller
     public function index(Request $request)
     {
         $fields = $this->fields;
-        $gamesTypes = GamesType::select($fields)->get();
+        $gamesTypes = GamesType::select($fields)->get()->all();
 
         return view('admin.integrated_types')->with(['gamesTypes' => $gamesTypes]);
     }
@@ -67,7 +67,7 @@ class IntegratedTypesController extends Controller
 
         $typesDefault = config('appAdditional.defaultTypes');
         $typesDefaultId = array_column($typesDefault, 'id');
-        $gamesTypes = GamesType::select(['id', 'name'])->whereIn('id', $typesDefaultId)->get();
+        $gamesTypes = GamesType::select(['id', 'name'])->whereIn('id', $typesDefaultId)->get()->all();
 
         $type = GamesType::where('id', $request->id)->select($fields)->first();
 
@@ -131,7 +131,7 @@ class IntegratedTypesController extends Controller
                         ['games_types_games.extra', '=', 1],
                         ['games_types_games.type_id', '=', $request->id],
                     ])
-                    ->groupBy('games_types_games.game_id')->get();
+                    ->groupBy('games_types_games.game_id')->get()->all();
 
                 //to do optimize this
                 foreach ($gamesToUpdate as $game) {
@@ -154,7 +154,7 @@ class IntegratedTypesController extends Controller
                             ['games_types_games.extra', '=', 0],
                         ])
                         ->groupBy('games_types_games.game_id')
-                        ->get();
+                        ->get()->all();
 
                     $gamesTypes = GamesTypeGame::select(['games_list.id',
                         DB::raw('group_concat(games_types_games.type_id) as type'), ])

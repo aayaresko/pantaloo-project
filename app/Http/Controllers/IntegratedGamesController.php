@@ -77,7 +77,7 @@ class IntegratedGamesController extends Controller
 
         View::share('dummyPicture', $dummyPicture);
         $definitionSettings = $configIntegratedGames['listSettings'];
-        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
+        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code')->all();
 
         $title = $defaultTitle;
 
@@ -187,7 +187,7 @@ class IntegratedGamesController extends Controller
         if (! is_null($currentUser) and in_array($currentUser->email, $emailsShowAllGames)) {
             $gamesCategories = GamesCategory::where([
                 ['active', '=', 1],
-            ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
+            ])->orderBy($orderCategoty[0], $orderCategoty[1])->get()->all();
         } else {
             $selectCategoryFields = [
                 'games_categories.id',
@@ -228,12 +228,12 @@ class IntegratedGamesController extends Controller
                     "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id ".
                     "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
                 ->groupBy('games_categories.id')
-                ->orderBy($orderCategoty[0], $orderCategoty[1])->get();
+                ->orderBy($orderCategoty[0], $orderCategoty[1])->get()->all();
         }
 
         $gamesTypes = GamesType::where([
             ['active', '=', 1],
-        ])->orderBy($orderType[0], $orderType[1])->get();
+        ])->orderBy($orderType[0], $orderType[1])->get()->all();
 
         if (is_null($currentUser)) {
             $freeSpins = 0;
@@ -302,7 +302,7 @@ class IntegratedGamesController extends Controller
         }
 
         $definitionSettings = $configIntegratedGames['listSettings'];
-        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code');
+        $settings = GamesListSettings::select($this->params['settings'])->get()->pluck('value', 'code')->all();
         $orderGames = ['games_list.rating', 'asc'];
 
         if (isset($settings['games'])) {

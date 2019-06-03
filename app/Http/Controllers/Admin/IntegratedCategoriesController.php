@@ -43,7 +43,7 @@ class IntegratedCategoriesController extends Controller
     public function index(Request $request)
     {
         $fields = $this->fields;
-        $gamesTypes = GamesCategory::select($fields)->get();
+        $gamesTypes = GamesCategory::select($fields)->get()->all();
 
         return view('admin.integrated_categories')->with(['gamesTypes' => $gamesTypes]);
     }

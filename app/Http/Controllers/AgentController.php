@@ -79,7 +79,7 @@ class AgentController extends Controller
 
         $transactions = collect();
 
-        $users = User::where('agent_id', Auth::user()->id)->get();
+        $users = User::where('agent_id', Auth::user()->id)->get()->all();
 
         $result = collect();
 
@@ -260,7 +260,7 @@ class AgentController extends Controller
                     DB::raw("IF(extra.base_line_cpa is null, $baseLineCpaDefault, extra.base_line_cpa) as base_line_cpa"),
                     'extra.block',
                 ])
-            ->get();
+            ->get()->all();
 
         $result = [];
 

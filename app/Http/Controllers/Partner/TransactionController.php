@@ -55,13 +55,13 @@ class TransactionController extends Controller
         $typeTransactionsObject = $commonConfig['typeTransaction'];
         $typeTransactions = json_decode(json_encode($typeTransactionsObject), false);
         $currentUser = Auth::user();
-        $users = User::where('agent_id', $currentUser->id)->get();
+        $users = User::where('agent_id', $currentUser->id)->get()->all();
         $gamesTypes = GamesType::select(['id', 'name', 'active', 'rating'])
-            ->where([['active', '=', 1]])->orderBy('id')->get();
+            ->where([['active', '=', 1]])->orderBy('id')->get()->all();
         $gamesCategories = GamesCategory::select(['id', 'name', 'active', 'rating'])
-            ->where([['active', '=', 1]])->orderBy('id')->get();
+            ->where([['active', '=', 1]])->orderBy('id')->get()->all();
         $trackers = Tracker::select(['id', 'name'])
-            ->where('user_id', $currentUser->id)->get();
+            ->where('user_id', $currentUser->id)->get()->all();
 
         return view('affiliates.transactions',
             [
@@ -143,7 +143,7 @@ class TransactionController extends Controller
             ->offset($start)
             ->limit($limit)
             ->orderBy($order, $dir)
-            ->select($param['columnsAlias'])->get();
+            ->select($param['columnsAlias'])->get()->all();
         /* END */
 
         /* TO VIEW */

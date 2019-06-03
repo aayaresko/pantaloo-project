@@ -17,7 +17,7 @@ class BonusController extends Controller
     public function index()
     {
         //to do if bonus be activated for this user
-        $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
+        $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get()->all();
 
         //check bonus
         $bonuses = $bonuses->filter(function ($item) {

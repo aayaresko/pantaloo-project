@@ -28,7 +28,7 @@ class TransactionController extends Controller
         if ($is_admin) {
             $users = User::all();
         } else {
-            $users = User::where('agent_id', Auth::user()->id)->get();
+            $users = User::where('agent_id', Auth::user()->id)->get()->all();
         }
 
         return view('agent.transactions', ['users' => $users, 'is_admin' => $is_admin]);
@@ -103,7 +103,7 @@ class TransactionController extends Controller
 
         $transactions = $transactions->orderBy('created_at', 'DESC');
 
-        $transactions = $transactions->get();
+        $transactions = $transactions->get()->all();
 
         foreach ($transactions as $transaction) {
             $result['data'][] = [

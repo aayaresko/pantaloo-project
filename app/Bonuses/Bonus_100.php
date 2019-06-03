@@ -605,7 +605,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //->orderBy('id')->limit($depositsCount)->get();
 
         $deposits = SystemNotification::where('user_id', $user->id)
-            ->where('type_id', 1)->orderBy('id')->limit($depositsCount)->get();
+            ->where('type_id', 1)->orderBy('id')->limit($depositsCount)->get()->all();
 
         if (count($deposits) == $depositsCount) {
             return $deposits[$depositsCount - 1];

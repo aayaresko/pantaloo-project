@@ -45,7 +45,7 @@ class AffiliatesController extends Controller
     {
         $user = $request->user();
         $trackersFileds = ['id', 'ref', 'name', 'campaign_link'];
-        $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
+        $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get()->all();
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
@@ -74,7 +74,7 @@ class AffiliatesController extends Controller
         $params = [];
         $configPartner = config('partner');
         $bannersFileds = ['id', 'url'];
-        $banners = Banner::select($bannersFileds)->get();
+        $banners = Banner::select($bannersFileds)->get()->all();
         $trackersFileds = ['id', 'ref', 'name', 'campaign_link'];
         $tracker = Tracker::select($trackersFileds)->where('id', $id)->first();
         $params['name'] = $tracker->name;
@@ -197,7 +197,7 @@ class AffiliatesController extends Controller
             '*',
 //            DB::raw("(SELECT sum(transactions.sum) FROM transactions where user_id = users.id and " .
 //                "type = $typeDeposit and created_at >= '$from' and created_at <= '$to') as cpu"),
-        ])->where('agent_id', $currentUser->id)->get();
+        ])->where('agent_id', $currentUser->id)->get()->all();
 
         $result = collect();
         foreach ($users as $user) {
@@ -229,7 +229,7 @@ class AffiliatesController extends Controller
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
             DB::raw('(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and '.
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
-        ])->where('user_id', $currentUser->id)->get();
+        ])->where('user_id', $currentUser->id)->get()->all();
 
         foreach ($trackerAll as $tracker) {
             $stat = $tracker->stat($from, $to);
@@ -271,7 +271,7 @@ class AffiliatesController extends Controller
         //get transaction withdraw
         //to do pagination for transactions
         $transactions = Transaction::where('user_id', $user->id)
-            ->where('type', 4)->get();
+            ->where('type', 4)->get()->all();
 
         return view('affiliates.withdraw', [
             'available' => $available,
