@@ -155,13 +155,14 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
                 $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
-                //5 to do config
-                $client = new Client(['timeout' => 5]);
-                $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
-                $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
-
 
                 if (!GeneralHelper::isTestMode()) {
+                    //5 to do config
+                    $client = new Client(['timeout' => 5]);
+                    //TO DO if exception
+                    $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+                    $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
                     if (isset($responseIpQualityJson['success'])) {
                         if ($responseIpQualityJson['success'] == true) {
                             if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
