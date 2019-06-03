@@ -47,6 +47,10 @@ class TransactionSum extends Command
         ini_set('memory_limit','4096M');
         $agents = User::whereIn('role', [1, 3])->get();
         foreach ($agents as $agent) {
+            if ($agent->email == 'affiliate@casinobit.io' and $agent->role == 3) {
+                $agent->role = 4;
+                $agent->save();
+            }
             $newAgent = AgentsKoef::where('user_id', $agent->id)->first();
             if (!$newAgent) {
                 $koefTransaction = Transaction::where('agent_id', $agent->id)->where('agent_commission', '>', 0)->first();

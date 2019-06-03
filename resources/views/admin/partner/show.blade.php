@@ -49,6 +49,17 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card-box">
+                                    <form action="{{route('admin.agents.setPercent', $partner->id)}}" method="post" class="form-inline">
+                                        <input type="number" class="form-control" name="koef" value="{{$partner->koefs->koef}}">
+                                        {{csrf_field()}}
+                                        <button type="submit" class="btn btn-success">Set percent</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-box">
                                     <h3>User table</h3>
                                     <table class="table table-striped table-bordered" id="userTable">
                                         <thead>

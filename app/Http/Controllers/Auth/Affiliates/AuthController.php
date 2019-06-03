@@ -238,7 +238,7 @@ class AuthController extends Controller
         }
 
         //to do config
-        $allowRoles = [1, 3];
+        $allowRoles = [1, 3, 4];
         $email = $request->input('email');
 
         $user = User::select(['id', 'email_confirmed', 'role'])
@@ -294,17 +294,18 @@ class AuthController extends Controller
             //to do super affiliates
             switch ($roleUser) {
                 case 1:
+                case 3:
                     return response()->json([
                         'status' => true,
                         'message' => [
                             'redirect' => '/affiliates',
                         ]
                     ]);
-                case 3:
+                case 4:
                     return response()->json([
                         'status' => true,
                         'message' => [
-                            'redirect' => '/admin',
+                            'redirect' => '/admin/agent/tree',
                         ]
                     ]);
             }

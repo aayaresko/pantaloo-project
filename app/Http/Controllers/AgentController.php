@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgentsKoef;
 use App\Payment;
 use App\Tracker;
 use Illuminate\Http\Request;
@@ -366,8 +367,15 @@ class AgentController extends Controller
     public function makeSuper($id, Request $request)
     {
         $partner = User::findOrFail($id);
-        $partner->affiliateCountries()->sync($request->country);
-        $partner->role = self::SUPER_AFFILIATE_ROLE;
+        if (!$request->country) {
+            $partner->affiliateCountries()->detach();
+            $partner->role = 1;
+            $partner->save();
+        } else {
+            $partner->affiliateCountries()->sync($request->country);
+            $partner->role = self::SUPER_AFFILIATE_ROLE;
+            $partner->save();
+        }
 
         return redirect()->back()->with('msg', "Success");
     }
@@ -377,6 +385,20 @@ class AgentController extends Controller
         $partner = User::findOrFail($id);
         $partner->agent_id = $request->affiliate;
         $partner->save();
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    public function setPercent($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $request->koef;
+        $newKoef->save();
 
         return redirect()->back()->with('msg', "Success");
     }
