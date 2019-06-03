@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.bonus') }}
-@endsection
+@section('title', trans('casino.bonus'))
+
 
 @section('content')
     <div class="cabinet-block"
@@ -31,12 +30,12 @@
                                             <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
                                             <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
 
-                                            <p class="text">Bonus Wager:
+                                            <p class="text">Bonus wager:
                                                 {{ $bonusStatistics['bonusWager']['real'] . ' / ' . $bonusStatistics['bonusWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
 
                                             @if ($active_bonus->bonus_id == 1)
 
-                                                <p class="text">Deposit Wager:
+                                                <p class="text">Deposit wager:
                                                     {{ $bonusStatistics['depositWager']['real'] . ' / ' . $bonusStatistics['depositWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
 
                                             @endif

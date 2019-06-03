@@ -165,7 +165,8 @@ class FreeSpins extends \App\Bonuses\Bonus
                     if (isset($responseIpQualityJson['success'])) {
                         if ($responseIpQualityJson['success'] == true) {
                             if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
-                                throw new \Exception('Free spins are not available while using VPN/Proxy');
+//                                throw new \Exception('Free spins are not available while using VPN/Proxy');
+                                throw new \Exception(trans('casino.free_spins_not_available_using_vpn'));
                             }
                         }
                     }

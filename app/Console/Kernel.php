@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RemoveKeyTranslate;
+use App\Console\Commands\Translate;
 use App\Console\Commands\UpdateTransactions;
 use App\Console\Commands\updateUserIntercom;
 use Illuminate\Console\Scheduling\Schedule;
@@ -29,7 +31,9 @@ class Kernel extends ConsoleKernel
         Commands\BonusJobs::class,
         Commands\TransactionSum::class,
         Commands\TransactionCount::class,
-        updateUserIntercom::class
+        updateUserIntercom::class,
+        Translate::class,
+        RemoveKeyTranslate::class,
     ];
 
     /**
