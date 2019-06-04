@@ -1257,6 +1257,10 @@ html[lang="th"] .main-title-block {
 .mobile-menu .navigation-list li a.support:before {
   background: url('../media/images/icons/support.png') no-repeat center;
 }
+.mobile-menu .navigation-list li a.games:before {
+  background: url('../media/images/icons/games_icon_violer.svg') no-repeat center;
+  background-size: cover;
+}
 .mobile-menu .navigation-list li a.deposite:before {
   background: url('../media/images/icons/deposit.png') no-repeat center;
 }
@@ -1296,7 +1300,9 @@ html[lang="th"] .main-title-block {
   height: 30px;
   margin-top: -19px;
 }
-
+/* .navigation.mobNav .order-games {
+  display: none;
+} */
 
 /*=====================SLIDER======================*/
 /*=====================MIDDLE======================*/

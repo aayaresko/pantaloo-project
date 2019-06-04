@@ -1,5 +1,5 @@
-      @foreach($gameList as $game)
-            <div class="single-game ng-scope" data-slot_id="{{$game->id}}">
+      @foreach($gameList as $key => $game)
+            <div @if ($key == 0) class="single-game ng-scope firstGame" @else class="single-game ng-scope" @endif data-slot_id="{{$game->id}}">
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
