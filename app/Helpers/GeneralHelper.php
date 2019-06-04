@@ -44,34 +44,40 @@ class GeneralHelper
      */
     static public function getListLanguage($key = null)
     {
+        $defaultLang = ['en'];
         $modeTrans = config('translator.source');
 
         if (!is_null($key)) {
             $modeTrans = $key;
         }
 
-        switch ($modeTrans) {
-            case 'database':
-                $languages = Language::get()->pluck('locale')->toArray();
-                break;
-            case 'files':
-                //to do read from config
-                $dir = base_path() . '/resources/lang';
-                $languagesIndex = array_diff(scandir($dir), ['..', '.']);
-                $languagesConfig = config('translator.available_locales');
-                $languages = array_values($languagesIndex);
+        try {
+            switch ($modeTrans) {
+                case 'database':
+                    $languages = Language::get()->pluck('locale')->toArray();
+                    break;
+                case 'files':
+                    //to do read from config
+                    $dir = base_path() . '/resources/lang';
+                    $languagesIndex = array_diff(scandir($dir), ['..', '.']);
+                    $languagesConfig = config('translator.available_locales');
+                    $languages = array_values($languagesIndex);
 
-                if ($languagesConfig != $languages) {
-                    throw new \Exception('SET CONFIG LANG VALUE');
-                }
-                break;
-            case 'mixed':
-                //to do
-                $languages = ['en'];
-                break;
-            default:
-                $languages = ['en'];
+                    if ($languagesConfig != $languages) {
+                        throw new \Exception('SET CONFIG LANG VALUE');
+                    }
+                    break;
+                case 'mixed':
+                    //to do
+                    $languages = $defaultLang;
+                    break;
+                default:
+                    $languages = $defaultLang;
+            }
+        } catch (\Exception $ex) {
+            $languages = [];
         }
+
         return $languages;
     }
 
