@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\RawLog;
 use App\ModernExtraUsers;
 use DB;
+use App\Events\OpenBonusEvent;
+use App\BonusLog;
 use Auth;
 use Response;
 use App\Models\SystemNotification;
@@ -42,27 +44,317 @@ class TestController extends Controller
 {
     const PASSWORD = 'rf3js1Q';
 
-    public function test1(Request $request)
-    {
-        dd(2);
-    }
 
     public function phpinfo(Request $request){
+        dd(777);
         phpinfo();
         exit();
     }
 
     public function error(Request $request){
+        dd(12234);
         throw new Exception("Custom error!");
         return 1;
     }
 
+
+    public function test1(Request $request)
+    {
+        dd(GeneralHelper::visitorIpCloudFlare());
+        throw new \Exception('FDSF');
+        dd(config('app.debu1g'));
+        //dd('appAdditional.rawLogKey.freeSpins' . 1);
+        dd(config('appAdditional.rawLogKey.freeSpins' . 1));
+        dd(config('appAdditional.rawLogKey.bonuses'));
+        $user = User::where('id', 136)->first();
+
+        dd($user);
+        DB::beginTransaction();
+
+        $user = User::where('id', $request->user()->id)->first();
+
+        $bonus_obj = new \App\Bonuses\FreeSpins($user);
+
+        $bonusActivate = $bonus_obj->activate();
+
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusActivate['message']]);
+        }
+
+        DB::commit();
+        dd($bonusActivate);
+    }
+
     public function http404(Request $request){
         return view('errors.404');
+
     }
 
     public function test(Request $request)
     {
+//        dd(2);
+//        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
+//            ['users.created_at', '>', '2019-04-01 11:23:43'],
+//            //['user_bonuses.bonus_id', '>', 0],
+//            ['users.bonus_id', '=', DB::raw('user_bonuses.bonus_id')],
+//            ['user_bonuses.deleted_at', '<>', null],
+//        ])->select(['users.id', 'users.created_at', 'user_bonuses.id as ids', 'user_bonuses.deleted_at'])->get()->toArray();
+//        $a = 0;
+//        foreach ($users as $user) {
+//            $userBonus = UserBonus::where('user_id', $user['id'])->first();
+//            if (is_null($userBonus)) {
+//                dump($user['id']);
+//                $a = $a + 1;
+//                //User::where('id', $user['id'])->update(['bonus_id' => null]);
+//            }
+//        }
+//        dd($a);
+        $user = User::where('email', 'amillardsuzellemarie@gmail.com')->first();
+        dd($user);
+
+        $bonusId = 1;
+        $configBonus = config('bonus');
+        $slotTypeId = config('appAdditional.slotTypeId');
+
+        $currentDate = new Carbon();
+
+
+        $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+        $ipFormatCurrent = inet_pton($ipCurrent);
+
+
+        $request = new Request;
+        $date = Carbon::now();
+        $date->modify('+' . 10 . 'days');
+
+        $bonusUser = UserBonus::create([
+            'user_id' => $user->id,
+            'bonus_id' => 1,
+            'data' => [
+                'free_spin_win' => 0,
+                'wagered_sum' => 0,
+                'transaction_id' => 0,
+                'total_deposit' => 0,
+                'wagered_deposit' => 0,
+                'wagered_amount' => 0,
+                'wagered_bonus_amount' => 0,
+                'dateStart' => $currentDate,
+                'ip_address' => $ipCurrent
+            ],
+            'ip_address' => $ipFormatCurrent,
+            'activated' => 0,
+            'expires_at' => $date,
+        ]);
+
+        //get all games for free
+        $request = new Request;
+
+        //add user for request - for lib
+        $request->merge(['user' => $user]);
+        $request->setUserResolver(function () use ($user) {
+            return $user;
+        });
+
+        //get games for free spins
+        $freeRoundGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
+            ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+            ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+            ->leftJoin('games_types', 'games_types_games.type_id', '=', 'games_types.id')
+            ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
+            ->whereIn('games_types_games.type_id', [$slotTypeId])
+            ->where([
+                ['games_list.active', '=', 1],
+                ['games_list.free_round', '=', 1],
+                ['games_types_games.extra', '=', 1],
+                ['games_types.active', '=', 1],
+                ['games_categories.active', '=', 1],
+            ])
+            ->groupBy('games_types_games.game_id')->get();
+
+        $gamesIds = implode(',', array_map(function ($item) {
+            return $item->system_id;
+        }, $freeRoundGames));
+
+        $request->merge(['gamesIds' => $gamesIds]);
+        $request->merge(['available' => 50]);
+        $request->merge(['timeFreeRound' => strtotime("10 day", 0)]);
+
+        $pantalloGamesSystem = new PantalloGamesSystem();
+        $freeRound = $pantalloGamesSystem->freeRound($request);
+
+        if ($freeRound['success'] === false) {
+            throw new \Exception('Problem with provider free spins');
+        }
+
+
+        dd(2);
+        DB::beginTransaction();
+        $user = User::where('id', 136)->lockForUpdate()->first();
+        sleep(20);
+        DB::commit();
+        dd($user);
+        dd(2);
+        DB::beginTransaction();
+
+        $user = User::where('id', $request->user()->id)->first();
+
+        $bonus_obj = new \App\Bonuses\FreeSpins($user);
+        sleep(10);
+        $bonusActivate = $bonus_obj->activate();
+
+        if ($bonusActivate['success'] === false) {
+            DB::rollBack();
+            redirect()->back()->withErrors([$bonusActivate['message']]);
+        }
+
+        DB::commit();
+        dd($bonusActivate);
+
+
+
+        User::where('id', $user->id)->update([
+            'bonus_id' => $bonusId
+        ]);
+
+        event(new OpenBonusEvent($user, 'welcome bonus'));
+
+        $response = [
+            'success' => true,
+            'message' => 'Done'
+        ];
+
+        BonusLog::updateOrCreate(
+            [
+                'bonus_id' => $bonusUser->id,
+                'operation_id' => $configBonus['operation']['active']
+            ],
+            ['status' => json_encode($response)]
+        );
+
+
+        dd('ok');
+        $gameIdOur = 77777;
+        $user = User::where('id', 4689)->first();
+
+        if (!is_null($user->bonus_id)) {
+            $userBonus = UserBonus::where('user_id', $user->id)->first();
+
+            $userBonusData = $userBonus->data;
+            //if no game free round
+            if (!isset($userBonusData['firstGame'])) {
+                //set this game
+                $userBonusData['firstGame'] = $gameIdOur;
+                UserBonus::where('user_id', $user->id)->update([
+                    'data' => json_encode($userBonusData)
+                ]);
+            }
+        }
+        $userBonus = UserBonus::where('user_id', $user->id)->first();
+        dd($userBonus);
+        $ipFormatCurrent = inet_pton('103.111.177.167');
+        $a = $bonuses = UserBonus::where('ip_address', $ipFormatCurrent)->first();
+        $user = User::where('id', $a->user_id)->first();
+        dd($user);
+        dd(2);
+        $transactionItems = Transaction::where([
+            ['transactions.created_at', '>=', '2019-04-01 00:14:32'],
+            ['transactions.created_at', '<=', '2019-04-30 00:14:32'],
+        ])
+            ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
+        dd($transactionItems);
+
+        $user =User::where('id', 14)->first();
+
+        $deposit = $user->transactions()->where('type', 3)->count();
+        dd($deposit);
+
+        $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
+        $disableRegistration = config('appAdditional.disableRegistration');
+        dd(array_merge($banedBonusesCountries, $disableRegistration));
+        dd(2);
+        $users = User::where('bitcoin_address', null)->get();
+        dd($users);
+        dump(count($users));
+        foreach ($users as $user) {
+            if (is_null($user->bitcoin_address)) {
+                $service = new Service();
+                $address = $service->getNewAddress('common');
+                User::where('id', $user->id)->update([
+                    'bitcoin_address' => $address
+                ]);
+            }
+        }
+        dd($users);
+        $service = new Service();
+        $address = $service->getNewAddress('common');
+
+        dd(GeneralHelper::visitorCountryCloudFlare());
+        $ip = GeneralHelper::visitorIpCloudFlare();
+        $ipFormatCurrent = inet_pton($ip);
+        $currentBonusByIp = UserBonus::where('bonus_id', 1)
+            ->where('ip_address', $ipFormatCurrent)
+            ->withTrashed()->count();
+        dd($currentBonusByIp);
+        dump(inet_pton(GeneralHelper::visitorIpCloudFlare()));
+        dd(inet_pton ('198.16.74.45') == inet_pton(GeneralHelper::visitorIpCloudFlare()));
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+        $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+        $client = new Client(['timeout' => 5]);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . '2a02:2788:c8:a63:9d65:9cce:fdad:703c');
+        $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', 13333)->first();
+        dd($issetFreeRound);
+
+        $date = new \DateTime();
+
+        $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                    'user_id' => 13333,
+                    'round' => 50,
+                    'valid_to' => $date,
+                    'created' => 0,//fake
+                    'free_round_id' => time(),//fake
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
+
+        dd($rawId);
+        $a = DB::connection('logs')->table('games_pantallo_free_rounds')
+            ->where('user_id', $user->id)->first();
+        dd($a);
+        $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+        dump($ipCurrent);
+        $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+        $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+        $client = new Client(['timeout' => 5]);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+        $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+        if (isset($responseIpQualityJson['success'])) {
+            if ($responseIpQualityJson['success'] == true) {
+                if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
+                    throw new \Exception('Free spins are not available while using VPN/Proxy');
+                }
+            }
+        }
+        dd(2222);
+
+        $client = new Client();
+
+        $res = $client->request('GET', 'https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd(json_decode($res->getBody()->getContents()));
+        dd($response->send());
+        dd(file_get_contents('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146'));
+        $client = new Client();
+        $response = $client->get('https://www.ipqualityscore.com/api/json/ip/HSfNwSsNu0m4Ra8rCwMyVaqWG5kfFEUw/202.147.194.146');
+        dd($response);
+
         dd(2);
         $user = User::where('id', 2550)->first();
         $class = BonusHelper::getClass(2);
@@ -84,6 +376,7 @@ class TestController extends Controller
         DB::commit();
         dd($act);
         dd(2);
+
         $userOffice = [
             2532,
 2528,

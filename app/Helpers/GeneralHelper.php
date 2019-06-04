@@ -3,6 +3,8 @@
 namespace Helpers;
 
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 
 class GeneralHelper
@@ -122,12 +124,14 @@ class GeneralHelper
                     $stat['wins'] = $stat['wins'] + $transaction->sum;
                 }
 
-                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
-
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
+
+
+                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
 
                 $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum *
                     $transaction->agent_commission / 100;
+
 
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1) * $transaction->sum - (-1) *
                     $transaction->sum * $transaction->agent_commission / 100;
@@ -177,5 +181,42 @@ class GeneralHelper
             }
         }
         return $lang;
+    }
+
+    public static function isTestMode()
+    {
+        return Cookie::get('testmode', false);
+    }
+
+    public static function isSecureProtocol(){
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $isSecure = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
+        }
+        return $isSecure;
+    }
+
+    public static function getTranslateDataByFileName($filename){
+
+        $return = [];
+
+        $filename = str_replace(DIRECTORY_SEPARATOR, ':', $filename);
+
+        if (preg_match("/(?<lang>\w+):(?<file>\w+)\.php$/", $filename, $matches)) {
+
+            $lang = $matches['lang'];
+            $file = $matches['file'];
+
+            $datafile = 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file . '.data';
+
+            if (\Illuminate\Support\Facades\Storage::exists($datafile)) {
+                $return = unserialize(\Illuminate\Support\Facades\Storage::get($datafile));
+            }
+        }
+
+        return $return;
     }
 }

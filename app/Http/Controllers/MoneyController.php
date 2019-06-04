@@ -46,29 +46,30 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
-        //to do universal way define user to DO
-        $sessionId = $_COOKIE['laravel_session'];
-        $sessionLeftTime = config('session.lifetime');
-        $sessionLeftTimeSecond = $sessionLeftTime * 60;
+        try {
+            //to do universal way define user to DO
+            $sessionId = $_COOKIE['laravel_session'];
+            $sessionLeftTime = config('session.lifetime');
+            $sessionLeftTimeSecond = $sessionLeftTime * 60;
 
-        $date = new \DateTime();
-        $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
+            $date = new \DateTime();
+            $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
 
-        //to do this - fix this = use universal way for get sessino user
-        //select nesessary fields
-        $user = User::select(['users.*', 's.id as session_id'])
-            ->join('sessions as s', 's.user_id', '=', 'users.id')
-            ->where('users.email', $email)
-            ->where('s.id', $sessionId)
-            ->where('s.last_activity', '>=', $minimumAllowedActivity)
-            ->first();
+            //to do this - fix this = use universal way for get sessino user
+            //select nesessary fields
+            $user = User::select(['users.*', 's.id as session_id'])
+                ->join('sessions as s', 's.user_id', '=', 'users.id')
+                ->where('users.email', $email)
+                ->where('s.id', $sessionId)
+                ->where('s.last_activity', '>=', $minimumAllowedActivity)
+                ->first();
 
-        if (is_null($user) or is_null($user->session_id)) {
-            return response()->json([
-                'status' => false,
-                'messages' => ['User or session is not found'],
-            ]);
-        }
+            if (is_null($user) or is_null($user->session_id)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }
 
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
@@ -76,34 +77,34 @@ class MoneyController extends Controller
 //            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
 //            ->first();
 
-        /*if (is_null($user)) {
-            return response()->json([
-                'status' => false,
-                'messages' => ['User or session is not found'],
-            ]);
-        }*/
+            /*if (is_null($user)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }*/
 
-        //to do once in 10 seconds and use other table for notifications
+            //to do once in 10 seconds and use other table for notifications
 
-        //to do fix this
-        $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
-            ->where(function ($query) {
-                $query->where('type_id', '=', 1)
-                    ->orWhere('type_id', '=', 2);
-            })
-            ->where('status', 0)
-            ->first();
+            //to do fix this
+            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+                ->where(function ($query) {
+                    $query->where('type_id', '=', 1)
+                        ->orWhere('type_id', '=', 2);
+                })
+                ->where('status', 0)
+                ->first();
 
-        if ($notificationTransactionDeposit) {
-            SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
-                'status' => 1
-            ]);
+            if ($notificationTransactionDeposit) {
+                SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
+                    'status' => 1
+                ]);
 
-            $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
-            $sum = $extraSystemNotification->depositAmount;
-        } else {
-            $sum = false;
-        }
+                $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
+                $sum = $extraSystemNotification->depositAmount;
+            } else {
+                $sum = false;
+            }
 
 //        $transaction = $user->transactions()
 //            ->where('type', 3)->where('notification', 0)->first();
@@ -116,34 +117,47 @@ class MoneyController extends Controller
 //            $sum = false;
 //        }
 
-        //to do check active bonus
-        //to do not use dispatch
-        if ($user->bonus_id) {
-            $checkFrequencyBonus = config('bonus.checkFrequency');
-            if (rand(1, $checkFrequencyBonus) === 1) {
-                $class = BonusHelper::getClass($user->bonus_id);
-                $bonusObject = new $class($user);
+            //to do check active bonus
+            //to do not use dispatch
+            if ($user->bonus_id) {
+                $checkFrequencyBonus = config('bonus.checkFrequency');
+                if (rand(1, $checkFrequencyBonus) === 1) {
+                    DB::beginTransaction();
+                    //get user for lock
+                    $currentUser = User::where('id', $user->id)
+                        ->lockForUpdate()->first();
 
-                DB::beginTransaction();
-                $bonusClose = $bonusObject->close(1);
-                if ($bonusClose['success'] === false) {
-                    DB::rollBack();
+                    $class = BonusHelper::getClass($currentUser->bonus_id);
+                    $bonusObject = new $class($currentUser);
+
+                    $bonusClose = $bonusObject->close(1);
+                    if ($bonusClose['success'] === false) {
+                        DB::rollBack();
+                    }
+                    DB::commit();
                 }
-                DB::commit();
             }
+
+            $response = [
+                'success' => true,
+                'realBalance' => $user->balance,
+                'balance' => $user->getBalance(),
+                'deposit' => $sum,
+                'free_spins' => $user->free_spins,
+                'balance_info' => [
+                    'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
+                    'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
+                    'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
+                ]
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
 
-        return response()->json([
-            'realBalance' => $user->balance,
-            'balance' => $user->getBalance(),
-            'deposit' => $sum,
-            'free_spins' => $user->free_spins,
-            'balance_info' => [
-                'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
-                'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
-                'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
-            ]
-        ]);
+        return response()->json($response);
     }
 
     /**

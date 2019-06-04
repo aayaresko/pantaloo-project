@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 intro-text">
-                            <h1>EARN <span>45%</span> RIGHT NOW</h1>
+                            <h1>EARN UP TO <span>45%</span> RIGHT NOW</h1>
                             <p>
                                 <span>And Get Payed Out Every Week</span>
                                 <br>
@@ -175,7 +175,7 @@
 
 
     <!-- Commissions Section -->
-    <div id="commissions" style="border-top: 1px dashed orange; padding-top: 50px;margin-bottom: 20px;">
+    <div id="commissions" style="border-top: 1px dashed orange; padding-top: 50px;margin-bottom: 20px;display: none">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-6">

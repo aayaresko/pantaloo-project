@@ -2,6 +2,7 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusCancelEvent;
 use App\Events\BonusDepositEvent;
 use App\Events\CloseBonusEvent;
 use App\Events\DepositWagerDoneEvent;
@@ -16,6 +17,7 @@ use App\Transaction;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Models\LastActionGame;
+use App\Modules\Others\DebugGame;
 use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
@@ -73,7 +75,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return true;
     }
 
-    public function activate()
+    public function activate($params = [])
     {
         $user = $this->user;
         $date = new \DateTime();
@@ -83,8 +85,29 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
         $currentDate = new Carbon();
 
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['active'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
+
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
+        }
+
         try {
-            //baned country
+            $ipCurrent = GeneralHelper::visitorIpCloudFlare();
+            $ipFormatCurrent = inet_pton($ipCurrent);
+
+            if ($mode == 0) {
+                //baned country
 //            if (!is_null($user->country)) {
 //                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
 //                if (in_array($user->country, $banedBonusesCountries)) {
@@ -97,35 +120,46 @@ class Bonus_100 extends \App\Bonuses\Bonus
 //                    ' clause 1.6 of the bonus terms & conditions.');
 //            }
 
-            if ($this->active_bonus) {
-                if ($this->active_bonus->bonus_id != static::$id) {
-                    throw new \Exception('You cannot activate this bonus as there is ' .
-                        'already an active bonus.');
-                } else {
-                    throw new \Exception('This bonus is already active.');
+                if ($this->active_bonus) {
+                    if ($this->active_bonus->bonus_id != static::$id) {
+                        throw new \Exception('You cannot activate this bonus as there is ' .
+                            'already an active bonus.');
+                    } else {
+                        throw new \Exception('This bonus is already active.');
+                    }
                 }
-            }
 
-            if ((int)$user->email_confirmed === 0) {
-                throw new \Exception('To activate this bonus, you need to confirm your email address first.
+                if ((int)$user->email_confirmed === 0) {
+                    throw new \Exception('To activate this bonus, you need to confirm your email address first.
                  Did not receive the activation mail? You can resend it in the Settings section of your profile.');
+                }
+
+                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                    ->where('type_id', 1)
+                    ->count();
+
+                if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
+                    throw new \Exception('You cannot activate this bonus in accordance with ' .
+                        'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
+                }
+
+
+                if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
+                    throw new \Exception('This bonus is already used.');
+                }
+
+                //check ip
+                $currentBonusByIp = UserBonus::where('bonus_id', static::$id)
+                    ->where('ip_address', $ipFormatCurrent)
+                    ->withTrashed()->count();
+
+                if ($currentBonusByIp > 0) {
+                    throw new \Exception('You cannot activate this bonus in accordance' .
+                        ' with clause 1.18 of the bonus terms & conditions');
+                }
+                //check ip
             }
 
-            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
-                ->where('type_id', 1)
-                ->count();
-
-            if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
-                throw new \Exception('You cannot activate this bonus in accordance with ' .
-                    'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
-            }
-
-
-            if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
-                throw new \Exception('This bonus is already used.');
-            }
-
-            //$date = $user->created_at;
             $date = Carbon::now();
             $date->modify('+' . $this->expireDays . 'days');
 
@@ -138,7 +172,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     'wagered_amount' => 0,
                     'wagered_bonus_amount' => 0,
                     'dateStart' => $currentDate,
+                    'ip_address' => $ipCurrent
                 ],
+                'ip_address' => $ipFormatCurrent,
                 'activated' => 0,
                 'expires_at' => $date,
             ]);
@@ -147,20 +183,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'bonus_id' => static::$id
             ]);
 
-            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent .'%'));
+            event(new OpenBonusEvent($user, 'bonus deposit ' . $this->percent . '%'));
 
             $response = [
                 'success' => true,
-                'message' => 'Done'
+                'message' => 'Done',
+                'details' => [
+                    'bonus_id' => $bonusUser->id,
+                    'mode' => $mode
+                ]
             ];
 
-            BonusLog::updateOrCreate(
-                [
-                    'bonus_id' => $bonusUser->id,
-                    'operation_id' => $configBonus['operation']['active']
-                ],
-                ['status' => json_encode($response)]
-            );
         } catch (\Exception $e) {
             $errorCode = $e->getCode();
             $errorLine = $e->getLine();
@@ -170,6 +203,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 'message' => $errorMessage
             ];
         }
+
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
+        ]);
 
         return $response;
     }
@@ -183,22 +223,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['realActivation'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['realActivation'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
-
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['realActivation'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
         //action
         try {
             //validate
@@ -274,6 +309,13 @@ class Bonus_100 extends \App\Bonuses\Bonus
             'status' => json_encode($response)
         ]);
 
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
+        ]);
+
         return $response;
     }
 
@@ -283,22 +325,19 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
+        $whoClose = ($mode == 0) ? 'by game' : 'by balance';
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['close'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['close'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['close'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
 
@@ -357,7 +396,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
                 $response = [
                     'success' => true,
-                    'message' => 'Done. Close'
+                    'message' => 'Done. Close' . $whoClose
                 ];
             } else {
                 throw new \Exception('The condition is not satisfied');
@@ -369,7 +408,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
             $errorMessage = $e->getMessage();
             $response = [
                 'success' => false,
-                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage
+                'message' => 'Line:' . $errorLine . '.Message:' . $errorMessage . $whoClose
             ];
 
             if ($errorCode === self::SPECIAL) {
@@ -377,10 +416,12 @@ class Bonus_100 extends \App\Bonuses\Bonus
             }
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
-        ]);
+        $debugResult = $debugGame->end();
 
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
+        ]);
 
         return $response;
     }
@@ -393,21 +434,17 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['cancel'])
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['cancel'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['cancel'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             //to do all sum last transaction if multi bonuses
@@ -431,6 +468,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 $activeBonus->delete();
             }
 
+            event(new BonusCancelEvent($updateUser, $this->getPercent() . '%'));
+
             $response = [
                 'success' => true,
                 'message' => 'Done'
@@ -447,8 +486,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
             ];
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;
@@ -459,25 +501,22 @@ class Bonus_100 extends \App\Bonuses\Bonus
         $transactionAmount = abs((float)$transaction['sum']);
         $transactionBonusSum = abs((float)$transaction['bonus_sum']);
 
+        $user = $this->user;
         $date = new \DateTime();
         $configBonus = config('bonus');
         $activeBonus = $this->active_bonus;
 
-        $rawLog = DB::connection('logs')->table('bonus_logs')
-            ->where('bonus_id', '=', $activeBonus->id)
-            ->where('operation_id', '=', $configBonus['operation']['wagerUpdate'])//to do config
-            ->first();
+        $userId = $user->id;
+        $debugGame = new DebugGame();
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
 
-        if ($rawLog) {
-            $rawLogId = $rawLog->id;
-        } else {
-            $rawLogId = DB::connection('logs')->table('bonus_logs')->insertGetId([
-                'bonus_id' => $activeBonus->id,
-                'operation_id' => $configBonus['operation']['wagerUpdate'],
-                'created_at' => $date,
-                'updated_at' => $date
-            ]);
-        }
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => $rawLogKey + $configBonus['operation']['wagerUpdate'],
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
 
         try {
             //if was be deposit
@@ -515,8 +554,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
             ];
         }
 
-        DB::connection('logs')->table('bonus_logs')->where('id', $rawLogId)->update([
-            'status' => json_encode($response)
+        $debugResult = $debugGame->end();
+
+        DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+            'response' => json_encode($response),
+            'extra' => json_encode($debugResult)
         ]);
 
         return $response;

@@ -38,7 +38,7 @@ class PantalloGames
             $connectTimeout = $this->paramsDefault['connectTimeout'];
             $clientParams = [
                 'verify' => false,
-                'connect_timeout' => $connectTimeout
+                'timeout' => $connectTimeout
             ];
             $client = new Client($clientParams);
             $response = $client->post($url, [

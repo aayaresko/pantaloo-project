@@ -68,54 +68,54 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         //temporary
-        $errors = [];
-        $data = $request->toArray();
-        $validator = Validator::make($data, [
-            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
-            'agree' => 'accepted'
-        ]);
-
-        // Check if mail provider is not temporary mail services
-        $validator->after(function ($validator) use ($data) {
-            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
-                $validator->errors()->add('email', 'Try use other mail service!');
-            }
-        });
-
-        if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
-
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => $errors
-                ]
-            ]);
-        }
-
-        $email = $request->email;
-        $currentDate = new \DateTime();
-
-        DB::table('new_affiliates')->insert([
-            [
-                'email' => $email,
-                'type_id' => 2,
-                'created_at' => $currentDate,
-                'updated_at' => $currentDate
-            ],
-        ]);
-
-        return response()->json([
-            'status' => true,
-            'message' => [
-                'email' => $email,
-                'title' => 'Register a CasinoBit Affiliate Account',
-                'body' => '<h4>Thank you for understanding! We will contact you!</h4>'
-            ]
-        ]);
+//        $errors = [];
+//        $data = $request->toArray();
+//        $validator = Validator::make($data, [
+//            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+//            'agree' => 'accepted'
+//        ]);
+//
+//        // Check if mail provider is not temporary mail services
+//        $validator->after(function ($validator) use ($data) {
+//            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+//                $validator->errors()->add('email', 'Try use other mail service!');
+//            }
+//        });
+//
+//        if ($validator->fails()) {
+//            $validatorErrors = $validator->errors()->toArray();
+//            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+//                array_push($errors, $item);
+//            });
+//
+//            return response()->json([
+//                'status' => false,
+//                'message' => [
+//                    'errors' => $errors
+//                ]
+//            ]);
+//        }
+//
+//        $email = $request->email;
+//        $currentDate = new \DateTime();
+//
+//        DB::table('new_affiliates')->insert([
+//            [
+//                'email' => $email,
+//                'type_id' => 2,
+//                'created_at' => $currentDate,
+//                'updated_at' => $currentDate
+//            ],
+//        ]);
+//
+//        return response()->json([
+//            'status' => true,
+//            'message' => [
+//                'email' => $email,
+//                'title' => 'Register a CasinoBit Affiliate Account',
+//                'body' => '<h4>Thank you for understanding! We will contact you!</h4>'
+//            ]
+//        ]);
 
         //normal code
         $data = $request->toArray();
@@ -212,6 +212,7 @@ class AuthController extends Controller
      */
     public function enter(Request $request)
     {
+        //to do lock if many request  - looking at default auth method
         $user = Auth::user();
         if (Auth::check()) {
             if ($user->isAgent()) {

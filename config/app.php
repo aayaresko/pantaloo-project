@@ -173,6 +173,8 @@ return [
         browner12\helpers\HelperServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \App\Providers\JsBridgeServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
+        //\App\Providers\EmailChecker\EmailChecker::class,
     ],
 
     /*
@@ -222,5 +224,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'JsBridge' => \App\Providers\JsBridge\JsBridge::class,
+        'Sentry' => Sentry\Laravel\Facade::class,
+        'EmailChecker' => \App\Providers\EmailChecker\EmailChecker::class
     ],
 ];
