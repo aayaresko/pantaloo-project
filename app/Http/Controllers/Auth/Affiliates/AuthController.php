@@ -212,6 +212,7 @@ class AuthController extends Controller
      */
     public function enter(Request $request)
     {
+        //to do lock if many request  - looking at default auth method
         $user = Auth::user();
         if (Auth::check()) {
             if ($user->isAgent()) {
