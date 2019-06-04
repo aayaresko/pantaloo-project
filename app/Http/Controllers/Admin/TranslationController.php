@@ -27,6 +27,7 @@ class TranslationController extends Controller
     {
         $this->params = [];
         $this->params['defaultLang'] = 'en';
+        $this->params['onlyStringRegular'] = "/^<p>[^<>]+<\/p>$/";
     }
 
     /**
@@ -189,12 +190,18 @@ class TranslationController extends Controller
         /* TO VIEW */
         $data = $items;
         $data->map(function ($item, $key) use ($param) {
+            $modeEdit = 1;
+            if ($item->text == strip_tags($item->text)) {
+                $modeEdit = 0;
+            }
+
             $item->cur_text = view('admin.parts.ckeditor_inline',
                 [
                     'html' => $item->cur_text,
                     'group' => $item->group,
                     'item' => $item->item,
                     'key' => $key,
+                    'mode' => $modeEdit
                 ]
             )->render();
 
@@ -293,9 +300,9 @@ class TranslationController extends Controller
 
     protected function ckeditorFeatureValue($value)
     {
-        preg_match("/^<p>[^<>]+<\/p>$/", $value, $regular);
+        preg_match($this->params['onlyStringRegular'], $value, $matches);
 
-        if (!empty($regular)) {
+        if (!empty($matches)) {
             $value = strip_tags($value);
         }
 
