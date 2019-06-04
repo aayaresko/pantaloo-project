@@ -193,10 +193,13 @@ class AuthController extends Controller
 
             $this->dispatch(new SetUserCountry($user));
             if (!$user->agent_id) {
-                $country = Country::where('code', $user->country)->first();
+                $country_code = GeneralHelper::visitorCountryCloudFlare();
+                $country = Country::where('code', $country_code)->first();
                 $agent = $country ? $country->user->first() : false;
-                $user->agent_id = $agent->id;
-                $user->save();
+                if ($agent) {
+                    $user->agent_id = $agent->id;
+                    $user->save();
+                }
             }
 
             Auth::guard($this->getGuard())->login($user);
