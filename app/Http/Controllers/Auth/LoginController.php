@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\ModernExtraUsers;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -56,7 +56,7 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             $user = Auth::user();
-            $roleUser = (int)Auth::user()->role;
+            $roleUser = (int) Auth::user()->role;
 
             if (array_search($roleUser, [1, 3]) !== false) {
                 Auth::logout();
@@ -69,8 +69,8 @@ class LoginController extends Controller
             $blockUser = ModernExtraUsers::where('user_id', $user->id)
                 ->where('code', 'block')->first();
 
-            if (!is_null($blockUser)) {
-                if ((int)$blockUser->value === 1) {
+            if (! is_null($blockUser)) {
+                if ((int) $blockUser->value === 1) {
                     //delete global session TO DO
                     Auth::logout();
 

@@ -55,6 +55,7 @@ class TestController extends Controller
         dd(22);
         //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         throw new Exception('Custom error!');
+
         return 1;
     }
 
@@ -97,7 +98,6 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-
         dd(2);
         //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
 //        dd(2);

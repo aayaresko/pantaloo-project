@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Bitcoin\Service;
-use App\Currency;
-use App\Jobs\SetUserCountry;
-use App\Models\StatisticalData;
-use App\Providers\EmailChecker\EmailChecker;
-use App\Tracker;
 use App\User;
-use App\UserActivation;
-use Helpers\GeneralHelper;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Mail;
 use Validator;
+use App\Tracker;
+use App\Currency;
+use App\UserActivation;
+use App\Bitcoin\Service;
+use Helpers\GeneralHelper;
+use App\Jobs\SetUserCountry;
+use Illuminate\Http\Request;
+use App\Models\StatisticalData;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cookie;
+use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -85,7 +85,7 @@ class RegisterController extends Controller
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (! GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
