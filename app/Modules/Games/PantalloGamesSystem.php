@@ -422,7 +422,7 @@ class PantalloGamesSystem implements GamesSystem
                         ['games_categories.active', '=', 1],
                     ])
                     ->whereIn('games_types_games.type_id', [$slotTypeId])
-                    ->groupBy('games_types_games.game_id')->get();
+                    ->groupBy('games_types_games.game_id')->get()->toArray();
 
                 $slotsGameIds = array_map(function ($item) {
                     return $item->id;

@@ -159,6 +159,7 @@ class User extends Authenticatable
         return round($available, 5, PHP_ROUND_HALF_DOWN);
     }
 
+    //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
     public function changeBalance($transaction, $cancel = false)
     {
         $transaction->sum = round($transaction->sum, 5, PHP_ROUND_HALF_DOWN);

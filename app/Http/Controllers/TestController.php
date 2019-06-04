@@ -52,15 +52,17 @@ class TestController extends Controller
 
     public function error(Request $request)
     {
-        dd(12234);
-
+        dd(22);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         throw new Exception('Custom error!');
-
         return 1;
     }
 
     public function test1(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
+
         dd(GeneralHelper::visitorIpCloudFlare());
 
         throw new \Exception('FDSF');
@@ -95,6 +97,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
 //            ['users.created_at', '>', '2019-04-01 11:23:43'],
@@ -2211,6 +2216,8 @@ class TestController extends Controller
 
     public function testTypes(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         $games = GamesList::leftJoin('games_types', 'games_types.id', '=', 'games_list.type_id')
             ->where([
                 ['games_types.code', '=', $request->category],
@@ -2221,6 +2228,8 @@ class TestController extends Controller
 
     public function game(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         try {
             $game = GamesList::where('id', $request->game)->first();
             dump($game);
