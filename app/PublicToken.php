@@ -9,12 +9,12 @@ class PublicToken extends Model
 {
     public function slot()
     {
-        return $this->belongsTo('App\Slot');
+        return $this->belongsTo(\App\Slot::class);
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function generate($user = false)

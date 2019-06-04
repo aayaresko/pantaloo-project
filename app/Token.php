@@ -9,12 +9,12 @@ class Token extends Model
 {
     public function slot()
     {
-        return $this->belongsTo('App\Slot');
+        return $this->belongsTo(\App\Slot::class);
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function generate($user = false)
@@ -28,6 +28,6 @@ class Token extends Model
 
     public function transactions()
     {
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany(\App\Transaction::class);
     }
 }

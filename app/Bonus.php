@@ -8,16 +8,16 @@ class Bonus extends Model
 {
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->hasMany(\App\User::class);
     }
 
     public function getClass()
     {
         $classes = [
-            'App\Bonuses\Bonus_100',
-            'App\Bonuses\Bonus_150',
-            'App\Bonuses\Bonus_200',
-            'App\Bonuses\FreeSpins',
+            \App\Bonuses\Bonus_100::class,
+            \App\Bonuses\Bonus_150::class,
+            \App\Bonuses\Bonus_200::class,
+            \App\Bonuses\FreeSpins::class,
         ];
 
         foreach ($classes as $class) {

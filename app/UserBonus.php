@@ -22,12 +22,12 @@ class UserBonus extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function bonus()
     {
-        return $this->belongsTo('App\Bonus');
+        return $this->belongsTo(\App\Bonus::class);
     }
 
     public function getObject()

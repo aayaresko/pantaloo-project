@@ -38,12 +38,12 @@ class Transaction extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(\App\User::class);
     }
 
     public function token()
     {
-        return $this->belongsTo('App\Token');
+        return $this->belongsTo(\App\Token::class);
     }
 
     public function getBtcSum()
@@ -227,6 +227,6 @@ class Transaction extends Model
 
     public function agent()
     {
-        return $this->belongsTo('App\User', 'agent_id', 'id');
+        return $this->belongsTo(\App\User::class, 'agent_id', 'id');
     }
 }

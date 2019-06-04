@@ -118,20 +118,20 @@ class IntercomEventHandler
      */
     public function subscribe($events)
     {
-        $events->listen('App\Events\OpenBonusEvent', 'App\Providers\Intercom\IntercomEventHandler@onOpenBonus');
-        $events->listen('App\Events\CloseBonusEvent', 'App\Providers\Intercom\IntercomEventHandler@onCloseBonus');
-        $events->listen('App\Events\DepositEvent', 'App\Providers\Intercom\IntercomEventHandler@onDeposit');
-        $events->listen('App\Events\BonusDepositEvent', 'App\Providers\Intercom\IntercomEventHandler@onBonusDeposit');
-        $events->listen('App\Events\WagerDoneEvent', 'App\Providers\Intercom\IntercomEventHandler@onWagerDone');
-        $events->listen('App\Events\DepositWagerDoneEvent', 'App\Providers\Intercom\IntercomEventHandler@onDepositWagerDone');
-        $events->listen('App\Events\BonusGameEvent', 'App\Providers\Intercom\IntercomEventHandler@onBonusGame');
+        $events->listen(\App\Events\OpenBonusEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onOpenBonus');
+        $events->listen(\App\Events\CloseBonusEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onCloseBonus');
+        $events->listen(\App\Events\DepositEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onDeposit');
+        $events->listen(\App\Events\BonusDepositEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onBonusDeposit');
+        $events->listen(\App\Events\WagerDoneEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onWagerDone');
+        $events->listen(\App\Events\DepositWagerDoneEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onDepositWagerDone');
+        $events->listen(\App\Events\BonusGameEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onBonusGame');
 
-        $events->listen('App\Events\WithdrawalRequestedEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalRequested');
-        $events->listen('App\Events\WithdrawalApprovedEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalApproved');
-        $events->listen('App\Events\WithdrawalFrozenEvent', 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalFrozen');
-        $events->listen('App\Events\AccountStatusEvent', 'App\Providers\Intercom\IntercomEventHandler@onAccountStatus');
+        $events->listen(\App\Events\WithdrawalRequestedEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalRequested');
+        $events->listen(\App\Events\WithdrawalApprovedEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalApproved');
+        $events->listen(\App\Events\WithdrawalFrozenEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onWithdrawalFrozen');
+        $events->listen(\App\Events\AccountStatusEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onAccountStatus');
 
-        $events->listen('App\Events\BonusCancelEvent', 'App\Providers\Intercom\IntercomEventHandler@onBonusCancel');
+        $events->listen(\App\Events\BonusCancelEvent::class, 'App\Providers\Intercom\IntercomEventHandler@onBonusCancel');
     }
 
     private function sendEvent($email, $name, $metadata = [])

@@ -13,6 +13,6 @@ class GamesList extends Model
 
     public function types()
     {
-        return $this->belongsToMany('App\Models\GamesType', 'games_types_games', 'game_id', 'type_id');
+        return $this->belongsToMany(\App\Models\GamesType::class, 'games_types_games', 'game_id', 'type_id');
     }
 }

@@ -15,16 +15,16 @@ class Slot extends Model
 
     public function tokens()
     {
-        return $this->hasMany('App\Token');
+        return $this->hasMany(\App\Token::class);
     }
 
     public function category()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo(\App\Category::class);
     }
 
     public function type()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsTo(\App\Type::class);
     }
 }

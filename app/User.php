@@ -275,22 +275,22 @@ class User extends Authenticatable
 
     public function transactions()
     {
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany(\App\Transaction::class);
     }
 
     public function bonus()
     {
-        return $this->belongsTo('App\Bonus');
+        return $this->belongsTo(\App\Bonus::class);
     }
 
     public function bonuses()
     {
-        return $this->hasMany('App\UserBonus');
+        return $this->hasMany(\App\UserBonus::class);
     }
 
     public function payments()
     {
-        return $this->hasMany('App\Payment');
+        return $this->hasMany(\App\Payment::class);
     }
 
     public function stat(Carbon $from, Carbon $to)
@@ -373,22 +373,22 @@ class User extends Authenticatable
 
     public function trackers()
     {
-        return $this->hasMany('App\Tracker');
+        return $this->hasMany(\App\Tracker::class);
     }
 
     public function tracker()
     {
-        return $this->belongsTo('App\Tracker');
+        return $this->belongsTo(\App\Tracker::class);
     }
 
     public function currency()
     {
-        return $this->belongsTo('App\Currency');
+        return $this->belongsTo(\App\Currency::class);
     }
 
     public function agentTransactions()
     {
-        return $this->hasMany('App\Transaction', 'agent_id');
+        return $this->hasMany(\App\Transaction::class, 'agent_id');
     }
 
     public function sendPasswordResetNotification($token)
