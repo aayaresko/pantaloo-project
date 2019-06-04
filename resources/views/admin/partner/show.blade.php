@@ -18,6 +18,7 @@
                                     <form action="{{route('admin.agents.makeSuper', $partner->id)}}" method="post" class="form-inline">
                                         <select name="country[]" id="select2Country" multiple="multiple">
                                             @foreach(App\Country::all() as $country)
+                                                @if(in_array($country->id, $deprecatedCountries)) @continue @endif
                                                 <option value="{{$country->id}}" @if(in_array($country->id, $countriesIds)) selected @endif>{{$country->name}}</option>
                                             @endforeach
                                         </select>
