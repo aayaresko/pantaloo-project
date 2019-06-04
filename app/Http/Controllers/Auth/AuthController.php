@@ -140,6 +140,7 @@ class AuthController extends Controller
             $user->ip = $ip;
 
             $tracker_id = Cookie::get('tracker_id');
+            $tracker = false;
             if ($tracker_id) {
                 $tracker = Tracker::find($tracker_id);
             } elseif(isset($data['ref']) and $data['ref']) {
@@ -200,6 +201,7 @@ class AuthController extends Controller
 
             Auth::guard($this->getGuard())->login($user);
         } catch (\Exception $ex) {
+
             return redirect()->back()->withErrors(['Something went wrong']);
         }
 
