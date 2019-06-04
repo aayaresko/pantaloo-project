@@ -1,10 +1,15 @@
 {
     "require-dev": {
-        "laravel/browser-kit-testing": "^1.0"
+        "laravel/browser-kit-testing": "^1.0",
+        "phpunit/phpunit": "~5.7"
     },
     "autoload-dev": {
         "classmap": [
             "tests/BrowserKitTestCase.php"
         ]
+    },
+    "require": {
+        "laravel/framework": "5.4.*",
+        "laravel/tinker": "~1.0"
     }
 }
