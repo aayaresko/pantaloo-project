@@ -94,62 +94,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $now = Carbon::now()->startOfDay();
-
-        $exsicts = DB::table('transactions')
-            ->select('id')
-            ->where('id', '>', 1418300)
-            ->where('created_at', '<', $now->toDateTimeString())
-            ->where('created_at', '>=', $now->subDay()->toDateTimeString())
-            ->limit(1)
-            ->get();
-        dd($exsicts);
-
-
-
-        for ($i = 0; $i < 93; $i++) {
-            $now = Carbon::now()->subDays(99)->addDays($i);
-            $transactionsUser = Transaction::where('created_at', '>', $now->subDay()->toDateString())
-                ->where('created_at', '<', $now->toDateString())
-                ->get()
-                ->groupBy('user_id');
-            foreach ($transactionsUser as $userId => $transactions) {
-                $userSum = new UserSum();
-                $userSum->user_id = $userId;
-                $userSum->deposits = 0;
-                $userSum->created_at = $now;
-                $userSum->bets = 0;
-                $userSum->wins = 0;
-                $userSum->bonus = 0;
-                $userSum->bet_count = 0;
-                foreach ($transactions as $transaction) {
-                    if ($transaction->type == 3) {
-                        $userSum->deposits += $transaction->sum;
-                    } elseif ($transaction->type == 1 or $transaction->type == 2) {
-                        if ($transaction->type == 1) {
-                            $userSum->bets += $transaction->sum;
-                            $userSum->bet_count += 1;
-                        } else {
-                            $userSum->wins += $transaction->sum;
-                        }
-
-                        $userSum->bonus += $transaction->bonus_sum;
-                    }
-                }
-                $userSum->save();
-            }
-        }
-        dd($userSum);
-
-        $transactions = User::where('users.agent_id', 331)
-            ->select('users.id')
-            ->distinct()
-            ->join('transactions as t', 't.user_id', '=', 'users.id')
-            ->where('t.type', 3)
-            ->pluck('id')->toArray();
-
-            Transaction::whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
-        dd($transactions);
+        $country = Country::where('code', 'AF')->first();
+        $user = $country->user->first();
+        dd($user);
         $users = User::where('id', '>', 2500)->get();
         foreach ($users as $user) {
             if (!$user->agent_id or $user->agent_id < 10) {
