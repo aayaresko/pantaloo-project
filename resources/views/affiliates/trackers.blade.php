@@ -174,7 +174,7 @@
                                     @foreach($trackers as $tracker)
                                         <tr>
                                             <td>{{$tracker->name}}</td>
-                                            <td>{{ env('PARTNER_ADDRESS') . '?ref=' . $tracker->ref }}</td>
+                                            <td>{{ config('partner.url') . '?ref=' . $tracker->ref }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
