@@ -372,7 +372,7 @@ class IntegratedGamesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get()->all();
+                ->select($param['columnsAlias'])->get();
         } else {
             /* SEARCH */
             $search = $request->input('search.value');
@@ -393,7 +393,7 @@ class IntegratedGamesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->select($param['columnsAlias'])->get()->all();
+                ->select($param['columnsAlias'])->get();
 
             $countSum = GamesTypeGame::select([DB::raw('COUNT(*) as `count`')])
                 ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
