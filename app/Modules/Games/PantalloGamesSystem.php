@@ -1176,6 +1176,9 @@ class PantalloGamesSystem implements GamesSystem
                 } catch (\Exception $ex) {
                     $response['removeFreeRounds'] = $ex->getMessage();
                 }
+            } else {
+                //delete free round
+                DB::connection('logs')->table('games_pantallo_free_rounds')->where('id', $rawId)->delete();
             }
         }
 

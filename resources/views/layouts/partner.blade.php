@@ -54,7 +54,7 @@
                 <li><a href="#services" class="page-scroll">Services</a></li>
                 <!-- <li><a href="#portfolio" class="page-scroll">Gallery</a></li> -->
                 <li><a href="#advantages" class="page-scroll">Advantages</a></li>
-                <li><a href="#commissions" class="page-scroll">Commissions Structure</a></li>
+                <!--li><a href="#commissions" class="page-scroll">Commissions Structure</a></li-->
                 <li><a href="#contact" class="page-scroll">Contact</a></li>
                 <button class="btn btn-custom btn-lg page-scroll" data-toggle="modal" data-target="#myModal" style="margin-top: 13px;padding: 5px 15px;">Login</button>
                 <button class="btn btn-custom btn-lg page-scroll" data-toggle="modal" data-target="#myModal2" style="margin-top: 13px;padding: 5px 15px;background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);">Register</button>
