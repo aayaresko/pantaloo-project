@@ -288,13 +288,15 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::group(['middleware' => ['can:accessAdminTranslatorPublic']], function () {
                 Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
+//                Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
+//                Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
+
+                Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslationsModern', 'uses' => 'Admin\TranslationController@changeTranslationModern']);
+                Route::get('/translation/getTransactions', ['as' => 'translations.getTransactions', 'uses' => 'Admin\TranslationController@getTransactions']);
+                Route::post('/translations/save', ['as' => 'translations.saveModern', 'uses' => 'Admin\TranslationController@saveModern']);
             });
 
             Route::get('/', 'UsersController@index');
-
-
-            Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
-            Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
         });
 
 

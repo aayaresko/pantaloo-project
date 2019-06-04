@@ -65,6 +65,7 @@ class Handler extends ExceptionHandler
             }
         }
 
+
         parent::report($e);
     }
 

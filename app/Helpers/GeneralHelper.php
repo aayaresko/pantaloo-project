@@ -2,8 +2,7 @@
 
 namespace Helpers;
 
-
-use Illuminate\Support\Facades\Cache;
+use App\Models\Language;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 
@@ -39,13 +38,46 @@ class GeneralHelper
     }
 
     /**
+     * @param null $key
      * @return array
+     * @throws \Exception
      */
-    static public function getListLanguage()
+    static public function getListLanguage($key = null)
     {
-        $dir = base_path() . '/resources/lang';
-        $languagesIndex = array_diff(scandir($dir), ['..', '.']);
-        $languages = array_values($languagesIndex);
+        $defaultLang = ['en'];
+        $modeTrans = config('translator.source');
+
+        if (!is_null($key)) {
+            $modeTrans = $key;
+        }
+
+        try {
+            switch ($modeTrans) {
+                case 'database':
+                    $languages = Language::get()->pluck('locale')->toArray();
+                    break;
+                case 'files':
+                    //to do read from config
+                    $dir = base_path() . '/resources/lang';
+                    $languagesIndex = array_diff(scandir($dir), ['..', '.']);
+                    $languagesConfig = config('translator.available_locales');
+                    $languages = array_values($languagesIndex);
+
+                    if ($languagesConfig != $languages) {
+                        throw new \Exception('SET CONFIG LANG VALUE');
+                    }
+                    break;
+                case 'mixed':
+                    //to do
+                    $languages = $defaultLang;
+                    break;
+                default:
+                    $languages = $defaultLang;
+            }
+        } catch (\Exception $ex) {
+            $languages = [];
+        }
+
         return $languages;
     }
 
@@ -188,12 +220,12 @@ class GeneralHelper
         return Cookie::get('testmode', false);
     }
 
-    public static function isSecureProtocol(){
+    public static function isSecureProtocol()
+    {
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $isSecure = true;
-        }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
             $isSecure = true;
         }
         return $isSecure;
