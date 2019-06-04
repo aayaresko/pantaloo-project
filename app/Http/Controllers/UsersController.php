@@ -232,7 +232,7 @@ class UsersController extends Controller
                 $sessionsUser = DB::table('sessions')
                     ->select(['id'])
                     ->where('user_id', $user->id)
-                    ->pluck('id');
+                    ->pluck('id')->all();
 
                 DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
             }
