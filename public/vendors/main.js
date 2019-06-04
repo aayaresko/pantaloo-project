@@ -263,16 +263,52 @@ function getCurrentScreen(){
 		$('.fp-enabled .footer.footer-home .footer-copyrights').addClass("showFooterLink");
 	}
 
-}
+	}
+
+	getCurrentScreen()
+
+	$(window).on('mousewheel', getCurrentScreen);
 
 
+	$("#reg-terms h3").on("click", function () {
+        $(this).next().slideToggle(500);
+	});
+	
 
-getCurrentScreen()
+	function bonusTerms() {
+		$('.block-bonus-buttons .usl-link').on('click', function (e) {
+			let linkBonus = $(this).attr('data-bonus-url');
+			$('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
+
+			let tempateBonusActive = $('.tempateBonusActive').html();
+			$('#uls').append(tempateBonusActive);
+		});
+
+		$('.usl-link').on('mfpClose', function (e) {
+			$("#uls .popUpTermForm").remove();
+		});
+	}
+
+	bonusTerms();
 
 
-$(window).on('mousewheel', getCurrentScreen);
-
+	$('#uls').on('click','.popUpBtnBonus', function(e){
 		
+		if($('#terms').prop('checked') == false){
+
+			$(".errorMessage").addClass("showErrorMsg");
+	
+			$(this).prev().addClass("showErrorMsg");
+
+			e.preventDefault();
+		}
+	});
+
+	$("#uls").on("click", '.mfp-close' ,function(){
+
+		$(".errorMessage").removeClass('showErrorMsg');
+
+	});
 
 });
 

@@ -2,12 +2,12 @@
 
 namespace App\Modules\Games;
 
-use App\Events\BonusGameEvent;
 use DB;
 use Log;
 use App\User;
 use Validator;
 use App\RawLog;
+use App\UserBonus;
 use App\Transaction;
 use Helpers\BonusHelper;
 use App\Models\GamesList;
@@ -58,7 +58,11 @@ class PantalloGamesSystem implements GamesSystem
         ]);
 
         try {
-            $game = GamesList::where('id', $request->gameId)->first();
+            //to do check game in available****
+            $game = GamesList::join('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                ->where('games_list.id', $request->gameId)
+                ->select(['games_list.*', 'games_list_extra.name as real_name'])->first();
+
             $gameId = $game->system_id;
 
             $userName = $this->getUserName($user);
@@ -95,7 +99,6 @@ class PantalloGamesSystem implements GamesSystem
             GamesPantalloSession::updateOrCreate(
                 ['sessionid' => $loginResponse['sessionid']], $loginResponse);
 
-            DB::beginTransaction();
             //get games
             $getGame = $pantalloGames->getGame([
                 'lang' => 'en',
@@ -106,6 +109,15 @@ class PantalloGamesSystem implements GamesSystem
                 'play_for_fun' => 0,
                 'homeurl' => url(''),
             ], true);
+
+            //to do user for update
+            if (!is_null($user->bonus_id)) {
+                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
+                $bonusObject = new $bonusClasses($user);
+                $setGame = $bonusObject->setGame($game, 'firstGame');
+            }
+
+            DB::beginTransaction();
 
             //FIX THIS WHEN PROVIDER FIX!!!!!!!!!!
             if ($getGame->gamesession_id == '') {
@@ -151,17 +163,15 @@ class PantalloGamesSystem implements GamesSystem
 
             DB::commit();
 
-            //event(new BonusGameEvent($user, 1));
-
         } catch (\Throwable $e) {
             DB::rollBack();
-            dump($playerExists);
-            dump($player);
-            dump('login');
-            dump($login);
-            dump('getGame');
-            dump($getGame);
-            dump($e);
+//            dump($playerExists);
+//            dump($player);
+//            dump('login');
+//            dump($login);
+//            dump('getGame');
+//            dump($getGame);
+//            dump($e);
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -192,7 +202,6 @@ class PantalloGamesSystem implements GamesSystem
     public function logoutPlayer($user)
     {
         $date = new \DateTime();
-
         $userId = $user->id;
 
         DB::beginTransaction();
@@ -321,7 +330,7 @@ class PantalloGamesSystem implements GamesSystem
 //                })
                 ->where([
                     ['users.id', '=', $params['session']->user_id],
-                ])->first();
+                ])->lockForUpdate()->first();
 
             if (is_null($params['session'])) {
                 throw new \Exception('User is not found');
@@ -331,8 +340,10 @@ class PantalloGamesSystem implements GamesSystem
             //DOUBLE FIX this!
             $methodWithGameId = ['debit', 'credit'];
             if (in_array($action, $methodWithGameId, true)) {
-                $params['game'] = GamesList::select(['id', 'system_id'])
-                    ->where('system_id', $requestParams['game_id'])->first();
+                $params['game'] = GamesList::join('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->where('games_list.system_id', $requestParams['game_id'])
+                    ->select(['games_list.id', 'games_list.system_id', 'games_list_extra.name as real_name'])->first();
+
                 if (is_null($params['game'])) {
                     throw new \Exception('Game is not found');
                 }
@@ -450,7 +461,7 @@ class PantalloGamesSystem implements GamesSystem
                             'session_id' => $params['session']->system_id,
                             'gamesession_id' => self::TEMPORARY,
                         ])->orderBy('id', 'DESC')->first();
-                    
+
                     if (is_null($gamesSession)) {
                         throw new \Exception('Games session is not found.' .
                             ' This user is not playing currently.', 500);
@@ -547,6 +558,8 @@ class PantalloGamesSystem implements GamesSystem
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = 0;
+                                //set game
+                                $setGame = $bonusObject->setGame($params['game'], 'realGame');
                             } else {
                                 $createParams['type'] = 9;
                                 $createParams['sum'] = 0;
@@ -733,6 +746,8 @@ class PantalloGamesSystem implements GamesSystem
                                 $createParams['type'] = 10;
                                 $createParams['sum'] = 0;
                                 $createParams['bonus_sum'] = $amountFreeSpins;
+
+                                $setGame = $bonusObject->setGame($params['game'], 'realGame');
                             } else {
                                 $createParams['type'] = 10;
                                 $createParams['sum'] = 0;
@@ -1005,12 +1020,17 @@ class PantalloGamesSystem implements GamesSystem
         $available = $request->available;
         $timeFreeRound = $request->timeFreeRound;
         $gamesIds = $request->gamesIds;
+        $mode = $request->mode;
+
+        $validTo = new \DateTime();
+        $validTo->modify("+$timeFreeRound second");
 
         $debugGame = new DebugGame();
         $debugGame->start();
 
         $user = $request->user();
         $userId = $user->id;
+        //and input
 
         //start log
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -1021,7 +1041,6 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        //DB::beginTransaction();
         try {
             $userName = $this->getUserName($user);
 
@@ -1042,13 +1061,61 @@ class PantalloGamesSystem implements GamesSystem
 
             $player = $playerResponse->response;
 
-            $issetFreeRound = GamesPantalloFreeRounds::select(['id', 'free_round_id'])
-                ->where('user_id', $user->id)->first();
+            $validTo = new \DateTime();
+            $validTo->modify("+$timeFreeRound second");
+            //prepare
 
-            if (is_null($issetFreeRound)) {
+            //act
+            //to do check double code
+            if ($mode == 0) {
+                $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
+                    ->where('user_id', $user->id)->where('deleted', 0)->first();
 
-                $validTo = new \DateTime();
-                $validTo->modify("+$timeFreeRound second");
+                if (is_null($issetFreeRound)) {
+
+                    $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                        'user_id' => $user->id,
+                        'round' => $available,
+                        'valid_to' => $validTo,
+                        'created' => 0,//fake
+                        'free_round_id' => time(),//fake
+                        'created_at' => $date,
+                        'updated_at' => $date
+                    ]);
+
+                    $freeRounds = $pantalloGames->addFreeRounds([
+                        'playerids' => $player->id,
+                        'gameids' => $gamesIds,
+                        'available' => $available,
+                        'validTo' => $validTo->format('Y-m-d')
+                    ], true);
+
+                    $freeRoundsResponse = json_decode($freeRounds->response);
+
+                    $freeRoundsId = $freeRoundsResponse->freeround_id;
+                    $freeRoundCreated = $freeRoundsResponse->created;
+
+                    DB::connection('logs')->table('games_pantallo_free_rounds')
+                        ->where('id', $rawId)
+                        ->update([
+                            'created' => $freeRoundCreated,
+                            'free_round_id' => $freeRoundsId,
+                        ]);
+
+                } else {
+                    $freeRoundsId = $issetFreeRound->free_round_id;
+                    dd('problem with active');
+                }
+            } else {
+                $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
+                    'user_id' => $user->id,
+                    'round' => $available,
+                    'valid_to' => $validTo,
+                    'created' => 0,//fake
+                    'free_round_id' => time(),//fake
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]);
 
                 $freeRounds = $pantalloGames->addFreeRounds([
                     'playerids' => $player->id,
@@ -1057,34 +1124,25 @@ class PantalloGamesSystem implements GamesSystem
                     'validTo' => $validTo->format('Y-m-d')
                 ], true);
 
+
                 $freeRoundsResponse = json_decode($freeRounds->response);
 
                 $freeRoundsId = $freeRoundsResponse->freeround_id;
                 $freeRoundCreated = $freeRoundsResponse->created;
 
-                DB::connection('logs')->table('games_pantallo_free_rounds')->insert([
-                    'user_id' => $user->id,
-                    'round' => $available,
-                    'valid_to' => $validTo,
-                    'created' => $freeRoundCreated,
-                    'free_round_id' => $freeRoundsId,
-                    'created_at' => $date,
-                    'updated_at' => $date
-                ]);
-            } else {
-                dd('problem');
-                $freeRoundsId = $issetFreeRound->free_round_id;
+                DB::connection('logs')->table('games_pantallo_free_rounds')
+                    ->where('id', $rawId)
+                    ->update([
+                        'created' => $freeRoundCreated,
+                        'free_round_id' => $freeRoundsId,
+                    ]);
             }
-            
+
             $response = [
                 'success' => true,
                 'freeRoundId' => $freeRoundsId
             ];
-
-            //DB::commit();
-
         } catch (\Throwable $e) {
-            //DB::rollBack();
             //rollback free rounds
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
@@ -1094,13 +1152,33 @@ class PantalloGamesSystem implements GamesSystem
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
 
+//          check this
             if (isset($freeRoundsId)) {
                 $removeFreeRounds = $pantalloGames->removeFreeRounds([
                     'playerids' => $player->id,
                     'freeround_id' => $freeRoundsId
                 ], true);
-                $response['removeFreeRounds'] = $removeFreeRounds;
-                $response['freeRoundsResponse'] = $freeRoundsResponse;
+
+                try {
+                    if ($removeFreeRounds->error == 0
+                        and in_array($player->id, $removeFreeRounds->response->successfull_removals)) {
+
+                        //if response good to delete from databases
+                        DB::connection('logs')->table('games_pantallo_free_rounds')
+                            ->where('id', $rawId)
+                            ->update([
+                                'deleted' => 1,
+                            ]);
+                    }
+
+                    $response['freeRoundsResponse'] = $freeRoundsResponse;
+                    $response['removeFreeRounds'] = $removeFreeRounds;
+                } catch (\Exception $ex) {
+                    $response['removeFreeRounds'] = $ex->getMessage();
+                }
+            } else {
+                //delete free round
+                DB::connection('logs')->table('games_pantallo_free_rounds')->where('id', $rawId)->delete();
             }
         }
 
@@ -1134,7 +1212,6 @@ class PantalloGamesSystem implements GamesSystem
             'updated_at' => $date
         ]);
 
-        DB::beginTransaction();
         try {
             $pantalloGames = new PantalloGames;
             $userName = $this->getUserName($user);
@@ -1174,20 +1251,18 @@ class PantalloGamesSystem implements GamesSystem
                 'success' => true,
             ];
 
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
-
-            if (isset($removeFreeRounds)) {
-                $response['removeFreeRounds'] = $removeFreeRounds;
-            }
 
             $response = [
                 'success' => false,
                 'message' => $errorMessage . ' Line:' . $errorLine
             ];
+
+            if (isset($removeFreeRounds)) {
+                $response['removeFreeRounds'] = $removeFreeRounds;
+            }
         }
 
         $debugGameResult = $debugGame->end();

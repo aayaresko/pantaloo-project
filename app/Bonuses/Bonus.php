@@ -32,7 +32,7 @@ abstract class Bonus
     abstract public function bonusAvailable();
 
 
-    abstract public function activate();
+    abstract public function activate($params);
 
     abstract public function realActivation($params);
 

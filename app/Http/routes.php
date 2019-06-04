@@ -11,13 +11,19 @@
 |
 */
 
-use App\Jobs\IntercomCreateUpdateUser;
-
-Route::get('beta/test', function () {
-    return redirect('/')->withCookie(cookie('betatest', 1, 86400, null, null, false, false));
+Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
+    Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
+    Route::get('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDepositView']);
+    Route::post('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDeposit']);
 });
 
 
+
+Route::get('robots.txt', function(\Illuminate\Http\Request $request){
+    return view('robots', [
+        'host' => $request->getHost()
+    ]);
+});
 
 //for optimization add array keep all language in config
 $languages = Helpers\GeneralHelper::getListLanguage();
@@ -73,11 +79,13 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     // Authentication Routes...
     Route::get('login', 'Auth\AuthController@showLoginForm');
     Route::post('login', 'Auth\AuthController@login');
+    Route::post('loginModern', 'Auth\AuthController@loginModern');
     Route::get('logout', 'Auth\AuthController@logout');
 
     // Registration Routes...
-    Route::get('register', 'Auth\AuthController@showRegistrationForm');
+    //Route::get('register', 'Auth\AuthController@showRegistrationForm');
     Route::post('register', 'Auth\AuthController@register');
+    Route::post('registerModern', 'Auth\AuthController@registerModern');
     //Route::post('register', 'Auth\AuthController@create');
 
     // Password Reset Routes...
@@ -344,12 +352,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::get('/integratedGames', ['as' => 'integratedGames', 'uses' => 'IntegratedGamesController@index']);
     Route::get('/integratedGamesJson', ['as' => 'integratedGamesJson', 'uses' => 'IntegratedGamesController@getGames']);
 
-    /* Pantallo Games */
-    Route::group(['prefix' => 'games'], function () {
-        Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
-        Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
-        Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
-    });
+//    /* Pantallo Games */
+//    Route::group(['prefix' => 'games'], function () {
+//        Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+//        Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+//        Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
+//    });
 
     //Route::get('/test/freespin', ['as' => 'test.freespin', 'uses' => 'PantalloGamesController@freeRound']);
 
@@ -378,6 +386,13 @@ Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
 Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin',], function () {
     Route::get('walletNotify', 'Bitcoin\TransactionController@walletNotify')->name('walletNotify');
     Route::get('blockNotify', 'Bitcoin\TransactionController@blockNotify')->name('blockNotify');
+});
+
+/* Pantallo Games */
+Route::group(['middleware' => ['games'], 'prefix' => 'games'], function () {
+    Route::get('/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+    Route::get('/pantallo/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);
+    Route::get('/qtech/endpoint', ['as' => 'games.balance', 'uses' => 'PantalloGamesController@endpoint']);//check this
 });
 
 Route::group(['middleware' => ['api', 'ip.country.block']], function () {

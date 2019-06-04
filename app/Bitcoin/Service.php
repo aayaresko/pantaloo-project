@@ -45,7 +45,7 @@ class Service
 
     public function connect()
     {
-        $connection_string = 'http://' . getenv('BITCOIN_USERNAME') . ':' . getenv('BITCOIN_PASSWORD') . '@' . getenv('BITCOIN_HOST') . ':' .  getenv('BITCOIN_PORT');
+        $connection_string = \config('bitcoin.connection');
         
         $this->client = new Client($connection_string);
     }

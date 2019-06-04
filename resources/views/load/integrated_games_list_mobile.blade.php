@@ -1,6 +1,4 @@
-<div class="block-container">
-    <div class="games-entry">
-        @foreach($gameList as $game)
+      @foreach($gameList as $game)
             <div class="single-game" onclick="enterFullscreen('fs_section_img')">
                 <a class="open_game" href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}">
                     <div class="game-preview"
@@ -14,9 +12,3 @@
                     </a>
             </div>
         @endforeach
-    </div>
-</div>
-
-<div class="paginationGame">
-    {{$gameList->render()}}
-</div>

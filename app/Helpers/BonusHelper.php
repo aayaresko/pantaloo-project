@@ -29,4 +29,31 @@ class BonusHelper
 
         return false;
     }
+
+    static public function bonusStatistics($bonusObject)
+    {
+        $dataBonus = $bonusObject->data;
+
+        $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
+        $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
+
+        $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
+
+        if (isset($dataBonus['wagered_deposit'])) {
+            $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
+        } else {
+            $depositWager = 0;
+        }
+
+        return [
+            'bonusWager' => [
+                'real' => $bonusWagerUser,
+                'necessary' =>$bonusWager
+            ],
+            'depositWager' => [
+                'real' => $depositWagerUser,
+                'necessary' =>$depositWager
+            ]
+        ];
+    }
 }

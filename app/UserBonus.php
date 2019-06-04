@@ -14,7 +14,7 @@ class UserBonus extends Model
         'data' => 'array',
     ];
 
-    protected $fillable = ['activated', 'expires_at', 'user_id', 'bonus_id', 'data', 'total_amount'];
+    protected $fillable = ['activated', 'expires_at', 'user_id', 'bonus_id', 'data', 'total_amount', 'ip_address'];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'expires_at'];
 

@@ -49,7 +49,7 @@ class BonusesTableSeeder extends Seeder
                 'id' => 1,
                 'public' => 1,
                 'name' => '50 free spins!',
-                'descr' => 'Available only registration',
+                'descr' => 'Available only after registration',
                 'rating' => 4,
                 'play_factor' => 33,
                 'created_at' => $currentDate,

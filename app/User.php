@@ -283,6 +283,8 @@ class User extends Authenticatable
         ];
 
         $transactions = $this->transactions()->where('created_at', '>=', $from)->where('created_at', '<=', $to)->get();
+        //to do fix this
+        $deposit = $this->transactions()->where('type', 3)->count();
 
         foreach ($transactions as $transaction)
         {
@@ -295,6 +297,7 @@ class User extends Authenticatable
                 }
 
                 $stat['deposits'] = $stat['deposits'] + $transaction->sum;
+
             }
             elseif($transaction->type == 1 or $transaction->type == 2)
             {
@@ -308,12 +311,19 @@ class User extends Authenticatable
                     $stat['wins'] = $stat['wins'] + $transaction->sum;
                 }
 
-                $stat['revenue'] = $stat['revenue'] + (-1)*$transaction->sum;
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
 
+
+                $stat['revenue'] = $stat['revenue'] + (-1)*$transaction->sum;
                 $stat['profit'] = $stat['profit'] + (-1)*$transaction->sum*$transaction->agent_commission/100;
+
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1)*$transaction->sum - (-1)*$transaction->sum*$transaction->agent_commission/100;
             }
+        }
+
+        if ($deposit == 0) {
+            $stat['revenue'] = 0;
+            $stat['profit'] = 0;
         }
 
         if($stat['bet_count'] != 0)

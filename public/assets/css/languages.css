@@ -36,13 +36,13 @@
 }
 .langbox li a {
     position: relative;
-    padding: 6px 35px 6px 10px;
+    /* padding: 6px 35px 6px 10px; */
     text-decoration: none;
     color: inherit;
 }
 .langbox > li > a {
-
-    padding: 11.5px 35px 11.5px 10px;
+     max-height: 41px;
+    padding: 11px 32px 10px 10px;
 }
 .langbox > li > a:after, .balancebox > li > .balancebox-title:after {
     content: '';
@@ -65,7 +65,7 @@
     display: inline-block;
     /* vertical-align: middle; */
     width: 20px;
-    margin-right: 4px;
+    margin-right: 1px;
 }
 .langbox .langbox-dropdown, .balancebox .balancebox-dropdown {
     display: none;
@@ -91,7 +91,7 @@
 .langbox li span {
     vertical-align: top;
     text-transform: uppercase;
-    margin-top: 3px;
+    margin-top: 4px;
     display: inline-block;
 }
 .langbox li a.active, .langbox .langbox-dropdown li a:hover, .balancebox li a.active, .balancebox .balancebox-dropdown li a:hover {

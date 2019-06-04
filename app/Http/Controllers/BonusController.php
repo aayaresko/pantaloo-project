@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\Bonus;
+use App\UserBonus;
 use App\Http\Requests;
+use Helpers\BonusHelper;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,40 +28,39 @@ class BonusController extends Controller
         });
 
         $active_bonus = Auth::user()->bonuses()->first();
+
+        $bonusStatistics = null;
+        if ($active_bonus) {
+            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+        }
         
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
+            'bonusStatistics' => $bonusStatistics
         ]);
     }
 
     public function activate(Bonus $bonus)
     {
-        //to do fix me !!!!
-
-        if(isset($_SERVER["HTTP_CF_IPCOUNTRY"])){
-            //If it is exists, use it.
-            $userCountry = $_SERVER["HTTP_CF_IPCOUNTRY"];
-            if (in_array($userCountry, ['AF','AL','DZ','AO','AT','CS','BH','BD','BY','BJ','BO','BA','BW','BF','BG','BI','CM','CV','CF','TD','KM','CG','CD','HR','CY','CZ','CI','DK','DJ','EG','GQ','ER','ET','FI','FR','GA','GM','GE','GH','GR','GN','GW','GY','HT','HN','HU','IN','ID','IR','IQ','JO','KZ','KE','KW','LV','LB','LS','LR','LT','MK','MG','MW','MY','ML','MR','MU','MD','MN','MA','MZ','NA','NI','NP','NE','NG','KP','OM','PK','PH','PL','PT','RO','RU','RW','ST','SN','SC','SL','SK','SI','SO','SD','CH','SY','TH','TG','TN','UG','UA','AE','TZ','VN','YE','ZM','ZW'])){
-                return redirect()->back()->withErrors(['Sorry, welcome bonus is not available in your country']);
-            }
-        }
+        //get user by request
+        $userRequest = Auth::user();
 
         //to do - check this - and edit this way
         if (!$bonus->public) {
             return redirect()->back()->withErrors(['No access']);
         }
 
-        $user = Auth::user();
-
-        $class = $bonus->getClass();
-
-        $bonus_obj = new $class($user);
-
-
         DB::beginTransaction();
 
-        $bonusActivate = $bonus_obj->activate();
+
+        $class = BonusHelper::getClass($bonus->id);
+
+        $user = User::where('id', $userRequest->id)->lockForUpdate()->first();
+
+        $bonusObj = new $class($user);
+
+        $bonusActivate = $bonusObj->activate();
 
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
@@ -70,6 +71,33 @@ class BonusController extends Controller
 
         return redirect()->back()->with('popup',
             ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
+
+
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
+//
+//        $user = Auth::user();
+//
+//        $class = $bonus->getClass();
+//
+//        $bonus_obj = new $class($user);
+//
+//
+//        DB::beginTransaction();
+//
+//        $bonusActivate = $bonus_obj->activate();
+//
+//        if ($bonusActivate['success'] === false) {
+//            DB::rollBack();
+//            redirect()->back()->withErrors([$bonusActivate['message']]);
+//        }
+//
+//        DB::commit();
+//
+//        return redirect()->back()->with('popup',
+//            ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
     }
 
     public function cancel()
@@ -127,7 +155,7 @@ class BonusController extends Controller
         $bonusObject = new $class($user);
 
         DB::beginTransaction();
-        $bonusActivate = $bonusObject->activate();
+        $bonusActivate = $bonusObject->activate(['mode' => 1]);
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
             return redirect()->back()->withErrors([$bonusActivate['message']]);
@@ -159,8 +187,15 @@ class BonusController extends Controller
         return redirect()->back()->with('msg', 'Bonus was canceled');
     }
 
-    public function promo()
+    public function promo(Request $request)
     {
-        return view('bonuses');
+        $user = $request->user();
+
+        $activeBonus = null;
+        if (!is_null($user)) {
+            $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
+        }
+
+        return view('bonuses')->with(['activeBonus' => $activeBonus]);
     }
 }

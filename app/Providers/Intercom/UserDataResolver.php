@@ -1,12 +1,13 @@
 <?php
 
-
 namespace App\Providers\Intercom;
 
 use App\Bonus;
-use App\ModernExtraUsers;
 use App\User;
 use App\UserBonus;
+use Helpers\BonusHelper;
+use Helpers\GeneralHelper;
+use App\ModernExtraUsers;
 use Illuminate\Support\Facades\Log;
 
 
@@ -25,8 +26,9 @@ class UserDataResolver
                 'Balance Real/Bonus' => self::getBalanceRealBonus($user),
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
+                'IP' => GeneralHelper::visitorIpCloudFlare(),
             ]];
-        foreach ($response['custom_attributes'] as $k=>$v){
+        foreach ($response['custom_attributes'] as $k => $v) {
             Log::info($k . ' => ' . $v);
         }
         return $response;
@@ -47,28 +49,15 @@ class UserDataResolver
         $bonusWagerString = $depositWagerString = '-';
 
         if ($userBonus) {
-
-            //to do FIX THIS!
-            //to do helper - delete this lines and from view bonus
-            $dataBonus = $userBonus->data;
-
-            $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
-            $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
-
-            $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
-
-            if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
-                $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
-            } else {
-                $depositWager = 0;
-            }
-
-            $curreny = config('app.currencyCode');
+            $bonusStatistics = BonusHelper::bonusStatistics($userBonus);
+            $currency = config('app.currencyCode');
 
             $depositWagerString = '-';
-            $bonusWagerString = $bonusWagerUser . ' / ' . $bonusWager . $curreny;
+            $bonusWagerString = $bonusStatistics['bonusWager']['real'] . ' / ' .
+                $bonusStatistics['bonusWager']['necessary'] . $currency;
             if ($userBonus->bonus_id == 1) {
-                $depositWagerString = $depositWagerUser . ' / ' . $depositWager . $curreny;
+                $depositWagerString = $bonusStatistics['depositWager']['real'] . ' / ' .
+                    $bonusStatistics['depositWager']['necessary'] . $currency;
             }
         }
 
@@ -77,14 +66,14 @@ class UserDataResolver
 
     private static function getBalanceRealBonus(User $user)
     {
-        return $user->getRealBalance() . '/' .$user->getBonusBalance();
+        return $user->getRealBalance() . '/' . $user->getBonusBalance();
     }
 
     private static function getAccountStatus(User $user)
     {
         $blockUser = ModernExtraUsers::where('user_id', $user->id)
             ->where('code', 'block')->first();
-        return is_null($blockUser) ? 'open' : 'banned';
+        return is_null($blockUser) || $blockUser->value == 0 ? 'open' : 'banned';
     }
 
     private static function getEmailVerified(User $user)
