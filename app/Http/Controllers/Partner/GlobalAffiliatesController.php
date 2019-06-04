@@ -113,7 +113,7 @@ class GlobalAffiliatesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->get()->all();
+                ->get();
 
             foreach ($items as $user) {
                 $result = collect();
@@ -131,11 +131,11 @@ class GlobalAffiliatesController extends Controller
                     ->pluck('id')->toArray();
 
                 $transactionItemsFull = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIdsFull)->get()->all();
+                    ->whereIn('user_id', $userIdsFull)->get();
                 //to do fix this
 
                 $transactionItems = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIds)->get()->all();
+                    ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
 
@@ -171,8 +171,7 @@ class GlobalAffiliatesController extends Controller
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
-                ->get()
-                ->all();
+                ->get();
 
             foreach ($items as $user) {
                 $result = collect();
@@ -189,10 +188,10 @@ class GlobalAffiliatesController extends Controller
                     ->pluck('id')->toArray();
 
                 $transactionItemsFull = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIdsFull)->get()->all();
+                    ->whereIn('user_id', $userIdsFull)->get();
                 //to do fix this
                 $transactionItems = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIds)->get()->all();
+                    ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
 
@@ -242,23 +241,23 @@ class GlobalAffiliatesController extends Controller
         //get transaction for affiliates
         $frozen = Transaction::where('type', 4)
             ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
-            ->where('withdraw_status', -1)->with('user')->get()->all();
+            ->where('withdraw_status', -1)->with('user')->get();
 
         $pending = Transaction::where('type', 4)
             ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
-            ->where('withdraw_status', 0)->with('user')->get()->all();
+            ->where('withdraw_status', 0)->with('user')->get();
 
         $failed = Transaction::where('type', 4)
             ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
-            ->where('withdraw_status', -2)->with('user')->get()->all();
+            ->where('withdraw_status', -2)->with('user')->get();
 
         $approved = Transaction::where('type', 4)
             ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
-            ->where('withdraw_status', 1)->with('user')->get()->all();
+            ->where('withdraw_status', 1)->with('user')->get();
 
         $queue = Transaction::where('type', 4)
             ->whereRaw('user_id in (SELECT id FROM users WHERE role = 1)')
-            ->where('withdraw_status', 3)->with('user')->get()->all();
+            ->where('withdraw_status', 3)->with('user')->get();
 
         return view('global-affiliates.withdraw', [
             'frozen' => $frozen,
