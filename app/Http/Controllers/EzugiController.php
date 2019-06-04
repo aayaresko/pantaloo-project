@@ -70,7 +70,7 @@ class EzugiController extends Controller
                     if ($user->id == 25) {
                         $private_token = '58c118028c36c468776592-4e8e57ab0d';
                     } else {
-                        $token = $public_token->getToken();
+                        $token = $public_token->token();
                         $private_token = $token->token;
                     }
 
