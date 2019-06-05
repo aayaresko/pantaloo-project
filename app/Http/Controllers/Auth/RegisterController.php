@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
 use App\User;
+use Illuminate\Mail\Mailable;
 use Validator;
 use App\Tracker;
 use App\Currency;
@@ -85,7 +88,7 @@ class RegisterController extends Controller
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (! GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
@@ -151,11 +154,11 @@ class RegisterController extends Controller
             //send email
             //to do check this
             $token = hash_hmac('sha256', str_random(40), config('app.key'));
-            $link = url('/').'/activate/'.$token.'/email/'.$user->email;
+            $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
             $activation = UserActivation::where('user_id', $user->id)->first();
 
-            if (! $activation) {
+            if (!$activation) {
                 $activation = new UserActivation();
             }
 
@@ -165,14 +168,15 @@ class RegisterController extends Controller
 
             $activation->save();
 
-            Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
-                $m->to($user->email, $user->name)->subject('Confirm email');
-            });
+            $mail = new BaseMailable('emails.confirm', ['link' => $link]);
+            $mail->subject('Confirm email');
+            Mail::to($user)->send($mail);
 
             $this->dispatch(new SetUserCountry($user));
 
             $this->guard()->login($user);
         } catch (\Exception $ex) {
+            dd($ex);
             return redirect()->back()->withErrors([$ex->getMessage()]);
         }
 
@@ -182,7 +186,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return User
      */
     protected function create(array $data)

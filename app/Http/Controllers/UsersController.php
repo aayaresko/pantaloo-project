@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
 use DB;
 use App\User;
 use App\Domain;
@@ -88,9 +90,9 @@ class UsersController extends Controller
 
         $activation->save();
 
-        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Confirm email');
-        });
+        $mail = new BaseMailable('emails.confirm', ['link' => $link]);
+        $mail->subject('Confirm email');
+        Mail::to($user)->send($mail);
 
         return redirect()->back()->with('popup', [
             'E-mail confirmation',

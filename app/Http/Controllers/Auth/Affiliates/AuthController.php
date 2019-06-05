@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
+use App\Mail\EmailPartnerConfirm;
 use DB;
 use Hash;
 use App\User;
@@ -380,9 +383,9 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        Mail::queue('emails.partner.confirm', ['link' => $link], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Confirm email');
-        });
+        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link]);
+        $mail->subject('Confirm email');
+        Mail::to($user)->send($mail);
 
         return [
             'status' => true,
