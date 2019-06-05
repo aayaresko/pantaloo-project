@@ -93,6 +93,54 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $user = User::where('email', 'anfield-rd@protonmail.com')->first();
+        $userIds = User::where('agent_id', $user->id)->get()->pluck('id');
+        $tr = Transaction::whereIn('user_id', $userIds)->where('type', '=', 3)->get()->toArray();
+        dd($tr);
+
+        $client = new Client([
+            'verify' => false,
+        ]);
+        //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
+        $response = $client->post('https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'response_type' => 'token',
+                'username' => 'api_casinobit',
+                'password' => 'BfRN18uA'
+            ]
+        ]);
+        $json = $response->getBody()->getContents();
+        $json = json_decode($json);
+        dd($json);
+        try {
+            $response = $client->get('https://api-int.qtplatform.com/v1/games', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Accept' => 'application/json',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+            dd($responseBodyAsString);
+        }
+
+        $game = $response->getBody()->getContents();
+        $game = json_decode($game);
+        foreach ($game->items as $game) {
+            foreach ($game->currencies as $currency) {
+                if ($currency == 'MBTC') {
+                    dump($game);
+                }
+            }
+        }
+        dd(2);
+
+
+
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
 //            ['users.created_at', '>', '2019-04-01 11:23:43'],
