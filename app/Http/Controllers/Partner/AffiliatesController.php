@@ -69,7 +69,7 @@ class AffiliatesController extends Controller
             $newTracker = new Tracker();
             $newTracker->user_id = $user->id;
             $newTracker->name = 'default';
-            $tracker->campaign_link = env('MAIN_ADDRESS');
+            $tracker->campaign_link = config('partner.main_url');
             $newTracker->ref = $ref;
             $newTracker->save();
         }
