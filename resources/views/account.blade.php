@@ -67,7 +67,8 @@
                                     </div>
                                     <div class="halfCol">
                                         <label for="country">Country:<span>*</span></label>
-                                        <select name="country" id="country">Country</select>
+                                        <!-- <select name="country" id="country">Country</select> -->
+                                        <input type="text" id="country">
                                     </div>
                                     
                                     <div class="halfCol">

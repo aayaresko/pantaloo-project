@@ -375,6 +375,8 @@ $(document).ready(function(){
 		minimumResultsForSearch: Infinity
 	});
 
+	$("#country").countrySelect();
+
 });
 
 
