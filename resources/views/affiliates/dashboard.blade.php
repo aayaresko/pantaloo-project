@@ -67,7 +67,16 @@
                             </div>
                         </div>
                     </div>
-
+                    @if(isset($countries) and $countries)
+                    <div class="col-lg-2 col-md-6">
+                        <div class="card-box widget-user">
+                            <div class="text-center">
+                                <h2 class="text-success">{{$countries}}</h2>
+                                <h5>COUNTRIES</h5>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <!-- end row -->
 

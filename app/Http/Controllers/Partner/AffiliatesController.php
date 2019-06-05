@@ -257,6 +257,13 @@ class AffiliatesController extends Controller
 
             $trackers->push($stat);
         }
+        $countries = false;
+        if ($currentUser->role == 3) {
+            $countriesCode = $currentUser->affiliateCountries->pluck('name')->toArray();
+            foreach ($countriesCode as $countryCode) {
+                $countries .= $countryCode . ' ';
+            }
+        }
 
         $data = [
             'users' => $result,
@@ -269,7 +276,8 @@ class AffiliatesController extends Controller
             'profit_total' => $result->sum('profit'),
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
-            'currencyCode' => $currencyCode
+            'currencyCode' => $currencyCode,
+            'countries' => $countries
         ];
 
         return view('affiliates.dashboard', $data);

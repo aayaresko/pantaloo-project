@@ -73,6 +73,7 @@
                                             <th>Deposit</th>
                                             <th>Today benefit</th>
                                             <th>Total Benefit</th>
+                                            <th>Withdraw</th>
                                         </tr>
                                         </thead>
 
@@ -87,6 +88,7 @@
                                                 <td>{{$user->deposit() ?: 0}}</td>
                                                 <td>{{$user->todayPlayerSum()}}</td>
                                                 <td>{{$user->totalPlayerSum()}}</td>
+                                                <td>{{$user->withdraw()}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

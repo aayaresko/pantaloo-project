@@ -479,4 +479,16 @@ class User extends Authenticatable
     {
         return $this->playerSum()->sum('deposits');
     }
+
+    public function withdraw()
+    {
+        $total = $this->transactions()
+            ->select(DB::raw('sum(`sum`) as total'))
+            ->where('type', 4)
+            ->where('withdraw_status', 2)
+            ->first();
+
+        return $total->total ?: 0;
+    }
+
 }

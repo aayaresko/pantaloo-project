@@ -38,6 +38,7 @@
                                     <th>Today benefit</th>
                                     <th>Total Benefit</th>
                                     <th>Profit</th>
+                                    <th>Withdraw</th>
                                 </tr>
                                 </thead>
 
@@ -52,6 +53,7 @@
                                         <td>{{$user->todayPlayerSum()}}</td>
                                         <td>{{$user->totalPlayerSum()}}</td>
                                         <td>{{$user->totalPlayerProfit()}}</td>
+                                        <td>{{$user->withdraw()}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
