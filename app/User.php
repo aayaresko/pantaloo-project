@@ -474,4 +474,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Country', 'affiliate_countries');
     }
+
+    public function deposit()
+    {
+        return $this->playerSum()->sum('deposits');
+    }
 }

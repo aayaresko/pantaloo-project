@@ -34,6 +34,7 @@
                                     <th>Campaign name</th>
                                     <th>Country</th>
                                     <th>Created</th>
+                                    <th>Depositis</th>
                                     <th>Today benefit</th>
                                     <th>Total Benefit</th>
                                     <th>Profit</th>
@@ -47,6 +48,7 @@
                                         <td>{{$user->tracker ? $user->tracker->name : 'default'}}</td>
                                         <td>{{$user->countries ? $user->countries->name : $user->country}}</td>
                                         <td>{{$user->created_at->format('Y-m-d  H:i')}}</td>
+                                        <td>{{$user->deposit() ?: 0}}</td>
                                         <td>{{$user->todayPlayerSum()}}</td>
                                         <td>{{$user->totalPlayerSum()}}</td>
                                         <td>{{$user->totalPlayerProfit()}}</td>
