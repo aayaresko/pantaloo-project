@@ -1259,7 +1259,7 @@ html[lang="th"] .main-title-block {
 }
 .mobile-menu .navigation-list li a.games:before {
   background: url('../media/images/icons/games_icon_violer.svg') no-repeat center;
-  background-size: cover;
+  background-size: contain;
 }
 .mobile-menu .navigation-list li a.deposite:before {
   background: url('../media/images/icons/deposit.png') no-repeat center;
