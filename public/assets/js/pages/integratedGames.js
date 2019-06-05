@@ -38,14 +38,20 @@ let events = function () {
     });
 
     $('body').on('click', 'a.open_game', function (e) {
+        let url = String(this.getAttribute('href'));
         e.preventDefault();
         if (auth) {
-            let url = String(this.getAttribute('href'));
+            
             $('.expand-game').addClass('not-allowed');
             getGame(url);
+            
         }
         else {
             $('.log-popup').addClass('active');
+
+            window.localStorage.setItem('gameUrl', url);
+            window.localStorage.setItem('authOpenGame', true);
+
         }
         return false;
     });
@@ -498,4 +504,26 @@ $('body').ready(function () {
         e.stopPropagation();
         $(this).toggleClass('single-game-hover').siblings().removeClass('single-game-hover');
     });
+});
+
+
+
+$(function(){
+
+    
+
+    let authOpenGame = window.localStorage.getItem('authOpenGame');
+
+    if(authOpenGame === 'true'){
+        let authGameUrl = window.localStorage.getItem('gameUrl');
+        getGame(authGameUrl);
+
+        window.localStorage.setItem('authOpenGame', 'false');
+        
+    }else{
+        console.log("error localstorage");
+    }
+
+    console.log(authOpenGame)
+
 });

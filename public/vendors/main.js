@@ -127,25 +127,41 @@ function animationInit(){
 	});
 
 
-	$("#login").on("submit", function () {
+	// $("#login").on("submit", function (e) {
 
-		let loginForm = $(this);
+	// 	let loginForm = $(this);
 		
-		$.ajax({
-			method: 'POST',
-			url: '/123456',
-			data: loginForm.serialize()
-		}).done(function () {
-			console.log("Succeses");
-		}).fail(function(){
-			console.log("error");
-			loginForm.find('input').addClass("showErrorMsg");
+	// 	$.ajax({
+	// 		method: 'POST',
+	// 		url: '/loginModern',
+	// 		data: loginForm.serialize()
+	// 	}).done(function (response) {
+
+	// 		// console.log(response);
+	// 		let resultLogin = response;
+
+	// 		if(resultLogin.status == false){
+	// 			loginForm.find('input').addClass("showErrorMsg");
 			
-			let loginResult = $(".loginError").addClass("showErrorMsg");
-			loginResult.html("These credentials do not match our records.");
-		});
-		return false;
-	});
+	// 			let loginResult = $(".loginError").addClass("showErrorMsg");
+				
+	// 			loginResult.html(resultLogin.message);
+
+	// 		}else{
+	// 			window.location.reload();
+
+	// 		}
+
+	// 	}).fail(function(){
+
+	// 		$(".loginError").html('There is some problem with your request');
+
+	// 		$(".loginError").addClass("showErrorMsg");
+
+	// 	});
+
+	// 	return false;
+	// });
 
 
 	$("#registr").on("submit", function () {
@@ -154,16 +170,28 @@ function animationInit(){
 
 		$.ajax({
 			method: 'POST',
-			url: '/123456',
+			url: '/registerModern',
 			data: regForm.serialize()
-		}).done(function () {
-			console.log("Succeses");
-		}).fail(function(){
-			console.log("error");
-			regForm.find('input').addClass("showErrorMsg");
+		}).done(function (response) {
 
-			let registrResult = $(".registrError").addClass("showErrorMsg");
-			registrResult.html("These credentials do not match our records.");
+			let resultRegistr = response;
+
+			if(resultRegistr.status == false){
+
+				regForm.find('input').addClass("showErrorMsg");
+				let registrResult = $(".registrError").addClass("showErrorMsg");
+				registrResult.html(resultRegistr.message);
+
+			}else{
+
+				window.location.reload();
+				
+			}
+		}).fail(function(){
+
+			$(".registrError").html('There is some problem with your request');
+			$(".registrError").addClass("showErrorMsg");
+
 		});
 		return false;
 	});

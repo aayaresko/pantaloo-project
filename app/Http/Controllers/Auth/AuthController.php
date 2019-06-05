@@ -417,13 +417,14 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->toArray();
-            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
-                array_push($errors, $item);
-            });
+
+            // array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+            //     array_push($errors, $item);
+            // });
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => $errors
+                    'errors' => ['jhgjhgjh']
                 ]
             ]);
         }
@@ -544,9 +545,9 @@ class AuthController extends Controller
 
     public function loginModern(Request $request)
     {
-        if (rand(1, 3) === 1) {
+        if (1) {
             return response()->json([
-                'status' => false,
+                'status' => true,
                 'message' => ['ERROR']
             ]);
         }

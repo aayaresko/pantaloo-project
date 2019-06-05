@@ -449,7 +449,7 @@
                                          
                                             @endif
                                         
-                                        </label>                                      
+                                        </label>                             
                                     </div>
                                 </div>
                             </div>
@@ -471,20 +471,17 @@
                     </div>
                 </div>
                 <div class="popUpFooter">
-                    <span>Have an account?<a href="#" class="login-btn">Sign in</a></span>
+                    <span>{{ trans('casino.have_account') }}<a href="#" class="login-btn">{{ trans('casino.enter_account') }}</a></span>
                 </div>
             </div>
              @else
-             <div class="regPopUpWrapper notAllowedCountry">
+             <div class="regPopUpWrapper git">
                 <div class="regPopUpBgTop"></div>
                 <button class="close-icon">×</button>
                 <div class="popup-entry">
                     <div class="icon"></div>
                     <h5 class="popup-title">{{ trans('casino.not_allowed_title')}}</h5>
                     <p class="subTitle">{{ trans('casino.not_allowed_subtitle')}}</p>
-                    <div class="send-btn-block">
-                        <a href="mailto:" class="contactUsBtn">{{ trans('casino.contact_us') }}</a>
-                    </div>
                 </div>
                 <div class="popUpFooter">
                     <span>{{ trans('casino.affiliate_info') }}<a href="mailto:affiliates@casinobit.io">affiliates@casinobit.io</a></span>
@@ -552,8 +549,8 @@
         <!-- </div> -->
     
     <div class="popUpFooter">
-        <span>Don’t have an account?<a href="{{ url('/register') }}"
-                                        class="account-btn">Creat</a></span>
+        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+                                        class="account-btn">{{ trans('casino.create_account') }}</a></span>
     </div>
     </div>
 </div>
