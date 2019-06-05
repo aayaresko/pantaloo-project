@@ -177,25 +177,25 @@ window.onpopstate = function(event) {
 
     var urlParams = new URLSearchParams(window.location.hash.replace("#","?"));
     var hash = urlParams.get('page');
-    console.log('hash page:' + hash);
+    // console.log('hash page:' + hash);
     
     if (hash == null) {
-        console.log("STOP");
+        // console.log("STOP");
         hash = 1
     }
 
     if (hash + 1 == currPage) {
-        console.log("STOP2");
+        // console.log("STOP2");
         history.back()
         return;
     }
 
-    console.log(currPage);
+    // console.log(currPage);
 
 
     if (hash <= currPage - 1) {
         
-        console.log("url page less than curr");
+        // console.log("url page less than curr");
         $('.single-game').slice(-gamesLoaded).remove();
         // $('.tittlePage').get(0).scrollIntoView();
         
@@ -213,11 +213,11 @@ window.onpopstate = function(event) {
         currPage--
         $('.moreGames').show()
     } else if (hash == currPage) {
-        console.log('else IF');
+        // console.log('else IF');
         listGameParams.page = currPage
         getListGames(true, true);
     } else {
-        console.log('else');
+        // console.log('else');
         window.location.reload()
     }
  
