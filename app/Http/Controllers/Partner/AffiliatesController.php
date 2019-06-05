@@ -317,6 +317,8 @@ class AffiliatesController extends Controller
         }
         $newKoef->koef = $request->koef;
         $newKoef->save();
+        $partner->commission = $request->koef;
+        $partner->save();
 
         return back();
     }

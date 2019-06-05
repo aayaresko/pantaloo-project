@@ -341,6 +341,7 @@ class AgentController extends Controller
 
         $user->commission = $request->input('commission');
         $user->save();
+        $this->setAgentKoef($user, $request->input('commission'));
 
         return redirect()->back()->with('msg', 'Agent was updated');
     }
@@ -393,14 +394,21 @@ class AgentController extends Controller
     public function setPercent($id, Request $request)
     {
         $partner = User::findOrFail($id);
+        $this->setAgentKoef($partner, $request->koef);
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    protected function setAgentKoef($partner, $koef)
+    {
         $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
         if (!$newKoef) {
             $newKoef = new AgentsKoef();
             $newKoef->user_id = $partner->id;
         }
-        $newKoef->koef = $request->koef;
+        $newKoef->koef = $koef;
         $newKoef->save();
-
-        return redirect()->back()->with('msg', "Success");
+        $partner->commission = $koef;
+        $partner->save();
     }
 }

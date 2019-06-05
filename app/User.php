@@ -146,7 +146,7 @@ class User extends Authenticatable
 
         $available = $profit - $this->payments()->sum('sum');
 
-        if($available <= 0) return 2;
+        if($available <= 0) return 0;
 
         return round($available, 5, PHP_ROUND_HALF_DOWN);
     }

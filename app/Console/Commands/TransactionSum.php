@@ -53,10 +53,9 @@ class TransactionSum extends Command
             }
             $newAgent = AgentsKoef::where('user_id', $agent->id)->first();
             if (!$newAgent) {
-                $koefTransaction = Transaction::where('agent_id', $agent->id)->where('agent_commission', '>', 0)->first();
                 $newAgent = new AgentsKoef();
                 $newAgent->user_id = $agent->id;
-                $newAgent->koef = $koefTransaction ? $koefTransaction->agent_commission : 40;
+                $newAgent->koef = $agent->commission ?: 0;
                 $newAgent->created_at = Carbon::now()->subDays(100);
                 $newAgent->save();
             }
@@ -119,49 +118,5 @@ class TransactionSum extends Command
                 }
             }
         }
-
-//        foreach ($agents as $agent) {
-//            $users = User::where('agent_id', $agent->id)->get();
-//
-//            for ($i = 0; $i < 7; $i++) {
-//                $now = Carbon::now()->subDays(7)->addDays($i);
-//                $nowStr = $now->toDateTimeString();
-//                $nowSubStr = $now->subDay()->toDateTimeString();
-//                $totalAgentSumPerDay = 0;
-//
-//                foreach ($users as $user) {
-//                    $transactions = $user->transactions()
-//                        ->select(DB::raw('sum(`sum`) as total'))
-//                        ->where('transactions.sum', '<>', 0)
-//                     //   ->where('agent_commission', '<>', 0)
-//                        ->whereIn('type', [1, 2])
-//                        ->where('created_at', '<', $nowStr)
-//                        ->where('created_at', '>=', $nowSubStr)
-//                        ->first();
-//                    if ($transactions->total) {
-//                        $trSum = new UserSum();
-//                        $trSum->user_id = $user->id;
-//                        $trSum->parent_id = $agent->id;
-//                        $trSum->percent = $agent->koefs->koef;
-//                        $trSum->sum = $transactions->total;
-//                        $trSum->created_at = $now;
-//                        $trSum->save();
-//                        $totalAgentSumPerDay += $transactions->total;
-//                    }
-//                }
-//                if ($totalAgentSumPerDay) {
-//                    $newAgentSum = new AgentSum();
-//                    $newAgentSum->user_id = $agent->id;
-//                    $newAgentSum->total_sum = $totalAgentSumPerDay;
-//                    $newAgentSum->agent_percent = $agent->koefs->koef;
-//                    if ($agent->agent_id) {
-//                        $newAgentSum->parent_percent = $agent->parentKoef->koef;
-//                        $newAgentSum->parent_profit = $newAgentSum->total_sum * ($newAgentSum->parent_percent - $newAgentSum->agent_percent) / 100;
-//                    }
-//                    $newAgentSum->created_at = $now;
-//                    $newAgentSum->save();
-//                }
-//            }
-//        }
     }
 }
