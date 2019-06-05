@@ -24,12 +24,12 @@
                                         <input type="text" class="form-control" name="name" value="">
                                         <h4>Select Language</h4>
                                         <select name="campaign_link" class="form-control">
-                                            <option value="{{url('/en')}}">English</option>
-                                            <option value="{{url('/de')}}">Deutsch</option>
-                                            <option value="{{url('/fr')}}">Français</option>
-                                            <option value="{{url('/it')}}">Italiano</option>
-                                            <option value="{{url('/ru')}}">Русский</option>
-                                            <option value="{{url('/th')}}">ไทย</option>
+                                            <option value="{{str_replace('partner.', '', url('/en'))}}">English</option>
+                                            <option value="{{str_replace('partner.', '', url('/de'))}}">Deutsch</option>
+                                            <option value="{{str_replace('partner.', '', url('/fr'))}}">Français</option>
+                                            <option value="{{str_replace('partner.', '', url('/it'))}}">Italiano</option>
+                                            <option value="{{str_replace('partner.', '', url('/ru'))}}">Русский</option>
+                                            <option value="{{str_replace('partner.', '', url('/th'))}}">ไทย</option>
                                         </select>
                                         {{--<h4>Ref</h4>--}}
                                         {{--<input type="text" class="form-control" name="ref" value="">--}}
