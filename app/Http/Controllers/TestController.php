@@ -93,6 +93,12 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+
+        $user = User::where('email', 'anfield-rd@protonmail.com')->first();
+        $userIds = User::where('agent_id', $user->id)->get()->pluck('id');
+        $tr = Transaction::whereIn('user_id', $userIds)->where('type', '=', 3)->get()->toArray();
+        dd($tr);
+
         $client = new Client([
             'verify' => false,
         ]);
