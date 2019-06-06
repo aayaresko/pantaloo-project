@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bonus;
+use App\Models\UserSum;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -138,8 +139,6 @@ class TestController extends Controller
             }
         }
         dd(2);
-
-
 
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([

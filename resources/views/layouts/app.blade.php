@@ -391,11 +391,13 @@
             </div>
 
             @if ($registrationStatus === 1)
+
                 <div class="popup-form">
                     <form id="registr" action="/register" method="POST">
                         {{csrf_field()}}
                         <input type="hidden" name="password_confirmation" value="">
                         <input type="hidden" name="name" value="no_name">
+                        <input type="hidden" name="ref" value="{{request()->ref}}">
                         <div class="row">
                             <div class="col-sm-12">
                                 <input type="email" class="email-input red"

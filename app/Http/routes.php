@@ -272,6 +272,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::group(['middleware' => ['can:accessAdminAffiliatePublic']], function () {
                 Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
+                Route::get('/agent/tree', ['as' => 'admin.agents.tree', 'uses' => 'AgentController@showTree']);
+                Route::get('/agent/tree/{id}', ['as' => 'admin.agents.show', 'uses' => 'AgentController@showAffiliate']);
+                Route::post('/agent/tree/{id}/makeSuper', ['as' => 'admin.agents.makeSuper', 'uses' => 'AgentController@makeSuper']);
+                Route::post('/agent/tree/{id}/setAffiliate', ['as' => 'admin.agents.setAffiliate', 'uses' => 'AgentController@setAffiliate']);
+                Route::post('/agent/tree/{id}/setPercent', ['as' => 'admin.agents.setPercent', 'uses' => 'AgentController@setPercent']);
                 Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
             });
 
@@ -315,6 +320,10 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             //Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
             Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'Partner\AffiliatesController@trackers']);
+            Route::get('/partners', ['as' => 'agent.affiliates', 'uses' => 'Partner\AffiliatesController@partners']);
+            Route::get('/partners/{id}', ['as' => 'agent.affiliates.show', 'uses' => 'Partner\AffiliatesController@partnerShow']);
+            Route::get('/users', ['as' => 'agent.users', 'uses' => 'Partner\AffiliatesController@users']);
+            Route::post('/partners/change/{id}', 'Partner\AffiliatesController@changeKoef')->name('agent.change.koef');
 
             Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);
             Route::post('/tracker/{tracker}/update', ['as' => 'agent.updateTracker', 'uses' => 'AgentController@updateTracker']);

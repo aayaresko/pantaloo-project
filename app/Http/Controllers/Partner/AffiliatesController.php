@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Models\AgentsKoef;
 use DB;
 use App\User;
 use Validator;
@@ -23,6 +24,8 @@ use App\Http\Controllers\Controller;
  */
 class AffiliatesController extends Controller
 {
+    const PLAYER_ROLE = 0;
+    const AGENT_ROLE = 1;
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -49,19 +52,31 @@ class AffiliatesController extends Controller
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
+        $ref = false;
 
         foreach ($trackers as $tracker) {
             $tracker->campaign_linkFull = $tracker->campaign_link;
             if (is_null($tracker->campaign_link)) {
                 $tracker->campaign_linkFull = $necessaryAddress;
+                $ref = $tracker->ref;
             }
 
             $tracker->fullLink = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
                 $configPartner['keyLink'], $tracker->ref);
         }
+        if (!$ref) {
+            $ref = str_random(12);
+            $newTracker = new Tracker();
+            $newTracker->user_id = $user->id;
+            $newTracker->name = 'default';
+            $newTracker->campaign_link = config('partner.main_url');
+            $newTracker->ref = $ref;
+            $newTracker->save();
+        }
 
         return view('affiliates.trackers', [
             'trackers' => $trackers,
+            'ref' => $ref
         ]);
 
     }
@@ -242,6 +257,13 @@ class AffiliatesController extends Controller
 
             $trackers->push($stat);
         }
+        $countries = false;
+        if ($currentUser->role == 3) {
+            $countriesCode = $currentUser->affiliateCountries->pluck('name')->toArray();
+            foreach ($countriesCode as $countryCode) {
+                $countries .= $countryCode . ' ';
+            }
+        }
 
         $data = [
             'users' => $result,
@@ -254,7 +276,8 @@ class AffiliatesController extends Controller
             'profit_total' => $result->sum('profit'),
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
-            'currencyCode' => $currencyCode
+            'currencyCode' => $currencyCode,
+            'countries' => $countries
         ];
 
         return view('affiliates.dashboard', $data);
@@ -279,5 +302,53 @@ class AffiliatesController extends Controller
             'transactions' => $transactions,
             'statusPayment' => $statusPayment
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function partners()
+    {
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
+        $myKoef = Auth::user()->koefs->koef;
+
+        return view('affiliates.partners', compact('affiliates', 'myKoef'));
+    }
+
+    public function changeKoef($id, Request $request)
+    {
+        $partner = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->where('id', $id)->firstOrFail();
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $request->koef;
+        $newKoef->save();
+        $partner->commission = $request->koef;
+        $partner->save();
+
+        return back();
+    }
+
+    public function users()
+    {
+        $users = User::where('agent_id', Auth::user()->id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
+        $myKoef = Auth::user()->koefs->koef;
+
+        return view('affiliates.users', compact('myKoef', 'users'));
+    }
+
+    public function partnerShow($id, User $user)
+    {
+        $partner = $user->findOrFail($id);
+        if (Auth::user()->id == $partner->agent_id) {
+            $users = $user->where('agent_id', $id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
+            $affiliates = $user->where('agent_id', $id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
+
+            return view('affiliates.partner', compact('partner', 'users', 'affiliates'));
+        }
+
+        abort(403);
     }
 }
