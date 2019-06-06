@@ -164,7 +164,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('/password', ['as' => 'password', 'uses' => 'UsersController@password']);
         Route::post('/email/confirm', ['as' => 'email.confirm', 'uses' => 'UsersController@confirmEmail']);
 
-        Route::get('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
+        Route::post('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
         Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
         Route::get('/free', ['as' => 'freeSpins', 'uses' => 'SlotController@freeSpins']);

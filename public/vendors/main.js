@@ -275,40 +275,40 @@ function getCurrentScreen(){
 	});
 	
 
-	function bonusTerms() {
-		$('.block-bonus-buttons .usl-link').on('click', function (e) {
-			let linkBonus = $(this).attr('data-bonus-url');
-			$('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
-
-			let tempateBonusActive = $('.tempateBonusActive').html();
-			$('#uls').append(tempateBonusActive);
-		});
-
-		$('.usl-link').on('mfpClose', function (e) {
-			$("#uls .popUpTermForm").remove();
-		});
-	}
-
-	bonusTerms();
-
-
-	$('#uls').on('click','.popUpBtnBonus', function(e){
-		
-		if($('#terms').prop('checked') == false){
-
-			$(".errorMessage").addClass("showErrorMsg");
-	
-			$(this).prev().addClass("showErrorMsg");
-
-			e.preventDefault();
-		}
-	});
-
-	$("#uls").on("click", '.mfp-close' ,function(){
-
-		$(".errorMessage").removeClass('showErrorMsg');
-
-	});
+	// function bonusTerms() {
+	// 	$('.block-bonus-buttons .usl-link').on('click', function (e) {
+	// 		let linkBonus = $(this).attr('data-bonus-url');
+	// 		$('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
+	//
+	// 		let tempateBonusActive = $('.tempateBonusActive').html();
+	// 		$('#uls').append(tempateBonusActive);
+	// 	});
+	//
+	// 	$('.usl-link').on('mfpClose', function (e) {
+	// 		$("#uls .popUpTermForm").remove();
+	// 	});
+	// }
+	//
+	// bonusTerms();
+	//
+	//
+	// $('#uls').on('click','.popUpBtnBonus', function(e){
+	//
+	// 	if($('#terms').prop('checked') == false){
+	//
+	// 		$(".errorMessage").addClass("showErrorMsg");
+	//
+	// 		$(this).prev().addClass("showErrorMsg");
+	//
+	// 		e.preventDefault();
+	// 	}
+	// });
+	//
+	// $("#uls").on("click", '.mfp-close' ,function(){
+	//
+	// 	$(".errorMessage").removeClass('showErrorMsg');
+	//
+	// });
 
 });
 

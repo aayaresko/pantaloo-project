@@ -2,8 +2,6 @@
 
 @section('title', trans('casino.bonuses'))
 
-
-
 @section('content')
     <div class="cabinet-block act page-bonuses pageBonus"
          style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
@@ -14,7 +12,7 @@
             <div class="container">
                 <div class="flexContainer">
 
-                    @foreach($bonuses as $bonus)
+                    @foreach($bonuses as  $key => $bonus)
                         @php
                             $bonusExtra = json_decode($bonus->extra, true);
                             $activatedBonus = '';
@@ -80,8 +78,13 @@
                     <input type="checkbox" id="terms">
                     <label for="terms"><span>I accept terms</span>
                         <p class="errorMessage">{{ trans('casino.error_msg') }}</p></label>
+
                     <a class='bonusActiveTerms popUpBtnBonus'
                        href="https://casinobit.io/bonus/1/activate">{{ trans('casino.activate') }}</a>
+
+                    <form action='#' id = 'formSendBonus' method='post' style="display: none">
+                        {{csrf_field()}}
+                    </form>
                 </div>
             @else
                 <div class="popUpTermForm" style="justify-content: flex-end;">
@@ -100,10 +103,48 @@
 @section('js')
     <script>
 
-        $('#uls').on('click', '.popUpBtnBonus', function (e) {
-            // let url = $(this).attr('href');
-            // $(`<form action='${url}' method='post'></form>`).appendTo('body').submit();
-        });
+        function bonusTerms() {
+            //click active first step
+            $('.block-bonus-buttons .usl-link').on('click', function (e) {
+                let linkBonus = $(this).attr('data-bonus-url');
+                $('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
+                //new
+                $('#formSendBonus').attr('action', linkBonus);
+
+                let tempateBonusActive = $('.tempateBonusActive').html();
+                $('#uls').append(tempateBonusActive);
+            });
+
+            //click second step
+            $('#uls').on('click','.popUpBtnBonus', function(e) {
+                e.preventDefault();
+                if($('#terms').prop('checked') == false){
+
+                    $(".errorMessage").addClass("showErrorMsg");
+
+                    $(this).prev().addClass("showErrorMsg");
+
+                } else {
+                    $('#formSendBonus').submit();
+                }
+
+            });
+
+            //close and delete link (form)
+            $('.usl-link').on('mfpClose', function (e) {
+                $("#uls .popUpTermForm").remove();
+            });
+
+            //delete message errors
+            $("#uls").on("click", '.mfp-close' ,function(){
+
+                $(".errorMessage").removeClass('showErrorMsg');
+
+            });
+        }
+
+        bonusTerms();
+
     </script>
 @endsection
 
