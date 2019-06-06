@@ -8,7 +8,7 @@ class Type extends Model
 {
     public function slots()
     {
-        return $this->hasMany(\App\Type::class);
+        return $this->hasMany(self::class);
     }
 
     public static function getSelect($val = false)

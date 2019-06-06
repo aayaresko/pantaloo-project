@@ -24,6 +24,7 @@ class BaseMailable extends Mailable
     public function to($data, $name = null)
     {
         $email = is_string($data) ? $data : $data->email;
+
         return parent::to($email, is_null($name) ? $name : $email);
     }
 

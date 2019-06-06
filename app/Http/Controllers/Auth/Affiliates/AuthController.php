@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
-use App\Mail\BaseMailable;
-use App\Mail\EmailConfirm;
-use App\Mail\EmailPartnerConfirm;
 use DB;
 use Hash;
 use App\User;
@@ -15,9 +12,12 @@ use App\ExtraUser;
 use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
 use Helpers\GeneralHelper;
 use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
+use App\Mail\EmailPartnerConfirm;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
