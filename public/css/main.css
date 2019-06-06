@@ -1257,6 +1257,10 @@ html[lang="th"] .main-title-block {
 .mobile-menu .navigation-list li a.support:before {
   background: url('../media/images/icons/support.png') no-repeat center;
 }
+.mobile-menu .navigation-list li a.games:before {
+  background: url('../media/images/icons/games_icon_violer.svg') no-repeat center;
+  background-size: contain;
+}
 .mobile-menu .navigation-list li a.deposite:before {
   background: url('../media/images/icons/deposit.png') no-repeat center;
 }
@@ -1296,7 +1300,9 @@ html[lang="th"] .main-title-block {
   height: 30px;
   margin-top: -19px;
 }
-
+/* .navigation.mobNav .order-games {
+  display: none;
+} */
 
 /*=====================SLIDER======================*/
 /*=====================MIDDLE======================*/
@@ -5728,6 +5734,33 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 
 
+.flexContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0px -15px;
+}
+
+.flexChild{
+  flex-basis: 40%;
+    margin: 15px;
+    flex-grow: 1;
+    max-width: 47%;
+}
+
+.flexChild:nth-child(odd) .block-bonus-left{
+    left: auto;
+    right: 30px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-right{
+    right: auto;
+    left: 80px;
+}
+
+
+
 
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
@@ -7172,6 +7205,17 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 @media (max-width: 991px) {
 
+
+  
+ .flexChild:nth-child(odd) .block-bonus-right{
+  left: 10px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-left{
+  right: 10px;
+}
+
+
   .errorMessage.showErrorMsg{
     display: block;
     margin-left: 0px;
@@ -7935,7 +7979,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 
-
+  .flexChild{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 
   .ac-wrap .block-bonus{
     margin-right: 0px;

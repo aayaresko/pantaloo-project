@@ -155,6 +155,7 @@
                             <ul class="list-unstyled">
                                 <li><a href="{{route('admin.agents')}}">Accounts</a></li>
                                 <li><a href="{{route('admin.agentPayments')}}">Withdraws</a></li>
+                                <li><a href="{{route('admin.agents.tree')}}">Tree</a></li>
                             </ul>
                         </li>
 
@@ -226,6 +227,14 @@
                         <li>
                             <a href="{{route('globalAffiliates.index')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Finance </span> </a>
                         </li>
+
+                        <li>
+                            <a href="{{route('globalAffiliates.users')}}" class="waves-effect"><i class="fa fa-users"></i> <span> Users </span> </a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('admin.agents.tree')}}" class="waves-effect"><i class="fa fa-tree"></i> <span> Tree </span> </a>
+                        </li>
                     @endcan
 
                     @can('accessAdminTranslatorPublic')
@@ -233,11 +242,15 @@
                             <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                         </li>
                     @endcan
-
+                    @if(Auth::user()->role == 4)
+                    <li>
+                        <a href="{{route('affiliates.logoutMain')}}" class="waves-effect"><i class="ti-close"></i><span> Logout </span></a>
+                    </li>
+                    @else
                     <li>
                         <a href="{{ url('/') }}" class="waves-effect"><i class="ti-close"></i><span> To site </span></a>
                     </li>
-
+                    @endif
                 </ul>
                 <div class="clearfix"></div>
             </div>

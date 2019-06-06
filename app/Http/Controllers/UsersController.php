@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AccountStatusEvent;
+use App\Models\AgentsKoef;
 use DB;
 use App\Domain;
 use App\Jobs\SetUserCountry;
@@ -200,6 +201,9 @@ class UsersController extends Controller
             $user->role = $request->input('role');
 
             $user->save();
+            if ($user->role == 1 or $user->role == 3) {
+                $this->setAgentKoef($user, $commission);
+            }
 
             //block user
             $block = ($request->has('block')) ? 1 : 0;
@@ -242,5 +246,18 @@ class UsersController extends Controller
     public function edit(User $user)
     {
 
+    }
+
+    protected function setAgentKoef($partner, $koef)
+    {
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $koef;
+        $newKoef->save();
+        $partner->commission = $koef;
+        $partner->save();
     }
 }

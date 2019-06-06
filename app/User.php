@@ -363,4 +363,132 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Transaction', 'agent_id');
     }
+
+    public function koefs()
+    {
+        return $this->hasOne('App\Models\AgentsKoef')->orderBy('id', 'desc');
+    }
+
+    public function allKoefs()
+    {
+        return $this->hasMany('App\Models\AgentsKoef')->orderBy('id', 'desc');
+    }
+
+    public function playersCount()
+    {
+        return self::where('agent_id', $this->id)->where('role', 0)->count();
+    }
+
+    public function agentsCount()
+    {
+        return self::where('agent_id', $this->id)->where('role', 1)->count();
+    }
+
+    public function benefits()
+    {
+        return $this->hasMany('App\Models\AgentSum');
+    }
+
+    public function allBenefits()
+    {
+        $sum = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $newSum = $child->allBenefits();
+            $sum += $newSum;
+        }
+        $sum += $this->benefits->sum('total_sum');
+
+        return $sum;
+    }
+
+    public function playersTotalCount()
+    {
+        $count = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $count += $child->playersTotalCount();
+        }
+        $count += $this->playersCount();
+
+        return $count;
+    }
+
+    public function parentKoef()
+    {
+        return $this->hasOne('App\Models\AgentsKoef', 'user_id', 'agent_id')->orderBy('id', 'desc');
+    }
+
+    public function profit()
+    {
+        return $this->benefits->sum('parent_profit');
+    }
+
+    public function totalProfit()
+    {
+        $count = 0;
+        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
+            $count += $child->totalProfit();
+        }
+        $count += $this->profit();
+
+        return $count;
+    }
+
+    public function playerSum()
+    {
+        return $this->hasMany('App\Models\UserSum');
+    }
+
+    public function totalPlayerSum()
+    {
+        return $this->playerSum()->sum('sum');
+    }
+
+    public function totalPlayerProfit()
+    {
+        $profit = 0;
+        foreach ($this->playerSum()->get() as $playerSum) {
+            $profit += $playerSum->sum * $playerSum->percent / 100;
+        }
+
+        return $profit;
+    }
+
+    public function todayPlayerSum()
+    {
+         $total = $this->transactions()
+            ->select(DB::raw('sum(`sum`) as total'))
+            ->where('transactions.sum', '<>', 0)
+            ->whereIn('type', [1, 2])
+            ->where('created_at', '>=', Carbon::now()->toDateString())
+            ->first();
+
+         return $total->total ?: 0;
+    }
+
+    public function countries()
+    {
+        return $this->hasOne('App\Country', 'code', 'country');
+    }
+
+    public function affiliateCountries()
+    {
+        return $this->belongsToMany('App\Country', 'affiliate_countries');
+    }
+
+    public function deposit()
+    {
+        return $this->playerSum()->sum('deposits');
+    }
+
+    public function withdraw()
+    {
+        $total = $this->transactions()
+            ->select(DB::raw('sum(`sum`) as total'))
+            ->where('type', 4)
+            ->where('withdraw_status', 2)
+            ->first();
+
+        return $total->total ?: 0;
+    }
+
 }

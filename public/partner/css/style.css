@@ -592,3 +592,56 @@ color: #777;
 	margin-top: 90px;
 	min-height: calc(100vh - 90px - 90px)
 }
+
+
+.itemContent{
+	display: none;
+}
+
+#exampleModalLongTitle{
+	display: inline-block;
+}
+
+.itemTitle{
+	cursor: pointer;
+}
+
+.popUpBtn{
+	margin: 9px 20px 0 20px;
+	background-color: transparent;
+	color: #555;
+    font-size: 15px;
+    font-weight: 400;
+	padding: 8px 2px;
+	text-transform: uppercase;
+}
+
+.modal-body{
+	padding: 45px;
+}
+
+.modal-header{
+	text-align: center;
+}
+
+.modal-title{
+	font-size: 25px;
+}
+
+.itemTitle i{
+	position: relative;
+	top: 2px;
+	left: 5px;
+	float: right;
+}
+
+.itemTitle i.rotate{
+	transform: rotate(180deg)
+}
+
+@media (min-width: 768px){
+	.modal-dialog{
+		max-width: 900px;
+		width: 100%;
+	}
+}
