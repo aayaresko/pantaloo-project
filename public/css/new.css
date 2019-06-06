@@ -211,6 +211,12 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.block-bonus-general {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .actions .block-bonus1 {
   background-image: url(../assets/images/bonuses/promo-1-bg-min.jpg);
 }

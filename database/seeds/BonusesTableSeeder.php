@@ -7,9 +7,7 @@ class BonusesTableSeeder extends Seeder
 {
 
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * @throws Exception
      */
     public function run()
     {
@@ -40,6 +38,7 @@ class BonusesTableSeeder extends Seeder
 
     /**
      * @return array
+     * @throws Exception
      */
     protected function getParams()
     {
@@ -47,50 +46,53 @@ class BonusesTableSeeder extends Seeder
         return [
             [
                 'id' => 1,
-                'public' => 1,
+                'public' => 0,
                 'name' => '50 free spins!',
                 'descr' => 'Available only after registration',
                 'rating' => 4,
-                'play_factor' => 33,
+                'extra' => json_encode([
+                    'mainPicture' => '/assets/images/bonuses/promo-1-bg-min.jpg',
+                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-1-box.jpg'
+                ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
             [
                 'id' => 2,
-                'min_sum' => 3,
-                'max_sum' => 0,
-                'procent' => 100,
-                'play_factor' => 33,
                 'public' => 1,
-                'name' => '200% bonus / First DepositEvent',
-                'descr' => '200% bonus / First DepositEvent',
+                'name' => '110% bonus / First Deposit',
+                'descr' => '110% bonus / First Deposit',
                 'rating' => 3,
+                'extra' => json_encode([
+                    'mainPicture' => '/assets/images/bonuses/promo-2-bg-min.jpg',
+                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-2-box.jpg'
+                ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
             [
                 'id' => 3,
-                'min_sum' => 3,
-                'max_sum' => 0,
-                'procent' => 150,
-                'play_factor' => 33,
                 'public' => 1,
-                'name' => '150% bonus / Second DepositEvent',
-                'descr' => '150% bonus / Second DepositEvent',
+                'name' => '80% bonus / Second Deposit',
+                'descr' => '80% bonus / Second Deposit',
                 'rating' => 2,
+                'extra' => json_encode([
+                    'mainPicture' => '/assets/images/bonuses/promo-3-bg-min.jpg',
+                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-3-box.jpg'
+                ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
             [
                 'id' => 4,
-                'min_sum' => 3,
-                'max_sum' => 0,
-                'procent' => 100,
-                'play_factor' => 33,
                 'public' => 1,
-                'name' => '100% bonus / Third DepositEvent',
-                'descr' => '100% bonus / Third DepositEvent',
+                'name' => '55% bonus / Third Deposit',
+                'descr' => '55% bonus / Third Deposit',
                 'rating' => 1,
+                'extra' => json_encode([
+                    'mainPicture' => '/assets/images/bonuses/promo-4-bg-min.jpg',
+                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-4-box.jpg'
+                ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
