@@ -12,7 +12,8 @@
                 <h1 class="page-title">{{ mb_convert_case(trans('casino.bonuses'), MB_CASE_UPPER) }}</h1>
             </div>
             <div class="container">
-                <div class="row">
+                <div class="flexContainer">    
+            
 
 {{--                    @php--}}
 {{--                        //fix this foreach!!!!!!!!!!!!--}}
@@ -26,7 +27,7 @@
 {{--                        }--}}
 
 {{--                    @endphp--}}
-{{--                    <div class="col-md-6 col-sm-6 npl ac-wrap">--}}
+{{--                    <div class="flexChild">--}}
 {{--                        <section class="block-bonus block-bonus1 clearfix {{ $activatedBonus1 }}">--}}
 {{--                            <div class="block-bonus-left">--}}
 {{--                                <div class="block-bonus-image">--}}
@@ -67,7 +68,7 @@
                             $activatedBonus2 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npl ac-wrap">
+                    <div class="flexChild">
                         <section class="block-bonus block-bonus2 clearfix {{ $activatedBonus2 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
@@ -109,7 +110,7 @@
                             $activatedBonus3 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npr ac-wrap">
+                    <div class="flexChild">
                         <section class="block-bonus block-bonus3 clearfix {{ $activatedBonus3 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
@@ -142,9 +143,9 @@
                     </div>
 
 
-                </div>
+              
 
-                <div class="row">
+               
 
 
                     @php
@@ -157,7 +158,7 @@
                             $activatedBonus4 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npl ac-wrap">
+                    <div class="flexChild">
                         <section class="block-bonus block-bonus4 clearfix {{ $activatedBonus4 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
@@ -188,7 +189,8 @@
                             <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
-                </div>
+          
+            </div>
             </div>
 
         </div>

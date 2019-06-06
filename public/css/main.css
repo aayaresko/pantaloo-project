@@ -5734,6 +5734,21 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 
 
+.flexContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0px -15px;
+}
+
+.flexChild{
+  flex-basis: 40%;
+    margin: 15px;
+    flex-grow: 1;
+    max-width: 47%;
+}
+
 
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
@@ -7941,7 +7956,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 
-
+  .flexChild{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 
   .ac-wrap .block-bonus{
     margin-right: 0px;
