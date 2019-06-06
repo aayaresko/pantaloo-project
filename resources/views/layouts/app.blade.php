@@ -29,12 +29,14 @@
 
     @include('_rel_alternate', ['languages' => $languages])
 
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8932ff">
     <meta name="msapplication-TileColor" content="#8932ff">
+    <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Google Tag Manager -->
@@ -389,11 +391,13 @@
             </div>
 
             @if ($registrationStatus === 1)
+
                 <div class="popup-form">
                     <form id="registr" action="/register" method="POST">
                         {{csrf_field()}}
                         <input type="hidden" name="password_confirmation" value="">
                         <input type="hidden" name="name" value="no_name">
+                        <input type="hidden" name="ref" value="{{request()->ref}}">
                         <div class="row">
                             <div class="col-sm-12">
                                 <input type="email" class="email-input red"

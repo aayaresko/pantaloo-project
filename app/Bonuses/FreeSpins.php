@@ -90,6 +90,10 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         try {
+            //close free spin temporary
+            throw new \Exception('This bonus is temporarily unavailable');
+
+
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
+use App\Models\AgentsKoef;
 use App\Validators\TemporaryMailCheck;
 use DB;
 use Hash;
@@ -140,9 +141,14 @@ class AuthController extends Controller
                 ]
             ]);
         }
+//
 
-        $service = new Service();
-        $address = $service->getNewAddress('common');
+        if (GeneralHelper::isTestMode()) {
+            $address = 'bitcoinTestAddress';
+        } else {
+            $service = new Service();
+            $address = $service->getNewAddress('common');
+        }
 
         if (isset($data['name'])) {
             $name = $data['name'];
@@ -165,15 +171,16 @@ class AuthController extends Controller
             $user->ip = $ip;
         }
 
+        $tracker = false;
         $tracker_id = Cookie::get('tracker_id');
-
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
-
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
-            }
+        } elseif($request->ref) {
+            $tracker = Tracker::where('ref', $request->ref)->first();
+        }
+        if ($tracker) {
+            $user->tracker()->associate($tracker);
+            $user->agent_id = $tracker->user_id;
         }
 
         $currency = Currency::find(1);
@@ -185,6 +192,10 @@ class AuthController extends Controller
         $user->role = 1;
 
         $user->save();
+        $newKoef = new AgentsKoef();
+        $newKoef->user_id = $user->id;
+        $newKoef->koef = 0;
+        $newKoef->save();
 
         $this->dispatch(new SetUserCountry($user));
 
@@ -232,7 +243,7 @@ class AuthController extends Controller
         }
 
         //to do config
-        $allowRoles = [1, 3];
+        $allowRoles = [1, 3, 4];
         $email = $request->input('email');
 
         $user = User::select(['id', 'email_confirmed', 'role'])
@@ -288,17 +299,18 @@ class AuthController extends Controller
             //to do super affiliates
             switch ($roleUser) {
                 case 1:
+                case 3:
                     return response()->json([
                         'status' => true,
                         'message' => [
                             'redirect' => '/affiliates',
                         ]
                     ]);
-                case 3:
+                case 4:
                     return response()->json([
                         'status' => true,
                         'message' => [
-                            'redirect' => '/admin',
+                            'redirect' => '/admin/agent/tree',
                         ]
                     ]);
             }

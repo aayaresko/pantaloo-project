@@ -196,6 +196,11 @@ class BonusController extends Controller
             $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
         }
 
-        return view('bonuses')->with(['activeBonus' => $activeBonus]);
+        $bonuses = Bonus::orderBy('id', 'asc')->get();
+
+        return view('bonuses')->with([
+            'bonuses' => $bonuses,
+            'activeBonus' => $activeBonus
+        ]);
     }
 }

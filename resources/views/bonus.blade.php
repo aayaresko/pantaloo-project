@@ -51,7 +51,11 @@
                                                 <h3 class="title">{{translate($bonus->name)}}</h3>
                                                 <p class="text">{{translate($bonus->descr)}}</p>
                                                 <a href="{{route('bonus.activate', $bonus)}}"
-                                                   class="push-button">{{trans('casino.activate')}}</a>
+                                                   class="push-button bonusActive">{{trans('casino.activate')}}</a>
+
+                                                <form action='{{route('bonus.activate', $bonus)}}' method='post' style="display: none">
+                                                    {{csrf_field()}}
+                                                </form>
                                             </div>
                                         </div>
                                     @endforeach
@@ -66,4 +70,21 @@
     </div>
 
     @include('footer_main')
+@endsection
+
+@section('js')
+    <script>
+
+        function bonusAct() {
+            //send form method post
+            $('body').on('click','.bonusActive', function(e) {
+                e.preventDefault();
+                let form = $(this).next();
+                form.submit();
+            });
+        }
+
+        bonusAct();
+
+    </script>
 @endsection
