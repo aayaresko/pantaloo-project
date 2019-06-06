@@ -9,7 +9,7 @@
     "type": "project",
     "require": {
         "php": ">=7.1.0",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.6.*",
         "nbobtc/bitcoind-php": "~2.0",
         "simplesoftwareio/simple-qrcode": "^1.4",
         "jenssegers/agent": "^2.3",
@@ -21,19 +21,20 @@
         "php-http/guzzle6-adapter": "^2.0",
         "sentry/sentry-laravel": "1.0.2",
         "laravel/tinker": "^1.0",
-        "fideloper/proxy": "~3.3"
+        "fideloper/proxy": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "~6.0",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "laravel/homestead": "^8.4",
         "laravel/browser-kit-testing": "^2.0",
         "deployer/recipes": "^6.2",
         "deployer/deployer": "^6.4",
-        "filp/whoops": "~2.0"
+        "filp/whoops": "^2.0",
+        "nunomaduro/collision": "^2.0"
     },
     "autoload": {
         "classmap": [
@@ -81,5 +82,7 @@
         "laravel": {
             "dont-discover": []
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
