@@ -5749,6 +5749,18 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
     max-width: 47%;
 }
 
+.flexChild:nth-child(odd) .block-bonus-left{
+    left: auto;
+    right: 30px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-right{
+    right: auto;
+    left: 80px;
+}
+
+
+
 
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
@@ -7192,6 +7204,17 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 
 @media (max-width: 991px) {
+
+
+  
+ .flexChild:nth-child(odd) .block-bonus-right{
+  left: 10px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-left{
+  right: 10px;
+}
+
 
   .errorMessage.showErrorMsg{
     display: block;
