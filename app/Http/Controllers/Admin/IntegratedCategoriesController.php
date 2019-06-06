@@ -140,7 +140,7 @@ class IntegratedCategoriesController extends Controller
             $markConfig = config('appAdditional.restrictionMark');
             $currentDate = new \DateTime();
             //ALLOW
-            if ($request->has('allowCountryCategories_codes')) {
+            if ($request->filled('allowCountryCategories_codes')) {
                 $restrictionAllowItems = [];
 
                 RestrictionCategoriesCountry::where('category_id', $categoryId)
@@ -165,7 +165,7 @@ class IntegratedCategoriesController extends Controller
             }
 
             //BAN
-            if ($request->has('banCountryCategories_codes')) {
+            if ($request->filled('banCountryCategories_codes')) {
                 $restrictionBanItems = [];
 
                 RestrictionCategoriesCountry::where('category_id', $categoryId)

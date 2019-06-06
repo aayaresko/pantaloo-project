@@ -87,7 +87,7 @@ class PantalloGamesController extends Controller
         }
 
         $configFreeRounds = config('appAdditional.freeRounds');
-        if ($request->has('gameId')) {
+        if ($request->filled('gameId')) {
             $gamesIds = $request->gameId;
         } else {
             $freeRoundGames = GamesList::select(['id', 'system_id'])->where('free_round', 1)->get()->toArray();

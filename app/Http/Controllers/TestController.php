@@ -52,7 +52,7 @@ class TestController extends Controller
 
     public function error(Request $request)
     {
-        dd(22);
+        //dd(22);
         //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         throw new Exception('Custom error!');
 

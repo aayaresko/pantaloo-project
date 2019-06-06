@@ -101,7 +101,7 @@ class IntegratedGamesController extends Controller
         }
 
         if ($need_redirect) {
-            $type_id = $request->has('type_id') ? $request->type_id : $type_name;
+            $type_id = $request->filled('type_id') ? $request->type_id : $type_name;
             foreach ($defaultTypes as $defaultType) {
                 if ($defaultType['id'] == $type_id) {
                     $entered_value = true;

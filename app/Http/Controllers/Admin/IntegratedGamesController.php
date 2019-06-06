@@ -217,7 +217,7 @@ class IntegratedGamesController extends Controller
             GamesListExtra::where('game_id', $request->id)->update($updatedGame);
 
             //update type
-            if ($request->has('type_id')) {
+            if ($request->filled('type_id')) {
                 $typeIds = $request->type_id;
                 $relationType = [];
                 foreach ($typeIds as $typeId) {
@@ -243,7 +243,7 @@ class IntegratedGamesController extends Controller
             $markConfig = config('appAdditional.restrictionMark');
             $currentDate = new \DateTime();
             //ALLOW
-            if ($request->has('allowCountryGames_codes')) {
+            if ($request->filled('allowCountryGames_codes')) {
                 $restrictionAllowItems = [];
 
                 RestrictionGamesCountry::where('game_id', $gameId)
@@ -266,7 +266,7 @@ class IntegratedGamesController extends Controller
             }
 
             //BAN
-            if ($request->has('banCountryGames_codes')) {
+            if ($request->filled('banCountryGames_codes')) {
                 $restrictionBanItems = [];
 
                 RestrictionGamesCountry::where('game_id', $gameId)
@@ -310,7 +310,7 @@ class IntegratedGamesController extends Controller
             ['games_types_games.extra', '=', 1],
         ];
 
-        if ($request->has('type_id')) {
+        if ($request->filled('type_id')) {
             if ($request->type_id > 0) {
                 array_push($param['whereCompare'],
                     ['games_types_games.type_id', '=', $request->type_id]);

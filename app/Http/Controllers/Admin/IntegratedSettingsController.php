@@ -71,14 +71,14 @@ class IntegratedSettingsController extends Controller
         DB::beginTransaction();
 
         try {
-            if ($request->has('games')) {
+            if ($request->filled('games')) {
                 GamesListSettings::where('code', 'games')->update(['value' => $request->games]);
             }
-            if ($request->has('categories')) {
+            if ($request->filled('categories')) {
                 GamesListSettings::where('code', 'categories')->update(['value' => $request->categories]);
             }
 
-            if ($request->has('types')) {
+            if ($request->filled('types')) {
                 GamesListSettings::where('code', 'types')->update(['value' => $request->types]);
             }
         } catch (\Exception $e) {

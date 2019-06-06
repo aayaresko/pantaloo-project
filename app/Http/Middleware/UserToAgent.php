@@ -33,7 +33,7 @@ class UserToAgent extends CommonMiddleware
         }
 
         if (! Auth::check()) {
-            if ($request->has('ref')) {
+            if ($request->filled('ref')) {
                 $ref = $request->input('ref');
                 $tracker = Tracker::where('ref', $ref)->first();
                 if ($tracker) {

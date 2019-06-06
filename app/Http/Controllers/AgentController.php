@@ -291,8 +291,8 @@ class AgentController extends Controller
             'block' => 'integer',
         ]);
 
-        if ($request->has('base_line_cpa') or $request->has('block')) {
-            $block = ($request->has('block')) ? 1 : 0;
+        if ($request->filled('base_line_cpa') or $request->filled('block')) {
+            $block = ($request->filled('block')) ? 1 : 0;
             $extraUser = ExtraUser::where('user_id', $user->id)->first();
             if (is_null($extraUser)) {
                 //add

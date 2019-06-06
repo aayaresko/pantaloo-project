@@ -454,15 +454,15 @@ class SlotController extends Controller
     {
         $slots = Slot::orderBy('raiting');
 
-        if ($request->has('q')) {
+        if ($request->filled('q')) {
             $slots = $slots->where('display_name', 'LIKE', '%'.$request->input('q').'%');
         }
 
-        if ($request->has('category_id')) {
+        if ($request->filled('category_id')) {
             $slots = $slots->where('category_id', $request->input('category_id'));
         }
 
-        if ($request->has('type')) {
+        if ($request->filled('type')) {
             $slots = $slots->where('type_id', $request->input('type'));
         }
 

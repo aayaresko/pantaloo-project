@@ -170,7 +170,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //to do check this method
-        if ($request->has('role')) {
+        if ($request->filled('role')) {
             if ($request->input('role') != 1 and $request->input('role') != 0) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
@@ -197,7 +197,7 @@ class UsersController extends Controller
             }
 
             //email confirm
-            $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
+            $emailConfirmed = ($request->filled('email_confirmed')) ? 1 : 0;
             $user->email_confirmed = $emailConfirmed;
 
             $user->commission = $commission;
@@ -206,7 +206,7 @@ class UsersController extends Controller
             $user->save();
 
             //block user
-            $block = ($request->has('block')) ? 1 : 0;
+            $block = ($request->filled('block')) ? 1 : 0;
             $blockUser = ModernExtraUsers::where('user_id', $user->id)
                 ->where('code', 'block')->first();
             //might use update or create but i use this way
