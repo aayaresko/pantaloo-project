@@ -46,6 +46,7 @@
                             <a href="#custom-modal" class="btn btn-primary waves-effect waves-light m-r-5 m-b-10"
                                data-animation="fadein" data-plugin="custommodal" data-overlayspeed="200"
                                data-overlaycolor="#36404a">Create Link</a>
+                            <h4>Links for players</h4>
                             <div class="table-wrap">
                                 <table class="table table-hover">
                                     <thead>

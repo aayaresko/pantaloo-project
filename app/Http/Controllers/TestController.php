@@ -94,21 +94,52 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $country = Country::where('code', 'AF')->first();
-        $user = $country->user->first();
-        dd($user);
-        $users = User::where('id', '>', 2500)->get();
-        foreach ($users as $user) {
-            if (!$user->agent_id or $user->agent_id < 10) {
-                $user->agent_id = [158, 154, 172, 252, 532, 331, 318, 350][rand(0, 7)];
-                $user->save();
+
+        $user = User::where('email', 'anfield-rd@protonmail.com')->first();
+        $userIds = User::where('agent_id', $user->id)->get()->pluck('id');
+        $tr = Transaction::whereIn('user_id', $userIds)->where('type', '=', 3)->get()->toArray();
+        dd($tr);
+
+        $client = new Client([
+            'verify' => false,
+        ]);
+        //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
+        $response = $client->post('https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'response_type' => 'token',
+                'username' => 'api_casinobit',
+                'password' => 'BfRN18uA'
+            ]
+        ]);
+        $json = $response->getBody()->getContents();
+        $json = json_decode($json);
+        dd($json);
+        try {
+            $response = $client->get('https://api-int.qtplatform.com/v1/games', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Accept' => 'application/json',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+            dd($responseBodyAsString);
+        }
+
+        $game = $response->getBody()->getContents();
+        $game = json_decode($game);
+        foreach ($game->items as $game) {
+            foreach ($game->currencies as $currency) {
+                if ($currency == 'MBTC') {
+                    dump($game);
+                }
             }
         }
-        dd();
         dd(2);
-        //$user = User::where('email', 'bluebell_999@yahoo.com')->first();
-        $user = User::where('email', 'marleestewart14@hotmail.com')->first();
-        dump($user);
+
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
 //            ['users.created_at', '>', '2019-04-01 11:23:43'],
