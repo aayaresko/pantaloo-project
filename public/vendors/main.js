@@ -381,15 +381,30 @@ $(document).ready(function(){
 
 		let userData = $(this).serialize();
 
+		let res = true;
 
 		$.ajax({
 			method: 'POST',
 			url: '1111',
 			data: userData,
-		}).done(function(){
-			console.log(userData)
-		}).fail(function(e){
-			console.log(e)
+		}).done(function(response){
+			
+				$(".alertWrapper").addClass("seccuses");
+				$(".alertWrapper").addClass("showAlert");
+				
+				setTimeout(function(){
+					$(".alertWrapper").removeClass("seccuses");
+					$(".alertWrapper").removeClass("showAlert");
+				},2000);
+
+		}).fail(function(){
+				$(".alertWrapper").addClass("error");
+				$(".alertWrapper").addClass("showAlert");
+				
+				setTimeout(function(){
+					$(".alertWrapper").removeClass("error");
+					$(".alertWrapper").removeClass("showAlert");
+				},2000);
 		});
 
 		return false;

@@ -130,9 +130,13 @@
         </div>
     </div>
 
-    <div class="alertWrapper seccuses">
+    <div class="alertWrapper">
         <div class="alertText">Message text info</div>
     </div>
+
+    <!-- <div class="alertWrapper error">
+        <div class="alertText">Message text info</div>
+    </div> -->
 
 @endsection
 
