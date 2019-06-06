@@ -386,10 +386,10 @@ class AuthController extends Controller
             $user = Auth::user();
             $roleUser = (int)Auth::user()->role;
 
-//            if (array_search($roleUser, [1, 3]) !== false) {
-//                Auth::logout();
-//                return back()->withErrors('This type of user is not allowed to login');
-//            }
+            if (array_search($roleUser, [1, 3, 4]) !== false) {
+                Auth::logout();
+                return back()->withErrors('This type of user is not allowed to login');
+            }
 
             //$extraUser = ExtraUser::where('user_id', $user->id)->first();
 
