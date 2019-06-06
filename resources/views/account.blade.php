@@ -130,6 +130,10 @@
         </div>
     </div>
 
+    <div class="alertWrapper seccuses">
+        <div class="alertText">Message text info</div>
+    </div>
+
 @endsection
 
 

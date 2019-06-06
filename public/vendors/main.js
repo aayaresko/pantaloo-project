@@ -381,15 +381,18 @@ $(document).ready(function(){
 
 		let userData = $(this).serialize();
 
+
 		$.ajax({
 			method: 'POST',
 			url: '1111',
 			data: userData,
 		}).done(function(){
 			console.log(userData)
-		}).fail(function(){
-			console.log(Error)
-		})
+		}).fail(function(e){
+			console.log(e)
+		});
+
+		return false;
 	});
 
 });
