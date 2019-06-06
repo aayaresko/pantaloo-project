@@ -225,18 +225,11 @@
 @section('js')
     <script>
 
-        // $('#uls').on('click','.popUpBtnBonus', function(e){
-        //     e.preventDefault();
-        //     let url = $(this).attr('href');
-        //     console.log(url);
-        //     $.ajax({
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         type: 'post',
-        //         url: url,
-        //         data: {},
-        //         async: false
-        //     });
-        // });
+        $('#uls').on('click','.popUpBtnBonus', function(e){
+            //console.log(212);
+            // let url = $(this).attr('href');
+            // $(`<form action='${url}' method='post'></form>`).appendTo('body').submit();
+        });
     </script>
 @endsection
 
