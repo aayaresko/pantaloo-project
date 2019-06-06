@@ -222,3 +222,22 @@
     @include('footer_main')
 @endsection
 
+@section('js')
+    <script>
+
+        // $('#uls').on('click','.popUpBtnBonus', function(e){
+        //     e.preventDefault();
+        //     let url = $(this).attr('href');
+        //     console.log(url);
+        //     $.ajax({
+        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        //         type: 'post',
+        //         url: url,
+        //         data: {},
+        //         async: false
+        //     });
+        // });
+    </script>
+@endsection
+
+
