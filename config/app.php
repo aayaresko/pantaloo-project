@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -119,8 +119,6 @@ return [
     | Available Settings: "single", "daily", "syslog", "errorlog"
     |
     */
-
-    'log' => env('APP_LOG', 'single'),
 
     'accuracyValues' => 5,
 

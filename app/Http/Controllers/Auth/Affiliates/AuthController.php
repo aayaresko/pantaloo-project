@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth\Affiliates;
 
 use DB;
-use Hash;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -19,6 +18,7 @@ use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
 use App\Mail\EmailPartnerConfirm;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Validators\TemporaryMailCheck;
@@ -156,7 +156,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $name,
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             'commission' => $partnerCommission,
         ]);
 
