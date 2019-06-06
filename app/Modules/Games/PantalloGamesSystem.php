@@ -339,6 +339,18 @@ class PantalloGamesSystem implements GamesSystem
                 throw new \Exception('User is not found');
             }
 
+            //force block user - no send query force
+            $blockUser = ModernExtraUsers::where('user_id', $params['session']->user_id)
+                ->where('code', 'block')->first();
+
+            if (!is_null($blockUser)) {
+                if ((int)$blockUser->value === 1) {
+                    //delete global session TO DO
+                    throw new \Exception('User is blocked');
+                }
+            }
+            //force block user - no send query force
+
             $action = $requestParams['action'];
             //DOUBLE FIX this!
             $methodWithGameId = ['debit', 'credit'];
