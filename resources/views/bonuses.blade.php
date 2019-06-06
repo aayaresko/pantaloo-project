@@ -12,52 +12,51 @@
                 <h1 class="page-title">{{ mb_convert_case(trans('casino.bonuses'), MB_CASE_UPPER) }}</h1>
             </div>
             <div class="container">
-                <div class="flexContainer">
+                <div class="flexContainer">    
 
+{{--                    @php--}}
+{{--                        //fix this foreach!!!!!!!!!!!!--}}
+{{--                        $bonusId1 = 1;--}}
+{{--                        $bonus1 = route('bonus.activate', $bonusId1);--}}
 
-                    {{--                    @php--}}
-                    {{--                        //fix this foreach!!!!!!!!!!!!--}}
-                    {{--                        $bonusId1 = 1;--}}
-                    {{--                        $bonus1 = route('bonus.activate', $bonusId1);--}}
+{{--                        if (!is_null($activeBonus)) {--}}
+{{--                            $activatedBonus1 = ($activeBonus->bonus_id == $bonusId1) ? 'activatedBonus' : '';--}}
+{{--                        } else {--}}
+{{--                            $activatedBonus1 = '';--}}
+{{--                        }--}}
 
-                    {{--                        if (!is_null($activeBonus)) {--}}
-                    {{--                            $activatedBonus1 = ($activeBonus->bonus_id == $bonusId1) ? 'activatedBonus' : '';--}}
-                    {{--                        } else {--}}
-                    {{--                            $activatedBonus1 = '';--}}
-                    {{--                        }--}}
+{{--                    @endphp--}}
+{{--                    <div class="flexChild">--}}
+{{--                        <section class="block-bonus clearfix {{ $activatedBonus1 }}">--}}
+{{--                            <div class="block-bonus-left">--}}
+{{--                                <div class="block-bonus-image">--}}
+{{--                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt=""/>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                    {{--                    @endphp--}}
-                    {{--                    <div class="flexChild">--}}
-                    {{--                        <section class="block-bonus block-bonus1 clearfix {{ $activatedBonus1 }}">--}}
-                    {{--                            <div class="block-bonus-left">--}}
-                    {{--                                <div class="block-bonus-image">--}}
-                    {{--                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt=""/>--}}
-                    {{--                                </div>--}}
-                    {{--                            </div>--}}
+{{--                            <div class="block-bonus-right">--}}
+{{--                                <div class="block-bonus-buttons">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="#uls"--}}
+{{--                                           class="btn-play-action usl-link"--}}
+{{--                                           data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>--}}
+{{--                                    @else--}}
+{{--                                        <a href="#"--}}
+{{--                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </section>--}}
+{{--                        <!-- <div class="bonusOverlay unavailable">--}}
+{{--                            <div class="icon"></div>--}}
+{{--                            <h3>Temporarily unavailable</h3>--}}
+{{--                        </div> -->--}}
 
-                    {{--                            <div class="block-bonus-right">--}}
-                    {{--                                <div class="block-bonus-buttons">--}}
-                    {{--                                    @if(Auth::check())--}}
-                    {{--                                        <a href="#uls"--}}
-                    {{--                                           class="btn-play-action usl-link"--}}
-                    {{--                                           data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>--}}
-                    {{--                                    @else--}}
-                    {{--                                        <a href="#"--}}
-                    {{--                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>--}}
-                    {{--                                    @endif--}}
-                    {{--                                </div>--}}
-                    {{--                            </div>--}}
-                    {{--                        </section>--}}
-                    {{--                        <!-- <div class="bonusOverlay unavailable">--}}
-                    {{--                            <div class="icon"></div>--}}
-                    {{--                            <h3>Temporarily unavailable</h3>--}}
-                    {{--                        </div> -->--}}
-
-                    {{--                        <div class="bonusOverlay activated">--}}
-                    {{--                            <div class="icon"></div>--}}
-                    {{--                            <h3>{{ trans('casino.bonus_status') }}</h3>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+{{--                        <div class="bonusOverlay activated">--}}
+{{--                            <div class="icon"></div>--}}
+{{--                            <h3>{{ trans('casino.bonus_status') }}</h3>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     @php
                         $bonusId2 = 2;
@@ -69,7 +68,7 @@
                         }
                     @endphp
                     <div class="flexChild">
-                        <section class="block-bonus block-bonus2 clearfix {{ $activatedBonus2 }}">
+                        <section class="block-bonus clearfix {{ $activatedBonus2 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-2-box.jpg') }}" alt=""/>
@@ -111,7 +110,7 @@
                         }
                     @endphp
                     <div class="flexChild">
-                        <section class="block-bonus block-bonus3 clearfix {{ $activatedBonus3 }}">
+                        <section class="block-bonus clearfix {{ $activatedBonus3 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-3-box.jpg') }}" alt=""/>
@@ -143,9 +142,9 @@
                     </div>
 
 
+              
 
-
-
+               
 
 
                     @php
@@ -159,7 +158,7 @@
                         }
                     @endphp
                     <div class="flexChild">
-                        <section class="block-bonus block-bonus4 clearfix {{ $activatedBonus4 }}">
+                        <section class="block-bonus clearfix {{ $activatedBonus4 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
                                     <img src="{{ asset('assets/images/bonuses/bonus-blok-4-box.jpg') }}" alt=""/>
@@ -189,8 +188,8 @@
                             <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
-
-                </div>
+          
+            </div>
             </div>
 
         </div>
