@@ -3661,6 +3661,8 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   top: 15px;
 } 
 
+
+
 .cabinet-block .cabinet-entry .main-content .main-content-entry .withdraw-entry .middle-block button.withdraw:before,
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .middle-block button.pinCode:before,
 .editEmailBtn:before {
@@ -5122,7 +5124,6 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   color: #fff;
   line-height: 40px;
-  padding-left: 25px;
   font-size: 16px;
 }
 
@@ -5767,7 +5768,7 @@ table.dataTable thead .sorting_desc{
 }
 
 .accountFormWrapper form .halfCol{
-  flex-basis: 47%;
+  flex-basis: 48%;
 }
 
 .accountFormWrapper .fullCol.flexStart{
@@ -5907,9 +5908,23 @@ table.dataTable thead .sorting_desc{
   right: 0px;
   margin: -2px;
   background: linear-gradient(90deg, #34248c, #844099);
-
   z-index: -1;
   border-radius: inherit;
+}
+
+.country-select .country-list{
+  background: linear-gradient(90deg, #2f0d52 0%, #35105b 100%);
+  border: 1px solid #4d397b;
+}
+
+.country-select .country-list .divider{
+  display: none;
+}
+
+#country{
+  padding-left: 50px;
+  width: 186px;
+  color: #fff;
 }
 
 
@@ -8784,6 +8799,22 @@ table.dataTable thead .sorting_desc{
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+
+
+  .accountFormWrapper form .halfCol{
+    flex-basis: 100%;
+  }
+
+  #country{
+    width: 100%;
+  }
+
+  .country-select{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+
 
   .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-nav li{
     margin-right: 10px;

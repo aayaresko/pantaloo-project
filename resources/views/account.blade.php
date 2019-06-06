@@ -36,7 +36,7 @@
                     <div class="withdraw-entry">
                         <div class="middle-block">
                             <div class="accountFormWrapper">
-                                <form action="">
+                                <form action="" id="userDataForm">
                                     <div class="halfCol">
                                     <label>First name:<span>*</span></label>
                                     <input type="text" name="first_name">
