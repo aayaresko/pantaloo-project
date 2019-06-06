@@ -284,6 +284,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
                 Route::get('/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
                 Route::get('/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+                Route::get('/getUsers', ['as' => 'globalAffiliates.users', 'uses' => 'Partner\GlobalAffiliatesController@getUsers']);
 
                 Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);
