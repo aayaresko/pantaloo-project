@@ -26,6 +26,7 @@ class AffiliatesController extends Controller
 {
     const PLAYER_ROLE = 0;
     const AGENT_ROLE = 1;
+    const GLOBAL_AGENT_ROLE = 4;
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -33,6 +34,9 @@ class AffiliatesController extends Controller
     {
         //test to two auth
         if (Auth::check()) {
+            if (Auth::user()->role == self::GLOBAL_AGENT_ROLE) {
+                return redirect()->route('admin.agents.tree');
+            }
             if (Auth::user()->isAgent()) {
                 return redirect()->route('agent.dashboard');
             }

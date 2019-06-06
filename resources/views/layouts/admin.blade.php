@@ -238,11 +238,15 @@
                             <a href="{{route('translations')}}" class="waves-effect"><i class="zmdi zmdi-translate"></i> <span> Translations </span> </a>
                         </li>
                     @endcan
-
+                    @if(Auth::user()->role == 4)
+                    <li>
+                        <a href="{{route('affiliates.logoutMain')}}" class="waves-effect"><i class="ti-close"></i><span> Logout </span></a>
+                    </li>
+                    @else
                     <li>
                         <a href="{{ url('/') }}" class="waves-effect"><i class="ti-close"></i><span> To site </span></a>
                     </li>
-
+                    @endif
                 </ul>
                 <div class="clearfix"></div>
             </div>
