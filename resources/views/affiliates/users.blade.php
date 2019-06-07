@@ -92,12 +92,16 @@
             table.draw();
         }
 
+        function isEmpty(obj){
+            return (Object.getOwnPropertyNames(obj).length === 0);
+        }
+
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
                 var min =  globalStart;
                 var max  = globalEnd;
                 var startDate = moment(data[3], 'YYYY-MM-DD HH');
-                if (startDate.isBetween(min, max)) {
+                if (startDate.isBetween(min, max) || (isEmpty(min) && isEmpty(max))) {
                     return true;
                 }
                 return false;

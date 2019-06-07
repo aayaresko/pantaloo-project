@@ -417,20 +417,35 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\AgentsKoef', 'user_id', 'agent_id')->orderBy('id', 'desc');
     }
 
-    public function profit()
+    //agent profit for affiliate
+    public function profit($from = false, $to = false)
     {
-        return $this->benefits->sum('parent_profit');
-    }
-
-    public function totalProfit()
-    {
-        $count = 0;
-        foreach (self::where('agent_id', $this->id)->where('role', 1)->get() as $child) {
-            $count += $child->totalProfit();
+        $totalProfit = 0;
+        $prepareQuerry = $this->benefits();
+        if ($from) {
+            $prepareQuerry->where('created_at', '>=', $from);
         }
-        $count += $this->profit();
+        if ($to) {
+            $prepareQuerry->where('created_at', '<', $to);
+        }
+        foreach ($prepareQuerry->get() as $benefit) {
+            $totalProfit += $benefit->total_sum * ($benefit->parent_percent - $benefit->agent_percent) / 100;
+        }
 
-        return $count;
+        return -$totalProfit;
+    }
+    //agent total profit for affiliate
+    public function totalProfit($from = false, $to = false)
+    {
+        $prepareQuerry = $this->benefits();
+        if ($from) {
+            $prepareQuerry->where('created_at', '>=', $from);
+        }
+        if ($to) {
+            $prepareQuerry->where('created_at', '<', $to);
+        }
+
+        return -$prepareQuerry->sum('parent_profit');
     }
 
     public function playerSum()
@@ -442,7 +457,7 @@ class User extends Authenticatable
     {
         return $this->playerSum()->sum('sum');
     }
-
+    // agent function
     public function totalPlayerProfit()
     {
         $profit = 0;
@@ -450,7 +465,7 @@ class User extends Authenticatable
             $profit += $playerSum->sum * $playerSum->percent / 100;
         }
 
-        return $profit;
+        return -$profit;
     }
 
     public function todayPlayerSum()
@@ -491,4 +506,21 @@ class User extends Authenticatable
         return $total->total ?: 0;
     }
 
+    //
+    public function totalEarn($from = false, $to = false)
+    {
+        $totalProfit = 0;
+        $prepareQuerry = $this->benefits();
+        if ($from) {
+            $prepareQuerry->where('created_at', '>=', $from);
+        }
+        if ($to) {
+            $prepareQuerry->where('created_at', '<', $to);
+        }
+        foreach ($prepareQuerry->get() as $benefit) {
+            $totalProfit += $benefit->total_sum * $benefit->agent_percent / 100;
+        }
+
+        return -$totalProfit;
+    }
 }

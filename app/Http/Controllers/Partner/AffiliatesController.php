@@ -269,6 +269,15 @@ class AffiliatesController extends Controller
             }
         }
 
+        $profitTotal = 0;
+        //add profit from players
+        $profitTotal += Auth::user()->totalEarn($from, $to);
+        //add profit from affiliates
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', 1)->get();
+        foreach ($affiliates as $affiliate) {
+            $profitTotal += $affiliate->totalProfit($from, $to);
+        }
+
         $data = [
             'users' => $result,
             'trackers' => $trackers,
@@ -277,7 +286,7 @@ class AffiliatesController extends Controller
             'confirm_deposits' => $result->sum('confirm_deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('profit'),
+            'profit_total' => $profitTotal,
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
             'currencyCode' => $currencyCode,
