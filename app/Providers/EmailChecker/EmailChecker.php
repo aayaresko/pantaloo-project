@@ -15,7 +15,7 @@ class EmailChecker
 
     public function isInvalidEmail($email, $default = false)
     {
-        if (GeneralHelper::isTestMode()){
+        if (GeneralHelper::isTestMode()) {
             return false;
         }
         if (!empty($email)) {
@@ -49,7 +49,7 @@ class EmailChecker
             'fast' => $this->fast
         );
 
-        $key = env('IP_QUALITY_SCORE');
+        $key = config('appAdditional.ipQualityScore');
 
         $formatted_parameters = http_build_query($parameters);
 
