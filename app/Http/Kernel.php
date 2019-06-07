@@ -97,6 +97,7 @@ class Kernel extends HttpKernel
         'ip.country.block' => IpCountryBlock::class,
         'ip.domain.country.block' => IpDomainCountryBlock::class,
     ];
+
     /**
      * The priority-sorted list of middleware.
      *
