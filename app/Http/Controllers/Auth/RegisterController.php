@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -154,7 +155,7 @@ class RegisterController extends Controller
 
             //send email
             //to do check this
-            $token = hash_hmac('sha256', str_random(40), config('app.key'));
+            $token = hash_hmac('sha256', Str::random(40), config('app.key'));
             $link = url('/').'/activate/'.$token.'/email/'.$user->email;
 
             $activation = UserActivation::where('user_id', $user->id)->first();

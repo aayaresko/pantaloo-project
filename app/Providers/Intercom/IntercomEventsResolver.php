@@ -2,6 +2,7 @@
 
 namespace App\Providers\Intercom;
 
+use Illuminate\Support\Str;
 use App\User;
 use Carbon\Carbon;
 
@@ -48,7 +49,7 @@ class IntercomEventsResolver
 
     private static function getEventData(User $user, $event_name, $timestamp)
     {
-        $dataMethodName = camel_case("get_{$event_name}_data");
+        $dataMethodName = Str::camel("get_{$event_name}_data");
 
         if (! method_exists(self::class, $dataMethodName)) {
             throw new \Exception('Call not exists events and method');

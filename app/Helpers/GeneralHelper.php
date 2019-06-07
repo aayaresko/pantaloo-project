@@ -2,6 +2,7 @@
 
 namespace Helpers;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
@@ -57,7 +58,7 @@ class GeneralHelper
      */
     public static function generateToken()
     {
-        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $token = hash_hmac('sha256', Str::random(40), config('app.key'));
 
         return $token;
     }

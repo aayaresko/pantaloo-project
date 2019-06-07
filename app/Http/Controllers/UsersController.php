@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use DB;
 use App\User;
 use App\Domain;
@@ -74,7 +75,7 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['Mail already sent. You can try in 15 minutes.']);
         }
 
-        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $token = hash_hmac('sha256', Str::random(40), config('app.key'));
 
         $link = url('/').'/activate/'.$token.'/email/'.$user->email;
 
