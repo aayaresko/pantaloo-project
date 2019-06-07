@@ -37,7 +37,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-12">
                                                                     <div class="field-block">
-                                                                        <input type="text" name="email" placeholder="{{translate('E-mail')}}"  value="{{ $email or old('email') }}">
+                                                                        <input type="text" name="email" placeholder="{{translate('E-mail')}}"  value="{{ $email ?? old('email') }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -108,7 +108,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $email ?? old('email') }}">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
