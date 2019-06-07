@@ -87,7 +87,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['active'],
@@ -237,7 +237,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['realActivation'],
@@ -341,7 +341,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['close'],
@@ -448,7 +448,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['cancel'],
@@ -520,7 +520,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['wagerUpdate'],
