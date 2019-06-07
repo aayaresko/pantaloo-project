@@ -21,7 +21,7 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.17" rel="stylesheet">
     <link href="/css/new.css?v=1.0.6" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
 
