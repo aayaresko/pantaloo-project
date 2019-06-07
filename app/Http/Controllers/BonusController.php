@@ -46,10 +46,10 @@ class BonusController extends Controller
         //get user by request
         $userRequest = Auth::user();
 
-        //to do - check this - and edit this way
-        if (!$bonus->public) {
-            return redirect()->back()->withErrors(['No access']);
-        }
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
 
         DB::beginTransaction();
 

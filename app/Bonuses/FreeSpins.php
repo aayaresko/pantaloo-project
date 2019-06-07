@@ -103,8 +103,9 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($mode == 0) {
                 //cancel and open
-                $bonusInfo = BonusModel::where('id', self::$id)->first();
+                $bonusInfo = BonusModel::where('id', static::$id)->first();
                 if (is_null($bonusInfo)) {
+                    dd(22);
                     throw new \Exception('Some is wrong');
                 }
 

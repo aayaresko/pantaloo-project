@@ -108,11 +108,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             if ($mode == 0) {
                 //cancel and open
-                $bonusInfo = BonusModel::where('id', self::$id)->first();
+                $bonusInfo = BonusModel::where('id', static::$id)->first();
                 if (is_null($bonusInfo)) {
                     throw new \Exception('Some is wrong');
                 }
-
+        
                 if ($bonusInfo->public == 0) {
                     //close free spin temporary
                     throw new \Exception('This bonus is temporarily unavailable');
