@@ -60,7 +60,9 @@
             key = $(this).attr("data-group") + $(this).attr("data-item");
             if (!(key in editorArray)) {
                 InlineEditor
-                    .create(this)
+                    .create(this, {
+                        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
+                    })
                     .then(newEditor => {
                         editorArray[key] = newEditor;
                         //show panel editor
