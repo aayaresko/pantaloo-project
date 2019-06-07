@@ -14,7 +14,7 @@ class Transaction extends Model
         'round_id', 'comment', 'bonus_sum', 'ext_id', 'confirmations',
     ];
 
-    protected $dates = ['deleted_at'];
+    
 
     public function scopeDeposits($query)
     {

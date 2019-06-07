@@ -9,7 +9,7 @@ class Slot extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    
 
     //protected $hidden = ['password'];
 
