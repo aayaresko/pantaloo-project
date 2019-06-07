@@ -5658,6 +5658,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   top:0px;
   left: 0px;
   height: 100%;
+  width: 100%;
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -5747,6 +5748,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
     margin: 15px;
     flex-grow: 1;
     max-width: 47%;
+  position: relative;
 }
 
 .flexChild:nth-child(odd) .block-bonus-left{
