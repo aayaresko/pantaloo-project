@@ -2,22 +2,24 @@
 
 namespace App\Bonuses;
 
+use App\Events\BonusCancelEvent;
 use DB;
 use Log;
 use App\User;
 use App\BonusLog;
 use App\UserBonus;
 use Carbon\Carbon;
+use App\UserBonus;
 use App\Transaction;
 use GuzzleHttp\Client;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
-use Illuminate\Http\Request;
-use App\Events\BonusGameEvent;
+use \Illuminate\Http\Request;
+use App\Models\LastActionGame;
 use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
-use App\Models\LastActionGame;
+use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
 use App\Events\BonusCancelEvent;
 use App\Modules\Others\DebugGame;
@@ -78,7 +80,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins'.self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['active'],
@@ -94,6 +96,10 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         try {
+            //close free spin temporary
+            throw new \Exception('This bonus is temporarily unavailable');
+
+
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
@@ -159,16 +165,19 @@ class FreeSpins extends \App\Bonuses\Bonus
                 $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
                 $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
-                //5 to do config
-                $client = new Client(['timeout' => 5]);
-                $responseIpQuality = $client->request('GET', $ipQualityScoreUrl.'/'.$ipQualityScoreKey.'/'.$ipCurrent);
-                $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
-                if (! GeneralHelper::isTestMode()) {
+                if (!GeneralHelper::isTestMode()) {
+                    //5 to do config
+                    $client = new Client(['timeout' => 5]);
+                    //TO DO if exception
+                    $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+                    $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
                     if (isset($responseIpQualityJson['success'])) {
                         if ($responseIpQualityJson['success'] == true) {
                             if ($responseIpQualityJson['vpn'] == true or $responseIpQualityJson['tor'] == true) {
-                                throw new \Exception('Free spins are not available while using VPN/Proxy');
+//                                throw new \Exception('Free spins are not available while using VPN/Proxy');
+                                throw new \Exception(trans('casino.free_spins_not_available_using_vpn'));
                             }
                         }
                     }

@@ -38,6 +38,7 @@ class PantalloGamesSystem implements GamesSystem
     /**
      * @param $request
      * @return array|mixed
+     * @throws \Exception
      */
     public function loginPlayer($request)
     {
@@ -111,8 +112,9 @@ class PantalloGamesSystem implements GamesSystem
             ], true);
 
             //to do user for update
-            if (! is_null($user->bonus_id)) {
-                $bonusClasses = BonusHelper::getClass((int) $user->bonus_id);
+            //to do bonus_id free spins to config
+            if (!is_null($user->bonus_id) and $user->bonus_id == 1) {
+                $bonusClasses = BonusHelper::getClass((int)$user->bonus_id);
                 $bonusObject = new $bonusClasses($user);
                 $setGame = $bonusObject->setGame($game, 'firstGame');
             }
@@ -161,6 +163,13 @@ class PantalloGamesSystem implements GamesSystem
                 LastActionGame::where('id', $getLastActionGame->id)->update($lastActionGameUpdate);
             }
 
+            $response = [
+                'success' => true,
+                'message' => [
+                    'gameLink' => $getGame->response
+                ]
+            ];
+
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -171,19 +180,13 @@ class PantalloGamesSystem implements GamesSystem
 //            dump('getGame');
 //            dump($getGame);
 //            dump($e);
-            return [
+            $response = [
                 'success' => false,
                 'message' => $e->getMessage(),
             ];
         }
 
         //finish debug
-        $response = [
-            'success' => true,
-            'message' => [
-                'gameLink' => $getGame->response,
-            ],
-        ];
         $debugGameResult = $debugGame->end();
 
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
@@ -1184,6 +1187,9 @@ class PantalloGamesSystem implements GamesSystem
                 } catch (\Exception $ex) {
                     $response['removeFreeRounds'] = $ex->getMessage();
                 }
+            } else {
+                //delete free round
+                DB::connection('logs')->table('games_pantallo_free_rounds')->where('id', $rawId)->delete();
             }
         }
 

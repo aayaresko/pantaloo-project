@@ -14,49 +14,49 @@
             <div class="container">
                 <div class="row">
 
-                    @php
-                        //fix this foreach!!!!!!!!!!!!
-                        $bonusId1 = 1;
-                        $bonus1 = route('bonus.activate', $bonusId1);
+{{--                    @php--}}
+{{--                        //fix this foreach!!!!!!!!!!!!--}}
+{{--                        $bonusId1 = 1;--}}
+{{--                        $bonus1 = route('bonus.activate', $bonusId1);--}}
 
-                        if (!is_null($activeBonus)) {
-                            $activatedBonus1 = ($activeBonus->bonus_id == $bonusId1) ? 'activatedBonus' : '';
-                        } else {
-                            $activatedBonus1 = '';
-                        }
+{{--                        if (!is_null($activeBonus)) {--}}
+{{--                            $activatedBonus1 = ($activeBonus->bonus_id == $bonusId1) ? 'activatedBonus' : '';--}}
+{{--                        } else {--}}
+{{--                            $activatedBonus1 = '';--}}
+{{--                        }--}}
 
-                    @endphp
-                    <div class="col-md-6 col-sm-6 npl ac-wrap">
-                        <section class="block-bonus block-bonus1 clearfix {{ $activatedBonus1 }}">
-                            <div class="block-bonus-left">
-                                <div class="block-bonus-image">
-                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt=""/>
-                                </div>
-                            </div>
+{{--                    @endphp--}}
+{{--                    <div class="col-md-6 col-sm-6 npl ac-wrap">--}}
+{{--                        <section class="block-bonus block-bonus1 clearfix {{ $activatedBonus1 }}">--}}
+{{--                            <div class="block-bonus-left">--}}
+{{--                                <div class="block-bonus-image">--}}
+{{--                                    <img src="{{ asset('assets/images/bonuses/bonus-blok-1-box.jpg') }}" alt=""/>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="block-bonus-right">
-                                <div class="block-bonus-buttons">
-                                    @if(Auth::check())
-                                        <a href="#uls"
-                                           class="btn-play-action usl-link"
-                                           data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>
-                                    @else
-                                        <a href="#"
-                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>
-                                    @endif
-                                </div>
-                            </div>
-                        </section>
-                        <!-- <div class="bonusOverlay unavailable">
-                            <div class="icon"></div>
-                            <h3>Temporarily unavailable</h3>
-                        </div> -->
+{{--                            <div class="block-bonus-right">--}}
+{{--                                <div class="block-bonus-buttons">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="#uls"--}}
+{{--                                           class="btn-play-action usl-link"--}}
+{{--                                           data-bonus-url='{{ $bonus1 }}'><span>{{ trans('casino.activate') }}</span></a>--}}
+{{--                                    @else--}}
+{{--                                        <a href="#"--}}
+{{--                                           class="btn-play-action reg-btn"><span>{{ trans('casino.join_now') }}</span></a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </section>--}}
+{{--                        <!-- <div class="bonusOverlay unavailable">--}}
+{{--                            <div class="icon"></div>--}}
+{{--                            <h3>Temporarily unavailable</h3>--}}
+{{--                        </div> -->--}}
 
-                        <div class="bonusOverlay activated">
-                            <div class="icon"></div>
-                            <h3>{{ trans('casino.bonus_status') }}</h3>
-                        </div>
-                    </div>
+{{--                        <div class="bonusOverlay activated">--}}
+{{--                            <div class="icon"></div>--}}
+{{--                            <h3>{{ trans('casino.bonus_status') }}</h3>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     @php
                         $bonusId2 = 2;
@@ -67,7 +67,7 @@
                             $activatedBonus2 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npr ac-wrap">
+                    <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus2 clearfix {{ $activatedBonus2 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
@@ -99,9 +99,7 @@
                             <h3>{{ trans('casino.bonus_status') }}</h3>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     @php
                         $bonusId3 = 3;
                         $bonus3 = route('bonus.activate', $bonusId3);
@@ -111,7 +109,7 @@
                             $activatedBonus3 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npl ac-wrap">
+                    <div class="col-md-6 col-sm-6 npr ac-wrap">
                         <section class="block-bonus block-bonus3 clearfix {{ $activatedBonus3 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
@@ -143,6 +141,12 @@
                         </div>
                     </div>
 
+
+                </div>
+
+                <div class="row">
+
+
                     @php
                         $bonusId4 = 4;
                         $bonus4 = route('bonus.activate', $bonusId4);
@@ -153,7 +157,7 @@
                             $activatedBonus4 = '';
                         }
                     @endphp
-                    <div class="col-md-6 col-sm-6 npr ac-wrap">
+                    <div class="col-md-6 col-sm-6 npl ac-wrap">
                         <section class="block-bonus block-bonus4 clearfix {{ $activatedBonus4 }}">
                             <div class="block-bonus-left">
                                 <div class="block-bonus-image">
