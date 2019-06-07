@@ -2,23 +2,23 @@
 
 namespace App\Bonuses;
 
-use App\Events\BonusCancelEvent;
-use App\Events\BonusDepositEvent;
-use App\Events\CloseBonusEvent;
-use App\Events\DepositWagerDoneEvent;
-use App\Events\OpenBonusEvent;
 use DB;
 use App\User;
-use App\Bonus;
 use App\BonusLog;
 use App\UserBonus;
 use Carbon\Carbon;
 use App\Transaction;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
+use App\Bonus as BonusModel;
 use App\Models\LastActionGame;
+use App\Events\OpenBonusEvent;
+use App\Events\CloseBonusEvent;
+use App\Events\BonusCancelEvent;
+use App\Events\BonusDepositEvent;
 use App\Modules\Others\DebugGame;
 use App\Models\SystemNotification;
+use App\Events\DepositWagerDoneEvent;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSessionGame;
 
@@ -107,6 +107,18 @@ class Bonus_100 extends \App\Bonuses\Bonus
             $ipFormatCurrent = inet_pton($ipCurrent);
 
             if ($mode == 0) {
+                //cancel and open
+                $bonusInfo = BonusModel::where('id', self::$id)->first();
+                if (is_null($bonusInfo)) {
+                    throw new \Exception('Some is wrong');
+                }
+
+                if ($bonusInfo->public == 0) {
+                    //close free spin temporary
+                    throw new \Exception('This bonus is temporarily unavailable');
+                }
+                //cancel and open
+
                 //baned country
 //            if (!is_null($user->country)) {
 //                $banedBonusesCountries = config('appAdditional.banedBonusesCountries');
