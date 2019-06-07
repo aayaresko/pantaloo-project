@@ -33,7 +33,7 @@ class BonusController extends Controller
         if ($active_bonus) {
             $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
         }
-        
+
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
@@ -46,10 +46,10 @@ class BonusController extends Controller
         //get user by request
         $userRequest = Auth::user();
 
-        //to do - check this - and edit this way
-        if (!$bonus->public) {
-            return redirect()->back()->withErrors(['No access']);
-        }
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
 
         DB::beginTransaction();
 

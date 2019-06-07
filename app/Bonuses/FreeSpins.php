@@ -74,7 +74,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['active'],
@@ -103,7 +103,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             if ($mode == 0) {
                 //cancel and open
-                $bonusInfo = BonusModel::where('id', self::$id)->first();
+                $bonusInfo = BonusModel::where('id', static::$id)->first();
                 if (is_null($bonusInfo)) {
                     throw new \Exception('Some is wrong');
                 }
@@ -299,7 +299,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['realActivation'],
@@ -363,7 +363,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['close'],
@@ -508,7 +508,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['cancel'],
@@ -660,7 +660,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['wagerUpdate'],
@@ -733,7 +733,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => $rawLogKey + $configBonus['operation']['setDeposit'],
@@ -853,7 +853,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
-        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
+        $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         if (!isset($this->dataBonus[$key])) {
 
