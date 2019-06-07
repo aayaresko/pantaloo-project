@@ -17,7 +17,7 @@ class UserBonus extends Model
     protected $fillable = ['activated', 'expires_at', 'user_id', 'bonus_id', 'data', 'total_amount', 'ip_address'];
 
     protected $dates = [
-        'created_at', 'updated_at', 'expires_at'
+        'created_at', 'updated_at', 'expires_at',
     ];
 
     protected $table = 'user_bonuses';

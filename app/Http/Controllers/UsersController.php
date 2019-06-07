@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use DB;
 use App\User;
 use App\Domain;
@@ -13,6 +12,7 @@ use App\UserActivation;
 use App\ModernExtraUsers;
 use App\Mail\BaseMailable;
 use App\Mail\EmailConfirm;
+use Illuminate\Support\Str;
 use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
 use App\Events\AccountStatusEvent;

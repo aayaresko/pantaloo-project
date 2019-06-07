@@ -9,8 +9,6 @@ class Slot extends Model
 {
     use SoftDeletes;
 
-    
-
     //protected $hidden = ['password'];
 
     public function tokens()

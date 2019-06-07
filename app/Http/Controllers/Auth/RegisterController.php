@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Str;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -12,6 +11,7 @@ use App\Bitcoin\Service;
 use App\Mail\BaseMailable;
 use App\Mail\EmailConfirm;
 use Helpers\GeneralHelper;
+use Illuminate\Support\Str;
 use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;

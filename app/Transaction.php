@@ -14,8 +14,6 @@ class Transaction extends Model
         'round_id', 'comment', 'bonus_sum', 'ext_id', 'confirmations',
     ];
 
-    
-
     public function scopeDeposits($query)
     {
         return $query->where('type', 3);

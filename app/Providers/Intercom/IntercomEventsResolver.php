@@ -2,9 +2,9 @@
 
 namespace App\Providers\Intercom;
 
-use Illuminate\Support\Str;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class IntercomEventsResolver
 {
