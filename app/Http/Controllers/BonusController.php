@@ -33,7 +33,7 @@ class BonusController extends Controller
         if ($active_bonus) {
             $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
         }
-        
+
         return view('bonus', [
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
