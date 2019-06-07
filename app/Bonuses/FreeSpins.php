@@ -90,10 +90,6 @@ class FreeSpins extends \App\Bonuses\Bonus
         }
 
         try {
-            //close free spin temporary
-            throw new \Exception('This bonus is temporarily unavailable');
-
-
             $createdUser = $user->created_at;
             $allowedDate = $createdUser->modify("+$this->timeActiveBonusDays days");
             $currentDate = new Carbon();
@@ -106,6 +102,18 @@ class FreeSpins extends \App\Bonuses\Bonus
             $ipFormatCurrent = inet_pton($ipCurrent);
 
             if ($mode == 0) {
+                //cancel and open
+                $bonusInfo = BonusModel::where('id', self::$id)->first();
+                if (is_null($bonusInfo)) {
+                    throw new \Exception('Some is wrong');
+                }
+
+                if ($bonusInfo->public == 0) {
+                    //close free spin temporary
+                    throw new \Exception('This bonus is temporarily unavailable');
+                }
+                //cancel and open
+
                 if ($this->active_bonus) {
                     if ($this->active_bonus->bonus_id != static::$id) {
                         throw new \Exception('You cannot activate this bonus ' .
