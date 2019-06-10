@@ -83,7 +83,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
 
     //bonus bonus
-    Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
+    //Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
     //bonus bonus
 
 
