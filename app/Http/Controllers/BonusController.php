@@ -46,10 +46,10 @@ class BonusController extends Controller
         //get user by request
         $userRequest = Auth::user();
 
-        //to do - check this - and edit this way
-        if (! $bonus->public) {
-            return redirect()->back()->withErrors(['No access']);
-        }
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
 
         DB::beginTransaction();
 
@@ -102,7 +102,7 @@ class BonusController extends Controller
     {
         $user_bonus = Auth::user()->bonuses()->first();
 
-        if (! $user_bonus) {
+        if (!$user_bonus) {
             return redirect()->back();
         }
         $class = $user_bonus->bonus->getClass();
@@ -168,7 +168,7 @@ class BonusController extends Controller
     {
         $userBonus = $user->bonuses()->first();
 
-        if (! $userBonus) {
+        if (!$userBonus) {
             return redirect()->back();
         }
 
@@ -192,10 +192,15 @@ class BonusController extends Controller
         $user = $request->user();
 
         $activeBonus = null;
-        if (! is_null($user)) {
+        if (!is_null($user)) {
             $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
         }
 
-        return view('bonuses')->with(['activeBonus' => $activeBonus]);
+        $bonuses = Bonus::orderBy('id', 'asc')->get();
+
+        return view('bonuses')->with([
+            'bonuses' => $bonuses,
+            'activeBonus' => $activeBonus
+        ]);
     }
 }

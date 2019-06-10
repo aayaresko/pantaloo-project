@@ -144,8 +144,6 @@ class TestController extends Controller
         }
         dd(2);
 
-
-
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
 //            ['users.created_at', '>', '2019-04-01 11:23:43'],

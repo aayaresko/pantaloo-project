@@ -22,7 +22,7 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
     <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.6" rel="stylesheet">
+    <link href="/css/new.css?v={{ time() }}" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
@@ -391,11 +391,13 @@
             </div>
 
             @if ($registrationStatus === 1)
+
                 <div class="popup-form">
                     <form id="registr" action="/register" method="POST">
                         {{csrf_field()}}
                         <input type="hidden" name="password_confirmation" value="">
                         <input type="hidden" name="name" value="no_name">
+                        <input type="hidden" name="ref" value="{{request()->ref}}">
                         <div class="row">
                             <div class="col-sm-12">
                                 <input type="email" class="email-input red"

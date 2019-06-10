@@ -5658,6 +5658,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   top:0px;
   left: 0px;
   height: 100%;
+  width: 100%;
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -5732,6 +5733,34 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 .block-bonus.activatedBonus .block-bonus-buttons{
   display: none;  
 }
+
+
+.flexContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0px -15px;
+}
+
+.flexChild{
+  flex-basis: 40%;
+    margin: 15px;
+    flex-grow: 1;
+    max-width: 47%;
+  position: relative;
+}
+
+.flexChild:nth-child(odd) .block-bonus-left{
+    left: auto;
+    right: 30px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-right{
+    right: auto;
+    left: 80px;
+}
+
 
 
 
@@ -7178,6 +7207,17 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 @media (max-width: 991px) {
 
+
+  
+ .flexChild:nth-child(odd) .block-bonus-right{
+  left: 10px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-left{
+  right: 10px;
+}
+
+
   .errorMessage.showErrorMsg{
     display: block;
     margin-left: 0px;
@@ -7941,7 +7981,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 
-
+  .flexChild{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 
   .ac-wrap .block-bonus{
     margin-right: 0px;

@@ -2,6 +2,7 @@
 
 namespace Helpers;
 
+use App\Models\Language;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
@@ -15,7 +16,7 @@ class GeneralHelper
      */
     public static function formatAmount($amount)
     {
-        $amount = (float) $amount;
+        $amount = (float)$amount;
         $accuracyValues = config('app.accuracyValues');
 
         return round($amount, $accuracyValues, PHP_ROUND_HALF_DOWN);
@@ -36,19 +37,52 @@ class GeneralHelper
      */
     public static function fullRequest()
     {
-        $request = url('/').$_SERVER['REQUEST_URI'];
+        $request = url('/') . $_SERVER['REQUEST_URI'];
 
         return $request;
     }
 
     /**
+     * @param null $key
      * @return array
+     * @throws \Exception
      */
-    public static function getListLanguage()
+    static public function getListLanguage($key = null)
     {
-        $dir = base_path().'/resources/lang';
-        $languagesIndex = array_diff(scandir($dir), ['..', '.']);
-        $languages = array_values($languagesIndex);
+        $defaultLang = ['en'];
+        $modeTrans = config('translator.source');
+
+        if (!is_null($key)) {
+            $modeTrans = $key;
+        }
+
+        try {
+            switch ($modeTrans) {
+                case 'database':
+                    $languages = Language::get()->pluck('locale')->toArray();
+                    break;
+                case 'files':
+                    //to do read from config
+                    $dir = base_path() . '/resources/lang';
+                    $languagesIndex = array_diff(scandir($dir), ['..', '.']);
+                    $languagesConfig = config('translator.available_locales');
+                    $languages = array_values($languagesIndex);
+
+                    if ($languagesConfig != $languages) {
+                        throw new \Exception('SET CONFIG LANG VALUE');
+                    }
+                    break;
+                case 'mixed':
+                    //to do
+                    $languages = $defaultLang;
+                    break;
+                default:
+                    $languages = $defaultLang;
+            }
+        } catch (\Exception $ex) {
+            $languages = [];
+        }
+
 
         return $languages;
     }
@@ -108,7 +142,7 @@ class GeneralHelper
 
         foreach ($transactions as $transaction) {
             if ($transaction->type == 3) {
-                if ((int) $transaction->confirmations < $minConfirmBtc) {
+                if ((int)$transaction->confirmations < $minConfirmBtc) {
                     $stat['pending_deposits'] = $stat['pending_deposits'] + $transaction->sum;
                 } else {
                     $stat['confirm_deposits'] = $stat['confirm_deposits'] + $transaction->sum;
@@ -164,10 +198,10 @@ class GeneralHelper
     {
         $lang = $currentLocale;
 
-        if (! is_null($prefixLang)) {
+        if (!is_null($prefixLang)) {
             $lang = $prefixLang;
         } else {
-            if (! is_null($cookieLang)) {
+            if (!is_null($cookieLang)) {
                 $lang = $cookieLang;
             } else {
                 //check ip address and check language
@@ -190,7 +224,9 @@ class GeneralHelper
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $isSecure = true;
-        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || ! empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+
             $isSecure = true;
         }
 
@@ -207,7 +243,7 @@ class GeneralHelper
             $lang = $matches['lang'];
             $file = $matches['file'];
 
-            $datafile = 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file.'.data';
+            $datafile = 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file . '.data';
 
             if (\Illuminate\Support\Facades\Storage::exists($datafile)) {
                 $return = unserialize(\Illuminate\Support\Facades\Storage::get($datafile));

@@ -11,12 +11,15 @@ use Carbon\Carbon;
 use App\Transaction;
 use App\Http\Requests;
 use App\Bitcoin\Service;
+use App\Models\AgentsKoef;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AgentController extends Controller
 {
+    const SUPER_AFFILIATE_ROLE = 3;
+
     public function login()
     {
         if (Auth::check()) {
@@ -221,7 +224,7 @@ class AgentController extends Controller
         }
 
         $service = new Service();
-        if (! $service->isValidAddress($request->input('address'))) {
+        if (!$service->isValidAddress($request->input('address'))) {
             return redirect()->back()->withErrors(['Invalid bitcoin address']);
         }
 
@@ -279,6 +282,49 @@ class AgentController extends Controller
         return view('admin.agents', ['agents' => $result]);
     }
 
+    public function showTree()
+    {
+        $users = User::with('koefs', 'benefits')
+            ->select('id', 'email', 'role', 'agent_id', 'created_at')
+            ->whereIn('role', [1, 3])
+            ->get();
+
+        $ids = [];
+        foreach ($users as $user) {
+            $ids[] = $user->id;
+        }
+        $parentIdChildArr = [];
+        foreach ($users as $user) {
+            $parentId = ($user->agent_id and in_array($user->agent_id, $ids)) ? $user->agent_id : 0;
+            $parentIdChildArr[$parentId][] = $user;
+            $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();
+            $user->userTotalCount = $user->playersTotalCount();
+            $user->percent = $user->koefs->koef;
+            $user->benefit = (string)$user->benefits->sum('total_sum');
+        }
+        $newTree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
+
+        return view('admin.partner.tree', compact('newTree'));
+    }
+
+    /**
+     * @param $list
+     * @param $parent
+     * @return array
+     */
+    protected function createTree(&$list, $parent)
+    {
+        $tree = [];
+        foreach ($parent as $child) {
+            if (isset($list[$child->id])) {
+                $child->_children = $this->createTree($list, $list[$child->id]);
+                $child->countChild = count($child->_children);
+            }
+            $tree[] = $child;
+        }
+        return $tree;
+    }
+
     public function commission(User $user, Request $request)
     {
         if ($user->role != 1) {
@@ -312,6 +358,7 @@ class AgentController extends Controller
 
         $user->commission = $request->input('commission');
         $user->save();
+        $this->setAgentKoef($user, $request->input('commission'));
 
         return redirect()->back()->with('msg', 'Agent was updated');
     }
@@ -323,5 +370,62 @@ class AgentController extends Controller
         return view('admin.agentPayments', [
             'payments' => $payments,
         ]);
+    }
+
+    public function showAffiliate($id, User $user)
+    {
+        $partner = $user->findOrFail($id);
+        $countriesIds = $partner->affiliateCountries->pluck('id')->toArray();
+        $deprecatedCountries = DB::table('affiliate_countries')->where('user_id', '<>', $id)->pluck('country_id');
+        $users = $user->where('agent_id', $id)->with('countries')->where('role', 0)->get();
+        $superAffiliates = $user->where('role', 3)->get();
+
+        return view('admin.partner.show', compact('partner', 'users', 'countriesIds', 'superAffiliates', 'deprecatedCountries'));
+    }
+
+    public function makeSuper($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        if (!$request->country) {
+            $partner->affiliateCountries()->detach();
+            $partner->role = 1;
+            $partner->save();
+        } else {
+            $partner->affiliateCountries()->sync($request->country);
+            $partner->role = self::SUPER_AFFILIATE_ROLE;
+            $partner->save();
+        }
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    public function setAffiliate($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        $partner->agent_id = $request->affiliate;
+        $partner->save();
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    public function setPercent($id, Request $request)
+    {
+        $partner = User::findOrFail($id);
+        $this->setAgentKoef($partner, $request->koef);
+
+        return redirect()->back()->with('msg', "Success");
+    }
+
+    protected function setAgentKoef($partner, $koef)
+    {
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $koef;
+        $newKoef->save();
+        $partner->commission = $koef;
+        $partner->save();
     }
 }

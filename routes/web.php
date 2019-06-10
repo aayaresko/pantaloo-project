@@ -11,7 +11,7 @@
 |
 */
 
-use Illuminate\Foundation\Auth\ResetsPasswords;
+//use Illuminate\Foundation\Auth\ResetsPasswords;
 
 Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('/password', ['as' => 'password', 'uses' => 'UsersController@password']);
         Route::post('/email/confirm', ['as' => 'email.confirm', 'uses' => 'UsersController@confirmEmail']);
 
-        Route::get('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
+        Route::post('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
         Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
         Route::get('/free', ['as' => 'freeSpins', 'uses' => 'SlotController@freeSpins']);
@@ -250,6 +250,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::group(['middleware' => ['can:accessAdminAffiliatePublic']], function () {
                 Route::get('/agent/list', ['as' => 'admin.agents', 'uses' => 'AgentController@all']);
+                Route::get('/agent/tree', ['as' => 'admin.agents.tree', 'uses' => 'AgentController@showTree']);
+                Route::get('/agent/tree/{id}', ['as' => 'admin.agents.show', 'uses' => 'AgentController@showAffiliate']);
+                Route::post('/agent/tree/{id}/makeSuper', ['as' => 'admin.agents.makeSuper', 'uses' => 'AgentController@makeSuper']);
+                Route::post('/agent/tree/{id}/setAffiliate', ['as' => 'admin.agents.setAffiliate', 'uses' => 'AgentController@setAffiliate']);
+                Route::post('/agent/tree/{id}/setPercent', ['as' => 'admin.agents.setPercent', 'uses' => 'AgentController@setPercent']);
                 Route::post('/agent/{user}/commission', ['as' => 'admin.agentCommission', 'uses' => 'AgentController@commission']);
             });
 
@@ -257,6 +262,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/users', ['as' => 'globalAffiliates.index', 'uses' => 'Partner\GlobalAffiliatesController@index']);
                 Route::get('/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
                 Route::get('/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
+                Route::get('/getUsers', ['as' => 'globalAffiliates.users', 'uses' => 'Partner\GlobalAffiliatesController@getUsers']);
 
                 Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);
@@ -266,12 +272,16 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::group(['middleware' => ['can:accessAdminTranslatorPublic']], function () {
                 Route::get('/translations', ['as' => 'translations', 'uses' => 'Admin\TranslationController@index']);
+//                Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
+//                Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
+
+                Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslationsModern', 'uses' => 'Admin\TranslationController@changeTranslationModern']);
+                Route::get('/translation/getTransactions', ['as' => 'translations.getTransactions', 'uses' => 'Admin\TranslationController@getTransactions']);
+                Route::post('/translations/save', ['as' => 'translations.saveModern', 'uses' => 'Admin\TranslationController@saveModern']);
             });
 
             Route::get('/', 'UsersController@index');
 
-            Route::get('/changeTranslation/{lang}', ['as' => 'changeTranslations', 'uses' => 'Admin\TranslationController@changeTranslation']);
-            Route::post('/translations/save', ['as' => 'translations.save', 'uses' => 'Admin\TranslationController@save']);
         });
 
         Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
@@ -291,6 +301,10 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             //Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'AgentController@trackers']);
             Route::get('/trackers', ['as' => 'agent.trackers', 'uses' => 'Partner\AffiliatesController@trackers']);
+            Route::get('/partners', ['as' => 'agent.affiliates', 'uses' => 'Partner\AffiliatesController@partners']);
+            Route::get('/partners/{id}', ['as' => 'agent.affiliates.show', 'uses' => 'Partner\AffiliatesController@partnerShow']);
+            Route::get('/users', ['as' => 'agent.users', 'uses' => 'Partner\AffiliatesController@users']);
+            Route::post('/partners/change/{id}', 'Partner\AffiliatesController@changeKoef')->name('agent.change.koef');
 
             Route::post('/tracker/create', ['as' => 'agent.store_tracker', 'uses' => 'AgentController@storeTracker']);
             Route::post('/tracker/{tracker}/update', ['as' => 'agent.updateTracker', 'uses' => 'AgentController@updateTracker']);

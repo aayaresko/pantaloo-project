@@ -50,7 +50,7 @@ class EmailChecker
             'fast' => $this->fast,
         ];
 
-        $key = env('IP_QUALITY_SCORE');
+        $key = config('appAdditional.ipQualityScore');
 
         $formatted_parameters = http_build_query($parameters);
 

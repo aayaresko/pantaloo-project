@@ -22,8 +22,15 @@
                                         {{csrf_field()}}
                                         <h4>Campaign Name</h4>
                                         <input type="text" class="form-control" name="name" value="">
-                                        <h4>Campaign Link</h4>
-                                        <input type="text" class="form-control" name="campaign_link" value="">
+                                        <h4>Select Language</h4>
+                                        <select name="campaign_link" class="form-control">
+                                            <option value="{{str_replace('partner.', '', url('/en'))}}">English</option>
+                                            <option value="{{str_replace('partner.', '', url('/de'))}}">Deutsch</option>
+                                            <option value="{{str_replace('partner.', '', url('/fr'))}}">Français</option>
+                                            <option value="{{str_replace('partner.', '', url('/it'))}}">Italiano</option>
+                                            <option value="{{str_replace('partner.', '', url('/ru'))}}">Русский</option>
+                                            <option value="{{str_replace('partner.', '', url('/th'))}}">ไทย</option>
+                                        </select>
                                         {{--<h4>Ref</h4>--}}
                                         {{--<input type="text" class="form-control" name="ref" value="">--}}
                                         <br>
@@ -39,6 +46,7 @@
                             <a href="#custom-modal" class="btn btn-primary waves-effect waves-light m-r-5 m-b-10"
                                data-animation="fadein" data-plugin="custommodal" data-overlayspeed="200"
                                data-overlaycolor="#36404a">Create Link</a>
+                            <h4>Links for players</h4>
                             <div class="table-wrap">
                                 <table class="table table-hover">
                                     <thead>
@@ -142,6 +150,37 @@
                             </div>
 
 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <h4>Links for partner</h4>
+                            <div class="table-wrap">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                            colspan="1">
+                                            Campaign Name
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                            colspan="1">
+                                            URL
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($trackers as $tracker)
+                                        <tr>
+                                            <td>{{$tracker->name}}</td>
+                                            <td>{{ config('partner.url') . '?ref=' . $tracker->ref }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

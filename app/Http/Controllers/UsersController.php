@@ -12,6 +12,7 @@ use App\UserActivation;
 use App\ModernExtraUsers;
 use App\Mail\BaseMailable;
 use App\Mail\EmailConfirm;
+use App\Models\AgentsKoef;
 use Illuminate\Support\Str;
 use App\Jobs\SetUserCountry;
 use Illuminate\Http\Request;
@@ -77,11 +78,11 @@ class UsersController extends Controller
 
         $token = hash_hmac('sha256', Str::random(40), config('app.key'));
 
-        $link = url('/').'/activate/'.$token.'/email/'.$user->email;
+        $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (! $activation) {
+        if (!$activation) {
             $activation = new UserActivation();
         }
 
@@ -146,7 +147,7 @@ class UsersController extends Controller
     {
         $errors = [];
 
-        if (! Hash::check($request->old_password, Auth::user()->password)) {
+        if (!Hash::check($request->old_password, Auth::user()->password)) {
             $errors[] = 'Wrong password';
         }
 
@@ -179,7 +180,7 @@ class UsersController extends Controller
 
             $commission = $request->input('commission');
 
-            if (! is_numeric($commission)) {
+            if (!is_numeric($commission)) {
                 return redirect()->back()->withErrors(['Invalid commission']);
             }
 
@@ -205,6 +206,9 @@ class UsersController extends Controller
             $user->role = $request->input('role');
 
             $user->save();
+            if ($user->role == 1 or $user->role == 3) {
+                $this->setAgentKoef($user, $commission);
+            }
 
             //block user
             $block = ($request->filled('block')) ? 1 : 0;
@@ -246,5 +250,18 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
+    }
+
+    protected function setAgentKoef($partner, $koef)
+    {
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $koef;
+        $newKoef->save();
+        $partner->commission = $koef;
+        $partner->save();
     }
 }

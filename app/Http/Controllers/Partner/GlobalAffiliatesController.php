@@ -234,6 +234,13 @@ class GlobalAffiliatesController extends Controller
         return response()->json($jsonData);
     }
 
+    public function getUsers()
+    {
+        $players = User::where('role', 0)->whereNull('agent_id')->orderBy('id', 'desc')->paginate(100);
+
+        return view('admin.partner.users', compact('players'));
+    }
+
     public function withdraws(Request $request)
     {
         //to do pagination database and to do in for usual player

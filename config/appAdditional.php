@@ -2,6 +2,10 @@
 
 return [
 
+    'forceHttps' => env('FORCE_HTTPS', true),
+
+    'ipQualityScore' => env('IP_QUALITY_SCORE'),
+
     'defaultTypes' => [
         [
             'id' => 10001,
@@ -158,8 +162,8 @@ return [
         'MU', 'MD', 'MN', 'MA', 'MZ', 'NA', 'NI', 'NP', 'NE', 'NG', 'KP', 'OM', 'PK',
         'PH', 'PL', 'PT', 'RO', 'RU', 'RW', 'ST', 'SN', 'SC', 'SL', 'SK', 'SI', 'SO',
         'SD', 'CH', 'SY', 'TH', 'TG', 'TN', 'UG', 'UA', 'AE', 'TZ', 'VN', 'YE', 'ZM',
-        'ZW', 'ME', 'RS', 'XX', ],
-
+        'ZW', 'ME', 'RS', 'XX'],
+    
     'ipQualityScoreUrl' => 'https://www.ipqualityscore.com/api/json/ip',
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),

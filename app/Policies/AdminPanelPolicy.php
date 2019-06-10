@@ -39,17 +39,17 @@ class AdminPanelPolicy
 
         $ip_allowed = $allowed_ips == [] || in_array($visitor_ip, $allowed_ips);
 
-        return $user->role >= 2 and $user->role <= 10 and $ip_allowed;
+        return $user->role >= 2 and $user->role <= 10 and $user->role != 3 and $ip_allowed;
     }
 
     public function accessUserAffiliate(User $user)
     {
-        return $user->role == 3;
+        return $user->role == 4;
     }
 
     public function accessAdminAffiliatePublic(User $user)
     {
-        return $user->role >= 2 and $user->role <= 3;
+        return $user->role == 2 or $user->role == 4;
     }
 
     public function accessAdminTranslatorPublic(User $user)
