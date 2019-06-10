@@ -245,7 +245,7 @@ class MoneyController extends Controller
 
     public function withdraw()
     {
-        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10);
+        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get();
 
         return view('withdraw', ['transactions' => $transactions]);
     }
