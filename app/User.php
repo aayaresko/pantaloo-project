@@ -455,7 +455,8 @@ class User extends Authenticatable
 
     public function totalPlayerSum()
     {
-        return $this->playerSum()->sum('sum');
+        $playerSum = $this->playerSum()->sum('sum');
+        return $playerSum ? -$playerSum : 0;
     }
     // agent function
     public function totalPlayerProfit()
@@ -477,7 +478,7 @@ class User extends Authenticatable
             ->where('created_at', '>=', Carbon::now()->toDateString())
             ->first();
 
-         return $total->total ?: 0;
+         return $total->total ? -$total->total : 0;
     }
 
     public function countries()
