@@ -81,7 +81,7 @@ class TransactionCount extends Command
                     $userSum->bonus += $transaction->bonus_sum;
                 }
                 if ($transaction->type == 5) {
-                    $depositBonusSum += $transaction->sum;
+                    $depositBonusSum += $transaction->bonus_sum;
                 }
             }
             //Formula:
