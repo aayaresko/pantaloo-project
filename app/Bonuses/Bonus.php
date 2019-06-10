@@ -18,18 +18,20 @@ abstract class Bonus
     protected $data;
     protected $dataBonus;
 
-    public function __construct(User $user)
+    public function __construct(User $user = null)
     {
         $this->user = $user;
 
-        $this->active_bonus = $this->user->bonuses()->first();
+        if (!is_null($user)) {
+            $this->active_bonus = $this->user->bonuses()->first();
+        }
 
         if (!is_null($this->active_bonus)) {
             $this->dataBonus = $this->active_bonus->data;
         }
     }
 
-    abstract public function bonusAvailable();
+    abstract public function bonusAvailable($params);
 
 
     abstract public function activate($params);

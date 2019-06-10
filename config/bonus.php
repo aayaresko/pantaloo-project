@@ -24,6 +24,18 @@ return [
         4 => 'App\Bonuses\Bonus_100',
     ],
 
-    'checkFrequency' => 10
+    'checkFrequency' => 10,
+
+    'setWelcomeBonus' => [
+        'name' => 'setFreeEnabled',
+        'time' => 1440,//seconds
+        'value' => 1,
+    ],
+
+    'moderUser' => [
+        'block',
+        'prefixName',
+        'freeEnabled'
+    ]
 
 ];

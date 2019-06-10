@@ -27,4 +27,9 @@ class Bonus extends Model
 
         throw new \Exception('Class not found');
     }
+
+    public function activeBonus()
+    {
+        return $this->hasOne('App\UserBonus', 'bonus_id', 'id');
+    }
 }

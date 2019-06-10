@@ -94,6 +94,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('password/reset', 'Auth\PasswordController@reset');
     //auth
 
+
+    //bonus bonus
+    Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
+    //bonus bonus
+
+
     Route::group([
         'prefix' => '{lang}',
         'where' => ['lang' => '(' . implode("|", $languages) . ')'],

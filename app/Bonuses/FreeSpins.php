@@ -2,7 +2,6 @@
 
 namespace App\Bonuses;
 
-use App\Events\BonusCancelEvent;
 use DB;
 use Log;
 use App\User;
@@ -11,6 +10,7 @@ use Carbon\Carbon;
 use App\UserBonus;
 use App\Transaction;
 use GuzzleHttp\Client;
+use App\ModernExtraUsers;
 use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
@@ -20,6 +20,7 @@ use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
 use App\Events\BonusGameEvent;
 use App\Events\CloseBonusEvent;
+use App\Events\BonusCancelEvent;
 use App\Modules\Others\DebugGame;
 use App\Models\SystemNotification;
 use App\Modules\Games\PantalloGamesSystem;
@@ -38,27 +39,57 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     const SPECIAL = 1313;
 
-    public function bonusAvailable()
+    public function bonusAvailable($params = [])
     {
-        $user = $this->user;
-        $createdUser = $user->created_at;
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
+        }
 
-        //hide if user 
-        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+        //GENERAL check****
+        $bonusInfo = BonusModel::where('id', static::$id)->first();
 
-        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
-        $currentDate = new Carbon();
-
-        if ($allowedDate < $currentDate) {
+        if (is_null($bonusInfo)) {
             return false;
         }
-        //hide if user 
 
-        $countBonuses = $this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count();
-
-        if ($countBonuses > 0) {
-            return false;
+        //get user info by free spins
+        $userFreeInfo = ModernExtraUsers::where('code', 'freeEnabled')->first();
+        if (!($userFreeInfo and $userFreeInfo->value == 1)) {
+            //cancel and open
+            if ($bonusInfo->public == 0) {
+                //close free spin temporary
+                return false;
+            }
+            //cancel and open
         }
+        //GENERAL check****
+
+        //additional check****
+        if ($mode == 0) {
+            $user = $this->user;
+            //check if user isset
+            if (!is_null($user)) {
+                //hide if user
+                $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
+
+                $createdUser = $user->created_at;
+                $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
+                $currentDate = new Carbon();
+
+                if ($allowedDate < $currentDate) {
+                    return false;
+                }
+                //hide if user
+
+                $countBonuses = $this->user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count();
+
+                if ($countBonuses > 0) {
+                    return false;
+                }
+            }
+        }
+        //additional check****
 
         return true;
     }
@@ -102,17 +133,25 @@ class FreeSpins extends \App\Bonuses\Bonus
             $ipFormatCurrent = inet_pton($ipCurrent);
 
             if ($mode == 0) {
-                //cancel and open
+
                 $bonusInfo = BonusModel::where('id', static::$id)->first();
+
                 if (is_null($bonusInfo)) {
                     throw new \Exception('Some is wrong');
                 }
 
-                if ($bonusInfo->public == 0) {
-                    //close free spin temporary
-                    throw new \Exception('This bonus is temporarily unavailable');
+                //get user info by free spins
+                $userFreeInfo = ModernExtraUsers::where('code', 'freeEnabled')->first();
+                if (!($userFreeInfo and $userFreeInfo->value == 1)) {
+                    //cancel and open
+
+                    if ($bonusInfo->public == 0) {
+                        //close free spin temporary
+                        throw new \Exception('This bonus is temporarily unavailable');
+                    }
+                    //cancel and open
                 }
-                //cancel and open
+                //get user info by free spins
 
                 if ($this->active_bonus) {
                     if ($this->active_bonus->bonus_id != static::$id) {
