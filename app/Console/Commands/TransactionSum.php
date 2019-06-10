@@ -60,17 +60,20 @@ class TransactionSum extends Command
                 $newAgent->save();
             }
         }
+        //deep start init
         $trim = 100;
+        //just for optimisation speed
         $lastId = 0;
-        $casinoFit = config('partner.casino_fit');
-        for ($i = 0; $i < $trim; $i++) {
-            $now = Carbon::now()->subDays($trim)->addDays($i)->startOfDay();
 
+        $casinoFit = config('partner.casino_fit');
+        for ($i = 0; $i <= $trim; $i++) {
+            $now = Carbon::now()->subDays($trim)->addDays($i)->startOfDay();
+            //show info to console
             $this->info($now->toDateString() . " Last id: $lastId");
 
             $transactionsUser = Transaction::where('created_at', '<', $now->toDateTimeString())
                 ->where('id', '>', $lastId)
-                ->where('created_at', '>', $now->subDay()->toDateTimeString())
+                ->where('created_at', '>=', $now->subDay()->toDateTimeString())
                 ->get()
                 ->groupBy('user_id');
             $now->addDay();
@@ -83,6 +86,7 @@ class TransactionSum extends Command
                 $userSum->wins = 0;
                 $userSum->bonus = 0;
                 $userSum->bet_count = 0;
+                $depositBonusSum = 0;
                 foreach ($transactions as $transaction) {
                     if ($transaction->type == 3) {
                         $userSum->deposits += $transaction->sum;
@@ -96,12 +100,25 @@ class TransactionSum extends Command
 
                         $userSum->bonus += $transaction->bonus_sum;
                     }
+                    if ($transaction->type == 5) {
+                        $depositBonusSum += $transaction->sum;
+                    }
                 }
-                $userSum->sum = ($userSum->bets + $userSum->wins) * (100 - $casinoFit) / 100;
+                //Formula:
+                //
+                //Net Gaming Revenue = *Bets - Wins - Bonuses - Admin Fee (18%)
+                // *we have bets as negative
+                $userSum->sum = ($userSum->bets + $userSum->wins + $depositBonusSum) * (100 - $casinoFit) / 100;
                 $userSum->save();
                 $lastId = $transaction->id;
 
                 if ($agent_id = @User::find($userId)->agent_id and $agent = $agents->where('id', $agent_id)->first()) {
+                    //if someone want to change user's agent we need old information
+                    $userSum->parent_id = $agent->id;
+                    $userSum->percent = $agent->commission;
+                    $userSum->save();
+
+
                     $agentSum = AgentSum::where('user_id', $agent_id)->where('created_at', $now->toDateTimeString())->first();
                     if (!$agentSum) {
                         $agentSum = new AgentSum();
@@ -112,11 +129,43 @@ class TransactionSum extends Command
                     $agentSum->agent_percent = $agent->koefs->koef;
                     if ($agent->agent_id) {
                         $agentSum->parent_percent = $agent->parentKoef->koef;
-                        $agentSum->parent_profit = $agentSum->total_sum * ($agentSum->parent_percent - $agentSum->agent_percent) / 100;
+                        $agentSum->parent_profit += $userSum->sum * ($agentSum->parent_percent - $agentSum->agent_percent) / 100;
+                        $parent = $agents->where('id', $agent->agent_id)->first();
+                        //if parent has parent -> add parent profit recursively
+                        if ($parent->agent_id) {
+                            $this->addParentProfit($agent->agent_id, $userSum->sum, $now, $agents);
+                        }
                     }
                     $agentSum->save();
                 }
             }
+        }
+    }
+
+    //recursively add parent profit
+    protected function addParentProfit($agent_id, $sum, $now, $agents)
+    {
+        //check parent is agent
+        $agent = @$agents->where('id', $agent_id)->first();
+        if (!$agent) {
+            return;
+        }
+
+        $agentSum = AgentSum::where('user_id', $agent_id)->where('created_at', $now->toDateTimeString())->first();
+        if (!$agentSum) {
+            $agentSum = new AgentSum();
+            $agentSum->user_id = $agent_id;
+            $agentSum->created_at = $now;
+            $agentSum->total_sum = 0;
+            $agentSum->agent_percent = $agent->koefs->koef;
+            $agentSum->parent_percent = $agent->parentKoef->koef;
+        }
+        $agentSum->parent_profit += $sum * ($agentSum->parent_percent - $agentSum->agent_percent) / 100;
+        $agentSum->save();
+
+        $parent = $agents->where('id', $agent->agent_id)->first();
+        if ($parent->agent_id) {
+            $this->addParentProfit($agent->agent_id, $sum, $now, $agents);
         }
     }
 }
