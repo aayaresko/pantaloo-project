@@ -45,8 +45,8 @@ class TestController extends Controller
 
     public function phpinfo(Request $request)
     {
-        dd(777);
-        phpinfo();
+        dump($request->getClientIps());
+        //phpinfo();
         exit();
     }
 
