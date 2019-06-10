@@ -159,7 +159,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     ->where('ip_address', $ipFormatCurrent)
                     ->withTrashed()->count();
 
-                if ($currentBonusByIp > 0) {
+                if (! GeneralHelper::isTestMode() && $currentBonusByIp > 0) {
                     throw new \Exception('You cannot activate this bonus in accordance'.
                         ' with clause 1.18 of the bonus terms & conditions');
                 }
