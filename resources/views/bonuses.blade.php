@@ -12,54 +12,49 @@
             <div class="container">
                 <div class="flexContainer">
 
-                    @foreach($bonuses as  $key => $bonus)
+                    @foreach($bonusForView as  $key => $bonus)
                         @php
                             $bonusExtra = json_decode($bonus->extra, true);
-                            $activatedBonus = '';
-                            if (!is_null($activeBonus)) {
-                                $activatedBonus = ($activeBonus->bonus_id == $bonus->id) ? 'activatedBonus' : '';
-                            }
                         @endphp
 
-                        @if ($bonus->public == 1 or $activatedBonus <> '')
-                            <div class="flexChild">
-                                <section class="block-bonus clearfix {{ $activatedBonus }}"
-                                         style="background-image: url({{ $bonusExtra['mainPicture'] }});">
-                                    <div class="block-bonus-left">
-                                        <div class="block-bonus-image">
-                                            <img src="{{ asset($bonusExtra['additionalPicture']) }}" alt=""/>
-                                        </div>
+                        <div class="flexChild">
+                            <section class="block-bonus clearfix {{ (is_null($bonus->active_bonus) ? '' : 'activatedBonus') }}"
+                                     style="background-image: url({{ $bonusExtra['mainPicture'] }});">
+                                <div class="block-bonus-left">
+                                    <div class="block-bonus-image">
+                                        <img src="{{ asset($bonusExtra['additionalPicture']) }}" alt=""/>
                                     </div>
-
-                                    <div class="block-bonus-right">
-                                        <div class="block-bonus-buttons">
-                                            @if(Auth::check())
-                                                <a href="#uls"
-                                                   class="btn-play-action usl-link"
-                                                   data-bonus-url='{{ route('bonus.activate', $bonus->id) }}'>
-                                                    <span>{{ trans('casino.activate') }}</span>
-                                                </a>
-                                            @else
-                                                <a href="#"
-                                                   class="btn-play-action reg-btn">
-                                                    <span>{{ trans('casino.join_now') }}</span>
-                                                </a>
-                                            @endif
-
-                                        </div>
-                                    </div>
-                                </section>
-                                <!-- <div class="bonusOverlay unavailable">
-                                    <div class="icon"></div>
-                                    <h3>Temporarily unavailable</h3>
-                                </div> -->
-
-                                <div class="bonusOverlay activated">
-                                    <div class="icon"></div>
-                                    <h3>{{ trans('casino.bonus_status') }}</h3>
                                 </div>
+
+                                <div class="block-bonus-right">
+                                    <div class="block-bonus-buttons">
+                                        @if(Auth::check())
+                                            <a href="#uls"
+                                               class="btn-play-action usl-link"
+                                               data-bonus-url='{{ route('bonus.activate', $bonus->id) }}'>
+                                                <span>{{ trans('casino.activate') }}</span>
+                                            </a>
+                                        @else
+                                            <a href="#"
+                                               class="btn-play-action reg-btn">
+                                                <span>{{ trans('casino.join_now') }}</span>
+                                            </a>
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- <div class="bonusOverlay unavailable">
+                                <div class="icon"></div>
+                                <h3>Temporarily unavailable</h3>
+                            </div> -->
+
+                            <div class="bonusOverlay activated">
+                                <div class="icon"></div>
+                                <h3>{{ trans('casino.bonus_status') }}</h3>
                             </div>
-                        @endif
+                        </div>
+
                     @endforeach
 
 

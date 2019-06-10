@@ -44,39 +44,43 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     const SPECIAL = 1313;
 
-    /**
-     * @return bool
-     */
-    public function bonusAvailable()
+
+    public function bonusAvailable($params = [])
     {
         $user = $this->user;
-        $createdUser = $user->created_at;
 
-        //hide if user
-        $timeActiveBonusSec = strtotime("$this->timeActiveBonusDays day", 0);
-
-        $allowedDate = $createdUser->modify("+$timeActiveBonusSec second");
-        $currentDate = new Carbon();
-
-//        if ($allowedDate < $currentDate) {
-//            return false;
-//        }
-        //hide if user
-
-        //hide if deposit count
-        $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
-            ->where('type_id', 1)
-            ->count();
-
-        if ($notificationTransactionDeposits > $this->depositsCount) {
-            return false;
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
         }
 
-        $countBonuses = $this->user->bonuses()
-            ->where('bonus_id', static::$id)->withTrashed()->count();
+        //GENERAL check****
+        $bonusInfo = BonusModel::where('id', static::$id)->where('public', 1)->first();
 
-        if ($countBonuses > 0) {
+        if (is_null($bonusInfo)) {
             return false;
+        }
+        //GENERAL check****
+
+        //additional check****
+        if ($mode == 0) {
+
+            //hide if deposit count
+            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                ->where('type_id', 1)
+                ->count();
+
+            if ($notificationTransactionDeposits > $this->depositsCount) {
+                return false;
+            }
+
+            $countBonuses = $this->user->bonuses()
+                ->where('bonus_id', static::$id)->withTrashed()->count();
+
+            if ($countBonuses > 0) {
+                return false;
+            }
+
         }
 
         return true;

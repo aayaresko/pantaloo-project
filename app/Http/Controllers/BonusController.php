@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Cookie;
 use App\User;
 use App\Bonus;
 use App\UserBonus;
@@ -14,30 +15,61 @@ use Illuminate\Support\Facades\Auth;
 
 class BonusController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //to do if bonus be activated for this user
-        $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
 
-        //check bonus
-        $bonuses = $bonuses->filter(function ($item) {
-            $bonusClass = $item->getClass();
-            $bonusObject = new $bonusClass(Auth::user());
-            //check
-            return $bonusObject->bonusAvailable();
-        });
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
 
-        $active_bonus = Auth::user()->bonuses()->first();
+        $bonusForView = [];
+        $activeBonus = null;
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
 
-        $bonusStatistics = null;
-        if ($active_bonus) {
-            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+            if (!is_null($bonus->active_bonus)) {
+                $activeBonus = $bonus;
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->active_bonus);
+                $activeBonus->bonusStatistics = $bonusStatistics;
+            }
+
+            if ($bonusAvailable and is_null($bonus->active_bonus)) {
+                array_push($bonusForView, $bonus);
+            }
         }
 
         return view('bonus', [
-            'bonuses' => $bonuses,
-            'active_bonus' => $active_bonus,
-            'bonusStatistics' => $bonusStatistics,
+            'bonusForView' => $bonusForView,
+            'activeBonus' => $activeBonus
+        ]);
+    }
+
+    public function promo(Request $request)
+    {
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
+
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
+
+        $bonusForView = [];
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+
+            if ($bonusAvailable or !is_null($bonus->active_bonus)) {
+                array_push($bonusForView, $bonus);
+            }
+        }
+
+        return view('bonuses', [
+            'bonusForView' => $bonusForView,
         ]);
     }
 
@@ -187,20 +219,17 @@ class BonusController extends Controller
         return redirect()->back()->with('msg', 'Bonus was canceled');
     }
 
-    public function promo(Request $request)
+
+    public function getWelcomeBonus(Request $request)
     {
         $user = $request->user();
-
-        $activeBonus = null;
-        if (!is_null($user)) {
-            $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
+        if (is_null($user)) {
+            $configBonusAccess = config('bonus.setWelcomeBonus');
+            $name = $configBonusAccess['name'];
+            $minutes = $configBonusAccess['time'];
+            $value = $configBonusAccess['value'];
+            Cookie::queue($name, $value, $minutes);
         }
-
-        $bonuses = Bonus::orderBy('id', 'asc')->get();
-
-        return view('bonuses')->with([
-            'bonuses' => $bonuses,
-            'activeBonus' => $activeBonus
-        ]);
+        return redirect('/');
     }
 }

@@ -81,6 +81,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
 
+
+    //bonus bonus
+    Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
+    //bonus bonus
+
+
     Route::group([
         'prefix' => '{lang}',
         'where' => ['lang' => '('.implode('|', $languages).')'],
