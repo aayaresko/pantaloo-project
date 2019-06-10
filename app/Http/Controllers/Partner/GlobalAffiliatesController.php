@@ -79,6 +79,29 @@ class GlobalAffiliatesController extends Controller
         return $param;
     }
 
+    protected function preparationParamsUsers(Request $request)
+    {
+        $param['columns'] = [
+            0 => 'users.id',
+            1 => 'users.email',
+            2 => 'users.created_at',
+        ];
+        $param['columnsAlias'] = [
+            0 => 'users.id',
+            1 => 'users.email',
+            2 => 'users.created_at',
+        ];
+        $param['whereUsers'] = [];
+        //date
+        $dateStart = new Carbon();
+        $dateStart->setTimestamp($request->dateStart);
+        $endStart = new Carbon();
+        $endStart->setTimestamp($request->endStart);
+
+
+        return $param;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -236,9 +259,86 @@ class GlobalAffiliatesController extends Controller
 
     public function getUsers()
     {
-        $players = User::where('role', 0)->whereNull('agent_id')->orderBy('id', 'desc')->paginate(100);
+        return view('admin.partner.users');
+    }
 
-        return view('admin.partner.users', compact('players'));
+    public function getUsersTable(Request $request)
+    {
+        $start1 = microtime(true);
+        $param = $this->preparationParamsUsers($request);
+        /* ACT */
+
+        $countSum = User::where('role', 0)
+            ->whereNull('agent_id')
+            ->count();
+
+        $totalData = $countSum;
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+
+        $order = $param['columns'][$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        if (empty($request->input('search.value'))) {
+            /* SORT */
+
+            $items = User::where('role', 0)
+                ->whereNull('agent_id')
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            foreach ($items as $user) {
+                $user->country = $user->countries ? $user->countries->name : $user->country;
+                $user->deposit = $user->deposit() ?: 0;
+                $user->today_benefit = $user->todayPlayerSum();
+                $user->total_benefit = $user->totalPlayerSum() ?: 0;
+                $user->withdraw = $user->withdraw();
+            }
+        } else {
+            $search = $request->input('search.value');
+
+            if (is_numeric($search)) {
+                array_push($param['whereUsers'], [$param['columns'][0], 'LIKE', "%{$search}%"]);
+            } else {
+                array_push($param['whereUsers'], [$param['columns'][1], 'LIKE', "%{$search}%"]);
+            }
+            $prepareItems = User::where('role', 0)
+                ->whereNull('agent_id')
+                ->where($param['whereUsers']);
+            $totalFiltered = $prepareItems->count();
+
+            $items = $prepareItems
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            foreach ($items as $user) {
+                $user->country = $user->countries ? $user->countries->name : $user->country;
+                $user->deposit = $user->deposit() ?: 0;
+                $user->today_benefit = $user->todayPlayerSum();
+                $user->total_benefit = $user->totalPlayerSum() ?: 0;
+                $user->withdraw = $user->withdraw();
+            }
+        }
+        /* END */
+
+        /* TO VIEW */
+        $data = $items;
+
+        $jsonData = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data,
+            'time' => round(microtime(true) - $start1, 4)
+        );
+
+        return response()->json($jsonData);
     }
 
     public function withdraws(Request $request)

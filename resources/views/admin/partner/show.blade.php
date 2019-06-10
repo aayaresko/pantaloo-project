@@ -94,6 +94,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <h4>Players total earn: {{$partner->totalEarn()}}</h4>
                             </div>
                         </div>
                     </div>

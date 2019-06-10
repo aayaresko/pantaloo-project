@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () u
         Route::post('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
 
         //redefine routes affiliates
-        Route::group(['prefix' => 'affiliates', 'middleware' => ['agent']], function () {
+        Route::group(['prefix' => 'affiliates', 'middleware' => ['auth', 'agent']], function () {
             Route::get('/logoutMain', ['as' => 'affiliates.logoutMain', 'uses' => 'Auth\Affiliates\AuthController@logout']);
         });
     });
@@ -263,6 +263,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 Route::get('/withdraws', ['as' => 'globalAffiliates.withdraws', 'uses' => 'Partner\GlobalAffiliatesController@withdraws']);
                 Route::get('/getFinance', ['as' => 'globalAffiliates.getFinance', 'uses' => 'Partner\GlobalAffiliatesController@getFinance']);
                 Route::get('/getUsers', ['as' => 'globalAffiliates.users', 'uses' => 'Partner\GlobalAffiliatesController@getUsers']);
+                Route::get('/getUsersTable', ['as' => 'globalAffiliates.usersTable', 'uses' => 'Partner\GlobalAffiliatesController@getUsersTable']);
 
                 Route::get('/transaction/{transaction}/approve', ['as' => 'globalAffiliates.approve', 'uses' => 'Partner\GlobalAffiliatesController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'globalAffiliates.freeze', 'uses' => 'Partner\GlobalAffiliatesController@freeze']);

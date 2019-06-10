@@ -268,6 +268,15 @@ class AffiliatesController extends Controller
             }
         }
 
+        $profitTotal = 0;
+        //add profit from players
+        $profitTotal += Auth::user()->totalEarn($from, $to);
+        //add profit from affiliates
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', 1)->get();
+        foreach ($affiliates as $affiliate) {
+            $profitTotal += $affiliate->totalProfit($from, $to);
+        }
+
         $data = [
             'users' => $result,
             'trackers' => $trackers,
@@ -276,7 +285,7 @@ class AffiliatesController extends Controller
             'confirm_deposits' => $result->sum('confirm_deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('profit'),
+            'profit_total' => $profitTotal,
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
             'currencyCode' => $currencyCode,
@@ -294,7 +303,16 @@ class AffiliatesController extends Controller
     {
         $statusPayment = config('appAdditional.statusPayment');
         $user = $request->user();
-        $available = $user->getAgentAvailable();
+        //$available = $user->getAgentAvailable();
+        $available = 0;
+        //add profit from players
+        $available += $user->totalEarn();
+        //add profit from affiliates
+        $affiliates = User::where('agent_id', $user->id)->where('role', 1)->get();
+        foreach ($affiliates as $affiliate) {
+            $available += $affiliate->totalProfit();
+        }
+        $totalWithdraw = $user->withdraw();
         //get transaction withdraw
         //to do pagination for transactions
         $transactions = Transaction::where('user_id', $user->id)
@@ -304,6 +322,7 @@ class AffiliatesController extends Controller
             'available' => $available,
             'transactions' => $transactions,
             'statusPayment' => $statusPayment,
+            'totalWithdraw' => $totalWithdraw,
         ]);
     }
 

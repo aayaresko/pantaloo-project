@@ -285,7 +285,7 @@ class AgentController extends Controller
     public function showTree()
     {
         $users = User::with('koefs', 'benefits')
-            ->select('id', 'email', 'role', 'agent_id', 'created_at')
+            ->select('id', 'email', 'role', 'agent_id', 'commission', 'created_at')
             ->whereIn('role', [1, 3])
             ->get();
 
@@ -299,8 +299,8 @@ class AgentController extends Controller
             $parentIdChildArr[$parentId][] = $user;
             $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();
             $user->userTotalCount = $user->playersTotalCount();
-            $user->percent = $user->koefs->koef;
-            $user->benefit = (string)$user->benefits->sum('total_sum');
+            $user->percent = $user->commission;
+            $user->benefit = (string) -$user->benefits->sum('total_sum');
         }
         $newTree = $this->createTree($parentIdChildArr, $parentIdChildArr[0]);
 
