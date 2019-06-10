@@ -47,6 +47,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function bonusAvailable($params = [])
     {
+        $user = $this->user;
         $mode = 0;
         if (isset($params['mode'])) {
             $mode = $params['mode'];
@@ -62,8 +63,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         //additional check****
         if ($mode == 0) {
-            $user = $this->user;
-            
             //check if user isset
             if (!is_null($user)) {
                 //hide if deposit count

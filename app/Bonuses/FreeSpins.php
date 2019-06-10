@@ -46,6 +46,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
     public function bonusAvailable($params = [])
     {
+        $user = $this->user;
         $mode = 0;
         if (isset($params['mode'])) {
             $mode = $params['mode'];
@@ -58,21 +59,27 @@ class FreeSpins extends \App\Bonuses\Bonus
             return false;
         }
 
-        //get user info by free spins
-        $userFreeInfo = ModernExtraUsers::where('code', 'freeEnabled')->first();
-        if (!($userFreeInfo and $userFreeInfo->value == 1)) {
-            //cancel and open
+        if (!is_null($user)) {
+            //get user info by free spins
+            $userFreeInfo = ModernExtraUsers::where('user_id', $user->id)->where('code', 'freeEnabled')->first();
+            if (!($userFreeInfo and $userFreeInfo->value == 1)) {
+                //cancel and open
+                if ($bonusInfo->public == 0) {
+                    //close free spin temporary
+                    return false;
+                }
+                //cancel and open
+            }
+            //GENERAL check****
+        } else {
             if ($bonusInfo->public == 0) {
-                //close free spin temporary
                 return false;
             }
-            //cancel and open
         }
-        //GENERAL check****
+
 
         //additional check****
         if ($mode == 0) {
-            $user = $this->user;
             //check if user isset
             if (!is_null($user)) {
                 //hide if user
@@ -145,7 +152,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 //get user info by free spins
-                $userFreeInfo = ModernExtraUsers::where('code', 'freeEnabled')->first();
+                $userFreeInfo = ModernExtraUsers::where('user_id', $user->id)->where('code', 'freeEnabled')->first();
                 if (!($userFreeInfo and $userFreeInfo->value == 1)) {
                     //cancel and open
 
