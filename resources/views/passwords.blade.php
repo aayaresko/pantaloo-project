@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="cabinet-block 1" style="background: #000 url('/media/images/bg/deposit-bg-dark.jpg') center no-repeat; background-size: cover;">
+<div class="cabinet-block 1" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
     <div class="cabinet-entry">
         <div class="main-content">
             <div class="credits-block">
@@ -38,21 +38,21 @@
                 <div class="setting-entry">
                     <div class="setting-tabs">
                         <ul>
-                            <li><a href="#tabs-1">PIN-code</a></li>
+                            <li><a href="#tabs-1">{{ trans('casino.pin_code') }}</a></li>
                             <li><a href="#tabs-2">{{ trans('casino.change_password') }}</a></li>
                             <li><a href="#tabs-3">{{ trans('casino.confirm_email') }}</a></li>
                         </ul>
                         <div id="tabs-1">
                             <!-- form add pin code  -->
                             <div class="middle-block" style="display: none">
-                                <form action="" method="POST">               
-                                    <span class="text">Add pin code</span>
-                                    <input type="text" name="#">  
+                                <form action="#" method="POST">               
+                                    <span class="text">{{ trans('casino.add_pin_code') }}</span>
+                                    <input type="text" name="add_pin_code">  
                                 
-                                    <span class="text">Repeat pin code</span>
-                                    <input type="text" name="#">
+                                    <span class="text">{{ trans('casino.repeat_pin_code') }}</span>
+                                    <input type="text" name="repeat_code">
 
-                                    <button class="pinCode">save</button>
+                                    <button class="pinCode">{{ trans('casino.save_pin_code') }}</button>
                                 </form>
                             </div>
                              <!-- end form add pin code  -->
@@ -60,18 +60,18 @@
 
                             <!-- form change pin code  -->
                             <div class="middle-block" style="display: block">
-                                <form action="" method="POST">  
+                                <form action="#" method="POST">  
                                                  
-                                    <span class="text">Current Pin code</span>
-                                    <input type="text" name="#">
+                                    <span class="text">{{ trans('casino.current_pin_code') }}</span>
+                                    <input type="text" name="current_pin_code">
                                 
-                                    <span class="text">New pin code</span>
-                                    <input type="text" name="#">
+                                    <span class="text">{{ trans('casino.new_pin_code') }}</span>
+                                    <input type="text" name="new_pin_code">
 
-                                    <span class="text">Repeat pin code </span>
-                                    <input type="text" name="#">
+                                    <span class="text">{{ trans('casino.repeat_pin_code') }}</span>
+                                    <input type="text" name="repeat_code">
 
-                                    <button class="pinCode">save</button>
+                                    <button class="pinCode">{{ trans('casino.save_pin_code') }}</button>
                                 </form>
                             </div>
                              <!-- form change pin code  -->
@@ -108,31 +108,36 @@
                                     ivanov.alexander@gmail.com
                                 </div>
                                 <p class="emailConfInfo">
-                                    Confirmed!
+                                    {{ trans('casino.confirmed_email') }}
                                 </p>
                                 <p class="supportContact">
-                                    If you need to change your email address, please
-                                    <a href="#">contact support.</a>
+                                    {{ trans('casino.contact_support_intro') }}
+                                    <a href="#">{{ trans('casino.contact_support') }}</a>
                                 </p>
 
                                <!-- end Email confirmed -->
                             @else
-    
-                                <form method="POST" action="{{ route('email.confirm') }}">
+
+                            <!-- Email not confirmed -->
+
+
+                            <form method="POST" action="{{ route('email.confirm') }}">
                                     {{ csrf_field() }}
                                     <div class="emailWrapper notConfirmd">
                                         <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">         
                                     </div>
                                     <p class="emailConfInfo">
-                                        Email not confirmed! <span>Don't receive email?</span><button class="update-btn">{{trans('casino.send_mail')}}</button>
+                                    {{ trans('casino.not_confirmed_email') }} <span>{{ trans('casino.receive_email') }} ?</span><button class="update-btn">{{trans('casino.send_mail')}}</button>
                                     </p>
-                                    <p class="supportContact">If you need to change your email address, please
-                                        <a href="#">contact support.</a>
+                                    <p class="supportContact">  {{ trans('casino.contact_support_intro') }}
+                                        <a href="#">{{ trans('casino.contact_support') }}</a>
                                     </p>
                                 </form>
+    
+                            <!-- end email not confirmed --> 
                                        
                             @endif
-                            <!-- enif -->
+                      
                             </div>
                         </div>
                     </div>

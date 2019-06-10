@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="cabinet-block"
-         style="background: #000 url('/media/images/bg/deposit-bg-dark.jpg') center no-repeat; background-size: cover;">
+         style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="cabinet-entry cabinetMod">
             <div class="main-content">
                 <div class="page-heading">
@@ -68,18 +68,18 @@
                     </div>
                 </div>
                 <div class='tableTransactionsWrapper'>
-                    <p class="descr">Your Withdraws</p>
+                    <p class="descr">{{ trans('casino.your_withdraws') }}</p>
                     <table id="transactionsTable" class="display">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Transaction ID</th>
-                                <th>Status</th>
-                                <th>Amount</th>
+                                <th>{{translate('casino.deposit_data')}}</th>
+                                <th>{{translate('casino.transaction_id')}}</th>
+                                <th>{{translate('casino.transaction_status')}}</th>
+                                <th>{{translate('casino.transaction_amount')}}</th>
                             </tr>
                         </thead>
                     </table>
-                    <button class="loadMoredataTableBtn">more</button>
+                    <button class="loadMoredataTableBtn">{{translate('casino.transaction_more')}}</button>
                     <hr class="devider">
                 </div>
             </div>

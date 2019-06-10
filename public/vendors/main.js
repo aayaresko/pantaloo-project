@@ -273,6 +273,12 @@ $(document).ready(function(){
 		
 		document.execCommand("copy");
 
+		$(".copied").addClass("showCopied");
+
+		setTimeout(function(){
+			$(".copied").removeClass("showCopied");
+		},1200);
+
 	});
 
 
@@ -280,7 +286,7 @@ $(document).ready(function(){
 		"searching": false,
 		"bPaginate": true,
 		"info":     false,
-		"ajax": "http://localhost/vendors/test.json",
+		"ajax": "/vendors/test.json",
 		"iDisplayLength" : 10,
 		"columns": [
             { "data": "date" },
@@ -294,7 +300,7 @@ $(document).ready(function(){
 			{ "orderable": false, "targets": 2 }
 		  ],
 		drawCallback: function(){
-			$('#btn-example-load-more').toggle(this.api().page.hasMore());
+			// $('#btn-example-load-more').toggle(this.api().page.hasMore());
 		},
 		createdRow: function( row, data, dataIndex ) {
 			// Set the data-status attribute, and add a class

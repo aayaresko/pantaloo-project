@@ -12,7 +12,7 @@
         <div class="cabinet-entry cabinetMod">
             <div class="main-content">
                 <div class="page-heading">
-                    <h1 class="page-title">Account</h1>
+                    <h1 class="page-title">{{ trans('casino.account_title')}}</h1>
                 </div>
                 <div class="userBalanceWrap">
                     <i class="bitcoin-icon"></i>
@@ -36,55 +36,54 @@
                     <div class="withdraw-entry">
                         <div class="middle-block">
                             <div class="accountFormWrapper">
-                                <form action="" id="userDataForm">
+                                <form id="userDataForm">
                                     <div class="halfCol">
-                                    <label>First name:<span>*</span></label>
+                                    <label>{{ trans('casino.account_first_name') }}<span>*</span></label>
                                     <input type="text" name="first_name">
                                     </div>
                                     
                                     <div class="halfCol">
-                                        <label>Last name:</label> 
+                                        <label>{{ trans('casino.account_last_name') }}</label> 
                                         <input type="text" name="last_name">
                                     </div>
                                     <div class="fullCol">
-                                        <label>Date of Birth: <span>*</span></label> 
+                                        <label>{{ trans('casino.date_of_birth') }}<span>*</span></label>  
                                         <select id="days" name="day"></select>
                                         <select id="months" name="month"></select>
                                         <select id="years" name="year"></select>
                                     </div>
                                     <div class="fullCol flexStart">
-                                        
-                                        <p class="genderTxt">Gender:</p>
+                                        <p class="genderTxt">{{ trans('casino.account_gender') }}</p>
                                         <div class="inputRadioWrapper">
                                             <input type="radio" value="male" name="gender" id="gender1"> 
-                                            <label for="gender1">Male</label>
+                                            <label for="gender1">{{ trans('casino.account_male') }}</label>
                                         </div>
 
                                         <div class="inputRadioWrapper">
                                             <input type="radio" value="female" name="gender" id="gender2"> 
-                                            <label for="gender2">Female</label>
+                                            <label for="gender2">{{ trans('casino.account_female') }}</label>
                                         </div>
                                     </div>
                                     <div class="halfCol">
-                                        <label for="country">Country:<span>*</span></label>
+                                        <label for="country">{{ trans('casino.account_country') }}:<span>*</span></label>
                                         <!-- <select name="country" id="country">Country</select> -->
                                         <input type="text" id="country">
                                     </div>
                                     
                                     <div class="halfCol">
-                                        <label for="city">City:</label> 
+                                        <label for="city">{{ trans('casino.account_city') }}:</label> 
                                         <input type="text" name="city" id="city">
                                     </div>
                                     <div class="fullCol">
-                                        <label for="">Email:</label>
+                                        <label>{{ trans('casino.account_email') }}:</label>
                                         <div class="emailWrapper confirmd">
                                             <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">         
-                                            <a href="{{route('settings', ['lang' => $currentLang])}}" class="editEmailBtn">Edit</a>
+                                            <a href="{{route('settings', ['lang' => $currentLang])}}" class="editEmailBtn">{{ trans('casino.account_edit') }}</a>
                                         </div>
                                     </div>
 
                                     <button class="updateUserDataBtn">
-                                        update
+                                    {{ trans('casino.account_update') }}
                                     </button>
                                 </form>
                             </div>
@@ -131,7 +130,7 @@
     </div>
 
     <div class="alertWrapper">
-        <div class="alertText">Message text info</div>
+        <div class="alertText">Text from response</div>
     </div>
 
     <!-- <div class="alertWrapper error">
