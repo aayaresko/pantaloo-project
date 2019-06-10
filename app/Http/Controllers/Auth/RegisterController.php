@@ -90,7 +90,7 @@ class RegisterController extends Controller
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (! GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
@@ -153,14 +153,26 @@ class RegisterController extends Controller
 
             $user->save();
 
+            //welcome bonus set param for active
+            $configBonus = config('bonus');
+            $configSetWelcome = $configBonus['setWelcomeBonus'];
+            if (Cookie::get($configSetWelcome['name']) === $configSetWelcome['value']) {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'freeEnabled',
+                    'value' => $configSetWelcome['value']
+                ]);
+            }
+            //welcome bonus set param for active
+
             //send email
             //to do check this
             $token = hash_hmac('sha256', Str::random(40), config('app.key'));
-            $link = url('/').'/activate/'.$token.'/email/'.$user->email;
+            $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
             $activation = UserActivation::where('user_id', $user->id)->first();
 
-            if (! $activation) {
+            if (!$activation) {
                 $activation = new UserActivation();
             }
 
