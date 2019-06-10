@@ -90,7 +90,7 @@ class RegisterController extends Controller
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (! GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
@@ -103,7 +103,7 @@ class RegisterController extends Controller
 
         //act
         try {
-            if (GeneralHelper::isTestMode()) {
+            if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
                 $address = 'bitcoinTestAddress';
             } else {
                 $service = new Service();
@@ -156,11 +156,11 @@ class RegisterController extends Controller
             //send email
             //to do check this
             $token = hash_hmac('sha256', Str::random(40), config('app.key'));
-            $link = url('/').'/activate/'.$token.'/email/'.$user->email;
+            $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
             $activation = UserActivation::where('user_id', $user->id)->first();
 
-            if (! $activation) {
+            if (!$activation) {
                 $activation = new UserActivation();
             }
 
