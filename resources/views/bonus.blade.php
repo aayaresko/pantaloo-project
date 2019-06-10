@@ -24,18 +24,17 @@
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
-
                                 @if($activeBonus)
                                     <div class="item">
                                         <div class="single-bonus">
-                                            <h3 class="title">{{trans($activeBonus->bonus->name)}}</h3>
-                                            <p class="text">{{trans($activeBonus->bonus->descr)}}</p>
+                                            <h3 class="title">{{trans($activeBonus->name)}}</h3>
+                                            <p class="text">{{trans($activeBonus->descr)}}</p>
 
                                             <p class="text">Bonus wager:
                                                 {{ $activeBonus->bonusStatistics['bonusWager']['real'] . ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }}
                                                 {{ config('app.currencyCode') }}</p>
 
-                                            @if ($active_bonus->bonus_id == 1)
+                                            @if ($activeBonus->bonus_id == 1)
 
                                                 <p class="text">Deposit wager:
                                                     {{ $activeBonus->bonusStatistics['depositWager']['real'] . ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }}

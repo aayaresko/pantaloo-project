@@ -31,13 +31,13 @@ class BonusController extends Controller
             $bonusObject = new $bonusClass($user);
             $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
 
-            if (!is_null($bonus->active_bonus)) {
+            if (!is_null($bonus->activeBonus)) {
                 $activeBonus = $bonus;
-                $bonusStatistics = BonusHelper::bonusStatistics($bonus->active_bonus);
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
                 $activeBonus->bonusStatistics = $bonusStatistics;
             }
 
-            if ($bonusAvailable and is_null($bonus->active_bonus)) {
+            if ($bonusAvailable) {
                 array_push($bonusForView, $bonus);
             }
         }
@@ -56,7 +56,7 @@ class BonusController extends Controller
         $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
             $query->where('user_id', $userId);
         }])->orderBy('rating', 'desc')->get();
-
+        
         $bonusForView = [];
         foreach ($bonuses as $bonus) {
             $bonusClass = BonusHelper::getClass($bonus->id);
@@ -67,7 +67,7 @@ class BonusController extends Controller
                 array_push($bonusForView, $bonus);
             }
         }
-
+        
         return view('bonuses', [
             'bonusForView' => $bonusForView,
         ]);

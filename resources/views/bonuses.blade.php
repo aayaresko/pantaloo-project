@@ -18,7 +18,7 @@
                         @endphp
 
                         <div class="flexChild">
-                            <section class="block-bonus clearfix {{ (is_null($bonus->active_bonus) ? '' : 'activatedBonus') }}"
+                            <section class="block-bonus clearfix {{ (is_null($bonus->activeBonus) ? '' : 'activatedBonus') }}"
                                      style="background-image: url({{ $bonusExtra['mainPicture'] }});">
                                 <div class="block-bonus-left">
                                     <div class="block-bonus-image">
