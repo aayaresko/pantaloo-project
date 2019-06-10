@@ -8,6 +8,7 @@ use App\Tracker;
 use App\Currency;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use App\ModernExtraUsers;
 use App\Mail\BaseMailable;
 use App\Mail\EmailConfirm;
 use Helpers\GeneralHelper;
@@ -156,7 +157,7 @@ class RegisterController extends Controller
             //welcome bonus set param for active
             $configBonus = config('bonus');
             $configSetWelcome = $configBonus['setWelcomeBonus'];
-            if (Cookie::get($configSetWelcome['name']) === $configSetWelcome['value']) {
+            if (Cookie::get($configSetWelcome['name']) == $configSetWelcome['value']) {
                 ModernExtraUsers::create([
                     'user_id' => $user->id,
                     'code' => 'freeEnabled',
