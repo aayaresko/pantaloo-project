@@ -104,7 +104,7 @@ class RegisterController extends Controller
 
         //act
         try {
-            if (GeneralHelper::isTestMode()) {
+            if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
                 $address = 'bitcoinTestAddress';
             } else {
                 $service = new Service();
