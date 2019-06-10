@@ -63,11 +63,11 @@ class BonusController extends Controller
             $bonusObject = new $bonusClass($user);
             $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
 
-            if ($bonusAvailable or !is_null($bonus->active_bonus)) {
+            if ($bonusAvailable or !is_null($bonus->activeBonus)) {
                 array_push($bonusForView, $bonus);
             }
         }
-        
+
         return view('bonuses', [
             'bonusForView' => $bonusForView,
         ]);
