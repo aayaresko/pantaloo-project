@@ -47,8 +47,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     public function bonusAvailable($params = [])
     {
-        $user = $this->user;
-
         $mode = 0;
         if (isset($params['mode'])) {
             $mode = $params['mode'];
@@ -64,23 +62,26 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         //additional check****
         if ($mode == 0) {
+            $user = $this->user;
+            
+            //check if user isset
+            if (!is_null($user)) {
+                //hide if deposit count
+                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                    ->where('type_id', 1)
+                    ->count();
 
-            //hide if deposit count
-            $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
-                ->where('type_id', 1)
-                ->count();
+                if ($notificationTransactionDeposits > $this->depositsCount) {
+                    return false;
+                }
 
-            if ($notificationTransactionDeposits > $this->depositsCount) {
-                return false;
+                $countBonuses = $this->user->bonuses()
+                    ->where('bonus_id', static::$id)->withTrashed()->count();
+
+                if ($countBonuses > 0) {
+                    return false;
+                }
             }
-
-            $countBonuses = $this->user->bonuses()
-                ->where('bonus_id', static::$id)->withTrashed()->count();
-
-            if ($countBonuses > 0) {
-                return false;
-            }
-
         }
 
         return true;
