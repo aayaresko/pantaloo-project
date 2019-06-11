@@ -132,8 +132,9 @@ function animationInit(){
 		let loginForm = $(this);
 		
 		$.ajax({
-			method: 'POST',
-			url: '/loginModern',
+			method: 'post',
+			dataType: 'json',
+			url: '/login',
 			data: loginForm.serialize()
 		}).done(function (response) {
 
@@ -169,8 +170,9 @@ function animationInit(){
 		let regForm = $(this);
 
 		$.ajax({
-			method: 'POST',
-			url: '/registerModern',
+			method: 'post',
+			dataType: 'json',
+			url: '/register',
 			data: regForm.serialize()
 		}).done(function (response) {
 
