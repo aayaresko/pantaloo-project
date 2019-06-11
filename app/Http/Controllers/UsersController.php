@@ -45,7 +45,7 @@ class UsersController extends Controller
                 }
 
                 if ($request->role) {
-                    $filterData['role'] = $request->role;
+                    $filterData['role'] = is_numeric($request->role) ? (int)$request->role : $request->role;
                     switch ($request->role) {
                         case 'all':
                             break;
@@ -193,7 +193,7 @@ class UsersController extends Controller
         $requestRole = $request->input('role');
         $configUser = config('appAdditional.users');
         $userTypes = $configUser['roles'];
-        $userTypes = array_filter($userTypes, function($item) {
+        $userTypes = array_filter($userTypes, function ($item) {
             return !(boolean)$item['noEdit'];
         });
 

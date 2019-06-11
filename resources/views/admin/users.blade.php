@@ -15,12 +15,14 @@
                             @php
                                 $emailDefault = isset($filterData['email']) ? $filterData['email'] : '';
                                 $roleDefault = isset($filterData['role']) ? $filterData['role'] : null;
+                                $userTypesDefault = $userTypes;
+                                array_unshift($userTypes, ['key' => 'allTest', 'name' => 'All Test Types']);
+                                array_unshift($userTypes, ['key' => 'all', 'name' => 'All Types']);
                             @endphp
+
                             <select name="role" class="selectpicker" data-live-search="true">
-                                <option name="0" value= 'all'>All Types</option>
-                                <option name="0" value= 'allTest'>All Test Types</option>
                                 @foreach($userTypes as $userType)
-                                    <option value="{{ $userType['key'] }}" {{ $roleDefault ===  $userType['key'] ? 'selected' : ''}}>
+                                    <option value="{{ $userType['key'] }}" {{ ($roleDefault === $userType['key']) ? 'selected' : ''}}>
                                         {{ $userType['name'] }}
                                     </option>
                                 @endforeach
@@ -61,13 +63,17 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->getCountry()}}</td>
                                             <td>
-                                                @if($user->role == 0)
-                                                    <span class="label label-primary">User</span>
-                                                @elseif($user->role == 1)
-                                                    <span class="label label-warning">Affiliate</span>
-                                                @else
-                                                    <span class="label label-danger">Admin</span>
-                                                @endif
+                                                @php
+                                                    $keyRole = array_search($user->role, array_column($userTypesDefault, 'key'))
+                                                @endphp
+                                                <span class="label label-primary">{{ $userTypesDefault[$keyRole]['name'] }}</span>
+{{--                                                @if($user->role == 0)--}}
+{{--                                                    <span class="label label-primary">User</span>--}}
+{{--                                                @elseif($user->role == 1)--}}
+{{--                                                    <span class="label label-warning">Affiliate</span>--}}
+{{--                                                @else--}}
+{{--                                                    <span class="label label-danger">Admin</span>--}}
+{{--                                                @endif--}}
                                             </td>
                                             <td>
                                                 @if($user->isOnline()) <span class="label label-success">Online</span>
