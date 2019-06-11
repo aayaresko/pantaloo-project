@@ -161,7 +161,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     ->where('type_id', 1)
                     ->count();
 
-                if ($notificationTransactionDeposits != ($this->depositsCount - 1)) {
+                if (!GeneralHelper::isTestMode() && $notificationTransactionDeposits != ($this->depositsCount - 1)) {
                     throw new \Exception('You cannot activate this bonus in accordance with ' .
                         'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
                 }
