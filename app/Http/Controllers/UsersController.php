@@ -28,6 +28,11 @@ class UsersController extends Controller
 
         switch ($user->role) {
             case 2:
+                $filterData = [];
+                $configUser = config('appAdditional.users');
+                $functionMakeTest = $configUser['testRole'];
+                $userTypes = $configUser['roles'];
+
                 //to do block to config value
                 $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
                     ->leftJoin('modern_extra_users as block', function ($join) {
@@ -35,12 +40,31 @@ class UsersController extends Controller
                             ->where('block.code', '=', 'block');
                     });
                 if ($request->email) {
-                    $users->where('users.email', $request->email);
+                    $filterData['email'] = $request->email;
+                    $users->where('users.email', 'like', '%' . $request->email . '%');
+                }
+
+                if ($request->role) {
+                    $filterData['role'] = $request->role;
+                    switch ($request->role) {
+                        case 'all':
+                            break;
+                        case 'allTest':
+                            $users->where('users.role', '<', 0);
+                            break;
+                        default:
+                            $users->where('users.role', $request->role);
+                    }
                 }
 
                 $users = $users->orderBy('created_at', 'DESC')->paginate(100);
 
-                return view('admin.users', ['users' => $users]);
+                return view('admin.users', [
+                    'users' => $users,
+                    'userTypes' => $userTypes,
+                    'filterData' => $filterData,
+                    'functionMakeTest' => $functionMakeTest,
+                ]);
             case 3:
                 return redirect('/admin/agent/list');
                 break;
@@ -166,8 +190,15 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //to do check this method
+        $requestRole = $request->input('role');
+        $configUser = config('appAdditional.users');
+        $userTypes = $configUser['roles'];
+        $userTypes = array_filter($userTypes, function($item) {
+            return !(boolean)$item['noEdit'];
+        });
+
         if ($request->has('role')) {
-            if ($request->input('role') != 1 and $request->input('role') != 0) {
+            if (array_search($requestRole, array_column($userTypes, 'key')) === false) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
             //validation

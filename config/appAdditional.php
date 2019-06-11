@@ -183,6 +183,45 @@ return [
 
     'officeIps' => [
         '136.0.0.139'
+    ],
+
+    'users' => [
+        'roles' => [
+            [
+                'key' => -3,
+                'name' => 'Admin test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => -2,
+                'name' => 'Affiliate test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => -1,
+                'name' => 'User test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 0,
+                'name' => 'User',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 1,
+                'name' => 'Affiliate',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 2,
+                'name' => 'Admin',
+                'noEdit' => 1
+            ]
+        ],
+        //no uses
+        'testRole' => function ($roleKey) {
+            return -1 * $roleKey - (1);
+        }
     ]
 
 ];

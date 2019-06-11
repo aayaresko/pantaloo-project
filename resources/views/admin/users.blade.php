@@ -10,12 +10,29 @@
         <div class="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <form action="" class="form-inline">
-                            <input type="text" name="email" class="form-control" placeholder="email filter">
+                    <form action="" class="form-inline">
+                        <div class="col-sm-4">
+                            @php
+                                $emailDefault = isset($filterData['email']) ? $filterData['email'] : '';
+                                $roleDefault = isset($filterData['role']) ? $filterData['role'] : null;
+                            @endphp
+                            <select name="role" class="selectpicker" data-live-search="true">
+                                <option name="0" value= 'all'>All Types</option>
+                                <option name="0" value= 'allTest'>All Test Types</option>
+                                @foreach($userTypes as $userType)
+                                    <option value="{{ $userType['key'] }}" {{ $roleDefault ===  $userType['key'] ? 'selected' : ''}}>
+                                        {{ $userType['name'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="email" class="form-control" placeholder="email filter" value="{{ $emailDefault }}">
                             <button type="submit" class="btn btn-success">Search</button>
-                        </form>
-                    </div>
+                        </div>
+
+                    </form>
                 </div>
                 <br>
                 <div class="row">
@@ -94,7 +111,7 @@
                                                                     <br>
                                                                 @else
                                                                     <select name="role" class="form-control">
-                                                                        @foreach([['key' => 0, 'name' => 'User'],['key' => 1, 'name' => 'Agent']] as $role)
+                                                                        @foreach($userTypes as $role)
                                                                             @if($role['key'] == $user->role) <option value="{{$role['key']}}" selected>{{$role['name']}}</option>
                                                                             @else <option value="{{$role['key']}}">{{$role['name']}}</option>
                                                                             @endif
