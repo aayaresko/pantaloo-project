@@ -48,7 +48,7 @@ class LoginController extends Controller
     {
         //preparation params
         $errors = [];
-        $mode = $request->isJson() ? 1 : 0;
+        $mode = $request->wantsJson() ? 1 : 0;
         $data = $request->all();
 
         try {
