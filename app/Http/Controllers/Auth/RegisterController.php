@@ -79,31 +79,39 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        //preparation params
+        $errors = [];
+        $mode = $request->isJson() ? 1 : 0;
         $data = $request->all();
-
         $validator = $this->validator($data);
+        //preparation params
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
-
-        //to do create normal controller for auth
-        $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
-        $disableRegistrationCountry = config('appAdditional.disableRegistration');
-
-        if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
-            return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
-        }
-
-        $emailChecker = new EmailChecker();
-
-        if ($emailChecker->isInvalidEmail($request->email)) {
-            return redirect()->back()->withErrors(['Please try another email service!']);
-        }
-        //end validation
-
-        //act
+        //main act
         try {
+            if ($validator->fails()) {
+                $validatorErrors = $validator->errors()->toArray();
+                array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+                    array_push($errors, $item);
+                });
+                throw new \Exception('validation');
+            }
+
+            //to do create normal controller for auth
+            $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
+            $disableRegistrationCountry = config('appAdditional.disableRegistration');
+
+            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+                $errors = ['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.'];
+                throw new \Exception('disableRegistration');
+            }
+
+            $emailChecker = new EmailChecker();
+            if ($emailChecker->isInvalidEmail($request->email)) {
+                $errors = ['Please try another email service!'];
+                throw new \Exception('emailService');
+            }
+            //end validation
+
             if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
                 $address = 'bitcoinTestAddress';
             } else {
@@ -191,9 +199,27 @@ class RegisterController extends Controller
 
             $this->guard()->login($user);
         } catch (\Exception $ex) {
-            dd($ex);
+            if (empty($errors)) {
+                $errors = ['Some is wrong'];
+            }
 
-            return redirect()->back()->withErrors([$ex->getMessage()]);
+            if ($mode == 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => [
+                        'errors' => $errors
+                    ]
+                ]);
+            }
+
+            return redirect()->back()->withErrors($errors);
+        }
+
+        if ($mode == 1) {
+            return response()->json([
+                'status' => true,
+                'message' => ['Done']
+            ]);
         }
 
         return redirect($this->redirectPath());
