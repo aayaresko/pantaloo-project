@@ -66,7 +66,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$user->getBalance()}}</td>
-                                            <td>{{$user->created_at->format('d.m.Y H:i')}}</td>
+                                            <td>{{$user->created_at->tz("Europe/Kiev")->format('d.m.Y H:i')}}</td>
                                             <td><a href="{{route('admin.transactions', ['user_id' => $user->id])}}" class="btn btn-warning">Transactions</a></td>
                                             <td><a href="{{route('admin.bonuses', $user)}}" class="btn btn-info">Bonus</a></td>
                                             <td>
