@@ -127,41 +127,41 @@ function animationInit(){
 	});
 
 
-	// $("#login").on("submit", function (e) {
+	$("#login").on("submit", function (e) {
 
-	// 	let loginForm = $(this);
+		let loginForm = $(this);
 		
-	// 	$.ajax({
-	// 		method: 'POST',
-	// 		url: '/loginModern',
-	// 		data: loginForm.serialize()
-	// 	}).done(function (response) {
+		$.ajax({
+			method: 'POST',
+			url: '/loginModern',
+			data: loginForm.serialize()
+		}).done(function (response) {
 
-	// 		// console.log(response);
-	// 		let resultLogin = response;
+			// console.log(response);
+			let resultLogin = response;
 
-	// 		if(resultLogin.status == false){
-	// 			loginForm.find('input').addClass("showErrorMsg");
+			if(resultLogin.status == false){
+				loginForm.find('input').addClass("showErrorMsg");
 			
-	// 			let loginResult = $(".loginError").addClass("showErrorMsg");
+				let loginResult = $(".loginError").addClass("showErrorMsg");
 				
-	// 			loginResult.html(resultLogin.message);
+				loginResult.html(resultLogin.message);
 
-	// 		}else{
-	// 			window.location.reload();
+			}else{
+				window.location.reload();
 
-	// 		}
+			}
 
-	// 	}).fail(function(){
+		}).fail(function(){
 
-	// 		$(".loginError").html('There is some problem with your request');
+			$(".loginError").html('There is some problem with your request');
 
-	// 		$(".loginError").addClass("showErrorMsg");
+			$(".loginError").addClass("showErrorMsg");
 
-	// 	});
+		});
 
-	// 	return false;
-	// });
+		return false;
+	});
 
 
 	$("#registr").on("submit", function () {

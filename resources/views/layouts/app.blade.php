@@ -475,7 +475,7 @@
                 </div>
             </div>
              @else
-             <div class="regPopUpWrapper git">
+             <div class="regPopUpWrapper notAllowedCountry">
                 <div class="regPopUpBgTop"></div>
                 <button class="close-icon">×</button>
                 <div class="popup-entry">
