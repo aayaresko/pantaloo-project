@@ -18,9 +18,9 @@
             <tr role="row">
                 <td>{{$transaction->id}}</td>
                 <td class="">@if($transaction->email_confirm == 0) <span class="label label-warning">{{$transaction->user->email}}</span>@else {{$transaction->user->email}} @endif</td>
-                <td class="">{{$transaction->user->created_at->format('d M Y H:i')}}</td>
+                <td class="">{{$transaction->user->created_at->tz("Europe/Kiev")->format('d M Y H:i')}}</td>
                 <td class="sorting_1">{{$transaction->sum*(-1)}}</td>
-                <td>{{$transaction->created_at->format('d M Y H:i')}}</td>
+                <td>{{$transaction->created_at->tz("Europe/Kiev")->format('d M Y H:i')}}</td>
                 <td class="">{{$transaction->user->getBalance()}}</td>
                 <td style="">
 
