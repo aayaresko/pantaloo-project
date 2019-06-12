@@ -34,7 +34,7 @@
                                                 {{ $activeBonus->bonusStatistics['bonusWager']['real'] . ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }}
                                                 {{ config('app.currencyCode') }}</p>
 
-                                            @if ($activeBonus->bonus_id == 1)
+                                            @if ($activeBonus->id == 1)
 
                                                 <p class="text">Deposit wager:
                                                     {{ $activeBonus->bonusStatistics['depositWager']['real'] . ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }}
