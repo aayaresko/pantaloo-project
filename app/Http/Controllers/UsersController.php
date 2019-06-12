@@ -33,7 +33,6 @@ class UsersController extends Controller
             case 2:
                 $filterData = [];
                 $configUser = config('appAdditional.users');
-                $functionMakeTest = $configUser['testRole'];
                 $userTypes = $configUser['roles'];
 
                 //to do block to config value
@@ -69,7 +68,6 @@ class UsersController extends Controller
                     'users' => $users,
                     'userTypes' => $userTypes,
                     'filterData' => $filterData,
-                    'functionMakeTest' => $functionMakeTest,
                 ]);
             case 3:
                 return redirect('/admin/agent/list');
