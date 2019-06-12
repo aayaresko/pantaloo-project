@@ -14,10 +14,12 @@
                         <div class="col-sm-4">
                             @php
                                 $emailDefault = isset($filterData['email']) ? $filterData['email'] : '';
-                                $roleDefault = isset($filterData['role']) ? $filterData['role'] : null;
+                                $roleDefault = isset($filterData['role']) ? $filterData['role'] : 'no';
+
                                 $userTypesDefault = $userTypes;
                                 array_unshift($userTypes, ['key' => 'allTest', 'name' => 'All Test Types']);
                                 array_unshift($userTypes, ['key' => 'all', 'name' => 'All Types']);
+
                             @endphp
 
                             <select name="role" class="selectpicker" data-live-search="true">

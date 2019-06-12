@@ -44,9 +44,15 @@ class UsersController extends Controller
                     $users->where('users.email', 'like', '%' . $request->email . '%');
                 }
 
-                if ($request->role) {
-                    $filterData['role'] = is_numeric($request->role) ? (int)$request->role : $request->role;
+                //to do fix this temporary
+                if ($request->has('role')) {
+                    $role = $request->role;
+                    $filterData['role'] = is_numeric($role) ? (int)$role : $role;
+
                     switch ($request->role) {
+                        case '':
+                            $filterData['role'] = 'all';
+                            break;
                         case 'all':
                             break;
                         case 'allTest':
