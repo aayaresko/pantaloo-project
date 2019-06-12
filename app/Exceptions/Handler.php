@@ -6,6 +6,7 @@ use Exception;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -79,6 +80,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if (Str::contains($e->getMessage(), 'unserialize')) {
+            $cookie1 = \Cookie::forget('laravel_session');
+            $cookie2 = \Cookie::forget('XSRF-TOKEN');
+
+            return redirect()->to('/')
+                ->withCookie($cookie1)
+                ->withCookie($cookie2);
+        }
+
         if ($e instanceof \Illuminate\Session\TokenMismatchException) {
             return redirect()
                 ->back()
