@@ -81,7 +81,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
 
-
+    Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
     //bonus bonus
     //Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
     //bonus bonus
@@ -374,7 +374,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 });
 
 Route::group(['middleware' => ['ajax', 'ip.country.block']], function () {
-    Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
+    //Route::get('/ajax/balance/{email}', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
 });
 
 Route::group(['middleware' => ['ajax'], 'prefix' => 'bitcoin'], function () {
