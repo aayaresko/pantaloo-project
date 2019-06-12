@@ -52,6 +52,14 @@ class LoginController extends Controller
         $data = $request->all();
 
         try {
+            //set locale
+            $lang = $request->cookie('langs');
+            $languages = \Helpers\GeneralHelper::getListLanguage();
+            if (in_array($lang, $languages)) {
+                app()->setLocale($lang);
+            }
+            //set locale
+
             //custom validation
             $validator = Validator::make($data, [
                 $this->username() => 'required|string',

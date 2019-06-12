@@ -88,6 +88,14 @@ class RegisterController extends Controller
 
         //main act
         try {
+            //set locale
+            $lang = $request->cookie('langs');
+            $languages = \Helpers\GeneralHelper::getListLanguage();
+            if (in_array($lang, $languages)) {
+                app()->setLocale($lang);
+            }
+            //set locale
+
             if ($validator->fails()) {
                 $validatorErrors = $validator->errors()->toArray();
                 array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
