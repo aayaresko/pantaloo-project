@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\GamesListSettings;
 use Illuminate\Database\Seeder;
+use App\Models\GamesListSettings;
 use Illuminate\Support\Facades\DB;
 
 class GamesSettingSeeder extends Seeder
@@ -26,7 +26,7 @@ class GamesSettingSeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         GamesListSettings::truncate();
         /* end clear */
@@ -35,7 +35,7 @@ class GamesSettingSeeder extends Seeder
             GamesListSettings::insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -44,6 +44,7 @@ class GamesSettingSeeder extends Seeder
     protected function getParams()
     {
         $currentDate = new DateTime();
+
         return [
             [
                 'id' => 1,

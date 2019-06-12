@@ -19,6 +19,7 @@ class TransactionController extends Controller
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -83,7 +84,7 @@ class TransactionController extends Controller
         $param['columnsAlias'] = $this->relatedFields;
         $param['user'] = $request->user();
         $param['conditions'] = [
-            ['transactions.agent_id', '=', $param['user']->id]
+            ['transactions.agent_id', '=', $param['user']->id],
         ];
 
         $param['minConfirmBtc'] = config('appAdditional.minConfirmBtc');
@@ -157,23 +158,23 @@ class TransactionController extends Controller
             //TO DO - use config for text
             //to do config get id deposit transaction
 
-            if ((int)$item->type === 3) {
-                if ((int)$item->confirmations < $param['minConfirmBtc']) {
-                    $item->description = $item->description . ' ' . view('admin.parts.extra.pending')->render();
+            if ((int) $item->type === 3) {
+                if ((int) $item->confirmations < $param['minConfirmBtc']) {
+                    $item->description = $item->description.' '.view('admin.parts.extra.pending')->render();
                 } else {
-                    $item->description = $item->description . ' ' . view('admin.parts.extra.confirm')->render();
+                    $item->description = $item->description.' '.view('admin.parts.extra.confirm')->render();
                 }
             }
 
             return $item;
         });
 
-        $jsonData = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data" => $data,
-        );
+        $jsonData = [
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data,
+        ];
 
         return response()->json($jsonData);
     }

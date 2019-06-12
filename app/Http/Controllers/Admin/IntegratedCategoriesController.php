@@ -6,24 +6,23 @@ use DB;
 use Validator;
 use App\Country;
 use App\Models\GamesList;
-use App\Models\GamesCategory;
 use Illuminate\Http\Request;
+use App\Models\GamesCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use App\Models\RestrictionCategoriesCountry;
 
 /**
- * Class IntegratedCategoriesController
- * @package App\Http\Controllers\Admin
+ * Class IntegratedCategoriesController.
  */
 class IntegratedCategoriesController extends Controller
 {
-
     /**
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -44,7 +43,8 @@ class IntegratedCategoriesController extends Controller
     public function index(Request $request)
     {
         $fields = $this->fields;
-        $gamesTypes = GamesCategory::select($fields)->get();
+        $gamesTypes = GamesCategory::select($fields)->get()->all();
+
         return view('admin.integrated_categories')->with(['gamesTypes' => $gamesTypes]);
     }
 
@@ -69,11 +69,11 @@ class IntegratedCategoriesController extends Controller
         $markConfig = config('appAdditional.restrictionMark');
         $allowGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
             ->where('mark', $markConfig['enable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
 
         $banGameCountry = RestrictionCategoriesCountry::where('category_id', $categoryId)
             ->where('mark', $markConfig['disable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
         $categoryCountries = [
             'allow' => $allowGameCountry,
             'ban' => $banGameCountry,
@@ -82,7 +82,7 @@ class IntegratedCategoriesController extends Controller
         return view('admin.integrated_category')->with([
             'item' => $type,
             'countries' => $countries,
-            'categoryCountries' => $categoryCountries
+            'categoryCountries' => $categoryCountries,
         ]);
     }
 
@@ -101,22 +101,23 @@ class IntegratedCategoriesController extends Controller
             'ratingItems' => 'integer',
             'allowCountryCategories_codes.*' => 'exists:countries,code',
             'banCountryCategories_codes.*' => 'exists:countries,code',
-            'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
+            'image' => "image|max:{$imageConfig['maxSize']}|mimes:".implode(',', $imageConfig['mimes']),
         ]);
 
         DB::beginTransaction();
+
         try {
             $updatedGame = $request->toArray();
             if ($request->hasFile('image')) {
                 $image = $request->image;
-                $nameImage = $request->id . time() . '.' . $image->getClientOriginalExtension();
+                $nameImage = $request->id.time().'.'.$image->getClientOriginalExtension();
                 $pathImage = "/categotyPictures/{$nameImage}";
-                Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['image'] = '/storage' . $pathImage;
+                Storage::put('public'.$pathImage, file_get_contents($image->getRealPath()));
+                $updatedGame['image'] = '/storage'.$pathImage;
             }
 
             $active = $request->input('active');
-            if (!is_null($active)) {
+            if (! is_null($active)) {
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             } else {
                 $updatedGame['active'] = 0;
@@ -139,7 +140,7 @@ class IntegratedCategoriesController extends Controller
             $markConfig = config('appAdditional.restrictionMark');
             $currentDate = new \DateTime();
             //ALLOW
-            if ($request->has('allowCountryCategories_codes')) {
+            if ($request->filled('allowCountryCategories_codes')) {
                 $restrictionAllowItems = [];
 
                 RestrictionCategoriesCountry::where('category_id', $categoryId)
@@ -164,7 +165,7 @@ class IntegratedCategoriesController extends Controller
             }
 
             //BAN
-            if ($request->has('banCountryCategories_codes')) {
+            if ($request->filled('banCountryCategories_codes')) {
                 $restrictionBanItems = [];
 
                 RestrictionCategoriesCountry::where('category_id', $categoryId)
@@ -190,9 +191,11 @@ class IntegratedCategoriesController extends Controller
             /* end work with restriction */
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         DB::commit();
+
         return redirect()->route('admin.integratedCategory', $request->id)->with('msg', 'Type was edited');
     }
 }

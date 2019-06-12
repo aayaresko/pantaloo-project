@@ -3,11 +3,10 @@
  * Script name  : login.php
  * Author       : M McIntyre <mike@mak.net.nz>
  * Date created : 6 March 2013
- * Purpose      : Ensures the person is logged in to the voting system
+ * Purpose      : Ensures the person is logged in to the voting system.
  **/
-
-include('includes/application_top.php');
-include('includes/session_start.php');
+include 'includes/application_top.php';
+include 'includes/session_start.php';
 
 define('URL_LOGIN_PAGE', 'https://moodle.roehampton.ac.uk/login/index.php');
 define('URL_LOGIN_PAGE', 'http://subudemocracy.bournemouth.ac.uk/Login/Login.aspx?Action=SUElection');
@@ -26,27 +25,27 @@ $use_posted_vars = false;
 // }
 
 switch (true) {
-    case false && (!array_key_exists('HTTPS', $_SERVER) || strtolower($_SERVER['HTTPS']) != 'on') :
+    case false && (! array_key_exists('HTTPS', $_SERVER) || strtolower($_SERVER['HTTPS']) != 'on'):
 
         tep_redirect(tep_href_link(FILENAME_LOGIN_SUBU));
-    case $_SERVER['REQUEST_METHOD'] == 'GET' :
+    case $_SERVER['REQUEST_METHOD'] == 'GET':
         break;
-    case !array_key_exists('username', $_POST) :
-    case !array_key_exists('password', $_POST) :
+    case ! array_key_exists('username', $_POST):
+    case ! array_key_exists('password', $_POST):
         // set an error message to tell the person to use the effin form !
         $_SESSION['login_error'] = 'Please use the form properly !';
         tep_redirect(tep_href_link(FILENAME_LOGIN_SUBU));
 
-    case !tep_not_null($_POST['username']) :
-    case !tep_not_null($_POST['password']) :
+    case ! tep_not_null($_POST['username']):
+    case ! tep_not_null($_POST['password']):
         // set an error message to tell the person to fill in the effin form !
         $_SESSION['login_error'] = 'Please provide both your username and password';
         tep_redirect(tep_href_link(FILENAME_LOGIN_SUBU));
 
     // we allow the server mak.co|net.net to use the query string "force_login"
     // in all other cases the user must validate with SUBU
-    case !array_key_exists('force_login', $_GET) :
-    case !preg_match('/jason\.coders\.kiwi\.nz/', $_SERVER['SERVER_NAME']) :
+    case ! array_key_exists('force_login', $_GET):
+    case ! preg_match('/jason\.coders\.kiwi\.nz/', $_SERVER['SERVER_NAME']):
         // make sure the code knows that it must use the posted variables
         $use_posted_vars = true;
 
@@ -90,12 +89,12 @@ switch (true) {
         $recipe = '//input[@name]';
         $form_items = $form_query->query($recipe, $form_object_item);
 
-        $form_inputs = array();
+        $form_inputs = [];
         foreach ($form_items as $form_item) {
-            $form_inputs[$form_item->getAttribute("name")] = $form_item->getAttribute("value");
+            $form_inputs[$form_item->getAttribute('name')] = $form_item->getAttribute('value');
         }
 
-        $input_mapping = array();
+        $input_mapping = [];
         $input_mapping['username'] = 'ctl00$ContentPlaceHolder1$txtUserName';
         $input_mapping['password'] = 'ctl00$ContentPlaceHolder1$txtPassword';
 
@@ -103,7 +102,7 @@ switch (true) {
         $input_mapping['password'] = 'password';
 
         foreach ($input_mapping as $local_input => $remote_input) {
-            if (!array_key_exists($remote_input, $form_inputs)) {
+            if (! array_key_exists($remote_input, $form_inputs)) {
                 // set a system error message
                 tep_redirect(tep_href_link(FILENAME_LOGIN_SUBU));
             }
@@ -111,7 +110,7 @@ switch (true) {
         }
 
         // get the target of the form
-        $form_target = 'http://subudemocracy.bournemouth.ac.uk/Login/' . $form_object_item->getAttribute('action');
+        $form_target = 'http://subudemocracy.bournemouth.ac.uk/Login/'.$form_object_item->getAttribute('action');
         $form_target = $form_object_item->getAttribute('action');
 
         // alter the cURL object to use the new form target
@@ -137,7 +136,6 @@ switch (true) {
             // fi
         }
 
-
         // if there is a node form[name="aspnetForm"]
         @$form_doc->loadHTML($result);
 
@@ -153,12 +151,12 @@ switch (true) {
         }
     // fi
 
-    default :
+    default:
         // login was successful
 
         if ($use_posted_vars) {
-// 			$_SESSION['student_id'] = $_POST['username'] ;
-// 			$_SESSION['student_name'] = $_POST['hdnStudent'] ;
+            // 			$_SESSION['student_id'] = $_POST['username'] ;
+            // 			$_SESSION['student_name'] = $_POST['hdnStudent'] ;
             $_SESSION['student_id'] = $_POST['username'];
             $_SESSION['student_name'] = 'Anonymous student';
 
@@ -180,9 +178,7 @@ switch (true) {
 
         tep_redirect($redirect_to);
 
-
 }
-
 
 if (TEST_REQUEST == 'yes' && array_key_exists('force_login', $_GET)) {
     $_SESSION['student_id'] = 'i7833547';
@@ -191,11 +187,10 @@ if (TEST_REQUEST == 'yes' && array_key_exists('force_login', $_GET)) {
     }
     $_SESSION['student_name'] = 'Dummy Student';
 
-// define('DIE_NOW', '1') ;
+    // define('DIE_NOW', '1') ;
     $redirect_to = tep_href_link('vote.php', '', 'NONSSL');
 
     tep_redirect($redirect_to);
-
 }
 
 // add the content to the page class
@@ -213,5 +208,3 @@ if (array_key_exists('login_error', $_SESSION)) {
 }
 // dump the page to std out
 echo $page_template->get_template_html();
-
-?>

@@ -41,7 +41,7 @@ class PasswordController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $validator = Validator::make($request->toArray(), [
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $email = $request->email;
@@ -49,12 +49,12 @@ class PasswordController extends Controller
 
         $user = User::where('email', $email)->first();
 
-        if (!is_null($user) and $user->email_confirmed != 1) {
+        if (! is_null($user) and $user->email_confirmed != 1) {
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['The email has not confirmed.']
-                ]
+                    'errors' => ['The email has not confirmed.'],
+                ],
             ]);
         }
 
@@ -67,8 +67,8 @@ class PasswordController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => $errors
-                ]
+                    'errors' => $errors,
+                ],
             ]);
         }
 
@@ -89,8 +89,8 @@ class PasswordController extends Controller
                         'response' => $response,
                         'email' => $email,
                         'title' => 'Reset Password',
-                        'body' => (string)view('affiliates.parts.reset_password')->with(['email' => $email])
-                    ]
+                        'body' => (string) view('affiliates.parts.reset_password')->with(['email' => $email]),
+                    ],
                 ]);
             case Password::INVALID_USER:
             default:
@@ -98,12 +98,11 @@ class PasswordController extends Controller
                     'status' => false,
                     'message' => [
                         'response' => $response,
-                        'errors' => ['User with such non-email exists']
-                    ]
+                        'errors' => ['User with such non-email exists'],
+                    ],
                 ]);
         }
     }
-
 
     /**
      * @param Request $request
@@ -124,11 +123,12 @@ class PasswordController extends Controller
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
                 array_push($errors, $item);
             });
+
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => $errors
-                ]
+                    'errors' => $errors,
+                ],
             ]);
         }
 
@@ -146,16 +146,16 @@ class PasswordController extends Controller
                     'status' => true,
                     'message' => [
                         'response' => $response,
-                        'redirect' => '/affiliates/dashboard'
-                    ]
+                        'redirect' => '/affiliates/dashboard',
+                    ],
                 ]);
             default:
                 return response()->json([
                     'status' => false,
                     'message' => [
                         'response' => $response,
-                        'errors' => ['User with such non-email exists']
-                    ]
+                        'errors' => ['User with such non-email exists'],
+                    ],
                 ]);
         }
     }
@@ -172,6 +172,7 @@ class PasswordController extends Controller
         }
 
         $email = $request->input('email');
+
         return view('affiliates.reset_password')->with(compact('token', 'email'));
     }
 
@@ -185,6 +186,7 @@ class PasswordController extends Controller
     public function validateCustom(Request $request, array $rules, array $messages = [], array $customAttributes = [])
     {
         $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
+
         return $validator;
     }
 }

@@ -37,6 +37,5 @@ class BitcoinSend extends Command
      */
     public function handle()
     {
-
     }
 }

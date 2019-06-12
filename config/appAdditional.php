@@ -99,24 +99,24 @@ return [
 
     'defaultTitle' => 'games',
 
-    'keepLanguage' => 60 * 24 * 30,//min
+    'keepLanguage' => 60 * 24 * 30, //min
     'resendMailTime' => 10,
     'linkActiveConfirm' => 60 * 60 * 24,
     'eventStatistic' => [
         'enter' => 1,
-        'register' => 2
+        'register' => 2,
     ],
 
     'partnerCommission' => 45,
 
     'freeRounds' => [
         'available' => 50,
-        'timeFreeRound' => 1209600
+        'timeFreeRound' => 1209600,
     ],
 
     'restrictionMark' => [
         'disable' => 0,
-        'enable' => 1
+        'enable' => 1,
     ],
 
     'getCountries' => 'https://restcountries.eu/rest/v2/all',
@@ -139,7 +139,7 @@ return [
     'cpaCurrencyCode' => 'mBTC',
 
     'allowIps' => [
-        '213.169.83.245'
+        '213.169.83.245',
     ],
 
     'depositNotifications' => [
@@ -148,7 +148,7 @@ return [
     ],
 
     'emailsShowAllGames' => [
-        'tuzomi@mail-list.top'
+        'tuzomi@mail-list.top',
     ],
 
     'disableRegistration' => ['US', 'UA', 'IL', 'XX'],
@@ -163,9 +163,8 @@ return [
         'PH', 'PL', 'PT', 'RO', 'RU', 'RW', 'ST', 'SN', 'SC', 'SL', 'SK', 'SI', 'SO',
         'SD', 'CH', 'SY', 'TH', 'TG', 'TN', 'UG', 'UA', 'AE', 'TZ', 'VN', 'YE', 'ZM',
         'ZW', 'ME', 'RS', 'XX'],
-
+    
     'ipQualityScoreUrl' => 'https://www.ipqualityscore.com/api/json/ip',
-
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
 
@@ -178,7 +177,7 @@ return [
     ],
 
     'optimization' => [
-        'clearRawLog' => '30 day'
+        'clearRawLog' => '30 day',
     ],
 
     'officeIps' => [
@@ -223,5 +222,4 @@ return [
             return -1 * $roleKey - (1);
         }
     ]
-
 ];

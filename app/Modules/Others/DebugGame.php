@@ -3,8 +3,7 @@
 namespace App\Modules\Others;
 
 /**
- * Class DebugGame
- * @package App\Modules\Others
+ * Class DebugGame.
  */
 class DebugGame
 {
@@ -31,9 +30,9 @@ class DebugGame
     public function start()
     {
         $start = microtime(true);
-        $startTime = explode(" ", microtime());
-        $startDate = date("m-d-y H:i:s", $startTime[1]) .
-            substr((string)$startTime[0], 1, 4);
+        $startTime = explode(' ', microtime());
+        $startDate = date('m-d-y H:i:s', $startTime[1]).
+            substr((string) $startTime[0], 1, 4);
 
         $this->start = $start;
         $this->startDate = $startDate;
@@ -48,9 +47,9 @@ class DebugGame
     {
         $start = $this->start;
         $startDate = $this->startDate;
-        $endTime = explode(" ", microtime());
-        $endDate = date("m-d-y H:i:s", $endTime[1]) .
-            substr((string)$endTime[0], 1, 4);
+        $endTime = explode(' ', microtime());
+        $endDate = date('m-d-y H:i:s', $endTime[1]).
+            substr((string) $endTime[0], 1, 4);
         $time = round(microtime(true) - $start, 4);
 
         $responseLog['time'] = $time;

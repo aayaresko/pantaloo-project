@@ -115,6 +115,7 @@ class TransactionCount extends Command
                         $this->addParentProfit($agent->agent_id, $userSum->sum, $now, $agents);
                     }
                 }
+                $agentSum->save();
             }
         }
     }

@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use App\User;
+use App\Jobs\Job;
 use Helpers\BonusHelper;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

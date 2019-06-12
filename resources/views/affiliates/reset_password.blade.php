@@ -16,7 +16,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="token" value="{{ $token }}">
                         <div class="form-group">
-                            <input type="email" name="email" tabindex="1" class="form-control" placeholder="Enter your email" value="{{ $email or old('email') }}" required>
+                            <input type="email" name="email" tabindex="1" class="form-control" placeholder="Enter your email" value="{{ $email ?? old('email') }}" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" tabindex="1" class="form-control" placeholder="Enter the new password" value="" required>

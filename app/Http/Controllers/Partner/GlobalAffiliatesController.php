@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
- * Class AffiliatesController
- * @package App\Http\Controllers\Partner
+ * Class AffiliatesController.
  */
 class GlobalAffiliatesController extends Controller
 {
@@ -21,6 +20,7 @@ class GlobalAffiliatesController extends Controller
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -140,7 +140,7 @@ class GlobalAffiliatesController extends Controller
 
             foreach ($items as $user) {
                 $result = collect();
-                
+
                 $userIds = User::where('users.agent_id', $user->id)
                     ->select('users.id')
                     ->distinct()
@@ -169,12 +169,12 @@ class GlobalAffiliatesController extends Controller
                 //to do fix this
                 $result->push($statistics);
 
-                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
-                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
-                $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
-                $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
-                $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
-                $user->bonus = $result->sum('bonus') . ' ' . $param['currencyCode'];
+                $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
+                $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
+                $user->revenue = $result->sum('revenue').' '.$param['currencyCode'];
+                $user->profit = $result->sum('profit').' '.$param['currencyCode'];
+                $user->bonus = $result->sum('bonus').' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
             }
         } else {
@@ -225,12 +225,12 @@ class GlobalAffiliatesController extends Controller
                 //to do fix this
                 $result->push($statistics);
 
-                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
-                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
-                $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
-                $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
-                $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
-                $user->bonus = $result->sum('bonus') . ' ' . $param['currencyCode'];
+                $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
+                $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
+                $user->revenue = $result->sum('revenue').' '.$param['currencyCode'];
+                $user->profit = $result->sum('profit').' '.$param['currencyCode'];
+                $user->bonus = $result->sum('bonus').' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
             }
 
@@ -246,13 +246,13 @@ class GlobalAffiliatesController extends Controller
         /* TO VIEW */
         $data = $items;
 
-        $jsonData = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data" => $data,
-            'time' => round(microtime(true) - $start1, 4)
-        );
+        $jsonData = [
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data,
+            'time' => round(microtime(true) - $start1, 4),
+        ];
 
         return response()->json($jsonData);
     }
@@ -371,7 +371,7 @@ class GlobalAffiliatesController extends Controller
             'pending' => $pending,
             'failed' => $failed,
             'approved' => $approved,
-            'queue' => $queue
+            'queue' => $queue,
         ]);
     }
 
@@ -379,12 +379,11 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
         if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
-
             $transaction->withdraw_status = 3;
             $transaction->save();
 
@@ -400,7 +399,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
@@ -418,7 +417,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
@@ -436,7 +435,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
