@@ -376,7 +376,7 @@ class AgentController extends Controller
     {
         $partner = $user->findOrFail($id);
         $countriesIds = $partner->affiliateCountries->pluck('id')->toArray();
-        $deprecatedCountries = DB::table('affiliate_countries')->where('user_id', '<>', $id)->pluck('country_id');
+        $deprecatedCountries = DB::table('affiliate_countries')->where('user_id', '<>', $id)->pluck('country_id')->toArray();
         $users = $user->where('agent_id', $id)->with('countries')->where('role', 0)->get();
         $superAffiliates = $user->where('role', 3)->get();
 
