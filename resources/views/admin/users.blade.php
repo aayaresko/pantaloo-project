@@ -38,7 +38,7 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" style="min-height: 500px;">
                         <div class="card-box">
                             <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
                                 <thead>
