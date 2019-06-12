@@ -27,7 +27,7 @@
  <div class="hidden">
     <div id="uls">
         <div class="termWrapperInner">
-            {!! trans('casino.bonus.term') !!}
+            {!! trans('casino.bonus__term') !!}
         </div>
     </div>
 </div>

@@ -42,10 +42,10 @@
 
                         <div class="col-sm-12">
                             <h5>
-                                {{ trans('casino.support.games_fair') }}
+                                {{ trans('casino.support__games_fair') }}
                             </h5>
                             <p class="text">
-                                {{ trans('casino.support.games_fair_value') }}
+                                {{ trans('casino.support__games_fair_value') }}
                             </p>
                         </div>
 
@@ -211,9 +211,9 @@
                     <div class="row">
                         <h4>{{ mb_convert_case(trans('casino.the_casino'), MB_CASE_TITLE) }}</h4>
                         <div class="col-sm-12">
-                            <h5>{{ trans('casino.support.games_fair') }}</h5>
+                            <h5>{{ trans('casino.support__games_fair') }}</h5>
                             <p class="text">
-                                {{ trans('casino.support.games_fair_value') }}
+                                {{ trans('casino.support__games_fair_value') }}
                             </p>
                         </div>
 
