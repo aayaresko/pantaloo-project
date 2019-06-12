@@ -199,7 +199,6 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //to do check this method
-        $requestRole = (int) $request->input('role');
         $configUser = config('appAdditional.users');
         $userTypes = $configUser['roles'];
         $userTypes = array_filter($userTypes, function ($item) {
@@ -207,6 +206,7 @@ class UsersController extends Controller
         });
 
         if ($request->filled('role')) {
+            $requestRole = (int) $request->input('role');
             if (array_search($requestRole, array_column($userTypes, 'key'), true) === false) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
