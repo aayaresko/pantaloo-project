@@ -81,12 +81,13 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if (Str::contains($e->getMessage(), 'unserialize')) {
-            $cookie1 = \Cookie::forget('laravel_session');
-            $cookie2 = \Cookie::forget('XSRF-TOKEN');
+            $redirect = redirect()->to('/');
+            foreach ($request->cookies as $key => $value) {
+                $cookie1 = \Cookie::forget($key);
+                $redirect->withCookie($cookie1);
+            }
 
-            return redirect()->to('/')
-                ->withCookie($cookie1)
-                ->withCookie($cookie2);
+            return $redirect;
         }
 
         if ($e instanceof \Illuminate\Session\TokenMismatchException) {
