@@ -99,7 +99,7 @@ class TransactionController extends Controller
         {
             $result['data'][] = [
                 $transaction->user->email,
-                $transaction->created_at->format('d M Y H:i'),
+                $is_admin ? $transaction->created_at->tz("Europe/Kiev")->format('d M Y H:i') : $transaction->created_at->format('d M Y H:i'),
                 $transaction->getDescription(),
                 $transaction->getAmount(),
                 $transaction->getBonusAmount()
