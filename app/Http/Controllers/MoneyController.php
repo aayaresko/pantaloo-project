@@ -34,7 +34,7 @@ class MoneyController extends Controller
         if ($user->free_spins == 0) {
             $transaction = $user->transactions()->where('type', 9)->orderBy('id', 'DESC')->first();
 
-            if (! $transaction) {
+            if (!$transaction) {
                 throw new \Exception('Transaction not found');
             }
 
@@ -48,9 +48,11 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
+        $request->session()->reflash();
+
         try {
             //to do universal way define user to DO
-            $sessionId = $_COOKIE['casinobit_session'];
+            //$sessionId = $_COOKIE['casinobit_session'];
             $sessionLeftTime = config('session.lifetime');
             $sessionLeftTimeSecond = $sessionLeftTime * 60;
 
@@ -59,19 +61,19 @@ class MoneyController extends Controller
 
             //to do this - fix this = use universal way for get sessino user
             //select nesessary fields
-            $user = User::select(['users.*', 's.id as session_id'])
-                ->join('sessions as s', 's.user_id', '=', 'users.id')
-                ->where('users.email', $email)
-                ->where('s.id', $sessionId)
-                ->where('s.last_activity', '>=', $minimumAllowedActivity)
-                ->first();
+//            $user = User::select(['users.*', 's.id as session_id'])
+//                ->join('sessions as s', 's.user_id', '=', 'users.id')
+//                ->where('users.email', $email)
+//                ->where('s.id', $sessionId)
+//                ->where('s.last_activity', '>=', $minimumAllowedActivity)
+//                ->first();
 
-            if (is_null($user) or is_null($user->session_id)) {
-                return response()->json([
-                    'status' => false,
-                    'messages' => ['User or session is not found'],
-                ]);
-            }
+//            if (is_null($user) or is_null($user->session_id)) {
+//                return response()->json([
+//                    'status' => false,
+//                    'messages' => ['User or session is not found'],
+//                ]);
+//            }
 
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
@@ -85,6 +87,15 @@ class MoneyController extends Controller
                     'messages' => ['User or session is not found'],
                 ]);
             }*/
+
+            $user = Auth::check() ? Auth::user() : null;
+
+            if (is_null($user)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }
 
             //to do once in 10 seconds and use other table for notifications
 
@@ -147,9 +158,9 @@ class MoneyController extends Controller
                 'deposit' => $sum,
                 'free_spins' => $user->free_spins,
                 'balance_info' => [
-                    'balance' => $user->getBalance().' m'.strtoupper($user->currency->title),
-                    'real_balance' => $user->getRealBalance().' m'.strtoupper($user->currency->title),
-                    'bonus_balance' => $user->getBonusBalance().' m'.strtoupper($user->currency->title),
+                    'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
+                    'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
+                    'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
                 ],
             ];
         } catch (\Exception $e) {
@@ -192,7 +203,7 @@ class MoneyController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
 
-        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: '.$data);
+        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: ' . $data);
     }
 
     public function newTransactions($transaction_id)
@@ -282,7 +293,7 @@ class MoneyController extends Controller
         }
 
         //2391
-        if ((int) $user->id > 2391) {
+        if ((int)$user->id > 2391) {
             if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
                 return redirect()->back()->withErrors(['You do not have any deposits.']);
             }
@@ -299,7 +310,7 @@ class MoneyController extends Controller
             return redirect()->back()->withErrors(['Minimum sum is 1']);
         }
 
-        if (! $service->isValidAddress($request->input('address'))) {
+        if (!$service->isValidAddress($request->input('address'))) {
             return redirect()->back()->withErrors(['Invalid bitcoin address']);
         }
 
@@ -469,7 +480,7 @@ class MoneyController extends Controller
         $form_data = [
             'currency' => 840,
             'amount' => $request->input('amount'),
-            'description' => 'Пополнение счета '.Auth::user()->email,
+            'description' => 'Пополнение счета ' . Auth::user()->email,
             'shop_invoice_id' => $invoice->id,
         ];
 
