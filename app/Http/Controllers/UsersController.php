@@ -203,7 +203,7 @@ class UsersController extends Controller
             return !(boolean)$item['noEdit'];
         });
 
-        if ($request->has('role')) {
+        if ($request->has('role') and $requestRole !== '') {
             if (array_search($requestRole, array_column($userTypes, 'key')) === false) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
