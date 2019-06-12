@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use App\User;
+use App\Jobs\Job;
 use Helpers\GeneralHelper;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,6 +14,7 @@ class SetUserCountry extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $user;
+
     protected $country;
 
     /**

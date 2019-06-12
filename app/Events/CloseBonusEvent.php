@@ -12,6 +12,7 @@ class CloseBonusEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $bonusName;
 
     /**

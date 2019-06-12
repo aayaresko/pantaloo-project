@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Providers\JsBridge\JsBridge;
 use DB;
 use Log;
 use Validator;
@@ -14,19 +13,19 @@ use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\GamesCategory;
 use App\Models\GamesListSettings;
+use App\Providers\JsBridge\JsBridge;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class IntegratedGamesController
- * @package App\Http\Controllers
+ * Class IntegratedGamesController.
  */
 class IntegratedGamesController extends Controller
 {
-
     /**
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -57,7 +56,6 @@ class IntegratedGamesController extends Controller
             9 => 'games_list.created_at',
         ];
 
-
         $this->relatedFields = $this->fields;
         //$this->relatedFields[2] = 'games_list.provider_id as provider';
         $this->relatedFields[3] = 'games_types.name as type';
@@ -69,7 +67,7 @@ class IntegratedGamesController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request, $lang, $type_name = "")
+    public function index(Request $request, $lang, $type_name = '')
     {
         $configIntegratedGames = config('integratedGames.common');
         $appAdditional = config('appAdditional');
@@ -103,10 +101,11 @@ class IntegratedGamesController extends Controller
         }
 
         if ($need_redirect) {
-            $type_id = $request->has('type_id') ? $request->type_id : $type_name;
+            $type_id = $request->filled('type_id') ? $request->type_id : $type_name;
             foreach ($defaultTypes as $defaultType) {
                 if ($defaultType['id'] == $type_id) {
                     $entered_value = true;
+
                     return redirect()->route('games', [
                         'lang' => $lang,
                         'type_name' => str_replace(' ', '-', $defaultType['name']),
@@ -115,21 +114,19 @@ class IntegratedGamesController extends Controller
             }
         }
 
-
         $orderType = ['games_types.rating', 'desc'];
         if (isset($settings['types'])) {
             $orderType = $definitionSettings[$settings['types']];
-            $orderType[0] = 'games_types.' . $orderType[0];
+            $orderType[0] = 'games_types.'.$orderType[0];
         }
 
         $orderCategoty = ['games_categories.rating', 'desc'];
         if (isset($settings['types'])) {
             $orderCategoty = $definitionSettings[$settings['categories']];
-            $orderCategoty[0] = 'games_categories.' . $orderCategoty[0];
+            $orderCategoty[0] = 'games_categories.'.$orderCategoty[0];
         }
 
         $codeCountry = GeneralHelper::visitorCountryCloudFlare();
-
 
         $whereGame = [
             ['games_types_games.extra', '=', 1],
@@ -187,7 +184,7 @@ class IntegratedGamesController extends Controller
         $currentUser = $request->user();
         $emailsShowAllGames = config('appAdditional.emailsShowAllGames');
 
-        if (!is_null($currentUser) and in_array($currentUser->email, $emailsShowAllGames)) {
+        if (! is_null($currentUser) and in_array($currentUser->email, $emailsShowAllGames)) {
             $gamesCategories = GamesCategory::where([
                 ['active', '=', 1],
             ])->orderBy($orderCategoty[0], $orderCategoty[1])->get();
@@ -224,11 +221,11 @@ class IntegratedGamesController extends Controller
                         ->where('rc.mark', '=', 1);
                 })
                 ->where($whereGame)
-                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
+                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country".
                     " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
-                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
-                    " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
-                    "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
+                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country".
+                    " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) ".
+                    "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id ".
                     "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
                 ->groupBy('games_categories.id')
                 ->orderBy($orderCategoty[0], $orderCategoty[1])->get();
@@ -248,11 +245,9 @@ class IntegratedGamesController extends Controller
             $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
         }
 
-
         if ($entered_value == false && $type_name != '') {
             abort(404);
         }
-
 
         return view('integrated_games')->with([
             'title' => $title,
@@ -265,13 +260,10 @@ class IntegratedGamesController extends Controller
 
     public function getCategory(Request $request)
     {
-
-
     }
 
     public function getTypes()
     {
-
     }
 
     /**
@@ -290,23 +282,23 @@ class IntegratedGamesController extends Controller
             ['games_categories.active', '=', 1],
         ];
 
-        if ((int)$request->freeSpins === 1) {
+        if ((int) $request->freeSpins === 1) {
             //to do
             $typeSlot = 10001;
             array_push($whereGameList, ['games_types_games.type_id', '=', $typeSlot]);
             array_push($whereGameList, ['games_list.free_round', '=', $request->freeSpins]);
         }
 
-        if ((int)$request->categoryId !== 0) {
+        if ((int) $request->categoryId !== 0) {
             array_push($whereGameList, ['games_list_extra.category_id', '=', $request->categoryId]);
         }
 
-        if ((int)$request->typeId !== 0) {
+        if ((int) $request->typeId !== 0) {
             array_push($whereGameList, ['games_types_games.type_id', '=', $request->typeId]);
         }
 
         if ($request->search !== '') {
-            array_push($whereGameList, ['games_list_extra.name', 'LIKE', '%' . $request->search . '%']);
+            array_push($whereGameList, ['games_list_extra.name', 'LIKE', '%'.$request->search.'%']);
         }
 
         $definitionSettings = $configIntegratedGames['listSettings'];
@@ -316,7 +308,7 @@ class IntegratedGamesController extends Controller
         if (isset($settings['games'])) {
             //to do current field
             $orderGames = $definitionSettings[$settings['games']];
-            $orderGames[0] = 'games_list.' . $orderGames[0];
+            $orderGames[0] = 'games_list.'.$orderGames[0];
         }
 
         //check this i use alien code
@@ -337,7 +329,7 @@ class IntegratedGamesController extends Controller
         $currentUser = $request->user();
         $emailsShowAllGames = config('appAdditional.emailsShowAllGames');
 
-        if (!is_null($currentUser) and in_array($currentUser->email, $emailsShowAllGames)) {
+        if (! is_null($currentUser) and in_array($currentUser->email, $emailsShowAllGames)) {
             $gameList = DB::table('games_types_games')->select($this->relatedFields)
                 ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
                 ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
@@ -374,23 +366,23 @@ class IntegratedGamesController extends Controller
                         ->where('rc.mark', '=', 1);
                 })
                 ->where($whereGameList)
-                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country" .
+                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_games_by_country".
                     " where game_id = games_list.id), '$codeCountry') OR rg.id is null) AND (rg_n.id is null)")
-                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country" .
-                    " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) " .
-                    "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id " .
+                ->whereRaw("(instr((select group_concat(code_country, '') from restriction_categories_by_country".
+                    " where category_id = games_list_extra.category_id), '$codeCountry') OR rc.id is null) ".
+                    "AND (IF(instr((select group_concat(code_country, '') from restriction_games_by_country where game_id = games_list.id ".
                     "and code_country = '$codeCountry'), '$codeCountry'), null, rc_n.id) is null)")
                 ->groupBy('games_types_games.game_id')
                 ->orderBy($orderGames[0], $orderGames[1])->paginate($paginationCount);
         }
 
-        $viewMobile = (string)view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
-        $viewDesktop = (string)view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);
+        $viewMobile = (string) view('load.integrated_games_list_mobile')->with(['gameList' => $gameList]);
+        $viewDesktop = (string) view('load.integrated_games_list_desktop')->with(['gameList' => $gameList]);
 
         return response()->json([
             'mobile' => $viewMobile,
             'desktop' => $viewDesktop,
-            'time' => round(microtime(true) - $start, 4)
+            'time' => round(microtime(true) - $start, 4),
         ]);
     }
 
@@ -413,7 +405,7 @@ class IntegratedGamesController extends Controller
 
         $validator = Validator::make($validateParams, [
             'gameId' => 'required|integer|exists:games_list,id',
-            'providerId' => 'required|integer|in:' . implode(',', $providerIds),
+            'providerId' => 'required|integer|in:'.implode(',', $providerIds),
         ]);
 
         if ($validator->fails()) {

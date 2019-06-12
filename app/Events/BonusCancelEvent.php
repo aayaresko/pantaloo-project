@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Events;
 
-use App\Events\Event;
 use App\User;
+use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -11,6 +12,7 @@ class BonusCancelEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $bonusName;
 
     /**

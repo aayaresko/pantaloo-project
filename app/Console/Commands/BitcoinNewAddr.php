@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Bitcoin\Service;
 use App\User;
+use App\Bitcoin\Service;
 use Illuminate\Console\Command;
 
 class BitcoinNewAddr extends Command
@@ -45,8 +45,7 @@ class BitcoinNewAddr extends Command
 
         $users = User::all();
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $address = $service->getNewAddress('common');
 
             $user->bitcoin_address = $address;
@@ -54,6 +53,6 @@ class BitcoinNewAddr extends Command
             $user->save();
         }
 
-        $this->info("All users get new addresses");
+        $this->info('All users get new addresses');
     }
 }

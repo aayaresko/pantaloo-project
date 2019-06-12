@@ -6,7 +6,6 @@ use App\Providers\JsBridge\JsBridge;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
-
 class JsBridgeServiceProvider extends ServiceProvider
 {
     /**
@@ -16,7 +15,6 @@ class JsBridgeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 
     /**

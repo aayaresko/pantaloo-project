@@ -104,16 +104,17 @@ class AuthController extends Controller
 //        }
 
         //to do create normal controller for auth
+        $appAdditional = config('appAdditional');
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (!GeneralHelper::isTestMode() and in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
         $emailChecker = new EmailChecker();
 
-        if ($emailChecker->isInvalidEmail($request->email)) {
+        if (!GeneralHelper::isTestMode() and $emailChecker->isInvalidEmail($request->email)) {
             return redirect()->back()->withErrors(['Please try another email service!']);
         }
         //end validation
@@ -143,7 +144,7 @@ class AuthController extends Controller
             $tracker = false;
             if ($tracker_id) {
                 $tracker = Tracker::find($tracker_id);
-            } elseif(isset($data['ref']) and $data['ref']) {
+            } elseif (isset($data['ref']) and $data['ref']) {
                 $tracker = Tracker::where('ref', $data['ref'])->first();
             }
 
@@ -152,7 +153,6 @@ class AuthController extends Controller
                 $user->agent_id = $tracker->user_id;
 
                 //set count for this registration
-                $appAdditional = config('appAdditional');
                 $eventStatistic = $appAdditional['eventStatistic'];
                 StatisticalData::create([
                     'event_id' => $eventStatistic['register'],
@@ -171,6 +171,18 @@ class AuthController extends Controller
             }
 
             $user->save();
+
+            //welcome bonus set param for active
+            $configBonus = config('bonus');
+            $configSetWelcome = $configBonus['setWelcomeBonus'];
+            if (Cookie::get($configSetWelcome['name']) === $configSetWelcome['value']) {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'freeEnabled',
+                    'value' => $configSetWelcome['value']
+                ]);
+            }
+            //welcome bonus set param for active
 
             //send email
             //to do check this
@@ -204,7 +216,6 @@ class AuthController extends Controller
 
             Auth::guard($this->getGuard())->login($user);
         } catch (\Exception $ex) {
-
             return redirect()->back()->withErrors(['Something went wrong']);
         }
 
@@ -301,7 +312,7 @@ class AuthController extends Controller
 
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
-        } elseif(isset($data['ref']) and $data['ref']) {
+        } elseif (isset($data['ref']) and $data['ref']) {
             $tracker = Tracker::where('ref', $data['ref'])->first();
         }
 

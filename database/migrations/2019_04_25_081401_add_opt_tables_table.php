@@ -19,7 +19,6 @@ class AddOptTablesTable extends Migration
         Schema::table('transactions', function ($table) {
             $table->dropIndex('token_id');
         });
-
     }
 
     /**

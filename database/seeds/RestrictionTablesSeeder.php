@@ -5,7 +5,6 @@ use Illuminate\Database\Seeder;
 class RestrictionTablesSeeder extends Seeder
 {
     /**
-     *
      * Run the database seeds.
      *
      *
@@ -26,7 +25,7 @@ class RestrictionTablesSeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         DB::table('restriction_games_by_country')->truncate();
         DB::table('restriction_categories_by_country')->truncate();
@@ -40,7 +39,7 @@ class RestrictionTablesSeeder extends Seeder
             DB::table('restriction_categories_by_country')->insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -50,6 +49,7 @@ class RestrictionTablesSeeder extends Seeder
     protected function getParams()
     {
         $currentDate = new DateTime();
+
         return [
             'games' => [
 //                [
