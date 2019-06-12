@@ -50,7 +50,7 @@ class MoneyController extends Controller
     {
         try {
             //to do universal way define user to DO
-            $sessionId = $_COOKIE['laravel_session'];
+            $sessionId = $_COOKIE['casinobit_session'];
             $sessionLeftTime = config('session.lifetime');
             $sessionLeftTimeSecond = $sessionLeftTime * 60;
 
