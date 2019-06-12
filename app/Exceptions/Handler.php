@@ -6,6 +6,8 @@ use Exception;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -78,6 +80,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if (Str::contains($e->getMessage(), 'unserialize')) {
+            $redirect = redirect()->to('/');
+            foreach ($request->cookies as $key => $value) {
+                $cookie1 = \Cookie::forget($key);
+                $redirect->withCookie($cookie1);
+            }
+
+            return $redirect;
+        }
+
         if ($e instanceof \Illuminate\Session\TokenMismatchException) {
             return redirect()
                 ->back()
