@@ -217,9 +217,5 @@ return [
                 'noEdit' => 1
             ]
         ],
-        //no uses
-        'testRole' => function ($roleKey) {
-            return -1 * $roleKey - (1);
-        }
     ]
 ];
