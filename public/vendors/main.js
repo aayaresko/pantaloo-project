@@ -277,9 +277,9 @@ function getCurrentScreen(){
 
 	$(window).on('mousewheel', getCurrentScreen);
 
-	$(".faqWrapper h4").on('click', function(){
+	$(".faqWrapper h6, .faqWrapper h5, .faqWrapper h4, .faqWrapper h3, .faqWrapper h2, .faqWrapper h1").on('click', function(){
 		$(this).next().toggleClass('showFaq');
-		$(this).toggleClass("rotateArrow")
+		$(this).toggleClass("rotateArrow");
 	});
 
 	// function bonusTerms() {

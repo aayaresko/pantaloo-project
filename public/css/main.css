@@ -5201,7 +5201,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 
 
-.faqWrapper .page-entry h4{
+.faqWrapper .page-entry > h1,
+.faqWrapper .page-entry > h2,
+.faqWrapper .page-entry > h3,
+.faqWrapper .page-entry > h4,
+.faqWrapper .page-entry > h5,
+.faqWrapper .page-entry > h6{
   padding-left: 20px;
   position: relative;
   font-family: 'MyriadPro-Bold' , sans-serif;
@@ -5214,7 +5219,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   cursor: pointer;
 }
 
-.faqWrapper .page-entry h4:before{
+.faqWrapper .page-entry h1:before,
+.faqWrapper .page-entry h2:before,
+.faqWrapper .page-entry h3:before,
+.faqWrapper .page-entry h4:before,
+.faqWrapper .page-entry h5:before,
+.faqWrapper .page-entry h6:before{
   content: '';
   display: inline-block;
   position: absolute;
@@ -5240,12 +5250,17 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   opacity: 1;
 }
 
-.faqWrapper .page-entry h4.rotateArrow:before{
+.faqWrapper .page-entry h1.rotateArrow:before,
+.faqWrapper .page-entry h2.rotateArrow:before,
+.faqWrapper .page-entry h3.rotateArrow:before,
+.faqWrapper .page-entry h4.rotateArrow:before,
+.faqWrapper .page-entry h5.rotateArrow:before,
+.faqWrapper .page-entry h6.rotateArrow:before{
   transform: rotate(0deg);
 }
 
 
-.textWrapper h5{
+.textWrapper h1, .textWrapper h2, .textWrapper h3, .textWrapper h4, .textWrapper h5, .textWrapper h6 {
   color: #fff;
   font-family: 'MyriadPro-medium' , sans-serif;
   font-size: 13px;
@@ -5255,12 +5270,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
 }
 
-.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .text{
+.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper{
   font-family: 'MyriadPro-medium' , sans-serif;
   font-size: 13px;
   line-height: 18px;
   color: #b8a7cd;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry{
