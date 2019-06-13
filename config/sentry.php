@@ -14,6 +14,7 @@ return [
 
     ],
 
-    //'error_types' => E_ALL & ~E_NOTICE & ~E_DEPRECATED,
+    'capture_silenced_errors' => true,
+    'error_types' => E_ALL & ~E_NOTICE & ~E_DEPRECATED,
 
 ];
