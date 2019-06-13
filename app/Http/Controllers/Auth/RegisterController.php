@@ -94,11 +94,13 @@ class RegisterController extends Controller
         preg_match_all($pattern, $currentUrl, $matchesPass);
 
         $matchesPass = $matchesPass[0] ?? [];
+
         if (in_array($passwordUser, $matchesPass)) {
-            return redirect()->back()->withErrors(['Try another password']);
-        }
-        elseif ($loginUser == $passwordUser){
-            return redirect()->back()->withErrors(['Try another password']);
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
+        } elseif (Str::contains($passwordUser, $currentUrl)) {
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
+        } elseif ($loginUser == $passwordUser) {
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
         }
         //end validation on password by repeat url to do function or validation class
 
