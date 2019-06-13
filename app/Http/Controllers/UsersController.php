@@ -268,6 +268,7 @@ class UsersController extends Controller
 
             if ($block === 1) {
                 //to do necessary update this code for all drivers etc
+                //to do middleware where mark  active
                 DB::table('sessions')
                     ->where('user_id', $user->id)
                     ->delete();
