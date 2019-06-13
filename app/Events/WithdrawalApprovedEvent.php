@@ -10,6 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class WithdrawalApprovedEvent extends Event
 {
     use SerializesModels;
+
     public $user;
 
     /**

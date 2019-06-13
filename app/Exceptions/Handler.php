@@ -5,9 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -19,10 +18,12 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
@@ -35,29 +36,37 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if ($this->isHttpException($e)) {
-            if ($e->getStatusCode() == 404) {
-                return response()->view('errors.' . '404', [], 404);
+        $appDebug = is_null(config('app.debug')) ? true : config('app.debug');
+
+        if (!$appDebug) {
+            if ($this->isHttpException($e)) {
+                if ($e->getStatusCode() == 404) {
+                    return response()->view('errors.' . '404', [], 404);
+                }
+            }
+
+            if (app()->bound('sentry') && $this->shouldReport($e)) {
+                if (Auth::check()) {
+                    \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
+                        $user = Auth::user();
+                        $scope->setUser([
+                            'id' => $user->id,
+                            'email' => $user->email,
+                            'ip_address' => GeneralHelper::visitorIpCloudFlare()
+                        ]);
+                    });
+                } else {
+
+                }
+                app('sentry')->captureException($e);
+
+            }
+
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+                return abort('404');
             }
         }
 
-        if (app()->bound('sentry') && $this->shouldReport($e)) {
-            if (Auth::check()) {
-                \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
-                    $user = Auth::user();
-                    $scope->setUser([
-                        'id' => $user->id,
-                        'email' => $user->email,
-                        'ip_address' => GeneralHelper::visitorIpCloudFlare()
-                    ]);
-                });
-            }
-            app('sentry')->captureException($e);
-        }
-
-        if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-            return abort('404');
-        }
 
         parent::report($e);
     }
@@ -71,6 +80,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if (Str::contains($e->getMessage(), 'unserialize')) {
+            $redirect = redirect()->to('/');
+            foreach ($request->cookies as $key => $value) {
+                $cookie1 = \Cookie::forget($key);
+                $redirect->withCookie($cookie1);
+            }
+
+            return $redirect;
+        }
+
         if ($e instanceof \Illuminate\Session\TokenMismatchException) {
             return redirect()
                 ->back()
@@ -83,5 +102,21 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $e);
+    }
+
+    /**
+     * Convert an authentication exception into an unauthenticated response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException $e
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $e)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        } else {
+            return redirect()->guest('login');
+        }
     }
 }

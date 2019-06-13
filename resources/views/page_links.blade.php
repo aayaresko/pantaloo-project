@@ -20,7 +20,7 @@ $pages = $pages->get();
     <li><a href="{{route('page', ['page_url' => $page->url, 'lang' => $currentLang])}}">{{$page->short_name}}</a></li>
 @endforeach
 
+<li class="order-games"><a href="{{route('games', ['lang' => $currentLang])}}" class="games">{{ trans('casino.games') }}</a></li>
 <li class="order-support"><a href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
 <li class="order-bonuses"><a href="{{route('bonus.promo', ['lang' => $currentLang])}}" class="bonuses">{{ trans('casino.bonuses') }}</a></li>
-<!-- <li class="order-afiliate"><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li> -->
 

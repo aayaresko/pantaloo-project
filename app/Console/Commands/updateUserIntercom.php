@@ -2,22 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\Events\AccountStatusEvent;
-use App\Events\BonusDepositEvent;
-use App\Events\BonusGameEvent;
-use App\Events\CloseBonusEvent;
+use App\User;
 use App\Events\DepositEvent;
-use App\Events\DepositWagerDoneEvent;
+use App\Events\BonusGameEvent;
 use App\Events\OpenBonusEvent;
 use App\Events\WagerDoneEvent;
-use App\Events\WithdrawalApprovedEvent;
-use App\Events\WithdrawalFrozenEvent;
-use App\Events\WithdrawalRequestedEvent;
-use App\Providers\Intercom\Intercom;
-use App\User;
+use App\Events\CloseBonusEvent;
 use Illuminate\Console\Command;
+use App\Events\BonusDepositEvent;
+use App\Events\AccountStatusEvent;
+use App\Providers\Intercom\Intercom;
 use Illuminate\Support\Facades\File;
+use App\Events\DepositWagerDoneEvent;
+use App\Events\WithdrawalFrozenEvent;
+use App\Events\WithdrawalApprovedEvent;
 use Illuminate\Support\Facades\Storage;
+use App\Events\WithdrawalRequestedEvent;
 
 class updateUserIntercom extends Command
 {
@@ -54,12 +54,11 @@ class updateUserIntercom extends Command
     {
         $newKey = $this->ask('Type new key and press enter');
 
-        $path = getcwd() . '/resources/lang';
+        $path = getcwd().'/resources/lang';
         $langs = array_diff(scandir($path), ['.', '..']);
 
         foreach ($langs as $lang) {
-
-            $cpath = $path . DIRECTORY_SEPARATOR . $lang;
+            $cpath = $path.DIRECTORY_SEPARATOR.$lang;
 
             //$files = array_diff(scandir($cpath), ['.', '..']);
             $files = ['casino.php'];
@@ -67,7 +66,7 @@ class updateUserIntercom extends Command
             foreach ($files as $file) {
 
 //              $data = File::getRequire($cpath . DIRECTORY_SEPARATOR . $file);
-                $datafile = preg_replace("/\.php$/", ".data", 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file);
+                $datafile = preg_replace("/\.php$/", '.data', 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
 
                 $data = unserialize(Storage::get($datafile));
 
@@ -89,7 +88,5 @@ class updateUserIntercom extends Command
 ////        event(new WithdrawalApprovedEvent($user));
 ////        event(new WithdrawalFrozenEvent($user, 'comment'));
 ////        event(new WithdrawalRequestedEvent($user));
-
-
     }
 }

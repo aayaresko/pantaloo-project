@@ -46,7 +46,7 @@ class ClearRawLog extends Command
         $configClearRawLog = $configOptimization['clearRawLog'];
 
         $outdated = new \DateTime();
-        $outdated->modify('- ' . $configClearRawLog);
+        $outdated->modify('- '.$configClearRawLog);
 
         RawLog::where('created_at', '<', $outdated)->delete();
         Log::info('ClearRawLog END');

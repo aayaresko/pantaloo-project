@@ -20,7 +20,6 @@ class CreateModernExtraUsersTable extends Migration
             $table->string('value');
             $table->timestamps();
             $table->unique(['user_id', 'code']);
-
         });
     }
 

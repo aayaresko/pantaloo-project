@@ -2,6 +2,10 @@
 
 return [
 
+    'forceHttps' => env('FORCE_HTTPS', true),
+
+    'ipQualityScore' => env('IP_QUALITY_SCORE'),
+
     'defaultTypes' => [
         [
             'id' => 10001,
@@ -95,24 +99,24 @@ return [
 
     'defaultTitle' => 'games',
 
-    'keepLanguage' => 60 * 24 * 30,//min
+    'keepLanguage' => 60 * 24 * 30, //min
     'resendMailTime' => 10,
     'linkActiveConfirm' => 60 * 60 * 24,
     'eventStatistic' => [
         'enter' => 1,
-        'register' => 2
+        'register' => 2,
     ],
 
     'partnerCommission' => 45,
 
     'freeRounds' => [
         'available' => 50,
-        'timeFreeRound' => 1209600
+        'timeFreeRound' => 1209600,
     ],
 
     'restrictionMark' => [
         'disable' => 0,
-        'enable' => 1
+        'enable' => 1,
     ],
 
     'getCountries' => 'https://restcountries.eu/rest/v2/all',
@@ -135,7 +139,7 @@ return [
     'cpaCurrencyCode' => 'mBTC',
 
     'allowIps' => [
-        '213.169.83.245'
+        '213.169.83.245',
     ],
 
     'depositNotifications' => [
@@ -144,7 +148,7 @@ return [
     ],
 
     'emailsShowAllGames' => [
-        'tuzomi@mail-list.top'
+        'tuzomi@mail-list.top',
     ],
 
     'disableRegistration' => ['US', 'UA', 'IL', 'XX'],
@@ -158,10 +162,9 @@ return [
         'MU', 'MD', 'MN', 'MA', 'MZ', 'NA', 'NI', 'NP', 'NE', 'NG', 'KP', 'OM', 'PK',
         'PH', 'PL', 'PT', 'RO', 'RU', 'RW', 'ST', 'SN', 'SC', 'SL', 'SK', 'SI', 'SO',
         'SD', 'CH', 'SY', 'TH', 'TG', 'TN', 'UG', 'UA', 'AE', 'TZ', 'VN', 'YE', 'ZM',
-        'ZW', 'ME','RS', 'XX'],
+        'ZW', 'ME', 'RS', 'XX'],
     
     'ipQualityScoreUrl' => 'https://www.ipqualityscore.com/api/json/ip',
-
 
     'ipQualityScoreKey' => env('IP_QUALITY_SCORE'),
 
@@ -172,13 +175,47 @@ return [
         'depositBonus3' => 40,
         'depositBonus4' => 50,
     ],
-    
+
     'optimization' => [
-        'clearRawLog' => '30 day'
+        'clearRawLog' => '30 day',
     ],
-    
+
     'officeIps' => [
         '136.0.0.139'
-    ]
+    ],
 
+    'users' => [
+        'roles' => [
+            [
+                'key' => -3,
+                'name' => 'Admin test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => -2,
+                'name' => 'Affiliate test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => -1,
+                'name' => 'User test',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 0,
+                'name' => 'User',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 1,
+                'name' => 'Affiliate',
+                'noEdit' => 0
+            ],
+            [
+                'key' => 2,
+                'name' => 'Admin',
+                'noEdit' => 1
+            ]
+        ],
+    ]
 ];

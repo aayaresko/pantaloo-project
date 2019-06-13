@@ -36,17 +36,19 @@ function controlsInit(){
 
 function mobMenuInit(){
 	if( $(window).width() < 1080 ){
-		$('.header-right-part .menu-btn').click(function(){
+		$('.header-right-part .menu-btn').click(function(e){
+			e.preventDefault();
 			$('body, html').addClass('cropped');
 			$('.mobile-menu').addClass('active');
 			$('.overlayMenu').addClass('active');
-			return false;
+			// return false;
 		})
-		$('.mobile-menu .close-icon').click(function(){
+		$('.mobile-menu .close-icon').click(function(e){
+			e.preventDefault();
 			$('body, html').removeClass('cropped');
 			$('.mobile-menu').removeClass('active');
 			$('.overlayMenu').removeClass('active');
-			return false;
+			// return false;
 		})
 	}
 	if( $(window).width() < 1080 ){
@@ -126,10 +128,17 @@ function animationInit(){
 		});
 	});
 
+	// var ll;
 
 	$("#login").on("submit", function (e) {
 
+
+
 		let loginForm = $(this);
+
+		$(".loginError ").html('');
+		$(".errorMessage ").removeClass("showErrorMsg");
+		loginForm.find('input').removeClass("showErrorMsg");
 		
 		$.ajax({
 			method: 'post',
@@ -138,15 +147,23 @@ function animationInit(){
 			data: loginForm.serialize()
 		}).done(function (response) {
 
-			// console.log(response);
 			let resultLogin = response;
 
 			if(resultLogin.status == false){
+
 				loginForm.find('input').addClass("showErrorMsg");
 			
 				let loginResult = $(".loginError").addClass("showErrorMsg");
 				
-				loginResult.html(resultLogin.message);
+				// loginResult.html(resultLogin.message.errors);
+
+				let itemsError = resultLogin.message.errors;
+	
+				for(let i = 0; i < itemsError.length; i++){
+
+					loginResult.append($('<p>').html(itemsError[i]));
+					
+				}
 
 			}else{
 				window.location.reload();
@@ -169,6 +186,10 @@ function animationInit(){
 
 		let regForm = $(this);
 
+		$(".registrError").html('');
+		$(".errorMessage").removeClass("showErrorMsg");
+		regForm.find('input').removeClass("showErrorMsg");
+
 		$.ajax({
 			method: 'post',
 			dataType: 'json',
@@ -178,13 +199,25 @@ function animationInit(){
 
 			let resultRegistr = response;
 
-			if(resultRegistr.status == false){
+			if (resultRegistr.status == false) {
 
 				regForm.find('input').addClass("showErrorMsg");
-				let registrResult = $(".registrError").addClass("showErrorMsg");
-				registrResult.html(resultRegistr.message);
 
-			}else{
+				let registrResult = $(".registrError").addClass("showErrorMsg");
+				// registrResult.html(resultRegistr.message);
+
+				let itemsError = resultRegistr.message.errors;
+
+				for(let i = 0; i < itemsError.length; i++){
+					
+					// var item = $('<p>').html(itemsError[i]);
+					registrResult.append($('<p>').html(itemsError[i]));
+					
+				}
+
+				// registrResult.append(item);
+
+			} else{
 
 				window.location.reload();
 				
@@ -242,6 +275,9 @@ function animationInit(){
 
 	$(".reg-popup .popup-container, .log-popup .popup-container, .simple-popup .popup-entry").click(function(e){
 		e.stopPropagation();
+	});
+	$('button.close-icon').click(function () {
+		$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
 	});
 	$(document).keydown(function(e) {
 		// ESCAPE key pressed
@@ -358,40 +394,40 @@ $(document).ready(function(){
 	});
 	
 
-	function bonusTerms() {
-		$('.block-bonus-buttons .usl-link').on('click', function (e) {
-			let linkBonus = $(this).attr('data-bonus-url');
-			$('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
-
-			let tempateBonusActive = $('.tempateBonusActive').html();
-			$('#uls').append(tempateBonusActive);
-		});
-
-		$('.usl-link').on('mfpClose', function (e) {
-			$("#uls .popUpTermForm").remove();
-		});
-	}
-
-	bonusTerms();
-
-
-	$('#uls').on('click','.popUpBtnBonus', function(e){
-		
-		if($('#terms').prop('checked') == false){
-
-			$(".errorMessage").addClass("showErrorMsg");
-	
-			$(this).prev().addClass("showErrorMsg");
-
-			e.preventDefault();
-		}
-	});
-
-	$("#uls").on("click", '.mfp-close' ,function(){
-
-		$(".errorMessage").removeClass('showErrorMsg');
-
-	});
+	// function bonusTerms() {
+	// 	$('.block-bonus-buttons .usl-link').on('click', function (e) {
+	// 		let linkBonus = $(this).attr('data-bonus-url');
+	// 		$('.tempateBonusActive .bonusActiveTerms').attr('href', linkBonus);
+	//
+	// 		let tempateBonusActive = $('.tempateBonusActive').html();
+	// 		$('#uls').append(tempateBonusActive);
+	// 	});
+	//
+	// 	$('.usl-link').on('mfpClose', function (e) {
+	// 		$("#uls .popUpTermForm").remove();
+	// 	});
+	// }
+	//
+	// bonusTerms();
+	//
+	//
+	// $('#uls').on('click','.popUpBtnBonus', function(e){
+	//
+	// 	if($('#terms').prop('checked') == false){
+	//
+	// 		$(".errorMessage").addClass("showErrorMsg");
+	//
+	// 		$(this).prev().addClass("showErrorMsg");
+	//
+	// 		e.preventDefault();
+	// 	}
+	// });
+	//
+	// $("#uls").on("click", '.mfp-close' ,function(){
+	//
+	// 	$(".errorMessage").removeClass('showErrorMsg');
+	//
+	// });
 
 
 	let inputType = 1;

@@ -1,18 +1,23 @@
 @extends('layouts.app')
 
 @php
-if ($title == 'games') {
+if ($title == $titleDefault) {
     $gameRoomTitle = 'casino.games';
+    $gameRoomMetaTitle = 'casino.games_meta_title';
 } else {
     $gameRoomTitle = 'casino.type_' . str_replace(' ', '_', $title);
+    $gameRoomMetaTitle = $gameRoomTitle;
 }
 @endphp
 
-@section('title', trans($gameRoomTitle))
-
+@section('title', trans($gameRoomMetaTitle))
 
 @section('description')
+@if($title == $titleDefault)
+{{ trans('casino.games_meta_descr') }}
+@else
 {{ trans('casino.play') }} {{trans($gameRoomTitle)}} {{ trans('casino.game_room_description') }}
+@endif
 @endsection
 
 @section('content')
@@ -98,9 +103,9 @@ if ($title == 'games') {
                 <div class="noGamesFound">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAADTUlEQVRYhc2YXYhNURTHf/cYXjz4SPKieKCcUuMrTjQkcpKPByIlHkb5TCnmjo9HxKhBMsYkiQdfJUS2KBT2eBAPbEkyD5IXIZ5kXA/bvc7dd59z97mHufN/22vttc/vnrv23mudXKFQwEVSqEnADKAJGAeMBH4BH4HXwAOgG1BOC/5REPqJ/lw1QCnUGqAVmOD4zCfAfuC6y+RqgA0JYLOBLmC8I1hR04FraNBm4GXK+DJ5MXB54H4NcFFNB14AqzOsUfkGpVDtwDbL3ALwEBDAY3TuDQBGo/NyPjDVEncOGAEcqQWwLAelULuAfZZ5F4GdQei/Mx1SlO2JRuAQMM+yxirggml0zkEpVGCBKwDLg9C/krjKXz1Hv8lNwHHDdx79D7x3XAsoz0HbrpuSAi6qDmCxxe60s6PyAKRQzeg8iWphEPrP0rOVdAPYbNgmod+wszwplAe0GfaLQejfygBXVAf6uInqQJoFPPSvGh6x9QLrsnGVqdkYTwaGuAZ7QGjY7geh/z0rVUQvgR7Dtsw12APmGrZLGYFsOmOMnfPQo/K2eJSVxiJzzTGugR4wLDL+ib4h/rW+GONBroHWu7g/yQM+R8YNwKj/8JyhxviHa6AHvDFsMzPjVMpcs8c10APuGrYVWWksWmuM77gGesBtw9YkhRqcGemvJgJjDZvz/e6hK5BoHg4ETmfnKqnLGD+lclfHygtCvxdoMewrpFALspIBW9CNVlStaRbwAILQPwV8MnxCCtVYOxtLgWOG7QKVOZ+o6Dm4yOJ/JoVakhIMYD1w1WJPVaxCBDAI/W5gj2XONSnUWSmUS9s5Dd2zdMb4twMH0wBW9MVSqKPA1pj594DL6G7tK5BDH8LTgJXYmyab2oA81Ni4S6F2A3sdH1ar2oB8NUDrXRyE/j5gDvAqA8AVoD3B34LD3+3y6WMjsBF94LpIAofRqQC6xM8nzG8LQj/WXxWw9FShfPTRMQv94ah423wDPqDz8ybw1hJeM6QzYJyMxj1JNUH2ZT3YSnLOtUihKvx9XbCmhqxHRZ0Ksl4lvzNk7AfMPlCxqonbOC1SqFy9m6Zqb3JHvQEJQj8J8kTdASEW8mQQ+pv6BSCUIA+hC+fOIPQ3APwG1srnNRTffbMAAAAASUVORK5CYII=" alt="">
                     <br>
-                    <p class="noGames">No games found</p>
-                    <p>Try to change search parameters or</p>
-                    <a href="{{ route('games', ['lang' => $currentLang]) }}" id="resetGames">reset filter</a>
+                    <p class="noGames">{{trans('casino.no_games_found')}}</p>
+                    <p>{{trans('casino.try_change_search')}}</p>
+                    <a href="{{ route('games', ['lang' => $currentLang]) }}" id="resetGames">{{trans('casino.reset_filter')}}</a>
                 </div>
                 <div class="games-entry">
                     <!-- games insert here by js -->
@@ -109,7 +114,7 @@ if ($title == 'games') {
 
         </div>
         <div class="paginationGame">
-           <button class="moreGames">load more</button>
+           <button class="moreGames">{{trans('casino.load_more')}}</button>
         </div>
        
     </div>

@@ -2,13 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Bitcoin\Service;
 use App\Jobs\Job;
 use App\Transaction;
+use App\Bitcoin\Service;
+use League\Flysystem\Exception;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use League\Flysystem\Exception;
 
 class Withdraw extends Job implements ShouldQueue
 {
@@ -19,7 +19,6 @@ class Withdraw extends Job implements ShouldQueue
      *
      * @return void
      */
-
     protected $transaction;
 
     public function __construct(Transaction $transaction)
@@ -42,13 +41,11 @@ class Withdraw extends Job implements ShouldQueue
         $service = new Service();
 
         try {
-            $id = $service->send($transaction->address, -1*$transaction->getBtcSum());
+            $id = $service->send($transaction->address, -1 * $transaction->getBtcSum());
             $transaction->withdraw_status = 1;
             $transaction->ext_id = $id;
             $transaction->save();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $transaction->comment = $e->getMessage();
             $transaction->withdraw_status = -2;
             $transaction->save();

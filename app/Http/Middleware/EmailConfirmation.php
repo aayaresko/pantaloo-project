@@ -18,21 +18,21 @@ class EmailConfirmation
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check())
-        {
+        if (Auth::check()) {
             $routes = collect([
                 'home',
                 'main',
                 'email.confirm',
                 'logout',
-                'email.activate'
+                'email.activate',
             ]);
-            
+
             $route_name = Request::route()->getName();
 
-            if(!$routes->contains($route_name)) {
-
-                if($request->path() == 'logout') return $next($request);
+            if (! $routes->contains($route_name)) {
+                if ($request->path() == 'logout') {
+                    return $next($request);
+                }
 
                 if (Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) {
                     if (Auth::user()->transactions()->deposits()->count() == 0) {

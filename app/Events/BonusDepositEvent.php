@@ -12,6 +12,7 @@ class BonusDepositEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $value;
 
     /**

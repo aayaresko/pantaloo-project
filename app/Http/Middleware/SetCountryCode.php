@@ -18,8 +18,7 @@ class SetCountryCode
     public function handle($request, Closure $next)
     {
         try {
-            if (!$request->session()->has('iso_code')) {
-
+            if (! $request->session()->has('iso_code')) {
                 session(['iso_code' => GeneralHelper::visitorCountryCloudFlare()]);
             }
         } catch (\Exception $e) {

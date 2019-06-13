@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Country;
 use DB;
 use App\User;
 use Validator;
@@ -103,16 +104,17 @@ class AuthController extends Controller
 //        }
 
         //to do create normal controller for auth
+        $appAdditional = config('appAdditional');
         $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
         $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-        if (in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+        if (!GeneralHelper::isTestMode() and in_array($codeCountryCurrent, $disableRegistrationCountry)) {
             return redirect()->back()->withErrors(['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.']);
         }
 
         $emailChecker = new EmailChecker();
 
-        if ($emailChecker->isInvalidEmail($request->email)) {
+        if (!GeneralHelper::isTestMode() and $emailChecker->isInvalidEmail($request->email)) {
             return redirect()->back()->withErrors(['Please try another email service!']);
         }
         //end validation
@@ -139,24 +141,25 @@ class AuthController extends Controller
             $user->ip = $ip;
 
             $tracker_id = Cookie::get('tracker_id');
-
+            $tracker = false;
             if ($tracker_id) {
                 $tracker = Tracker::find($tracker_id);
+            } elseif (isset($data['ref']) and $data['ref']) {
+                $tracker = Tracker::where('ref', $data['ref'])->first();
+            }
 
-                if ($tracker) {
-                    $user->tracker()->associate($tracker);
-                    $user->agent_id = $tracker->user_id;
+            if ($tracker) {
+                $user->tracker()->associate($tracker);
+                $user->agent_id = $tracker->user_id;
 
-                    //set count for this registration
-                    $appAdditional = config('appAdditional');
-                    $eventStatistic = $appAdditional['eventStatistic'];
-                    StatisticalData::create([
-                        'event_id' => $eventStatistic['register'],
-                        'value' => 'register',
-                        'tracker_id' => $tracker->id
-                    ]);
-                    //set count for this registration
-                }
+                //set count for this registration
+                $eventStatistic = $appAdditional['eventStatistic'];
+                StatisticalData::create([
+                    'event_id' => $eventStatistic['register'],
+                    'value' => 'register',
+                    'tracker_id' => $tracker->id
+                ]);
+                //set count for this registration
             }
 
             //this temporary decision
@@ -168,6 +171,18 @@ class AuthController extends Controller
             }
 
             $user->save();
+
+            //welcome bonus set param for active
+            $configBonus = config('bonus');
+            $configSetWelcome = $configBonus['setWelcomeBonus'];
+            if (Cookie::get($configSetWelcome['name']) === $configSetWelcome['value']) {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'freeEnabled',
+                    'value' => $configSetWelcome['value']
+                ]);
+            }
+            //welcome bonus set param for active
 
             //send email
             //to do check this
@@ -189,6 +204,15 @@ class AuthController extends Controller
             });
 
             $this->dispatch(new SetUserCountry($user));
+            if (!$user->agent_id) {
+                $country_code = GeneralHelper::visitorCountryCloudFlare();
+                $country = Country::where('code', $country_code)->first();
+                $agent = $country ? $country->user->first() : false;
+                if ($agent) {
+                    $user->agent_id = $agent->id;
+                    $user->save();
+                }
+            }
 
             Auth::guard($this->getGuard())->login($user);
         } catch (\Exception $ex) {
@@ -288,21 +312,23 @@ class AuthController extends Controller
 
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
+        } elseif (isset($data['ref']) and $data['ref']) {
+            $tracker = Tracker::where('ref', $data['ref'])->first();
+        }
 
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
+        if ($tracker) {
+            $user->tracker()->associate($tracker);
+            $user->agent_id = $tracker->user_id;
 
-                //set count for this registration
-                $appAdditional = config('appAdditional');
-                $eventStatistic = $appAdditional['eventStatistic'];
-                StatisticalData::create([
-                    'event_id' => $eventStatistic['register'],
-                    'value' => 'register',
-                    'tracker_id' => $tracker->id
-                ]);
-                //set count for this registration
-            }
+            //set count for this registration
+            $appAdditional = config('appAdditional');
+            $eventStatistic = $appAdditional['eventStatistic'];
+            StatisticalData::create([
+                'event_id' => $eventStatistic['register'],
+                'value' => 'register',
+                'tracker_id' => $tracker->id
+            ]);
+            //set count for this registration
         }
 
         //this temporary decision
@@ -371,7 +397,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $roleUser = (int)Auth::user()->role;
 
-            if (array_search($roleUser, [1, 3]) !== false) {
+            if (array_search($roleUser, [1, 3, 4]) !== false) {
                 Auth::logout();
                 return back()->withErrors('This type of user is not allowed to login');
             }

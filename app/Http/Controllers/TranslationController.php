@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Cookie;
 
 class TranslationController extends Controller
 {
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -18,14 +17,15 @@ class TranslationController extends Controller
     {
         //validate
         $getListLanguage = config('getListLanguage');
-        if (!in_array($lang, $getListLanguage)) {
+        if (! in_array($lang, $getListLanguage)) {
             return redirect('/');
         }
 
         $previousUrl = url()->previous();
         $arrayPreviousUrl = explode('/', $previousUrl);
         $arrayPreviousUrl[3] = $lang;
-        $urlWithLang = implode("/", $arrayPreviousUrl);
+        $urlWithLang = implode('/', $arrayPreviousUrl);
+
         return redirect($urlWithLang);
     }
 
@@ -45,9 +45,11 @@ class TranslationController extends Controller
 
         $translation = Translation::find($request->input('pk'));
 
-        if(!$translation) return redirect()->back()->withErrors(['Translation not found']);
+        if (! $translation) {
+            return redirect()->back()->withErrors(['Translation not found']);
+        }
 
-        $translation->rus  = $request->input('value');
+        $translation->rus = $request->input('value');
         $translation->status = 1;
         $translation->save();
 
@@ -58,8 +60,9 @@ class TranslationController extends Controller
     {
         $translation = Translation::find($request->input('id'));
 
-        if($translation)
+        if ($translation) {
             $translation->delete();
+        }
 
         return response()->json(['success' => 1]);
     }

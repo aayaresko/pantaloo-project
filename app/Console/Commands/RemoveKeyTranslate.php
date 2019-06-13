@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Helpers\GeneralHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Helpers\GeneralHelper;
 
 class RemoveKeyTranslate extends Command
 {
@@ -41,14 +41,14 @@ class RemoveKeyTranslate extends Command
     {
         $removeKey = $this->ask('Type key to remove and enter');
 
-        $langs= GeneralHelper::getListLanguage();
+        $langs = GeneralHelper::getListLanguage();
 
         foreach ($langs as $lang) {
             $files = ['casino.php'];
             foreach ($files as $file) {
-                $datafile = preg_replace("/\.php$/", ".data", 'lang' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file);
+                $datafile = preg_replace("/\.php$/", '.data', 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
                 $data = unserialize(Storage::get($datafile));
-                if (($key = array_search($removeKey, $data)) !== false){
+                if (($key = array_search($removeKey, $data)) !== false) {
                     unset($data[$key]);
                 }
                 Storage::put($datafile, serialize($data));

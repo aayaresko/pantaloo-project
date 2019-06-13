@@ -21,20 +21,22 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.6" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.17" rel="stylesheet">
+    <link href="/css/new.css?v={{ time() }}" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8932ff">
     <meta name="msapplication-TileColor" content="#8932ff">
+    <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Google Tag Manager -->

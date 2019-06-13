@@ -26,7 +26,7 @@ class GamesCategorySeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         GamesCategory::truncate();
         /* end clear */
@@ -35,7 +35,7 @@ class GamesCategorySeeder extends Seeder
             GamesCategory::insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -44,6 +44,7 @@ class GamesCategorySeeder extends Seeder
     protected function getParams()
     {
         $currentDate = new DateTime();
+
         return [];
     }
 }

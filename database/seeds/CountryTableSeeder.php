@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class CountryTableSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      *
@@ -27,7 +26,7 @@ class CountryTableSeeder extends Seeder
     protected function insertToDB($params)
     {
         /* for foreign key */
-        DB::statement("SET foreign_key_checks=0");
+        DB::statement('SET foreign_key_checks=0');
         /* start clear */
         Country::truncate();
         /* end clear */
@@ -36,7 +35,7 @@ class CountryTableSeeder extends Seeder
             Country::insert($item);
         }
         /* end main act */
-        DB::statement("SET foreign_key_checks=1");
+        DB::statement('SET foreign_key_checks=1');
     }
 
     /**
@@ -52,7 +51,7 @@ class CountryTableSeeder extends Seeder
         try {
             $counties = [];
             $response = $client->get($urlCountries, [
-                'headers' =>[]
+                'headers' =>[],
             ]);
 
             $responseJson = json_decode($response->getBody()->getContents());
@@ -66,10 +65,10 @@ class CountryTableSeeder extends Seeder
                     'updated_at' => $currentDate,
                 ];
             }
+
             return $counties;
-        }
-        catch (\Exception $e) {
-            dd($e->getMessage() . $e->getCode());
+        } catch (\Exception $e) {
+            dd($e->getMessage().$e->getCode());
         }
     }
 }
