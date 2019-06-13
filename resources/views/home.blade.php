@@ -4,9 +4,7 @@
 {{ trans('casino.home_description') }}
 @endsection
 
-@section('keywords')
-{{ trans('casino.home_keywords') }}
-@endsection
+
 
 @section('content')
     <ul class="sections-nav">
@@ -58,7 +56,7 @@
             <span class="side-name">{{ trans('casino.blackjack') }}</span>
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
-                <h1 class="game-name word-split">{{ trans('casino.blackjack') }}</h1>
+                <h2 class="game-name word-split">{{ trans('casino.blackjack') }}</h2>
                 
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_name' => 'blackjack', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.play_now') }}</span></a>
@@ -83,7 +81,7 @@
             <span class="side-name">{{ trans('casino.roulette') }}</span>
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
-                <h1 class="game-name word-split">{{ trans('casino.roulette') }}</h1>
+                <h2 class="game-name word-split">{{ trans('casino.roulette') }}</h2>
                 
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_name' => 'roulette', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>
@@ -108,7 +106,7 @@
             <span class="side-name">{{ trans('casino.slots') }}</span>
             <div class="main-title-block">
                 <span class="category-title">{{ trans('casino.live_games_second') }}</span>
-                <h1 class="game-name word-split">{{ trans('casino.slots') }}</h1>
+                <h2 class="game-name word-split">{{ trans('casino.slots') }}</h2>
                
                 <div class="main-btn-block">
                     <a href="{{ route('games', ['type_name' => 'slots', 'lang' => $currentLang]) }}" class="play-btn"><span class="btn-entry">{{ trans('casino.games') }}</span></a>

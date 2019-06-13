@@ -177,7 +177,6 @@
 .actions {
   padding-bottom: 70px;
   position: relative;
-  /*z-index: 9999;*/
 }
 .actions .container .row {
   margin-bottom: 30px;
@@ -212,6 +211,12 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.block-bonus-general {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .actions .block-bonus1 {
   background-image: url(../assets/images/bonuses/promo-1-bg-min.jpg);
 }
@@ -231,6 +236,14 @@
   position: relative;
   min-height: 330px;
 }
+
+.actions .block-bonus{
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
 .actions .block-bonus .block-bonus-left {
   position: absolute;
   top: 60px;
@@ -306,6 +319,7 @@
 
 .cabinet-block.act {
   padding-top: 130px;
+
 }
 
 body .cabinet-block{
@@ -333,7 +347,7 @@ body .cabinet-block{
 }
 
 #uls p, #reg-terms p{
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
 }
 
 #uls .text, #reg-terms .text {
@@ -388,6 +402,14 @@ body .cabinet-block{
   opacity: .6;
 }
 
+@media (min-width: 767px) and (max-width: 1080px){
+  .pageBonus .actions{
+    padding-bottom: 160px;
+    padding-top: 40px;
+  }
+}
+
+
 /*responsive*/
 @media (max-width: 1200px) {
   .actions .info-block {
@@ -415,10 +437,6 @@ body .cabinet-block{
   }
 }
 @media (max-width: 992px) {
-
-  .actions .npr {
-    padding: 0;
-  }
 
   .block-bonus1 {
     margin-bottom: 0px;
@@ -483,7 +501,11 @@ body .cabinet-block{
 @media (max-width: 768px) {
   .actions {
     margin-left: -5px;
-    padding-bottom: 160px;
+    padding-bottom: 180px;
+  }
+
+  .actions .npr {
+    padding: 0;
   }
   
 

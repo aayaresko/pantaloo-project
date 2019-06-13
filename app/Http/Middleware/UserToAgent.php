@@ -15,7 +15,7 @@ class UserToAgent extends CommonMiddleware
      * @var array
      */
     protected $except = [
-        '/'
+        '/',
     ];
 
     /**
@@ -32,8 +32,8 @@ class UserToAgent extends CommonMiddleware
             return $next($request);
         }
 
-        if (!Auth::check()) {
-            if ($request->has('ref')) {
+        if (! Auth::check()) {
+            if ($request->filled('ref')) {
                 $ref = $request->input('ref');
                 $tracker = Tracker::where('ref', $ref)->first();
                 if ($tracker) {
@@ -45,7 +45,7 @@ class UserToAgent extends CommonMiddleware
                     StatisticalData::create([
                         'event_id' => $eventStatistic['enter'],
                         'value' => 'enter',
-                        'tracker_id' => $tracker->id
+                        'tracker_id' => $tracker->id,
                     ]);
                     //set count for this enters
 

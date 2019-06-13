@@ -38,18 +38,20 @@ class PantalloGames
             $connectTimeout = $this->paramsDefault['connectTimeout'];
             $clientParams = [
                 'verify' => false,
-                'connect_timeout' => $connectTimeout
+                'timeout' => $connectTimeout,
             ];
             $client = new Client($clientParams);
             $response = $client->post($url, [
-                'form_params' => $body
+                'form_params' => $body,
             ]);
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
-            throw new \Exception($errorMessage . '.' . $errorLine);
+
+            throw new \Exception($errorMessage.'.'.$errorLine);
         }
         $responseBody = $response->getBody()->getContents();
+
         return $responseBody;
     }
 

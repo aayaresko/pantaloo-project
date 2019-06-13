@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -24,7 +25,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function home()
     {
         return view('home');
@@ -44,8 +44,9 @@ class HomeController extends Controller
         $sessionFlashAll = session('flash');
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
-        //save parameters
-        $url = url("/$lang") . $_SERVER['REQUEST_URI'];
-        return redirect($url);
+
+        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()).$_SERVER['REQUEST_URI'], '/');
+
+        return redirect($url, 301);
     }
 }

@@ -16,7 +16,9 @@ class AgentCheck
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::user()->isAgent()) return redirect()->route('agent.login');
+        if (! Auth::user()->isAgent()) {
+            return redirect()->route('agent.login');
+        }
 
         return $next($request);
     }

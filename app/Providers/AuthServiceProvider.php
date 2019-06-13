@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\User;
 use App\Policies\AdminPanelPolicy;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -22,19 +20,18 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any application authentication / authorization services.
      *
-     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
      * @return void
      */
-    public function boot(GateContract $gate)
+    public function boot()
     {
-        $this->registerPolicies($gate);
+        $this->registerPolicies();
         //
 
-        Gate::define('accessUserAdmin', AdminPanelPolicy::class . '@accessUserAdmin');
-        Gate::define('accessUserTranslator', AdminPanelPolicy::class . '@accessUserTranslator');
-        Gate::define('accessUserAdminPublic', AdminPanelPolicy::class . '@accessUserAdminPublic');
-        Gate::define('accessUserAffiliate', AdminPanelPolicy::class . '@accessUserAffiliate');
-        Gate::define('accessAdminAffiliatePublic', AdminPanelPolicy::class . '@accessAdminAffiliatePublic');
-        Gate::define('accessAdminTranslatorPublic', AdminPanelPolicy::class . '@accessAdminTranslatorPublic');
+        Gate::define('accessUserAdmin', AdminPanelPolicy::class.'@accessUserAdmin');
+        Gate::define('accessUserTranslator', AdminPanelPolicy::class.'@accessUserTranslator');
+        Gate::define('accessUserAdminPublic', AdminPanelPolicy::class.'@accessUserAdminPublic');
+        Gate::define('accessUserAffiliate', AdminPanelPolicy::class.'@accessUserAffiliate');
+        Gate::define('accessAdminAffiliatePublic', AdminPanelPolicy::class.'@accessAdminAffiliatePublic');
+        Gate::define('accessAdminTranslatorPublic', AdminPanelPolicy::class.'@accessAdminTranslatorPublic');
     }
 }

@@ -10,4 +10,3 @@ class ModernExtraUsers extends Model
 
     protected $fillable = ['user_id', 'code', 'value'];
 }
-

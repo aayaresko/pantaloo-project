@@ -12,7 +12,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
-                            Available: <span class="label label-success">{{ $available }} mBTC</span>
+                            TotalEarn: <span class="label label-success">{{ $available }} mBTC</span>
+                            TotalWithdraw: <span class="label label-success">{{ $totalWithdraw }} mBTC</span>
+                            Available: <span class="label label-{{($available - $totalWithdraw) < 0 ? 'danger' : 'success'}}">{{ $available - $totalWithdraw }} mBTC</span>
                             <br>
                             <form method="POST" action="">
                                 {{csrf_field()}}

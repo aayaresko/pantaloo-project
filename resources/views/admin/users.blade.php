@@ -10,16 +10,37 @@
         <div class="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <form action="" class="form-inline">
-                            <input type="text" name="email" class="form-control" placeholder="email filter">
+                    <form action="" class="form-inline">
+                        <div class="col-sm-4">
+                            @php
+                                $emailDefault = isset($filterData['email']) ? $filterData['email'] : '';
+                                $roleDefault = isset($filterData['role']) ? $filterData['role'] : 'no';
+
+                                $userTypesDefault = $userTypes;
+                                array_unshift($userTypes, ['key' => 'allTest', 'name' => 'All Test Types']);
+                                array_unshift($userTypes, ['key' => 'all', 'name' => 'All Types']);
+
+                            @endphp
+
+                            <select name="role" class="selectpicker" data-live-search="true">
+                                @foreach($userTypes as $userType)
+                                    <option value="{{ $userType['key'] }}" {{ ($roleDefault === $userType['key']) ? 'selected' : ''}}>
+                                        {{ $userType['name'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="email" class="form-control" placeholder="email filter" value="{{ $emailDefault }}">
                             <button type="submit" class="btn btn-success">Search</button>
-                        </form>
-                    </div>
+                        </div>
+
+                    </form>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" style="min-height: 500px;">
                         <div class="card-box">
                             <table class="table table-striped table-bordered dataTable no-footer datatable" role="/rid" aria-describedby="datatable_info">
                                 <thead>
@@ -44,13 +65,17 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->getCountry()}}</td>
                                             <td>
-                                                @if($user->role == 0)
-                                                    <span class="label label-primary">User</span>
-                                                @elseif($user->role == 1)
-                                                    <span class="label label-warning">Affiliate</span>
-                                                @else
-                                                    <span class="label label-danger">Admin</span>
-                                                @endif
+                                                @php
+                                                    $keyRole = array_search($user->role, array_column($userTypesDefault, 'key'))
+                                                @endphp
+                                                <span class="label label-primary">{{ $userTypesDefault[$keyRole]['name'] }}</span>
+{{--                                                @if($user->role == 0)--}}
+{{--                                                    <span class="label label-primary">User</span>--}}
+{{--                                                @elseif($user->role == 1)--}}
+{{--                                                    <span class="label label-warning">Affiliate</span>--}}
+{{--                                                @else--}}
+{{--                                                    <span class="label label-danger">Admin</span>--}}
+{{--                                                @endif--}}
                                             </td>
                                             <td>
                                                 @if($user->isOnline()) <span class="label label-success">Online</span>
@@ -66,7 +91,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$user->getBalance()}}</td>
-                                            <td>{{$user->created_at->format('d.m.Y H:i')}}</td>
+                                            <td>{{$user->created_at->tz("Europe/Kiev")->format('d.m.Y H:i')}}</td>
                                             <td><a href="{{route('admin.transactions', ['user_id' => $user->id])}}" class="btn btn-warning">Transactions</a></td>
                                             <td><a href="{{route('admin.bonuses', $user)}}" class="btn btn-info">Bonus</a></td>
                                             <td>
@@ -94,7 +119,7 @@
                                                                     <br>
                                                                 @else
                                                                     <select name="role" class="form-control">
-                                                                        @foreach([['key' => 0, 'name' => 'User'],['key' => 1, 'name' => 'Agent']] as $role)
+                                                                        @foreach($userTypes as $role)
                                                                             @if($role['key'] == $user->role) <option value="{{$role['key']}}" selected>{{$role['name']}}</option>
                                                                             @else <option value="{{$role['key']}}">{{$role['name']}}</option>
                                                                             @endif

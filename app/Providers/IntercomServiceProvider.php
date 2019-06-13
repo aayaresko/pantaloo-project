@@ -8,7 +8,6 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 
 class IntercomServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-
     /**
      * Register the application services.
      *
@@ -17,11 +16,12 @@ class IntercomServiceProvider extends ServiceProvider implements DeferrableProvi
     public function register()
     {
         $this->app->singleton(Intercom::class, function ($app) {
-           return new Intercom();
+            return new Intercom();
         });
     }
 
-    public function provides(){
+    public function provides()
+    {
         return [Intercom::class];
     }
 }

@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.frq') }}
-@endsection
+@section('title', trans('casino.frq'))
 
 @section('content')
     <div class="page-content-block disabledBoxShadow"
@@ -63,10 +61,10 @@
 
                         <div class="textWrapper">
                             <h5>
-                                {{ trans('casino.support.games_fair') }}
+                                {{ trans('casino.support__games_fair') }}
                             </h5>
                             <p class="text">
-                                {{ trans('casino.support.games_fair_value') }}
+                                {{ trans('casino.support__games_fair_value') }}
                             </p>
                         </div>
 
@@ -231,10 +229,12 @@
 
                    
                         <h4>{{ mb_convert_case(trans('casino.the_casino'), MB_CASE_TITLE) }}</h4>
+
                         <div class="textWrapper">
-                            <h5>{{ trans('casino.support.games_fair') }}</h5>
+                            <h5>{{ trans('casino.support__games_fair') }}</h5>
+
                             <p class="text">
-                                {{ trans('casino.support.games_fair_value') }}
+                                {{ trans('casino.support__games_fair_value') }}
                             </p>
                         </div>
 

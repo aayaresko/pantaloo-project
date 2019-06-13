@@ -2,9 +2,11 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Translate;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\RemoveKeyTranslate;
 use App\Console\Commands\UpdateTransactions;
 use App\Console\Commands\updateUserIntercom;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -16,6 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+        Commands\Optimization\ClearRawLog::class,
         Commands\BitcoinGetTransactions::class,
         Commands\Games\PantalloLogOutPlayer::class,
         Commands\Games\PantalloGetGames::class,
@@ -26,7 +29,11 @@ class Kernel extends ConsoleKernel
         Commands\BitcoinSend::class,
         Commands\BonusTest::class,
         Commands\BonusJobs::class,
-        updateUserIntercom::class
+        Commands\TransactionSum::class,
+        Commands\TransactionCount::class,
+        updateUserIntercom::class,
+        Translate::class,
+        RemoveKeyTranslate::class,
     ];
 
     /**
@@ -49,5 +56,20 @@ class Kernel extends ConsoleKernel
         $schedule->command('games:PantalloGetGames')->hourly();
         //get games pantallo with image
         $schedule->command('games:PantalloGetGames getImage')->dailyAt('00:30');
+        $schedule->command('transaction:count')->dailyAt('00:00');
+        //optimizations
+        //clear raw log
+        $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
+    }
+
+    /**
+     * Register the Closure based commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
+        require base_path('routes/console.php');
     }
 }

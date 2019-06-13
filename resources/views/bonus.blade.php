@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.bonus') }}
-@endsection
+@section('title', trans('casino.bonus'))
+
 
 @section('content')
     <div class="cabinet-block"
@@ -25,33 +24,21 @@
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
-                                @if($active_bonus)
+                                @if($activeBonus)
                                     <div class="item">
                                         <div class="single-bonus">
-                                            <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
-                                            <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
-                                            @php
-                                                $dataBonus = $active_bonus->data;
+                                            <h3 class="title">{{trans($activeBonus->name)}}</h3>
+                                            <p class="text">{{trans($activeBonus->descr)}}</p>
 
-                                                $bonusWagerUser = isset($dataBonus['wagered_bonus_amount']) ? $dataBonus['wagered_bonus_amount'] : 0;
-                                                $bonusWager = isset($dataBonus['wagered_sum']) ? $dataBonus['wagered_sum'] : 0;
+                                            <p class="text">Bonus wager:
+                                                {{ $activeBonus->bonusStatistics['bonusWager']['real'] . ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }}
+                                                {{ config('app.currencyCode') }}</p>
 
-                                                $depositWagerUser = isset($dataBonus['wagered_amount']) ? $dataBonus['wagered_amount'] : 0;
+                                            @if ($activeBonus->id == 1)
 
-                                                if (isset($dataBonus['wagered_deposit']) and (int)$dataBonus['wagered_deposit'] === 1) {
-                                                    $depositWager = isset($dataBonus['total_deposit']) ? $dataBonus['total_deposit'] : 0;
-                                                } else {
-                                                    $depositWager = 0;
-                                                }
-
-                                            @endphp
-                                            <p class="text">Bonus Wager:
-                                                {{ $bonusWagerUser . ' / ' . $bonusWager }} {{ config('app.currencyCode') }}</p>
-
-                                            @if ($active_bonus->bonus_id == 1)
-
-                                                <p class="text">Deposit Wager:
-                                                    {{ $depositWagerUser . ' / ' . $depositWager }} {{ config('app.currencyCode') }}</p>
+                                                <p class="text">Deposit wager:
+                                                    {{ $activeBonus->bonusStatistics['depositWager']['real'] . ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }}
+                                                    {{ config('app.currencyCode') }}</p>
 
                                             @endif
 
@@ -60,17 +47,23 @@
                                         </div>
                                     </div>
                                 @else
-                                    @foreach($bonuses as $bonus)
+                                    @foreach($bonusForView as $bonus)
                                         <div class="item">
                                             <div class="single-bonus">
                                                 <h3 class="title">{{translate($bonus->name)}}</h3>
                                                 <p class="text">{{translate($bonus->descr)}}</p>
                                                 <a href="{{route('bonus.activate', $bonus)}}"
-                                                   class="push-button">{{trans('casino.activate')}}</a>
+                                                   class="push-button bonusActive">{{trans('casino.activate')}}</a>
+
+                                                <form action='{{route('bonus.activate', $bonus)}}' method='post'
+                                                      style="display: none">
+                                                    {{csrf_field()}}
+                                                </form>
                                             </div>
                                         </div>
                                     @endforeach
                                 @endif
+
                             </div>
                         </div>
                     </div>
@@ -81,4 +74,21 @@
     </div>
 
     @include('footer_main')
+@endsection
+
+@section('js')
+    <script>
+
+        function bonusAct() {
+            //send form method post
+            $('body').on('click', '.bonusActive', function (e) {
+                e.preventDefault();
+                let form = $(this).next();
+                form.submit();
+            });
+        }
+
+        bonusAct();
+
+    </script>
 @endsection

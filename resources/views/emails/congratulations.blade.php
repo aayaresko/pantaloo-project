@@ -237,7 +237,7 @@
                                                                                             valign="top"
                                                                                             bgcolor="">
                                                                                             <div>
-                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Your account details are as follows:&nbsp;</span></span></div>
+                                                                                                <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Your account details are as following:&nbsp;</span></span></div>
                                                                                                 <div><span style="font-size:12px;"><span style="color:#FFFFFF;">Login: {{ $email }}&nbsp;</span></span></div>
                                                                                             </div>
                                                                                         </td>
@@ -291,7 +291,7 @@
                                                                     valign="top"
                                                                     bgcolor="">
                                                                     <div><span style="font-size:12px;"><span style="color:#ae94cd;">If you encounter any problems activating or logging in to your account,<br />
-please contact us by emailing&nbsp;<a href="mailto:support@casinobit.io">support@casinobit.io.</a>&nbsp;<a href="https://www.casinobit.io/"> </a></span></span></div>
+please contact us by email&nbsp;<a href="mailto:support@casinobit.io">support@casinobit.io.</a>&nbsp;<a href="https://www.casinobit.io/"> </a></span></span></div>
 
                                                                 </td>
                                                             </tr>

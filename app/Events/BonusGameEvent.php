@@ -12,6 +12,7 @@ class BonusGameEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $gameName;
 
     /**
