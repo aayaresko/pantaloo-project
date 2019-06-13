@@ -12,7 +12,7 @@ class AddColumnFreeRoundToGamelist extends Migration
      */
     public function up()
     {
-        Schema::table('games_list', function($table) {
+        Schema::table('games_list', function ($table) {
             $table->boolean('free_round')->defalut(0)->after('active');
         });
     }
@@ -24,7 +24,7 @@ class AddColumnFreeRoundToGamelist extends Migration
      */
     public function down()
     {
-        Schema::table('games_list', function($table) {
+        Schema::table('games_list', function ($table) {
             $table->dropColumn('free_round');
         });
     }

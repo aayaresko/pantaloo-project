@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.settings') }}
-@endsection
+@section('title', trans('casino.settings'))
+
 
 @section('content')
 <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
@@ -208,7 +207,7 @@
                                                 </table>
                                                 <br>
                                                 <div class="btn-block">
-                                                    <button class="update-btn">{{ mb_convert_case(trans('casino.update') , MB_CASE_UPPER) }}</button>
+                                                    <button class="update-btn">{{ mb_convert_case(trans('casino.send_mail') , MB_CASE_UPPER) }}</button>
                                                 </div>
                                             </form>
                                         </div>

@@ -75,12 +75,12 @@ before('deploy:symlink', 'artisan:migrate');
 
 task('snapshot', [
     'get_revision',
-    'deploy'
+    'deploy',
 ]);
 
 task('get_revision', function () {
     $revision = substr(runLocally('git rev-parse HEAD'), 0, 7);
-    writeln($revision . '.zerostage.ga');
+    writeln($revision.'.zerostage.ga');
     set('revision', $revision);
     set('deploy_path', '/var/www/snapshot/{{application}}/{{revision}}');
 });
@@ -99,10 +99,6 @@ task('reload:php-fpm', function () {
 });
 
 before('deploy:symlink', 'deploy:public_disk');
-before('deploy', 'configure');
 
-task('configure', function () {
-    if (get('target') != 'prod') {
-        after('deploy', 'reload:php-fpm');
-    }
-});
+task('reload:php-fpm')->onHosts('STAGE');
+after('deploy', 'reload:php-fpm');

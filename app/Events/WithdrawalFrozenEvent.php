@@ -10,7 +10,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class WithdrawalFrozenEvent extends Event
 {
     use SerializesModels;
+
     public $user;
+
     public $comment;
 
     /**

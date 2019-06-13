@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Bitcoin;
 
-use Illuminate\Support\Facades\Config;
-use League\Flysystem\Exception;
-use Nbobtc\Command\Command;
 use Nbobtc\Http\Client;
+use Nbobtc\Command\Command;
+use League\Flysystem\Exception;
 use Nbobtc\Http\Message\Response;
+use Illuminate\Support\Facades\Config;
 
 // ./bitcoind -conf=/var/www/html/bitcoin-0.12.1/bin/bitcoin.conf -daemon -prune=1024
 
@@ -26,9 +27,7 @@ class Service
             $data = static::getResponse($response);
 
             return $data['isvalid'];
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -45,8 +44,8 @@ class Service
 
     public function connect()
     {
-        $connection_string = 'http://' . getenv('BITCOIN_USERNAME') . ':' . getenv('BITCOIN_PASSWORD') . '@' . getenv('BITCOIN_HOST') . ':' .  getenv('BITCOIN_PORT');
-        
+        $connection_string = \config('bitcoin.connection');
+
         $this->client = new Client($connection_string);
     }
 
@@ -91,22 +90,32 @@ class Service
             $response = $this->client->sendCommand(new Command('gettransaction', $transaction_id));
 
             $res = static::getResponse($response);
+
             return $res;
         } catch (\Exception $e) {
-            if ($e->getMessage() == 'Invalid or non-wallet transaction id') return false;
-            else throw $e;
+            if ($e->getMessage() == 'Invalid or non-wallet transaction id') {
+                return false;
+            } else {
+                throw $e;
+            }
         }
     }
 
-    static function getResponse($response)
+    public static function getResponse($response)
     {
         $result = json_decode($response->getBody()->getContents(), true);
 
-        if(!is_array($result)) throw new \Exception('Invalid json');
+        if (! is_array($result)) {
+            throw new \Exception('Invalid json');
+        }
 
-        if(isset($result['error'])) throw new \Exception($result['error']['message']);
+        if (isset($result['error'])) {
+            throw new \Exception($result['error']['message']);
+        }
 
-        if(!isset($result['result'])) throw new \Exception('Result not found');
+        if (! isset($result['result'])) {
+            throw new \Exception('Result not found');
+        }
 
         return $result['result'];
     }

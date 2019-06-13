@@ -44,3 +44,15 @@ function main() {
 
 }
 main();
+
+
+
+$(function(){
+
+  $(".itemTitle").on("click", function () {
+      $(this).next().slideToggle(300);
+      $(this).find('.fa-angle-down').toggleClass("rotate")
+     
+  })
+
+});

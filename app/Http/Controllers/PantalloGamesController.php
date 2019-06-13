@@ -9,12 +9,10 @@ use App\Modules\PantalloGames;
 use App\Modules\Games\PantalloGamesSystem;
 
 /**
- * Class PantalloGamesController
- * @package App\Http\Controllers
+ * Class PantalloGamesController.
  */
 class PantalloGamesController extends Controller
 {
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -23,9 +21,9 @@ class PantalloGamesController extends Controller
     {
         $pantalloGamesSystem = new PantalloGamesSystem();
         $response = $pantalloGamesSystem->callback($request);
+
         return response()->json($response);
     }
-
 
     /**
      * @param Request $request
@@ -36,6 +34,7 @@ class PantalloGamesController extends Controller
         $pantalloGames = new PantalloGames;
         $params = [];
         $games = $pantalloGames->getGameList($params, true);
+
         return $games->response;
     }
 
@@ -53,9 +52,9 @@ class PantalloGamesController extends Controller
         }
         $pantalloGamesSystem = new PantalloGamesSystem();
         $response = $pantalloGamesSystem->loginPlayer($request);
+
         return response()->json($response);
     }
-
 
     /**
      * @param Request $request
@@ -66,6 +65,7 @@ class PantalloGamesController extends Controller
         $pantalloGamesSystem = new PantalloGamesSystem();
         $user = $request->user();
         $response = $pantalloGamesSystem->logoutPlayer($user);
+
         return response()->json($response);
     }
 
@@ -82,12 +82,12 @@ class PantalloGamesController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => $validator->errors()
+                'message' => $validator->errors(),
             ]);
         }
 
         $configFreeRounds = config('appAdditional.freeRounds');
-        if ($request->has('gameId')) {
+        if ($request->filled('gameId')) {
             $gamesIds = $request->gameId;
         } else {
             $freeRoundGames = GamesList::select(['id', 'system_id'])->where('free_round', 1)->get()->toArray();
@@ -103,6 +103,7 @@ class PantalloGamesController extends Controller
         $pantalloGamesSystem = new PantalloGamesSystem();
 
         $response = $pantalloGamesSystem->freeRound($request);
+
         return response()->json($response);
     }
 }

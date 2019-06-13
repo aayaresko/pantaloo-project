@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Request;
 use App;
+use Config;
 use Cookie;
 use Closure;
-use Config;
+use Request;
 use App\User;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
@@ -14,19 +14,20 @@ use Illuminate\Support\Facades\View;
 
 class LanguageSwitch extends CommonMiddleware
 {
+    const COOKIE_NAME = 'langs';
     /**
      * @var array
      */
     protected $except = [
         '/games/endpoint',
-        '/games/pantallo/endpoint'
+        '/games/pantallo/endpoint',
     ];
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -39,7 +40,7 @@ class LanguageSwitch extends CommonMiddleware
         $languages = GeneralHelper::getListLanguage();
         $timeKeepLang = config('appAdditional.keepLanguage');
         $prefixLang = $request->route()->parameter('lang');
-        $cookieLang = Cookie::get('lang');
+        $cookieLang = Cookie::get(self::COOKIE_NAME);
 
         if (!is_null($prefixLang)) {
             $lang = $prefixLang;
@@ -62,7 +63,7 @@ class LanguageSwitch extends CommonMiddleware
         View::share('languages', $languages);
         View::share('currentLang', $lang);
         Config::set('currentLang', $lang);
-        Cookie::queue('lang', $lang, $timeKeepLang);
+        Cookie::queue(self::COOKIE_NAME, $lang, $timeKeepLang);
 
         /*
         if ($request->has('session_id')) {

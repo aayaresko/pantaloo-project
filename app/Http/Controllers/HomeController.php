@@ -25,7 +25,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function home()
     {
         return view('home');
@@ -46,7 +45,8 @@ class HomeController extends Controller
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
 
-        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'], '/');
+        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()).$_SERVER['REQUEST_URI'], '/');
+
         return redirect($url, 301);
     }
 }

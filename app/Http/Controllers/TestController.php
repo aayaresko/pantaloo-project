@@ -2,69 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Log;
+use Auth;
+use Cookie;
+use App\User;
+use Response;
 use App\Bonus;
 use Exception;
-use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
-use App\RawLog;
-use App\ModernExtraUsers;
-use DB;
-use App\Events\OpenBonusEvent;
-use App\BonusLog;
-use Auth;
-use Response;
-use App\Models\SystemNotification;
-use Log;
-use App\Bitcoin\Service;
-use App\Transaction;
-use App\Country;
-use App\User;
 use Validator;
+use App\RawLog;
+use App\Country;
+use App\BonusLog;
 use App\UserBonus;
-use Helpers\GeneralHelper;
-use App\Models\GamesType;
+use Carbon\Carbon;
+use App\Transaction;
+use GuzzleHttp\Client;
+use App\Bitcoin\Service;
+use Helpers\BonusHelper;
 use App\Models\GamesList;
+use App\Models\GamesType;
+use App\ModernExtraUsers;
+use App\Jobs\BonusHandler;
+use Helpers\GeneralHelper;
+use Illuminate\Http\Request;
+use App\Models\GamesCategory;
+use App\Models\GamesTypeGame;
+//use App\Models\SystemNotification;
+use App\Events\OpenBonusEvent;
 use App\Models\GamesListExtra;
 use App\Models\LastActionGame;
-use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
-//use App\Models\SystemNotification;
-use GuzzleHttp\Client;
-use Cookie;
-use App\Jobs\BonusHandler;
+use App\Models\SystemNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
-use Illuminate\Http\Request;
-use App\Models\GamesTypeGame;
-use Helpers\BonusHelper;
-use App\Modules\Games\PantalloGamesSystem;
-
 
 class TestController extends Controller
 {
     const PASSWORD = 'rf3js1Q';
 
-
-    public function phpinfo(Request $request){
-        dd(777);
-        phpinfo();
+    public function phpinfo(Request $request)
+    {
+        dump($request->getClientIps());
+        //phpinfo();
         exit();
     }
 
-    public function error(Request $request){
-        dd('hello!!!');
-        throw new Exception("Custom error!");
+    public function error(Request $request)
+    {
+        //dd(22);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
+        throw new Exception('Custom error!');
+
         return 1;
     }
 
-
     public function test1(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
+
         dd(GeneralHelper::visitorIpCloudFlare());
+
         throw new \Exception('FDSF');
         dd(config('app.debu1g'));
         //dd('appAdditional.rawLogKey.freeSpins' . 1);
-        dd(config('appAdditional.rawLogKey.freeSpins' . 1));
+        dd(config('appAdditional.rawLogKey.freeSpins'. 1));
         dd(config('appAdditional.rawLogKey.bonuses'));
         $user = User::where('id', 136)->first();
 
@@ -86,13 +91,59 @@ class TestController extends Controller
         dd($bonusActivate);
     }
 
-    public function http404(Request $request){
+    public function http404(Request $request)
+    {
         return view('errors.404');
-
     }
 
     public function test(Request $request)
     {
+
+        $user = User::where('email', 'anfield-rd@protonmail.com')->first();
+        $userIds = User::where('agent_id', $user->id)->get()->pluck('id');
+        $tr = Transaction::whereIn('user_id', $userIds)->where('type', '=', 3)->get()->toArray();
+        dd($tr);
+
+        $client = new Client([
+            'verify' => false,
+        ]);
+        //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
+        $response = $client->post('https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA', [
+            'form_params' => [
+                'grant_type' => 'password',
+                'response_type' => 'token',
+                'username' => 'api_casinobit',
+                'password' => 'BfRN18uA'
+            ]
+        ]);
+        $json = $response->getBody()->getContents();
+        $json = json_decode($json);
+        dd($json);
+        try {
+            $response = $client->get('https://api-int.qtplatform.com/v1/games', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Accept' => 'application/json',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+            dd($responseBodyAsString);
+        }
+
+        $game = $response->getBody()->getContents();
+        $game = json_decode($game);
+        foreach ($game->items as $game) {
+            foreach ($game->currencies as $currency) {
+                if ($currency == 'MBTC') {
+                    dump($game);
+                }
+            }
+        }
+        dd(2);
+
 //        dd(2);
 //        $users = User::rightJoin('user_bonuses', 'user_bonuses.user_id', '=', 'users.id')->where([
 //            ['users.created_at', '>', '2019-04-01 11:23:43'],
@@ -119,14 +170,12 @@ class TestController extends Controller
 
         $currentDate = new Carbon();
 
-
         $ipCurrent = GeneralHelper::visitorIpCloudFlare();
         $ipFormatCurrent = inet_pton($ipCurrent);
 
-
         $request = new Request;
         $date = Carbon::now();
-        $date->modify('+' . 10 . 'days');
+        $date->modify('+'. 10 .'days');
 
         $bonusUser = UserBonus::create([
             'user_id' => $user->id,
@@ -140,7 +189,7 @@ class TestController extends Controller
                 'wagered_amount' => 0,
                 'wagered_bonus_amount' => 0,
                 'dateStart' => $currentDate,
-                'ip_address' => $ipCurrent
+                'ip_address' => $ipCurrent,
             ],
             'ip_address' => $ipFormatCurrent,
             'activated' => 0,
@@ -178,7 +227,7 @@ class TestController extends Controller
 
         $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => 50]);
-        $request->merge(['timeFreeRound' => strtotime("10 day", 0)]);
+        $request->merge(['timeFreeRound' => strtotime('10 day', 0)]);
 
         $pantalloGamesSystem = new PantalloGamesSystem();
         $freeRound = $pantalloGamesSystem->freeRound($request);
@@ -186,7 +235,6 @@ class TestController extends Controller
         if ($freeRound['success'] === false) {
             throw new \Exception('Problem with provider free spins');
         }
-
 
         dd(2);
         DB::beginTransaction();
@@ -211,42 +259,39 @@ class TestController extends Controller
         DB::commit();
         dd($bonusActivate);
 
-
-
         User::where('id', $user->id)->update([
-            'bonus_id' => $bonusId
+            'bonus_id' => $bonusId,
         ]);
 
         event(new OpenBonusEvent($user, 'welcome bonus'));
 
         $response = [
             'success' => true,
-            'message' => 'Done'
+            'message' => 'Done',
         ];
 
         BonusLog::updateOrCreate(
             [
                 'bonus_id' => $bonusUser->id,
-                'operation_id' => $configBonus['operation']['active']
+                'operation_id' => $configBonus['operation']['active'],
             ],
             ['status' => json_encode($response)]
         );
-
 
         dd('ok');
         $gameIdOur = 77777;
         $user = User::where('id', 4689)->first();
 
-        if (!is_null($user->bonus_id)) {
+        if (! is_null($user->bonus_id)) {
             $userBonus = UserBonus::where('user_id', $user->id)->first();
 
             $userBonusData = $userBonus->data;
             //if no game free round
-            if (!isset($userBonusData['firstGame'])) {
+            if (! isset($userBonusData['firstGame'])) {
                 //set this game
                 $userBonusData['firstGame'] = $gameIdOur;
                 UserBonus::where('user_id', $user->id)->update([
-                    'data' => json_encode($userBonusData)
+                    'data' => json_encode($userBonusData),
                 ]);
             }
         }
@@ -261,10 +306,10 @@ class TestController extends Controller
             ['transactions.created_at', '>=', '2019-04-01 00:14:32'],
             ['transactions.created_at', '<=', '2019-04-30 00:14:32'],
         ])
-            ->whereRaw("user_id in (SELECT id FROM users WHERE agent_id = 331)")->get()->groupBy('user_id');
+            ->whereRaw('user_id in (SELECT id FROM users WHERE agent_id = 331)')->get()->groupBy('user_id');
         dd($transactionItems);
 
-        $user =User::where('id', 14)->first();
+        $user = User::where('id', 14)->first();
 
         $deposit = $user->transactions()->where('type', 3)->count();
         dd($deposit);
@@ -281,7 +326,7 @@ class TestController extends Controller
                 $service = new Service();
                 $address = $service->getNewAddress('common');
                 User::where('id', $user->id)->update([
-                    'bitcoin_address' => $address
+                    'bitcoin_address' => $address,
                 ]);
             }
         }
@@ -297,14 +342,13 @@ class TestController extends Controller
             ->withTrashed()->count();
         dd($currentBonusByIp);
         dump(inet_pton(GeneralHelper::visitorIpCloudFlare()));
-        dd(inet_pton ('198.16.74.45') == inet_pton(GeneralHelper::visitorIpCloudFlare()));
+        dd(inet_pton('198.16.74.45') == inet_pton(GeneralHelper::visitorIpCloudFlare()));
         dd(GeneralHelper::visitorIpCloudFlare());
         $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
         $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
         $client = new Client(['timeout' => 5]);
-        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . '2a02:2788:c8:a63:9d65:9cce:fdad:703c');
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl.'/'.$ipQualityScoreKey.'/'.'2a02:2788:c8:a63:9d65:9cce:fdad:703c');
         $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
-
 
         dd(GeneralHelper::visitorIpCloudFlare());
         $issetFreeRound = DB::connection('logs')->table('games_pantallo_free_rounds')
@@ -317,10 +361,10 @@ class TestController extends Controller
                     'user_id' => 13333,
                     'round' => 50,
                     'valid_to' => $date,
-                    'created' => 0,//fake
-                    'free_round_id' => time(),//fake
+                    'created' => 0, //fake
+                    'free_round_id' => time(), //fake
                     'created_at' => $date,
-                    'updated_at' => $date
+                    'updated_at' => $date,
                 ]);
 
         dd($rawId);
@@ -333,7 +377,7 @@ class TestController extends Controller
         $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
         $client = new Client(['timeout' => 5]);
-        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl.'/'.$ipQualityScoreKey.'/'.$ipCurrent);
         $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
         if (isset($responseIpQualityJson['success'])) {
@@ -555,11 +599,10 @@ class TestController extends Controller
 41,
 42,
 64,
-85, 136, 146, 956
+85, 136, 146, 956,
         ];
         $startDate = '2019-04-01 00:00:00';
         $endDate = '2019-04-30 00:00:00';
-
 
         echo '<h2>TOTAL</h2>';
         $select1 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
@@ -642,7 +685,6 @@ class TestController extends Controller
         //"sum_sum" => "0.00000"
         //"sum_bonus_sum" => "16698.47000"
 
-
         //total_user
         //withdraw 4
         //    "sum_sum" => "-1710.37109"
@@ -664,10 +706,6 @@ class TestController extends Controller
         //   "sum_sum" => "0.00000"
         //    "sum_bonus_sum" => "16472.77000"
 
-
-
-
-
         dd(22);
         $user = User::where('id', 2535)->first();
         $class = BonusHelper::getClass(4);
@@ -688,7 +726,6 @@ class TestController extends Controller
         }
         DB::commit();
         dd($act);
-
 
         dd(Bonus::findOrFail(2));
         $ip = GeneralHelper::visitorIpCloudFlare();
@@ -751,7 +788,7 @@ class TestController extends Controller
         //dd(BonusHelper::getClass(1)::id);
         $bonusClasses = config('bonus.classes');
         $user = User::where('id', 136)->first();
-        $bonusObject = new $bonusClasses[1] ($user);
+        $bonusObject = new $bonusClasses[1]($user);
         $bonusObject->activationAfterTransaction(222);
         dd($bonusObject);
         Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
@@ -762,7 +799,7 @@ class TestController extends Controller
         dd($userBonus->data);
         $date = new \DateTime();
         $userBonus = UserBonus::where('id', 2225)->update([
-            'data' => json_encode(['wagered_sum' => 0])
+            'data' => json_encode(['wagered_sum' => 0]),
         ]);
         dd(2);
         $date = new \DateTime();
@@ -776,8 +813,8 @@ class TestController extends Controller
                 'wagered_sum' => 0,
                 'transaction_id' => 0,
                 'dateStart' => $date,
-                'lastCheck' => $date
-            ]
+                'lastCheck' => $date,
+            ],
         ]);
         dd(2);
         Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
@@ -792,14 +829,14 @@ class TestController extends Controller
         $amount = 5;
         $lastTransaction = Transaction::where('sum', 0)
             ->where(function ($query) {
-            $query->where('transactions.sum', '<>', 0)
+                $query->where('transactions.sum', '<>', 0)
                 ->orWhere('transactions.bonus_sum', '<>', 0);
-        })->first();
+            })->first();
 
         $lastTransaction->sum = -2;
         dump($lastTransaction->toArray());
 
-        if (!is_null($lastTransaction)) {
+        if (! is_null($lastTransaction)) {
             //to do! fix this
             $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
@@ -819,7 +856,6 @@ class TestController extends Controller
         $modePlay = 1;
         $amount = -5;
         $transactionHas = (object) ['sum' => 10, 'bonus_sum' => 2];
-
 
         if ($modePlay === 0) {
             $createParams['sum'] = $amount;
@@ -841,7 +877,7 @@ class TestController extends Controller
             $createParams['bonus_sum'] = 0;
         } else {
             //to do fix this
-            if ((float)$balance < abs($amount)) {
+            if ((float) $balance < abs($amount)) {
                 $createParams['sum'] = -1 * $balance;
                 $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
                         abs($amount) - abs($createParams['sum']));
@@ -855,17 +891,15 @@ class TestController extends Controller
             }
         }
 
-
         dd($createParams);
         $amount = 5;
         $lastTransaction = Transaction::where('sum', 0)->first();
         $lastTransaction->bonus_sum = '2.0';
         $lastTransaction->sum = '1.0';
         dump($lastTransaction->toArray());
-        if (!is_null($lastTransaction)) {
+        if (! is_null($lastTransaction)) {
             //to do! fix this
-            if ((float)$lastTransaction->bonus_sum > 0) {
-
+            if ((float) $lastTransaction->bonus_sum > 0) {
                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
                 $percentageSum = abs($lastTransaction->sum) / $totalSum;
@@ -908,7 +942,7 @@ class TestController extends Controller
             $conditions = 1;
             $response = [
                 'success' => true,
-                'message' => 'Deposit is not found'
+                'message' => 'Deposit is not found',
             ];
         }
 
@@ -932,12 +966,12 @@ class TestController extends Controller
                 'transactions.bonus_sum',
                 'games_pantallo_transactions.amount as amount',
                 'games_pantallo_transactions.game_id as game_id',
-                'games_pantallo_transactions.balance_after as balance_after'
+                'games_pantallo_transactions.balance_after as balance_after',
             ])->orderBy('id', 'DESC')->first();
 
         dump($lastTransaction->toArray());
-        if (!is_null($lastTransaction)) {
-            if ((float)$lastTransaction->bonus_sum <> 0 and (float)$lastTransaction->sum <> 0) {
+        if (! is_null($lastTransaction)) {
+            if ((float) $lastTransaction->bonus_sum != 0 and (float) $lastTransaction->sum != 0) {
                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
                 $percentageSum = abs($lastTransaction->sum) / $totalSum;
@@ -957,7 +991,6 @@ class TestController extends Controller
             $createParams['bonus_sum'] = 2;
         }
 
-
         dd($createParams);
         $slotsGames = DB::table('games_types_games')->select(['games_list.id', 'games_list.system_id'])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
@@ -976,7 +1009,6 @@ class TestController extends Controller
         $slotsGameIds = array_map(function ($item) {
             return $item->id;
         }, $slotsGames);
-
 
         $typeOpenGame = LastActionGame::select(['id'])
             ->where('user_id', 136)
@@ -1033,8 +1065,8 @@ class TestController extends Controller
             'type_id' => 1,
             'extra' => json_encode([
                 'transactionId' => 1,
-                'depositAmount' => 200.200
-            ])
+                'depositAmount' => 200.200,
+            ]),
         ]);
         dd(2);
         $gamesSession = GamesPantalloSessionGame::select(['id', 'game_id'])
@@ -1051,7 +1083,7 @@ class TestController extends Controller
             $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
-                    'sum' => -1 * $setAmount
+                    'sum' => -1 * $setAmount,
                 ]);
                 $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
                 $date = new \DateTime();
@@ -1063,7 +1095,7 @@ class TestController extends Controller
                         'deleted_at' => $date,
                         'sum' => -1 * $difference,
                         'user_id' => $transaction->user_id,
-                        'comment' => 'system'
+                        'comment' => 'system',
                     ],
                 ]);
             }
@@ -1074,7 +1106,7 @@ class TestController extends Controller
             'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
             ->where([
                 ['system_id', '=', 'ha-33776d8b2a554bbc8a0628156da2347c'],
-                ['games_pantallo_transactions.action_id', '=', 2]
+                ['games_pantallo_transactions.action_id', '=', 2],
             ])
             ->toSql();
         dd($transaction);
@@ -1095,7 +1127,7 @@ class TestController extends Controller
                         if ($getTransaction) {
                             Transaction::where('id', $transaction->id)
                                 ->update([
-                                    'confirmations' => $getTransaction['confirmations']
+                                    'confirmations' => $getTransaction['confirmations'],
                                 ]);
                         }
                     } catch (\Exception $ex) {
@@ -1103,7 +1135,6 @@ class TestController extends Controller
                         print_r($ex->getMessage());
                     }
                 }
-
             });
         dd(3);
 
@@ -1115,7 +1146,6 @@ class TestController extends Controller
             DB::raw('(users.balance + users.bonus_balance) as full_balance'),
         ];
 
-        
         //add additional fields
         $additionalFieldsUser = [
             'affiliates.id as partner_id',
@@ -1151,18 +1181,17 @@ class TestController extends Controller
         dispatch(new BonusHandler($user));
         dd($user);
 
-
         DB::beginTransaction();
+
         try {
             dump($user);
             User::where('id', 136)->update(['bonus_balance' => 10]);
-            $user1 =User::where('id', 136)->first();
+            $user1 = User::where('id', 136)->first();
 
             dump($user1);
 
             sleep(10);
             DB::rollBack();
-
         } catch (\Exception $e) {
             DB::rollBack();
         }
@@ -1210,7 +1239,7 @@ class TestController extends Controller
         dd(2);
         $date = new \DateTime();
         dump($date);
-        $minimumAllowedActivity = $date->modify("-222 second");
+        $minimumAllowedActivity = $date->modify('-222 second');
         dd($minimumAllowedActivity);
         dd(2);
         $configIntegratedGames = config('integratedGames.common');
@@ -1229,16 +1258,16 @@ class TestController extends Controller
         array_push($whereGameList, ['games_list.mobile', '=', 0]);
 
         $list = GamesTypeGame::select([
-            0 => "games_list.id",
-            1 => "games_list_extra.name",
-            2 => "games_list.provider_id",
-            3 => "games_types.name as type",
-            4 => "games_categories.name as category",
-            5 => "games_list_extra.image as image",
-            6 => "games_list.rating",
-            7 => "games_list.active",
-            8 => "games_list.mobile",
-            9 => "games_list.created_at",
+            0 => 'games_list.id',
+            1 => 'games_list_extra.name',
+            2 => 'games_list.provider_id',
+            3 => 'games_types.name as type',
+            4 => 'games_categories.name as category',
+            5 => 'games_list_extra.image as image',
+            6 => 'games_list.rating',
+            7 => 'games_list.active',
+            8 => 'games_list.mobile',
+            9 => 'games_list.created_at',
         ])
             ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
             ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
@@ -1248,17 +1277,11 @@ class TestController extends Controller
             ->groupBy('games_types_games.game_id')
             ->get()->toArray();
 
-
         $headers = [
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
-            , 'Content-type' => 'text/csv'
-            , 'Content-Disposition' => 'attachment; filename=games_all.csv'
-            , 'Expires' => '0'
-            , 'Pragma' => 'public'
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0', 'Content-type' => 'text/csv', 'Content-Disposition' => 'attachment; filename=games_all.csv', 'Expires' => '0', 'Pragma' => 'public',
         ];
 
-
-        # add headers for each column in the CSV download
+        // add headers for each column in the CSV download
         array_unshift($list, array_keys($list[0]));
 
         $callback = function () use ($list) {
@@ -1270,7 +1293,6 @@ class TestController extends Controller
         };
 
         return Response::stream($callback, 200, $headers);
-
 
         dd(2);
         Mail::queue('emails.confirm', ['link' => 'dsfgfdgfd'], function ($m) {
@@ -1293,7 +1315,7 @@ class TestController extends Controller
         DB::connection('logs')->table('raw_log')->where('id', $a)->update([
             //'user_id' => 22222,
             'response' => 2,
-            'extra' => 2
+            'extra' => 2,
         ]);
         dd($a);
         $user = User::where('email', 'bekerman.i@blockspoint.com')->first();
@@ -1304,7 +1326,7 @@ class TestController extends Controller
         $userName = $userNameDefault;
 
         if ($user->created_at > $usePrefixAfter) {
-            $userName = $prefixName . $userNameDefault;
+            $userName = $prefixName.$userNameDefault;
         }
 
         $prefixNameStrictly = ModernExtraUsers::select(['user_id', 'code', 'value'])
@@ -1312,8 +1334,8 @@ class TestController extends Controller
             ->where('code', 'prefixName')
             ->first();
 
-        if (!is_null($prefixNameStrictly)) {
-            $userName = $prefixNameStrictly->value . $userNameDefault;
+        if (! is_null($prefixNameStrictly)) {
+            $userName = $prefixNameStrictly->value.$userNameDefault;
         }
 
         dd($userName);
@@ -1350,7 +1372,7 @@ class TestController extends Controller
         dd($freeRound);
         $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => 50]);
-        $request->merge(['timeFreeRound' => strtotime("30 day", 0)]);
+        $request->merge(['timeFreeRound' => strtotime('30 day', 0)]);
         dd(2);
         //dd(GeneralHelper::visitorIpCloudFlare());
 //        dd(2);
@@ -1384,7 +1406,7 @@ class TestController extends Controller
             $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
-                    'sum' => -1 * $setAmount
+                    'sum' => -1 * $setAmount,
                 ]);
                 $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
                 $date = new \DateTime();
@@ -1396,7 +1418,7 @@ class TestController extends Controller
                         'deleted_at' => $date,
                         'sum' => -1 * $difference,
                         'user_id' => $transaction->user_id,
-                        'comment' => 'system'
+                        'comment' => 'system',
                     ],
                 ]);
             }
@@ -1409,13 +1431,14 @@ class TestController extends Controller
         foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
+
             try {
                 dump($bonus_obj->realActivation());
                 dump($bonus_obj->close());
             } catch (\Exception $e) {
                 dd([
                     'id' => $bonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
@@ -1429,7 +1452,7 @@ class TestController extends Controller
             $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
-                    'sum' => -1 * $setAmount
+                    'sum' => -1 * $setAmount,
                 ]);
                 $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
                 $date = new \DateTime();
@@ -1441,7 +1464,7 @@ class TestController extends Controller
                         'deleted_at' => $date,
                         'sum' => -1 * $difference,
                         'user_id' => $transaction->user_id,
-                        'comment' => 'system'
+                        'comment' => 'system',
                     ],
                 ]);
             }
@@ -1463,7 +1486,7 @@ class TestController extends Controller
             $absTransactionSum = (-1) * $transaction->sum;
             if ($absTransactionSum > $setAmount) {
                 Transaction::where('id', $transaction->id)->update([
-                    'sum' => -1 * $setAmount
+                    'sum' => -1 * $setAmount,
                 ]);
                 $difference = GeneralHelper::formatAmount($absTransactionSum - $setAmount);
                 $date = new \DateTime();
@@ -1475,7 +1498,7 @@ class TestController extends Controller
                         'deleted_at' => $date,
                         'sum' => -1 * $difference,
                         'user_id' => $transaction->user_id,
-                        'comment' => 'system'
+                        'comment' => 'system',
                     ],
                 ]);
             }
@@ -1483,7 +1506,7 @@ class TestController extends Controller
         dd('ok');
         //$amount = $getTransaction
         Transaction::where('id', 307311)->where('type', 4)->update([
-            'sum' => '-60'
+            'sum' => '-60',
         ]);
         //create new transaction
 
@@ -1526,7 +1549,7 @@ class TestController extends Controller
 
         $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => 50]);
-        $request->merge(['timeFreeRound' => strtotime("5 day", 0)]);
+        $request->merge(['timeFreeRound' => strtotime('5 day', 0)]);
 
         $user = User::where('id', 1031)->first();
         $pantalloGamesSystem = new PantalloGamesSystem();
@@ -1536,7 +1559,7 @@ class TestController extends Controller
         $users = User::where('id', '>', 450)->get();
         foreach ($users as $user) {
             User::where('id', $user->id)->update([
-                'email_confirmed' => 1
+                'email_confirmed' => 1,
             ]);
         }
         dd(2);
@@ -1561,11 +1584,7 @@ class TestController extends Controller
         $allGames = $pantalloGames->getGameList([], true);
         dd($allGames);
         $headers = [
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0'
-            , 'Content-type' => 'text/csv'
-            , 'Content-Disposition' => 'attachment; filename=games.csv'
-            , 'Expires' => '0'
-            , 'Pragma' => 'public'
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0', 'Content-type' => 'text/csv', 'Content-Disposition' => 'attachment; filename=games.csv', 'Expires' => '0', 'Pragma' => 'public',
         ];
 
         $list = GamesTypeGame::select(['games_list_extra.name as origin_name', 'games_categories.name as provider_name'])
@@ -1583,7 +1602,7 @@ class TestController extends Controller
             ])
             ->groupBy('games_types_games.game_id')->get()->toArray();
 
-        # add headers for each column in the CSV download
+        // add headers for each column in the CSV download
         array_unshift($list, array_keys($list[0]));
 
         $callback = function () use ($list) {
@@ -1613,34 +1632,35 @@ class TestController extends Controller
                 DB::raw('(transactions.sum + transactions.bonus_sum) as real_amount'),
                 'games_pantallo_transactions.amount as amount',
                 'games_pantallo_transactions.game_id as game_id',
-                'games_pantallo_transactions.balance_after as balance_after'
+                'games_pantallo_transactions.balance_after as balance_after',
             ])->first();
         dd($transactionHas);
         $user = User::where('id', 136)->first();
         $d = $user->created_at;
-        $d1 = $d->modify("+3 days");
+        $d1 = $d->modify('+3 days');
         $dd = $user->created_at;
-        $d2 = $dd->modify("+100 days");
+        $d2 = $dd->modify('+100 days');
         dd($d1, $d2);
         $bonuses = UserBonus::all();
 
         foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
+
             try {
                 $bonus_obj->realActivation();
                 $bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
                     'id' => $bonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
         dd(2);
         $freeSpinWin = DB::table('transactions')->where('user_id', 157)->where([
             ['created_at', '>', '2019-03-05 16:49:03'],
-            ['type', '=', 10]
+            ['type', '=', 10],
         ])->get();
         dd($freeSpinWin);
         dump($_SERVER['REMOTE_ADDR']);
@@ -1655,22 +1675,24 @@ class TestController extends Controller
                 'grant_type' => 'password',
                 'response_type' => 'token',
                 'username' => 'api_casinobit',
-                'password' => 'BfRN18uA'
-            ]
+                'password' => 'BfRN18uA',
+            ],
         ]);
         $json = $response->getBody()->getContents();
         $json = json_decode($json);
         dd(2);
+
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Authorization' => 'Bearer '.$json->access_token,
                     'Accept' => 'application/json',
-                ]
+                ],
             ]);
         } catch (\Exception $e) {
             $response = $e->getResponse();
             $responseBodyAsString = $response->getBody()->getContents();
+
             return $responseBodyAsString;
             dd($responseBodyAsString);
         }
@@ -1694,17 +1716,19 @@ class TestController extends Controller
         foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
+
             try {
                 //$bonus_obj->realActivation();
                 $bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
                     'id' => $bonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
         dd(21);
+
         try {
             $typeBonus = 1;
             $bonusClass = null;
@@ -1712,7 +1736,6 @@ class TestController extends Controller
         } catch (\Exception $x) {
             dd(1);
         }
-
 
         $userFields = [
             'users.id as id',
@@ -1789,13 +1812,12 @@ class TestController extends Controller
         $games = GamesList::all();
         foreach ($games as $game) {
             GamesListExtra::where('game_id', $game->id)->update([
-                'category_id' => $game->category_id
+                'category_id' => $game->category_id,
             ]);
         }
         dd('Ok');
         $games = GamesList::where('details', null)->get();
         dd($games);
-
 
         $pantalloGamesSystem = new PantalloGamesSystem();
         $freeRound = $pantalloGamesSystem->removeFreeRounds($request);
@@ -1821,7 +1843,7 @@ class TestController extends Controller
 
         $request->merge(['gamesIds' => $gamesIds]);
         $request->merge(['available' => 1]);
-        $request->merge(['timeFreeRound' => strtotime("1 day", 0)]);
+        $request->merge(['timeFreeRound' => strtotime('1 day', 0)]);
 
         $pantalloGamesSystem = new PantalloGamesSystem();
         $freeRound = $pantalloGamesSystem->freeRound($request);
@@ -1833,31 +1855,28 @@ class TestController extends Controller
             'type_id' => 4,
             'request' => 4,
             'response' => 4,
-            'extra' => 4
+            'extra' => 4,
         ]);
 
         if (1) {
-
             DB::beginTransaction();
             RawLog::create([
                 'type_id' => 1,
                 'request' => 1,
                 'response' => 1,
-                'extra' => 1
+                'extra' => 1,
             ]);
             DB::commit();
         }
         DB::commit();
 
-
         dd(2);
-
 
         RawLog::create([
             'type_id' => 1,
             'request' => GeneralHelper::fullRequest(),
             'response' => 2,
-            'extra' => 2
+            'extra' => 2,
         ]);
         dd(2);
         $slotTypeId = config('appAdditional.slotTypeId');
@@ -1902,6 +1921,7 @@ class TestController extends Controller
         dd($openGames);
 
         dd('old');
+
         return redirect('/')->with('popup_fixed', 'true');
 
         $service = new Service();
@@ -1924,13 +1944,14 @@ class TestController extends Controller
         foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
+
             try {
                 $bonus_obj->realActivation();
                 $bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
                     'id' => $bonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
@@ -2015,8 +2036,8 @@ class TestController extends Controller
                 'grant_type' => 'password',
                 'response_type' => 'token',
                 'username' => 'api_casinobit',
-                'password' => 'BfRN18uA'
-            ]
+                'password' => 'BfRN18uA',
+            ],
         ]);
         $json = $response->getBody()->getContents();
         $json = json_decode($json);
@@ -2024,13 +2045,14 @@ class TestController extends Controller
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $json->access_token,
+                    'Authorization' => 'Bearer '.$json->access_token,
                     'Accept' => 'application/json',
-                ]
+                ],
             ]);
         } catch (\Exception $e) {
             $response = $e->getResponse();
             $responseBodyAsString = $response->getBody()->getContents();
+
             return $responseBodyAsString;
             dd($responseBodyAsString);
         }
@@ -2063,8 +2085,9 @@ class TestController extends Controller
         GamesList::where('id', 1)
             ->update([
                 'name' => 'Zdffd',
-                'updated_at' => DB::raw('updated_at')]);
+                'updated_at' => DB::raw('updated_at'), ]);
         dd(2);
+
         return view('emails.confirm')->with(['link' => 'https://www.casinobit.io/activate/be532c9328437e9a9a24b83bf70b349f4914217a2ae8e8fe9822d017000f77d4']);
         dd($current_user = trim(shell_exec('whoami')));
         GamesTypeGame::where([
@@ -2080,7 +2103,7 @@ class TestController extends Controller
             ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
             ->where([
                 ['games_types_games.extra', '=', 1],
-                ['games_types_games.type_id', '=', 1]
+                ['games_types_games.type_id', '=', 1],
             ])
             ->groupBy('games_types_games.game_id')->get();
         //dd($gameList);
@@ -2092,101 +2115,9 @@ class TestController extends Controller
             ]);
         }
 
-
         dd(2345354356436);
         $aa = [
-            300
-            , 639
-            , 640
-            , 642
-            , 643
-            , 644
-            , 645
-            , 646
-            , 647
-            , 648
-            , 653
-            , 654
-            , 655
-            , 656
-            , 657
-            , 658
-            , 659
-            , 660
-            , 661
-            , 662
-            , 663
-            , 664
-            , 665
-            , 666
-            , 667
-            , 668
-            , 669
-            , 670
-            , 671
-            , 672
-            , 673
-            , 674
-            , 680
-            , 681
-            , 682
-            , 683
-            , 686
-            , 687
-            , 688
-            , 689
-            , 690
-            , 693
-            , 696
-            , 695
-            , 694
-            , 697
-            , 698
-            , 699
-            , 700
-            , 701
-            , 942
-            , 943
-            , 944
-            , 945
-            , 946
-            , 947
-            , 948
-            , 949
-            , 950
-            , 951
-            , 952
-            , 953
-            , 954
-            , 955
-            , 956
-            , 957
-            , 958
-            , 959
-            , 960
-            , 961
-            , 962
-            , 963
-            , 964
-            , 965
-            , 966
-            , 967
-            , 968
-            , 969
-            , 970
-            , 971
-            , 972
-            , 973
-            , 974
-            , 975
-            , 976
-            , 977
-            , 978
-            , 979
-            , 980
-            , 981
-            , 982
-            , 983
+            300, 639, 640, 642, 643, 644, 645, 646, 647, 648, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 680, 681, 682, 683, 686, 687, 688, 689, 690, 693, 696, 695, 694, 697, 698, 699, 700, 701, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983,
         ];
 
         foreach ($aa as $id) {
@@ -2205,7 +2136,7 @@ class TestController extends Controller
             ->leftJoin('games_categories', 'games_categories.id', '=', 'games_list_extra.category_id')
             ->where([
                 ['games_types_games.extra', '=', 1],
-                ['games_types_games.type_id', '=', 5]
+                ['games_types_games.type_id', '=', 5],
             ])
             ->whereNotIn('games_list.id', [
 
@@ -2219,7 +2150,6 @@ class TestController extends Controller
                 'extra' => 1,
             ]);
         }
-
 
         dd(2222234455555566666);
         $a = file_get_contents('https://www.casinobit.ioa/');
@@ -2239,12 +2169,12 @@ class TestController extends Controller
         $am = 1000;
         User::where('id', 1)
             ->update([
-                'balance' => DB::raw("balance+$am")
+                'balance' => DB::raw("balance+$am"),
             ]);
         dd(2);
 
         $test = User::where('id', 1)->update([
-            'balance' => DB::raw("balance+$am")
+            'balance' => DB::raw("balance+$am"),
         ]);
         dd(2);
 
@@ -2261,7 +2191,7 @@ class TestController extends Controller
 //        dd($update->toArray());
 //        $amount = 20;
         $test = User::where('id', 1)->update([
-            'balance' => -1
+            'balance' => -1,
         ]);
         dd($test);
         dd($request->fullUrl());
@@ -2272,15 +2202,16 @@ class TestController extends Controller
         if ($validator->fails()) {
             $error = $validator->errors();
             dd($error->first());
+
             throw new \Exception('Insufficient funds', 500);
         }
-
 
         $userFields = ['users.id as id', 'users.balance as balance', 'affiliates.id as partner_id', 'affiliates.commission as partner_commission'];
         $user = User::select($userFields)->leftJoin('users as affiliates', 'users.agent_id', '=', 'affiliates.id')->where('users.id', 136)->first();
         dd($user->toArray());
         //->leftJoin('posts', 'users.id', '=', 'posts.user_id')
         $types = GamesType::all();
+
         return view('test.listTypes')->with(['types' => $types]);
 //
 //        dd(11);
@@ -2293,7 +2224,6 @@ class TestController extends Controller
         $pantalloGames = new PantalloGames;
         $getGameList = $pantalloGames->getGameList([], true);
         dd(count($getGameList->response));
-
 
         $post = [
             'api_login' => 'casinobit_mc_s',
@@ -2321,23 +2251,29 @@ class TestController extends Controller
                 'method' => 'getGameList',
                 'show_systems' => 0,
                 'currency' => 'EUR',
-            ]
+            ],
         ]);
         dd($result->getBody());
+
         return view('testtest');
     }
 
     public function testTypes(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         $games = GamesList::leftJoin('games_types', 'games_types.id', '=', 'games_list.type_id')
             ->where([
-                ['games_types.code', '=', $request->category]
+                ['games_types.code', '=', $request->category],
             ])->select(['games_types.id', 'games_list.name'])->get();
+
         return view('test.listGames')->with(['games' => $games]);
     }
 
     public function game(Request $request)
     {
+        dd(2);
+        //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
         try {
             $game = GamesList::where('id', $request->game)->first();
             dump($game);
@@ -2354,7 +2290,7 @@ class TestController extends Controller
                 $player = $pantalloGames->createPlayer([
                     'user_id' => $userId,
                     'user_username' => $userId,
-                    'password' => self::PASSWORD
+                    'password' => self::PASSWORD,
                 ], true);
             } else {
                 $player = $playerExists;
@@ -2364,10 +2300,10 @@ class TestController extends Controller
             $login = $pantalloGames->loginPlayer([
                 'user_id' => $userId,
                 'user_username' => $userId,
-                'password' => self::PASSWORD
+                'password' => self::PASSWORD,
             ], true);
 
-            $loginResponse = (array)$login->response;
+            $loginResponse = (array) $login->response;
             $idLogin = $loginResponse['id'];
             unset($loginResponse['id']);
             $loginResponse['system_id'] = $idLogin;
@@ -2387,14 +2323,15 @@ class TestController extends Controller
             dump($idLogin);
             dump($getGame);
             GamesPantalloSessionGame::create(['session_id' => $idLogin,
-                'gamesession_id' => $getGame->gamesession_id]);
+                'gamesession_id' => $getGame->gamesession_id, ]);
 
             return view('testtest', ['link' => $getGame]);
         } catch (\Exception $e) {
             dd($e);
+
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }

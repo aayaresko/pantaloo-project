@@ -62,11 +62,13 @@ let events = function () {
     $('body').on('click', '.moreGames', function (e) {
         let append = true;
         listGameParams.page = currPage;
-        history.pushState({}, "", '#page=' + currPage)
-        currPage++
         getListGames(append);
     });
 
+    $('a.getFreeSpins').on('click', function (e) {
+        e.preventDefault();
+        $('.type_of_game').val($('.js-example-basic-single option:first-child').val()).trigger('change');
+    })
 
     $('.type_of_game').on('change', function (e) {
         e.preventDefault();
@@ -134,8 +136,16 @@ let events = function () {
         $('html,body').scrollTop(0);
     });
 
-
+    
     function freeSpinGames() {
+        
+        if ((location.href).indexOf("games/") >= 0) {
+            let splitedUrl = window.location.href.split("/")
+            splitedUrl.pop()
+            // console.log(splitedUrl.join('/').split('#')[0]);
+            history.pushState({}, "", splitedUrl.join('/').split('#')[0])
+            
+        } 
         // e.preventDefault();
         listGameParams.typeId = 0;
         listGameParams.categoryId = 0;
@@ -154,6 +164,65 @@ function handleImage(img) {
     $(img).attr("src", dummy);
 }
 
+
+let mobile = false
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    mobile = true
+}
+
+
+window.onpopstate = function(event) {
+    
+    var gamesLoaded = localStorage.getItem('gamesLoaded')
+
+    var urlParams = new URLSearchParams(window.location.hash.replace("#","?"));
+    var hash = urlParams.get('page');
+    // console.log('hash page:' + hash);
+    
+    if (hash == null) {
+        // console.log("STOP");
+        hash = 1
+    }
+
+    if (hash + 1 == currPage) {
+        // console.log("STOP2");
+        history.back()
+        return;
+    }
+
+    // console.log(currPage);
+
+
+    if (hash <= currPage - 1) {
+        
+        // console.log("url page less than curr");
+        $('.single-game').slice(-gamesLoaded).remove();
+        // $('.tittlePage').get(0).scrollIntoView();
+        
+        $('html, body').animate({
+            scrollTop: $(".games-entry .firstGame").last().offset().top-20
+        }, 500);
+
+        if (mobile) {
+            localStorage.setItem('gamesLoaded', 10)
+        } else {
+            localStorage.setItem('gamesLoaded', 15)
+        }
+       
+        // console.log($('.single-game').length);
+        currPage--
+        $('.moreGames').show()
+    } else if (hash == currPage) {
+        // console.log('else IF');
+        listGameParams.page = currPage
+        getListGames(true, true);
+    } else {
+        // console.log('else');
+        window.location.reload()
+    }
+ 
+};
+
 // $('#resetGames').on('click', function(e){
 //     e.preventDefault()
 //     console.log('lol');
@@ -169,12 +238,8 @@ function handleImage(img) {
 // })
 
 
-let mobile = false
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    mobile = true
-}
 
-function getListGames(append) {
+function getListGames(append, hist) {
     $('.preloaderCommon').show();
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -217,14 +282,23 @@ function getListGames(append) {
               
 
                 if (append) {                  
+                    // $(".insertGames .games-entry").append('<div class="lol">' +device+ '</div>');
                     $(".insertGames .games-entry").append(device);
+                    if (!hist) {
+                          history.pushState({
+                              page: currPage
+                          }, "", '#page=' + currPage)
+                    }
+                  
+                    localStorage.setItem('gamesLoaded', $(games).find('.single-game').length);
+                    currPage++
                 } else {     
                     $(".insertGames .games-entry").html(device);
                     if ((location.href).indexOf("games/") <= 0) {
                          history.pushState({}, "", 'games')
                     } else {
                         // location.hash = '';
-                        history.pushState({}, "", window.location.href.split('#')[0])
+                        history.replaceState({}, "", window.location.href.split('#')[0])
                         
                     }              
                      currPage = 2
@@ -385,9 +459,9 @@ $(function () {
 
 // when you are in fullscreen, ESC and F11 may not be trigger by keydown listener.
 // so don't use it to detect exit fullscreen
-document.addEventListener('keydown', function (e) {
-    console.log('key press' + e.keyCode);
-});
+// document.addEventListener('keydown', function (e) {
+//     console.log('key press' + e.keyCode);
+// });
 // detect enter or exit fullscreen mode
 document.addEventListener('webkitfullscreenchange', fullscreenChange);
 document.addEventListener('mozfullscreenchange', fullscreenChange);

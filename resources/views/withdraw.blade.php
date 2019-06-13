@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-    {{translate('Withdraw')}}
-@endsection
+@section('title', trans('Withdraw'))
 
 @section('content')
     <div class="cabinet-block"
@@ -61,8 +59,11 @@
                             </div>
                         @endif
                         <div class="bottom-block">
-                            @if(count($transactions) > 0) <h3
-                                    class="title">{{ trans('casino.your_withdraws') }}</h3> @endif
+                            @if(count($transactions) > 0)
+                                <h3 class="title">
+                                {{ trans('casino.your_withdraws') }}
+                                </h3>
+                            @endif
                             @include('transactions')
                         </div>
                     </div>

@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Validator;
-use App\Models\GamesListSettings;
 use Illuminate\Http\Request;
+use App\Models\GamesListSettings;
 use App\Http\Controllers\Controller;
 
 /**
- * Class IntegratedSettingsController
- * @package App\Http\Controllers\Admin
+ * Class IntegratedSettingsController.
  */
 class IntegratedSettingsController extends Controller
 {
@@ -18,6 +17,7 @@ class IntegratedSettingsController extends Controller
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -34,7 +34,7 @@ class IntegratedSettingsController extends Controller
             2 => 'name',
             3 => 'value',
             4 => 'created_at',
-            5 => 'updated_at'
+            5 => 'updated_at',
         ];
     }
 
@@ -46,7 +46,8 @@ class IntegratedSettingsController extends Controller
     {
         $configIntegratedGames = config('integratedGames.common');
         $definitionSettings = $configIntegratedGames['listSettings'];
-        $settings = GamesListSettings::select($this->fields)->get();
+        $settings = GamesListSettings::select($this->fields)->get()->all();
+
         return view('admin.integrated_settings')->with([
             'definitionSettings' => $definitionSettings,
             'settings' => $settings,
@@ -62,28 +63,31 @@ class IntegratedSettingsController extends Controller
         $configIntegratedGames = config('integratedGames.common');
         $definitionSettings = $configIntegratedGames['listSettings'];
         $this->validate($request, [
-            'games' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
-            'categories' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
-            'types' => 'integer|in:' . implode(',', array_keys($definitionSettings)),
+            'games' => 'integer|in:'.implode(',', array_keys($definitionSettings)),
+            'categories' => 'integer|in:'.implode(',', array_keys($definitionSettings)),
+            'types' => 'integer|in:'.implode(',', array_keys($definitionSettings)),
         ]);
 
         DB::beginTransaction();
+
         try {
-            if ($request->has('games')) {
+            if ($request->filled('games')) {
                 GamesListSettings::where('code', 'games')->update(['value' => $request->games]);
             }
-            if ($request->has('categories')) {
+            if ($request->filled('categories')) {
                 GamesListSettings::where('code', 'categories')->update(['value' => $request->categories]);
             }
 
-            if ($request->has('types')) {
+            if ($request->filled('types')) {
                 GamesListSettings::where('code', 'types')->update(['value' => $request->types]);
             }
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         DB::commit();
+
         return redirect()->route('admin.integratedSettings')->with('msg', 'Settings was edited');
     }
 }
