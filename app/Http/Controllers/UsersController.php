@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Domain;
-use App\Jobs\SetUserCountry;
-use App\UserActivation;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use App\Http\Requests;
 use App\User;
+use App\Domain;
+use Carbon\Carbon;
+use App\Http\Requests;
+use Mockery\Exception;
+use App\UserActivation;
 use App\ModernExtraUsers;
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
+use App\Models\AgentsKoef;
+use Illuminate\Support\Str;
+use App\Jobs\SetUserCountry;
+use Illuminate\Http\Request;
+use App\Events\AccountStatusEvent;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Mockery\Exception;
+use Illuminate\Support\Facades\Config;
 
 class UsersController extends Controller
 {
@@ -26,17 +31,47 @@ class UsersController extends Controller
 
         switch ($user->role) {
             case 2:
+                $filterData = [];
+                $configUser = config('appAdditional.users');
+                $userTypes = $configUser['roles'];
+
                 //to do block to config value
                 $users = User::select(['users.*', DB::raw('IFNULL(block.value, 0) as block')])
                     ->leftJoin('modern_extra_users as block', function ($join) {
                         $join->on('users.id', '=', 'block.user_id')
                             ->where('block.code', '=', 'block');
-                    })
-                    ->orderBy('created_at', 'DESC')->get();
+                    });
+                if ($request->email) {
+                    $filterData['email'] = $request->email;
+                    $users->where('users.email', 'like', '%' . $request->email . '%');
+                }
 
-                return view('admin.users', ['users' => $users]);
+                //to do fix this temporary
+                if ($request->filled('role')) {
+                    $role = $request->role;
+                    $filterData['role'] = is_numeric($role) ? (int)$role : $role;
+
+                    switch ($request->role) {
+                        case 'all':
+                            break;
+                        case 'allTest':
+                            $users->where('users.role', '<', 0);
+                            break;
+                        default:
+                            $users->where('users.role', $request->role);
+                    }
+                }
+
+                $users = $users->orderBy('created_at', 'DESC')->paginate(100);
+
+                return view('admin.users', [
+                    'users' => $users,
+                    'userTypes' => $userTypes,
+                    'filterData' => $filterData,
+                ]);
             case 3:
                 return redirect('/admin/agent/list');
+
                 break;
             case 10:
                 return redirect('/admin/translations');
@@ -66,13 +101,15 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['Mail already sent. You can try in 15 minutes.']);
         }
 
-        $token = hash_hmac('sha256', str_random(40), config('app.key'));
+        $token = hash_hmac('sha256', Str::random(40), config('app.key'));
 
         $link = url('/') . '/activate/' . $token . '/email/' . $user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (!$activation) $activation = new UserActivation();
+        if (!$activation) {
+            $activation = new UserActivation();
+        }
 
         $activation->user()->associate($user);
         $activation->token = $token;
@@ -80,9 +117,9 @@ class UsersController extends Controller
 
         $activation->save();
 
-        Mail::queue('emails.confirm', ['link' => $link], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Confirm email');
-        });
+        $mail = new BaseMailable('emails.confirm', ['link' => $link]);
+        $mail->subject('Confirm email');
+        Mail::to($user)->send($mail);
 
         return redirect()->back()->with('popup', [
             'E-mail confirmation',
@@ -119,9 +156,9 @@ class UsersController extends Controller
             $user->email_confirmed = 1;
             $user->save();
 
-            Mail::queue('emails.congratulations', ['email' => $user->email], function ($m) use ($user) {
-                $m->to($user->email, $user->name)->subject('Email is now validated');
-            });
+            $mail = new BaseMailable('emails.congratulations', ['email' => $user->email]);
+            $mail->subject('Email is now validated');
+            Mail::to($user)->send($mail);
 
             return redirect('/')->with('popup',
                 ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
@@ -160,8 +197,15 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //to do check this method
-        if ($request->has('role')) {
-            if ($request->input('role') != 1 and $request->input('role') != 0) {
+        $configUser = config('appAdditional.users');
+        $userTypes = $configUser['roles'];
+        $userTypes = array_filter($userTypes, function ($item) {
+            return !(boolean)$item['noEdit'];
+        });
+
+        if ($request->filled('role')) {
+            $requestRole = (int) $request->input('role');
+            if (array_search($requestRole, array_column($userTypes, 'key'), true) === false) {
                 return redirect()->back()->withErrors(['Invalid role']);
             }
             //validation
@@ -186,18 +230,20 @@ class UsersController extends Controller
                 $user->confirmation_required = 0;
             }
 
-
             //email confirm
-            $emailConfirmed = ($request->has('email_confirmed')) ? 1 : 0;
+            $emailConfirmed = ($request->filled('email_confirmed')) ? 1 : 0;
             $user->email_confirmed = $emailConfirmed;
 
             $user->commission = $commission;
             $user->role = $request->input('role');
 
             $user->save();
+            if ($user->role == 1 or $user->role == 3) {
+                $this->setAgentKoef($user, $commission);
+            }
 
             //block user
-            $block = ($request->has('block')) ? 1 : 0;
+            $block = ($request->filled('block')) ? 1 : 0;
             $blockUser = ModernExtraUsers::where('user_id', $user->id)
                 ->where('code', 'block')->first();
             //might use update or create but i use this way
@@ -205,13 +251,29 @@ class UsersController extends Controller
                 ModernExtraUsers::create([
                     'user_id' => $user->id,
                     'code' => 'block',
-                    'value' => $block
+                    'value' => $block,
                 ]);
+                $oldStatus = 'open';
             } else {
                 ModernExtraUsers::where('user_id', $user->id)
                     ->where('code', 'block')->update([
-                        'value' => $block
+                        'value' => $block,
                     ]);
+            }
+
+            $oldStatus = $block ? 'open' : 'block';
+            $newStatus = $block ? 'block' : 'open';
+
+            event(new AccountStatusEvent($user, $oldStatus, $newStatus));
+
+            if ($block === 1) {
+                //to do necessary update this code for all drivers etc
+                $sessionsUser = DB::table('sessions')
+                    ->select(['id'])
+                    ->where('user_id', $user->id)
+                    ->pluck('id')->all();
+
+                DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
             }
         }
 
@@ -220,6 +282,18 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
+    }
 
+    protected function setAgentKoef($partner, $koef)
+    {
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $koef;
+        $newKoef->save();
+        $partner->commission = $koef;
+        $partner->save();
     }
 }

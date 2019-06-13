@@ -14,6 +14,7 @@ class LandingController extends Controller
     public function main(Request $request)
     {
         $entryPoint = config('app.foreignPages.main');
+
         return redirect($entryPoint);
     }
 
@@ -28,16 +29,17 @@ class LandingController extends Controller
         $parsedUrl = parse_url($fullUrl);
         $getQuery = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 
-        $getParameters = '/?' . $getQuery;
+        $getParameters = '/?'.$getQuery;
         $mainUrl = config('app.foreignPages.main');
         $defaultView = 'landingPages.general';
-        //to do this - 
-        if ($lang !== 'en') {
-            $currentView = $defaultView . '_' . $lang;
-        } else {
-            $currentView = $defaultView;
-        }
-        
+        //to do this -
+//        if ($lang !== 'en') {
+//            $currentView = $defaultView . '_' . $lang;
+//        } else {
+//            $currentView = $defaultView;
+//        }
+        $currentView = $defaultView.'_'.$lang;
+
         return view($currentView)->with([
             'lang' => $lang,
             'mainUrl' => $mainUrl,

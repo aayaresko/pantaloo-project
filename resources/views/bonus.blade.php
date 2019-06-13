@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ trans('casino.bonus') }}
-@endsection
+@section('title', trans('casino.bonus'))
+
 
 @section('content')
-    <div class="cabinet-block" style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
+    <div class="cabinet-block"
+         style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="cabinet-entry">
             <div class="main-content">
                 <div class="page-heading">
@@ -152,9 +152,19 @@
         </div>
     </div>
 
-    <div class="hidden">
-        <div id="reg-terms">
-            {!! trans('casino.terms_conditions') !!}
-        </div>
-    </div>
+@section('js')
+    <script>
+
+        function bonusAct() {
+            //send form method post
+            $('body').on('click', '.bonusActive', function (e) {
+                e.preventDefault();
+                let form = $(this).next();
+                form.submit();
+            });
+        }
+
+        bonusAct();
+
+    </script>
 @endsection

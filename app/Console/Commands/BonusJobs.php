@@ -41,20 +41,20 @@ class BonusJobs extends Command
     {
         $bonuses = UserBonus::all();
 
-        foreach ($bonuses as $bonus)
-        {
+        foreach ($bonuses as $bonus) {
             $class = $bonus->bonus->getClass();
             $bonus_obj = new $class($bonus->user);
+
             try {
                 //$bonus_obj->realActivation();
                 $bonus_obj->close();
             } catch (\Exception $e) {
                 Log::alert([
+                    'code' => 'bonusMessage',
                     'id' => $bonus->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         }
-        
     }
 }

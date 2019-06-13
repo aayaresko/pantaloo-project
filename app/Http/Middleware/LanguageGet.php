@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Domain;
 use Closure;
+use App\Domain;
 use Illuminate\Support\Facades\Config;
 
 class LanguageGet
@@ -19,18 +19,19 @@ class LanguageGet
     {
         $parts = parse_url(url('/'));
 
-        if(!isset($parts['host'])) $lang = 'en';
-        else {
+        if (! isset($parts['host'])) {
+            $lang = 'en';
+        } else {
             $host = $parts['host'];
             $host = str_replace('www.', '', $host);
 
             $domain = Domain::where('domain', $host)->first();
 
-            if($domain)
-            {
+            if ($domain) {
                 $lang = $domain->lang;
+            } else {
+                $lang = 'en';
             }
-            else $lang = 'en';
         }
 
         Config::set('lang', $lang);

@@ -3,126 +3,55 @@
 namespace App\Bonuses;
 
 use App\User;
-use App\Transaction;
+use App\UserBonus;
 use Carbon\Carbon;
+use App\Transaction;
+use App\Models\LastActionGame;
 
 abstract class Bonus
 {
     public static $id;
+
     protected $user;
+
+    protected $lastAction;
+
     protected $active_bonus;
+
     protected $data;
 
-    public function __construct(User $user)
+    protected $dataBonus;
+
+    public function __construct(User $user = null)
     {
         $this->user = $user;
 
-        $this->active_bonus = $this->user->bonuses()->first();
-    }
+        if (!is_null($user)) {
+            $this->active_bonus = $this->user->bonuses()->first();
+        }
 
-    public function hasBonusTransactions($minutes = 1)
-    {
-        $date = Carbon::now();
-        $date->modify('-' . $minutes . ' minutes');
-
-        $transaction = $this->user->transactions()->where('created_at', '>', $date)->first();
-
-        if (!$transaction) {
-            return false;
-        } else {
-            return true;
+        if (! is_null($this->active_bonus)) {
+            $this->dataBonus = $this->active_bonus->data;
         }
     }
 
-    public function cancel($reason = false)
-    {
-        if ($this->hasBonusTransactions()) {
-            throw new \Exception('Unable cancel bonus while playing. Try in several minutes.');
-        }
+    abstract public function bonusAvailable($params);
 
-        $transaction = new Transaction();
-        $transaction->bonus_sum = -1 * $this->user->bonus_balance;
-        $transaction->sum = 0;
-        $transaction->comment = $reason;
-        $transaction->type = 6;
-        $transaction->user()->associate($this->user);
+    abstract public function activate($params);
 
-        $this->user->changeBalance($transaction);
+    abstract public function realActivation($params);
 
-        if ($this->user->bonus_balance == 0) {
-            $this->active_bonus->delete();
-        }
-    }
+    abstract public function cancel();
 
-    public function close()
-    {
-        if ($this->hasBonusTransactions()) {
-            return false;
-        }
+    abstract public function close($mode);
 
-        $now = Carbon::now();
-
-        if ($this->active_bonus->expires_at->format('U') < $now->format('U')) {
-            $this->cancel('Expired');
-        }
-        if ($this->active_bonus->activated == 1 and $this->user->bonus_balance == 0 and $this->user->free_spins == 0) {
-            $this->cancel('No bonus funds');
-        }
-
-        if ($this->active_bonus->activated == 1) {
-            if ($this->getPlayedSum() >= $this->get('wagered_sum')) {
-                $transaction = new Transaction();
-                $transaction->bonus_sum = -1 * $this->user->bonus_balance;
-                $transaction->sum = $this->user->bonus_balance;
-                $transaction->comment = 'Bonus to real transfer';
-                $transaction->type = 7;
-                $transaction->user()->associate($this->user);
-
-                $this->user->changeBalance($transaction);
-
-                $this->active_bonus->delete();
-
-                $this->user->bonus_balance = 0;
-                $this->user->save();
-            }
-        }
-    }
-
-    public function get($var)
-    {
-        $data = $this->active_bonus->data;
-
-        if (isset($data[$var])) {
-            return $data[$var];
-        } else {
-            throw new \Exception('Var not found');
-        }
-    }
-
-    public function set($var, $value)
-    {
-        if (!$this->active_bonus) {
-            throw new \Exception('Activate_bonus not found');
-        }
-
-        $data = $this->active_bonus->data;
-        $data[$var] = $value;
-        $this->active_bonus->data = $data;
-
-        $this->active_bonus->save();
-
-        return $value;
-    }
-
-    abstract public function getStatus();
-
-    abstract public function activate();
-
-    abstract public function realActivation();
-
-    abstract public function getPercent();
+    abstract public function wagerUpdate($transaction);
 
     abstract public function getPlayedSum();
 
-    abstract public function bonusAvailable();
+    abstract public function hasBonusTransactions($minutes);
+
+    abstract public function getStatus();
+
+    abstract public function getPercent();
 }

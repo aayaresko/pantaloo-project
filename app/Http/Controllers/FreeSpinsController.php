@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\RawLog;
+use App\User;
 use App\Token;
-use App\Transaction;
+use App\RawLog;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Transaction;
 use App\Slots\Casino;
 use App\Http\Requests;
-use App\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use League\Flysystem\Exception;
+use Illuminate\Support\Facades\Auth;
 
 class FreeSpinsController extends Controller
 {
@@ -26,57 +26,76 @@ class FreeSpinsController extends Controller
         try {
             //$casino->CheckSignature($request);
 
-            if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-                $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+                $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
             }
 
             $ip = $_SERVER['REMOTE_ADDR'];
 
-            if($ip != '46.4.63.60') throw new \Exception('Technical error', 1);
+            if ($ip != '46.4.63.60') {
+                throw new \Exception('Technical error', 1);
+            }
 
             $token = Token::where('token', $request->input('sessionid'))->first();
-            if(!$token) $token = Token::where('token', $request->input('gamesessionid'))->first();
-            if(!$token) throw new \Exception('Technical error', 1);
+            if (! $token) {
+                $token = Token::where('token', $request->input('gamesessionid'))->first();
+            }
+            if (! $token) {
+                throw new \Exception('Technical error', 1);
+            }
 
             $user = $token->user;
 
-            if(!$user) throw new \Exception('Technical error', 1);
+            if (! $user) {
+                throw new \Exception('Technical error', 1);
+            }
 
             $resp = [];
 
-            switch ($request->input('request'))
-            {
+            switch ($request->input('request')) {
                 case 'getaccount':
                     $resp = [
                         'GAMESESSIONID' => $token->token,
                         'ACCOUNTID' => $user->id,
                         'CURRENCY' => 'EUR',
                         'CITY' => 'Berlin',
-                        'COUNTRY' => 'DEU'
+                        'COUNTRY' => 'DEU',
                     ];
+
                     break;
 
                 case 'getbalance':
 
                     $resp = [
-                        'BALANCE' => $user->free_spins
+                        'BALANCE' => $user->free_spins,
                     ];
+
                     break;
                 case 'wager':
                     $sum = $request->input('betamount');
                     $ext_id = $request->input('transactionid');
                     $round_id = $request->input('roundid');
 
-                    if(!is_numeric($round_id)) throw new \Exception('Round id not found');
+                    if (! is_numeric($round_id)) {
+                        throw new \Exception('Round id not found');
+                    }
 
-                    if(!is_numeric($sum)) throw new \Exception('Invalid betsum', 1);
-                    if($sum < 0) throw new \Exception('Invalid betsum', 1);
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('Tranaction id required', 110);
+                    if (empty($ext_id)) {
+                        throw new \Exception('Tranaction id required', 110);
+                    }
 
                     $transaction = Transaction::where('ext_id', $ext_id)->first();
 
-                    if($transaction) throw new \Exception('Transaction already exists', 110);
+                    if ($transaction) {
+                        throw new \Exception('Transaction already exists', 110);
+                    }
 
                     $transaction = new Transaction();
                     $transaction->ext_id = $ext_id;
@@ -88,8 +107,11 @@ class FreeSpinsController extends Controller
 
                     $transaction->bonus_sum = 0;
                     $transaction->sum = 0;
-                    if($sum > 0) $transaction->free_spin = -1;
-                    else $transaction->free_spin = 0;
+                    if ($sum > 0) {
+                        $transaction->free_spin = -1;
+                    } else {
+                        $transaction->free_spin = 0;
+                    }
 
                     $user->changeBalance($transaction);
 
@@ -97,10 +119,11 @@ class FreeSpinsController extends Controller
 
                     $resp = [
                         'ACCOUNTTRANSACTIONID' => $transaction->id,
-                        'REALMONEYBET' => -1*$sum,
+                        'REALMONEYBET' => -1 * $sum,
                         'BONUSMONEYBET' => 0,
-                        'BALANCE' => $balance
+                        'BALANCE' => $balance,
                     ];
+
                     break;
 
                 case 'result':
@@ -108,15 +131,25 @@ class FreeSpinsController extends Controller
                     $ext_id = $request->input('transactionid');
                     $round_id = $request->input('roundid');
 
-                    if(!is_numeric($round_id)) throw new \Exception('Round id not found');
-                    if(!is_numeric($sum)) throw new \Exception('Invalid betsum', 1);
-                    if($sum < 0) throw new \Exception('Invalid betsum', 1);
+                    if (! is_numeric($round_id)) {
+                        throw new \Exception('Round id not found');
+                    }
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('Tranaction id required', 110);
+                    if (empty($ext_id)) {
+                        throw new \Exception('Tranaction id required', 110);
+                    }
 
                     $transaction = Transaction::where('ext_id', $ext_id)->first();
 
-                    if($transaction) throw new \Exception('Transaction already exists', 110);
+                    if ($transaction) {
+                        throw new \Exception('Transaction already exists', 110);
+                    }
 
                     $transaction = new Transaction();
                     $transaction->ext_id = $ext_id;
@@ -134,25 +167,38 @@ class FreeSpinsController extends Controller
 
                     $resp = [
                         'ACCOUNTTRANSACTIONID' => $transaction->id,
-                        'BALANCE' => $balance
+                        'BALANCE' => $balance,
                     ];
+
                     break;
                 case 'rollback':
                     $sum = $request->input('rollbackamount');
                     $ext_id = $request->input('transactionid');
 
-                    if(!is_numeric($sum)) throw new \Exception('Invalid betsum', 1);
-                    if($sum < 0) throw new \Exception('Invalid betsum', 1);
+                    if (! is_numeric($sum)) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
+                    if ($sum < 0) {
+                        throw new \Exception('Invalid betsum', 1);
+                    }
 
-                    if(empty($ext_id)) throw new \Exception('Tranaction id required', 102);
+                    if (empty($ext_id)) {
+                        throw new \Exception('Tranaction id required', 102);
+                    }
 
                     $transaction = Transaction::where('ext_id', $ext_id)->first();
 
-                    if(!$transaction) throw new \Exception('Transaction not found', 102);
+                    if (! $transaction) {
+                        throw new \Exception('Transaction not found', 102);
+                    }
 
-                    if($transaction->type != 9) throw new \Exception('Operation not allowed', 110);
+                    if ($transaction->type != 9) {
+                        throw new \Exception('Operation not allowed', 110);
+                    }
 
-                    if($user->id != $transaction->user_id) throw new \Exception('Operation not allowed', 110);
+                    if ($user->id != $transaction->user_id) {
+                        throw new \Exception('Operation not allowed', 110);
+                    }
 
                     $user->changeBalance($transaction, true);
 
@@ -160,31 +206,33 @@ class FreeSpinsController extends Controller
 
                     $resp = [
                         'ACCOUNTTRANSACTIONID' => $transaction->id,
-                        'BALANCE' => $balance
+                        'BALANCE' => $balance,
                     ];
+
                     break;
                 default: throw new \Exception('No such method');
             }
 
             $response = $casino->Response($request->input('request'), $resp);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $code = $e->getCode();
-            if(!$code) $code = 1;
+            if (! $code) {
+                $code = 1;
+            }
 
             $response = $casino->Response($request->input('request'), [], [
                 'msg' => $e->getMessage(),
-                'code' => $code
+                'code' => $code,
             ]);
         }
 
         $raw_log->response = $response;
+        $raw_log->user_id = $user->id;
         $raw_log->save();
 
         return response()->make($response, 200, [
             'Content-Type: text/xml',
-            'Cache-Control: max-age=0'
+            'Cache-Control: max-age=0',
         ]);
     }
 }

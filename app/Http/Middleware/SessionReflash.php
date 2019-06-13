@@ -16,6 +16,7 @@ class SessionReflash
     public function handle($request, Closure $next)
     {
         $request->session()->reflash();
+
         return $next($request);
     }
 }

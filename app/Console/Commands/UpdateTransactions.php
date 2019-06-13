@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Bitcoin\Service;
 use App\Transaction;
+use App\Bitcoin\Service;
 use Illuminate\Console\Command;
 use League\Flysystem\Exception;
 
@@ -41,20 +41,25 @@ class UpdateTransactions extends Command
     public function handle()
     {
         $service = new Service();
-        $minConfirmBtc = config('appAdditional.minConfirmBtc');
+        $minConfirmBtc = config('appAdditional.normalConfirmBtc');
 
         while (true) {
             $transactions = Transaction::where('confirmations', '<', $minConfirmBtc)->where('type', 3)->get();
 
             foreach ($transactions as $transaction) {
+                try {
+                    $data = $service->getTransaction($transaction->ext_id);
 
-                if ($data = $service->getTransaction($transaction->ext_id)) {
+                    if ($data) {
+                        print_r($data);
 
-                    print_r($data);
+                        $transaction->confirmations = $data['confirmations'];
 
-                    $transaction->confirmations = $data['confirmations'];
-
-                    $transaction->save();
+                        $transaction->save();
+                    }
+                } catch (\Exception $ex) {
+                    //to do logs and rollback
+                    print_r($ex->getMessage());
                 }
             }
 

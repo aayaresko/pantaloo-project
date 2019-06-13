@@ -305,7 +305,7 @@ and you’ll be ready to play.</span></span></div>
                                                                     <div><span style="font-size:12px;"><span style="color:#ae94cd;">Enjoy and have fun,<br>
 Support Team</span></span></div>
 
-                                                                    <div><a href="http://www.casinobit.io"><span style="color:#FFFFFF;">casinobit.io</span></a></div>
+                                                                    <div><a href="https://www.casinobit.io"><span style="color:#FFFFFF;">casinobit.io</span></a></div>
                                                                 </td>
                                                             </tr>
                                                         </table>

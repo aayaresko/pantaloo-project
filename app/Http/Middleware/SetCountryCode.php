@@ -18,14 +18,8 @@ class SetCountryCode
     public function handle($request, Closure $next)
     {
         try {
-            if (!$request->session()->has('iso_code')) {
-
-                $ip = GeneralHelper::visitorIpCloudFire();
-
-                //to do this job edit session way
-                $ip = geoip($ip);
-
-                session(['iso_code' => $ip['iso_code']]);
+            if (! $request->session()->has('iso_code')) {
+                session(['iso_code' => GeneralHelper::visitorCountryCloudFlare()]);
             }
         } catch (\Exception $e) {
             session(['iso_code' => '']);

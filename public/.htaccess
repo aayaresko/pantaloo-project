@@ -5,9 +5,21 @@
 
     RewriteEngine On
 
+    RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"' [OR]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ - [env=proto:http]
+    RewriteCond %{HTTP:CF-Visitor} '"scheme":"https"' [OR]
+    RewriteCond %{HTTPS} =on
+    RewriteRule ^(.*)$ - [env=proto:https]
+
+    RewriteBase /
+
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*?)/?$ %{ENV:proto}://%1/$1 [R=301,L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    RewriteRule ^(.*)/$ %{ENV:proto}://%{HTTP_HOST}/$1 [L,R=301]
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d

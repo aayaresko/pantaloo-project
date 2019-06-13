@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Affiliates;
 
-use Hash;
+use DB;
 use App\User;
 use Validator;
 use App\Tracker;
@@ -11,20 +11,24 @@ use App\ExtraUser;
 use Carbon\Carbon;
 use App\UserActivation;
 use App\Bitcoin\Service;
+use App\Models\AgentsKoef;
+use App\Mail\BaseMailable;
+use App\Mail\EmailConfirm;
 use Helpers\GeneralHelper;
-use Illuminate\Http\Request;
 use App\Jobs\SetUserCountry;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Mail\EmailPartnerConfirm;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Validators\TemporaryMailCheck;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 /**
- * Class AuthController
- * @package App\Http\Controllers\Auth\Affiliates
+ * Class AuthController.
  */
 class AuthController extends Controller
 {
@@ -39,7 +43,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins, DispatchesJobs;
+    use ThrottlesLogins, DispatchesJobs;
 
     /**
      * Where to redirect users after login / registration.
@@ -47,6 +51,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
     protected $loginPath = '/';
 
     /**
@@ -56,7 +61,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware(['guest'], ['except' => 'logout']);
     }
 
     /**
@@ -65,6 +70,57 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        //temporary
+//        $errors = [];
+//        $data = $request->toArray();
+//        $validator = Validator::make($data, [
+//            'email' => 'required|email|max:255|unique:users|unique:new_affiliates',
+//            'agree' => 'accepted'
+//        ]);
+//
+//        // Check if mail provider is not temporary mail services
+//        $validator->after(function ($validator) use ($data) {
+//            if (TemporaryMailCheck::isTemporaryMailService($data['email'])) {
+//                $validator->errors()->add('email', 'Try use other mail service!');
+//            }
+//        });
+//
+//        if ($validator->fails()) {
+//            $validatorErrors = $validator->errors()->toArray();
+//            array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
+//                array_push($errors, $item);
+//            });
+//
+//            return response()->json([
+//                'status' => false,
+//                'message' => [
+//                    'errors' => $errors
+//                ]
+//            ]);
+//        }
+//
+//        $email = $request->email;
+//        $currentDate = new \DateTime();
+//
+//        DB::table('new_affiliates')->insert([
+//            [
+//                'email' => $email,
+//                'type_id' => 2,
+//                'created_at' => $currentDate,
+//                'updated_at' => $currentDate
+//            ],
+//        ]);
+//
+//        return response()->json([
+//            'status' => true,
+//            'message' => [
+//                'email' => $email,
+//                'title' => 'Register a CasinoBit Affiliate Account',
+//                'body' => '<h4>Thank you for understanding! We will contact you!</h4>'
+//            ]
+//        ]);
+
+        //normal code
         $data = $request->toArray();
         $validator = Validator::make($data, [
             'name' => 'string|max:255',
@@ -80,16 +136,22 @@ class AuthController extends Controller
             array_walk_recursive($validatorErrors, function ($item, $key) use (&$errors) {
                 array_push($errors, $item);
             });
+
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => $errors
-                ]
+                    'errors' => $errors,
+                ],
             ]);
         }
+//
 
-        $service = new Service();
-        $address = $service->getNewAddress('common');
+        if (GeneralHelper::isTestMode()) {
+            $address = 'bitcoinTestAddress';
+        } else {
+            $service = new Service();
+            $address = $service->getNewAddress('common');
+        }
 
         if (isset($data['name'])) {
             $name = $data['name'];
@@ -100,8 +162,8 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $name,
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'commission' => $partnerCommission
+            'password' => Hash::make($data['password']),
+            'commission' => $partnerCommission,
         ]);
 
         $user->bitcoin_address = $address;
@@ -112,15 +174,16 @@ class AuthController extends Controller
             $user->ip = $ip;
         }
 
+        $tracker = false;
         $tracker_id = Cookie::get('tracker_id');
-
         if ($tracker_id) {
             $tracker = Tracker::find($tracker_id);
-
-            if ($tracker) {
-                $user->tracker()->associate($tracker);
-                $user->agent_id = $tracker->user_id;
-            }
+        } elseif($request->ref) {
+            $tracker = Tracker::where('ref', $request->ref)->first();
+        }
+        if ($tracker) {
+            $user->tracker()->associate($tracker);
+            $user->agent_id = $tracker->user_id;
         }
 
         $currency = Currency::find(1);
@@ -132,6 +195,10 @@ class AuthController extends Controller
         $user->role = 1;
 
         $user->save();
+        $newKoef = new AgentsKoef();
+        $newKoef->user_id = $user->id;
+        $newKoef->koef = 0;
+        $newKoef->save();
 
         $this->dispatch(new SetUserCountry($user));
 
@@ -148,8 +215,8 @@ class AuthController extends Controller
             'message' => [
                 'email' => $email,
                 'title' => 'Confirm Email',
-                'body' => (string)view('affiliates.parts.confirm_email')->with(['email' => $email])
-            ]
+                'body' => (string) view('affiliates.parts.confirm_email')->with(['email' => $email]),
+            ],
         ]);
     }
 
@@ -159,14 +226,15 @@ class AuthController extends Controller
      */
     public function enter(Request $request)
     {
+        //to do lock if many request  - looking at default auth method
         $user = Auth::user();
         if (Auth::check()) {
             if ($user->isAgent()) {
                 return response()->json([
                     'status' => true,
                     'message' => [
-                        'redirect' => '/affiliates/dashboard'
-                    ]
+                        'redirect' => '/affiliates/dashboard',
+                    ],
                 ]);
             }
         }
@@ -178,7 +246,7 @@ class AuthController extends Controller
         }
 
         //to do config
-        $allowRoles = [1, 3];
+        $allowRoles = [1, 3, 4];
         $email = $request->input('email');
 
         $user = User::select(['id', 'email_confirmed', 'role'])
@@ -189,8 +257,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['These credentials do not match our records.']
-                ]
+                    'errors' => ['These credentials do not match our records.'],
+                ],
             ]);
         }
 
@@ -198,12 +266,12 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['The email has not confirmed.']
-                ]
+                    'errors' => ['The email has not confirmed.'],
+                ],
             ]);
         }
 
-        $roleUser = (int)$user->role;
+        $roleUser = (int) $user->role;
         $allowRoleKey = array_search($roleUser, $allowRoles);
         if ($allowRoleKey === false) {
             $allowRole = $allowRoles[0];
@@ -214,37 +282,39 @@ class AuthController extends Controller
         $authData = [
             'email' => $email,
             'password' => $request->input('password'),
-            'role' => $allowRole
+            'role' => $allowRole,
         ];
 
         if (Auth::attempt($authData, $remember)) {
             $user = Auth::user();
             $extraUser = ExtraUser::where('user_id', $user->id)->first();
-            if (!is_null($extraUser)) {
-                if ((int)$extraUser->block > 0) {
+            if (! is_null($extraUser)) {
+                if ((int) $extraUser->block > 0) {
                     Auth::logout();
+
                     return response()->json([
                         'status' => false,
                         'message' => [
-                            'errors' => ['The user is blocked']
-                        ]
+                            'errors' => ['The user is blocked'],
+                        ],
                     ]);
                 }
             }
             //to do super affiliates
             switch ($roleUser) {
                 case 1:
-                    return response()->json([
-                        'status' => true,
-                        'message' => [
-                            'redirect' => '/affiliates',
-                        ]
-                    ]);
                 case 3:
                     return response()->json([
                         'status' => true,
                         'message' => [
-                            'redirect' => '/admin',
+                            'redirect' => '/affiliates',
+                        ],
+                    ]);
+                case 4:
+                    return response()->json([
+                        'status' => true,
+                        'message' => [
+                            'redirect' => '/admin/agent/tree',
                         ]
                     ]);
             }
@@ -252,8 +322,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'errors' => ['These credentials do not match our records.']
-                ]
+                    'errors' => ['These credentials do not match our records.'],
+                ],
             ]);
         }
     }
@@ -264,6 +334,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('affiliates.index');
     }
 
@@ -279,8 +350,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'User is not found.'
-                ]
+                    'errors' => 'User is not found.',
+                ],
             ];
         }
 
@@ -288,8 +359,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Something went wrong.'
-                ]
+                    'errors' => 'Something went wrong.',
+                ],
             ];
         }
 
@@ -312,11 +383,11 @@ class AuthController extends Controller
 
         $token = GeneralHelper::generateToken();
 
-        $link = url('/') . '?confirm=' . $token . '&email=' . $user->email;
+        $link = url('/').'?confirm='.$token.'&email='.$user->email;
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
-        if (!$activation) {
+        if (! $activation) {
             $activation = new UserActivation();
         }
 
@@ -325,13 +396,13 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        Mail::queue('emails.partner.confirm', ['link' => $link], function ($m) use ($user) {
-            $m->to($user->email, $user->name)->subject('Confirm email');
-        });
+        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link]);
+        $mail->subject('Confirm email');
+        Mail::to($user)->send($mail);
 
         return [
             'status' => true,
-            'message' => []
+            'message' => [],
         ];
     }
 
@@ -349,8 +420,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'User is not found'
-                ]
+                    'errors' => 'User is not found',
+                ],
             ];
         }
 
@@ -376,8 +447,8 @@ class AuthController extends Controller
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Email already confirmed'
-                ]
+                    'errors' => 'Email already confirmed',
+                ],
             ];
         }
 
@@ -396,14 +467,14 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => [
                     'messages' => 'Congratulations! E-mail was confirmed!',
-                ]
+                ],
             ];
         } else {
             return [
                 'status' => false,
                 'message' => [
-                    'errors' => 'Email wasn\'t confirmed. Invalid link.'
-                ]
+                    'errors' => 'Email wasn\'t confirmed. Invalid link.',
+                ],
             ];
         }
     }

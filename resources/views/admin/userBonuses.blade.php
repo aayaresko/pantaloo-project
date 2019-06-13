@@ -28,7 +28,8 @@
                                         <td>{{$active_bonus->bonus->id}}</td>
                                         <td>{{$active_bonus->bonus->name}}</td>
                                         <td>{{$active_bonus->bonus->descr}}</td>
-                                        <td>Percent: {{$bonus_obj->getPercent()}} %<br>Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</td>
+                                        <td>TO DO THIS</td>
+                                        {{--<td>Percent: {{$bonus_obj->getPercent()}} %<br>Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</td>--}}
                                         <td><a href="{{route('admin.bonusCancel', $user)}}" class="btn btn-danger">Cancel</a></td>
                                     </tr>
                                 @else

@@ -3,8 +3,7 @@
 namespace App\Modules\Games;
 
 /**
- * Interface GamesSystem
- * @package App\Modules\Games
+ * Interface GamesSystem.
  */
 interface GamesSystem
 {

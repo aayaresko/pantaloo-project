@@ -1,9 +1,9 @@
 <?php
 
-if (!function_exists('translate')) {
+if (! function_exists('translate')) {
 
     /**
-     * description
+     * description.
      *
      * @param
      * @return
@@ -14,28 +14,28 @@ if (!function_exists('translate')) {
 
         $translation = \App\Translation::where('eng', $eng)->first();
 
-        if(!$translation)
-        {
+        if (! $translation) {
             $translation = new \App\Translation();
             $translation->eng = $eng;
             $translation->save();
 
             return msg($eng, $messages);
-        }
-        else
-        {
-            if($lang == 'ru') {
-                if ($translation->status == 1) return msg($translation->rus, $messages);
-                else return msg($eng, $messages);
+        } else {
+            if ($lang == 'ru') {
+                if ($translation->status == 1) {
+                    return msg($translation->rus, $messages);
+                } else {
+                    return msg($eng, $messages);
+                }
+            } else {
+                return msg($eng, $messages);
             }
-            else return msg($eng, $messages);
         }
     }
 
     function msg($str, $messages)
     {
-        foreach ($messages as $message)
-        {
+        foreach ($messages as $message) {
             $str = sprintf($str, $message);
         }
 

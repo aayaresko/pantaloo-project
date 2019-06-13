@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Validator;
-use App\Bitcoin\Service;
-use App\Invoice;
-use App\Jobs\Withdraw;
-use App\Transaction;
 use App\User;
-use App\Jobs\BonusHandler;
-use Helpers\BonusHelper;
+use Validator;
+use App\Invoice;
 use App\UserBonus;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
+use App\Transaction;
 use Helpers\PayTrio;
+use App\Http\Requests;
+use App\Jobs\Withdraw;
+use App\Bitcoin\Service;
+use Helpers\BonusHelper;
+use App\Jobs\BonusHandler;
+use Illuminate\Http\Request;
+use App\Models\SystemNotification;
+use Illuminate\Support\Facades\Auth;
+use App\Events\WithdrawalFrozenEvent;
+use App\Events\WithdrawalApprovedEvent;
+use App\Events\WithdrawalRequestedEvent;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class MoneyController extends Controller
@@ -30,7 +34,9 @@ class MoneyController extends Controller
         if ($user->free_spins == 0) {
             $transaction = $user->transactions()->where('type', 9)->orderBy('id', 'DESC')->first();
 
-            if (!$transaction) throw new \Exception('Transaction not found');
+            if (! $transaction) {
+                throw new \Exception('Transaction not found');
+            }
 
             if ($user->transactions()->where('type', 10)->where('id', '>', $transaction->id)->count() > 0) {
                 $stop = true;
@@ -42,51 +48,118 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
-        //to do universal way define user to DO
-        $sessionId = $_COOKIE['laravel_session'];
-        $sessionLeftTime = config('session.lifetime');
-        $sessionLeftTimeSecond = $sessionLeftTime * 60;
-        $user = User::where('email', $email)->first();
+        try {
+            //to do universal way define user to DO
+            $sessionId = $_COOKIE['laravel_session'];
+            $sessionLeftTime = config('session.lifetime');
+            $sessionLeftTimeSecond = $sessionLeftTime * 60;
 
-        //to do this - fix this = use universal way
-        $sessionUser = DB::table('sessions')->where('user_id', $user->id)
-            ->where('id', $sessionId)
-            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
-            ->first();
+            $date = new \DateTime();
+            $minimumAllowedActivity = $date->modify("-$sessionLeftTimeSecond second");
 
-        if (is_null($sessionUser)) {
-            return response()->json([
-                'status' => false,
-                'messages' => ['User or session is not found'],
-            ]);
+            //to do this - fix this = use universal way for get sessino user
+            //select nesessary fields
+            $user = User::select(['users.*', 's.id as session_id'])
+                ->join('sessions as s', 's.user_id', '=', 'users.id')
+                ->where('users.email', $email)
+                ->where('s.id', $sessionId)
+                ->where('s.last_activity', '>=', $minimumAllowedActivity)
+                ->first();
+
+            if (is_null($user) or is_null($user->session_id)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }
+
+//        $sessionUser = DB::table('sessions')
+//            ->where('id', $sessionId)
+//            ->where('user_id', $user->id)
+//            ->where('last_activity', '<=', DB::raw("last_activity + $sessionLeftTimeSecond"))
+//            ->first();
+
+            /*if (is_null($user)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }*/
+
+            //to do once in 10 seconds and use other table for notifications
+
+            //to do fix this
+            $notificationTransactionDeposit = SystemNotification::where('user_id', $user->id)
+                ->where(function ($query) {
+                    $query->where('type_id', '=', 1)
+                        ->orWhere('type_id', '=', 2);
+                })
+                ->where('status', 0)
+                ->first();
+
+            if ($notificationTransactionDeposit) {
+                SystemNotification::where('id', $notificationTransactionDeposit->id)->update([
+                    'status' => 1,
+                ]);
+
+                $extraSystemNotification = json_decode($notificationTransactionDeposit->extra);
+                $sum = $extraSystemNotification->depositAmount;
+            } else {
+                $sum = false;
+            }
+
+//        $transaction = $user->transactions()
+//            ->where('type', 3)->where('notification', 0)->first();
+//
+//        if ($transaction) {
+//            $sum = $transaction->sum;
+//            $transaction->notification = 1;
+//            $transaction->save();
+//        } else {
+//            $sum = false;
+//        }
+
+            //to do check active bonus
+            //to do not use dispatch
+            if ($user->bonus_id) {
+                $checkFrequencyBonus = config('bonus.checkFrequency');
+                if (rand(1, $checkFrequencyBonus) === 1) {
+                    DB::beginTransaction();
+                    //get user for lock
+                    $currentUser = User::where('id', $user->id)
+                        ->lockForUpdate()->first();
+
+                    $class = BonusHelper::getClass($currentUser->bonus_id);
+                    $bonusObject = new $class($currentUser);
+
+                    $bonusClose = $bonusObject->close(1);
+                    if ($bonusClose['success'] === false) {
+                        DB::rollBack();
+                    }
+                    DB::commit();
+                }
+            }
+
+            $response = [
+                'success' => true,
+                'realBalance' => $user->balance,
+                'balance' => $user->getBalance(),
+                'deposit' => $sum,
+                'free_spins' => $user->free_spins,
+                'balance_info' => [
+                    'balance' => $user->getBalance().' m'.strtoupper($user->currency->title),
+                    'real_balance' => $user->getRealBalance().' m'.strtoupper($user->currency->title),
+                    'bonus_balance' => $user->getBonusBalance().' m'.strtoupper($user->currency->title),
+                ],
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
         }
 
-        $transaction = $user->transactions()
-            ->where('type', 3)->where('notification', 0)->first();
-
-        if ($transaction) {
-            $sum = $transaction->sum;
-            $transaction->notification = 1;
-            $transaction->save();
-        } else {
-            $sum = false;
-        }
-
-        //to do check active bonus
-        //to do use dispatch
-        dispatch(new BonusHandler($user));
-
-        return response()->json([
-            'realBalance' => $user->balance,
-            'balance' => $user->getBalance(),
-            'deposit' => $sum,
-            'free_spins' => $user->free_spins,
-	        'balance_info' => [
-	        	'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
-	        	'real_balance' => $user->getRealBalance() . ' m' . strtoupper($user->currency->title),
-	        	'bonus_balance' => $user->getBonusBalance() . ' m' . strtoupper($user->currency->title),
-	        ]
-        ]);
+        return response()->json($response);
     }
 
     /**
@@ -119,7 +192,7 @@ class MoneyController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
 
-        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: ' . $data);
+        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: '.$data);
     }
 
     public function newTransactions($transaction_id)
@@ -133,7 +206,7 @@ class MoneyController extends Controller
                 'date' => $item->created_at->format('d M Y H:i'),
                 'id' => $item->id,
                 'status' => $item->getStatus(),
-                'amount' => $item->getSum()
+                'amount' => $item->getSum(),
             ];
         }));
     }
@@ -149,7 +222,7 @@ class MoneyController extends Controller
                 'date' => $item->created_at->format('d M Y H:i'),
                 'id' => $item->id,
                 'status' => $item->getStatus(),
-                'amount' => $item->getSum()
+                'amount' => $item->getSum(),
             ];
         }));
     }
@@ -166,9 +239,8 @@ class MoneyController extends Controller
             [
                 'qr_code' => $qrcode->size(200)->generate(Auth::user()->bitcoin_address),
                 'bitcoin_address' => Auth::user()->bitcoin_address,
-                'transactions' => $deposits
+                'transactions' => $deposits,
             ]);
-
     }
 
     public function withdraw()
@@ -184,25 +256,52 @@ class MoneyController extends Controller
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
         //check bonus
-        BonusHelper::bonusCheck($user, 1);
+        if ($user->bonus_id) {
+            $class = BonusHelper::getClass($user->bonus_id);
+            $bonusObject = new $class($user);
 
-        if($user->bonuses()->first()) return redirect()->back()->withErrors(['Bonus is active']);
+            DB::beginTransaction();
+            $bonusClose = $bonusObject->close(0);
+            if ($bonusClose['success'] === false) {
+                DB::rollBack();
+            }
+            DB::commit();
+        }
+        //check bonus
 
-        if($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        if ($user->bonuses()->first()) {
+            return redirect()->back()->withErrors(['Bonus is active']);
+        }
 
-        if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) return redirect()->back()->withErrors(['E-mail confirmation required']);
+        if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) {
+            return redirect()->back()->withErrors(['You have unconfirmed deposits']);
+        }
+
+        if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) {
+            return redirect()->back()->withErrors(['E-mail confirmation required']);
+        }
+
+        //2391
+        if ((int) $user->id > 2391) {
+            if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                return redirect()->back()->withErrors(['You do not have any deposits.']);
+            }
+        }
 
         $this->validate($request, [
             'address' => 'required',
-            'sum' => 'required|numeric|min:1'
+            'sum' => 'required|numeric|min:1',
         ]);
-
 
         $service = new Service();
 
-        if ($request->input('sum') < 1) return redirect()->back()->withErrors(['Minimum sum is 1']);
+        if ($request->input('sum') < 1) {
+            return redirect()->back()->withErrors(['Minimum sum is 1']);
+        }
 
-        if (!$service->isValidAddress($request->input('address'))) return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        if (! $service->isValidAddress($request->input('address'))) {
+            return redirect()->back()->withErrors(['Invalid bitcoin address']);
+        }
 
         $sum = $request->input('sum');
         $sum = round($sum, 5, PHP_ROUND_HALF_DOWN);
@@ -226,13 +325,15 @@ class MoneyController extends Controller
 
         $lang = config('currentLang');
 
+        event(new WithdrawalRequestedEvent($user));
+
         return redirect()->route('withdraw', ['lang' => $lang])->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
 
     public function transfers(Request $request)
     {
         try {
-            $start = Carbon::createFromFormat("Y-m-d", $request->input('start'));
+            $start = Carbon::createFromFormat('Y-m-d', $request->input('start'));
         } catch (\Exception $e) {
             $start = Carbon::now();
         }
@@ -240,7 +341,7 @@ class MoneyController extends Controller
         $start->setTime(0, 0, 0);
 
         try {
-            $end = Carbon::createFromFormat("Y-m-d", $request->input('end'));
+            $end = Carbon::createFromFormat('Y-m-d', $request->input('end'));
         } catch (\Exception $e) {
             $end = Carbon::now();
         }
@@ -275,20 +376,24 @@ class MoneyController extends Controller
 
     public function stat(Request $request)
     {
-
     }
 
     public function aprove(Transaction $transaction)
     {
         if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
-
             $transaction->withdraw_status = 3;
             $transaction->save();
+
+            $user = User::where('id', $transaction->user_id)->first();
+
+            event(new WithdrawalApprovedEvent($user));
 
             $this->dispatch(new Withdraw($transaction));
 
             return redirect()->route('pending')->with('msg', 'Transfer was complete!');
-        } else return redirect()->back()->withErrors(['Invalid type and status']);
+        } else {
+            return redirect()->back()->withErrors(['Invalid type and status']);
+        }
     }
 
     public function freeze(Transaction $transaction)
@@ -297,8 +402,14 @@ class MoneyController extends Controller
             $transaction->withdraw_status = -1;
             $transaction->save();
 
+            $user = User::where('id', $transaction->user_id)->first();
+
+            event(new WithdrawalFrozenEvent($user, $transaction->comment));
+
             return redirect()->route('pending')->with('msg', 'Transaction was frozen');
-        } else return redirect()->back()->withErrors(['Invalid type']);
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
     }
 
     public function unfreeze(Transaction $transaction)
@@ -308,7 +419,9 @@ class MoneyController extends Controller
             $transaction->save();
 
             return redirect()->route('pending')->with('msg', 'Transaction was unfrozen');
-        } else return redirect()->back()->withErrors(['Invalid type']);
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
     }
 
     public function cancel(Transaction $transaction)
@@ -318,7 +431,9 @@ class MoneyController extends Controller
             $transaction->save();
 
             return redirect()->route('pending')->with('msg', 'Transaction was canceled');
-        } else return redirect()->back()->withErrors(['Invalid type']);
+        } else {
+            return redirect()->back()->withErrors(['Invalid type']);
+        }
     }
 
     public function pending()
@@ -333,9 +448,8 @@ class MoneyController extends Controller
     }
 
     /**
-     * USD wallet
+     * USD wallet.
      */
-
     public function depositUsd()
     {
         return view('usd.deposit');
@@ -344,7 +458,7 @@ class MoneyController extends Controller
     public function depositUsdDo(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required|numeric|min:1'
+            'amount' => 'required|numeric|min:1',
         ]);
 
         $invoice = new Invoice();
@@ -355,8 +469,8 @@ class MoneyController extends Controller
         $form_data = [
             'currency' => 840,
             'amount' => $request->input('amount'),
-            'description' => 'Пополнение счета ' . Auth::user()->email,
-            'shop_invoice_id' => $invoice->id
+            'description' => 'Пополнение счета '.Auth::user()->email,
+            'shop_invoice_id' => $invoice->id,
         ];
 
         $pay = new PayTrio('304221', 'x7kR0RgDg2R3JpD4duditHXsdi7ZI0Fsx');
@@ -385,13 +499,13 @@ class MoneyController extends Controller
         $this->validate($request, [
             'shop_invoice_id' => 'required|numeric|min:1',
             'shop_amount' => 'required|numeric|min:1',
-            'sign' => 'required'
+            'sign' => 'required',
         ]);
 
         $data = [
             'invoice_id' => $request->input('shop_invoice_id'),
             'amount' => $request->input('shop_amount'),
-            'sign' => $request->input('sign')
+            'sign' => $request->input('sign'),
         ];
 
         $invoice = Invoice::where(['id' => $data['invoice_id'], 'amount' => $data['amount'], 'sign' => $data['sign']])->first();
@@ -420,7 +534,7 @@ class MoneyController extends Controller
         if ($status) {
             echo 'OK';
         } else {
-            throw new \Exception("Something went wrong");
+            throw new \Exception('Something went wrong');
         }
     }
 }
