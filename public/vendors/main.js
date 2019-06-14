@@ -270,14 +270,18 @@ function getCurrentScreen(){
 
 	}
 
-	getCurrentScreen()
+	// getCurrentScreen()
+
+	getCurrentScreen();
+
 
 	$(window).on('mousewheel', getCurrentScreen);
 
-
-	$("#reg-terms h3").on("click", function () {
-        $(this).next().slideToggle(500);
+	$(".faqWrapper h6, .faqWrapper h5, .faqWrapper h4, .faqWrapper h3, .faqWrapper h2, .faqWrapper h1").on('click', function(){
+		$(this).next().toggleClass('showFaq');
+		$(this).toggleClass("rotateArrow");
 	});
+
 
 	$(window).on('scroll', function(){
 
@@ -293,9 +297,9 @@ function getCurrentScreen(){
 
 	$(".toTop").on("click", function(){
 		$("html").animate({scrollTop: 0},1000);
-
 	})
 	
+
 
 	// function bonusTerms() {
 	// 	$('.block-bonus-buttons .usl-link').on('click', function (e) {
