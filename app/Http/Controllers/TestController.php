@@ -48,6 +48,8 @@ class TestController extends Controller
     {
         dump(IntercomHelper::getIntercomConfigByCountryCode('TH'));
         dump(IntercomHelper::getIntercomConfigByUser(\Illuminate\Support\Facades\Auth::user()));
+        dump(IntercomHelper::getIntercomConfig(\Illuminate\Support\Facades\Auth::user()));
+
         //dump($request->getClientIps());
         //phpinfo();
         exit();
