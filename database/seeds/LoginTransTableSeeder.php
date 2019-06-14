@@ -12,7 +12,7 @@ class LoginTransTableSeeder extends Seeder
     {
         $currentDate = new DateTime();
 
-        DB::table('translator_translations')->insert([
+        $data = [
             [
                 'locale' => 'en',
                 'namespace' => '*',
@@ -90,6 +90,11 @@ class LoginTransTableSeeder extends Seeder
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
-        ]);
+        ];
+
+        foreach ($data as $item) {
+            DB::table('translator_translations')->where('item', $item['item'])->delete();
+            DB::table('translator_translations')->insert([$item]);
+        }
     }
 }
