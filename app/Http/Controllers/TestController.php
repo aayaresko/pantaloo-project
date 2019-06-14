@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Helpers\IntercomHelper;
 use Log;
 use Auth;
 use Cookie;
@@ -45,7 +46,9 @@ class TestController extends Controller
 
     public function phpinfo(Request $request)
     {
-        dump($request->getClientIps());
+        dump(IntercomHelper::getIntercomConfigByCountryCode('TH'));
+        dump(IntercomHelper::getIntercomConfigByUser(\Illuminate\Support\Facades\Auth::user()));
+        //dump($request->getClientIps());
         //phpinfo();
         exit();
     }
