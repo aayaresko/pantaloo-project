@@ -88,13 +88,21 @@ class TransactionController extends Controller
             }
             $userId = $user->id;
 
+            //to do use table for deposit TO DO FIX THIS**********************
             $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
+            //$deposit = SystemNotification::where(['ext_id' => $txid])->first();
 
             if (! is_null($transactionSystem)) {
                 //update
                 //check must if transaction has 1 confirmation
                 //confirmations must be 1
+                //TO DO USE ONLY ONE TABLE**********************
                 Transaction::where('id', $transactionSystem->id)->update([
+                    'confirmations' => $rawTransaction['confirmations'],
+                ]);
+
+                //to do use $deposit->id
+                SystemNotification::where('transaction_id', $transactionSystem->id)->update([
                     'confirmations' => $rawTransaction['confirmations'],
                 ]);
 
@@ -145,6 +153,9 @@ class TransactionController extends Controller
                     //to do config - mean deposit transactions
                     'type_id' => $depositNotifications,
                     'value' => $amountTransaction,
+                    'transaction_id' => $transaction->id,
+                    'confirmations' => $rawTransaction['confirmations'],
+                    'ext_id' => $rawTransaction['txid'],
                     'extra' => json_encode([
                         'transactionId' => $transaction->id,
                         'depositAmount' => $amountTransaction,

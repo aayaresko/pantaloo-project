@@ -287,49 +287,6 @@ $(document).ready(function(){
 
 	getCurrentScreen()
 
-	let table = $('#transactionsTable').DataTable({
-		"searching": false,
-		"bPaginate": true,
-		"info":     false,
-		"ajax": "/vendors/test.json",
-		"iDisplayLength" : 10,
-		"columns": [
-            { "data": "date" },
-            { "data": "id" },
-            { "data": "status" },
-            { "data": "amount" }
-		],
-		
-		"columnDefs": [
-			{ "orderable": false, "targets": 1 },
-			{ "orderable": false, "targets": 2 }
-		  ],
-		drawCallback: function(){
-			// $('#btn-example-load-more').toggle(this.api().page.hasMore());
-		},
-		createdRow: function( row, data, dataIndex ) {
-			// Set the data-status attribute, and add a class
-			let tdStatus = $( row ).find('td:eq(2)')
-			tdStatus.addClass('statustransAction');
-				
-			if(data.status === 'Confirmed' ){
-				tdStatus.addClass('confirm')
-			}else{
-				tdStatus.addClass('notConfirm')
-			}
-	
-		}
-
-	});
-
-	$('.loadMoredataTableBtn').on('click', function(){  
-
-		table.page.loadMore();
-
-	 });
-
-
-
 
 	 $(".unavailInfo").on("click", '#popUpBonus',function(){
 		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
