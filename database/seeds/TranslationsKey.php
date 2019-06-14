@@ -1,17 +1,19 @@
 <?php
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class TranslationsKey extends Seeder
 {
     /**
-     * Run the database seeds.
+     * @throws Exception
      *
-     * @return void
      */
     public function run()
     {
         $currentDate = new DateTime();
-        DB::table('translator_translations')->insert([
+
+        $data = [
             [
                 'locale' => 'en',
                 'namespace' => '*',
@@ -276,95 +278,13 @@ Our experts have taken various sophisticated measures to prevent the theft of fu
                 'locked' => '0',
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
-            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'not_allowed_title',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'not_allowed_subtitle',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'contact_us',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'affiliate_info',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'dont_have_account',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'have_account',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'create_account',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-//            [
-//                'locale' => 'en',
-//                'namespace' => '*',
-//                'group' => 'casino',
-//                'item' => 'enter_account',
-//                'text' => '',
-//                'unstable' => '0',
-//                'locked' => '0',
-//                'created_at' => $currentDate,
-//                'updated_at' => $currentDate,
-//            ],
-        ]);
+            ]
+        ];
+
+        foreach ($data as $item) {
+            DB::table('translator_translations')->where('item', $item['item'])->delete();
+        }
+
+        DB::table('translator_translations')->insert($data);
     }
 }
