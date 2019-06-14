@@ -564,6 +564,7 @@ header.header.active .promo-actions-block .promo-action-btn {
     top: 0px;
     left: 0px;
     z-index: -1;
+    pointer-events: none;
 }
 /* line 182, ../scss/_navigation.scss */
 .header .floated {
@@ -5740,16 +5741,69 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   position: relative;
 }
 
-.flexChild:nth-child(odd) .block-bonus-left{
+
+.flexChild:nth-child(even) .block-bonus-left{
     left: auto;
     right: 30px;
 }
 
+
 .flexChild:nth-child(odd) .block-bonus-right{
-    right: auto;
+    /* left: auto; */
+    right: 80px;
+}
+
+.flexChild:nth-child(even) .block-bonus-right{
+    /* right: auto; */
     left: 80px;
 }
 
+.toTop{
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  background: linear-gradient(115deg, #421f91, #a92e9f);
+  border-radius: 100%;
+  border: none;
+  text-align: center;
+  line-height: 10px;
+  z-index: 9999999;
+  outline: none;
+  transform: translateX(100px);
+  opacity: 0;
+  transition: transform 0.9s, opacity 0.2s;
+}
+
+.toTop.hideBtnToTop{
+  transform: translateX(0px);
+  opacity: 1;
+}
+
+.toTop svg{
+  fill: #fff;
+  transform: rotate(-90deg);
+}
+
+
+.toTop:before{
+  content: '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin: -2px;
+  z-index: -1;
+  background: linear-gradient(90deg, #34248c, #844099);
+  opacity: 0.42;
+  position: absolute;
+  border-radius: inherit;
+}
+
+.toTop:hover{
+  box-shadow: inset 0 0 10px #000;
+}
 
 
 
@@ -7196,15 +7250,30 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 
 @media (max-width: 991px) {
 
+  .toTop{
+    right: 20px;
+    bottom: 100px;
+  }
+
 
   
- .flexChild:nth-child(odd) .block-bonus-right{
+.flexChild:nth-child(odd) .block-bonus-left{
   left: 10px;
 }
 
-.flexChild:nth-child(odd) .block-bonus-left{
+.flexChild:nth-child(even) .block-bonus-right{
+  left: 20px;
+}
+
+.flexChild:nth-child(odd) .block-bonus-right{
   right: 10px;
 }
+
+.flexChild:nth-child(even) .block-bonus-left{
+  right: 10px;
+}
+
+
 
 
   .errorMessage.showErrorMsg{
@@ -7681,6 +7750,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion .ui-accordion-content .single-section .text {
     font-size: 17px;
     margin-bottom: 10px;
+    margin-right: 20px;
   }
   /* line 1459, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-accordion .ui-accordion-content .single-section .field-block {
