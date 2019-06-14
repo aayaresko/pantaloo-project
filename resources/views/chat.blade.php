@@ -3,9 +3,9 @@
 @section('title', trans('casino.frq'))
 
 @section('content')
-    <div class="page-content-block"
-         style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
-        <div class="page-content-container">
+    <div class="page-content-block disabledBoxShadow"
+         style="background: #000 url('/media/images/bg/faq_bg.jpg') center no-repeat; background-size: cover;">
+        <div class="page-content-container faqWrapper">
             <div class="page-content-entry">
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
@@ -43,7 +43,10 @@
 
                     </div>
                 </div>
-
+            </div>
+            <div class="supportWrapper" style="display: none;">
+                <h3>{{ trans('casino.support_title') }}</h3>
+                <p>{{ trans('casino.support_subtitle') }}</p>
             </div>
         </div>
 
