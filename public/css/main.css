@@ -5742,10 +5742,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 
 
-.flexChild:nth-child(even) .block-bonus-left{
+/* .flexChild:nth-child(even) .block-bonus-left{
     left: auto;
     right: 30px;
-}
+} */
 
 
 .flexChild:nth-child(odd) .block-bonus-right{
@@ -5753,10 +5753,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
     right: 80px;
 }
 
-.flexChild:nth-child(even) .block-bonus-right{
-    /* right: auto; */
+/* .flexChild:nth-child(even) .block-bonus-right{
+    right: auto; 
     left: 80px;
-}
+} */
 
 .toTop{
   width: 60px;
@@ -7256,22 +7256,22 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   }
 
 
-  
+/*   
 .flexChild:nth-child(odd) .block-bonus-left{
   left: 10px;
-}
+} */
 
-.flexChild:nth-child(even) .block-bonus-right{
+/* .flexChild:nth-child(even) .block-bonus-right{
   left: 20px;
-}
+} */
 
-.flexChild:nth-child(odd) .block-bonus-right{
+/* .flexChild:nth-child(odd) .block-bonus-right{
   right: 10px;
-}
+} */
 
-.flexChild:nth-child(even) .block-bonus-left{
+/* .flexChild:nth-child(even) .block-bonus-left{
   right: 10px;
-}
+} */
 
 
 
