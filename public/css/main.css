@@ -5310,11 +5310,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   padding: 0px 20px;
 }
 
-#reg-terms > .termWrapperInner,
-#uls > .termWrapperInner{
-  padding: 0px;
-}
-
 .termContentwrapper br{
 	display: none;
 }
