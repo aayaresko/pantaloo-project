@@ -268,12 +268,10 @@ class UsersController extends Controller
 
             if ($block === 1) {
                 //to do necessary update this code for all drivers etc
-                $sessionsUser = DB::table('sessions')
-                    ->select(['id'])
+                //to do middleware where mark  active
+                DB::table('sessions')
                     ->where('user_id', $user->id)
-                    ->pluck('id')->all();
-
-                DB::table('sessions')->whereIn('id', $sessionsUser)->delete();
+                    ->delete();
             }
         }
 
