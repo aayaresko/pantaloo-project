@@ -5556,6 +5556,21 @@ text-transform: uppercase;
 	text-decoration: none;
 }
 
+#uls, #reg-terms, .activBonusPoUpWrap {
+  max-width: 950px;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #270840 0%, #3a1563 100%);
+  color: #ffffff;
+  /* font-family: "MyriadProRegular"; */
+  overflow: initial;
+  border-radius: 5px;
+  padding: 0px;
+  min-height: 240px;
+  position: relative;
+  margin: 0 auto;
+  padding-bottom: 15px;
+}
+
 .activBonusPoUpWrap{
 	display: flex;
 	justify-content: center;
@@ -5859,12 +5874,11 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 
 
-#uls, #reg-terms, .activBonusPoUpWrap {
+/* #uls, #reg-terms, .activBonusPoUpWrap {
   max-width: 950px;
   box-sizing: border-box;
   background: linear-gradient(90deg, #270840 0%, #3a1563 100%);
   color: #ffffff;
-  /* font-family: "MyriadProRegular"; */
   overflow: initial;
   border-radius: 5px;
   padding: 0px;
@@ -5872,7 +5886,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   position: relative;
   margin: 0 auto;
   padding-bottom: 15px;
-}
+} */
 
 #uls h2, #reg-terms h2{
   font-size: 20px;
