@@ -282,6 +282,25 @@ function getCurrentScreen(){
 		$(this).toggleClass("rotateArrow");
 	});
 
+
+	$(window).on('scroll', function(){
+
+		if($(window).scrollTop() > 500){
+			$(".toTop").addClass("hideBtnToTop");
+			// console.log('lol1')
+		}else{
+			$(".toTop").removeClass("hideBtnToTop");
+			// console.log('lol2')
+		}
+
+	});
+
+	$(".toTop").on("click", function(){
+		$("html").animate({scrollTop: 0},1000);
+	})
+	
+
+
 	// function bonusTerms() {
 	// 	$('.block-bonus-buttons .usl-link').on('click', function (e) {
 	// 		let linkBonus = $(this).attr('data-bonus-url');
