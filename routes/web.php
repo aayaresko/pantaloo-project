@@ -121,6 +121,141 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
         Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+        Route::get('sitemap', function() {
+
+            // create new sitemap object
+            $sitemap = App::make('sitemap');
+
+            // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+            // by default cache is disabled
+            $sitemap->setCache('laravel.sitemap', 60);
+
+            // check if there is cached sitemap and build new only if is not
+            if (!$sitemap->isCached()) {
+                // add item to the sitemap (url, date, priority, freq)
+//
+
+
+                // add item with translations (url, date, priority, freq, images, title, translations)
+                $translations = [
+                    ['language' => 'de', 'url' => URL::to('/de')],
+                    ['language' => 'en', 'url' => URL::to('/en')],
+                    ['language' => 'fr', 'url' => URL::to('/fr')],
+                    ['language' => 'it', 'url' => URL::to('/it')],
+                    ['language' => 'jp', 'url' => URL::to('/jp')],
+                    ['language' => 'ru', 'url' => URL::to('/ru')],
+                    ['language' => 'th', 'url' => URL::to('/th')],
+                    ['language' => 'vn', 'url' => URL::to('/vn')],
+                ];
+                $translationsGames = [
+                    ['language' => 'de', 'url' => URL::to('/de/games')],
+                    ['language' => 'en', 'url' => URL::to('/en/games')],
+                    ['language' => 'fr', 'url' => URL::to('/fr/games')],
+                    ['language' => 'it', 'url' => URL::to('/it/games')],
+                    ['language' => 'jp', 'url' => URL::to('/jp/games')],
+                    ['language' => 'ru', 'url' => URL::to('/ru/games')],
+                    ['language' => 'th', 'url' => URL::to('/th/games')],
+                    ['language' => 'vn', 'url' => URL::to('/vn/games')],
+                ];
+                $translationsFaq = [
+                    ['language' => 'de', 'url' => URL::to('/de/faq')],
+                    ['language' => 'en', 'url' => URL::to('/en/faq')],
+                    ['language' => 'fr', 'url' => URL::to('/fr/faq')],
+                    ['language' => 'it', 'url' => URL::to('/it/faq')],
+                    ['language' => 'jp', 'url' => URL::to('/jp/faq')],
+                    ['language' => 'ru', 'url' => URL::to('/ru/faq')],
+                    ['language' => 'th', 'url' => URL::to('/th/faq')],
+                    ['language' => 'vn', 'url' => URL::to('/vn/faq')],
+                ];
+                $translationsBonuses = [
+                    ['language' => 'de', 'url' => URL::to('/de/bonuses')],
+                    ['language' => 'en', 'url' => URL::to('/en/bonuses')],
+                    ['language' => 'fr', 'url' => URL::to('/fr/bonuses')],
+                    ['language' => 'it', 'url' => URL::to('/it/bonuses')],
+                    ['language' => 'jp', 'url' => URL::to('/jp/bonuses')],
+                    ['language' => 'ru', 'url' => URL::to('/ru/bonuses')],
+                    ['language' => 'th', 'url' => URL::to('/th/bonuses')],
+                    ['language' => 'vn', 'url' => URL::to('/vn/bonuses')],
+                ];
+                $translationsPasswordForgot = [
+                    ['language' => 'de', 'url' => URL::to('/de/password/forgot')],
+                    ['language' => 'en', 'url' => URL::to('/en/password/forgot')],
+                    ['language' => 'fr', 'url' => URL::to('/fr/password/forgot')],
+                    ['language' => 'it', 'url' => URL::to('/it/password/forgot')],
+                    ['language' => 'jp', 'url' => URL::to('/jp/password/forgot')],
+                    ['language' => 'ru', 'url' => URL::to('/ru/password/forgot')],
+                    ['language' => 'th', 'url' => URL::to('/th/password/forgot')],
+                    ['language' => 'vn', 'url' => URL::to('/vn/password/forgot')],
+                ];
+                $translationsPasswordEmail = [
+                    ['language' => 'de', 'url' => URL::to('/de/password/email')],
+                    ['language' => 'en', 'url' => URL::to('/en/password/email')],
+                    ['language' => 'fr', 'url' => URL::to('/fr/password/email')],
+                    ['language' => 'it', 'url' => URL::to('/it/password/email')],
+                    ['language' => 'jp', 'url' => URL::to('/jp/password/email')],
+                    ['language' => 'ru', 'url' => URL::to('/ru/password/email')],
+                    ['language' => 'th', 'url' => URL::to('/th/password/email')],
+                    ['language' => 'vn', 'url' => URL::to('/vn/password/email')],
+                ];
+
+                $getcategories = DB::table('games_types')->where('active',1)->orderBy('id', 'desc')->get();
+
+                foreach ($getcategories as $category) {
+                    $category_name = $category->default_name;
+                    $category_name = preg_replace('/\s/','-',$category_name);
+                    $updated_at = $category->updated_at;
+
+                    $translationscategory = [
+                        ['language' => 'de', 'url' => URL::to('/de/games/'.$category_name)],
+                        ['language' => 'en', 'url' => URL::to('/en/games/'.$category_name)],
+                        ['language' => 'fr', 'url' => URL::to('/fr/games/'.$category_name)],
+                        ['language' => 'it', 'url' => URL::to('/it/games/'.$category_name)],
+                        ['language' => 'jp', 'url' => URL::to('/jp/games/'.$category_name)],
+                        ['language' => 'ru', 'url' => URL::to('/ru/games/'.$category_name)],
+                        ['language' => 'th', 'url' => URL::to('/th/games/'.$category_name)],
+                        ['language' => 'vn', 'url' => URL::to('/vn/games/'.$category_name)],
+                    ];
+
+
+
+                    $sitemap->add(URL::to('/en/games/'.$category_name), $updated_at, '0.7', 'daily', [], null, $translationscategory);
+                }
+
+//                $sitemap->add(URL::to('/en/games/slots'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsSlots);
+//                $sitemap->add(URL::to('/en/games/dice'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsDice);
+//                $sitemap->add(URL::to('/en/games/blackjack'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBlackjack);
+//                $sitemap->add(URL::to('/en/games/roulette'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsRoulette);
+//                $sitemap->add(URL::to('/en/games/poker'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsPoker);
+//                $sitemap->add(URL::to('/en/games/baccarat'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBaccarat);
+//                $sitemap->add(URL::to('/en/games/bet-on-numbers'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsNumbers);
+//                $sitemap->add(URL::to('/en/games/keno'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsKeno);
+//                $sitemap->add(URL::to('/en/games/live-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsLiveGames );
+//                $sitemap->add(URL::to('/en/games/video-poker'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVideoPoker );
+//                $sitemap->add(URL::to('/en/games/table-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsTableGames );
+//                $sitemap->add(URL::to('/en/games/virtual-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVirtualGames );
+//                $sitemap->add(URL::to('/en/games/virtual-sports'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVirtualSports );
+//                $sitemap->add(URL::to('/en/games/scratch-cards'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsScratchCards );
+//                $sitemap->add(URL::to('/en/games/bingo'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBingo );
+//                $sitemap->add(URL::to('/en/games/others'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsOther );
+
+                $getgames = DB::table('games_list')->orderBy('system_id', 'desc')->get();
+
+                foreach ($getgames as $game) {
+                    $game_id = $game->system_id;
+                    $provider_id = $game->provider_id;
+                    $updated_at = $game->updated_at;
+                    $sitemap->add(URL::to('/integratedGameLink/provider/'.$provider_id.'/game/'.$game_id), $updated_at, '0.5', 'weekly');
+                }
+                $sitemap->add(URL::to('/en'), date('Y-m-dTH:i:sP', time()), '1', 'always', [], null, $translations);
+                $sitemap->add(URL::to('/en/games'), date('Y-m-dTH:i:sP', time()), '0.7', 'daily', [], null, $translationsGames);
+                $sitemap->add(URL::to('/en/faq'), date('Y-m-dTH:i:sP', time()),'0.3', 'monthly', [], null, $translationsFaq);
+                $sitemap->add(URL::to('/en/bonuses'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsBonuses);
+                $sitemap->add(URL::to('/en/password/forgot'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordForgot);
+                $sitemap->add(URL::to('/en/password/email'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordEmail);
+            }
+            return $sitemap->render('xml');
+        });
+
     });
 
     //Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);
@@ -143,6 +278,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
             Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
         });
+
 
         Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
         Route::post('/contribution', ['as' => 'usd.depositDo', 'uses' => 'MoneyController@depositUsdDo']);
