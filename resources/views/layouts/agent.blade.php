@@ -89,7 +89,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <!-- Notification -->
-                        <div class="notification-box">
+                        <!-- <div class="notification-box">
                             <ul class="list-inline m-b-0">
                                 <li>
                                     <a href="javascript:void(0);" class="right-bar-toggle">
@@ -101,7 +101,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                         <!-- End Notification bar -->
                     </li>
                     <li class="hidden-xs">
