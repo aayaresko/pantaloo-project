@@ -2,7 +2,6 @@
 
 @section('title', trans('casino.bonus'))
 
-
 @section('content')
     <div class="cabinet-block"
          style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
@@ -11,63 +10,51 @@
                 <div class="page-heading">
                     <h1 class="page-title">{{trans('casino.get_bonus')}}</h1>
                 </div>
-                <div class="userBalanceWrap">
-                    <i class="bitcoin-icon"></i>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
-                        <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
-                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    
-                    <div class="userBalanceCol">
-                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
-                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
-                                        class="text">{{ trans('casino.add_credits') }}</span></a>
-                </div>
+
+                @include('main_parts.header_account')
+
                 <div class="main-content-entry">
                     <div class="bonus-entry">
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
-                                
-                            @if($active_bonus)
+
+                            @if($activeBonus)
                                     <div class="item activated">
                                         <div class="single-bonus">
                                             <div class="itemWrapper">
-                                                <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
-                                                <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
+                                                <h3 class="title">{{trans($activeBonus->name)}}</h3>
+                                                <p class="text">{{trans($activeBonus->descr)}}</p>
                                                 <div class="activeWrapper">
-                                                        <div class="icon avail">
-
-                                                        </div>   
-                                                        @if ($active_bonus->bonus_id != 1)
-                                                            <h3 class="title">activated</h3>
-                                                            <p class="text">Wagered sum: {{$bonus_obj->getPlayedSum()}} mBtc</p>
-                                                            <p class="text">Percent: {{$bonus_obj->getPercent()}} %</p>
+                                                        <div class="icon avail"></div>
+                                                        <h3 class="title">activated</h3>
+                                                        <p class="text">Bonus wager: {{ $activeBonus->bonusStatistics['bonusWager']['real'] .
+                                                         ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }} {{ $currencyCode }}
+                                                        </p>
+                                                        @if ($activeBonus->id == 1)
+                                                                <p class="text">Deposit wager:  {{ $activeBonus->bonusStatistics['depositWager']['real'] .
+                                                                 ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
                                                         @endif
                                                 </div>
                                             </div>
                                             <div class="wrapperBottom">
                                                 <div class="btnWrap">
-                                                    <a href="{{route('bonus.cancel')}}" class="push-button canceledBtn"><i class="fa fa-plus"></i> {{ trans('casino.cancel') }}</a>
+                                                    <a href="{{ route('bonus.cancel') }}" class="push-button canceledBtn">
+                                                        <i class="fa fa-plus"></i>
+                                                        {{ trans('casino.cancel') }}
+                                                    </a>
                                                 </div>
                                                 <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
                                                 <!-- <a href="#" class="reg-terms showGameLink">Show games</a> -->
                                             </div>
-                                            
-                                                
+
                                             <!-- <a href="{{route('bonus.cancel')}}" class="push-button">{{ trans('casino.cancel') }}</a> -->
                                         </div>
                                     </div>
                                     @else
                
                             
-                                    @foreach($bonuses as $bonus)
+                                    @foreach($bonusForView as $bonus)
 
                                     <div class="item">
                                         <div class="single-bonus">
@@ -105,13 +92,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     @endforeach
-                                    
                                 @endif
 
-                                
-                                
                             </div>
                         </div>
                     </div>
@@ -121,40 +104,11 @@
         </div>
     </div>
 
-   
-
-    <footer class="footer footer-home">
-        <div class="bitcoin-block">
-            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
-        </div>
-        <div class="msg-block">
-            <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
-        </div>
-        <div class="games-listing-block">
-            <ul class="games-listing">
-                @include('footer_links')
-            </ul>
-        </div>
-        <div class="footer-copyrights">
-            <ul class="footerLinks">
-                <li class="rightReservedTxt">© All rights reserved</li>
-                <li><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li>
-                <li><a target="_blank" href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
-                <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
-                <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>
-            </ul>
-        </div>
-        
-    </footer>
-     <div class="hidden">
-        <div id="uls">
-            {!! trans('casino.bonus.term') !!}
-        </div>
-    </div>
+    @include('footer_main')
+@endsection
 
 @section('js')
     <script>
-
         function bonusAct() {
             //send form method post
             $('body').on('click', '.bonusActive', function (e) {

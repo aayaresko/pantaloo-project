@@ -141,10 +141,10 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::get('/deposit', ['as' => 'deposit', 'uses' => 'UserAccountController@deposit']);
             Route::get('/getDeposits', ['as' => 'getDeposit', 'uses' => 'UserAccountController@getDeposits']);
 
-            Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
+            Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'UserAccountController@withdraw']);
             Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
-            Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
-            Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
+            Route::get('/settings', ['as' => 'settings', 'uses' => 'UserAccountController@settings']);
+            Route::get('/bonus', ['as' => 'bonus', 'uses' => 'UserAccountController@bonuses']);
         });
 
         Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);

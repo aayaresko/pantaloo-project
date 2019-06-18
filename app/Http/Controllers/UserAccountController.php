@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bonus;
 use DB;
 use App\User;
 use Validator;
@@ -26,9 +27,16 @@ use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 class UserAccountController extends Controller
 {
 
-    public function account(Request $request)
+    public function account(Request $request, $lang)
     {
-        return view('account');
+        $user = $request->user();
+        $currencyCode = config('app.currencyCode');
+
+        return view('account', [
+            'currencyCode' => $currencyCode,
+            'user' => $user,
+            'lang' => $lang
+        ]);
     }
 
     public function deposit(Request $request, $lang)
@@ -46,6 +54,43 @@ class UserAccountController extends Controller
         ]);
     }
 
+    public function bonuses(Request $request)
+    {
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
+
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
+
+        $bonusForView = [];
+        $activeBonus = null;
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+
+            if (!is_null($bonus->activeBonus)) {
+                $activeBonus = $bonus;
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
+                $activeBonus->bonusStatistics = $bonusStatistics;
+            }
+
+            if ($bonusAvailable) {
+                array_push($bonusForView, $bonus);
+            }
+        }
+
+        $currencyCode = config('app.currencyCode');
+
+        return view('bonus', [
+            'currencyCode' => $currencyCode,
+            'bonusForView' => $bonusForView,
+            'activeBonus' => $activeBonus,
+            'user' => $user
+        ]);
+    }
+
     public function getDeposits(Request $request)
     {
         $user = $request->user();
@@ -58,20 +103,12 @@ class UserAccountController extends Controller
                throw new \Exception('user is not found');
             }
 
+            //to do new version not use transactions!!!!!!!!
             $depositsDate = SystemNotification::select(['created_at as date', 'transaction_id as id', 'confirmations', 'value as amount'])
                 ->where('user_id', $user->id)->skip($request->startItem)->take($request->getItem)->get();
 
-            //to do new version not use transactions
-
-            //to do script
-//            if (!$depositsDate->isEmpty() and is_null($depositsDate[0]->ext_id)) {
-//                $depositsDate = Transaction::select([
-//                    'transactions.created_at as date',
-//                    'transactions.id',
-//                    'transactions.confirmations',
-//                    'transactions.sum as amount'
-//                ])->where('user_id', $user->id)->skip($request->startItem)->take($request->getItem)->get();
-//            }
+            $nextCount = SystemNotification::where('user_id', $user->id)
+                ->skip($request->startItem + $request->getItem)->take($request->getItem)->count();
 
             $deposits = $depositsDate->map(function ($item, $key) use ($params) {
                 $item->status = 'No confirmed';
@@ -95,15 +132,36 @@ class UserAccountController extends Controller
         return [
             'success' => true,
             'messages' => ['Done'],
-            'deposits' => $deposits
+            'deposits' => $deposits,
+            'countNext' => $nextCount
         ];
     }
 
-    public function withdraw()
+    public function settings(Request $request, $lang)
     {
+        $user = $request->user();
+        $currencyCode = config('app.currencyCode');
+
+        return view('passwords', [
+            'currencyCode' => $currencyCode,
+            'user' => $user,
+            'lang' => $lang
+        ]);
+    }
+
+    public function withdraw(Request $request, $lang)
+    {
+        $user = $request->user();
+        $currencyCode = config('app.currencyCode');
+
         $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get();
 
-        return view('withdraw', ['transactions' => $transactions]);
+        return view('withdraw', [
+            'transactions' => $transactions,
+            'currencyCode' => $currencyCode,
+            'user' => $user,
+            'lang' => $lang
+        ]);
     }
 
     public function withdrawDo(Request $request)

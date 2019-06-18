@@ -315,6 +315,7 @@ class MoneyController extends Controller
         $transaction->withdraw_status = 0;
         $transaction->address = $request->input('address');
 
+        //to do change balance fix this code
         try {
             Auth::user()->changeBalance($transaction);
         } catch (\Exception $e) {

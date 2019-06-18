@@ -15,24 +15,9 @@
             <div class="page-heading unbordered">
                 <h1 class="page-title">{{ trans('casino.settings') }}</h1>
             </div>
-            <div class="userBalanceWrap">
-                    <i class="bitcoin-icon"></i>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
-                        <p class="balancebox-getbalance">{{Auth::user()->getBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
-                        <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    
-                    <div class="userBalanceCol">
-                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
-                        <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}} m{{strtoupper(Auth::user()->currency->title)}}</p>
-                    </div>
-                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
-                                        class="text">{{ trans('casino.add_credits') }}</span></a>
-            </div>
+
+            @include('main_parts.header_account')
+
             <div class="main-content-entry">
                 <div class="setting-entry">
                     <div class="setting-tabs">
@@ -109,7 +94,7 @@
                                 <p class="emailConfInfo">
                                     {{ trans('casino.confirmed_email') }}
                                 </p>
-                                <p class="supportContact">
+                                <p class="supportContact showIntercom">
                                     {{ trans('casino.contact_support_intro') }}
                                     <a href="#">{{ trans('casino.contact_support') }}</a>
                                 </p>

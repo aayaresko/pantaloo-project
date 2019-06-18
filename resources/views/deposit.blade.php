@@ -7,32 +7,12 @@
          style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
         <div class="cabinet-entry cabinetMod">
             <div class="main-content">
+
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.deposit'), MB_CASE_UPPER) }}</h1>
                 </div>
 
-                <div class="userBalanceWrap">
-                    <i class="bitcoin-icon"></i>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.balance') }}</span>
-                        <p class="balancebox-getbalance">{{ $user->getBalance() }}
-                            {{ $currencyCode }}</p>
-                    </div>
-                    <div class="userBalanceCol leftBorder">
-                        <span class="userBalanceTxt">{{ trans('casino.real_balance') }}</span>
-                        <p class="balancebox-getrealbalance">{{ $user->getRealBalance() }}
-                            {{ $currencyCode }}</p>
-                    </div>
-
-                    <div class="userBalanceCol">
-                        <span class="userBalanceTxt">{{ trans('casino.bonus_balance') }}</span>
-                        <p class="balancebox-getbonusbalance">{{ $user->getBonusBalance() }}
-                            {{ $currencyCode }}</p>
-                    </div>
-
-                    <a class="add-credits-btn AddCreditBtn" href="{{route('deposit', ['lang' => $currentLang])}}">
-                        <span class="text">{{ trans('casino.add_credits') }}</span></a>
-                </div>
+                @include('main_parts.header_account')
 
                 <div class="main-content-entry">
                     <div class="deposit-entry">
@@ -60,18 +40,18 @@
 
                 </div>
                 <div class='tableTransactionsWrapper'>
-                    <p class="descr">{{translate('Your Deposits')}}</p>
+                    <p class="descr">{{ trans('Your Deposits') }}</p>
                     <table id="transactionsTable" class="display">
                         <thead>
                         <tr>
-                            <th>{{translate('casino.deposit_data')}}</th>
-                            <th>{{translate('casino.transaction_id')}}</th>
-                            <th>{{translate('casino.transaction_status')}}</th>
-                            <th>{{translate('casino.transaction_amount')}}</th>
+                            <th>{{ trans('casino.deposit_data') }}</th>
+                            <th>{{ trans('casino.transaction_id') }}</th>
+                            <th>{{ trans('casino.transaction_status') }}</th>
+                            <th>{{ trans('casino.transaction_amount') }}</th>
                         </tr>
                         </thead>
                     </table>
-                    <button class="loadMoredataTableBtn">{{translate('casino.transaction_more')}}</button>
+                    <button class="loadMoredataTableBtn">{{ trans('casino.transaction_more') }}</button>
                     <hr class="devider">
                 </div>
             </div>
@@ -101,7 +81,7 @@
                     "info": false,
                     createdRow: function (row, data, dataIndex) {
                         // Set the data-status attribute, and add a class
-                        let tdStatus = $(row).find('td:eq(2)')
+                        let tdStatus = $(row).find('td:eq(2)');
                         tdStatus.addClass('statustransAction');
 
                         if (data.status === 'Confirmed') {

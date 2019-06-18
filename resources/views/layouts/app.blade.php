@@ -969,6 +969,12 @@
             intercomUpdate();
         });
     });
+
+
+    $('body').on('click','.showIntercom',function(e) {
+        e.preventDefault();
+        Intercom('show');
+    });
 </script>
 
 </body>
