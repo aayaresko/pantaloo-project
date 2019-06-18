@@ -26,16 +26,16 @@
 </footer>
  <div class="hidden">
     <div id="uls">
-        <div class="termWrapperInner">
+      
             {!! trans('casino.bonus__term') !!}
-        </div>
+      
     </div>
 </div>
 
 <div class="hidden">
     <div id="reg-terms">
-        <div class="termWrapperInner">
+      
             {!! trans('casino.terms_conditions') !!}
-        </div>
+ 
     </div>
 </div>
