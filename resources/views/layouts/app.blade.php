@@ -523,7 +523,7 @@
                                         <input type="password" name="password" class="pass-input" required>
                                         <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
 
-                                        <a href="{{ url("/{$currentLang}/password/reset") }}"
+                                        <a href="{{ url("/{$currentLang}/password/forgot") }}"
                                         class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                                         <p class="errorMessage loginError"></p>
                                     </div>
