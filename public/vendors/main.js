@@ -197,13 +197,16 @@ function lettering(){
 }
 
 function ParallaxSections(){
-	// if ( $(window).width() > 1080 ){
-		$('.sections-container').fullpage({
-			menu: '.sections-nav',
-			anchors: ['', 'blackjack', 'roulette', 'slots'],
-			responsiveWidth: 1080
-		});
-	// }
+	let lock = false
+	if ( $(window).width() < 1080 ){
+		lock = true
+	}
+	$('.sections-container').fullpage({
+		menu: '.sections-nav',
+		anchors: ['', 'blackjack', 'roulette', 'slots'],
+		responsiveWidth: 1080,
+		lockAnchors: lock			
+	});
 }
 
 function gamesSlider(){

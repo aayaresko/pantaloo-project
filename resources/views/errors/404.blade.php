@@ -18,6 +18,28 @@
                     <a href="https://casinobit.io/" class="btn-back notArrow">home</a>
                 </div>
             </div>
+            <footer class="footer footer-home">
+                <div class="msg-block">
+                    <span class="msg">What do you want to play?</span>
+                </div>
+                <div class="games-listing-block">
+                    <ul class="games-listing">
+                        @include('footer_links', ['currentLang' => 'en'])
+                    </ul>
+                </div>
+            </footer>
+            <div class="mobile-container">
+            <section class="welcome-mob">
+                <div class="msg-block">
+                    <span class="msg">What do you want to play?</span>
+                </div>
+                <div class="games-listing-block">
+                    <ul class="games-listing">
+                        @include('footer_links', ['currentLang' => 'en'])
+                    </ul>
+                </div>
+            </section>
+            </div>
     </div>
 </body>
 </html>
