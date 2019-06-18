@@ -64,8 +64,9 @@
                             </div>
 
                             <br>
-                            <div style="min-height: 500px">
-                            <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable"  role="grid" aria-describedby="datatable_info" style="min-height: 500px">
+                            {{--<div style="min-height: 1000px">--}}
+                            <div>
+                            <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable"  role="grid" aria-describedby="datatable_info">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Id</th>
