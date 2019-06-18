@@ -24,6 +24,9 @@
                                     <th width="1%">
                                         №
                                     </th>
+                                    <th width="1%">
+                                        key
+                                    </th>
                                     @if ($defaultLang <> $currentLang)
                                         <th>{{ $defaultLang }}</th>
                                     @endif
@@ -33,6 +36,7 @@
 
                                 <tbody>
                                 <tr role="row">
+                                    <td></td>
                                     <td></td>
                                     @if ($defaultLang <> $currentLang)
                                         <td></td>
@@ -126,9 +130,10 @@
                 "columnDefs": [
                     {"orderable": false, "targets": 0},
                     {"orderable": false, "targets": 1},
+                    {"orderable": false, "targets": 2},
                         @if ($defaultLang <> $currentLang)
                     {
-                        "orderable": false, "targets": 2
+                        "orderable": false, "targets": 3
                     },
                     @endif
                 ],
@@ -148,6 +153,7 @@
                 },
                 "columns": [
                     {"data": "key"},
+                    {"data": "item"},
                         @if ($defaultLang <> $currentLang)
                     {
                         "data": "text"
