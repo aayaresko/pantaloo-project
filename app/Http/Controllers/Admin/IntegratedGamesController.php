@@ -64,12 +64,22 @@ class IntegratedGamesController extends Controller
     public function index(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
+        $params['providers'] = $configIntegratedGames['providers'];
         $dummyPicture = $configIntegratedGames['dummyPicture'];
         $types = GamesType::select(['id', 'code', 'name'])->get()->all();
+        $mobile = GamesList::select(['mobile'])->get();
+        $active = GamesList::select(['active'])->get();
+        $category = GamesCategory::select(['id', 'code', 'name'])->get();
+        $provider = GamesList::select(['provider_id'])->get();
         View::share('dummyPicture', $dummyPicture);
 
         return view('admin.integrated_games')
-            ->with(['types' => $types]);
+            ->with(['types' => $types,
+                    'active' => $active,
+                    'mobile' => $mobile,
+                    'category' => $category,
+                    'provider' => $provider,
+                    ]);
     }
 
     /**
@@ -309,6 +319,39 @@ class IntegratedGamesController extends Controller
         $param['whereCompare'] = [
             ['games_types_games.extra', '=', 1],
         ];
+
+        if ($request->has('category_id'))
+        {
+            if ($request->category_id > 0)
+            {
+                array_push($param['whereCompare'],
+                    ['games_categories.id', '=', $request->category_id]);
+            }
+        }
+        if ($request->has('mobile'))
+        {
+            if ($request->mobile <= 2)
+            {
+                array_push($param['whereCompare'],
+                    ['games_list.mobile', '=', $request->mobile]);
+            }
+        }
+        if ($request->has('active'))
+        {
+            if ($request->active <= 2)
+            {
+                array_push($param['whereCompare'],
+                    ['games_list.active', '=', $request->active]);
+            }
+        }
+        if ($request->has('provider_id'))
+        {
+            if ($request->provider_id > 0)
+            {
+                array_push($param['whereCompare'],
+                    ['games_list.provider_id', '=', $request->provider_id]);
+            }
+        }
 
         if ($request->filled('type_id')) {
             if ($request->type_id > 0) {

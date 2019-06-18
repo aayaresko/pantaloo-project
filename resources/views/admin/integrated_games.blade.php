@@ -21,8 +21,8 @@
                         <div class="card-box">
 
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <select name="type_id" class="selectpicker" data-live-search="true">
+                                <div class="col-sm-2">
+                                    <select name="type_id" class="selectpicker selectType" data-live-search="true">
                                         <option value="0" selected>Type / All</option>
                                         @foreach($types as $type)
                                             <option value="{{$type->id}}">{{$type->name}}</option>
@@ -31,14 +31,41 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-3">
-
+                                <div class="col-sm-2">
+                                    <select name="category_id" class="selectpicker selectCategory" data-live-search="true">
+                                        <option value="0" selected>Category / All</option>
+                                        @foreach($category as $categorys)
+                                            <option value="{{$categorys->id}}">{{$categorys->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <div class="col-sm-2">
+                                    <select name="provider_id" class="selectpicker selectProvider" data-live-search="true">
+                                        <option value="0" selected>Provider / All</option>
+                                        <option value="1">Pantallo</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <select name="mobile" class="selectpicker selectMobile" data-live-search="true">
+                                        <option value="3" selected>Mobile / All</option>
+                                        <option value="1">On</option>
+                                        <option value="0">Off</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select name="active" class="selectpicker selectActive" data-live-search="true">
+                                        <option value="3" selected>Active / All</option>
+                                        <option value="1">On</option>
+                                        <option value="0">Off</option>
+                                    </select>
+                                </div>
+
                             </div>
 
                             <br>
-
-                            <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable" role="grid" aria-describedby="datatable_info">
+                            <div style="min-height: 500px">
+                            <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable"  role="grid" aria-describedby="datatable_info" style="min-height: 500px">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Id</th>
@@ -68,6 +95,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
