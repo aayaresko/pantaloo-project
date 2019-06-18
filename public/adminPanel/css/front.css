@@ -27,10 +27,6 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     display: none;
 }
 
-/*.game-list .dropdown-menu {*/
-/*    height: 100px;*/
-/*}*/
-
 .game-list .dropdown-menu.inner {
     height: 70px;
 }
