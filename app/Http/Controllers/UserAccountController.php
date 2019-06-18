@@ -64,21 +64,22 @@ class UserAccountController extends Controller
         }])->orderBy('rating', 'desc')->get();
 
         $bonusForView = [];
-        $activeBonus = null;
         foreach ($bonuses as $bonus) {
             $bonusClass = BonusHelper::getClass($bonus->id);
             $bonusObject = new $bonusClass($user);
-            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
+
+            $bonus->notAvailable = true;
+            if (!$bonusAvailable) {
+                $bonus->notAvailable = false;
+            }
 
             if (!is_null($bonus->activeBonus)) {
-                $activeBonus = $bonus;
                 $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
-                $activeBonus->bonusStatistics = $bonusStatistics;
+                $bonus->bonusStatistics = $bonusStatistics;
             }
 
-            if ($bonusAvailable) {
-                array_push($bonusForView, $bonus);
-            }
+            array_push($bonusForView, $bonus);
         }
 
         $currencyCode = config('app.currencyCode');
@@ -86,7 +87,6 @@ class UserAccountController extends Controller
         return view('bonus', [
             'currencyCode' => $currencyCode,
             'bonusForView' => $bonusForView,
-            'activeBonus' => $activeBonus,
             'user' => $user
         ]);
     }

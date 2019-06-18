@@ -18,83 +18,85 @@
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
+                                @foreach($bonusForView as $bonus)
 
-                            @if($activeBonus)
-                                    <div class="item activated">
-                                        <div class="single-bonus">
-                                            <div class="itemWrapper">
-                                                <h3 class="title">{{trans($activeBonus->name)}}</h3>
-                                                <p class="text">{{trans($activeBonus->descr)}}</p>
-                                                <div class="activeWrapper">
-                                                        <div class="icon avail"></div>
-                                                        <h3 class="title">activated</h3>
-                                                        <p class="text">Bonus wager: {{ $activeBonus->bonusStatistics['bonusWager']['real'] .
-                                                         ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }} {{ $currencyCode }}
-                                                        </p>
-                                                        @if ($activeBonus->id == 1)
-                                                                <p class="text">Deposit wager:  {{ $activeBonus->bonusStatistics['depositWager']['real'] .
-                                                                 ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
-                                                        @endif
-                                                </div>
-                                            </div>
-                                            <div class="wrapperBottom">
-                                                <div class="btnWrap">
-                                                    <a href="{{ route('bonus.cancel') }}" class="push-button canceledBtn">
-                                                        <i class="fa fa-plus"></i>
-                                                        {{ trans('casino.cancel') }}
-                                                    </a>
-                                                </div>
-                                                <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
-                                                <!-- <a href="#" class="reg-terms showGameLink">Show games</a> -->
-                                            </div>
+                                    @php
+                                        $bonusStatus = '';
 
-                                            <!-- <a href="{{route('bonus.cancel')}}" class="push-button">{{ trans('casino.cancel') }}</a> -->
-                                        </div>
-                                    </div>
-                                    @else
-               
-                            
-                                    @foreach($bonusForView as $bonus)
+                                        if ($bonus->notAvailable === false) {
+                                            $bonusStatus = 'unavailable';
+                                        }
 
-                                    <div class="item">
+                                        if (!is_null($bonus->activeBonus)) {
+                                            $bonusStatus = 'activated';
+                                        }
+
+                                    @endphp
+                                    <div class="item {{ $bonusStatus }}">
                                         <div class="single-bonus">
                                             <div class="itemWrapper">
                                                 <h3 class="title">{{translate($bonus->name)}}</h3>
                                                 <p class="text">{{translate($bonus->descr)}}</p>
+
                                                 <div class="activeWrapper">
                                                     <div class="icon avail">
-
-                                                    </div>   
-                                                    <h3 class="title">Activated</h3>
-                                                    <p class="text">Wagered sun: 0 mBTC Percent: 0%</p>
+                                                    </div>
+                                                    @if (!is_null($bonus->activeBonus))
+                                                        <h3 class="title">activated</h3>
+                                                        <p class="text">Bonus wager:
+                                                            {{ $bonus->bonusStatistics['bonusWager']['real'] .
+                                                                 ' / ' .
+                                                                  $bonus->bonusStatistics['bonusWager']['necessary'] }}
+                                                            {{ $currencyCode }}
+                                                        </p>
+                                                        @if ($bonus->id == 1)
+                                                            <p class="text">Deposit wager:
+                                                                {{ $bonus->bonusStatistics['depositWager']['real'] .
+                                                                         ' / ' . $bonus->bonusStatistics['depositWager']['necessary'] }}
+                                                                {{ config('app.currencyCode') }}</p>
+                                                        @endif
+                                                    @endif
                                                 </div>
+
                                                 <div class="unavailableWrapper">
                                                     <div class="icon unavail">
 
-                                                    </div> 
+                                                    </div>
                                                     <h3 class="title">{{ trans('casino.bonus_unavailable') }}</h3>
                                                 </div>
                                             </div>
+
                                             <div class="wrapperBottom">
                                                 <div class="btnWrap">
-                                                    <a href="{{route('bonus.activate', $bonus)}}" class="push-button activatedBtn"><i class="fa fa-check"></i>{{trans('casino.activate')}}</a>
-                                                    <a href="{{route('bonus.activate', $bonus)}}" class="push-button canceledBtn"><i class="fa fa-plus"></i>Cancel</a>
+                                                    <a href="{{ route('bonus.activate', $bonus) }}"
+                                                       class="push-button activatedBtn bonusAction">
+                                                        <i class="fa fa-check"></i>{{ trans('casino.activate') }}</a>
+
+                                                    <a href="{{ route('bonus.activate', $bonus) }}"
+                                                       class="push-button canceledBtn bonusAction">
+                                                        <i class="fa fa-plus"></i>Cancel</a>
                                                 </div>
-                                                <p class="unavailInfo">Просрочен!  <button id="popUpBonus"><span class="infoTxt">info</span></button></p>
+                                                <p class="unavailInfo">Expired!
+                                                    <button id="popUpBonus">
+                                                        <span class="infoTxt">info</span></button>
+                                                </p>
                                                 <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
-                                                <!-- <a href="#" class="reg-terms showGameLink">Show games</a> -->
                                             </div>
+
                                             <div class="popUpBonusUnavail">
                                                 <h3>Unavailable <span class="popUpHideBtn"></span></h3>
-                                                <p>Бонус просрочен. По условиям вы не можете использовать его для запуска игр и получения бесплатных новых бонусов.
-                                                По условиям вы не можете использовать его для запуска игр и получения бесплатных новых бонусов.
+                                                <p>Bonus expired. Under the terms, you can not use it to run games and get free new bonuses.
+                                                    Under the terms, you can not use it to run games and get free new bonuses.
                                                 </p>
                                             </div>
+
                                         </div>
                                     </div>
-                                    @endforeach
-                                @endif
-
+                                @endforeach
+                                    <form id = 'sendBonusAction' action='#' method='post'
+                                          style="display: none">
+                                        {{csrf_field()}}
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -111,10 +113,11 @@
     <script>
         function bonusAct() {
             //send form method post
-            $('body').on('click', '.bonusActive', function (e) {
+            $('body').on('click', '.bonusAction', function (e) {
                 e.preventDefault();
-                let form = $(this).next();
-                form.submit();
+                //set url
+                let action = this.href;
+                $('#sendBonusAction').attr('action', action).submit();
             });
         }
 
