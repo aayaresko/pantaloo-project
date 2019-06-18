@@ -72,7 +72,7 @@
                                                        class="push-button activatedBtn bonusAction">
                                                         <i class="fa fa-check"></i>{{ trans('casino.activate') }}</a>
 
-                                                    <a href="{{ route('bonus.activate', $bonus) }}"
+                                                    <a href="{{ route('bonus.cancel') }}"
                                                        class="push-button canceledBtn bonusAction">
                                                         <i class="fa fa-plus"></i>Cancel</a>
                                                 </div>

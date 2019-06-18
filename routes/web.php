@@ -152,11 +152,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/contribution/success', ['as' => 'usd.success', 'uses' => 'MoneyController@depositSuccess']);
         Route::get('/contribution/fail', ['as' => 'usd.fail', 'uses' => 'MoneyController@depositFail']);
 
-        Route::get('/bonus/cancel', ['as' => 'bonus.cancel', 'uses' => 'BonusController@cancel']);
 
         Route::post('/password', ['as' => 'password', 'uses' => 'UsersController@password']);
         Route::post('/email/confirm', ['as' => 'email.confirm', 'uses' => 'UsersController@confirmEmail']);
 
+        Route::post('/bonus/cancel', ['as' => 'bonus.cancel', 'uses' => 'BonusController@cancel']);
         Route::post('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
         Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
