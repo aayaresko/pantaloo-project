@@ -106,7 +106,8 @@ class MetaTagSeeder extends Seeder
 
                         $tId = $translateRepos->search($locale, $item)->first()->id;
 
-                        $translateRepos->update($tId, $locale . '::::' . $v);
+//                        $translateRepos->update($tId, $locale . '::::' . $v);
+                        $translateRepos->update($tId, $v);
                     }
 
                 }
