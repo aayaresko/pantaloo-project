@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MetatagSeeder extends Migration
+class MetatagSeederMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class MetatagSeeder extends Migration
         $seeder = new DatabaseSeeder();
 
         $seeder->call(
-            MetatagSeeder::class
+            MetaTagSeeder::class
         );
     }
 
