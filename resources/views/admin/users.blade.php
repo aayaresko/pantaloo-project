@@ -151,7 +151,7 @@
                         </table>
                         </div>
                     </div>
-                    <div class="col-sm-12">{{$users->links()}}</div>
+                    <div class="col-sm-12">{{ $users->appends($filterData)->links() }}</div>
                 </div>
             </div>
         </div>
