@@ -74,7 +74,7 @@
 <!-- Footer Section -->
 <div id="footer">
     <div class="container text-center">
-        <p>&copy; 2018 CasinoBit Affiliates. Design by <a href="https://partners.casinobit.io" rel="nofollow">US</a></p>
+        <p>&copy;2018-2019 CasinoBit Affiliates. Design by <a href="https://casinobit.io" rel="nofollow">CasinoBit</a></p>
     </div>
 </div>
 <!-- Modal -->

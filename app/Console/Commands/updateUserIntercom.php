@@ -52,41 +52,18 @@ class updateUserIntercom extends Command
      */
     public function handle()
     {
-        $newKey = $this->ask('Type new key and press enter');
+        $user = User::findOrFail(146);
 
-        $path = getcwd().'/resources/lang';
-        $langs = array_diff(scandir($path), ['.', '..']);
-
-        foreach ($langs as $lang) {
-            $cpath = $path.DIRECTORY_SEPARATOR.$lang;
-
-            //$files = array_diff(scandir($cpath), ['.', '..']);
-            $files = ['casino.php'];
-
-            foreach ($files as $file) {
-
-//              $data = File::getRequire($cpath . DIRECTORY_SEPARATOR . $file);
-                $datafile = preg_replace("/\.php$/", '.data', 'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
-
-                $data = unserialize(Storage::get($datafile));
-
-                $data[$newKey] = isset($data[$newKey]) ? $data[$newKey] : $newKey;
-
-                Storage::put($datafile, serialize($data));
-            }
-        }
-//        $user = User::findOrFail(146);
-////
-////        event(new AccountStatusEvent($user, 'old_status', 'new_status'));
-////        event(new BonusDepositEvent($user, 100500));
-////        event(new BonusGameEvent($user, 'game name'));
-////        event(new CloseBonusEvent($user, 'bonus name'));
-////        event(new DepositEvent($user, 1000));
-////        event(new DepositWagerDoneEvent($user));
-////        event(new OpenBonusEvent($user, 'bonus name'));
-////        event(new WagerDoneEvent($user));
-////        event(new WithdrawalApprovedEvent($user));
-////        event(new WithdrawalFrozenEvent($user, 'comment'));
-////        event(new WithdrawalRequestedEvent($user));
+        event(new AccountStatusEvent($user, 'old_status', 'new_status'));
+        event(new BonusDepositEvent($user, 100500));
+        event(new BonusGameEvent($user, 'game name'));
+        event(new CloseBonusEvent($user, 'bonus name'));
+        event(new DepositEvent($user, 1000));
+        event(new DepositWagerDoneEvent($user));
+        event(new OpenBonusEvent($user, 'bonus name'));
+        event(new WagerDoneEvent($user));
+        event(new WithdrawalApprovedEvent($user));
+        event(new WithdrawalFrozenEvent($user, 'comment'));
+        event(new WithdrawalRequestedEvent($user));
     }
 }

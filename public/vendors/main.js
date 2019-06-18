@@ -312,13 +312,16 @@ function lettering(){
 }
 
 function ParallaxSections(){
-	// if ( $(window).width() > 1080 ){
-		$('.sections-container').fullpage({
-			menu: '.sections-nav',
-			anchors: ['', 'blackjack', 'roulette', 'slots'],
-			responsiveWidth: 1080
-		});
-	// }
+	let lock = false
+	if ( $(window).width() < 1080 ){
+		lock = true
+	}
+	$('.sections-container').fullpage({
+		menu: '.sections-nav',
+		anchors: ['', 'blackjack', 'roulette', 'slots'],
+		responsiveWidth: 1080,
+		lockAnchors: lock			
+	});
 }
 
 function gamesSlider(){
@@ -392,6 +395,23 @@ $(document).ready(function(){
 	$("#reg-terms h3").on("click", function () {
         $(this).next().slideToggle(500);
 	});
+
+	$(window).on('scroll', function(){
+
+		if($(window).scrollTop() > 500){
+			$(".toTop").addClass("hideBtnToTop");
+			// console.log('lol1')
+		}else{
+			$(".toTop").removeClass("hideBtnToTop");
+			// console.log('lol2')
+		}
+
+	});
+
+	$(".toTop").on("click", function(){
+		$("html").animate({scrollTop: 0},1000);
+
+	})
 	
 
 	// function bonusTerms() {
