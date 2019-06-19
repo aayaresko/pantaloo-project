@@ -188,7 +188,7 @@ class GlobalAffiliatesController extends Controller
             }
 
             $items = User::leftJoin('extra_users', 'users.id', '=', 'extra_users.user_id')
-                ->whereRaw('users.id in (SELECT id FROM users WHERE role = 1)')
+                ->whereRaw('users.id in (SELECT id FROM users WHERE role = 1 or role = 3)')
                 ->where($param['whereUsers'])
                 ->select(['users.id', 'users.email', 'extra_users.base_line_cpa'])
                 ->offset($start)
@@ -205,32 +205,40 @@ class GlobalAffiliatesController extends Controller
                     ->where('t.type', 3)
                     ->pluck('id')->toArray();
                 //to do fix this
-                $userIdsFull = User::where('users.agent_id', $user->id)
-                    ->select('users.id')
-                    ->distinct()
-                    ->pluck('id')->toArray();
-
-                $transactionItemsFull = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIdsFull)->get();
+//                $userIdsFull = User::where('users.agent_id', $user->id)
+//                    ->select('users.id')
+//                    ->distinct()
+//                    ->pluck('id')->toArray();
+//
+//                $transactionItemsFull = Transaction::where($param['whereTransaction'])
+//                    ->whereIn('user_id', $userIdsFull)->get();
                 //to do fix this
-                $transactionItems = Transaction::where($param['whereTransaction'])
+                $transactionItems = Transaction::where($param['whereTransaction'])->where('type', 3)
                     ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
 
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 //to do fix this
-                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
-                $statistics['bonus'] = $statisticsFull['bonus'];
+//                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
+//                $statistics['bonus'] = $statisticsFull['bonus'];
                 //to do fix this
                 $result->push($statistics);
+                $profitTotal = 0;
+                //add profit from players
+                $profitTotal += $user->totalEarn($param['dateStart'], $param['endStart']);
+                $revenueTotal = 0;
+                //add profit from players
+                $revenueTotal += $user->totalRevenue($param['dateStart'], $param['endStart']);
+                $bonusSum = DB::table('user_sums')->where('parent_id', $user->id)->where('created_at', '>=', $param['dateStart'])
+                    ->where('created_at', '<', $param['endStart'])->sum('bonus');
 
                 $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
                 $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
                 $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
-                $user->revenue = $result->sum('revenue').' '.$param['currencyCode'];
-                $user->profit = $result->sum('profit').' '.$param['currencyCode'];
-                $user->bonus = $result->sum('bonus').' '.$param['currencyCode'];
+                $user->revenue = $revenueTotal.' '.$param['currencyCode'];
+                $user->profit = $profitTotal.' '.$param['currencyCode'];
+                $user->bonus = $bonusSum.' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
             }
 
