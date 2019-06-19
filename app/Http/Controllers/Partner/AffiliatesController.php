@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Models\AgentsKoef;
 use DB;
 use App\User;
+use Illuminate\Support\Str;
 use Validator;
 use App\Banner;
 use App\Tracker;
@@ -69,7 +70,7 @@ class AffiliatesController extends Controller
                 $configPartner['keyLink'], $tracker->ref);
         }
         if (!$ref) {
-            $ref = str_random(12);
+            $ref = Str::random(12);
             $newTracker = new Tracker();
             $newTracker->user_id = $user->id;
             $newTracker->name = 'default';
