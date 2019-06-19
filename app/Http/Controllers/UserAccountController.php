@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Jobs\Withdraw;
 use App\Bitcoin\Service;
 use Helpers\BonusHelper;
+use App\ModernExtraUsers;
 use App\Jobs\BonusHandler;
 use Illuminate\Http\Request;
 use App\Models\SystemNotification;
@@ -51,6 +52,50 @@ class UserAccountController extends Controller
             'qrCode' => $qrCode,
             'user' => $user,
             'lang' => $lang
+        ]);
+    }
+
+    public function updateUserExtra(Request $request, $lang)
+    {
+        try {
+            $errors = [];
+            $data = $request->all();
+            dump($data);
+            $validator = Validator::make($data, [
+                'firstName' => 'required|string:3',
+                'birthDay' => 'integer',
+                'countryCode' => 'required|exists:countries,code',
+                'lastName' => 'string:3|nullable',
+                'city' => 'string:1|nullable',
+            ]);
+
+
+            if ($validator->fails()) {
+                $validatorErrors = $validator->errors()->toArray();
+                array_walk_recursive($validatorErrors, function ($item) use (&$errors) {
+                    array_push($errors, $item);
+                });
+                throw new \Exception('validation');
+            }
+
+
+        } catch (\Exception $ex) {
+
+            if (empty($errors)) {
+                $errors = [$ex->getMessage()];
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => ['Done']
         ]);
     }
 

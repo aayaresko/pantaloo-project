@@ -24,18 +24,18 @@
                                 <form id="userDataForm">
                                     <div class="halfCol">
                                     <label>{{ trans('casino.account_first_name') }}<span>*</span></label>
-                                    <input type="text" name="first_name">
+                                    <input type="text" name="firstName" required>
                                     </div>
                                     
                                     <div class="halfCol">
                                         <label>{{ trans('casino.account_last_name') }}</label> 
-                                        <input type="text" name="last_name">
+                                        <input type="text" name="lastName">
                                     </div>
                                     <div class="fullCol">
                                         <label>{{ trans('casino.date_of_birth') }}<span>*</span></label>  
-                                        <select id="days" name="day"></select>
-                                        <select id="months" name="month"></select>
-                                        <select id="years" name="year"></select>
+                                        <select id="days" name="day" required></select>
+                                        <select id="months" name="month" required></select>
+                                        <select id="years" name="year" required></select>
                                     </div>
                                     <div class="fullCol flexStart">
                                         <p class="genderTxt">{{ trans('casino.account_gender') }}</p>
@@ -59,13 +59,13 @@
                                         <label for="city">{{ trans('casino.account_city') }}:</label> 
                                         <input type="text" name="city" id="city">
                                     </div>
-                                    <div class="fullCol">
-                                        <label>{{ trans('casino.account_email') }}:</label>
-                                        <div class="emailWrapper confirmd">
-                                            <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">         
-                                            <a href="{{route('settings', ['lang' => $currentLang])}}" class="editEmailBtn">{{ trans('casino.account_edit') }}</a>
-                                        </div>
-                                    </div>
+{{--                                    <div class="fullCol">--}}
+{{--                                        <label>{{ trans('casino.account_email') }}:</label>--}}
+{{--                                        <div class="emailWrapper confirmd">--}}
+{{--                                            <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{ $user->email }}">--}}
+{{--                                            <a href="{{route('settings', ['lang' => $currentLang])}}" class="editEmailBtn">{{ trans('casino.account_edit') }}</a>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
                                     <button class="updateUserDataBtn">
                                     {{ trans('casino.account_update') }}
@@ -78,55 +78,111 @@
             </div>
             @include('settings')
         </div>
-</div>
-<footer class="footer footer-home">
-        <div class="bitcoin-block">
-            <span class="bitcoin-msg"><i class="bitcoin-icon"></i> We work only with bitcoin</span>
-        </div>
-        <div class="msg-block">
-            <span class="msg">{{ trans('casino.do_you_want_to_play') }}</span>
-        </div>
-        <div class="games-listing-block">
-            <ul class="games-listing">
-                @include('footer_links')
-            </ul>
-        </div>
-        <div class="footer-copyrights">
-            <ul class="footerLinks">
-                <li class="rightReservedTxt">© All rights reserved</li>
-                <li><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li>
-                <li><a target="_blank" href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
-                <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
-                <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>
-            </ul>
-        </div>
-        
-    </footer>
-     <div class="hidden">
-        <div id="uls">
-            {!! trans('casino.bonus.term') !!}
-        </div>
     </div>
 
-    <div class="hidden">
-        <div id="reg-terms">
-            {!! trans('casino.terms_conditions') !!}
-        </div>
-    </div>
-
-    <div class="alertWrapper">
-        <div class="alertText">Text from response</div>
-    </div>
-
-    <!-- <div class="alertWrapper error">
-        <div class="alertText">Message text info</div>
-    </div> -->
-
+    @include('footer_main')
 @endsection
 
 
 @section('js')
 
+    <script>
+        //prepare
+        let params = {
+            lang: '{{ $lang }}'
+        };
 
+        //visualization
+        let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        $('#years').append($('<option />').attr('disabled', true).attr('selected', true).val('').html('Year'));
+        $('#months').append($('<option />').attr('disabled', true).attr('selected', true).val('').html('Month'));
+
+        for (let i = new Date().getFullYear(); i > 1900; i--){
+
+            $('#years').append($('<option />').val(i).html(i));
+        }
+
+        for (let i = 1; i < 13; i++){
+            $('#months').append($('<option />').val(i).html(monthNames[i - 1]));
+
+        }
+
+        function updateNumberOfDays(){
+            $('#days').html('');
+            $('#days').append($('<option />').attr('disabled', true).attr('selected', true).val('').html('Day'));
+            let month=$('#months').val();
+            let year=$('#years').val();
+            let days=daysInMonth(month, year);
+
+            for(let i=1; i < days+1 ; i++){
+                $('#days').append($('<option />').val(i).html(i));
+            }
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+
+        updateNumberOfDays();
+
+        $('#years, #months').on("change", function(){
+            updateNumberOfDays();
+        });
+
+
+        $('.accountFormWrapper select').select2({
+            minimumResultsForSearch: Infinity
+        });
+
+        $("#country").countrySelect();
+        //visualization
+
+        //action
+        function objectifyForm(formArray) {
+            let returnArray = {};
+            for (let i = 0; i < formArray.length; i++) {
+                returnArray[formArray[i]['name']] = formArray[i]['value'];
+            }
+            return returnArray;
+        }
+
+        $('#userDataForm').on('submit', function(e) {
+            e.preventDefault();
+            let userDateForm = objectifyForm($(this).serializeArray());
+            userDateForm.countryCode = $("#country").countrySelect("getSelectedCountryData").iso2;
+            userDateForm.birthDay = new Date(userDateForm.year, userDateForm.month,  userDateForm.day).getTime();
+
+
+            console.log(userDateForm);
+            $.ajax({
+                method: 'post',
+                url: `/${params.lang}/updateUserExtra`,
+                data: userDateForm,
+            }).done(function(response){
+
+                $(".alertWrapper").addClass("seccuses");
+                $(".alertWrapper").addClass("showAlert");
+
+                setTimeout(function(){
+                    $(".alertWrapper").removeClass("seccuses");
+                    $(".alertWrapper").removeClass("showAlert");
+                },2000);
+
+            }).fail(function(){
+                $(".alertWrapper").addClass("error");
+                $(".alertWrapper").addClass("showAlert");
+
+                setTimeout(function(){
+                    $(".alertWrapper").removeClass("error");
+                    $(".alertWrapper").removeClass("showAlert");
+                },2000);
+            });
+
+            return false;
+        });
+        //action
+    </script>
 
 @endsection

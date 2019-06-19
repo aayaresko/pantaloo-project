@@ -17,8 +17,7 @@
                 <div class="text-block-withdraw">
                     <p class="descr">{{ trans('casino.transfer_wallet_address') }}</p>
                     <p class="descr">
-                        {{ trans('casino.have_millibitcoins',
-                     ['availableBalance' => $user->getRealBalance()]) }}
+                        {{ trans('casino.have_millibitcoins', ['availableBalance' => $user->balance]) }}
                     </p>
                 </div>
 
@@ -33,14 +32,13 @@
                             </center>
                             <form action="" method="POST">               
                                 <span class="text">{{ trans('casino.your_bitcoin_address') }}</span>
-                                <input type="text" name="address">
+                                <input type="text" name="address"  pattern="^[13][a-km-zA-HJ-NP-Z0-9]{25,35}$" required>
                                 <span class="text">{{ trans('casino.amount_mbtc') }}</span>
-                                <input type="text" name="sum">
+                                <input type="text" name="sum" pattern="^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]*\.[0-9]*[1-9][0-9]*)$" required>
                                 <button class="withdraw">{{ trans('casino.withdraw') }}</button>
                                 {{csrf_field()}}
                             </form>
                         </div>
-
                     </div>
                 </div>
 
