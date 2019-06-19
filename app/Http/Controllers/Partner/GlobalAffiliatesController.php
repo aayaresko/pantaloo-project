@@ -229,14 +229,19 @@ class GlobalAffiliatesController extends Controller
                 $profitTotal += $user->totalEarn($param['dateStart'], $param['endStart']);
                 $revenueTotal = 0;
                 //add profit from players
-                $revenueTotal += $user->totalRevenue($param['dateStart'], $param['endStart']);
+                $revenueTotal = DB::table('user_sums')->whereIn('user_id', $userIds)
+                    ->where('parent_id', $user->id)
+                    ->where('created_at', '>=', $param['dateStart']->addDay())
+                    ->where('created_at', '<', $param['endStart']->addDay())
+                    ->sum('sum');
+
                 $bonusSum = DB::table('user_sums')->where('parent_id', $user->id)->where('created_at', '>=', $param['dateStart'])
                     ->where('created_at', '<', $param['endStart'])->sum('bonus');
 
                 $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
                 $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
                 $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
-                $user->revenue = $revenueTotal.' '.$param['currencyCode'];
+                $user->revenue = -$revenueTotal.' '.$param['currencyCode'];
                 $user->profit = $profitTotal.' '.$param['currencyCode'];
                 $user->bonus = $bonusSum.' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
