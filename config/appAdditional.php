@@ -106,7 +106,7 @@ return [
         'register' => 2,
     ],
 
-    'partnerCommission' => 45,
+    'partnerCommission' => 25,
 
     'freeRounds' => [
         'available' => 50,
