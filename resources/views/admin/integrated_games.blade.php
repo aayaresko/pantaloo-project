@@ -39,23 +39,27 @@
                                         @endforeach
                                     </select>
                                 </div>
+
                                 <div class="col-sm-2">
                                     <select name="provider_id" class="selectpicker selectProvider" data-live-search="true">
                                         <option value="0" selected>Provider / All</option>
-                                        <option value="1">Pantallo</option>
+                                        @foreach($providers as $key => $provider)
+                                            <option value="{{ $key }}">{{ $provider['code'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <select name="mobile" class="selectpicker selectMobile" data-live-search="true">
-                                        <option value="3" selected>Mobile / All</option>
+                                        <option value="-1" selected>Mobile / All</option>
                                         <option value="1">On</option>
                                         <option value="0">Off</option>
                                     </select>
                                 </div>
+
                                 <div class="col-sm-2">
                                     <select name="active" class="selectpicker selectActive" data-live-search="true">
-                                        <option value="3" selected>Active / All</option>
+                                        <option value="-1" selected>Active / All</option>
                                         <option value="1">On</option>
                                         <option value="0">Off</option>
                                     </select>
@@ -64,7 +68,6 @@
                             </div>
 
                             <br>
-                            {{--<div style="min-height: 1000px">--}}
                             <div>
                             <table id = "tableOrder" class="table table-striped table-bordered dataTable no-footer datatable"  role="grid" aria-describedby="datatable_info">
                                 <thead>

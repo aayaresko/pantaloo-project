@@ -61,6 +61,11 @@ $('.selectCategory').change(function () {
     initDataTable();
 });
 
+$('.selectProvider').change(function () {
+    options.provider_id = $('select[name="provider_id"]').val();
+    initDataTable();
+});
+
 
 $('.selectMobile').change(function () {
     options.mobile = $('select[name="mobile"]').val();
