@@ -273,12 +273,9 @@ $(document).ready(function () {
 		$(this).toggleClass("rotateArrow");
 	});
 
-	$(".textWrapper h3").on("click", function(){
-		$(this).nextUntil('h3').toggleClass("showFaq");
 
-		let a = $(this).nextUntil('h3')
-		console.log(a)
-		
+	$(".textWrapper h1, .textWrapper h2, .textWrapper h3, .textWrapper h4, .textWrapper h5, .textWrapper h6").on("click", function(){
+		$(this).nextUntil('h2').toggleClass("showFaq");
 	});
 
 	
