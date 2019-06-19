@@ -12,6 +12,7 @@
 */
 
 //use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Storage;
 
 Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
@@ -120,6 +121,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('post.password.reset');
 
         Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
+        Route::get('/sitemap.xml', 'SitemapController@index');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
         Route::get('sitemap', function() {
 
@@ -132,9 +134,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             // check if there is cached sitemap and build new only if is not
             if (!$sitemap->isCached()) {
-                // add item to the sitemap (url, date, priority, freq)
-//
-
 
                 // add item with translations (url, date, priority, freq, images, title, translations)
                 $translations = [
@@ -198,14 +197,14 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                     ['language' => 'vn', 'url' => URL::to('/vn/password/email')],
                 ];
 
-                $getcategories = DB::table('games_types')->where('active',1)->orderBy('id', 'desc')->get();
+                $getCategories = DB::table('games_types')->where('active',1)->orderBy('id', 'desc')->get();
 
-                foreach ($getcategories as $category) {
+                foreach ($getCategories as $category) {
                     $category_name = $category->default_name;
                     $category_name = preg_replace('/\s/','-',$category_name);
                     $updated_at = $category->updated_at;
 
-                    $translationscategory = [
+                    $translationsCategory = [
                         ['language' => 'de', 'url' => URL::to('/de/games/'.$category_name)],
                         ['language' => 'en', 'url' => URL::to('/en/games/'.$category_name)],
                         ['language' => 'fr', 'url' => URL::to('/fr/games/'.$category_name)],
@@ -215,28 +214,8 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                         ['language' => 'th', 'url' => URL::to('/th/games/'.$category_name)],
                         ['language' => 'vn', 'url' => URL::to('/vn/games/'.$category_name)],
                     ];
-
-
-
-                    $sitemap->add(URL::to('/en/games/'.$category_name), $updated_at, '0.7', 'daily', [], null, $translationscategory);
+                    $sitemap->add(URL::to('/en/games/'.$category_name), $updated_at, '0.7', 'daily', [], null, $translationsCategory);
                 }
-
-//                $sitemap->add(URL::to('/en/games/slots'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsSlots);
-//                $sitemap->add(URL::to('/en/games/dice'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsDice);
-//                $sitemap->add(URL::to('/en/games/blackjack'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBlackjack);
-//                $sitemap->add(URL::to('/en/games/roulette'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsRoulette);
-//                $sitemap->add(URL::to('/en/games/poker'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsPoker);
-//                $sitemap->add(URL::to('/en/games/baccarat'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBaccarat);
-//                $sitemap->add(URL::to('/en/games/bet-on-numbers'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsNumbers);
-//                $sitemap->add(URL::to('/en/games/keno'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsKeno);
-//                $sitemap->add(URL::to('/en/games/live-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsLiveGames );
-//                $sitemap->add(URL::to('/en/games/video-poker'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVideoPoker );
-//                $sitemap->add(URL::to('/en/games/table-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsTableGames );
-//                $sitemap->add(URL::to('/en/games/virtual-games'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVirtualGames );
-//                $sitemap->add(URL::to('/en/games/virtual-sports'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsVirtualSports );
-//                $sitemap->add(URL::to('/en/games/scratch-cards'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsScratchCards );
-//                $sitemap->add(URL::to('/en/games/bingo'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsBingo );
-//                $sitemap->add(URL::to('/en/games/others'), '2015-06-24T14:30:00+02:00', '0.7', 'daily', [], null, $translationsOther );
 
                 $getgames = DB::table('games_list')->orderBy('system_id', 'desc')->get();
 
@@ -253,9 +232,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
                 $sitemap->add(URL::to('/en/password/forgot'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordForgot);
                 $sitemap->add(URL::to('/en/password/email'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordEmail);
             }
-            return $sitemap->render('xml');
-        });
 
+            $sitemap->store('xml', 'sitemap');
+            return $sitemap->render('xml');
+
+        });
     });
 
     //Route::any('/ezugi/callback', ['as' => 'ezugi', 'uses' => 'EzugiController@callback']);
