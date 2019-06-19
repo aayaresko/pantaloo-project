@@ -277,11 +277,11 @@
             @if(Auth::guest())
                 <div class="auth-block-mobile">
                     <div class="login-block floated">
-                        <a href="{{url('/login')}}" class="login-btn"><span
+                        <a href="{{url('#login')}}" class="login-btn"><span
                                     class="text">{{ trans('casino.login') }}</span></a>
                     </div>
                     <div class="registration-block floated">
-                        <a href="{{url('/registr')}}" class="reg-btn"><span
+                        <a href="{{url('#registr')}}" class="reg-btn"><span
                                     class="text">{{ trans('casino.registration') }}</span></a>
                     </div>
                 </div>

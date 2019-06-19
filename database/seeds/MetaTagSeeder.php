@@ -82,6 +82,10 @@ class MetaTagSeeder extends Seeder
                 'table-games' => [
                     'title' => 'Bitcoin Table Games – Play Bitcoin Casino Table Games Online with Bitcoin | Casinobit',
                     'description' => 'Play Gambling Table Games with Bitcoin at Casinobit ♠ Wide Selection of Online Casino Table Games to Win BTC ✔ Provably Fair'
+                ],
+                'others' => [
+                    'title' => 'Bitcoin Games – Play Bitcoin Casino Games Online with Bitcoin | Casinobit',
+                    'description' => 'Play at Casinobit ♠ Wide Selection of Online Games to Win BTC ✔ Provably Fair'
                 ]
             ]
         ];
