@@ -5244,12 +5244,12 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   cursor: pointer;
 }
 
-.faqWrapper .page-entry h1:before,
-.faqWrapper .page-entry h2:before,
-.faqWrapper .page-entry h3:before,
-.faqWrapper .page-entry h4:before,
-.faqWrapper .page-entry h5:before,
-.faqWrapper .page-entry h6:before{
+.faqWrapper .page-entry > h1:before,
+.faqWrapper .page-entry > h2:before,
+.faqWrapper .page-entry > h3:before,
+.faqWrapper .page-entry > h4:before,
+.faqWrapper .page-entry > h5:before,
+.faqWrapper .page-entry > h6:before{
   content: '';
   display: inline-block;
   position: absolute;
@@ -5293,6 +5293,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   line-height: 20px;
   display: inline-block;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+  margin-top: 5px;
 }
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper{
@@ -5852,10 +5853,10 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   font-size: 12px;
 }
 
-
+/* 
 .pageBonus .actions{
   z-index: 99999;
-}
+} */
 
 
 .block-bonus.activatedBonus + .bonusOverlay{
@@ -5878,6 +5879,8 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   align-items: center;
   flex-wrap: wrap;
   margin: 0px -15px;
+  position: relative;
+  z-index: 99999;
 }
 
 .flexChild{
