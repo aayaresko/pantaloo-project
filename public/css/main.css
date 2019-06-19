@@ -5253,7 +5253,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   content: '';
   display: inline-block;
   position: absolute;
-  top: 5px;
+  top: 4px;
   left: 0px;
   width: 10px;
   height: 10px;
@@ -5293,7 +5293,9 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   line-height: 20px;
   display: inline-block;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper{
@@ -5718,11 +5720,24 @@ text-transform: uppercase;
   opacity: 1;
 }
 
+.textWrapper > p{
+  max-height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.6s 0.1s ease, max-height 0.5s ease;
+  margin-bottom: 0px;
+}
+
+.textWrapper > p.showFaq{
+  max-height: 2000px;
+  opacity: 1;
+}
+
 .faqWrapper .page-entry h4.rotateArrow:before{
   transform: rotate(0deg);
 }
 
-
+/* 
 .textWrapper h5{
   color: #fff;
   font-family: 'MyriadPro-medium' , sans-serif;
@@ -5731,7 +5746,7 @@ text-transform: uppercase;
   line-height: 20px;
   display: inline-block;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
-}
+} */
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .text{
   font-family: 'MyriadPro-medium' , sans-serif;
