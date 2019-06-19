@@ -268,10 +268,19 @@ $(document).ready(function () {
         }
     })
 
-    $(".faqWrapper h6, .faqWrapper h5, .faqWrapper h4, .faqWrapper h3, .faqWrapper h2, .faqWrapper h1").on('click', function () {
+    $(".faqWrapper .page-entry > h6, .faqWrapper .page-entry > h5, .faqWrapper .page-entry>h4, .faqWrapper .page-entry>h3, .faqWrapper .page-entry>h2, .faqWrapper .page-entry>h1").on('click', function () {
         $(this).next().toggleClass('showFaq');
-        $(this).toggleClass("rotateArrow");
-    });
+		$(this).toggleClass("rotateArrow");
+	});
+
+	$(".textWrapper  h6, .textWrapper  h5, .textWrapper  h4, .textWrapper  h3, .textWrapper  h2, .textWrapper  h1").on("click", function(){
+		$(this).nextUntil('h3').toggleClass("showFaq");
+		console.log("click")
+		
+	});
+
+	
+
 
 
     $(window).on('scroll', function () {
