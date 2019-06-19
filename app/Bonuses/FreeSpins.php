@@ -193,8 +193,7 @@ class FreeSpins extends \App\Bonuses\Bonus
                 }
 
                 if ((int)$user->email_confirmed === 0) {
-                    throw new \Exception('To activate this bonus, you need to confirm your email address first.
-                 Did not receive the activation mail? You can resend it in the Settings section of your profile.');
+                    throw new \Exception(trans('casino.try_get_bonuses_without_confirmation_email'));
                 }
 
                 if ($allowedDate < $currentDate) {

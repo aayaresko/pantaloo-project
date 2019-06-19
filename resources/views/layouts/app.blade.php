@@ -4,13 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">  
-    @if(Route::currentRouteName() == 'main')
-       <title>@yield('title', trans('casino.title'))</title>
-    @else
-       <title>@yield('title', trans('casino.title')) | CasinoBit</title>
-    @endif
-    <meta name="description" content="@yield('description', '')">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ MetaTag::get('title') }}</title>
+    {!! MetaTag::tag('description') !!}
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -885,17 +882,21 @@
 {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
 
 <script>
+    @php
+    $intercomConfig = \Helpers\IntercomHelper::getIntercomConfig();
+    @endphp
+
     @if (is_null($user))
         window.intercomSettings = {
-        app_id: "ebzyh5ul"
+        app_id: "{{ $intercomConfig->appId }}"
     };
     @else
             @php
-                $hmac = hash_hmac('sha256', $user->email, config('intercom.intercom_key'));
+                $hmac = hash_hmac('sha256', $user->email, $intercomConfig->key );
             @endphp
 
         window.intercomSettings = {
-        app_id: "ebzyh5ul",
+        app_id: "{{ $intercomConfig->appId }}",
         user_hash: '{{ $hmac }}', // HMAC using SHA-256
         email: "{{ $user->email }}", // Email address
     };
@@ -921,7 +922,7 @@
                 var s = d.createElement('script');
                 s.type = 'text/javascript';
                 s.async = true;
-                s.src = 'https://widget.intercom.io/widget/u91xvurq';
+                s.src = 'https://widget.intercom.io/widget/{{ $intercomConfig->appId }}';
                 var x = d.getElementsByTagName('script')[0];
                 x.parentNode.insertBefore(s, x);
             };

@@ -15,6 +15,7 @@ use App\Models\GamesCategory;
 use App\Models\GamesListSettings;
 use App\Providers\JsBridge\JsBridge;
 use Illuminate\Support\Facades\View;
+use Torann\LaravelMetaTags\Facades\MetaTag;
 
 /**
  * Class IntegratedGamesController.
@@ -69,6 +70,9 @@ class IntegratedGamesController extends Controller
      */
     public function index(Request $request, $lang, $type_name = '')
     {
+        MetaTag::set('title', trans("metatag.games_{$type_name}_title"));
+        MetaTag::set('description', trans("metatag.games_{$type_name}_description"));
+
         $configIntegratedGames = config('integratedGames.common');
         $appAdditional = config('appAdditional');
         $dummyPicture = $configIntegratedGames['dummyPicture'];

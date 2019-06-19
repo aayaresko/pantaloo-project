@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'forceHttps' => env('FORCE_HTTPS', true),
 
     'ipQualityScore' => env('IP_QUALITY_SCORE'),
