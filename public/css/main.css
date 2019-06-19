@@ -5720,7 +5720,9 @@ text-transform: uppercase;
   opacity: 1;
 }
 
-.textWrapper > p{
+.textWrapper > p,
+.textWrapper > ol,
+.textWrapper > ul{
   max-height: 0px;
   overflow: hidden;
   opacity: 0;
@@ -5728,7 +5730,9 @@ text-transform: uppercase;
   margin-bottom: 0px;
 }
 
-.textWrapper > p.showFaq{
+.textWrapper > p.showFaq,
+.textWrapper > ol.showFaq,
+.textWrapper > ul.showFaq{
   max-height: 2000px;
   opacity: 1;
 }
