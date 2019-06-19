@@ -256,10 +256,10 @@ class AgentController extends Controller
         $baseLineCpaDefault = config('appAdditional.defaultmBtcCpu');
 
         $agents = User::leftJoin('extra_users as extra', 'users.id', '=', 'extra.user_id')
-            ->where('role', 1)
+            ->whereIn('role', [1, 3])
             ->select(
                 [
-                    '*', 'users.id as id',
+                    '*', 'users.id as id', 'users.created_at as created',
                     DB::raw("IF(extra.base_line_cpa is null, $baseLineCpaDefault, extra.base_line_cpa) as base_line_cpa"),
                     'extra.block',
                 ])
