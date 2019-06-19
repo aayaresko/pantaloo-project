@@ -21,13 +21,13 @@
                         <div class="card-box">
 
                             <div class="row">
+
                                 <div class="col-sm-2">
-                                    <select name="type_id" class="selectpicker selectType" data-live-search="true">
-                                        <option value="0" selected>Type / All</option>
-                                        @foreach($types as $type)
-                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                    <select name="provider_id" class="selectpicker selectProvider" data-live-search="true">
+                                        <option value="0" selected>Provider / All</option>
+                                        @foreach($providers as $key => $provider)
+                                            <option value="{{ $key }}">{{ $provider['code'] }}</option>
                                         @endforeach
-                                        <option value="-1">Type / New</option>
                                     </select>
                                 </div>
 
@@ -41,25 +41,26 @@
                                 </div>
 
                                 <div class="col-sm-2">
-                                    <select name="provider_id" class="selectpicker selectProvider" data-live-search="true">
-                                        <option value="0" selected>Provider / All</option>
-                                        @foreach($providers as $key => $provider)
-                                            <option value="{{ $key }}">{{ $provider['code'] }}</option>
+                                    <select name="type_id" class="selectpicker selectType" data-live-search="true">
+                                        <option value="0" selected>Type / All</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <select name="mobile" class="selectpicker selectMobile" data-live-search="true">
-                                        <option value="-1" selected>Mobile / All</option>
-                                        <option value="1">On</option>
-                                        <option value="0">Off</option>
+                                        <option value="-1">Type / New</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <select name="active" class="selectpicker selectActive" data-live-search="true">
                                         <option value="-1" selected>Active / All</option>
+                                        <option value="1">On</option>
+                                        <option value="0">Off</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <select name="mobile" class="selectpicker selectMobile" data-live-search="true">
+                                        <option value="-1" selected>Mobile / All</option>
                                         <option value="1">On</option>
                                         <option value="0">Off</option>
                                     </select>
