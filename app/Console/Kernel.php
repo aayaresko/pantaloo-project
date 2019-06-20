@@ -62,7 +62,7 @@ class Kernel extends ConsoleKernel
         //clear raw log
         $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
         $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
-        $schedule->command('createSitemap')->dailyAt('00:40');
+        $schedule->command('createSitemap')->dailyAt('01:40');
     }
 
     /**
