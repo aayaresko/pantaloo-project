@@ -690,7 +690,7 @@
                     }
 
                     if (data.deposit) {
-                        ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+                        gtag('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
                         $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');
