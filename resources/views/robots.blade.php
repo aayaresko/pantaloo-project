@@ -3,11 +3,11 @@
     Disallow: /
 @else
     User-agent: *
-    ​Disallow: */logout
-    ​Disallow: */deposit
-    ​Disallow: */bonus
-    ​Disallow: */withdraw
-    ​Disallow: */settings
+    Disallow: */logout
+    Disallow: */deposit
+    Disallow: */bonus
+    Disallow: */withdraw
+    Disallow: */settings
     Disallow: */password/reset
     Disallow: /login
     Disallow: *?*

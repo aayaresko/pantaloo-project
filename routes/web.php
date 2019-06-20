@@ -12,6 +12,7 @@
 */
 
 //use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Storage;
 
 Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::get('/getTestMode', ['uses' => 'TestMode\GeneralController@getTestMode']);
@@ -77,7 +78,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('register', 'Auth\RegisterController@register');
 
     // Authentication Routes...
-//    Route::get('login', 'Auth\LoginController@showLoginForm');
+    Route::get('login', 'Auth\LoginController@showLoginForm');
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
 
@@ -120,6 +121,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('post.password.reset');
 
         Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
+        Route::get('/sitemap.xml', 'SitemapController@index');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     });
 
@@ -143,6 +145,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
             Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
         });
+
 
         Route::get('/contribution', ['as' => 'usd.deposit', 'uses' => 'MoneyController@depositUsd']);
         Route::post('/contribution', ['as' => 'usd.depositDo', 'uses' => 'MoneyController@depositUsdDo']);
