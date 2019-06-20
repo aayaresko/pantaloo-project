@@ -90,7 +90,7 @@ class UserAccountController extends Controller
             ];
 
             if ($request->filled('lastName')) {
-                $infoExtraUser['lastName'] =  $request->lastName;
+                $infoExtraUser['lastName'] = $request->lastName;
             }
 
             if ($request->filled('city')) {
@@ -149,43 +149,6 @@ class UserAccountController extends Controller
         ]);
     }
 
-    public function bonuses(Request $request)
-    {
-        $user = $request->user();
-        $userId = is_null($user) ? null : $user->id;
-
-        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        }])->orderBy('rating', 'desc')->get();
-
-        $bonusForView = [];
-        foreach ($bonuses as $bonus) {
-            $bonusClass = BonusHelper::getClass($bonus->id);
-            $bonusObject = new $bonusClass($user);
-            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
-
-            $bonus->notAvailable = true;
-            if (!$bonusAvailable) {
-                $bonus->notAvailable = false;
-            }
-
-            if (!is_null($bonus->activeBonus)) {
-                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
-                $bonus->bonusStatistics = $bonusStatistics;
-            }
-
-            array_push($bonusForView, $bonus);
-        }
-
-        $currencyCode = config('app.currencyCode');
-
-        return view('bonus', [
-            'currencyCode' => $currencyCode,
-            'bonusForView' => $bonusForView,
-            'user' => $user
-        ]);
-    }
-
     public function getDeposits(Request $request)
     {
         $user = $request->user();
@@ -195,15 +158,18 @@ class UserAccountController extends Controller
 
         try {
             if (is_null($user)) {
-               throw new \Exception('user is not found');
+                throw new \Exception('user is not found');
             }
 
             //to do new version not use transactions!!!!!!!!
-            $depositsDate = SystemNotification::select(['created_at as date', 'transaction_id as id', 'confirmations', 'value as amount'])
-                ->where('user_id', $user->id)->skip($request->startItem)->take($request->getItem)->get();
+            $depositsDate = SystemNotification::select(['created_at as date',
+                'transaction_id as id', 'confirmations', 'value as amount'])
+                ->where('user_id', $user->id)->skip($request->startItem)->take($request->getItem)
+                ->orderBy($request->order[0], $request->order[1])->get();
+
 
             $nextCount = SystemNotification::where('user_id', $user->id)
-                ->skip($request->startItem + $request->getItem)->take($request->getItem)->count();
+                ->skip($request->getItem)->take($request->getItem+ $request->stepItem)->get()->count();
 
             $deposits = $depositsDate->map(function ($item, $key) use ($params) {
                 $item->status = 'No confirmed';
@@ -241,6 +207,43 @@ class UserAccountController extends Controller
             'currencyCode' => $currencyCode,
             'user' => $user,
             'lang' => $lang
+        ]);
+    }
+
+    public function bonuses(Request $request)
+    {
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
+
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
+
+        $bonusForView = [];
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
+
+            $bonus->notAvailable = true;
+            if (!$bonusAvailable) {
+                $bonus->notAvailable = false;
+            }
+
+            if (!is_null($bonus->activeBonus)) {
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
+                $bonus->bonusStatistics = $bonusStatistics;
+            }
+
+            array_push($bonusForView, $bonus);
+        }
+
+        $currencyCode = config('app.currencyCode');
+
+        return view('bonus', [
+            'currencyCode' => $currencyCode,
+            'bonusForView' => $bonusForView,
+            'user' => $user
         ]);
     }
 

@@ -64,21 +64,31 @@
 
 @section('js')
     <script>
+        let a;
         let paramsTable = {
             startItem: 0,
-            getItem: 10,
-            lang: '{{ $lang }}'
+            stepItem: 10,
+            getItem: 0,
+            lang: '{{ $lang }}',
+            order: ['id', 'desc']
         };
 
         class Table {
             constructor(params) {
                 //init table
                 this.params = params;
+                this.column = [
+                    {"data": "date"},
+                    {"data": "id"},
+                    {"data": "status"},
+                    {"data": "amount"}
+                ];
                 this.table = $('#transactionsTable').DataTable({
                     "searching": false,
-                    //"bPaginate": true,
-                    "iDisplayLength": 1000,
+                    //"iDisplayLength": 1000,
                     "info": false,
+                    "ordering": true,
+                    "order": [],
                     createdRow: function (row, data, dataIndex) {
                         // Set the data-status attribute, and add a class
                         let tdStatus = $(row).find('td:eq(2)');
@@ -91,12 +101,7 @@
                         }
 
                     },
-                    "columns": [
-                        {"data": "date"},
-                        {"data": "id"},
-                        {"data": "status"},
-                        {"data": "amount"}
-                    ],
+                    "columns": this.column,
                     "columnDefs": [
                         {"orderable": false, "targets": 1},
                         {"orderable": false, "targets": 2}
@@ -104,24 +109,45 @@
                 });
                 //init events
                 this.events();
-                this.getDeposits();
+                this.getDeposits(this.params);
             }
 
             events() {
                 $('.loadMoredataTableBtn').on('click', () => {
-                    this.getDeposits();
+                    this.getDeposits(this.params);
+                });
+
+                this.table.on('click', 'th', (e) => {
+                    e.preventDefault();
+                    let sort = this.table.order();
+                    let order = [this.column[sort[0][0]].data, sort[0][1]];
+                    this.params.order = order;
+                    //console.log(this.params);
+                    //this.params.order = this.params
+                    this.getDeposits(this.params, false);
+
                 });
             }
 
-            getDeposits() {
+            getDeposits(params, counter = true) {
+
+                if (counter === true) {
+                    this.params.getItem =  this.params.getItem + this.params.stepItem;
+                }
+
                 $.ajax({
                     type: 'get',
-                    url: `/${this.params.lang}/getDeposits`,
-                    data: this.params,
+                    url: `/${params.lang}/getDeposits`,
+                    data: params,
                     success: (data) => {
                         if (data.success === true) {
-                            this.table.rows.add(data.deposits).draw(false);
-                            paramsTable.startItem = paramsTable.startItem + paramsTable.getItem;
+                            //clear all datatables
+                            table.table.clear().draw();
+                            if (data.countNext == 0) {
+                                $('.loadMoredataTableBtn').hide();
+                            }
+
+                            this.table.rows.add(data.deposits).draw(true);
                         }
                     }
                 });
