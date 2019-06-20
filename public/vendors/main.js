@@ -465,10 +465,6 @@ $(document).ready(function(){
 
 	});
 
-	$(".regBtn").on("click", function(){
-		
-	})
-
 });
 
 

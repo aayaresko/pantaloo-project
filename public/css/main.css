@@ -220,7 +220,7 @@ input[type="password"] {
   font-size: 15px;
   background: transparent;
   padding-left: 35px;
-  outline: none;
+  /* outline: none; */
   margin-bottom: 30px;
 }
 /* line 16, ../scss/_navigation.scss */
@@ -5431,6 +5431,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   /* border: 2px solid transparent; */
 }
 
+
+
 .activBonusPoUpWrap .push-btn.close-button{
   padding: 6px 25px 6px 25px;
   background-image: linear-gradient(14deg, #421f91 0%, #a92e9f 100%);
@@ -5891,6 +5893,18 @@ label.remem{
   position: absolute;
   opacity: 0;
 }
+
+#agree:focus + .termLabel:before, 
+#remember:focus + .remem:before,
+.regBtn:focus,
+.loginBtn:focus{
+  outline-color: rgb(77, 144, 254); 
+  outline-offset: -2px;
+  outline-style: auto;
+  outline-width: 5px;
+}
+
+
 
 input:checked + .termLabel:before,
 input:checked + .remem:before{
