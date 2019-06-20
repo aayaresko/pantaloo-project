@@ -33,10 +33,104 @@ class UserAccountController extends Controller
         $user = $request->user();
         $currencyCode = config('app.currencyCode');
 
+        $extraUser = ModernExtraUsers::where('user_id', $user->id)
+            ->where('code', 'info')->first();
+
         return view('account', [
             'currencyCode' => $currencyCode,
+            'extraUser' => $extraUser,
             'user' => $user,
             'lang' => $lang
+        ]);
+    }
+
+    public function updateUserExtra(Request $request, $lang)
+    {
+        $user = $request->user();
+        try {
+            DB::beginTransaction();
+
+            $errors = [];
+            $data = $request->all();
+
+            $validator = Validator::make($data, [
+                'firstName' => 'required|string:3',
+                'birthDay' => 'required|date',
+                'countryCode' => 'required|exists:countries,code',
+                'lastName' => 'string:3|nullable',
+                'city' => 'string:1|nullable',
+                'gender' => 'integer|in:1,2'
+            ]);
+
+
+            if ($validator->fails()) {
+                $validatorErrors = $validator->errors()->toArray();
+                array_walk_recursive($validatorErrors, function ($item) use (&$errors) {
+                    array_push($errors, $item);
+                });
+                throw new \Exception('validation');
+            }
+
+            //main part
+            $infoUser = [
+                'name' => $request->firstName,
+                'country' => $request->countryCode,
+            ];
+
+            User::where('id', $user->id)->update($infoUser);
+
+            //second part
+            $getExtraUser = ModernExtraUsers::where('user_id', $user->id)
+                ->where('code', 'info')->first();
+
+            $birthDay = $request->birthDay;
+
+            $infoExtraUser = [
+                'birthDay' => $birthDay,
+            ];
+
+            if ($request->filled('lastName')) {
+                $infoExtraUser['lastName'] =  $request->lastName;
+            }
+
+            if ($request->filled('city')) {
+                $infoExtraUser['city'] = $request->city;
+            }
+
+            if ($request->filled('gender')) {
+                $infoExtraUser['gender'] = (int)$request->gender;
+            }
+
+            if ($getExtraUser) {
+                ModernExtraUsers::where('id', $getExtraUser->id)->update([
+                    'value' => json_encode($infoExtraUser)
+                ]);
+            } else {
+                ModernExtraUsers::create([
+                    'user_id' => $user->id,
+                    'code' => 'info',
+                    'value' => json_encode($infoExtraUser)
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            if (empty($errors)) {
+                $errors = [$ex->getMessage()];
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => $errors
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => ['Update successful']
         ]);
     }
 
@@ -52,50 +146,6 @@ class UserAccountController extends Controller
             'qrCode' => $qrCode,
             'user' => $user,
             'lang' => $lang
-        ]);
-    }
-
-    public function updateUserExtra(Request $request, $lang)
-    {
-        try {
-            $errors = [];
-            $data = $request->all();
-            dump($data);
-            $validator = Validator::make($data, [
-                'firstName' => 'required|string:3',
-                'birthDay' => 'integer',
-                'countryCode' => 'required|exists:countries,code',
-                'lastName' => 'string:3|nullable',
-                'city' => 'string:1|nullable',
-            ]);
-
-
-            if ($validator->fails()) {
-                $validatorErrors = $validator->errors()->toArray();
-                array_walk_recursive($validatorErrors, function ($item) use (&$errors) {
-                    array_push($errors, $item);
-                });
-                throw new \Exception('validation');
-            }
-
-
-        } catch (\Exception $ex) {
-
-            if (empty($errors)) {
-                $errors = [$ex->getMessage()];
-            }
-
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'errors' => $errors
-                ]
-            ]);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => ['Done']
         ]);
     }
 
