@@ -78,7 +78,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('register', 'Auth\RegisterController@register');
 
     // Authentication Routes...
-    Route::get('login', 'Auth\LoginController@showLoginForm');
+//    Route::get('login', 'Auth\LoginController@showLoginForm');
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
 

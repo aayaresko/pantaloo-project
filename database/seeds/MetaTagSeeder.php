@@ -59,7 +59,7 @@ class MetaTagSeeder extends Seeder
                     'title' => 'Bitcoin Bingo – Play Online Bingo with Bitcoin | Casinobit',
                     'description' => 'Play Bitcoin Bingo at Casinobit ♠ Wide Selection of Online Bingo Games to Win BTC ✔ Provably Fair'
                 ],
-                'scratch-card' => [
+                'scratch-cards' => [
                     'title' => 'Bitcoin Scratch Сards – Play Online Scratch Сards with Bitcoin | Casinobit',
                     'description' => 'Play Bitcoin Scratch Сards at Casinobit ♠ Wide Selection of Online Scratch Сard Games to Win BTC ✔ Provably Fair'
                 ],
@@ -82,7 +82,16 @@ class MetaTagSeeder extends Seeder
                 'table-games' => [
                     'title' => 'Bitcoin Table Games – Play Bitcoin Casino Table Games Online with Bitcoin | Casinobit',
                     'description' => 'Play Gambling Table Games with Bitcoin at Casinobit ♠ Wide Selection of Online Casino Table Games to Win BTC ✔ Provably Fair'
-                ]
+                ],
+                'others' => [
+                    'title' => 'Bitcoin Games – Play Bitcoin Casino Games Online with Bitcoin | Casinobit',
+                    'description' => 'Play at Casinobit ♠ Wide Selection of Online Games to Win BTC ✔ Provably Fair'
+                ],
+                'live-games' => [
+                    'title' => 'Bitcoin Games – Play Bitcoin Casino Games Online with Bitcoin | Casinobit',
+                    'description' => 'Play at Casinobit ♠ Wide Selection of Online Games to Win BTC ✔ Provably Fair'
+                ],
+
             ]
         ];
         $langRepos = \Illuminate\Support\Facades\App::make(\Waavi\Translation\Repositories\LanguageRepository::class);
