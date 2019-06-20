@@ -214,7 +214,7 @@ class AuthController extends Controller
             'status' => true,
             'message' => [
                 'email' => $email,
-                'title' => 'Confirm Email',
+                'title' => 'CasinoBit Affiliate registration',
                 'body' => (string) view('affiliates.parts.confirm_email')->with(['email' => $email]),
             ],
         ]);
@@ -399,7 +399,7 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link]);
+        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link, 'email' => $userEmail]);
         $mail->subject('Confirm email');
 
         foreach (config('partner.addresses_to_send_confirmation') as $email){
