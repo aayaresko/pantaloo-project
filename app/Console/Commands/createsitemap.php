@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+
 class createSitemap extends Command
 {
     /**
@@ -148,6 +149,6 @@ class createSitemap extends Command
             $sitemap->add(URL::to('/en/password/email'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordEmail);
         }
 
-        $sitemap->store('xml', 'sitemap');
+         $sitemap->store('xml', 'sitemap');
     }
 }
