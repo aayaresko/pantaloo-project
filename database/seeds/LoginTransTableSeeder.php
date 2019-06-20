@@ -29,7 +29,7 @@ class LoginTransTableSeeder extends Seeder
                 'namespace' => '*',
                 'group' => 'casino',
                 'item' => 'not_allowed_subtitle',
-                'text' => 'CasinoBit.io isn\'t avaible in your country.We\'re so sorry!If you think that we were mistaken with your location, please contact us with support',
+                'text' => 'CasinoBit.io isn\'t avaible in your country.We\'re so sorry! If you think that we were mistaken with your location, please contact us with support',
                 'unstable' => '0',
                 'locked' => '0',
                 'created_at' => $currentDate,
