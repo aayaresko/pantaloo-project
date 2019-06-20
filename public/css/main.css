@@ -350,7 +350,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   top: 50%;
   margin-top: -10px;
   left: 0;
-  background: url("../media/images/icons/user.svg") no-repeat center / cover;
+  background: url("../media/images/icons/user.svg?v=1") no-repeat center / cover;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
   -ms-transition: 0.2s linear;
@@ -886,7 +886,7 @@ html[lang="th"] .main-title-block {
   top: 50%;
   margin-top: -14px;
   left: -10px;
-  background: url("../media/images/icons/user.svg") no-repeat center / cover;
+  background: url("../media/images/icons/user.svg?v=1") no-repeat center / cover;
 }
 /* line 373, ../scss/_navigation.scss */
 .header .header-right-part .login-block .login-btn:hover,
