@@ -669,14 +669,20 @@ transform: rotate(180deg)
 	.btn-custom.loginBtn {
 		margin-right: 10px;
 	}
+	
 }
 
 @media (max-width: 992px) {
+	.modal-open #menu {
+		margin-right: 0;
+	}
 	.navbar-collapse.collapse {
 	display: none !important;
 	}
 	.navbar-collapse.collapse.in {
 		display: block !important;
+		/* position: relative;
+		top: 17px; */
 	}
 	.navbar-header {
 		position: relative;
@@ -730,12 +736,14 @@ transform: rotate(180deg)
 		flex-direction: column;
 		width: 100%;
 		margin: 0;
-		margin-top: 40px;
+		margin-top: 23px;
 		padding-bottom: 32px;
 		float: none !important;
 	}
 	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
-		max-height: 600px;
+		position: relative;
+		top: 17px;
+		max-height: calc(100vh - 80px);
 	}
 	.popUpBtn {
 		margin: 9px 2px;
