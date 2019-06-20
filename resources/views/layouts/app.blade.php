@@ -679,6 +679,7 @@
             dateType: 'json',
             success: function (data) {
                 if (data.success == true) {
+                    console.log(data);
                     $('span.deposit-value').html(data.balance);
                     $('span.value').html(data.balance);
 
