@@ -158,10 +158,10 @@ class GeneralHelper
                 }
 
                 $stat['bonus'] = $stat['bonus'] + $transaction->bonus_sum;
-
-                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum;
-
-                $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum *
+                //added 0.82 koef (100% - casino fit)
+                $stat['revenue'] = $stat['revenue'] + (-1) * $transaction->sum * 0.82;
+                //added 0.82 koef (100% - casino fit)
+                $stat['profit'] = $stat['profit'] + (-1) * $transaction->sum  * 0.82 *
                     $transaction->agent_commission / 100;
 
                 $stat['adminProfit'] = $stat['adminProfit'] + (-1) * $transaction->sum - (-1) *

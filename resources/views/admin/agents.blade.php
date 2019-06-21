@@ -17,6 +17,7 @@
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">#</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Affiliate</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Created</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Users</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Procent</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1">Base line CPA</th>
@@ -30,6 +31,7 @@
                                     <tr role="row">
                                         <td>{{$agent['agent']->id}}</td>
                                         <td class="">{{$agent['agent']->email}}</td>
+                                        <td class="">{{$agent['agent']->created}}</td>
                                         <td class=""><span class="label label-success">{{$agent['users']}}</span></td>
                                         <td class="">{{$agent['agent']->commission}} %</td>
                                         <td class="">{{$agent['agent']->base_line_cpa}}</td>

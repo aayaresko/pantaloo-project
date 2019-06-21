@@ -4,13 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">  
-    @if(Route::currentRouteName() == 'main')
-       <title>@yield('title', trans('casino.title'))</title>
-    @else
-       <title>@yield('title', trans('casino.title')) | CasinoBit</title>
-    @endif
-    <meta name="description" content="@yield('description', '')">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ MetaTag::get('title') }}</title>
+    {!! MetaTag::tag('description') !!}
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -280,11 +277,11 @@
             @if(Auth::guest())
                 <div class="auth-block-mobile">
                     <div class="login-block floated">
-                        <a href="{{url('/login')}}" class="login-btn"><span
+                        <a href="{{url('#login')}}" class="login-btn"><span
                                     class="text">{{ trans('casino.login') }}</span></a>
                     </div>
                     <div class="registration-block floated">
-                        <a href="{{url('/registr')}}" class="reg-btn"><span
+                        <a href="{{url('#registr')}}" class="reg-btn"><span
                                     class="text">{{ trans('casino.registration') }}</span></a>
                     </div>
                 </div>
@@ -405,7 +402,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label>{{ trans('casino.email_address') }} <span>*</span></label>
-                                    <input type="email" class="email-input" name="email" required>
+                                    <input type="email" class="email-input" name="email" required tabindex="1" title="{{ trans('casino.input_title') }}">
                                     <!-- <p class="errorMessage">Email required</p> -->
                                 </div>
                             </div>
@@ -415,7 +412,7 @@
                                     
                                     <label>{{ trans('casino.password') }} <span>*</span></label>
                                     <div class="pasInputWrapper">
-                                        <input type="password" class="pass-input" name="password" required>
+                                        <input type="password" class="pass-input" name="password" required tabindex="2" title="{{ trans('casino.input_title') }}">
                                         <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
                                     </div>
                                     <p class="errorMessage registrError"></p>
@@ -435,7 +432,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="block-thumbnail">
-                                        <input type="checkbox" name="agree" id="agree" required>
+                                        <input type="checkbox" name="agree" id="agree" required tabindex="3">
                                         <label for="agree" class="termLabel">
                                    
                                             {{--fix in future this--}}
@@ -461,7 +458,7 @@
                                 <div class="col-sm-12">
                                     <div class="send-btn-block">
                                         {{--<button class="send-btn"><span class="btn-entry">Get Notified</span></button>--}}
-                                        <button class="send-btn regBtn">
+                                        <button class="send-btn regBtn" tabindex="4">
                                             <!-- <span class="btn-entry"></span> -->
                                             {{ trans('casino.registration') }}
                                         </button>
@@ -511,7 +508,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                             <label>{{ trans('casino.email_address') }} <span>*</span></label>
-                                <input type="email" name="email" class="email-input" required>
+                                <input type="email" name="email" class="email-input" required tabindex="5" title="{{ trans('casino.input_title') }}">
                                 <!-- <p class="errorMessage loginErrorEmail"></p> -->
                             </div>
                         </div>
@@ -520,7 +517,7 @@
                                     
                                     <label >{{ trans('casino.password') }} <span>*</span></label>
                                     <div class="pasInputWrapper">
-                                        <input type="password" name="password" class="pass-input" required>
+                                        <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
                                         <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
 
                                         <a href="{{ url("/{$currentLang}/password/forgot") }}"
@@ -532,7 +529,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="block-thumbnail">
-                                <input type="checkbox" name="remember" id="remember">
+                                <input type="checkbox" name="remember" id="remember" tabindex="7">
                                 <label for="remember" class="remem">{{ trans('casino.remember_me') }}</label>
                                 </div>
                             </div>
@@ -540,7 +537,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="send-btn-block">
-                                    <button class="send-btn loginBtn"><span class="btn-entry">{{trans('casino.enter_now')}}</span>
+                                    <button class="send-btn loginBtn" tabindex="8"><span class="btn-entry">{{trans('casino.enter_now')}}</span>
                                     </button>
                                 </div>
                             </div>

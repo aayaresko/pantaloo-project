@@ -86,6 +86,24 @@ class RegisterController extends Controller
         $validator = $this->validator($data);
         //preparation params
 
+        //validation on password by repeat url to do function or validation class
+        $passwordUser = $data['password'];
+        $loginUser = $data['email'];
+        $currentUrl = $request->getHost();
+        $pattern = "/\w{4,}/";
+        preg_match_all($pattern, $currentUrl, $matchesPass);
+
+        $matchesPass = $matchesPass[0] ?? [];
+
+        if (in_array($passwordUser, $matchesPass)) {
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
+        } elseif (Str::contains($passwordUser, $currentUrl)) {
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
+        } elseif ($loginUser == $passwordUser) {
+            return redirect()->back()->withErrors([trans('casino.try_another_password')]);
+        }
+        //end validation on password by repeat url to do function or validation class
+
         //main act
         try {
             //set locale

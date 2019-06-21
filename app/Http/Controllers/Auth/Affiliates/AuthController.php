@@ -197,7 +197,7 @@ class AuthController extends Controller
         $user->save();
         $newKoef = new AgentsKoef();
         $newKoef->user_id = $user->id;
-        $newKoef->koef = 0;
+        $newKoef->koef = $partnerCommission;
         $newKoef->save();
 
         $this->dispatch(new SetUserCountry($user));

@@ -160,7 +160,7 @@ class TranslationController extends Controller
             /* SEARCH */
             $search = $request->input('search.value');
             $preSearch = "%$search%";
-            $whereRaw = "(translator_translations.text LIKE ? or cur_lang.text LIKE ?)";
+            $whereRaw = "(translator_translations.text LIKE ? or cur_lang.text LIKE ? or translator_translations.item LIKE ?)";
 
             $items = Translation::leftJoin('translator_translations as cur_lang',
                 function ($join) use ($param) {
@@ -169,7 +169,7 @@ class TranslationController extends Controller
                         ->where('cur_lang.locale', '=', $param['currentLang']);
                 })
                 ->where($whereCompare)
-                ->whereRaw($whereRaw, [$preSearch, $preSearch])
+                ->whereRaw($whereRaw, [$preSearch, $preSearch, $preSearch])
                 ->offset($start)
                 ->limit($limit)
                 ->select($param['columnsAlias'])
@@ -182,7 +182,7 @@ class TranslationController extends Controller
                         ->where('cur_lang.locale', '=', $param['currentLang']);
                 })
                 ->where($whereCompare)
-                ->whereRaw($whereRaw, [$preSearch, $preSearch])
+                ->whereRaw($whereRaw, [$preSearch, $preSearch, $preSearch])
                 ->count();
 
             $totalFiltered = $countSum;

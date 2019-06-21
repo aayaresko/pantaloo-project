@@ -64,12 +64,18 @@ class IntegratedGamesController extends Controller
     public function index(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
+        $params['providers'] = $configIntegratedGames['providers'];
         $dummyPicture = $configIntegratedGames['dummyPicture'];
         $types = GamesType::select(['id', 'code', 'name'])->get()->all();
+        $category = GamesCategory::select(['id', 'code', 'name'])->get();
+        $providers = $params['providers'];
         View::share('dummyPicture', $dummyPicture);
 
-        return view('admin.integrated_games')
-            ->with(['types' => $types]);
+        return view('admin.integrated_games')->with([
+            'types' => $types,
+            'category' => $category,
+            'providers' => $providers
+        ]);
     }
 
     /**
@@ -155,6 +161,7 @@ class IntegratedGamesController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function gameUpdate(Request $request)
     {
@@ -171,7 +178,7 @@ class IntegratedGamesController extends Controller
             'banCountryGames_codes.*' => 'exists:countries,code',
             'category_id' => 'integer|exists:games_categories,id',
             'rating' => 'integer',
-            'image' => "image|max:{$imageConfig['maxSize']}|mimes:".implode(',', $imageConfig['mimes']),
+            'image' => "image|max:{$imageConfig['maxSize']}|mimes:" . implode(',', $imageConfig['mimes']),
         ]);
 
         DB::beginTransaction();
@@ -181,14 +188,14 @@ class IntegratedGamesController extends Controller
             $updatedGame = $request->toArray();
             if ($request->hasFile('image')) {
                 $image = $request->image;
-                $nameImage = $request->id.'.'.$image->getClientOriginalExtension();
+                $nameImage = $request->id . '.' . $image->getClientOriginalExtension();
                 $pathImage = "/gamesPictures/{$nameImage}";
-                Storage::put('public'.$pathImage, file_get_contents($image->getRealPath()));
-                $updatedGame['image'] = '/storage'.$pathImage;
+                Storage::put('public' . $pathImage, file_get_contents($image->getRealPath()));
+                $updatedGame['image'] = '/storage' . $pathImage;
             }
 
             $active = $request->input('active');
-            if (! is_null($active)) {
+            if (!is_null($active)) {
                 $updatedGame['active'] = ($active === 'on') ? 1 : 0;
             } else {
                 $updatedGame['active'] = 0;
@@ -197,7 +204,7 @@ class IntegratedGamesController extends Controller
             unset($updatedGame['_token']);
             $default_provider_image = $request->input('default_provider_image');
 
-            if (! is_null($default_provider_image)) {
+            if (!is_null($default_provider_image)) {
                 if ($default_provider_image === 'on') {
                     $updatedGame['image'] = $game->our_image;
                     unset($updatedGame['default_provider_image']);
@@ -310,6 +317,33 @@ class IntegratedGamesController extends Controller
             ['games_types_games.extra', '=', 1],
         ];
 
+        if ($request->has('category_id')) {
+            if ($request->category_id > 0) {
+                array_push($param['whereCompare'],
+                    ['games_categories.id', '=', $request->category_id]);
+            }
+        }
+        if ($request->has('mobile')) {
+            if ($request->mobile >= 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.mobile', '=', $request->mobile]);
+            }
+        }
+
+        if ($request->has('active')) {
+            if ($request->active >= 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.active', '=', $request->active]);
+            }
+        }
+
+        if ($request->has('provider_id')) {
+            if ($request->provider_id > 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.provider_id', '=', $request->provider_id]);
+            }
+        }
+
         if ($request->filled('type_id')) {
             if ($request->type_id > 0) {
                 array_push($param['whereCompare'],
@@ -318,7 +352,7 @@ class IntegratedGamesController extends Controller
 
             if ($request->type_id == -1) {
                 $firstLoad = CustomField::where('code', 'get_games')->first();
-                if (! is_null($firstLoad)) {
+                if (!is_null($firstLoad)) {
                     array_push($param['whereCompare'],
                         ['games_list.created_at', '>', $firstLoad->created_at]);
 
