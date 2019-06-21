@@ -466,7 +466,7 @@ class GlobalAffiliatesController extends Controller
     }
     public function settings(Request $request)
     {
-        return view('admin.change_password');
+        return view('affiliates.change_password');
     }
 
     public function changePassword(Request $request,User $user,Hash $hash,Validator $validator)
