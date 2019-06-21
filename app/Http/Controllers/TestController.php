@@ -46,6 +46,7 @@ class TestController extends Controller
 
     public function phpinfo(Request $request)
     {
+        dd(GeneralHelper::visitorIpCloudFlare());
         dump(IntercomHelper::getIntercomConfigByCountryCode('TH'));
         if (\Illuminate\Support\Facades\Auth::check()) {
             dump(IntercomHelper::getIntercomConfigByUser(\Illuminate\Support\Facades\Auth::user()));

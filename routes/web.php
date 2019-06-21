@@ -34,6 +34,7 @@ $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
 //$partner = 'partner.test.test';
+//$partner = 'partner.casinobit.localhost';
 
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {
@@ -55,7 +56,7 @@ Route::group(['middleware' => ['web', 'ip.domain.country.block']], function () u
 
         Route::post('/affiliates/password/reset', ['as' => 'affiliates.passwordReset', 'uses' => 'Auth\Affiliates\PasswordController@reset']);
         Route::post('affiliates/sendToken/{userEmail}', ['as' => 'affiliates.sendToken', 'uses' => 'Auth\Affiliates\AuthController@confirmEmail']);
-        Route::post('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
+        Route::get('affiliates/activate/{token}/email/{email}', ['as' => 'affiliates.email.activate', 'uses' => 'Auth\Affiliates\AuthController@activate']);
 
         //redefine routes affiliates
         Route::group(['prefix' => 'affiliates', 'middleware' => ['auth', 'agent']], function () {
