@@ -268,10 +268,18 @@ $(document).ready(function () {
         }
     })
 
-    $(".faqWrapper h6, .faqWrapper h5, .faqWrapper h4, .faqWrapper h3, .faqWrapper h2, .faqWrapper h1").on('click', function () {
+    $(".faqWrapper .page-entry > h2").on('click', function () {
         $(this).next().toggleClass('showFaq');
-        $(this).toggleClass("rotateArrow");
-    });
+		$(this).toggleClass("rotateArrow");
+	});
+
+
+	$(".textWrapper h1, .textWrapper h2, .textWrapper h3, .textWrapper h4, .textWrapper h5, .textWrapper h6").on("click", function(){
+		$(this).nextUntil('h2').toggleClass("showFaq");
+	});
+
+	
+
 
 
     $(window).on('scroll', function () {

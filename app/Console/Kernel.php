@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel
         updateUserIntercom::class,
         Translate::class,
         RemoveKeyTranslate::class,
+        Commands\createSitemap::class,
     ];
 
     /**
@@ -60,6 +61,8 @@ class Kernel extends ConsoleKernel
         //optimizations
         //clear raw log
         $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
+        $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
+        $schedule->command('createSitemap')->dailyAt('01:40');
     }
 
     /**

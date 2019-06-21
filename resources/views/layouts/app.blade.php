@@ -277,11 +277,11 @@
             @if(Auth::guest())
                 <div class="auth-block-mobile">
                     <div class="login-block floated">
-                        <a href="{{url('/login')}}" class="login-btn"><span
+                        <a href="{{url('#login')}}" class="login-btn"><span
                                     class="text">{{ trans('casino.login') }}</span></a>
                     </div>
                     <div class="registration-block floated">
-                        <a href="{{url('/registr')}}" class="reg-btn"><span
+                        <a href="{{url('#registr')}}" class="reg-btn"><span
                                     class="text">{{ trans('casino.registration') }}</span></a>
                     </div>
                 </div>
@@ -679,6 +679,7 @@
             dateType: 'json',
             success: function (data) {
                 if (data.success == true) {
+                    console.log(data);
                     $('span.deposit-value').html(data.balance);
                     $('span.value').html(data.balance);
 
@@ -690,7 +691,7 @@
                     }
 
                     if (data.deposit) {
-                        ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+                        ga('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
                         $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');
