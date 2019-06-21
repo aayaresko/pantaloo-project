@@ -232,12 +232,16 @@ class UserAccountController extends Controller
         ];
     }
 
-    public function settings(Request $request, $lang)
+
+    public function withdraw(Request $request, $lang)
     {
         $user = $request->user();
         $currencyCode = config('app.currencyCode');
 
-        return view('passwords', [
+        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get();
+
+        return view('withdraw', [
+            'transactions' => $transactions,
             'currencyCode' => $currencyCode,
             'user' => $user,
             'lang' => $lang
@@ -281,20 +285,24 @@ class UserAccountController extends Controller
         ]);
     }
 
-    public function withdraw(Request $request, $lang)
+    public function settings(Request $request, $lang)
     {
         $user = $request->user();
         $currencyCode = config('app.currencyCode');
 
-        $transactions = Auth::user()->transactions()->withdraws()->orderBy('id', 'Desc')->limit(10)->get();
-
-        return view('withdraw', [
-            'transactions' => $transactions,
+        return view('passwords', [
             'currencyCode' => $currencyCode,
             'user' => $user,
             'lang' => $lang
         ]);
     }
+
+
+
+
+
+
+
 
     public function withdrawDo(Request $request)
     {
