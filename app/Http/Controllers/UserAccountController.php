@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Bonus;
+
 use DB;
 use App\User;
 use Validator;
+use App\Bonus;
 use App\Invoice;
-use App\UserBonus;
 use Carbon\Carbon;
 use App\Transaction;
 use Helpers\PayTrio;
@@ -16,7 +16,6 @@ use App\Jobs\Withdraw;
 use App\Bitcoin\Service;
 use Helpers\BonusHelper;
 use App\ModernExtraUsers;
-use App\Jobs\BonusHandler;
 use Illuminate\Http\Request;
 use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
@@ -151,50 +150,85 @@ class UserAccountController extends Controller
 
     public function getDeposits(Request $request)
     {
+        $param = [];
         $user = $request->user();
-        $deposits = [];
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
-        $params = ['minConfirmBtc' => $minConfirmBtc];
 
         try {
             if (is_null($user)) {
                 throw new \Exception('user is not found');
             }
 
-            //to do new version not use transactions!!!!!!!!
-            $depositsDate = SystemNotification::select(['created_at as date',
-                'transaction_id as id', 'confirmations', 'value as amount'])
-                ->where('user_id', $user->id)->skip($request->startItem)->take($request->getItem)
-                ->orderBy($request->order[0], $request->order[1])->get();
+            $param['minConfirmBtc'] = $minConfirmBtc;
 
+            $param['columns'] = [
+                0 => 'created_at',
+                1 => 'transaction_id',
+                2 => 'confirmations',
+                3 => 'value'
+            ];
+
+            $param['whereCompare'] = [
+                ['user_id', '=', $user->id]
+            ];
+
+            $param['columnsAlias'] = [
+                0 => 'created_at as date',
+                1 => 'transaction_id as id',
+                2 => 'confirmations',
+                3 => 'value as amount'
+            ];
+
+            /* ACT */
+            $whereCompare = $param['whereCompare'];
+
+            $countSum = SystemNotification::select($param['columns'])->where($param['whereCompare'])
+                ->skip($request->startItem)->take($request->getItem)->get()->count();
+
+            $totalData = $countSum;
+            $totalFiltered = $totalData;
+
+            $order = $param['columns'][$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
+
+            /* SORT */
+            $items = SystemNotification::select($param['columnsAlias'])->where($param['whereCompare'])
+                ->offset($request->startItem)->limit($request->getItem)->orderBy($order, $dir)->get();
 
             $nextCount = SystemNotification::where('user_id', $user->id)
-                ->skip($request->getItem)->take($request->getItem+ $request->stepItem)->get()->count();
+                ->skip($request->getItem)->take($request->getItem + $request->stepItem)->get()->count();
+            /* END */
 
-            $deposits = $depositsDate->map(function ($item, $key) use ($params) {
+            /* TO VIEW */
+            $data = $items;
+
+            $data->map(function ($item) use ($param) {
                 $item->status = 'No confirmed';
-                if ($item->confirmations >= $params['minConfirmBtc']) {
+                if ($item->confirmations >= $param['minConfirmBtc']) {
                     $item->status = 'Confirmed';
                 }
                 unset($item->confirmations);
-                //trans
-                //function for status confirmations
                 return $item;
             });
+
         } catch (\Exception $ex) {
             return [
-                'success' => false,
-                'messages' => [$ex->getMessage()],
-                'deposits' => $deposits
-
+                'status' => false,
+                'error' => $ex->getMessage(),
+                'draw' => intval($request->input('draw')),
+                'recordsTotal' => intval($totalData),
+                'recordsFiltered' => intval($totalFiltered),
+                'data' => [],
             ];
         }
 
         return [
-            'success' => true,
-            'messages' => ['Done'],
-            'deposits' => $deposits,
-            'countNext' => $nextCount
+            'status' => true,
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data,
+            'nextCount' => $nextCount
         ];
     }
 

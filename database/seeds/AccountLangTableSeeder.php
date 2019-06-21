@@ -194,7 +194,7 @@ class AccountLangTableSeeder extends Seeder
                 'namespace' => '*',
                 'group' => 'casino',
                 'item' => 'transaction_status',
-                'text' => 'status',
+                'text' => 'Status',
                 'unstable' => '0',
                 'locked' => '0',
                 'created_at' => $currentDate,

@@ -64,32 +64,69 @@
 
 @section('js')
     <script>
-        let a;
         let paramsTable = {
             startItem: 0,
             stepItem: 10,
             getItem: 0,
             lang: '{{ $lang }}',
-            order: ['id', 'desc']
         };
 
         class Table {
             constructor(params) {
                 //init table
+                this.table = null;
                 this.params = params;
-                this.column = [
-                    {"data": "date"},
-                    {"data": "id"},
-                    {"data": "status"},
-                    {"data": "amount"}
-                ];
+                this.events();
+                this.getDeposits(this.params, true);
+            }
+
+            events() {
+                $('.loadMoredataTableBtn').on('click', () => {
+                    this.getDeposits(this.params, true);
+                });
+            }
+
+            getDeposits(params, counter = false) {
+                let order = [0, "desc"];
+
+                if (counter === true) {
+                    this.params.getItem = this.params.getItem + this.params.stepItem;
+                }
+
+                if (this.table != null) {
+                    order = this.table.order()[0];
+                }
+
+                $('#transactionsTable').DataTable().destroy();
+
                 this.table = $('#transactionsTable').DataTable({
                     "searching": false,
-                    //"iDisplayLength": 1000,
                     "info": false,
-                    "ordering": true,
-                    "order": [],
-                    createdRow: function (row, data, dataIndex) {
+                    "order": [order],
+                    "columns": [
+                        {"data": "date"},
+                        {"data": "id"},
+                        {"data": "status"},
+                        {"data": "amount"}
+                    ],
+                    "columnDefs": [
+                        {"orderable": false, "targets": 1},
+                        {"orderable": false, "targets": 2}
+                    ],
+                    "serverSide": true,
+                    'processing': true,
+                    //to do preloader
+                    'language': {
+                        'loadingRecords': '&nbsp;',
+                        'processing': 'Loading...'
+                    },
+                    "ajax": {
+                        "url": `/${params.lang}/getDeposits`,
+                        "dataType": "json",
+                        "type": "GET",
+                        "data": this.params,
+                    },
+                    "createdRow": function (row, data, dataIndex) {
                         // Set the data-status attribute, and add a class
                         let tdStatus = $(row).find('td:eq(2)');
                         tdStatus.addClass('statustransAction');
@@ -99,58 +136,17 @@
                         } else {
                             tdStatus.addClass('notConfirm')
                         }
-
                     },
-                    "columns": this.column,
-                    "columnDefs": [
-                        {"orderable": false, "targets": 1},
-                        {"orderable": false, "targets": 2}
-                    ],
-                });
-                //init events
-                this.events();
-                this.getDeposits(this.params);
-            }
-
-            events() {
-                $('.loadMoredataTableBtn').on('click', () => {
-                    this.getDeposits(this.params);
-                });
-
-                this.table.on('click', 'th', (e) => {
-                    e.preventDefault();
-                    let sort = this.table.order();
-                    let order = [this.column[sort[0][0]].data, sort[0][1]];
-                    this.params.order = order;
-                    //console.log(this.params);
-                    //this.params.order = this.params
-                    this.getDeposits(this.params, false);
-
-                });
-            }
-
-            getDeposits(params, counter = true) {
-
-                if (counter === true) {
-                    this.params.getItem =  this.params.getItem + this.params.stepItem;
-                }
-
-                $.ajax({
-                    type: 'get',
-                    url: `/${params.lang}/getDeposits`,
-                    data: params,
-                    success: (data) => {
-                        if (data.success === true) {
-                            //clear all datatables
-                            table.table.clear().draw();
-                            if (data.countNext == 0) {
+                    "initComplete": function (settings, data) {
+                        if (data.status == true) {
+                            if (data.nextCount == 0) {
                                 $('.loadMoredataTableBtn').hide();
                             }
-
-                            this.table.rows.add(data.deposits).draw(true);
                         }
                     }
                 });
+
+
             }
         }
 
