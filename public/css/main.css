@@ -1440,9 +1440,9 @@ html.cropped {
   -webkit-border-radius: 19px;
   -moz-border-radius: 19px;
   /* background-color: rgba(0, 0, 0, 0.7); */
-  background: linear-gradient(90deg, #100029, #2d115c);
+  /* background: linear-gradient(90deg, #100029, #2d115c); */
   overflow: hidden;
-  padding-top: 23px;
+  padding-top: 25px;
   padding-bottom: 48px;
   max-width: 160px;
   width: 100%;
@@ -1450,7 +1450,14 @@ html.cropped {
   bottom: 20%;
   text-align: center;
   z-index: 99999;
+  background: url(../images/msg_bg.png) no-repeat top;
 }
+
+.number-value-small{
+  font-size: 20px;
+  margin-left: -5px;
+}
+
 /* line 111, ../scss/_middle.scss */
 .msg-popup .top-text {
   display: block;
@@ -1462,17 +1469,17 @@ html.cropped {
   display: block;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 40px;
-  line-height: 41px;
+  line-height: 26px;
   position: relative;
 }
 /* line 124, ../scss/_middle.scss */
 .msg-popup .middle-text {
   display: block;
-  padding: 0 20px;
+  padding: 0 25px;
   font-size: 13px;
   color: #b8a7cd;
-  margin: 8px 0px;
-  line-height: 19px;
+  margin: 12px 0px 8px 0px;
+  line-height: 17px;
 }
 /* line 130, ../scss/_middle.scss */
 .msg-popup .registration-btn {
@@ -6392,7 +6399,7 @@ input:checked + .remem:before{
   /* line 100, ../scss/_responsive.scss */
   body .msg-popup {
     left: 12%;
-    max-width: 136px;
+    /* max-width: 136px; */
     padding-top: 12px;
     padding-bottom: 40px;
   }
