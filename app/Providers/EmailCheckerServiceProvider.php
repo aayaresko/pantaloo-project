@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Support\ServiceProvider;
+use App\Providers\EmailChecker\EmailChecker;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
 class EmailCheckerServiceProvider extends ServiceProvider

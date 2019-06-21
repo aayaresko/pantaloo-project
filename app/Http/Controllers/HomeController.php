@@ -7,6 +7,8 @@ use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Torann\LaravelMetaTags\Facades\MetaTag;
+
 
 class HomeController extends Controller
 {
@@ -25,7 +27,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function home()
     {
         return view('home');
@@ -33,6 +34,9 @@ class HomeController extends Controller
 
     public function index()
     {
+        MetaTag::set('title', trans("metatag.main__title"));
+        MetaTag::set('description', trans("metatag.main__description"));
+
         return view('home');
     }
 
@@ -46,7 +50,8 @@ class HomeController extends Controller
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
 
-        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'], '/');
+        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()).$_SERVER['REQUEST_URI'], '/');
+
         return redirect($url, 301);
     }
 }

@@ -7,8 +7,7 @@ use Log;
 use App\UserBonus;
 
 /**
- * Class BonusHelper
- * @package Helpers
+ * Class BonusHelper.
  */
 class BonusHelper
 {
@@ -17,20 +16,20 @@ class BonusHelper
      * @return mixed
      * @throws \Exception
      */
-    static public function getClass($id)
+    public static function getClass($id)
     {
         $bonusClasses = config('bonus.classes');
 
         foreach ($bonusClasses as $class) {
             if ($class::$id == $id) {
                 return $class;
-            };
+            }
         }
 
         return false;
     }
 
-    static public function bonusStatistics($bonusObject)
+    public static function bonusStatistics($bonusObject)
     {
         $dataBonus = $bonusObject->data;
 
@@ -48,12 +47,12 @@ class BonusHelper
         return [
             'bonusWager' => [
                 'real' => $bonusWagerUser,
-                'necessary' =>$bonusWager
+                'necessary' =>$bonusWager,
             ],
             'depositWager' => [
                 'real' => $depositWagerUser,
-                'necessary' =>$depositWager
-            ]
+                'necessary' =>$depositWager,
+            ],
         ];
     }
 }

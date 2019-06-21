@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
- * Class AffiliatesController
- * @package App\Http\Controllers\Partner
+ * Class AffiliatesController.
  */
 class GlobalAffiliatesController extends Controller
 {
@@ -21,6 +20,7 @@ class GlobalAffiliatesController extends Controller
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -79,6 +79,29 @@ class GlobalAffiliatesController extends Controller
         return $param;
     }
 
+    protected function preparationParamsUsers(Request $request)
+    {
+        $param['columns'] = [
+            0 => 'users.id',
+            1 => 'users.email',
+            2 => 'users.created_at',
+        ];
+        $param['columnsAlias'] = [
+            0 => 'users.id',
+            1 => 'users.email',
+            2 => 'users.created_at',
+        ];
+        $param['whereUsers'] = [];
+        //date
+        $dateStart = new Carbon();
+        $dateStart->setTimestamp($request->dateStart);
+        $endStart = new Carbon();
+        $endStart->setTimestamp($request->endStart);
+
+
+        return $param;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -117,7 +140,7 @@ class GlobalAffiliatesController extends Controller
 
             foreach ($items as $user) {
                 $result = collect();
-                
+
                 $userIds = User::where('users.agent_id', $user->id)
                     ->select('users.id')
                     ->distinct()
@@ -146,12 +169,12 @@ class GlobalAffiliatesController extends Controller
                 //to do fix this
                 $result->push($statistics);
 
-                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
-                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
-                $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
-                $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
-                $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
-                $user->bonus = $result->sum('bonus') . ' ' . $param['currencyCode'];
+                $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
+                $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
+                $user->revenue = $result->sum('revenue').' '.$param['currencyCode'];
+                $user->profit = $result->sum('profit').' '.$param['currencyCode'];
+                $user->bonus = $result->sum('bonus').' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
             }
         } else {
@@ -165,7 +188,7 @@ class GlobalAffiliatesController extends Controller
             }
 
             $items = User::leftJoin('extra_users', 'users.id', '=', 'extra_users.user_id')
-                ->whereRaw('users.id in (SELECT id FROM users WHERE role = 1)')
+                ->whereRaw('users.id in (SELECT id FROM users WHERE role = 1 or role = 3)')
                 ->where($param['whereUsers'])
                 ->select(['users.id', 'users.email', 'extra_users.base_line_cpa'])
                 ->offset($start)
@@ -182,32 +205,45 @@ class GlobalAffiliatesController extends Controller
                     ->where('t.type', 3)
                     ->pluck('id')->toArray();
                 //to do fix this
-                $userIdsFull = User::where('users.agent_id', $user->id)
-                    ->select('users.id')
-                    ->distinct()
-                    ->pluck('id')->toArray();
-
-                $transactionItemsFull = Transaction::where($param['whereTransaction'])
-                    ->whereIn('user_id', $userIdsFull)->get();
+//                $userIdsFull = User::where('users.agent_id', $user->id)
+//                    ->select('users.id')
+//                    ->distinct()
+//                    ->pluck('id')->toArray();
+//
+//                $transactionItemsFull = Transaction::where($param['whereTransaction'])
+//                    ->whereIn('user_id', $userIdsFull)->get();
                 //to do fix this
-                $transactionItems = Transaction::where($param['whereTransaction'])
+                $transactionItems = Transaction::where($param['whereTransaction'])->where('type', 3)
                     ->whereIn('user_id', $userIds)->get();
 
                 $cpumBtcLimit = is_null($user->base_line_cpa) ? $param['cpumBtcLimit'] : $user->base_line_cpa;
 
                 $statistics = GeneralHelper::statistics($transactionItems, $cpumBtcLimit);
                 //to do fix this
-                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
-                $statistics['bonus'] = $statisticsFull['bonus'];
+//                $statisticsFull = GeneralHelper::statistics($transactionItemsFull, $cpumBtcLimit);
+//                $statistics['bonus'] = $statisticsFull['bonus'];
                 //to do fix this
                 $result->push($statistics);
+                $profitTotal = 0;
+                //add profit from players
+                $profitTotal += $user->totalEarn($param['dateStart'], $param['endStart']);
+                $revenueTotal = 0;
+                //add profit from players
+                $revenueTotal = DB::table('user_sums')->whereIn('user_id', $userIds)
+                    ->where('parent_id', $user->id)
+                    ->where('created_at', '>=', $param['dateStart']->addDay())
+                    ->where('created_at', '<', $param['endStart']->addDay())
+                    ->sum('sum');
 
-                $user->pendingDeposits = $result->sum('pending_deposits') . ' ' . $param['currencyCode'];
-                $user->confirmDeposits = $result->sum('confirm_deposits') . ' ' . $param['currencyCode'];
-                $user->deposits = $result->sum('deposits') . ' ' . $param['currencyCode'];
-                $user->revenue = $result->sum('revenue') . ' ' . $param['currencyCode'];
-                $user->profit = $result->sum('profit') . ' ' . $param['currencyCode'];
-                $user->bonus = $result->sum('bonus') . ' ' . $param['currencyCode'];
+                $bonusSum = DB::table('user_sums')->where('parent_id', $user->id)->where('created_at', '>=', $param['dateStart'])
+                    ->where('created_at', '<', $param['endStart'])->sum('bonus');
+
+                $user->pendingDeposits = $result->sum('pending_deposits').' '.$param['currencyCode'];
+                $user->confirmDeposits = $result->sum('confirm_deposits').' '.$param['currencyCode'];
+                $user->deposits = $result->sum('deposits').' '.$param['currencyCode'];
+                $user->revenue = -$revenueTotal.' '.$param['currencyCode'];
+                $user->profit = $profitTotal.' '.$param['currencyCode'];
+                $user->bonus = $bonusSum.' '.$param['currencyCode'];
                 $user->cpa = $result->sum('cpa');
             }
 
@@ -217,6 +253,90 @@ class GlobalAffiliatesController extends Controller
                 ->get()->toArray();
 
             $totalFiltered = $countSum[0]['count'];
+        }
+        /* END */
+
+        /* TO VIEW */
+        $data = $items;
+
+        $jsonData = [
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data,
+            'time' => round(microtime(true) - $start1, 4),
+        ];
+
+        return response()->json($jsonData);
+    }
+
+    public function getUsers()
+    {
+        return view('admin.partner.users');
+    }
+
+    public function getUsersTable(Request $request)
+    {
+        $start1 = microtime(true);
+        $param = $this->preparationParamsUsers($request);
+        /* ACT */
+
+        $countSum = User::where('role', 0)
+            ->whereNull('agent_id')
+            ->count();
+
+        $totalData = $countSum;
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+
+        $order = $param['columns'][$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        if (empty($request->input('search.value'))) {
+            /* SORT */
+
+            $items = User::where('role', 0)
+                ->whereNull('agent_id')
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            foreach ($items as $user) {
+                $user->country = $user->countries ? $user->countries->name : $user->country;
+                $user->deposit = $user->deposit() ?: 0;
+                $user->today_benefit = $user->todayPlayerSum();
+                $user->total_benefit = $user->totalPlayerSum() ?: 0;
+                $user->withdraw = $user->withdraw();
+            }
+        } else {
+            $search = $request->input('search.value');
+
+            if (is_numeric($search)) {
+                array_push($param['whereUsers'], [$param['columns'][0], 'LIKE', "%{$search}%"]);
+            } else {
+                array_push($param['whereUsers'], [$param['columns'][1], 'LIKE', "%{$search}%"]);
+            }
+            $prepareItems = User::where('role', 0)
+                ->whereNull('agent_id')
+                ->where($param['whereUsers']);
+            $totalFiltered = $prepareItems->count();
+
+            $items = $prepareItems
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            foreach ($items as $user) {
+                $user->country = $user->countries ? $user->countries->name : $user->country;
+                $user->deposit = $user->deposit() ?: 0;
+                $user->today_benefit = $user->todayPlayerSum();
+                $user->total_benefit = $user->totalPlayerSum() ?: 0;
+                $user->withdraw = $user->withdraw();
+            }
         }
         /* END */
 
@@ -264,7 +384,7 @@ class GlobalAffiliatesController extends Controller
             'pending' => $pending,
             'failed' => $failed,
             'approved' => $approved,
-            'queue' => $queue
+            'queue' => $queue,
         ]);
     }
 
@@ -272,12 +392,11 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
         if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
-
             $transaction->withdraw_status = 3;
             $transaction->save();
 
@@ -293,7 +412,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
@@ -311,7 +430,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 
@@ -329,7 +448,7 @@ class GlobalAffiliatesController extends Controller
     {
         $user = User::where('id', $transaction->user_id)->first();
 
-        if ((int)$user->role != 1) {
+        if ((int) $user->role != 1) {
             return redirect()->back()->withErrors(['Something is wrong']);
         }
 

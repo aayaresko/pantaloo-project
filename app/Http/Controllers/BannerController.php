@@ -36,20 +36,20 @@ class BannerController extends Controller
         $parts = explode('/', $request->file('image')->getMimeType());
         $extension = $parts[1];
 
-        $file_name = uniqid() . '.' . $extension;
-        $path = storage_path() . '/app/public/promo/';
+        $file_name = uniqid().'.'.$extension;
+        $path = storage_path().'/app/public/promo/';
 
-        $url = '/storage/promo/' . $file_name;
+        $url = '/storage/promo/'.$file_name;
         $image = request()->image;
-        Storage::put('public/promo/' . $file_name, file_get_contents($image->getRealPath()));
+        Storage::put('public/promo/'.$file_name, file_get_contents($image->getRealPath()));
 
-        $size = getimagesize($path . $file_name);
+        $size = getimagesize($path.$file_name);
 
         $banner = new Banner();
-        $banner->path = $path . $file_name;
+        $banner->path = $path.$file_name;
         $banner->url = $url;
         $banner->type = $extension;
-        $banner->size = $size[0] . ' x ' . $size[1];
+        $banner->size = $size[0].' x '.$size[1];
         $banner->save();
 
         return redirect()->route('banners.create')->with('msg', 'Banner was created!');

@@ -4,8 +4,8 @@ namespace App\Console\Commands\Games;
 
 use Log;
 use App\User;
-use App\Models\GamesType;
 use App\Models\GamesList;
+use App\Models\GamesType;
 use App\Models\GamesCategory;
 use App\Modules\PantalloGames;
 use Illuminate\Console\Command;
@@ -49,10 +49,11 @@ class PantalloLogOutPlayer extends Command
         //check  this code
         //to do this select fileds
         //check last_activities field
-        $this->info("Start ...");
+        $this->info('Start ...');
         Log::info('PantalloLogOutPlayer START');
         $lifetime = 120;
         $chunk = 20;
+
         try {
             $configIntegratedGames = config('integratedGames.common');
             $statusConfig = $configIntegratedGames['statusSession'];
@@ -62,7 +63,7 @@ class PantalloLogOutPlayer extends Command
             User::leftJoin('games_pantallo_session', 'users.id', '=', 'games_pantallo_session.user_id')
                 ->where([
                     ['users.last_activity', '>', $date],
-                    ['games_pantallo_session.status', '=', 0]
+                    ['games_pantallo_session.status', '=', 0],
                 ])->chunk($chunk, function ($users) use ($statusConfig, $pantalloGamesSystem) {
                     //to make logout for players
                     foreach ($users as $user) {
@@ -76,6 +77,6 @@ class PantalloLogOutPlayer extends Command
         }
         //get games and load or update
         Log::info('PantalloLogOutPlayer END');
-        $this->info("Users have been logged in.");
+        $this->info('Users have been logged in.');
     }
 }

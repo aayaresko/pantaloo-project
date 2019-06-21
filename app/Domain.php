@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Http\Requests\Request;
+use Illuminate\Database\Eloquent\Model;
 
 class Domain extends Model
 {
-    static function getLang()
+    public static function getLang()
     {
         $url = Request::fullUrl();
 

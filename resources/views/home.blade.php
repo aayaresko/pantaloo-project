@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('description')
-{{ trans('casino.home_description') }}
-@endsection
-
-
-
 @section('content')
     <ul class="sections-nav">
         <li data-menuanchor="blackjack" class="active"><a href="#blackjack">{{ trans('casino.blackjack') }}</a></li>

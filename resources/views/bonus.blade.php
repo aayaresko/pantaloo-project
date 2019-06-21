@@ -24,19 +24,21 @@
                         <div class="middle-block">
                             <div class="nav-block"></div>
                             <div class="bonuses-listing">
-                                @if($active_bonus)
+                                @if($activeBonus)
                                     <div class="item">
                                         <div class="single-bonus">
-                                            <h3 class="title">{{trans($active_bonus->bonus->name)}}</h3>
-                                            <p class="text">{{trans($active_bonus->bonus->descr)}}</p>
+                                            <h3 class="title">{{trans($activeBonus->name)}}</h3>
+                                            <p class="text">{{trans($activeBonus->descr)}}</p>
 
                                             <p class="text">Bonus wager:
-                                                {{ $bonusStatistics['bonusWager']['real'] . ' / ' . $bonusStatistics['bonusWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
+                                                {{ $activeBonus->bonusStatistics['bonusWager']['real'] . ' / ' . $activeBonus->bonusStatistics['bonusWager']['necessary'] }}
+                                                {{ config('app.currencyCode') }}</p>
 
-                                            @if ($active_bonus->bonus_id == 1)
+                                            @if ($activeBonus->id == 1)
 
                                                 <p class="text">Deposit wager:
-                                                    {{ $bonusStatistics['depositWager']['real'] . ' / ' . $bonusStatistics['depositWager']['necessary'] }} {{ config('app.currencyCode') }}</p>
+                                                    {{ $activeBonus->bonusStatistics['depositWager']['real'] . ' / ' . $activeBonus->bonusStatistics['depositWager']['necessary'] }}
+                                                    {{ config('app.currencyCode') }}</p>
 
                                             @endif
 
@@ -45,17 +47,23 @@
                                         </div>
                                     </div>
                                 @else
-                                    @foreach($bonuses as $bonus)
+                                    @foreach($bonusForView as $bonus)
                                         <div class="item">
                                             <div class="single-bonus">
                                                 <h3 class="title">{{translate($bonus->name)}}</h3>
                                                 <p class="text">{{translate($bonus->descr)}}</p>
                                                 <a href="{{route('bonus.activate', $bonus)}}"
-                                                   class="push-button">{{trans('casino.activate')}}</a>
+                                                   class="push-button bonusActive">{{trans('casino.activate')}}</a>
+
+                                                <form action='{{route('bonus.activate', $bonus)}}' method='post'
+                                                      style="display: none">
+                                                    {{csrf_field()}}
+                                                </form>
                                             </div>
                                         </div>
                                     @endforeach
                                 @endif
+
                             </div>
                         </div>
                     </div>
@@ -66,4 +74,21 @@
     </div>
 
     @include('footer_main')
+@endsection
+
+@section('js')
+    <script>
+
+        function bonusAct() {
+            //send form method post
+            $('body').on('click', '.bonusActive', function (e) {
+                e.preventDefault();
+                let form = $(this).next();
+                form.submit();
+            });
+        }
+
+        bonusAct();
+
+    </script>
 @endsection

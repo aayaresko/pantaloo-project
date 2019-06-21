@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Helpers\GeneralHelper;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
 
 class GeneralMiddleware
 {
@@ -24,11 +24,12 @@ class GeneralMiddleware
 
         //if (!$request->cookies->has('betatest') &&
         // !in_array($ip, ['172.68.110.111', '46.28.207.238']) && !in_array($request->getRequestUri(), [''])){
-            //return redirect('/coming_soon');
+        //return redirect('/coming_soon');
         //}
-        
+
         $partnerPage = config('app.foreignPages.partner');
         View::share('partnerPage', $partnerPage);
+
         return $next($request);
     }
 }

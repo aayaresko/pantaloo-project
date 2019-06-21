@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Providers\JsBridge;
-
 
 class JsBridge implements \ArrayAccess
 {

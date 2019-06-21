@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Cookie;
 use App\User;
 use App\Bonus;
 use App\UserBonus;
@@ -14,30 +15,61 @@ use Illuminate\Support\Facades\Auth;
 
 class BonusController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //to do if bonus be activated for this user
-        $bonuses = Bonus::where('public', 1)->orderBy('rating', 'desc')->get();
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
 
-        //check bonus
-        $bonuses = $bonuses->filter(function ($item) {
-            $bonusClass = $item->getClass();
-            $bonusObject = new $bonusClass(Auth::user());
-            //check
-            return $bonusObject->bonusAvailable();
-        });
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
 
-        $active_bonus = Auth::user()->bonuses()->first();
+        $bonusForView = [];
+        $activeBonus = null;
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
 
-        $bonusStatistics = null;
-        if ($active_bonus) {
-            $bonusStatistics = BonusHelper::bonusStatistics($active_bonus);
+            if (!is_null($bonus->activeBonus)) {
+                $activeBonus = $bonus;
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
+                $activeBonus->bonusStatistics = $bonusStatistics;
+            }
+
+            if ($bonusAvailable) {
+                array_push($bonusForView, $bonus);
+            }
         }
-        
+
         return view('bonus', [
-            'bonuses' => $bonuses,
-            'active_bonus' => $active_bonus,
-            'bonusStatistics' => $bonusStatistics
+            'bonusForView' => $bonusForView,
+            'activeBonus' => $activeBonus
+        ]);
+    }
+
+    public function promo(Request $request)
+    {
+        $user = $request->user();
+        $userId = is_null($user) ? null : $user->id;
+
+        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->orderBy('rating', 'desc')->get();
+        
+        $bonusForView = [];
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+
+            if ($bonusAvailable or !is_null($bonus->activeBonus)) {
+                array_push($bonusForView, $bonus);
+            }
+        }
+
+        return view('bonuses', [
+            'bonusForView' => $bonusForView,
         ]);
     }
 
@@ -46,13 +78,12 @@ class BonusController extends Controller
         //get user by request
         $userRequest = Auth::user();
 
-        //to do - check this - and edit this way
-        if (!$bonus->public) {
-            return redirect()->back()->withErrors(['No access']);
-        }
+//        //to do - check this - and edit this way
+//        if (!$bonus->public) {
+//            return redirect()->back()->withErrors(['No access']);
+//        }
 
         DB::beginTransaction();
-
 
         $class = BonusHelper::getClass($bonus->id);
 
@@ -71,7 +102,6 @@ class BonusController extends Controller
 
         return redirect()->back()->with('popup',
             ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
-
 
 //        //to do - check this - and edit this way
 //        if (!$bonus->public) {
@@ -144,7 +174,7 @@ class BonusController extends Controller
             'user' => $user,
             'bonuses' => $bonuses,
             'active_bonus' => $active_bonus,
-            'bonus_obj' => $bonus_obj
+            'bonus_obj' => $bonus_obj,
         ]);
     }
 
@@ -158,6 +188,7 @@ class BonusController extends Controller
         $bonusActivate = $bonusObject->activate(['mode' => 1]);
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$bonusActivate['message']]);
         }
         DB::commit();
@@ -180,6 +211,7 @@ class BonusController extends Controller
         $bonusCancel = $bonusObject->cancel('Closed by admin');
         if ($bonusCancel['success'] === false) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$bonusCancel['message']]);
         }
         DB::commit();
@@ -187,15 +219,17 @@ class BonusController extends Controller
         return redirect()->back()->with('msg', 'Bonus was canceled');
     }
 
-    public function promo(Request $request)
+
+    public function getWelcomeBonus(Request $request)
     {
         $user = $request->user();
-
-        $activeBonus = null;
-        if (!is_null($user)) {
-            $activeBonus = UserBonus::select('bonus_id')->where('user_id', $user->id)->first();
+        if (is_null($user)) {
+            $configBonusAccess = config('bonus.setWelcomeBonus');
+            $name = $configBonusAccess['name'];
+            $minutes = $configBonusAccess['time'];
+            $value = $configBonusAccess['value'];
+            Cookie::queue($name, $value, $minutes);
         }
-
-        return view('bonuses')->with(['activeBonus' => $activeBonus]);
+        return redirect('/');
     }
 }

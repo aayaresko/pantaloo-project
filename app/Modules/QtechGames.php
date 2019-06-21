@@ -38,18 +38,20 @@ class QtechGames
             $connectTimeout = $this->paramsDefault['connectTimeout'];
             $clientParams = [
                 'verify' => false,
-                'connect_timeout' => $connectTimeout
+                'connect_timeout' => $connectTimeout,
             ];
             $client = new Client($clientParams);
             $response = $client->post($url, [
-                'form_params' => $body
+                'form_params' => $body,
             ]);
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
-            throw new \Exception($errorMessage . '.' . $errorLine);
+
+            throw new \Exception($errorMessage.'.'.$errorLine);
         }
         $responseBody = $response->getBody()->getContents();
+
         return $responseBody;
     }
 
@@ -60,8 +62,7 @@ class QtechGames
         ]);
         //https://api-int.qtplatform.com/v1/auth/token?grant_type=password&response_type=token&username=api_casinobit&password=BfRN18uA
         $response = $client->post('https://api-int.qtplatform.com/v1/auth/token', [
-            'form_params' => []
+            'form_params' => [],
         ]);
     }
-
 }

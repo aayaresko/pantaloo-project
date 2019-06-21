@@ -89,7 +89,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <!-- Notification -->
-                        <div class="notification-box">
+                        <!-- <div class="notification-box">
                             <ul class="list-inline m-b-0">
                                 <li>
                                     <a href="javascript:void(0);" class="right-bar-toggle">
@@ -101,7 +101,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                         <!-- End Notification bar -->
                     </li>
                     <li class="hidden-xs">
@@ -134,6 +134,12 @@
                     </li>
                     <li>
                         <a href="{{route('agent.transactions')}}" class="waves-effect"><i class="ti-package"></i> <span> Transactions </span> </a>
+                    </li>
+                    <li>
+                        <a href="{{route('agent.affiliates')}}" class="waves-effect"><i class="ti-user"></i> <span> Affiliates </span> </a>
+                    </li>
+                    <li>
+                        <a href="{{route('agent.users')}}" class="waves-effect"><i class="fa fa-users"></i> <span> Users </span> </a>
                     </li>
                     <li>
                         <a href="{{route('agent.trackers')}}" class="waves-effect"><i class="ti-target"></i> <span> Links </span> </a>

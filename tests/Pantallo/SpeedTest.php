@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class SpeedTest extends TestCase
+class SpeedTest extends BrowserKitTestCase
 {
     /**
      * A basic test example.
@@ -14,17 +14,13 @@ class SpeedTest extends TestCase
      */
     public function testExample()
     {
-
     }
 
     protected function sendRequest()
     {
-
     }
-
 
     protected function client()
     {
-
     }
 }
