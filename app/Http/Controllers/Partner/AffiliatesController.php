@@ -2,28 +2,32 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Models\AgentsKoef;
 use DB;
 use App\User;
+use Illuminate\Support\Str;
 use Validator;
 use App\Banner;
 use App\Tracker;
-use Carbon\Carbon;
 use App\ExtraUser;
+use Carbon\Carbon;
 use App\Transaction;
 use Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use App\Models\StatisticalData;
 use App\Models\Partners\Feedback;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 
 /**
- * Class AffiliatesController
- * @package App\Http\Controllers\Partner
+ * Class AffiliatesController.
  */
 class AffiliatesController extends Controller
 {
+    const PLAYER_ROLE = 0;
+    const AGENT_ROLE = 1;
+    const GLOBAL_AGENT_ROLE = 4;
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -31,10 +35,14 @@ class AffiliatesController extends Controller
     {
         //test to two auth
         if (Auth::check()) {
+            if (Auth::user()->role == self::GLOBAL_AGENT_ROLE) {
+                return redirect()->route('admin.agents.tree');
+            }
             if (Auth::user()->isAgent()) {
                 return redirect()->route('agent.dashboard');
             }
         }
+
         return view('affiliates.lending');
     }
 
@@ -50,21 +58,32 @@ class AffiliatesController extends Controller
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
+        $ref = false;
 
         foreach ($trackers as $tracker) {
             $tracker->campaign_linkFull = $tracker->campaign_link;
             if (is_null($tracker->campaign_link)) {
                 $tracker->campaign_linkFull = $necessaryAddress;
+                $ref = $tracker->ref;
             }
 
-            $tracker->fullLink = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
+            $tracker->fullLink = sprintf('%s?%s=%s', $tracker->campaign_linkFull,
                 $configPartner['keyLink'], $tracker->ref);
+        }
+        if (!$ref) {
+            $ref = Str::random(12);
+            $newTracker = new Tracker();
+            $newTracker->user_id = $user->id;
+            $newTracker->name = 'default';
+            $newTracker->campaign_link = config('partner.main_url');
+            $newTracker->ref = $ref;
+            $newTracker->save();
         }
 
         return view('affiliates.trackers', [
             'trackers' => $trackers,
+            'ref' => $ref
         ]);
-
     }
 
     /**
@@ -89,7 +108,7 @@ class AffiliatesController extends Controller
             $tracker->campaign_linkFull = $necessaryAddress;
         }
 
-        $params['link'] = sprintf("%s?%s=%s", $tracker->campaign_linkFull,
+        $params['link'] = sprintf('%s?%s=%s', $tracker->campaign_linkFull,
             $configPartner['keyLink'], $tracker->ref);
 
         $url = url('/');
@@ -99,23 +118,23 @@ class AffiliatesController extends Controller
 
             $item->html = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $params['url'] . $item->url,
+                'image' => $params['url'].$item->url,
                 'name' => $params['name'],
                 'style' => '',
             ]);
 
             $item->htmlView = view('affiliates.parts.banner_html', [
                 'link' => $params['link'],
-                'image' => $params['url'] . $item->url,
+                'image' => $params['url'].$item->url,
                 'name' => $params['name'],
-                'style' => "style=max-height:100px",
+                'style' => 'style=max-height:100px',
             ]);
 
             return $item;
         });
 
         return view('affiliates.marketing_material')->with([
-            'banners' => $banners
+            'banners' => $banners,
         ]);
     }
 
@@ -143,38 +162,38 @@ class AffiliatesController extends Controller
                 'message' => [
                     'errors' => $errors,
                     'title' => 'Error',
-                    'body' => (string)view('affiliates.parts.body')->with(['data' => $errors])
-                ]
+                    'body' => (string) view('affiliates.parts.body')->with(['data' => $errors]),
+                ],
             ]);
         }
 
         //might add try - catch and transaction
         Feedback::create($request->toArray());
+
         return response()->json([
             'status' => true,
             'message' => [
                 'title' => 'Info',
-                'body' => (string)view('affiliates.parts.body')->with(['data' => 'We will contact you shortly'])
-            ]
+                'body' => (string) view('affiliates.parts.body')->with(['data' => 'We will contact you shortly']),
+            ],
         ]);
     }
 
     /**
-     *
-     * in future - will need rewrite this method
+     * in future - will need rewrite this method.
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function dashboard(Request $request)
     {
         try {
-            $from = Carbon::createFromFormat("Y-m-d", $request->input('start'));
+            $from = Carbon::createFromFormat('Y-m-d', $request->input('start'));
         } catch (\Exception $e) {
             $from = Carbon::now();
         }
 
         try {
-            $to = Carbon::createFromFormat("Y-m-d", $request->input('end'));
+            $to = Carbon::createFromFormat('Y-m-d', $request->input('end'));
         } catch (\Exception $e) {
             $to = Carbon::now();
         }
@@ -190,7 +209,7 @@ class AffiliatesController extends Controller
         $cpaCurrencyCode = config('appAdditional.cpaCurrencyCode');
 
         $extraUser = ExtraUser::where('user_id', $currentUser->id)->first();
-        if (!is_null($extraUser)) {
+        if (! is_null($extraUser)) {
             $cpumBtcLimit = $extraUser->base_line_cpa;
         }
 
@@ -201,13 +220,13 @@ class AffiliatesController extends Controller
 //                "type = $typeDeposit and created_at >= '$from' and created_at <= '$to') as cpu"),
         ])->where('agent_id', $currentUser->id)->get();
 
-
         $result = collect();
         foreach ($users as $user) {
             $stat = $user->stat($from, $to);
             //set cpa
-            foreach ($stat as $key => $value)
+            foreach ($stat as $key => $value) {
                 $stat[$key] = round($value, 2);
+            }
 
             $stat['cpa'] = ($stat['confirm_deposits'] >= $cpumBtcLimit) ? 1 : 0;
             $cpaPending = GeneralHelper::formatAmount($cpumBtcLimit - $stat['deposits']);
@@ -227,9 +246,9 @@ class AffiliatesController extends Controller
 
         $trackerAll = Tracker::select([
             '*',
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
+            DB::raw('(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and '.
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventEnterId') as enter"),
-            DB::raw("(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and " .
+            DB::raw('(SELECT count(*) FROM statistical_data where tracker_id = trackers.id and '.
                 "created_at >= '$from' and created_at <= '$to' and event_id = '$eventRegistrId') as register"),
         ])->where('user_id', $currentUser->id)->get();
 
@@ -243,6 +262,22 @@ class AffiliatesController extends Controller
 
             $trackers->push($stat);
         }
+        $countries = false;
+        if ($currentUser->role == 3) {
+            $countriesCode = $currentUser->affiliateCountries->pluck('name')->toArray();
+            foreach ($countriesCode as $countryCode) {
+                $countries .= $countryCode . ' ';
+            }
+        }
+
+        $profitTotal = 0;
+        //add profit from players
+        $profitTotal += Auth::user()->totalEarn($from, $to);
+        //add profit from affiliates
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', 1)->get();
+        foreach ($affiliates as $affiliate) {
+            $profitTotal += $affiliate->totalProfit($from, $to);
+        }
 
         $data = [
             'users' => $result,
@@ -252,10 +287,11 @@ class AffiliatesController extends Controller
             'confirm_deposits' => $result->sum('confirm_deposits'),
             'bonus_total' => $result->sum('bonus'),
             'revenue_total' => $result->sum('revenue'),
-            'profit_total' => $result->sum('profit'),
+            'profit_total' => $profitTotal,
             'cpa_total' => $result->sum('cpa'),
             'cpaCurrencyCode' => $cpaCurrencyCode,
-            'currencyCode' => $currencyCode
+            'currencyCode' => $currencyCode,
+            'countries' => $countries
         ];
 
         return view('affiliates.dashboard', $data);
@@ -297,7 +333,16 @@ class AffiliatesController extends Controller
     {
         $statusPayment = config('appAdditional.statusPayment');
         $user = $request->user();
-        $available = $user->getAgentAvailable();
+        //$available = $user->getAgentAvailable();
+        $available = 0;
+        //add profit from players
+        $available += $user->totalEarn();
+        //add profit from affiliates
+        $affiliates = User::where('agent_id', $user->id)->where('role', 1)->get();
+        foreach ($affiliates as $affiliate) {
+            $available += $affiliate->totalProfit();
+        }
+        $totalWithdraw = $user->withdraw();
         //get transaction withdraw
         //to do pagination for transactions
         $transactions = Transaction::where('user_id', $user->id)
@@ -306,7 +351,56 @@ class AffiliatesController extends Controller
         return view('affiliates.withdraw', [
             'available' => $available,
             'transactions' => $transactions,
-            'statusPayment' => $statusPayment
+            'statusPayment' => $statusPayment,
+            'totalWithdraw' => $totalWithdraw,
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function partners()
+    {
+        $affiliates = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
+        $myKoef = Auth::user()->koefs->koef;
+
+        return view('affiliates.partners', compact('affiliates', 'myKoef'));
+    }
+
+    public function changeKoef($id, Request $request)
+    {
+        $partner = User::where('agent_id', Auth::user()->id)->where('role', self::AGENT_ROLE)->where('id', $id)->firstOrFail();
+        $newKoef = AgentsKoef::where('user_id', $partner->id)->where('created_at', '>', date('Y-m-d'))->first();
+        if (!$newKoef) {
+            $newKoef = new AgentsKoef();
+            $newKoef->user_id = $partner->id;
+        }
+        $newKoef->koef = $request->koef;
+        $newKoef->save();
+        $partner->commission = $request->koef;
+        $partner->save();
+
+        return back();
+    }
+
+    public function users()
+    {
+        $users = User::where('agent_id', Auth::user()->id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
+        $myKoef = Auth::user()->koefs->koef;
+
+        return view('affiliates.users', compact('myKoef', 'users'));
+    }
+
+    public function partnerShow($id, User $user)
+    {
+        $partner = $user->findOrFail($id);
+        if (Auth::user()->id == $partner->agent_id) {
+            $users = $user->where('agent_id', $id)->with('countries')->where('role', self::PLAYER_ROLE)->get();
+            $affiliates = $user->where('agent_id', $id)->where('role', self::AGENT_ROLE)->with('koefs', 'benefits')->get();
+
+            return view('affiliates.partner', compact('partner', 'users', 'affiliates'));
+        }
+
+        abort(403);
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Providers\Intercom;
 
-use App\Bonus;
 use App\User;
+use App\Bonus;
 use App\UserBonus;
 use Helpers\BonusHelper;
-use Helpers\GeneralHelper;
 use App\ModernExtraUsers;
+use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Log;
-
 
 class UserDataResolver
 {
     protected $user;
+
     protected $container;
 
     public static function getData(User $user)
@@ -27,10 +27,11 @@ class UserDataResolver
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
                 'IP' => GeneralHelper::visitorIpCloudFlare(),
-            ]];
+            ], ];
         foreach ($response['custom_attributes'] as $k => $v) {
-            Log::info($k . ' => ' . $v);
+            Log::info($k.' => '.$v);
         }
+
         return $response;
     }
 
@@ -53,11 +54,11 @@ class UserDataResolver
             $currency = config('app.currencyCode');
 
             $depositWagerString = '-';
-            $bonusWagerString = $bonusStatistics['bonusWager']['real'] . ' / ' .
-                $bonusStatistics['bonusWager']['necessary'] . $currency;
+            $bonusWagerString = $bonusStatistics['bonusWager']['real'].' / '.
+                $bonusStatistics['bonusWager']['necessary'].$currency;
             if ($userBonus->bonus_id == 1) {
-                $depositWagerString = $bonusStatistics['depositWager']['real'] . ' / ' .
-                    $bonusStatistics['depositWager']['necessary'] . $currency;
+                $depositWagerString = $bonusStatistics['depositWager']['real'].' / '.
+                    $bonusStatistics['depositWager']['necessary'].$currency;
             }
         }
 
@@ -66,13 +67,14 @@ class UserDataResolver
 
     private static function getBalanceRealBonus(User $user)
     {
-        return $user->getRealBalance() . '/' . $user->getBonusBalance();
+        return $user->getRealBalance().'/'.$user->getBonusBalance();
     }
 
     private static function getAccountStatus(User $user)
     {
         $blockUser = ModernExtraUsers::where('user_id', $user->id)
             ->where('code', 'block')->first();
+
         return is_null($blockUser) || $blockUser->value == 0 ? 'open' : 'banned';
     }
 

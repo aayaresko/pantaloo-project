@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Bitcoin\Service;
 use App\Transaction;
+use App\Bitcoin\Service;
 use Illuminate\Console\Command;
 
 class BitcoinResend extends Command
@@ -44,8 +44,7 @@ class BitcoinResend extends Command
 
         $transactions = Transaction::where('resend_status', 1)->where('confirmations', '>=', $minConfirmBtc)->get();
 
-        foreach ($transactions as $transaction)
-        {
+        foreach ($transactions as $transaction) {
             $transaction->resend_status = 1;
             $transaction->save();
 

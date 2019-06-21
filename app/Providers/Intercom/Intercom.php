@@ -1,35 +1,39 @@
 <?php
 
-
 namespace App\Providers\Intercom;
 
-use App\Providers\Intercom\IntercomEventsResolver;
 use App\User;
+use Helpers\IntercomHelper;
+use Illuminate\Support\Facades\DB;
 use Intercom\IntercomClient;
+use App\Providers\Intercom\IntercomEventsResolver;
 
 class Intercom
 {
-    protected $client;
-
-    public function __construct()
-    {
-        $config = config('intercom');
-        $token = $config['intercom_token'];
-
-        $this->client = new IntercomClient($token);
-    }
+    protected $_client;
 
     public function create_or_update_user(User $user)
     {
-        $result = $this->client->users->create(UserDataResolver::getData($user));
+        $result = $this->client($user)->users->create(UserDataResolver::getData($user));
+
         return $result;
     }
 
     public function send_event($data)
     {
-        $result = $this->client->events->create($data);
+        $user = User::where('email', $data['email'])->first();
+
+        $result = $this->client($user)->events->create($data);
 
         return $result;
+    }
+
+    private function client($user)
+    {
+
+        $intercom = IntercomHelper::getIntercomConfigByUser($user);
+
+        return new IntercomClient($intercom->token);
     }
 
 }

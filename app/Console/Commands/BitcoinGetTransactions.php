@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Bitcoin\Service;
-use App\Transaction;
 use App\User;
+use App\Transaction;
+use App\Bitcoin\Service;
 use Illuminate\Console\Command;
 use League\Flysystem\Exception;
 
@@ -45,16 +45,16 @@ class BitcoinGetTransactions extends Command
 
         $service = new Service();
 
-        while(true) {
+        while (true) {
             $raw_transactions = $service->getTransactions(1000);
 
             foreach ($raw_transactions as $raw_transaction) {
                 if ($raw_transaction['category'] == 'receive') {
                     $transaction = Transaction::where(['ext_id' => $raw_transaction['txid']])->first();
 
-                    if (!$transaction) {
+                    if (! $transaction) {
                         $transaction = new Transaction();
-                        $transaction->sum = $raw_transaction['amount']*1000;
+                        $transaction->sum = $raw_transaction['amount'] * 1000;
                         $transaction->bonus_sum = 0;
                         $transaction->ext_id = $raw_transaction['txid'];
                         $transaction->confirmations = $raw_transaction['confirmations'];

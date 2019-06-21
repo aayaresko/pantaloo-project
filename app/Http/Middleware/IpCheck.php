@@ -19,8 +19,7 @@ class IpCheck
         $ip = $request->ip();
         $ips = ['51.254.21.174', '188.227.174.150'];
 
-        if (!in_array($ip, $ips))
-        {
+        if (! in_array($ip, $ips)) {
             return redirect('/');
         }
 

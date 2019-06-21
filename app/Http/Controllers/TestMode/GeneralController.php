@@ -8,8 +8,8 @@ use Cookie;
 use App\User;
 use Validator;
 use App\Transaction;
-use Helpers\BonusHelper;
 use App\Bitcoin\Service;
+use Helpers\BonusHelper;
 use Helpers\GeneralHelper;
 use App\Events\DepositEvent;
 use Illuminate\Http\Request;
@@ -23,7 +23,8 @@ class GeneralController extends Controller
 
     public function getTestMode(Request $request)
     {
-        $testmode = !$request->cookie('testmode', false);
+        $testmode = ! $request->cookie('testmode', false);
+
         return redirect('')->withCookie(cookie('testmode', $testmode));
     }
 
@@ -45,14 +46,14 @@ class GeneralController extends Controller
         $debugGame = new DebugGame();
         $debugGame->start();
 
-        $userId = 0;//system user
+        $userId = 0; //system user
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
             'type_id' => 10,
             'user_id' => $userId,
             'request' => GeneralHelper::fullRequest(),
             'created_at' => $date,
-            'updated_at' => $date
+            'updated_at' => $date,
         ]);
 
         try {
@@ -61,7 +62,7 @@ class GeneralController extends Controller
             //add balidate ip
             $ipSender = GeneralHelper::visitorIpCloudFlare();
             $ipExpectedArray = config('appAdditional.officeIps');
-            if (!in_array($ipSender, $ipExpectedArray)) {
+            if (! in_array($ipSender, $ipExpectedArray)) {
                 throw new \Exception('Not allowed IP');
             }
 
@@ -73,10 +74,11 @@ class GeneralController extends Controller
 
             if ($validator->fails()) {
                 $error = $validator->errors()->first();
+
                 throw new \Exception($error);
             }
 
-            if (!password_verify($request->code, self::HASH)) {
+            if (! password_verify($request->code, self::HASH)) {
                 throw new \Exception('Code is not correct');
             }
 
@@ -90,7 +92,7 @@ class GeneralController extends Controller
             }
             $userId = $user->id;
 
-            $amountTransaction = (float)$request->amount;
+            $amountTransaction = (float) $request->amount;
 
             $transaction = Transaction::create([
                 'comment' => 'TEST MODE',
@@ -99,16 +101,16 @@ class GeneralController extends Controller
                 'type' => 13,
                 'user_id' => $user->id,
                 'ext_id' => 'TEST MODE',
-                'confirmations' => 13
+                'confirmations' => 13,
             ]);
 
             $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
 
             $depositNotifications = 1;
-            if (!is_null($user->bonus_id)) {
+            if (! is_null($user->bonus_id)) {
                 $class = BonusHelper::getClass($user->bonus_id);
                 $bonusObject = new $class($user);
-                if ((int)$user->bonus_id === 1) {
+                if ((int) $user->bonus_id === 1) {
                     $depositNotifications = 2;
                     //to do check status
                     $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
@@ -132,15 +134,15 @@ class GeneralController extends Controller
                 'extra' => json_encode([
                     'transactionId' => $transaction->id,
                     'depositAmount' => $amountTransaction,
-                    'comment' => 'TEST MODE'
-                ])
+                    'comment' => 'TEST MODE',
+                ]),
             ]);
 
             event(new DepositEvent($user, $amountTransaction));
 
             $response = [
                 'success' => true,
-                'msg' => 'Done.TXID:' . 'TEST MODE' ."TRANSACTION:{$transaction->id}"
+                'msg' => 'Done.TXID:'.'TEST MODE'."TRANSACTION:{$transaction->id}",
             ];
 
             DB::commit();
@@ -151,7 +153,7 @@ class GeneralController extends Controller
 
             $response = [
                 'success' => false,
-                'msg' => $errorMessage . ' Line:' . $errorLine
+                'msg' => $errorMessage.' Line:'.$errorLine,
             ];
         }
 
@@ -161,10 +163,9 @@ class GeneralController extends Controller
         DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
             'user_id' => $userId,
             'response' => json_encode($response),
-            'extra' => json_encode($debugGameResult)
+            'extra' => json_encode($debugGameResult),
         ]);
 
         return $response;
     }
-
 }

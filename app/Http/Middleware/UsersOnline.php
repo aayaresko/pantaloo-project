@@ -27,13 +27,15 @@ class UsersOnline
 
             //logout user if he is blocked.
             $extraUser = ExtraUser::where('user_id', $user->id)->first();
-            if (!is_null($extraUser)) {
-                if ((int)$extraUser->block > 0) {
+            if (! is_null($extraUser)) {
+                if ((int) $extraUser->block > 0) {
                     Auth::logout();
+
                     return redirect('/');
                 }
             }
         }
+
         return $next($request);
     }
 }

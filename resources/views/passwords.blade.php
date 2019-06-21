@@ -207,7 +207,7 @@
                                                 </table>
                                                 <br>
                                                 <div class="btn-block">
-                                                    <button class="update-btn">{{ mb_convert_case(trans('casino.update') , MB_CASE_UPPER) }}</button>
+                                                    <button class="update-btn">{{ mb_convert_case(trans('casino.send_mail') , MB_CASE_UPPER) }}</button>
                                                 </div>
                                             </form>
                                         </div>

@@ -8,6 +8,6 @@ class Category extends Model
 {
     public function slots()
     {
-        return $this->hasMany('App\Slot');
+        return $this->hasMany(\App\Slot::class);
     }
 }

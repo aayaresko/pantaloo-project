@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Slot;
-use App\Slots\Ezugi;
 use App\Type;
 use App\User;
-use Illuminate\Http\Request;
+use App\Category;
+use App\Slots\Ezugi;
 use App\Slots\Casino;
-use Illuminate\Support\Facades\Auth;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class SlotController extends Controller
@@ -29,25 +29,23 @@ class SlotController extends Controller
 
     public function casino()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => route('slot', Slot::find(304)),
                 'baltic' => route('slot', Slot::find(303)),
                 'latin' => route('slot', Slot::find(302)),
                 'est_europe' => route('slot', Slot::find(301)),
                 'usa' => route('slot', Slot::find(305)),
-                'name' => 'Choose game'
+                'name' => 'Choose game',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => route('demo', Slot::find(304)),
                 'baltic' => route('demo', Slot::find(303)),
                 'latin' => route('demo', Slot::find(302)),
                 'est_europe' => route('demo', Slot::find(301)),
                 'usa' => route('demo', Slot::find(305)),
-                'name' => 'Choose game'
+                'name' => 'Choose game',
             ];
         }
 
@@ -60,25 +58,23 @@ class SlotController extends Controller
 
     public function blackjack()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => false,
-                'baltic' => route('slot', [Slot::find(303), 'blackjack']) . '?lobby=1',
-                'latin' => route('slot', [Slot::find(302), 'blackjack']) . '?lobby=1',
-                'est_europe' => route('slot', [Slot::find(301), 'blackjack']) . '?lobby=1',
-                'usa' => route('slot', [Slot::find(305), 'blackjack']) . '?lobby=1',
-                'name' => 'Blackjack'
+                'baltic' => route('slot', [Slot::find(303), 'blackjack']).'?lobby=1',
+                'latin' => route('slot', [Slot::find(302), 'blackjack']).'?lobby=1',
+                'est_europe' => route('slot', [Slot::find(301), 'blackjack']).'?lobby=1',
+                'usa' => route('slot', [Slot::find(305), 'blackjack']).'?lobby=1',
+                'name' => 'Blackjack',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => false,
-                'baltic' => route('demo', [Slot::find(303), 'blackjack']) . '?lobby=1',
-                'latin' => route('demo', [Slot::find(302), 'blackjack']) . '?lobby=1',
-                'est_europe' => route('demo', [Slot::find(301), 'blackjack']) . '?lobby=1',
-                'usa' => route('demo', [Slot::find(305), 'blackjack']) . '?lobby=1',
-                'name' => 'Blackjack'
+                'baltic' => route('demo', [Slot::find(303), 'blackjack']).'?lobby=1',
+                'latin' => route('demo', [Slot::find(302), 'blackjack']).'?lobby=1',
+                'est_europe' => route('demo', [Slot::find(301), 'blackjack']).'?lobby=1',
+                'usa' => route('demo', [Slot::find(305), 'blackjack']).'?lobby=1',
+                'name' => 'Blackjack',
             ];
         }
 
@@ -91,25 +87,23 @@ class SlotController extends Controller
 
     public function roulette()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => route('slot', [Slot::find(304), 5001]),
                 'baltic' => route('slot', [Slot::find(303), 601000]),
                 'latin' => route('slot', [Slot::find(302), 1000]),
                 'est_europe' => route('slot', [Slot::find(301), 501000]),
                 'usa' => route('slot', [Slot::find(305)]),
-                'name' => 'Roulette'
+                'name' => 'Roulette',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => route('demo', [Slot::find(304), 5001]),
                 'baltic' => route('demo', [Slot::find(303), 601000]),
                 'latin' => route('demo', [Slot::find(302), 1000]),
                 'est_europe' => route('demo', [Slot::find(301), 501000]),
                 'usa' => route('demo', [Slot::find(305)]),
-                'name' => 'Roulette'
+                'name' => 'Roulette',
             ];
         }
 
@@ -122,25 +116,23 @@ class SlotController extends Controller
 
     public function holdem()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => false,
                 'baltic' => false,
                 'latin' => false,
                 'est_europe' => route('slot', [Slot::find(301), 507000]),
                 'usa' => false,
-                'name' => 'Holdem'
+                'name' => 'Holdem',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => false,
                 'baltic' => false,
                 'latin' => false,
                 'est_europe' => route('demo', [Slot::find(301), 507000]),
                 'usa' => false,
-                'name' => 'Holdem'
+                'name' => 'Holdem',
             ];
         }
 
@@ -153,25 +145,23 @@ class SlotController extends Controller
 
     public function baccarat()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => false,
                 'baltic' => false,
-                'latin' => route('slot', [Slot::find(302), 'baccarat']) . '?lobby=1',
+                'latin' => route('slot', [Slot::find(302), 'baccarat']).'?lobby=1',
                 'est_europe' => false,
-                'usa' => route('slot', [Slot::find(305), 'baccarat']) . '?lobby=1',
-                'name' => 'Baccarat'
+                'usa' => route('slot', [Slot::find(305), 'baccarat']).'?lobby=1',
+                'name' => 'Baccarat',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => false,
                 'baltic' => false,
-                'latin' => route('demo', [Slot::find(302), 'baccarat']) . '?lobby=1',
+                'latin' => route('demo', [Slot::find(302), 'baccarat']).'?lobby=1',
                 'est_europe' => false,
-                'usa' => route('demo', [Slot::find(305), 'baccarat']) . '?lobby=1',
-                'name' => 'Baccarat'
+                'usa' => route('demo', [Slot::find(305), 'baccarat']).'?lobby=1',
+                'name' => 'Baccarat',
             ];
         }
 
@@ -184,25 +174,23 @@ class SlotController extends Controller
 
     public function numbers()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => false,
                 'baltic' => route('slot', [Slot::find(303), 602000]),
                 'latin' => false,
                 'est_europe' => false,
                 'usa' => false,
-                'name' => 'Numbers'
+                'name' => 'Numbers',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => false,
                 'baltic' => route('demo', [Slot::find(303), 602000]),
                 'latin' => false,
                 'est_europe' => false,
                 'usa' => false,
-                'name' => 'Numbers'
+                'name' => 'Numbers',
             ];
         }
 
@@ -215,25 +203,23 @@ class SlotController extends Controller
 
     public function keno()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data = [
                 'europe' => false,
                 'baltic' => route('slot', [Slot::find(303), 606000]),
                 'latin' => false,
                 'est_europe' => false,
                 'usa' => false,
-                'name' => 'Keno'
+                'name' => 'Keno',
             ];
-        }
-        else
-        {
+        } else {
             $data = [
                 'europe' => false,
                 'baltic' => route('demo', [Slot::find(303), 606000]),
                 'latin' => false,
                 'est_europe' => false,
                 'usa' => false,
-                'name' => 'Keno'
+                'name' => 'Keno',
             ];
         }
 
@@ -252,7 +238,7 @@ class SlotController extends Controller
             'latin' => false,
             'est_europe' => false,
             'usa' => false,
-            'name' => 'Dice'
+            'name' => 'Dice',
         ];
 
         $data['description'] = '';
@@ -264,20 +250,21 @@ class SlotController extends Controller
 
     public function test()
     {
-        if(Casino::isMobile()) $slots = Slot::where('is_mobile', 1)->paginate(6);
-        else $slots = Slot::paginate(16);
+        if (Casino::isMobile()) {
+            $slots = Slot::where('is_mobile', 1)->paginate(6);
+        } else {
+            $slots = Slot::paginate(16);
+        }
 
         return view('test', ['slots' => $slots]);
     }
 
     public function startUrl(Slot $slot)
     {
-        if($slot->category_id == 6)
-        {
+        if ($slot->category_id == 6) {
             $casino = new Ezugi();
             $data = $casino->getStartUrl($slot, null, false, Config::get('lang'));
-        }
-        else {
+        } else {
             $casino = new Casino(env('CASINO_OPERATOR_ID'), env('CASINO_KEY'));
             $data = $casino->SlotStartURL($slot);
         }
@@ -289,12 +276,15 @@ class SlotController extends Controller
 
     public function index()
     {
-        if(Casino::isMobile()) $slots = Slot::where('is_mobile', 1)->where('is_working', 1)->orderBy('raiting')->paginate(6);
-        else $slots = Slot::orderBy('raiting')->where('is_working', 1)->paginate(30);
+        if (Casino::isMobile()) {
+            $slots = Slot::where('is_mobile', 1)->where('is_working', 1)->orderBy('raiting')->paginate(6);
+        } else {
+            $slots = Slot::orderBy('raiting')->where('is_working', 1)->paginate(30);
+        }
 
         $meta = [
             'description' => 'Играть онлайн в слоты на биткоины предлагаем в этом разделе. Слоты - это имитация игровых автоматов, где выигрыш получают в биткоинах. Большой выбор игровых слотов и возможностей выиграть максимальный приз.',
-            'keywords' => 'биткоин слоты'
+            'keywords' => 'биткоин слоты',
         ];
 
         return view('slots', ['slots' => $slots, 'meta' => $meta]);
@@ -302,53 +292,63 @@ class SlotController extends Controller
 
     public function demo(Request $request, Slot $slot, $game_id = null)
     {
-        if($request->input('lobby')) $lobby = true;
-        else $lobby = false;
+        if ($request->input('lobby')) {
+            $lobby = true;
+        } else {
+            $lobby = false;
+        }
 
-        if($slot->category_id == 6)
-        {
+        if ($slot->category_id == 6) {
             $casino = new Ezugi();
             $data = $casino->getStartUrl($slot, $game_id, $lobby, Config::get('lang'), true);
-        }
-        else {
+        } else {
             app()->abort(500);
         }
 
-        if($data['url']) return redirect($data['url']);
+        if ($data['url']) {
+            return redirect($data['url']);
+        }
 
         return view('slot', ['slot' => $slot, 'data' => $data]);
     }
 
     public function freeSpins(Request $request)
     {
-        if(Auth::user()->free_spins == 0) app()->abort(500);
+        if (Auth::user()->free_spins == 0) {
+            app()->abort(500);
+        }
 
         $slot = Slot::find(1);
 
         $casino = new Casino(env('FREE_CASINO_OPERATOR_ID'), env('FREE_CASINO_KEY'));
         $data = $casino->SlotStartURL($slot);
 
-        if($data['url']) return redirect($data['url']);
+        if ($data['url']) {
+            return redirect($data['url']);
+        }
 
         return view('slot', ['slot' => $slot, 'data' => $data]);
     }
 
     public function get(Request $request, Slot $slot, $game_id = null)
     {
-        if($request->input('lobby')) $lobby = true;
-        else $lobby = false;
+        if ($request->input('lobby')) {
+            $lobby = true;
+        } else {
+            $lobby = false;
+        }
 
-        if($slot->category_id == 6)
-        {
+        if ($slot->category_id == 6) {
             $casino = new Ezugi();
             $data = $casino->getStartUrl($slot, $game_id, $lobby, Config::get('lang'));
-        }
-        else {
+        } else {
             $casino = new Casino(env('CASINO_OPERATOR_ID'), env('CASINO_KEY'));
             $data = $casino->SlotStartURL($slot);
         }
 
-        if($data['url']) return redirect($data['url']);
+        if ($data['url']) {
+            return redirect($data['url']);
+        }
 
         return view('slot', ['slot' => $slot, 'data' => $data]);
     }
@@ -357,8 +357,11 @@ class SlotController extends Controller
     {
         $transaction = Auth::user()->transactions()->where('status', 3)->where('notification', 0)->first();
 
-        if($transaction) $sum = $transaction->sum;
-        else $sum = false;
+        if ($transaction) {
+            $sum = $transaction->sum;
+        } else {
+            $sum = false;
+        }
 
         $transaction->notification = 1;
         $transaction->save();
@@ -370,7 +373,9 @@ class SlotController extends Controller
     {
         $slots = Slot::orderBy('raiting');
 
-        if($request->input('q')) $slots = $slots->where('display_name', 'LIKE', '%' . $request->input('q') . '%');
+        if ($request->input('q')) {
+            $slots = $slots->where('display_name', 'LIKE', '%'.$request->input('q').'%');
+        }
 
         $slots = $slots->get();
 
@@ -388,22 +393,25 @@ class SlotController extends Controller
             'display_name' => 'required|min:3|max:255',
             'raiting' => 'required|integer|min:0',
             'image' => 'mimes:jpeg,png',
-            'type_id' => 'required'
+            'type_id' => 'required',
             //'is_bonus' => 'required'
         ]);
 
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
-                $web_path = '/images/' . $slot->id . '.png';
-                $real_path = public_path() . '/images/';
+                $web_path = '/images/'.$slot->id.'.png';
+                $real_path = public_path().'/images/';
 
-                if(file_exists($real_path . $slot->id . '.png')) unlink($real_path . $slot->id . '.png');
+                if (file_exists($real_path.$slot->id.'.png')) {
+                    unlink($real_path.$slot->id.'.png');
+                }
 
-                $request->file('image')->move($real_path,  $slot->id . '.png');
+                $request->file('image')->move($real_path, $slot->id.'.png');
 
                 $slot->image = $web_path;
+            } else {
+                return redirect()->back()->withErrors(['Upload file problem']);
             }
-            else return redirect()->back()->withErrors(['Upload file problem']);
         }
 
         $slot->display_name = $request->input('display_name');
@@ -411,18 +419,29 @@ class SlotController extends Controller
 
         $slot->demo_url = $request->input('demo_url');
 
-        if($request->input('is_working') == 'on') $slot->is_working = 1;
-        else $slot->is_working = 0;
+        if ($request->input('is_working') == 'on') {
+            $slot->is_working = 1;
+        } else {
+            $slot->is_working = 0;
+        }
 
-        if($request->input('is_mobile') == 'on') $slot->is_mobile = 1;
-        else $slot->is_mobile = 0;
+        if ($request->input('is_mobile') == 'on') {
+            $slot->is_mobile = 1;
+        } else {
+            $slot->is_mobile = 0;
+        }
 
-        if($request->input('is_bonus') == 'on') $slot->is_bonus = 1;
-        else $slot->is_bonus = 0;
+        if ($request->input('is_bonus') == 'on') {
+            $slot->is_bonus = 1;
+        } else {
+            $slot->is_bonus = 0;
+        }
 
         $type = Type::find($request->input('type_id'));
 
-        if(!$type) return redirect()->back();
+        if (! $type) {
+            return redirect()->back();
+        }
 
         $slot->type()->associate($type);
 
@@ -435,30 +454,33 @@ class SlotController extends Controller
     {
         $slots = Slot::orderBy('raiting');
 
-        if($request->has('q'))
-        {
-            $slots = $slots->where('display_name', 'LIKE', '%' . $request->input('q') . '%');
+        if ($request->filled('q')) {
+            $slots = $slots->where('display_name', 'LIKE', '%'.$request->input('q').'%');
         }
 
-        if($request->has('category_id'))
-        {
+        if ($request->filled('category_id')) {
             $slots = $slots->where('category_id', $request->input('category_id'));
         }
 
-        if($request->has('type'))
-        {
+        if ($request->filled('type')) {
             $slots = $slots->where('type_id', $request->input('type'));
         }
 
         $slots = $slots->where('is_working', 1);
 
-        if(Casino::isMobile()) $slots = $slots->where('is_mobile', 1)->paginate(6);
-        else $slots = $slots->paginate(30);
+        if (Casino::isMobile()) {
+            $slots = $slots->where('is_mobile', 1)->paginate(6);
+        } else {
+            $slots = $slots->paginate(30);
+        }
 
         $pag = $slots->links();
 
-        if($pag) $html = $pag->toHtml();
-        else $html = '';
+        if ($pag) {
+            $html = $pag->toHtml();
+        } else {
+            $html = '';
+        }
 
         return response()->json(['slots' => json_decode($slots->toJson()), 'pagination' => $html]);
     }

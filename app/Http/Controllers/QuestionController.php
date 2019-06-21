@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -32,7 +32,7 @@ class QuestionController extends Controller
     {
         $this->validate($request, [
             'question' => 'required|max:250',
-            'answer' => 'required|max:2000'
+            'answer' => 'required|max:2000',
         ]);
 
         $question = new Question();
@@ -52,7 +52,7 @@ class QuestionController extends Controller
     {
         $this->validate($request, [
             'question' => 'required|max:250',
-            'answer' => 'required|max:2000'
+            'answer' => 'required|max:2000',
         ]);
 
         $question->question = $request->input('question');

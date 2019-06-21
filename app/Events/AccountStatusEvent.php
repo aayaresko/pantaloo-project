@@ -12,7 +12,9 @@ class AccountStatusEvent extends Event
     use SerializesModels;
 
     public $user;
+
     public $old_status;
+
     public $new_status;
 
     /**

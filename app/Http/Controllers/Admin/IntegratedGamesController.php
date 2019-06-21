@@ -9,17 +9,16 @@ use App\CustomField;
 use App\Models\GamesList;
 use App\Models\GamesType;
 use Illuminate\Http\Request;
-use App\Models\GamesTypeGame;
 use App\Models\GamesCategory;
+use App\Models\GamesTypeGame;
 use App\Models\GamesListExtra;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Storage;
 use App\Models\RestrictionGamesCountry;
+use Illuminate\Support\Facades\Storage;
 
 /**
- * Class IntegratedGamesController
- * @package App\Http\Controllers\Admin
+ * Class IntegratedGamesController.
  */
 class IntegratedGamesController extends Controller
 {
@@ -27,6 +26,7 @@ class IntegratedGamesController extends Controller
      * @var array
      */
     protected $fields;
+
     /**
      * @var array
      */
@@ -52,7 +52,7 @@ class IntegratedGamesController extends Controller
 
         $this->relatedFields = $this->fields;
         $this->relatedFields[2] = 'games_list.provider_id as provider';
-        $this->relatedFields[3] = DB::raw("group_concat(games_types.name) as type");
+        $this->relatedFields[3] = DB::raw('group_concat(games_types.name) as type');
         $this->relatedFields[4] = 'games_categories.name as category';
         $this->relatedFields[5] = 'games_list_extra.image as image';
     }
@@ -64,11 +64,18 @@ class IntegratedGamesController extends Controller
     public function index(Request $request)
     {
         $configIntegratedGames = config('integratedGames.common');
+        $params['providers'] = $configIntegratedGames['providers'];
         $dummyPicture = $configIntegratedGames['dummyPicture'];
-        $types = GamesType::select(['id', 'code', 'name'])->get();
+        $types = GamesType::select(['id', 'code', 'name'])->get()->all();
+        $category = GamesCategory::select(['id', 'code', 'name'])->get();
+        $providers = $params['providers'];
         View::share('dummyPicture', $dummyPicture);
-        return view('admin.integrated_games')
-            ->with(['types' => $types]);
+
+        return view('admin.integrated_games')->with([
+            'types' => $types,
+            'category' => $category,
+            'providers' => $providers
+        ]);
     }
 
     /**
@@ -86,25 +93,25 @@ class IntegratedGamesController extends Controller
         View::share('maxSizeImage', $imageConfig['maxSize']);
         View::share('typesImage', $imageConfig['mimes']);
 
-        $types = GamesType::select(['id', 'code', 'name'])->get();
-        $categories = GamesCategory::select(['id', 'code', 'name'])->get();
+        $types = GamesType::select(['id', 'code', 'name'])->get()->all();
+        $categories = GamesCategory::select(['id', 'code', 'name'])->get()->all();
         //to do check this in one query - i don't have time
         $gameId = $request->id;
         $whereCompare = [
             ['games_list.id', '=', $gameId],
-            ['games_types_games.extra', '=', 1]
+            ['games_types_games.extra', '=', 1],
         ];
 
         $whereCompareDefault = [
             ['games_list.id', '=', $gameId],
-            ['games_types_games.extra', '=', 0]
+            ['games_types_games.extra', '=', 0],
         ];
 
         $addFields = [
             10 => 'games_list.name as default_name',
             13 => 'games_list.category_id as default_category_id',
             14 => 'games_list.our_image as default_image',
-            3 => DB::raw("group_concat(games_types_games.type_id) as type"),
+            3 => DB::raw('group_concat(games_types_games.type_id) as type'),
         ];
         $fields = array_merge_recursive($addFields, $this->fields);
 
@@ -132,11 +139,11 @@ class IntegratedGamesController extends Controller
         $markConfig = config('appAdditional.restrictionMark');
         $allowGameCountry = RestrictionGamesCountry::where('game_id', $gameId)
             ->where('mark', $markConfig['enable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
 
         $banGameCountry = RestrictionGamesCountry::where('game_id', $gameId)
             ->where('mark', $markConfig['disable'])
-            ->lists('code_country')->toArray();
+            ->pluck('code_country')->toArray();
         $gameCountries = [
             'allow' => $allowGameCountry,
             'ban' => $banGameCountry,
@@ -147,13 +154,14 @@ class IntegratedGamesController extends Controller
             'types' => $types,
             'countries' => $countries,
             'categories' => $categories,
-            'gameCountries' => $gameCountries
+            'gameCountries' => $gameCountries,
         ]);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function gameUpdate(Request $request)
     {
@@ -174,6 +182,7 @@ class IntegratedGamesController extends Controller
         ]);
 
         DB::beginTransaction();
+
         try {
             $game = GamesList::where('id', $request->id)->first();
             $updatedGame = $request->toArray();
@@ -215,11 +224,10 @@ class IntegratedGamesController extends Controller
             GamesListExtra::where('game_id', $request->id)->update($updatedGame);
 
             //update type
-            if ($request->has('type_id')) {
+            if ($request->filled('type_id')) {
                 $typeIds = $request->type_id;
                 $relationType = [];
                 foreach ($typeIds as $typeId) {
-
                     array_push($relationType, [
                         'extra' => 1,
                         'game_id' => $request->id,
@@ -231,7 +239,7 @@ class IntegratedGamesController extends Controller
 
                 GamesTypeGame::where([
                     ['extra', '=', 1],
-                    ['game_id', '=', $request->id]
+                    ['game_id', '=', $request->id],
                 ])->delete();
 
                 GamesTypeGame::insert($relationType);
@@ -242,7 +250,7 @@ class IntegratedGamesController extends Controller
             $markConfig = config('appAdditional.restrictionMark');
             $currentDate = new \DateTime();
             //ALLOW
-            if ($request->has('allowCountryGames_codes')) {
+            if ($request->filled('allowCountryGames_codes')) {
                 $restrictionAllowItems = [];
 
                 RestrictionGamesCountry::where('game_id', $gameId)
@@ -265,7 +273,7 @@ class IntegratedGamesController extends Controller
             }
 
             //BAN
-            if ($request->has('banCountryGames_codes')) {
+            if ($request->filled('banCountryGames_codes')) {
                 $restrictionBanItems = [];
 
                 RestrictionGamesCountry::where('game_id', $gameId)
@@ -287,12 +295,13 @@ class IntegratedGamesController extends Controller
                     ->where('mark', $markConfig['disable'])->delete();
             }
             /* end work with restriction */
-
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         DB::commit();
+
         return redirect()->route('admin.integratedGame', $game->id)->with('msg', 'Game was edited');
     }
 
@@ -308,7 +317,34 @@ class IntegratedGamesController extends Controller
             ['games_types_games.extra', '=', 1],
         ];
 
-        if ($request->has('type_id')) {
+        if ($request->has('category_id')) {
+            if ($request->category_id > 0) {
+                array_push($param['whereCompare'],
+                    ['games_categories.id', '=', $request->category_id]);
+            }
+        }
+        if ($request->has('mobile')) {
+            if ($request->mobile >= 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.mobile', '=', $request->mobile]);
+            }
+        }
+
+        if ($request->has('active')) {
+            if ($request->active >= 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.active', '=', $request->active]);
+            }
+        }
+
+        if ($request->has('provider_id')) {
+            if ($request->provider_id > 0) {
+                array_push($param['whereCompare'],
+                    ['games_list.provider_id', '=', $request->provider_id]);
+            }
+        }
+
+        if ($request->filled('type_id')) {
             if ($request->type_id > 0) {
                 array_push($param['whereCompare'],
                     ['games_types_games.type_id', '=', $request->type_id]);
@@ -422,13 +458,13 @@ class IntegratedGamesController extends Controller
             return $item;
         });
 
-        $jsonData = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data" => $data,
-            'time' => round(microtime(true) - $start1, 4)
-        );
+        $jsonData = [
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $data,
+            'time' => round(microtime(true) - $start1, 4),
+        ];
 
         return response()->json($jsonData);
     }

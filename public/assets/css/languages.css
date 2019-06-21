@@ -46,16 +46,17 @@
 }
 .langbox > li > a:after, .balancebox > li > .balancebox-title:after {
     content: '';
-    background: url(../images/languages/carpet.png) no-repeat scroll 0 0 transparent;
-    width: 10px;
-    height: 6px;
+    background: url('/media/images/icons/down-arrow.svg') no-repeat;
+    width: 9px;
+    height: 10px;
     display: inline-block;
     position: absolute;
-    top: 19px;
+    top: 17px;
     right: 17px;
+    transition: .2s;
 }
 .langbox > li > a.is-open:after, .balancebox > li > a.is-open + .balancebox-title:after {
-    background-position: left bottom;
+    transform: rotate(180deg);
 }
 .langbox li:last-child {
     margin-right: 0; }

@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Bonus;
-use App\Bonuses\Bonus_100;
-use App\Slots\Casino;
-use App\Transaction;
 use App\User;
+use App\Bonus;
 use App\UserBonus;
+use App\Transaction;
+use App\Slots\Casino;
+use App\Bonuses\Bonus_100;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,7 +73,7 @@ class BonusTest extends Command
         $winners = 0;
         $win_sum = 0;
 
-        for($i = 0; $i < 10000; $i = $i + 1) {
+        for ($i = 0; $i < 10000; $i = $i + 1) {
             $bouns_balance = 12.5;
             $play_factor = 45;
             $played_sum = 0;
@@ -82,8 +82,7 @@ class BonusTest extends Command
 
             $bouns_balance = 0;
 
-            for($z = 0; $z < 50; $z = $z + 1)
-            {
+            for ($z = 0; $z < 50; $z = $z + 1) {
                 $bouns_balance = $bouns_balance + $this->play(0.25);
             }
 
@@ -93,29 +92,29 @@ class BonusTest extends Command
 
                     $bouns_balance = $bouns_balance - $bet_sum;
                     $bouns_balance = $bouns_balance + $this->play($bet_sum, 47);
+                } else {
+                    break;
                 }
-                else break;
             }
 
             $persons = $persons + 1;
 
-            if($bouns_balance > 0)
-            {
+            if ($bouns_balance > 0) {
                 $winners = $winners + 1;
                 $win_sum = $win_sum + $bouns_balance;
             }
         }
 
-        echo "Winners: " . $winners . "\n";
-        echo "Win sum: " . $win_sum . "\n";
+        echo 'Winners: '.$winners."\n";
+        echo 'Win sum: '.$win_sum."\n";
     }
 
     public function play($sum, $win_procent = 45)
     {
-        if(rand(0, 100) <= $win_procent)
-        {
+        if (rand(0, 100) <= $win_procent) {
             return $sum * 2;
+        } else {
+            return 0;
         }
-        else return 0;
     }
 }

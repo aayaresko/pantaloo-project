@@ -1,14 +1,13 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Request;
-use App\Jobs\IntercomCreateUpdateUser;
-use App\Providers\Intercom\Intercom;
 use App\User;
-use App\Http\Controllers\Controlleruse;
+use App\Http\Requests\Request;
+use App\Providers\Intercom\Intercom;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\IntercomCreateUpdateUser;
+use App\Http\Controllers\Controlleruse;
 
 class IntercomController extends Controller
 {
@@ -18,6 +17,7 @@ class IntercomController extends Controller
 
         if ($user) {
             dispatch(new IntercomCreateUpdateUser($user));
+
             return 1;
         } else {
             return 0;

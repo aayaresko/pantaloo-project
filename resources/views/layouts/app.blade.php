@@ -4,13 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">  
-    @if(Route::currentRouteName() == 'main')
-       <title>@yield('title', trans('casino.title'))</title>
-    @else
-       <title>@yield('title', trans('casino.title')) | CasinoBit</title>
-    @endif
-    <meta name="description" content="@yield('description', '')">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ MetaTag::get('title') }}</title>
+    {!! MetaTag::tag('description') !!}
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,20 +18,22 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.15" rel="stylesheet">
-    <link href="/css/new.css?v=1.0.6" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.17" rel="stylesheet">
+    <link href="/css/new.css?v={{ time() }}" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8932ff">
     <meta name="msapplication-TileColor" content="#8932ff">
+    <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Google Tag Manager -->
@@ -278,11 +277,11 @@
             @if(Auth::guest())
                 <div class="auth-block-mobile">
                     <div class="login-block floated">
-                        <a href="{{url('/login')}}" class="login-btn"><span
+                        <a href="{{url('#login')}}" class="login-btn"><span
                                     class="text">{{ trans('casino.login') }}</span></a>
                     </div>
                     <div class="registration-block floated">
-                        <a href="{{url('/registr')}}" class="reg-btn"><span
+                        <a href="{{url('#registr')}}" class="reg-btn"><span
                                     class="text">{{ trans('casino.registration') }}</span></a>
                     </div>
                 </div>
@@ -389,11 +388,13 @@
             </div>
 
             @if ($registrationStatus === 1)
+
                 <div class="popup-form">
                     <form id="registr" action="/register" method="POST">
                         {{csrf_field()}}
                         <input type="hidden" name="password_confirmation" value="">
                         <input type="hidden" name="name" value="no_name">
+                        <input type="hidden" name="ref" value="{{request()->ref}}">
                         <div class="row">
                             <div class="col-sm-12">
                                 <input type="email" class="email-input red"
@@ -475,7 +476,7 @@
                         <div class="col-sm-12">
                             <input type="password" name="password" class="pass-input blue"
                                    placeholder="{{ trans('casino.password') }}">
-                            <a href="{{ url("/{$currentLang}/password/reset") }}"
+                            <a href="{{ url("/{$currentLang}/password/forgot") }}"
                                class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                         </div>
                     </div>
@@ -678,6 +679,7 @@
             dateType: 'json',
             success: function (data) {
                 if (data.success == true) {
+                    console.log(data);
                     $('span.deposit-value').html(data.balance);
                     $('span.value').html(data.balance);
 
@@ -689,7 +691,7 @@
                     }
 
                     if (data.deposit) {
-                        ga('send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+                        ga('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
                         $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');
@@ -881,17 +883,21 @@
 {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
 
 <script>
+    @php
+    $intercomConfig = \Helpers\IntercomHelper::getIntercomConfig();
+    @endphp
+
     @if (is_null($user))
         window.intercomSettings = {
-        app_id: "ebzyh5ul"
+        app_id: "{{ $intercomConfig->appId }}"
     };
     @else
             @php
-                $hmac = hash_hmac('sha256', $user->email, config('intercom.intercom_key'));
+                $hmac = hash_hmac('sha256', $user->email, $intercomConfig->key );
             @endphp
 
         window.intercomSettings = {
-        app_id: "ebzyh5ul",
+        app_id: "{{ $intercomConfig->appId }}",
         user_hash: '{{ $hmac }}', // HMAC using SHA-256
         email: "{{ $user->email }}", // Email address
     };
@@ -917,7 +923,7 @@
                 var s = d.createElement('script');
                 s.type = 'text/javascript';
                 s.async = true;
-                s.src = 'https://widget.intercom.io/widget/u91xvurq';
+                s.src = 'https://widget.intercom.io/widget/{{ $intercomConfig->appId }}';
                 var x = d.getElementsByTagName('script')[0];
                 x.parentNode.insertBefore(s, x);
             };
