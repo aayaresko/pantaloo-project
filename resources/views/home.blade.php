@@ -13,14 +13,17 @@
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
+
             <div class="msg-popup">
-			<span class="top-text">
-				<span class="number-value">110%</span>
-                {{ trans('casino.bonus') }}
-            </span>
+                <span class="top-text">
+                    <span class="number-value">110 <span class="number-value-small">%</span></span>
+                        {{ trans('casino.bonus') }}
+                </span>
                 <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
+                
                 <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
             </div>
+
             @endif
             <span class="side-name">{{ trans('casino.welcome') }}</span>
             <div class="main-title-block">
@@ -40,7 +43,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">110%</span>
+				<span class="number-value">110 <span class="number-value-small">%</span></span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -65,7 +68,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">110%</span>
+            <span class="number-value">110 <span class="number-value-small">%</span></span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
@@ -90,7 +93,7 @@
             @if(Auth::guest())
                 <div class="msg-popup">
 			<span class="top-text">
-				<span class="number-value">110%</span>
+                <span class="number-value">110 <span class="number-value-small">%</span></span>
                 {{ trans('casino.bonus') }}
             </span>
                     <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
