@@ -177,7 +177,7 @@
                             </form>
                         </div>
 
-                        <h3 class="setting-title">{{trans('Confirm email')}}</h3>
+                        <h3 class="setting-title">{{trans('casino.confirm_email')}}</h3>
                         <div>
                             @if(Auth::user()->isConfirmed())
                                 Email confirmed
@@ -186,18 +186,18 @@
                                     <div class="col-sm-12">
 
                                         <div class="single-section">
-                                            <h3 class="section-title">{{trans('Email confirmation')}}</h3>
+                                            <h3 class="section-title">{{trans('casino.email_confirmation')}}</h3>
                                             <form method="POST" action="{{route('email.confirm')}}">
                                                 {{csrf_field()}}
                                                 <table>
                                                     <tbody>
                                                     <tr>
-                                                        <td><span class="text">{{trans('Email')}}</span></td>
+                                                        <td><span class="text">{{trans('casino.email')}}</span></td>
                                                         <td>
                                                             <div class="row">
                                                                 <div class="col-sm-12">
                                                                     <div class="field-block email">
-                                                                        <input type="email" name="email" placeholder="{{trans('Email')}}" value="{{Auth::user()->email}}">
+                                                                        <input type="email" name="email" placeholder="{{ trans('casino.email') }}" value="{{Auth::user()->email}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
