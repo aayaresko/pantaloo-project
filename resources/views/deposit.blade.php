@@ -131,10 +131,12 @@
                         let tdStatus = $(row).find('td:eq(2)');
                         tdStatus.addClass('statustransAction');
 
-                        if (data.status === 'Confirmed') {
-                            tdStatus.addClass('confirm')
-                        } else {
-                            tdStatus.addClass('notConfirm')
+                        switch (data.statusCode) {
+                            case 1:
+                                tdStatus.addClass('confirm');
+                                break;
+                            default:
+                                tdStatus.addClass('notConfirm');
                         }
                     },
                     "initComplete": function (settings, data) {

@@ -6,21 +6,13 @@ use DB;
 use App\User;
 use Validator;
 use App\Bonus;
-use App\Invoice;
-use Carbon\Carbon;
 use App\Transaction;
-use Helpers\PayTrio;
 use App\Http\Requests;
-use App\Jobs\Withdraw;
-use App\Bitcoin\Service;
 use Helpers\BonusHelper;
 use App\ModernExtraUsers;
 use Illuminate\Http\Request;
 use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
-use App\Events\WithdrawalFrozenEvent;
-use App\Events\WithdrawalApprovedEvent;
-use App\Events\WithdrawalRequestedEvent;
 use App\Models\Withdraw as WithdrawModel;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
@@ -168,10 +160,6 @@ class UserAccountController extends Controller
                 3 => 'value'
             ];
 
-            $param['whereCompare'] = [
-                ['user_id', '=', $user->id]
-            ];
-
             $param['columnsAlias'] = [
                 0 => 'created_at as date',
                 1 => 'transaction_id as id',
@@ -179,10 +167,14 @@ class UserAccountController extends Controller
                 3 => 'value as amount'
             ];
 
+            $param['whereCompare'] = [
+                ['user_id', '=', $user->id]
+            ];
+
             /* ACT */
             $whereCompare = $param['whereCompare'];
 
-            $countSum = SystemNotification::select($param['columns'])->where($param['whereCompare'])
+            $countSum = SystemNotification::select($param['columns'])->where($whereCompare)
                 ->skip($request->startItem)->take($request->getItem)->get()->count();
 
             $totalData = $countSum;
@@ -192,10 +184,10 @@ class UserAccountController extends Controller
             $dir = $request->input('order.0.dir');
 
             /* SORT */
-            $items = SystemNotification::select($param['columnsAlias'])->where($param['whereCompare'])
+            $items = SystemNotification::select($param['columnsAlias'])->where($whereCompare)
                 ->offset($request->startItem)->limit($request->getItem)->orderBy($order, $dir)->get();
 
-            $nextCount = SystemNotification::where('user_id', $user->id)
+            $nextCount = SystemNotification::where($whereCompare)
                 ->skip($request->getItem)->take($request->getItem + $request->stepItem)->get()->count();
             /* END */
 
@@ -203,9 +195,12 @@ class UserAccountController extends Controller
             $data = $items;
 
             $data->map(function ($item) use ($param) {
+
                 $item->status = 'No confirmed';
+                $item->statusCode = 0;
                 if ($item->confirmations >= $param['minConfirmBtc']) {
                     $item->status = 'Confirmed';
+                    $item->statusCode = 1;
                 }
                 $item->date = date('d M Y H:i', strtotime($item->date));
 
@@ -231,7 +226,6 @@ class UserAccountController extends Controller
         ];
     }
 
-
     public function withdraw(Request $request, $lang)
     {
         $user = $request->user();
@@ -247,7 +241,6 @@ class UserAccountController extends Controller
         ]);
     }
 
-
     public function getWithdraws(Request $request)
     {
         $param = [];
@@ -261,28 +254,52 @@ class UserAccountController extends Controller
 
             $param['minConfirmBtc'] = $minConfirmBtc;
 
+//            $param['columns'] = [
+//                0 => 'created_at',
+//                1 => 'transaction_id',
+//                2 => 'status_withdraw',
+//                3 => 'value'
+//            ];
+//
+//
+//            $param['columnsAlias'] = [
+//                0 => 'created_at as date',
+//                1 => 'transaction_id as id',
+//                2 => 'status_withdraw as status',
+//                3 => 'value as amount'
+//            ];
+//
+//            $param['whereCompare'] = [
+//                ['user_id', '=', $user->id]
+//            ];
+
+
             $param['columns'] = [
                 0 => 'created_at',
-                1 => 'transaction_id',
-                2 => 'status_withdraw',
-                3 => 'value'
-            ];
-
-            $param['whereCompare'] = [
-                ['user_id', '=', $user->id]
+                1 => 'id',
+                2 => 'withdraw_status',
+                3 => 'sum'
             ];
 
             $param['columnsAlias'] = [
                 0 => 'created_at as date',
-                1 => 'transaction_id as id',
-                2 => 'status_withdraw as status',
-                3 => 'value as amount'
+                1 => 'id',
+                2 => 'withdraw_status as status',
+                3 => 'sum as amount'
+            ];
+
+            $param['whereCompare'] = [
+                ['type', '=', 4],//to do fix this
+                ['user_id', '=', $user->id]
             ];
 
             /* ACT */
             $whereCompare = $param['whereCompare'];
 
-            $countSum = WithdrawModel::select($param['columns'])->where($param['whereCompare'])
+//            $countSum = WithdrawModel::select($param['columns'])->where($whereCompare)
+//                ->skip($request->startItem)->take($request->getItem)->get()->count();
+
+            $countSum = Transaction::select($param['columns'])->where($whereCompare)
                 ->skip($request->startItem)->take($request->getItem)->get()->count();
 
             $totalData = $countSum;
@@ -292,17 +309,38 @@ class UserAccountController extends Controller
             $dir = $request->input('order.0.dir');
 
             /* SORT */
-            $items = WithdrawModel::select($param['columnsAlias'])->where($param['whereCompare'])
+//            $items = WithdrawModel::select($param['columnsAlias'])->where($whereCompare)
+//                ->offset($request->startItem)->limit($request->getItem)->orderBy($order, $dir)->get();
+
+            $items = Transaction::select($param['columnsAlias'])->where($whereCompare)
                 ->offset($request->startItem)->limit($request->getItem)->orderBy($order, $dir)->get();
 
-            $nextCount = WithdrawModel::where('user_id', $user->id)
+//            $nextCount = WithdrawModel::where($whereCompare)
+//                ->skip($request->getItem)->take($request->getItem + $request->stepItem)->get()->count();
+
+            $nextCount = Transaction::where($whereCompare)
                 ->skip($request->getItem)->take($request->getItem + $request->stepItem)->get()->count();
+
             /* END */
 
             /* TO VIEW */
             $data = $items;
 
             $data->map(function ($item) use ($param) {
+
+                $status = (int)$item->status;
+                $item->statusCode = $status;
+                switch ($status) {
+                    case 1:
+                        $item->status = 'Done';
+                        break;
+                    case -3:
+                        $item->status = 'Waiting';
+                        break;
+                    default:
+                        $item->status = 'Pending';
+                }
+
                 return $item;
             });
 
