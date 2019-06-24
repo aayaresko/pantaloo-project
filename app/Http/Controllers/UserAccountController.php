@@ -202,7 +202,7 @@ class UserAccountController extends Controller
                     $item->status = 'Confirmed';
                     $item->statusCode = 1;
                 }
-                $item->date = date('d M Y H:i', strtotime($item->date));
+                $item->date = date(trans('date.action_deposit'), strtotime($item->date));
 
                 unset($item->confirmations);
                 return $item;
@@ -340,6 +340,9 @@ class UserAccountController extends Controller
                     default:
                         $item->status = 'Pending';
                 }
+
+
+                $item->date = date(trans('date.action_withdraw'), strtotime($item->date));
 
                 return $item;
             });
