@@ -105,8 +105,8 @@
                 <a class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
                 <a class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
             @else
-                <a href="/" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
-                <a href="/" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
+                <a href="/{{ app()->getLocale() }}" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
+                <a href="/{{ app()->getLocale() }}" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
             @endif
         </div>
     </div>
@@ -727,7 +727,7 @@
             dateType: 'json',
             success: function (data) {
                 if (data.success == true) {
-                    console.log(data);
+                    //console.log(data);
                     $('span.deposit-value').html(data.balance);
                     $('span.value').html(data.balance);
 
