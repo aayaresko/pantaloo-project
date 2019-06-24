@@ -140,6 +140,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             //Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
             Route::get('/deposit', ['as' => 'deposit', 'uses' => 'UserAccountController@deposit']);
             Route::get('/getDeposits', ['as' => 'getDeposit', 'uses' => 'UserAccountController@getDeposits']);
+            Route::get('/getWithdraws', ['as' => 'getWithdraws', 'uses' => 'UserAccountController@getWithdraws']);
             Route::post('/updateUserExtra', ['as' => 'updateUserExtra', 'uses' => 'UserAccountController@updateUserExtra']);
 
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'UserAccountController@withdraw']);

@@ -24,12 +24,13 @@
                 <div class="main-content-entry">
                     <div class="withdraw-entry">
                         <div class="middle-block">
-                            <center>
-                                @foreach($errors->all() as $error)
-                                    {{$error}}<br>
-                                @endforeach
-                                <br><br>
-                            </center>
+{{--                            <center>--}}
+{{--                                @foreach($errors->all() as $error)--}}
+{{--                                    {{$error}}<br>--}}
+{{--                                @endforeach--}}
+{{--                                <br><br>--}}
+{{--                            </center>--}}
+                            <br><br>
                             <form action="" method="POST">               
                                 <span class="text">{{ trans('casino.your_bitcoin_address') }}</span>
                                 <input type="text" name="address"  pattern="^[13][a-km-zA-HJ-NP-Z0-9]{25,35}$" required>
@@ -64,4 +65,100 @@
     </div>
 
     @include('footer_main')
+@endsection
+
+@section('js')
+    <script>
+        let paramsTable = {
+            startItem: 0,
+            stepItem: 10,
+            getItem: 0,
+            lang: '{{ $lang }}',
+        };
+
+        class Table {
+            constructor(params) {
+                //init table
+                this.table = null;
+                this.params = params;
+                this.events();
+                this.getDeposits(this.params, true);
+            }
+
+            events() {
+                $('.loadMoredataTableBtn').on('click', () => {
+                    this.getDeposits(this.params, true);
+                });
+            }
+
+            getDeposits(params, counter = false) {
+                let order = [0, "desc"];
+
+                if (counter === true) {
+                    this.params.getItem = this.params.getItem + this.params.stepItem;
+                }
+
+                if (this.table != null) {
+                    order = this.table.order()[0];
+                }
+
+                $('#transactionsTable').DataTable().destroy();
+
+                this.table = $('#transactionsTable').DataTable({
+                    "searching": false,
+                    "info": false,
+                    "order": [order],
+                    "columns": [
+                        {"data": "date"},
+                        {"data": "id"},
+                        {"data": "status"},
+                        {"data": "amount"}
+                    ],
+                    "columnDefs": [
+                        {"orderable": false, "targets": 1},
+                        {"orderable": false, "targets": 2}
+                    ],
+                    "serverSide": true,
+                    'processing': true,
+                    //to do preloader
+                    'language': {
+                        'loadingRecords': '&nbsp;',
+                        'processing': 'Loading...'
+                    },
+                    "ajax": {
+                        "url": `/${params.lang}/getWithdraws`,
+                        "dataType": "json",
+                        "type": "GET",
+                        "data": this.params,
+                    },
+                    "createdRow": function (row, data, dataIndex) {
+                        // Set the data-status attribute, and add a class
+                        let tdStatus = $(row).find('td:eq(2)');
+                        tdStatus.addClass('statustransAction');
+
+                        if (data.status >= 0) {
+                            tdStatus.addClass('confirm')
+                        } else {
+                            tdStatus.addClass('notConfirm')
+                        }
+                    },
+                    "initComplete": function (settings, data) {
+                        if (data.status == true) {
+                            if (data.nextCount == 0) {
+                                $('.loadMoredataTableBtn').hide();
+                            }
+                        }
+                    }
+                });
+
+
+            }
+        }
+
+        let table;
+        (function () {
+            table = new Table(paramsTable);
+        })();
+
+    </script>
 @endsection

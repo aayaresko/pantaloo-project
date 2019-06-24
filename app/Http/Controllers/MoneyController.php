@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Jobs\Withdraw;
 use App\Bitcoin\Service;
 use Helpers\BonusHelper;
+use Helpers\GeneralHelper;
 use App\Jobs\BonusHandler;
 use Illuminate\Http\Request;
 use App\Models\SystemNotification;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\WithdrawalFrozenEvent;
 use App\Events\WithdrawalApprovedEvent;
 use App\Events\WithdrawalRequestedEvent;
+use App\Models\Withdraw as WithdrawModel;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class MoneyController extends Controller
@@ -34,7 +36,7 @@ class MoneyController extends Controller
         if ($user->free_spins == 0) {
             $transaction = $user->transactions()->where('type', 9)->orderBy('id', 'DESC')->first();
 
-            if (! $transaction) {
+            if (!$transaction) {
                 throw new \Exception('Transaction not found');
             }
 
@@ -147,9 +149,9 @@ class MoneyController extends Controller
                 'deposit' => $sum,
                 'free_spins' => $user->free_spins,
                 'balance_info' => [
-                    'balance' => $user->getBalance().' m'.strtoupper($user->currency->title),
-                    'real_balance' => $user->getRealBalance().' m'.strtoupper($user->currency->title),
-                    'bonus_balance' => $user->getBonusBalance().' m'.strtoupper($user->currency->title),
+                    'balance' => $user->getBalance() . config('app.currencyCode'),
+                    'real_balance' => $user->getRealBalance() . config('app.currencyCode'),
+                    'bonus_balance' => $user->getBonusBalance() . config('app.currencyCode'),
                 ],
             ];
         } catch (\Exception $e) {
@@ -192,7 +194,7 @@ class MoneyController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
 
-        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: '.$data);
+        return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: ' . $data);
     }
 
     public function newTransactions($transaction_id)
@@ -252,7 +254,11 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
-        $user = Auth::user();
+        //preparations
+        $errors = [];
+        $date = new \DateTime();
+        $user = $request->user();
+        $userId = $user->id;
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
         //check bonus
@@ -267,68 +273,142 @@ class MoneyController extends Controller
             }
             DB::commit();
         }
-        //check bonus
+        //preparations
 
-        if ($user->bonuses()->first()) {
-            return redirect()->back()->withErrors(['Bonus is active']);
-        }
-
-        if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) {
-            return redirect()->back()->withErrors(['You have unconfirmed deposits']);
-        }
-
-        if ($user->confirmation_required == 1 and Auth::user()->email_confirmed == 0) {
-            return redirect()->back()->withErrors(['E-mail confirmation required']);
-        }
-
-        //2391
-        if ((int) $user->id > 2391) {
-            if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
-                return redirect()->back()->withErrors(['You do not have any deposits.']);
-            }
-        }
-
-        $this->validate($request, [
-            'address' => 'required',
-            'sum' => 'required|numeric|min:1',
-        ]);
-
-        $service = new Service();
-
-        if ($request->input('sum') < 1) {
-            return redirect()->back()->withErrors(['Minimum sum is 1']);
-        }
-
-        if (! $service->isValidAddress($request->input('address'))) {
-            return redirect()->back()->withErrors(['Invalid bitcoin address']);
-        }
-
-        $sum = $request->input('sum');
-        $sum = round($sum, 5, PHP_ROUND_HALF_DOWN);
-        $sum = -1 * $sum;
-
-        $transaction = new Transaction();
-        $transaction->sum = $sum;
-        $transaction->bonus_sum = 0;
-        $transaction->user()->associate(Auth::user());
-        $transaction->type = 4;
-        $transaction->withdraw_status = 0;
-        $transaction->address = $request->input('address');
-
-        //to do change balance fix this code
+        //action
         try {
-            Auth::user()->changeBalance($transaction);
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['Not enoug funds']);
+            $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+                'type_id' => config('appAdditional.rawLogKey.withdraw'),
+                'user_id' => $userId,
+                'request' => GeneralHelper::fullRequest(),
+                'created_at' => $date,
+                'updated_at' => $date,
+            ]);
+
+            //check bonus
+            if ($user->bonuses()->first()) {
+                $errors = ['Bonus is active'];
+                throw new \Exception('bonus_is_active');
+            }
+
+            if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) {
+                $errors = ['You have unconfirmed deposits'];
+                throw new \Exception('unconfirmed_deposits');
+            }
+
+            if ($user->confirmation_required == 1 and $user->email_confirmed == 0) {
+                $errors = ['E-mail confirmation required'];
+                throw new \Exception('confirmation_required');
+            }
+
+            //sometimes fix this - after first start
+            if ((int)$user->id > 2391) {
+                if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                    $errors = ['You do not have any deposits.'];
+                    throw new \Exception('do_not_have_any_deposits.');
+                }
+            }
+
+            //main act
+            $validator = Validator::make($request->all(), [
+                'address' => 'required',
+                'sum' => 'required|numeric|min:1',
+            ]);
+
+            if ($validator->fails()) {
+                $validatorErrors = $validator->errors()->toArray();
+                array_walk_recursive($validatorErrors, function ($item) use (&$errors) {
+                    array_push($errors, $item);
+                });
+                throw new \Exception('validation');
+            }
+
+            $service = new Service();
+
+            if ($request->input('sum') < 1) {
+                $errors = ['Minimum sum is 1'];
+                throw new \Exception('minimum_sum_is');
+            }
+
+            if (!$service->isValidAddress($request->input('address'))) {
+                $errors = ['Invalid bitcoin address'];
+                throw new \Exception('invalid_address');
+            }
+
+            $sum = $request->input('sum');
+            $sum = GeneralHelper::formatAmount($sum);
+            $sum = -1 * $sum;
+
+            DB::beginTransaction();
+
+            $actualUser = User::select(['id'])
+                ->where('id', $user->id)->lockForUpdate()->first();
+
+            if ((float)$actualUser->balance < abs($sum)) {
+                $errors = ['Not enough funds'];
+                throw new \Exception('not_enough_funds');
+            }
+
+            $transaction = Transaction::create([
+                'sum' => $sum,
+                'bonus_sum' => 0,
+                'user_id' => $user->id,
+                'type' => 4,
+                'withdraw_status' => -3,
+                'address' => $request->input('address'),
+                'comment' => 'withdraw',
+
+            ]);
+
+            $withdraw = WithdrawModel::create([
+                'user_id' => $user->id,
+                'value' => $sum,
+                'status_withdraw' => -3,
+                'to_address' => $request->input('address'),
+                'transaction_id' => $transaction->id
+            ]);
+
+            //edit balance user
+            User::where('id', $user->id)
+                ->update(['balance' => DB::raw("balance+{$sum}")]);
+
+            //this code we can deleting
+            $userAfterUpdate = User::select('id', 'balance')->where('id', $user->id)->first();
+
+            if ($userAfterUpdate->balance < 0) {
+                $errors = ['Not enough funds'];
+                throw new \Exception('not_enough_funds');
+            }
+            //this code we can deleting
+
+            DB::commit();
+
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'user_id' => $userId,
+                'response' => json_encode([
+                    'transaction_id' => $transaction->id,
+                    'withdraw_id' => $withdraw->id
+                ])
+            ]);
+
+            $lang = config('currentLang');
+
+            event(new WithdrawalRequestedEvent($user));
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            if (empty($errors)) {
+                $errors = ['Some is wrong'];
+            }
+
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'user_id' => $userId,
+                'response' => $ex->getMessage()
+            ]);
         }
 
-        //$this->dispatch(new Withdraw($transaction));
-
-        $lang = config('currentLang');
-
-        event(new WithdrawalRequestedEvent($user));
-
-        return redirect()->route('withdraw', ['lang' => $lang])->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
+        return redirect()->route('withdraw', ['lang' => $lang])
+            ->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
 
     public function transfers(Request $request)
@@ -372,7 +452,12 @@ class MoneyController extends Controller
 
         $pending_sum = $withdraws->where('withdraw_status', 0)->sum('sum');
 
-        return view('admin.transfers', ['transfers' => $transfers, 'deposit_sum' => $deposit_sum, 'withdraw_sum' => $withdraw_sum, 'pending_sum' => $pending_sum]);
+        return view('admin.transfers', [
+            'transfers' => $transfers,
+            'deposit_sum' => $deposit_sum,
+            'withdraw_sum' => $withdraw_sum,
+            'pending_sum' => $pending_sum
+        ]);
     }
 
     public function stat(Request $request)
@@ -445,7 +530,13 @@ class MoneyController extends Controller
         $aproved = Transaction::where('type', 4)->where('withdraw_status', 1)->with('user')->get();
         $queue = Transaction::where('type', 4)->where('withdraw_status', 3)->with('user')->get();
 
-        return view('admin.pending', ['frozen' => $frozen, 'pending' => $pending, 'failed' => $failed, 'aproved' => $aproved, 'queue' => $queue]);
+        return view('admin.pending', [
+            'frozen' => $frozen,
+            'pending' => $pending,
+            'failed' => $failed,
+            'aproved' => $aproved,
+            'queue' => $queue
+        ]);
     }
 
     /**
@@ -470,7 +561,7 @@ class MoneyController extends Controller
         $form_data = [
             'currency' => 840,
             'amount' => $request->input('amount'),
-            'description' => 'Пополнение счета '.Auth::user()->email,
+            'description' => 'Пополнение счета ' . Auth::user()->email,
             'shop_invoice_id' => $invoice->id,
         ];
 
