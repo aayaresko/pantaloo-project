@@ -1439,18 +1439,17 @@ html.cropped {
   border-radius: 19px;
   -webkit-border-radius: 19px;
   -moz-border-radius: 19px;
-  /* background-color: rgba(0, 0, 0, 0.7); */
-  /* background: linear-gradient(90deg, #100029, #2d115c); */
-  overflow: hidden;
-  padding-top: 25px;
-  padding-bottom: 48px;
+  /* background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden; */
+  padding-top: 23px;
+  padding-bottom: 55px;
   max-width: 160px;
   width: 100%;
   left: 10%;
   bottom: 20%;
   text-align: center;
   z-index: 99999;
-  background: url(../images/msg_bg.png) no-repeat top;
+  /* background: url(../images/msg_bg.png) no-repeat top; */
 }
 
 .number-value-small{
@@ -1486,24 +1485,26 @@ html.cropped {
   display: block;
   position: absolute;
   bottom: 0;
-  background: linear-gradient(76deg,#421f91,#a92e9f);
-  /* background: url("../media/images/bg/reg-btn-2.png") center no-repeat; */
-  background-size: cover;
+  /* background: url("../media/images/bg/reg-btn-2.png") center no-repeat;
+  background-size: cover; */
   width: 100%;
   padding: 12px 0;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 15px;
   left: 0;
   color: #fff;
-  z-index: 99999;
-  height: 44px;
+  z-index: 999999999;
+  /* height: 44px; */
   text-transform: uppercase;
   text-decoration: none;
 }
-/* line 148, ../scss/_middle.scss */
-.msg-popup .registration-btn:hover {
-  box-shadow: inset 0 0 10px #000;
+.msg-popup .registration-btn > img {
+  max-height: 180px;
 }
+/* line 148, ../scss/_middle.scss */
+/* .msg-popup .registration-btn:hover {
+  opacity: .8;
+} */
 
 /* line 153, ../scss/_middle.scss */
 .side-name {
@@ -4717,7 +4718,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-align: center;
   /*padding-right: 10%;*/
   margin-bottom: 30px;
-  position: relative;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 9;
 }
 /* line 64, ../scss/_footer.scss */
@@ -6419,7 +6423,7 @@ input:checked + .remem:before{
   /* line 115, ../scss/_responsive.scss */
   body .msg-popup .registration-btn {
     padding: 10px 0;
-    height: 34px;
+    /* height: 34px; */
     font-size: 14px;
   }
   /* line 121, ../scss/_responsive.scss */
