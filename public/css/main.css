@@ -1439,8 +1439,8 @@ html.cropped {
   border-radius: 19px;
   -webkit-border-radius: 19px;
   -moz-border-radius: 19px;
-  background-color: rgba(0, 0, 0, 0.7);
-  overflow: hidden;
+  /* background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden; */
   padding-top: 23px;
   padding-bottom: 55px;
   max-width: 160px;
@@ -1449,55 +1449,62 @@ html.cropped {
   bottom: 20%;
   text-align: center;
   z-index: 99999;
+  /* background: url(../images/msg_bg.png) no-repeat top; */
 }
+
+.number-value-small{
+  font-size: 20px;
+  margin-left: -5px;
+}
+
 /* line 111, ../scss/_middle.scss */
 .msg-popup .top-text {
   display: block;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
-  font-size: 19px;
+  font-size: 15px;
 }
 /* line 116, ../scss/_middle.scss */
 .msg-popup .top-text .number-value {
   display: block;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 40px;
+  line-height: 26px;
   position: relative;
-  margin-bottom: -7px;
 }
 /* line 124, ../scss/_middle.scss */
 .msg-popup .middle-text {
   display: block;
-  padding: 0 2px;
-  font-size: 15px;
-  color: #b9a2d6;
+  padding: 0 25px;
+  font-size: 13px;
+  color: #b8a7cd;
+  margin: 12px 0px 8px 0px;
+  line-height: 17px;
 }
 /* line 130, ../scss/_middle.scss */
 .msg-popup .registration-btn {
   display: block;
   position: absolute;
   bottom: 0;
-  background: url("../media/images/bg/reg-btn-2.png") center no-repeat;
-  background-size: cover;
+  /* background: url("../media/images/bg/reg-btn-2.png") center no-repeat;
+  background-size: cover; */
   width: 100%;
   padding: 12px 0;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
-  font-size: 19px;
+  font-size: 15px;
   left: 0;
   color: #fff;
-  z-index: 99999;
-  height: 44px;
+  z-index: 999999999;
+  /* height: 44px; */
   text-transform: uppercase;
-  -webkit-transition: 0.2s linear;
-  -moz-transition: 0.2s linear;
-  -ms-transition: 0.2s linear;
-  -o-transition: 0.2s linear;
-  transition: 0.2s linear;
   text-decoration: none;
 }
-/* line 148, ../scss/_middle.scss */
-.msg-popup .registration-btn:hover {
-  opacity: .8;
+.msg-popup .registration-btn > img {
+  max-height: 180px;
 }
+/* line 148, ../scss/_middle.scss */
+/* .msg-popup .registration-btn:hover {
+  opacity: .8;
+} */
 
 /* line 153, ../scss/_middle.scss */
 .side-name {
@@ -4711,7 +4718,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-align: center;
   /*padding-right: 10%;*/
   margin-bottom: 30px;
-  position: relative;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 9;
 }
 /* line 64, ../scss/_footer.scss */
@@ -6393,7 +6403,7 @@ input:checked + .remem:before{
   /* line 100, ../scss/_responsive.scss */
   body .msg-popup {
     left: 12%;
-    max-width: 136px;
+    /* max-width: 136px; */
     padding-top: 12px;
     padding-bottom: 40px;
   }
@@ -6413,7 +6423,7 @@ input:checked + .remem:before{
   /* line 115, ../scss/_responsive.scss */
   body .msg-popup .registration-btn {
     padding: 10px 0;
-    height: 34px;
+    /* height: 34px; */
     font-size: 14px;
   }
   /* line 121, ../scss/_responsive.scss */

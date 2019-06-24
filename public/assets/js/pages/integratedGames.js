@@ -553,11 +553,11 @@ $('body').ready(function () {
 
 $(function(){
 
-    
+    // if (auth)
 
     let authOpenGame = window.localStorage.getItem('authOpenGame');
 
-    if(authOpenGame === 'true'){
+    if(authOpenGame === 'true' && auth){
         let authGameUrl = window.localStorage.getItem('gameUrl');
         getGame(authGameUrl);
 

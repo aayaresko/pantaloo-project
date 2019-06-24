@@ -257,6 +257,9 @@
   border-radius: 10px;
   overflow: hidden;
 }
+.actions .block-bonus-image > img {
+  max-height: 160px;
+}
 .actions .block-bonus .block-bonus-right {
   position: absolute;
   bottom: 50px;
