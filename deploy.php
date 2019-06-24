@@ -107,4 +107,5 @@ before('deploy:symlink', 'deploy:public_disk');
 task('reload:php7.1-fpm')->onHosts('STAGE');
 task('reload:php7.3-fpm')->onHosts('PROD');
 
-after('deploy', 'reload:php-fpm');
+after('deploy', 'reload:php7.1-fpm');
+after('deploy', 'reload:php7.3-fpm');
