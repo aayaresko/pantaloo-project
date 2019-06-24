@@ -214,7 +214,7 @@ class AuthController extends Controller
             'status' => true,
             'message' => [
                 'email' => $email,
-                'title' => 'Confirm Email',
+                'title' => 'CasinoBit Affiliate registration',
                 'body' => (string) view('affiliates.parts.confirm_email')->with(['email' => $email]),
             ],
         ]);
@@ -383,7 +383,10 @@ class AuthController extends Controller
 
         $token = GeneralHelper::generateToken();
 
-        $link = url('/').'?confirm='.$token.'&email='.$user->email;
+        $link = route('affiliates.email.activate', [
+            'token' => $token,
+            'email' => urlencode($user->email)
+        ]);
 
         $activation = UserActivation::where('user_id', $user->id)->first();
 
@@ -396,9 +399,14 @@ class AuthController extends Controller
         $activation->activated = 0;
         $activation->save();
 
-        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link]);
+        $mail = new BaseMailable('emails.partner.confirm', ['link' => $link, 'email' => $userEmail]);
         $mail->subject('Confirm email');
-        Mail::to($user)->send($mail);
+
+        foreach (config('partner.addresses_to_send_confirmation') as $email){
+            $mail->to($email);
+        }
+
+        Mail::send($mail);
 
         return [
             'status' => true,
@@ -416,6 +424,7 @@ class AuthController extends Controller
         $linkActiveConfirm = config('appAdditional.linkActiveConfirm');
 
         $user = User::where('email', $email)->first();
+
         if (is_null($user)) {
             return [
                 'status' => false,
@@ -433,6 +442,7 @@ class AuthController extends Controller
             ['token', '=', $token],
             ['updated_at', '>=', $date],
         ])->first();
+
 
 //        if (is_null($activation)) {
 //            return [
@@ -459,9 +469,10 @@ class AuthController extends Controller
             $user->email_confirmed = 1;
             $user->save();
 
-            Mail::queue('emails.partner.congratulations', ['email' => $user->email], function ($m) use ($user) {
-                $m->to($user->email, $user->name)->subject('Email is now validated');
-            });
+            $mail = new BaseMailable('emails.partner.congratulations', ['email' => $user->email]);
+            $mail->subject('Acount is now activateded');
+
+            Mail::to($user->email)->send($mail);
 
             return [
                 'status' => true,

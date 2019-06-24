@@ -16,7 +16,7 @@ $(document).ready(function () {
     // resizeIframe();
     // $(window).on('resize', resizeIframe);
     // preloader();
-});
+
 
 function controlsInit() {
     if ($(window).width() > 1080) {
@@ -96,165 +96,281 @@ function gamePopup() {
     });*/
 }
 
-function animationInit() {
-    $('.reg-btn').each(function () {
-        $(this).click(function (e) {
-            // ga('send','pageview','/registr');
-            $('.reg-popup').addClass('active');
-            return false;
-        });
-    });
-
-    $('.account-btn').click(function () {
-        //alert(100);
-
-        $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-        setTimeout(function () {
-            $('.simple-popup').removeClass('active');
-            $('.reg-popup').addClass('active');
-        }, 300);
-
-        return false
-    })
-
-    $('.login-btn').each(function () {
-        $(this).click(function (e) {
-            // ga('send','pageview','/login');
-            $('.log-popup').addClass('active');
-            return false
-        })
-    })
-    /*
-    $('.promo-action-btn').each(function(){
-        $(this).click(function(e){
-            $('.simple-popup').addClass('active');
-            setTimeout(function(){
-                $('.simple-popup .popup-entry').addClass('active');
-            }, 300);
-            return false
-        })
-    })
-    */
-    $('.page-content-container .btn-block.mobile .live-btn').click(function () {
-        $(this).toggleClass('active');
-        $('.page-content-navigation.mobile').slideToggle();
-        return false;
-    })
-    $('.simple-popup .close-icon').click(function () {
-        $('.popup-entry').removeClass('active');
-        setTimeout(function () {
-            $('.simple-popup').removeClass('active');
-        }, 300);
-    })
-    $('.simple-popup .close-button').click(function () {
-        $('.popup-entry').removeClass('active');
-        setTimeout(function () {
-            $('.simple-popup').removeClass('active');
-        }, 300);
-    })
-    $("body").click(function (e) {
-        if ($(e.target).parents('.mfp-wrap').length || ($(e.target).attr('class') && $(e.target).attr('class').indexOf('mfp-') == 0)) return;
-        // $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-        setTimeout(function () {
-            $('.simple-popup').removeClass('active');
-        }, 300);
-    });
-    $(".reg-popup .popup-container, .log-popup .popup-container, .simple-popup .popup-entry").click(function (e) {
-        e.stopPropagation();
-    });
-    $('button.close-icon').click(function () {
-        $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-    });
-    $(document).keydown(function (e) {
-        // ESCAPE key pressed
-        if (e.keyCode == 27) {
-            $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
-            setTimeout(function () {
-                $('.simple-popup').removeClass('active');
-            }, 300);
-        }
-    });
-    $('.btn-history-block .open-history-link').click(function () {
-        $('.bottom-block').slideToggle();
-        return false;
-    })
-}
-
-function logOut() {
-    /*
-    $('.logout-btn').click(function(){
-        $('.header').removeClass('usr');
-    })
-    */
-}
-
-function lettering() {
-    $('.word-split').each(function () {
-        // fix th lang on home page headers
-        if (($(this).html() == 'Casinobit') || ($('html').attr('lang') != 'th')) {
-            $(this).lettering();
-        }
-    })
-}
-
-function ParallaxSections() {
-    let lock = false
-    if ($(window).width() < 1080) {
-        lock = true
-    }
-    $('.sections-container').fullpage({
-        menu: '.sections-nav',
-        anchors: ['', 'blackjack', 'roulette', 'slots'],
-        responsiveWidth: 1080,
-        lockAnchors: lock,
-        afterLoad: function (origin, destination, direction) {
-            let event = new CustomEvent('sectionAfterLoad', {
-                detail: {origin: origin, destination: destination, direction: direction}
-            });
-            window.dispatchEvent(event);
-        }
-    });
-}
-
-function gamesSlider() {
-    if ($('.games-block').length > 0 && $(window).width() < 1080) {
-        var owl = $('.games-slider');
-        owl.owlCarousel({
-            items: 1,
-            addClassActive: true,
-            loop: true,
-            nav: true,
-            navContainer: '.nav-block',
-            dotsContainer: '.dots-block'
-        })
-    }
-}
-
-function bonusSlider() {
-    if ($('.bonuses-listing').length > 0 && $(window).width() < 1080) {
-        var owl = $('.bonuses-listing');
-        owl.owlCarousel({
-            items: 1,
-            addClassActive: true,
-            loop: true,
-            nav: true,
-            navContainer: '.middle-block',
-            dotsContainer: '.nav-block',
-            navText: ''
-        })
-    }
-}
-
-function blockFilter() {
-    if ($('.block-filter select').length > 0) {
-        $('.block-filter select').select2({
-            minimumResultsForSearch: Infinity
-        });
-    }
-}
+	function animationInit() {
+		$('.reg-btn').each(function () {
+			$(this).click(function (e) {
+				// ga('send','pageview','/registr');
+				$('.reg-popup').addClass('active');
+				return false;
+			});
+		});
 
 
-$(document).ready(function () {
+
+		$('.account-btn').click(function(){
+			//alert(100);
+
+			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+			setTimeout(function(){
+				$('.simple-popup').removeClass('active');
+				$('.reg-popup').addClass('active');
+			}, 300);
+
+			return false
+		})
+
+		$('.login-btn').each(function(){
+			$(this).click(function(e){
+				// ga('send','pageview','/login');
+				$(".reg-popup").removeClass('active');
+				setTimeout(function(){
+					$('.log-popup').addClass('active');
+				},300);
+
+				return false;
+			});
+		});
+
+		// var ll;
+
+		$("#login").on("submit", function (e) {
+
+
+
+			let loginForm = $(this);
+
+			$(".loginError ").html('');
+			$(".errorMessage ").removeClass("showErrorMsg");
+			loginForm.find('input').removeClass("showErrorMsg");
+			
+			$.ajax({
+				method: 'post',
+				dataType: 'json',
+				url: '/login',
+				data: loginForm.serialize()
+			}).done(function (response) {
+
+				let resultLogin = response;
+
+				if(resultLogin.status == false){
+
+					loginForm.find('input').addClass("showErrorMsg");
+				
+					let loginResult = $(".loginError").addClass("showErrorMsg");
+					
+					// loginResult.html(resultLogin.message.errors);
+
+					let itemsError = resultLogin.message.errors;
+		
+					for(let i = 0; i < itemsError.length; i++){
+
+						loginResult.append($('<p>').html(itemsError[i]));
+						
+					}
+
+				}else{
+					window.location.reload();
+
+				}
+
+			}).fail(function(){
+
+				$(".loginError").html('There is some problem with your request');
+
+				$(".loginError").addClass("showErrorMsg");
+
+			});
+
+			return false;
+		});
+
+
+		$("#registr").on("submit", function () {
+
+			let regForm = $(this);
+
+			$(".registrError").html('');
+			$(".errorMessage").removeClass("showErrorMsg");
+			regForm.find('input').removeClass("showErrorMsg");
+
+			$.ajax({
+				method: 'post',
+				dataType: 'json',
+				url: '/register',
+				data: regForm.serialize()
+			}).done(function (response) {
+
+				let resultRegistr = response;
+
+				if (resultRegistr.status == false) {
+
+					regForm.find('input').addClass("showErrorMsg");
+
+					let registrResult = $(".registrError").addClass("showErrorMsg");
+					// registrResult.html(resultRegistr.message);
+
+					let itemsError = resultRegistr.message.errors;
+
+					for(let i = 0; i < itemsError.length; i++){
+						
+						// var item = $('<p>').html(itemsError[i]);
+						registrResult.append($('<p>').html(itemsError[i]));
+						
+					}
+
+					// registrResult.append(item);
+
+				} else{
+
+					window.location.reload();
+					
+				}
+			}).fail(function(){
+
+				$(".registrError").html('There is some problem with your request');
+				$(".registrError").addClass("showErrorMsg");
+
+			});
+			return false;
+		});
+
+		
+
+		/*
+		$('.promo-action-btn').each(function(){
+			$(this).click(function(e){
+				$('.simple-popup').addClass('active');
+				setTimeout(function(){
+					$('.simple-popup .popup-entry').addClass('active');
+				}, 300);
+				return false
+			})
+		})
+		*/
+		$('.page-content-container .btn-block.mobile .live-btn').click(function(){
+			$(this).toggleClass('active');
+			$('.page-content-navigation.mobile').slideToggle();
+			return false;
+		})
+		$('.simple-popup .close-icon').click(function(){
+			$('.popup-entry').removeClass('active');
+			setTimeout(function(){
+				$('.simple-popup').removeClass('active');
+			}, 300);
+		})
+		$('.simple-popup .close-button').click(function(){
+			$('.popup-entry').removeClass('active');
+			setTimeout(function(){
+				$('.simple-popup').removeClass('active');
+			}, 300);
+		})
+		// $("body").click(function(e){
+		// 	if($(e.target).parents('.mfp-wrap').length || ($(e.target).attr('class') && $(e.target).attr('class').indexOf('mfp-') == 0)) return;
+		//     $(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+		//     setTimeout(function(){
+		//         $('.simple-popup').removeClass('active');
+		//     }, 300);
+		// });
+
+		$(".close-icon").on("click", function(){
+			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+		});
+
+		$(".reg-popup .popup-container, .log-popup .popup-container, .simple-popup .popup-entry").click(function(e){
+			e.stopPropagation();
+		});
+		$('button.close-icon').click(function () {
+			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+		});
+		$(document).keydown(function(e) {
+			// ESCAPE key pressed
+			if (e.keyCode == 27) {
+				$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+				setTimeout(function(){
+					$('.simple-popup').removeClass('active');
+				}, 300);
+			}
+		});
+		$('.btn-history-block .open-history-link').click(function(){
+			$('.bottom-block').slideToggle();
+			return false;
+		})
+	}
+
+	function logOut() {
+		/*
+		$('.logout-btn').click(function(){
+			$('.header').removeClass('usr');
+		})
+		*/
+	}
+
+	function lettering() {
+		$('.word-split').each(function () {
+			// fix th lang on home page headers
+			if (($(this).html() == 'Casinobit') || ($('html').attr('lang') != 'th')) {
+				$(this).lettering();
+			}
+		})
+	}
+
+	function ParallaxSections() {
+		let lock = false
+		if ($(window).width() < 1080) {
+			lock = true
+		}
+		$('.sections-container').fullpage({
+			menu: '.sections-nav',
+			anchors: ['', 'blackjack', 'roulette', 'slots'],
+			responsiveWidth: 1080,
+			lockAnchors: lock,
+			afterLoad: function (origin, destination, direction) {
+				let event = new CustomEvent('sectionAfterLoad', {
+					detail: {origin: origin, destination: destination, direction: direction}
+				});
+				window.dispatchEvent(event);
+			}
+		});
+	}
+
+	function gamesSlider() {
+		if ($('.games-block').length > 0 && $(window).width() < 1080) {
+			var owl = $('.games-slider');
+			owl.owlCarousel({
+				items: 1,
+				addClassActive: true,
+				loop: true,
+				nav: true,
+				navContainer: '.nav-block',
+				dotsContainer: '.dots-block'
+			})
+		}
+	}
+
+	function bonusSlider() {
+		if ($('.bonuses-listing').length > 0 && $(window).width() < 1080) {
+			var owl = $('.bonuses-listing');
+			owl.owlCarousel({
+				items: 1,
+				addClassActive: true,
+				loop: true,
+				nav: true,
+				navContainer: '.middle-block',
+				dotsContainer: '.nav-block',
+				navText: ''
+			})
+		}
+	}
+
+	function blockFilter() {
+		if ($('.block-filter select').length > 0) {
+			$('.block-filter select').select2({
+				minimumResultsForSearch: Infinity
+			});
+		}
+	}
+
+
 
     $(window).on('sectionAfterLoad', function (event) {
         if ($(window).width() >= 1080) {
@@ -282,6 +398,22 @@ $(document).ready(function () {
 
 
 
+	let inputType = 1;
+
+
+	$('.showPasBtn').on("click", function(){
+
+		if(inputType == 0){
+			inputType = 1;
+			$(this).prev().attr('type', 'password');
+		}else{
+			inputType = 0;
+			$(this).prev().attr('type', 'text');
+		}
+
+	});
+
+
     $(window).on('scroll', function () {
 
         if ($(window).scrollTop() > 500) {
@@ -296,7 +428,7 @@ $(document).ready(function () {
 
     $(".toTop").on("click", function () {
         $("html").animate({scrollTop: 0}, 1000);
-    })
+    });
 
 
     // function bonusTerms() {
@@ -334,7 +466,7 @@ $(document).ready(function () {
     //
     // });
 
-});
+
 
 
 // let pageCount = location.href;
@@ -363,3 +495,5 @@ $(document).ready(function () {
 // }
 //
 // preloader();
+
+});
