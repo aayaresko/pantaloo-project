@@ -1438,14 +1438,14 @@ html.cropped {
   border-radius: 19px;
   -webkit-border-radius: 19px;
   -moz-border-radius: 19px;
-  background-color: rgba(0, 0, 0, 0.7);
-  overflow: hidden;
+  /* background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden; */
   padding-top: 23px;
   padding-bottom: 55px;
   max-width: 160px;
   width: 100%;
   left: 10%;
-  bottom: 20%;
+  bottom: 18%;
   text-align: center;
   z-index: 99999;
 }
@@ -1475,16 +1475,16 @@ html.cropped {
   display: block;
   position: absolute;
   bottom: 0;
-  background: url("../media/images/bg/reg-btn-2.png") center no-repeat;
-  background-size: cover;
+  /* background: url("../media/images/bg/reg-btn-2.png") center no-repeat;
+  background-size: cover; */
   width: 100%;
   padding: 12px 0;
   font-family: 'MyriadPro-Bold', arial, sans-serif;
   font-size: 19px;
   left: 0;
   color: #fff;
-  z-index: 99999;
-  height: 44px;
+  z-index: 999999999;
+  /* height: 44px; */
   text-transform: uppercase;
   -webkit-transition: 0.2s linear;
   -moz-transition: 0.2s linear;
@@ -1493,10 +1493,13 @@ html.cropped {
   transition: 0.2s linear;
   text-decoration: none;
 }
-/* line 148, ../scss/_middle.scss */
-.msg-popup .registration-btn:hover {
-  opacity: .8;
+.msg-popup .registration-btn > img {
+  max-height: 170px;
 }
+/* line 148, ../scss/_middle.scss */
+/* .msg-popup .registration-btn:hover {
+  opacity: .8;
+} */
 
 /* line 153, ../scss/_middle.scss */
 .side-name {
@@ -4707,7 +4710,10 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-align: center;
   /*padding-right: 10%;*/
   margin-bottom: 30px;
-  position: relative;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 9;
 }
 /* line 64, ../scss/_footer.scss */
@@ -6152,7 +6158,7 @@ font-family: 'MyriadPro-BoldCond', sans-serif;
   /* line 115, ../scss/_responsive.scss */
   body .msg-popup .registration-btn {
     padding: 10px 0;
-    height: 34px;
+    /* height: 34px; */
     font-size: 14px;
   }
   /* line 121, ../scss/_responsive.scss */

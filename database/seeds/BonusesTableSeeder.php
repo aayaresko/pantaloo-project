@@ -65,7 +65,7 @@ class BonusesTableSeeder extends Seeder
                 'rating' => 3,
                 'extra' => json_encode([
                     'mainPicture' => '/assets/images/bonuses/promo-2-bg-min.jpg',
-                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-2-box.jpg'
+                    'additionalPicture' => '/assets/images/bonuses/bonus-block-110_en.png'
                 ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
@@ -78,7 +78,7 @@ class BonusesTableSeeder extends Seeder
                 'rating' => 2,
                 'extra' => json_encode([
                     'mainPicture' => '/assets/images/bonuses/promo-3-bg-min.jpg',
-                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-3-box.jpg'
+                    'additionalPicture' => '/assets/images/bonuses/bonus-block-80_en.png'
                 ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
@@ -91,7 +91,7 @@ class BonusesTableSeeder extends Seeder
                 'rating' => 1,
                 'extra' => json_encode([
                     'mainPicture' => '/assets/images/bonuses/promo-4-bg-min.jpg',
-                    'additionalPicture' => '/assets/images/bonuses/bonus-blok-4-box.jpg'
+                    'additionalPicture' => '/assets/images/bonuses/bonus-block-55_en.png'
                 ]),
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
