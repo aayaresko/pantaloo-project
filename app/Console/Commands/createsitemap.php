@@ -145,8 +145,7 @@ class createSitemap extends Command
             $sitemap->add(URL::to('/en/games'), date('Y-m-dTH:i:sP', time()), '0.7', 'daily', [], null, $translationsGames);
             $sitemap->add(URL::to('/en/faq'), date('Y-m-dTH:i:sP', time()),'0.3', 'monthly', [], null, $translationsFaq);
             $sitemap->add(URL::to('/en/bonuses'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsBonuses);
-            $sitemap->add(URL::to('/en/password/forgot'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordForgot);
-            $sitemap->add(URL::to('/en/password/email'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null, $translationsPasswordEmail);
+            
         }
 
          $sitemap->store('xml', 'sitemap');
