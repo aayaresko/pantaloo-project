@@ -261,6 +261,15 @@ class MoneyController extends Controller
         $userId = $user->id;
         $minConfirmBtc = config('appAdditional.minConfirmBtc');
 
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => config('appAdditional.rawLogKey.withdraw'),
+            'user_id' => $userId,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date,
+        ]);
+
+
         //check bonus
         if ($user->bonus_id) {
             $class = BonusHelper::getClass($user->bonus_id);
@@ -277,14 +286,6 @@ class MoneyController extends Controller
 
         //action
         try {
-            $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
-                'type_id' => config('appAdditional.rawLogKey.withdraw'),
-                'user_id' => $userId,
-                'request' => GeneralHelper::fullRequest(),
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
             //check bonus
             if ($user->bonuses()->first()) {
                 $errors = ['Bonus is active'];
@@ -323,13 +324,14 @@ class MoneyController extends Controller
                 throw new \Exception('validation');
             }
 
-            $service = new Service();
 
             if ($request->input('sum') < 1) {
                 $errors = ['Minimum sum is 1'];
                 throw new \Exception('minimum_sum_is');
             }
 
+
+            $service = new Service();
             if (!$service->isValidAddress($request->input('address'))) {
                 $errors = ['Invalid bitcoin address'];
                 throw new \Exception('invalid_address');
@@ -411,60 +413,7 @@ class MoneyController extends Controller
             ->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
     }
 
-    public function transfers(Request $request)
-    {
-        try {
-            $start = Carbon::createFromFormat('Y-m-d', $request->input('start'));
-        } catch (\Exception $e) {
-            $start = Carbon::now();
-        }
-
-        $start->setTime(0, 0, 0);
-
-        try {
-            $end = Carbon::createFromFormat('Y-m-d', $request->input('end'));
-        } catch (\Exception $e) {
-            $end = Carbon::now();
-        }
-
-        $end->setTime(23, 59, 59);
-
-        $transfers = Transaction::whereIn('type', [3, 4]);
-
-        $deposits = Transaction::deposits();
-        $withdraws = Transaction::withdraws();
-
-        if ($start) {
-            $transfers = $transfers->where('created_at', '>=', $start);
-            $deposits = $deposits->where('created_at', '>=', $start);
-            $withdraws = $withdraws->where('created_at', '>=', $start);
-        }
-
-        if ($end) {
-            $transfers = $transfers->where('created_at', '<=', $end);
-            $deposits = $deposits->where('created_at', '<=', $end);
-            $withdraws = $withdraws->where('created_at', '<=', $end);
-        }
-
-        $deposit_sum = $deposits->sum('sum');
-        $withdraw_sum = $withdraws->sum('sum');
-        $transfers = $transfers->orderBy('id', 'DESC')->paginate(15);
-
-        $pending_sum = $withdraws->where('withdraw_status', 0)->sum('sum');
-
-        return view('admin.transfers', [
-            'transfers' => $transfers,
-            'deposit_sum' => $deposit_sum,
-            'withdraw_sum' => $withdraw_sum,
-            'pending_sum' => $pending_sum
-        ]);
-    }
-
-    public function stat(Request $request)
-    {
-    }
-
-    public function aprove(Transaction $transaction)
+    public function approve(Transaction $transaction)
     {
         if ($transaction->type == 4 and $transaction->withdraw_status == 0) {
             $transaction->withdraw_status = 3;
@@ -537,6 +486,62 @@ class MoneyController extends Controller
             'aproved' => $aproved,
             'queue' => $queue
         ]);
+    }
+
+
+    //to do,  methods below - maybe deprecated
+
+    public function transfers(Request $request)
+    {
+        try {
+            $start = Carbon::createFromFormat('Y-m-d', $request->input('start'));
+        } catch (\Exception $e) {
+            $start = Carbon::now();
+        }
+
+        $start->setTime(0, 0, 0);
+
+        try {
+            $end = Carbon::createFromFormat('Y-m-d', $request->input('end'));
+        } catch (\Exception $e) {
+            $end = Carbon::now();
+        }
+
+        $end->setTime(23, 59, 59);
+
+        $transfers = Transaction::whereIn('type', [3, 4]);
+
+        $deposits = Transaction::deposits();
+        $withdraws = Transaction::withdraws();
+
+        if ($start) {
+            $transfers = $transfers->where('created_at', '>=', $start);
+            $deposits = $deposits->where('created_at', '>=', $start);
+            $withdraws = $withdraws->where('created_at', '>=', $start);
+        }
+
+        if ($end) {
+            $transfers = $transfers->where('created_at', '<=', $end);
+            $deposits = $deposits->where('created_at', '<=', $end);
+            $withdraws = $withdraws->where('created_at', '<=', $end);
+        }
+
+        $deposit_sum = $deposits->sum('sum');
+        $withdraw_sum = $withdraws->sum('sum');
+        $transfers = $transfers->orderBy('id', 'DESC')->paginate(15);
+
+        $pending_sum = $withdraws->where('withdraw_status', 0)->sum('sum');
+
+        return view('admin.transfers', [
+            'transfers' => $transfers,
+            'deposit_sum' => $deposit_sum,
+            'withdraw_sum' => $withdraw_sum,
+            'pending_sum' => $pending_sum
+        ]);
+    }
+
+    public function stat(Request $request)
+    {
     }
 
     /**

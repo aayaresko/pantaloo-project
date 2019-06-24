@@ -230,7 +230,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
                 Route::get('/pending', ['as' => 'pending', 'uses' => 'MoneyController@pending']);
 
-                Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@aprove']);
+                Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'freeze', 'uses' => 'MoneyController@freeze']);
                 Route::get('/transaction/{transaction}/unfreeze', ['as' => 'unfreeze', 'uses' => 'MoneyController@unfreeze']);
                 Route::get('/transaction/{transaction}/cancel', ['as' => 'cancel', 'uses' => 'MoneyController@cancel']);
