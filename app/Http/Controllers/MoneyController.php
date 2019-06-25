@@ -463,11 +463,11 @@ class MoneyController extends Controller
             $checkTransaction = Transaction::where('user_id', $user->id)
                 ->where('type', 4)
                 ->where(DB::raw("MD5(concat(id, '$keyApp', $userId))"), $request->link)->first();
-            dump($checkTransaction);
+
             //to do use $checkWithdraw
             if (is_null($checkTransaction)) {
                 $errors = ['Some is wrong. Hash'];
-                throw new \Exception('no_user');
+                throw new \Exception('problem_hash');
             }
 
             //edit status transactions and withdraw
