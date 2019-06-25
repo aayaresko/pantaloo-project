@@ -375,6 +375,18 @@ class UserAccountController extends Controller
         }])->orderBy('rating', 'desc')->get();
 
         $bonusForView = [];
+
+        //get only availiable bonus
+        foreach ($bonuses as $key => $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+            if (!$bonusAvailable) {
+                unset($bonuses[$key]);
+            }
+        }
+
+        //get status bonuses
         foreach ($bonuses as $bonus) {
             $bonusClass = BonusHelper::getClass($bonus->id);
             $bonusObject = new $bonusClass($user);
