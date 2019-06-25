@@ -11,7 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'sum', 'agent_id', 'agent_commission', 'type', 'user_id',
-        'round_id', 'comment', 'bonus_sum', 'ext_id', 'confirmations',
+        'round_id', 'comment', 'bonus_sum', 'ext_id', 'confirmations', 'withdraw_status',
     ];
 
     public function scopeDeposits($query)
