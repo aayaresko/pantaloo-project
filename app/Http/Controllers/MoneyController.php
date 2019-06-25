@@ -347,7 +347,7 @@ class MoneyController extends Controller
 
             DB::beginTransaction();
 
-            $actualUser = User::select(['id'])
+            $actualUser = User::select(['id', 'balance'])
                 ->where('id', $user->id)->lockForUpdate()->first();
 
             if ((float)$actualUser->balance < abs($sum)) {
