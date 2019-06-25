@@ -156,7 +156,8 @@ class MoneyController extends Controller
                 'realBalance' => $user->balance,
                 'balance' => $user->getBalance(),
                 'deposit' => $sum,
-                'depositId' => $notificationTransactionDeposit ? $notificationTransactionDeposit->id : false,
+                'depositId' => isset($extraSystemNotification) && isset($extraSystemNotification->transactionId) ? $extraSystemNotification->transactionId : false,
+                'depositComment' => isset($extraSystemNotification) && isset($extraSystemNotification->comment) ? $extraSystemNotification->comment : false,
                 'free_spins' => $user->free_spins,
                 'balance_info' => [
                     'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
