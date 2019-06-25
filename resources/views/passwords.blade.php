@@ -100,7 +100,7 @@
                                 @if($user->isConfirmed())
                                     <!-- Email confirmed -->
                                         <div class="emailWrapper confirmd">
-                                            ivanov.alexander@gmail.com
+                                            {{ $user->email }}
                                         </div>
 
                                         <p class="emailConfInfo">
