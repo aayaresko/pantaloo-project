@@ -4,9 +4,6 @@ let globalTable;
 let optionsDefault = {};
 let options = JSON.parse(JSON.stringify(optionsDefault));
 
-function setOptions() {
-    options.type_id = $('select[name="type_id"]').val();
-}
 
 function initDataTable() {
     //destroy
@@ -54,10 +51,32 @@ $(function () {
 });
 
 
-$('.selectpicker').change(function () {
-    setOptions();
+$('.selectType').change(function () {
+    options.type_id = $('select[name="type_id"]').val();
     initDataTable();
 });
+
+$('.selectCategory').change(function () {
+    options.category_id = $('select[name="category_id"]').val();
+    initDataTable();
+});
+
+$('.selectProvider').change(function () {
+    options.provider_id = $('select[name="provider_id"]').val();
+    initDataTable();
+});
+
+
+$('.selectMobile').change(function () {
+    options.mobile = $('select[name="mobile"]').val();
+    initDataTable();
+});
+
+$('.selectActive').change(function () {
+    options.active = $('select[name="active"]').val();
+    initDataTable();
+});
+
 $(document).ready(function () {
     //something
 });

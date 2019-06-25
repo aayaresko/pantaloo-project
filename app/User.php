@@ -562,4 +562,19 @@ class User extends Authenticatable
 
         return -$totalProfit;
     }
+
+    //
+    public function totalRevenue($from = false, $to = false)
+    {
+        $prepareQuerry = $this->benefits();
+        if ($from) {
+            $prepareQuerry->where('created_at', '>=', $from);
+        }
+        if ($to) {
+            $prepareQuerry->where('created_at', '<', $to);
+        }
+        $totalProfit = $prepareQuerry->sum('total_sum');
+
+        return -$totalProfit;
+    }
 }

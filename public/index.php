@@ -9,6 +9,13 @@
 
 define('LARAVEL_START', microtime(true));
 
+if (class_exists('Tideways\Profiler')) {
+    \Tideways\Profiler::start(array(
+        'api_key' => 'ax7nY1aXZ7rGSNUL',
+        'sample_rate' => 25,
+    ));
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

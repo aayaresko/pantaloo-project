@@ -16,7 +16,8 @@
                             <br>
                             <form method="POST" action="">
                                 {{csrf_field()}}
-                                <h4>Bitcoin Address</h4> <input type="text" class="form-control" name="address" style="width:400px;">
+                                <h4>Bitcoin Address</h4> <input type="text" class="form-control" name="address"
+                                                                style="width:400px;">
                                 <br>
                                 <input type="submit" name="withdraw" value="Withdraw" class="btn btn-primary">
                             </form>
@@ -25,9 +26,17 @@
 
                             @if(count($payments) > 0)
                                 <table class="table table-hover">
-                                    <tr><th>Date</th><th>Sum, mBtc</th><th>Status</th></tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Sum, mBtc</th>
+                                        <th>Status</th>
+                                    </tr>
                                     @foreach($payments as $payment)
-                                        <tr><td>{{$payment->created_at->format('d M Y H:i')}}</td><td>{{$payment->sum}}</td><td>{!! $payment->getStatus() !!}</td></tr>
+                                        <tr>
+                                            <td>{{$payment->created_at->format(trans('dateformat.date_format'))}}</td>
+                                            <td>{{$payment->sum}}</td>
+                                            <td>{!! $payment->getStatus() !!}</td>
+                                        </tr>
                                     @endforeach
                                 </table>
                             @else

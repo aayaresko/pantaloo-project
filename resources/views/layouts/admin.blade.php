@@ -229,11 +229,16 @@
                         </li>
 
                         <li>
+                            <a href="{{route('globalAffiliates.settings')}}" class="waves-effect"><i class="fa fa-bank"></i> <span> Settings </span> </a>
+
+
+                        <li>
                             <a href="{{route('globalAffiliates.users')}}" class="waves-effect"><i class="fa fa-users"></i> <span> Users </span> </a>
                         </li>
 
                         <li>
                             <a href="{{route('admin.agents.tree')}}" class="waves-effect"><i class="fa fa-tree"></i> <span> Tree </span> </a>
+
                         </li>
                     @endcan
 

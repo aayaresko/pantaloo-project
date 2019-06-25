@@ -94,11 +94,18 @@ task('copy_env', function () {
 
 before('deploy:vendors', 'copy_env');
 
-task('reload:php-fpm', function () {
+task('reload:php7.1-fpm', function () {
     run('sudo /usr/sbin/service php7.1-fpm reload');
+});
+
+task('reload:php7.3-fpm', function () {
+    run('sudo /usr/sbin/service php7.3-fpm reload');
 });
 
 before('deploy:symlink', 'deploy:public_disk');
 
-task('reload:php-fpm')->onHosts('STAGE');
-after('deploy', 'reload:php-fpm');
+task('reload:php7.1-fpm')->onHosts('STAGE');
+task('reload:php7.3-fpm')->onHosts('PROD');
+
+after('deploy', 'reload:php7.1-fpm');
+after('deploy', 'reload:php7.3-fpm');
