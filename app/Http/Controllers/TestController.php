@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Helpers\IntercomHelper;
+use Illuminate\Support\Facades\Cache;
 use Log;
 use Auth;
 use Cookie;
@@ -46,15 +47,10 @@ class TestController extends Controller
 
     public function phpinfo(Request $request)
     {
+        $key = '/memcq=1';
+        dump(Cache::store('memcached')->get($key));
+        Cache::store('memcached')->put($key, time(), 600); // 10 Minutes
         dd(GeneralHelper::visitorIpCloudFlare());
-        dump(IntercomHelper::getIntercomConfigByCountryCode('TH'));
-        if (\Illuminate\Support\Facades\Auth::check()) {
-            dump(IntercomHelper::getIntercomConfigByUser(\Illuminate\Support\Facades\Auth::user()));
-        }
-        dump(IntercomHelper::getIntercomConfig(\Illuminate\Support\Facades\Auth::user()));
-
-        //dump($request->getClientIps());
-        //phpinfo();
         exit();
     }
 
