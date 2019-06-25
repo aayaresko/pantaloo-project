@@ -55,6 +55,16 @@ class AffiliatesController extends Controller
         $user = $request->user();
         $trackersFileds = ['id', 'ref', 'name', 'campaign_link'];
         $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
+        if (!$trackers->count()) {
+            $ref = Str::random(12);
+            $newTracker = new Tracker();
+            $newTracker->user_id = $user->id;
+            $newTracker->name = 'default';
+            $newTracker->campaign_link = config('partner.main_url');
+            $newTracker->ref = $ref;
+            $newTracker->save();
+            $trackers = Tracker::select($trackersFileds)->where('user_id', $user->id)->get();
+        }
 
         $configPartner = config('partner');
         $necessaryAddress = config('app.foreignPages.main');
@@ -69,15 +79,6 @@ class AffiliatesController extends Controller
 
             $tracker->fullLink = sprintf('%s?%s=%s', $tracker->campaign_linkFull,
                 $configPartner['keyLink'], $tracker->ref);
-        }
-        if (!$ref) {
-            $ref = Str::random(12);
-            $newTracker = new Tracker();
-            $newTracker->user_id = $user->id;
-            $newTracker->name = 'default';
-            $newTracker->campaign_link = config('partner.main_url');
-            $newTracker->ref = $ref;
-            $newTracker->save();
         }
 
         return view('affiliates.trackers', [
