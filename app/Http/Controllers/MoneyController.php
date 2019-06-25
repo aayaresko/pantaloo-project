@@ -330,10 +330,12 @@ class MoneyController extends Controller
                 throw new \Exception('minimum_sum_is');
             }
 
-            $service = new Service();
-            if (!$service->isValidAddress($request->input('address'))) {
-                $errors = ['Invalid bitcoin address'];
-                throw new \Exception('invalid_address');
+            if (!GeneralHelper::isTestMode()) {
+                $service = new Service();
+                if (!$service->isValidAddress($request->input('address'))) {
+                    $errors = ['Invalid bitcoin address'];
+                    throw new \Exception('invalid_address');
+                }
             }
 
             $sum = $request->input('sum');
@@ -401,6 +403,7 @@ class MoneyController extends Controller
             //to do check withdraw only************future
             //$link = md5($withdraw->id . config('app.key') . $withdraw->user_id);
             $link = md5($transaction->id . config('app.key') . $transaction->user_id);
+
             $mail = new BaseMailable('emails.confirm_withdraw',
                 ['link' => sprintf('%s/%s?link=%s&email=%s', url('/'), 'withdrawActivation', $link, $user->email)]);
             $mail->subject('Confirm email');
