@@ -743,7 +743,8 @@
                         let event = new CustomEvent('depositEvent', {
                             detail: {
                                 id: data.depositId,
-                                revenu: Math.round(data.deposit)
+                                revenu: Math.round(data.deposit),
+                                comment: data.depositComment
                             }
                         });
                         window.dispatchEvent(event);
