@@ -208,15 +208,23 @@ class MoneyController extends Controller
         return redirect()->back()->with('msg', 'Bitcoins was send!<br><br>Transaction id: ' . $data);
     }
 
-    public function newTransactions($transaction_id)
+    public function newTransactions(Request $request, $transaction_id)
     {
+        //temporary
+        $lang = $request->cookie('langs');
+        $languages = \Helpers\GeneralHelper::getListLanguage();
+        if (in_array($lang, $languages)) {
+            app()->setLocale($lang);
+        }
+        //temporary
+
         $result = [];
 
         $transactions = Auth::user()->transactions()->where('type', 3)->where('id', '>', $transaction_id)->orderBy('id', 'Desc')->get();
 
         return response()->json($transactions->map(function ($item) {
             return [
-                'date' => $item->created_at->format('d M Y H:i'),
+                'date' => $item->created_at->format(trans('date.action_deposit')),
                 'id' => $item->id,
                 'status' => $item->getStatus(),
                 'amount' => $item->getSum(),
@@ -224,15 +232,23 @@ class MoneyController extends Controller
         }));
     }
 
-    public function allTransactions()
+    public function allTransactions(Request $request)
     {
+        //temporary
+        $lang = $request->cookie('langs');
+        $languages = \Helpers\GeneralHelper::getListLanguage();
+        if (in_array($lang, $languages)) {
+            app()->setLocale($lang);
+        }
+        //temporary
+
         $result = [];
 
         $transactions = Auth::user()->transactions()->where('type', 3)->orderBy('id', 'Desc')->limit(10)->get();
 
         return response()->json($transactions->map(function ($item) {
             return [
-                'date' => $item->created_at->format('d M Y H:i'),
+                'date' => $item->created_at->format(trans('date.action_deposit')),
                 'id' => $item->id,
                 'status' => $item->getStatus(),
                 'amount' => $item->getSum(),

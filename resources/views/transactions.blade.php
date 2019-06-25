@@ -11,10 +11,10 @@
         <tbody>
         @foreach($transactions as $transaction)
             <tr id="txid_{{$transaction->id}}">
-                <td>{{$transaction->created_at->format(trans('dateformat.date_format'))}}</td>
+                <td>{{$transaction->created_at->format(trans('date.action_deposit'))}}</td>
                 <td>{{$transaction->id}}</td>
                 <td>{{translate($transaction->getStatus())}}</td>
-                <td>{{$transaction->getSum()}}</td>А
+                <td>{{$transaction->getSum()}}</td>
             </tr>
         @endforeach
         </tbody>
