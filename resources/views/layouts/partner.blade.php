@@ -23,7 +23,7 @@
 
     <!-- Stylesheet
         ================================================== -->
-    <link rel="stylesheet" type="text/css" href="/partner/css/style.css?v=996737">
+    <link rel="stylesheet" type="text/css" href="/partner/css/style.css?v=996739">
     <link rel="stylesheet" type="text/css" href="/partner/css/nivo-lightbox/nivo-lightbox.css">
     <link rel="stylesheet" type="text/css" href="/partner/css/nivo-lightbox/default.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -45,7 +45,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand page-scroll" href="/" style="padding: 0 !important;"><img src="/partner/img/logo-affiliate-casinobit.png" style="width: 230px; height: auto;" /></a> </div>
+            <a class="navbar-brand page-scroll" href="/" style="padding: 0 !important;"><img src="/partner/img/casinobit_partners_logo_black.svg" style="width: 190px; height: auto;" /></a> </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,8 +61,10 @@
                 <li><a href="#advantages" class="page-scroll">Advantages</a></li>
                 <!--li><a href="#commissions" class="page-scroll">Commissions Structure</a></li-->
                 <li><a href="#contact" class="page-scroll">Contact</a></li>
-                <button class="btn btn-custom btn-lg page-scroll" data-toggle="modal" data-target="#myModal" style="margin-top: 13px;padding: 5px 15px;">Login</button>
-                <button class="btn btn-custom btn-lg page-scroll" data-toggle="modal" data-target="#myModal2" style="margin-top: 13px;padding: 5px 15px;background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);">Register</button>
+                <li>
+                <button class="btn btn-custom btn-lg page-scroll loginBtn" data-toggle="modal" data-target="#myModal">Login</button>
+                <button class="btn btn-custom btn-lg page-scroll" data-toggle="modal" data-target="#myModal2" style="background-image: linear-gradient(to right, #fbb05c 0%, #ff6963 100%);">Register</button>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -74,7 +76,7 @@
 <!-- Footer Section -->
 <div id="footer">
     <div class="container text-center">
-        <p>&copy; 2018 CasinoBit Affiliates. Design by <a href="https://partners.casinobit.io" rel="nofollow">US</a></p>
+        <p>&copy;2018-2019 CasinoBit Affiliates. Design by <a href="https://casinobit.io" rel="nofollow">CasinoBit</a></p>
     </div>
 </div>
 <!-- Modal -->

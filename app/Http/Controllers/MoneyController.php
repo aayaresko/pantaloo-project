@@ -52,9 +52,11 @@ class MoneyController extends Controller
 
     public function balance(Request $request, $email)
     {
+        $request->session()->reflash();
+
         try {
             //to do universal way define user to DO
-            $sessionId = $_COOKIE['laravel_session'];
+            //$sessionId = $_COOKIE['casinobit_session'];
             $sessionLeftTime = config('session.lifetime');
             $sessionLeftTimeSecond = $sessionLeftTime * 60;
 
@@ -63,19 +65,19 @@ class MoneyController extends Controller
 
             //to do this - fix this = use universal way for get sessino user
             //select nesessary fields
-            $user = User::select(['users.*', 's.id as session_id'])
-                ->join('sessions as s', 's.user_id', '=', 'users.id')
-                ->where('users.email', $email)
-                ->where('s.id', $sessionId)
-                ->where('s.last_activity', '>=', $minimumAllowedActivity)
-                ->first();
+//            $user = User::select(['users.*', 's.id as session_id'])
+//                ->join('sessions as s', 's.user_id', '=', 'users.id')
+//                ->where('users.email', $email)
+//                ->where('s.id', $sessionId)
+//                ->where('s.last_activity', '>=', $minimumAllowedActivity)
+//                ->first();
 
-            if (is_null($user) or is_null($user->session_id)) {
-                return response()->json([
-                    'status' => false,
-                    'messages' => ['User or session is not found'],
-                ]);
-            }
+//            if (is_null($user) or is_null($user->session_id)) {
+//                return response()->json([
+//                    'status' => false,
+//                    'messages' => ['User or session is not found'],
+//                ]);
+//            }
 
 //        $sessionUser = DB::table('sessions')
 //            ->where('id', $sessionId)
@@ -89,6 +91,15 @@ class MoneyController extends Controller
                     'messages' => ['User or session is not found'],
                 ]);
             }*/
+
+            $user = Auth::check() ? Auth::user() : null;
+
+            if (is_null($user)) {
+                return response()->json([
+                    'status' => false,
+                    'messages' => ['User or session is not found'],
+                ]);
+            }
 
             //to do once in 10 seconds and use other table for notifications
 

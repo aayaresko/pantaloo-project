@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Helpers\IntercomHelper;
+use Illuminate\Support\Facades\Cache;
 use Log;
 use Auth;
 use Cookie;
@@ -45,8 +47,10 @@ class TestController extends Controller
 
     public function phpinfo(Request $request)
     {
-        dump($request->getClientIps());
-        //phpinfo();
+        $key = '/memcq=1';
+        dump(Cache::store('memcached')->get($key));
+        Cache::store('memcached')->put($key, time(), 600); // 10 Minutes
+        dd(GeneralHelper::visitorIpCloudFlare());
         exit();
     }
 
@@ -75,7 +79,7 @@ class TestController extends Controller
         throw new \Exception('FDSF');
         dd(config('app.debu1g'));
         //dd('appAdditional.rawLogKey.freeSpins' . 1);
-        dd(config('appAdditional.rawLogKey.freeSpins'. 1));
+        dd(config('appAdditional.rawLogKey.freeSpins' . 1));
         dd(config('appAdditional.rawLogKey.bonuses'));
         $user = User::where('id', 136)->first();
 
@@ -181,7 +185,7 @@ class TestController extends Controller
 
         $request = new Request;
         $date = Carbon::now();
-        $date->modify('+'. 10 .'days');
+        $date->modify('+' . 10 . 'days');
 
         $bonusUser = UserBonus::create([
             'user_id' => $user->id,
@@ -288,12 +292,12 @@ class TestController extends Controller
         $gameIdOur = 77777;
         $user = User::where('id', 4689)->first();
 
-        if (! is_null($user->bonus_id)) {
+        if (!is_null($user->bonus_id)) {
             $userBonus = UserBonus::where('user_id', $user->id)->first();
 
             $userBonusData = $userBonus->data;
             //if no game free round
-            if (! isset($userBonusData['firstGame'])) {
+            if (!isset($userBonusData['firstGame'])) {
                 //set this game
                 $userBonusData['firstGame'] = $gameIdOur;
                 UserBonus::where('user_id', $user->id)->update([
@@ -353,7 +357,7 @@ class TestController extends Controller
         $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
         $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
         $client = new Client(['timeout' => 5]);
-        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl.'/'.$ipQualityScoreKey.'/'.'2a02:2788:c8:a63:9d65:9cce:fdad:703c');
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . '2a02:2788:c8:a63:9d65:9cce:fdad:703c');
         $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
         dd(GeneralHelper::visitorIpCloudFlare());
@@ -364,14 +368,14 @@ class TestController extends Controller
         $date = new \DateTime();
 
         $rawId = DB::connection('logs')->table('games_pantallo_free_rounds')->insertGetId([
-                    'user_id' => 13333,
-                    'round' => 50,
-                    'valid_to' => $date,
-                    'created' => 0, //fake
-                    'free_round_id' => time(), //fake
-                    'created_at' => $date,
-                    'updated_at' => $date,
-                ]);
+            'user_id' => 13333,
+            'round' => 50,
+            'valid_to' => $date,
+            'created' => 0, //fake
+            'free_round_id' => time(), //fake
+            'created_at' => $date,
+            'updated_at' => $date,
+        ]);
 
         dd($rawId);
         $a = DB::connection('logs')->table('games_pantallo_free_rounds')
@@ -383,7 +387,7 @@ class TestController extends Controller
         $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
 
         $client = new Client(['timeout' => 5]);
-        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl.'/'.$ipQualityScoreKey.'/'.$ipCurrent);
+        $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $ipCurrent);
         $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
 
         if (isset($responseIpQualityJson['success'])) {
@@ -429,183 +433,183 @@ class TestController extends Controller
 
         $userOffice = [
             2532,
-2528,
-2520,
-2518,
-2516,
-2515,
-2514,
-2512,
-2501,
-2500,
-2499,
-2494,
-2493,
-2491,
-2489,
-2488,
-2486,
-2484,
-2483,
-2480,
-2479,
-2477,
-2476,
-2474,
-2473,
-2472,
-2471,
-2470,
-2468,
-2467,
-2466,
-2465,
-2456,
-2451,
-2446,
-2445,
-2444,
-2443,
-2442,
-2441,
-2438,
-2399,
-1162,
-1055,
-1041,
-1031,
-1024,
-1021,
-1011,
-1007,
-998,
-975,
-971,
-456,
-442,
-432,
-427,
-402,
-379,
-376,
-372,
-370,
-368,
-366,
-365,
-345,
-332,
-328,
-323,
-318,
-308,
-307,
-306,
-44,
-2411,
-348,
-349,
-350,
-351,
-352,
-353,
-354,
-359,
-361,
-362,
-363,
-364,
-367,
-369,
-371,
-373,
-374,
-375,
-377,
-378,
-380,
-381,
-382,
-383,
-384,
-385,
-386,
-387,
-330,
-319,
-2426,
-2428,
-389,
-390,
-391,
-394,
-396,
-398,
-399,
-405,
-338,
-340,
-341,
-342,
-343,
-344,
-346,
-256,
-257,
-258,
-259,
-260,
-261,
-264,
-275,
-276,
-277,
-278,
-281,
-282,
-283,
-284,
-285,
-286,
-287,
-288,
-289,
-290,
-292,
-293,
-294,
-295,
-296,
-299,
-162,
-167,
-169,
-214,
-215,
-219,
-220,
-222,
-224,
-240,
-241,
-242,
-243,
-244,
-247,
-248,
-249,
-250,
-251,
-252,
-253,
-254,
-38,
-39,
-40,
-41,
-42,
-64,
-85, 136, 146, 956,
+            2528,
+            2520,
+            2518,
+            2516,
+            2515,
+            2514,
+            2512,
+            2501,
+            2500,
+            2499,
+            2494,
+            2493,
+            2491,
+            2489,
+            2488,
+            2486,
+            2484,
+            2483,
+            2480,
+            2479,
+            2477,
+            2476,
+            2474,
+            2473,
+            2472,
+            2471,
+            2470,
+            2468,
+            2467,
+            2466,
+            2465,
+            2456,
+            2451,
+            2446,
+            2445,
+            2444,
+            2443,
+            2442,
+            2441,
+            2438,
+            2399,
+            1162,
+            1055,
+            1041,
+            1031,
+            1024,
+            1021,
+            1011,
+            1007,
+            998,
+            975,
+            971,
+            456,
+            442,
+            432,
+            427,
+            402,
+            379,
+            376,
+            372,
+            370,
+            368,
+            366,
+            365,
+            345,
+            332,
+            328,
+            323,
+            318,
+            308,
+            307,
+            306,
+            44,
+            2411,
+            348,
+            349,
+            350,
+            351,
+            352,
+            353,
+            354,
+            359,
+            361,
+            362,
+            363,
+            364,
+            367,
+            369,
+            371,
+            373,
+            374,
+            375,
+            377,
+            378,
+            380,
+            381,
+            382,
+            383,
+            384,
+            385,
+            386,
+            387,
+            330,
+            319,
+            2426,
+            2428,
+            389,
+            390,
+            391,
+            394,
+            396,
+            398,
+            399,
+            405,
+            338,
+            340,
+            341,
+            342,
+            343,
+            344,
+            346,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            264,
+            275,
+            276,
+            277,
+            278,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287,
+            288,
+            289,
+            290,
+            292,
+            293,
+            294,
+            295,
+            296,
+            299,
+            162,
+            167,
+            169,
+            214,
+            215,
+            219,
+            220,
+            222,
+            224,
+            240,
+            241,
+            242,
+            243,
+            244,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            38,
+            39,
+            40,
+            41,
+            42,
+            64,
+            85, 136, 146, 956,
         ];
         $startDate = '2019-04-01 00:00:00';
         $endDate = '2019-04-30 00:00:00';
@@ -836,13 +840,13 @@ class TestController extends Controller
         $lastTransaction = Transaction::where('sum', 0)
             ->where(function ($query) {
                 $query->where('transactions.sum', '<>', 0)
-                ->orWhere('transactions.bonus_sum', '<>', 0);
+                    ->orWhere('transactions.bonus_sum', '<>', 0);
             })->first();
 
         $lastTransaction->sum = -2;
         dump($lastTransaction->toArray());
 
-        if (! is_null($lastTransaction)) {
+        if (!is_null($lastTransaction)) {
             //to do! fix this
             $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
@@ -861,7 +865,7 @@ class TestController extends Controller
 
         $modePlay = 1;
         $amount = -5;
-        $transactionHas = (object) ['sum' => 10, 'bonus_sum' => 2];
+        $transactionHas = (object)['sum' => 10, 'bonus_sum' => 2];
 
         if ($modePlay === 0) {
             $createParams['sum'] = $amount;
@@ -883,7 +887,7 @@ class TestController extends Controller
             $createParams['bonus_sum'] = 0;
         } else {
             //to do fix this
-            if ((float) $balance < abs($amount)) {
+            if ((float)$balance < abs($amount)) {
                 $createParams['sum'] = -1 * $balance;
                 $createParams['bonus_sum'] = -1 * GeneralHelper::formatAmount(
                         abs($amount) - abs($createParams['sum']));
@@ -903,9 +907,9 @@ class TestController extends Controller
         $lastTransaction->bonus_sum = '2.0';
         $lastTransaction->sum = '1.0';
         dump($lastTransaction->toArray());
-        if (! is_null($lastTransaction)) {
+        if (!is_null($lastTransaction)) {
             //to do! fix this
-            if ((float) $lastTransaction->bonus_sum > 0) {
+            if ((float)$lastTransaction->bonus_sum > 0) {
                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
                 $percentageSum = abs($lastTransaction->sum) / $totalSum;
@@ -927,7 +931,7 @@ class TestController extends Controller
         //dd(LastActionGame::where('user_id', 136)->first());
         $activeBonus = UserBonus::where('id', 1129)->first();
         dd($activeBonus->data);
-        $activeBonus->data = ['lastCheck'=> new \DateTime()];
+        $activeBonus->data = ['lastCheck' => new \DateTime()];
         $activeBonus->save();
 
         dd($activeBonus->data);
@@ -976,8 +980,8 @@ class TestController extends Controller
             ])->orderBy('id', 'DESC')->first();
 
         dump($lastTransaction->toArray());
-        if (! is_null($lastTransaction)) {
-            if ((float) $lastTransaction->bonus_sum != 0 and (float) $lastTransaction->sum != 0) {
+        if (!is_null($lastTransaction)) {
+            if ((float)$lastTransaction->bonus_sum != 0 and (float)$lastTransaction->sum != 0) {
                 $totalSum = abs($lastTransaction->sum + $lastTransaction->bonus_sum);
 
                 $percentageSum = abs($lastTransaction->sum) / $totalSum;
@@ -1332,7 +1336,7 @@ class TestController extends Controller
         $userName = $userNameDefault;
 
         if ($user->created_at > $usePrefixAfter) {
-            $userName = $prefixName.$userNameDefault;
+            $userName = $prefixName . $userNameDefault;
         }
 
         $prefixNameStrictly = ModernExtraUsers::select(['user_id', 'code', 'value'])
@@ -1340,8 +1344,8 @@ class TestController extends Controller
             ->where('code', 'prefixName')
             ->first();
 
-        if (! is_null($prefixNameStrictly)) {
-            $userName = $prefixNameStrictly->value.$userNameDefault;
+        if (!is_null($prefixNameStrictly)) {
+            $userName = $prefixNameStrictly->value . $userNameDefault;
         }
 
         dd($userName);
@@ -1691,7 +1695,7 @@ class TestController extends Controller
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
                 'headers' => [
-                    'Authorization' => 'Bearer '.$json->access_token,
+                    'Authorization' => 'Bearer ' . $json->access_token,
                     'Accept' => 'application/json',
                 ],
             ]);
@@ -2051,7 +2055,7 @@ class TestController extends Controller
         try {
             $response = $client->get('https://api-int.qtplatform.com/v1/games', [
                 'headers' => [
-                    'Authorization' => 'Bearer '.$json->access_token,
+                    'Authorization' => 'Bearer ' . $json->access_token,
                     'Accept' => 'application/json',
                 ],
             ]);
@@ -2091,7 +2095,7 @@ class TestController extends Controller
         GamesList::where('id', 1)
             ->update([
                 'name' => 'Zdffd',
-                'updated_at' => DB::raw('updated_at'), ]);
+                'updated_at' => DB::raw('updated_at'),]);
         dd(2);
 
         return view('emails.confirm')->with(['link' => 'https://www.casinobit.io/activate/be532c9328437e9a9a24b83bf70b349f4914217a2ae8e8fe9822d017000f77d4']);
@@ -2309,7 +2313,7 @@ class TestController extends Controller
                 'password' => self::PASSWORD,
             ], true);
 
-            $loginResponse = (array) $login->response;
+            $loginResponse = (array)$login->response;
             $idLogin = $loginResponse['id'];
             unset($loginResponse['id']);
             $loginResponse['system_id'] = $idLogin;
@@ -2329,7 +2333,7 @@ class TestController extends Controller
             dump($idLogin);
             dump($getGame);
             GamesPantalloSessionGame::create(['session_id' => $idLogin,
-                'gamesession_id' => $getGame->gamesession_id, ]);
+                'gamesession_id' => $getGame->gamesession_id,]);
 
             return view('testtest', ['link' => $getGame]);
         } catch (\Exception $e) {

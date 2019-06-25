@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('description')
-{{ trans('casino.home_description') }}
-@endsection
-
-
-
 @section('content')
     <ul class="sections-nav">
         <li data-menuanchor="blackjack" class="active"><a href="#blackjack">{{ trans('casino.blackjack') }}</a></li>
@@ -19,14 +13,11 @@
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
+
             <div class="msg-popup">
-			<span class="top-text">
-				<span class="number-value">110%</span>
-                {{ trans('casino.bonus') }}
-            </span>
-                <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
-                <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
+                <a href="#" class="registration-btn reg-btn"><img src="media/images/home_bonus_en.png" alt=""></a>
             </div>
+
             @endif
             <span class="side-name">{{ trans('casino.welcome') }}</span>
             <div class="main-title-block">
@@ -44,14 +35,9 @@
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
-                <div class="msg-popup">
-			<span class="top-text">
-				<span class="number-value">110%</span>
-                {{ trans('casino.bonus') }}
-            </span>
-                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
-                </div>
+           <div class="msg-popup">
+               <a href="#" class="registration-btn reg-btn"><img src="media/images/home_bonus_en.png" alt=""></a>
+           </div>
             @endif
             <span class="side-name">{{ trans('casino.blackjack') }}</span>
             <div class="main-title-block">
@@ -69,14 +55,9 @@
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
-                <div class="msg-popup">
-			<span class="top-text">
-				<span class="number-value">110%</span>
-                {{ trans('casino.bonus') }}
-            </span>
-                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{ trans('casino.registration') }}</a>
-                </div>
+           <div class="msg-popup">
+               <a href="#" class="registration-btn reg-btn"><img src="media/images/home_bonus_en.png" alt=""></a>
+           </div>
             @endif
             <span class="side-name">{{ trans('casino.roulette') }}</span>
             <div class="main-title-block">
@@ -94,14 +75,9 @@
                 <span class="bitcoin-msg"><i class="bitcoin-icon"></i> {{ trans('casino.work_bitcoin') }}</span>
             </div>
             @if(Auth::guest())
-                <div class="msg-popup">
-			<span class="top-text">
-				<span class="number-value">110%</span>
-                {{ trans('casino.bonus') }}
-            </span>
-                    <span class="middle-text">{!! trans('casino.after_first_deposit') !!}</span>
-                    <a href="#" class="registration-btn reg-btn">{{trans('casino.registration')}}</a>
-                </div>
+            <div class="msg-popup">
+                <a href="#" class="registration-btn reg-btn"><img src="media/images/home_bonus_en.png" alt=""></a>
+            </div>
             @endif
             <span class="side-name">{{ trans('casino.slots') }}</span>
             <div class="main-title-block">

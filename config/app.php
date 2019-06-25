@@ -204,6 +204,7 @@ return [
         \App\Providers\JsBridgeServiceProvider::class,
         //Sentry\Laravel\ServiceProvider::class,
         //\App\Providers\EmailChecker\EmailChecker::class,
+        Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
     ],
 
     /*
@@ -261,5 +262,6 @@ return [
         'JsBridge' => \App\Providers\JsBridge\JsBridge::class,
         //'Sentry' => Sentry\Laravel\Facade::class,
         'EmailChecker' => \App\Providers\EmailChecker\EmailChecker::class,
+        'MetaTag'   => Torann\LaravelMetaTags\Facades\MetaTag::class,
     ],
 ];

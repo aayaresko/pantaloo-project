@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'forceHttps' => env('FORCE_HTTPS', true),
 
     'ipQualityScore' => env('IP_QUALITY_SCORE'),
@@ -107,7 +106,7 @@ return [
         'register' => 2,
     ],
 
-    'partnerCommission' => 45,
+    'partnerCommission' => 25,
 
     'freeRounds' => [
         'available' => 50,
