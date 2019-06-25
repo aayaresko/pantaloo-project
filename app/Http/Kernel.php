@@ -15,6 +15,7 @@ use App\Http\Middleware\SetCountryCode;
 use App\Http\Middleware\EmailConfirmation;
 use App\Http\Middleware\GeneralMiddleware;
 use App\Http\Middleware\IpDomainCountryBlock;
+use App\Http\Middleware\UtmByRef;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -55,6 +56,7 @@ class Kernel extends HttpKernel
             //EmailConfirmation::class,
             SetCountryCode::class,
             GeneralMiddleware::class,
+            UtmByRef::class,
         ],
         'landing' => [
             \App\Http\Middleware\EncryptCookies::class,
