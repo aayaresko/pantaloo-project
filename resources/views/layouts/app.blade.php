@@ -739,7 +739,16 @@
                     }
 
                     if (data.deposit) {
-                        ga('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+
+                        let event = new CustomEvent('depositEvent', {
+                            detail: {
+                                id: data.depositId,
+                                revenu: Math.round(data.deposit)
+                            }
+                        });
+                        window.dispatchEvent(event);
+                        //ga('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
+
                         $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');

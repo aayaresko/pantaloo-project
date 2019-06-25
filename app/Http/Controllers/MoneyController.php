@@ -150,12 +150,13 @@ class MoneyController extends Controller
                     DB::commit();
                 }
             }
-
+            //$sum = 10;
             $response = [
                 'success' => true,
                 'realBalance' => $user->balance,
                 'balance' => $user->getBalance(),
                 'deposit' => $sum,
+                'depositId' => 1, //$notificationTransactionDeposit ? $notificationTransactionDeposit->id : false,
                 'free_spins' => $user->free_spins,
                 'balance_info' => [
                     'balance' => $user->getBalance() . ' m' . strtoupper($user->currency->title),
