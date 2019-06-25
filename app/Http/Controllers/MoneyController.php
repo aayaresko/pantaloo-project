@@ -304,10 +304,13 @@ class MoneyController extends Controller
             }
 
             //sometimes fix this - after first start
-            if ((int)$user->id > 2391) {
-                if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
-                    $errors = ['You do not have any deposits.'];
-                    throw new \Exception('do_not_have_any_deposits.');
+            //TO DO THIS - if use deposit
+            if (!GeneralHelper::isTestMode()) {
+                if ((int)$user->id > 2391) {
+                    if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                        $errors = ['You do not have any deposits.'];
+                        throw new \Exception('do_not_have_any_deposits.');
+                    }
                 }
             }
 
