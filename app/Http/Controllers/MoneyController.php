@@ -151,9 +151,9 @@ class MoneyController extends Controller
                 'deposit' => $sum,
                 'free_spins' => $user->free_spins,
                 'balance_info' => [
-                    'balance' => $user->getBalance() . config('app.currencyCode'),
-                    'real_balance' => $user->getRealBalance() . config('app.currencyCode'),
-                    'bonus_balance' => $user->getBonusBalance() . config('app.currencyCode'),
+                    'balance' => $user->getBalance() . ' ' . config('app.currencyCode'),
+                    'real_balance' => $user->getRealBalance() . ' ' . config('app.currencyCode'),
+                    'bonus_balance' => $user->getBonusBalance() . ' ' . config('app.currencyCode'),
                 ],
             ];
         } catch (\Exception $e) {
