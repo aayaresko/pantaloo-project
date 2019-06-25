@@ -81,10 +81,12 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     Route::post('login', 'Auth\LoginController@login');
     Route::get('logout', 'Auth\LoginController@logout');
 
-
     //bonus bonus
     //Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
     //bonus bonus
+
+    //check withdraw
+    Route::get('/withdrawActivation', ['as' => 'withdrawActivation', 'uses' => 'MoneyController@withdrawActivation']);
 
 
     Route::group([
@@ -145,6 +147,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
             Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'UserAccountController@withdraw']);
             Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
+
             Route::get('/settings', ['as' => 'settings', 'uses' => 'UserAccountController@settings']);
             Route::get('/bonus', ['as' => 'bonus', 'uses' => 'UserAccountController@bonuses']);
         });

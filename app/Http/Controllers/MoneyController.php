@@ -15,10 +15,12 @@ use App\Jobs\Withdraw;
 use App\Bitcoin\Service;
 use Helpers\BonusHelper;
 use Helpers\GeneralHelper;
+use App\Mail\BaseMailable;
 use App\Jobs\BonusHandler;
 use Illuminate\Http\Request;
 use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Events\WithdrawalFrozenEvent;
 use App\Events\WithdrawalApprovedEvent;
 use App\Events\WithdrawalRequestedEvent;
@@ -269,7 +271,6 @@ class MoneyController extends Controller
             'updated_at' => $date,
         ]);
 
-
         //check bonus
         if ($user->bonus_id) {
             $class = BonusHelper::getClass($user->bonus_id);
@@ -324,12 +325,10 @@ class MoneyController extends Controller
                 throw new \Exception('validation');
             }
 
-
             if ($request->input('sum') < 1) {
                 $errors = ['Minimum sum is 1'];
                 throw new \Exception('minimum_sum_is');
             }
-
 
             $service = new Service();
             if (!$service->isValidAddress($request->input('address'))) {
@@ -397,6 +396,15 @@ class MoneyController extends Controller
 
             event(new WithdrawalRequestedEvent($user));
 
+            //TO DO THIS IN EVENT CLASS USE LISTENER ETC
+            //send mail
+            //to do check withdraw only************future
+            //$link = md5($withdraw->id . config('app.key') . $withdraw->user_id);
+            $link = md5($transaction->id . config('app.key') . $transaction->user_id);
+            $mail = new BaseMailable('emails.confirm_withdraw',
+                ['link' => sprintf('%s/%s?link=%s&email=%s', url('/'), 'withdrawActivation', $link, $user->email)]);
+            $mail->subject('Confirm email');
+            Mail::to($user)->send($mail);
         } catch (\Exception $ex) {
             DB::rollBack();
             if (empty($errors)) {
@@ -407,10 +415,91 @@ class MoneyController extends Controller
                 'user_id' => $userId,
                 'response' => $ex->getMessage()
             ]);
+
+            return redirect()->back()->withErrors($errors);
         }
 
         return redirect()->route('withdraw', ['lang' => $lang])
-            ->with('popup', ['WITHDRAW', 'Withdraw was successfull!', 'Your withdrawal is pending approval']);
+            ->with('popup', ['WITHDRAW', 'Confirm withdrawal!', 'A confirmation email has been sent to the mail.']);
+    }
+
+    public function withdrawActivation(Request $request)
+    {
+        $errors = [];
+        try {
+            //main act
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'link' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                $validatorErrors = $validator->errors()->toArray();
+                array_walk_recursive($validatorErrors, function ($item) use (&$errors) {
+                    array_push($errors, $item);
+                });
+                throw new \Exception('validation');
+            }
+
+            $user = User::where('email', $request->email)->first();
+
+            if (is_null($user)) {
+                $errors = ['User is not found'];
+                throw new \Exception('no_user');
+            }
+            $userId = $user->id;
+
+            //make check
+            $keyApp = config('app.key');
+
+            //to do check withdraw only************future
+            //to do use this table
+//            $checkWithdraw = WithdrawModel::where('user_id', $user->id)
+//                ->where(DB::raw("MD5(concat(id, '$keyApp', $userId))"), $request->link)->first();
+
+            $checkTransaction = Transaction::where('user_id', $user->id)
+                ->where('type', 4)
+                ->where(DB::raw("MD5(concat(id, '$keyApp', $userId))"), $request->link)->first();
+            dump($checkTransaction);
+            //to do use $checkWithdraw
+            if (is_null($checkTransaction)) {
+                $errors = ['Some is wrong. Hash'];
+                throw new \Exception('no_user');
+            }
+
+            //edit status transactions and withdraw
+            DB::beginTransaction();
+
+            Transaction::where('id', $checkTransaction->id)->update([
+                'withdraw_status' => 0,
+            ]);
+
+            WithdrawModel::where('transaction_id', $checkTransaction->id)->update([
+                'status_withdraw' => 0,
+            ]);
+
+//            WithdrawModel::where('id', $checkWithdraw->id)->update([
+//                'status_withdraw' => 0,
+//            ]);
+
+//            Transaction::where('id', $checkWithdraw->transaction_id)->update([
+//                'withdraw_status' => 0,
+//            ]);
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            if (empty($errors)) {
+                $errors = ['Some is wrong'];
+            }
+
+            //to do transaction
+            return redirect()->route('withdraw', ['lang' => app()->getLocale()])->withErrors($errors);
+        }
+
+        return redirect()->route('withdraw', ['lang' => app()->getLocale()])
+            ->with('popup', ['WITHDRAW', 'Withdrawal has been confirmed!', 'Withdrawal has been confirmed!']);
     }
 
     public function approve(Transaction $transaction)
