@@ -242,6 +242,11 @@ class MoneyController extends Controller
         }));
     }
 
+    /**
+     * to do delete
+     *
+     * @deprecated
+     */
     public function deposit()
     {
         //$qr_code = 'data:image/png;base64, ' . base64_encode(QrCode::format('png')->size(100)->generate('Make me into an QrCode!'));
@@ -304,7 +309,11 @@ class MoneyController extends Controller
                 throw new \Exception('bonus_is_active');
             }
 
-            if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) {
+            $countNoConfirmDeposits = SystemNotification::where('user_id', $user->id)
+                ->where('confirmations', '<', $minConfirmBtc)->count();
+            //if ($user->transactions()->deposits()->where('confirmations', '<', $minConfirmBtc)->count() > 0) {
+
+            if ($countNoConfirmDeposits > 0) {
                 $errors = ['You have unconfirmed deposits'];
                 throw new \Exception('unconfirmed_deposits');
             }
@@ -316,9 +325,13 @@ class MoneyController extends Controller
 
             //sometimes fix this - after first start
             //TO DO THIS - if use deposit
+            $countConfirmDeposits = SystemNotification::where('user_id', $user->id)
+                ->where('confirmations', '>=', $minConfirmBtc)->count();
+
             if (!GeneralHelper::isTestMode()) {
                 if ((int)$user->id > 2391) {
-                    if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                    //if ($user->transactions()->deposits()->where('confirmations', '>=', $minConfirmBtc)->count() == 0) {
+                    if ($countConfirmDeposits == 0) {
                         $errors = ['You do not have any deposits.'];
                         throw new \Exception('do_not_have_any_deposits.');
                     }
@@ -635,8 +648,14 @@ class MoneyController extends Controller
     }
 
 
-    //to do,  methods below - maybe deprecated
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * to fix this method
+     * methow below contains getting deposits by transaction we use model system notification for deposits etc
+     * need use nessesary model
+     */
     public function transfers(Request $request)
     {
         try {
