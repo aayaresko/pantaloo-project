@@ -424,10 +424,8 @@ class MoneyController extends Controller
 
             $mail = new BaseMailable('emails.confirm_withdraw',
                 [
-                    'link' => sprintf('%s/%s?link=%s&email=%s',
-                        url('/'), 'withdrawActivation',
-                        $link,
-                        $user->email)
+                    'link' => sprintf('%s/%s?link=%s&email=%s', url('/'), 'withdrawActivation', $link, $user->email),
+                    'valueWithCurrency' => abs($sum) . ' ' . config('app.currencyCode')
                 ]);
 
             $mail->subject('Confirm withdrawal');

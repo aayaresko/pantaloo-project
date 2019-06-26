@@ -156,15 +156,21 @@
                                                                     height="100%"
                                                                     valign="top"
                                                                     bgcolor="">
-                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;">Thank you for registering with <a href="https://www.casinobit.io/" style="color:#ae94cd;">CasinoBit.io</a>. You are only one step away from playing some of the best casino games online. </span></span></div>
+                                                                    <div style="text-align: center;">
+                                                                        <span style="font-size:12px;">
+                                                                            <span style="color:#ae94cd;">
+                                                                                You are requesting a withdrawal request ( to {{ $valueWithCurrency }}). To confirm, click on the button to confirm the withdrawal of funds. If you did not request the withdrawal of the funds, then ignore the letter and write to the support service
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
 
                                                                     <div>&nbsp;</div>
 
-                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;">All we need to do now is validate the email registered with your account. Please click on the button below to confirm your email address and activate your account.</span></span></div>
+
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:10px 10px 20px 10px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:center"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb)" href="{{ $link }}" target="_blank">CONFIRM EMAIL </a></td></tr></tbody></table></td></tr></tbody></table>
+                                                        <table border="0" cellPadding="0" cellSpacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%"><tbody><tr><td align="center" class="outer-td" style="padding:10px 10px 20px 10px"><table border="0" cellPadding="0" cellSpacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:center"><tbody><tr><td align="center" bgcolor="#4f2c85" class="inner-td" style="border-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a style="background-color:#4f2c85;border:1px solid #333333;border-color:#663daf;border-radius:5px;border-width:0px;color:#ffffff;display:inline-block;font-family:helvetica,arial,sans-serif;font-size:12px;font-weight:normal;letter-spacing:0px;line-height:15px;padding:10px 20px 10px 20px;text-align:center;text-decoration:none;background:linear-gradient(-180deg,#6b4fd0,#7536bb)" href="{{ $link }}" target="_blank">CONFIRM WITHDRAWAL </a></td></tr></tbody></table></td></tr></tbody></table>
                                                         <table  border="0"
                                                                 cellpadding="0"
                                                                 cellspacing="0"
@@ -279,8 +285,7 @@
                                                                     height="100%"
                                                                     valign="top"
                                                                     bgcolor="">
-                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;">Once you have completed your registration, you will receive an email with your login information
-and you’ll be ready to play.</span></span></div>
+                                                                    <div style="text-align: center;"><span style="font-size:12px;"><span style="color:#ae94cd;"></span></span></div>
                                                                 </td>
                                                             </tr>
                                                         </table>
