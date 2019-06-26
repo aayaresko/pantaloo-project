@@ -81,16 +81,10 @@ class CreateSitemap extends Command
                 $category_name = preg_replace('/\s/', '-', $category_name);
                 $updated_at = $category->updated_at;
 
-                $translationsCategory = [
-                    ['language' => 'de', 'url' => URL::to('/de/games/' . $category_name)],
-                    ['language' => 'en', 'url' => URL::to('/en/games/' . $category_name)],
-                    ['language' => 'fr', 'url' => URL::to('/fr/games/' . $category_name)],
-                    ['language' => 'it', 'url' => URL::to('/it/games/' . $category_name)],
-                    ['language' => 'jp', 'url' => URL::to('/jp/games/' . $category_name)],
-                    ['language' => 'ru', 'url' => URL::to('/ru/games/' . $category_name)],
-                    ['language' => 'th', 'url' => URL::to('/th/games/' . $category_name)],
-                    ['language' => 'vn', 'url' => URL::to('/vn/games/' . $category_name)],
-                ];
+                $translationsCategory = [];
+                foreach ($languages as $language) {
+                    array_push($translationsCategory, ['language' => $language, 'url' => URL::to("/{$language}/games/" . $category_name)]);
+                }
 
                 $sitemap->add(URL::to('/en/games/' . $category_name), $updated_at, '0.7', 'daily', [], null, $translationsCategory);
             }
