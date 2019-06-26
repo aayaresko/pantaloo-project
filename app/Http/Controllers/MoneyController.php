@@ -300,7 +300,7 @@ class MoneyController extends Controller
         try {
             //check bonus
             if ($user->bonuses()->first()) {
-                $errors = ['Bonus is active'];
+                $errors = ['You can not make a withdrawal. Bonus is active'];
                 throw new \Exception('bonus_is_active');
             }
 
@@ -366,21 +366,22 @@ class MoneyController extends Controller
                 throw new \Exception('not_enough_funds');
             }
 
+            $withdrawStatus = -3;
+
             $transaction = Transaction::create([
                 'sum' => $sum,
                 'bonus_sum' => 0,
                 'user_id' => $user->id,
                 'type' => 4,
-                'withdraw_status' => -3,
+                'withdraw_status' => $withdrawStatus,
                 'address' => $request->input('address'),
                 'comment' => 'withdraw',
-
             ]);
 
             $withdraw = WithdrawModel::create([
                 'user_id' => $user->id,
                 'value' => $sum,
-                'status_withdraw' => -3,
+                'status_withdraw' => $withdrawStatus,
                 'to_address' => $request->input('address'),
                 'transaction_id' => $transaction->id
             ]);
@@ -404,7 +405,8 @@ class MoneyController extends Controller
                 'user_id' => $userId,
                 'response' => json_encode([
                     'transaction_id' => $transaction->id,
-                    'withdraw_id' => $withdraw->id
+                    'withdraw_id' => $withdraw->id,
+                    'status_withdraw' => $withdrawStatus,
                 ])
             ]);
 
@@ -412,37 +414,59 @@ class MoneyController extends Controller
 
             event(new WithdrawalRequestedEvent($user));
 
-            //TO DO THIS IN EVENT CLASS USE LISTENER ETC
-            //send mail
+
+            //SEND EMAIL CONFIRM *************
+            //TO DO THIS IN EVENT
             //to do check withdraw only************future
             //$link = md5($withdraw->id . config('app.key') . $withdraw->user_id);
+
             $link = md5($transaction->id . config('app.key') . $transaction->user_id);
 
             $mail = new BaseMailable('emails.confirm_withdraw',
-                ['link' => sprintf('%s/%s?link=%s&email=%s', url('/'), 'withdrawActivation', $link, $user->email)]);
-            $mail->subject('Confirm email');
+                [
+                    'link' => sprintf('%s/%s?link=%s&email=%s',
+                        url('/'), 'withdrawActivation',
+                        $link,
+                        $user->email)
+                ]);
+
+            $mail->subject('Confirm withdrawal');
             Mail::to($user)->send($mail);
+            //SEND EMAIL CONFIRM *************
         } catch (\Exception $ex) {
             DB::rollBack();
+
             if (empty($errors)) {
                 $errors = ['Some is wrong'];
             }
 
             DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
                 'user_id' => $userId,
-                'response' => $ex->getMessage()
+                'response' => json_encode([
+                    'errors' => [$ex->getMessage()]
+                ])
             ]);
 
             return redirect()->back()->withErrors($errors);
         }
 
         return redirect()->route('withdraw', ['lang' => $lang])
-            ->with('popup', ['WITHDRAW', 'Confirm withdrawal!', 'A confirmation email has been sent to the mail.']);
+            ->with('popup', ['Withdrawal!', 'A confirmation email has been sent to the mail.']);
     }
 
     public function withdrawActivation(Request $request)
     {
         $errors = [];
+        $date = new \DateTime();
+
+        $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
+            'type_id' => config('appAdditional.rawLogKey.withdraw'),
+            'user_id' => 0,
+            'request' => GeneralHelper::fullRequest(),
+            'created_at' => $date,
+            'updated_at' => $date,
+        ]);
+
         try {
             //main act
             $validator = Validator::make($request->all(), [
@@ -487,12 +511,14 @@ class MoneyController extends Controller
             //edit status transactions and withdraw
             DB::beginTransaction();
 
+            $withdrawStatus = 0;
+
             Transaction::where('id', $checkTransaction->id)->update([
-                'withdraw_status' => 0,
+                'withdraw_status' => $withdrawStatus,
             ]);
 
             WithdrawModel::where('transaction_id', $checkTransaction->id)->update([
-                'status_withdraw' => 0,
+                'status_withdraw' => $withdrawStatus,
             ]);
 
 //            WithdrawModel::where('id', $checkWithdraw->id)->update([
@@ -505,18 +531,34 @@ class MoneyController extends Controller
 
             DB::commit();
 
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'user_id' => $userId,
+                'response' => json_encode([
+                    'transaction_id' => $checkTransaction->id,
+                    //'withdraw_id' => $checkWithdraw->id,
+                    'status_withdraw' => $withdrawStatus,
+                ])
+            ]);
+
         } catch (\Exception $ex) {
             DB::rollBack();
             if (empty($errors)) {
                 $errors = ['Some is wrong'];
             }
 
+            DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                'user_id' => $userId,
+                'response' => json_encode([
+                    'errors' => [$ex->getMessage()]
+                ])
+            ]);
+
             //to do transaction
             return redirect()->route('withdraw', ['lang' => app()->getLocale()])->withErrors($errors);
         }
 
         return redirect()->route('withdraw', ['lang' => app()->getLocale()])
-            ->with('popup', ['WITHDRAW', 'Withdrawal has been confirmed!', 'Withdrawal has been confirmed!']);
+            ->with('popup', ['Withdrawal!', 'Withdrawal has been confirmed!']);
     }
 
     public function approve(Transaction $transaction)
