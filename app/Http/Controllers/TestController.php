@@ -65,6 +65,9 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $transactionSystem = Transaction::where('type', 3)->where('ext_id', 'e506268a74fdf87757d8b1d67b29f6570cf0dea961cbfdad7fe2961559c0bc0c')->first();
+        dd($transactionSystem);
         $depositsDate = Transaction::select([
             'transactions.created_at as date',
             'transactions.id',

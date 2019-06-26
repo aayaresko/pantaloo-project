@@ -23,6 +23,7 @@ class TransactionController extends Controller
      *
      * @param Request $request
      * @return array
+     * @throws \Exception
      */
     public function walletNotify(Request $request)
     {
@@ -89,8 +90,9 @@ class TransactionController extends Controller
             $userId = $user->id;
 
             //to do use table for deposit TO DO FIX THIS**********************
-            $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
-            //$deposit = SystemNotification::where(['ext_id' => $txid])->first();
+            $transactionSystem = Transaction::where('type', 3)->where('ext_id', $txid)->first();
+            //after seed run
+            //$deposit = SystemNotification::where('ext_id', $txid)->first();
 
             if (! is_null($transactionSystem)) {
                 //update
@@ -198,6 +200,7 @@ class TransactionController extends Controller
      *
      * @param Request $request
      * @return array
+     * @throws \Exception
      */
     public function blockNotify(Request $request)
     {
