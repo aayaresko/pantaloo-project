@@ -69,7 +69,7 @@ class TransactionController extends Controller
             //get transaction
             $rawTransaction = $service->getTransaction($txid);
 
-            if (! $rawTransaction) {
+            if (!$rawTransaction) {
                 throw new \Exception('Transactions is not found in node');
             }
 
@@ -94,7 +94,7 @@ class TransactionController extends Controller
             //after seed run
             //$deposit = SystemNotification::where('ext_id', $txid)->first();
 
-            if (! is_null($transactionSystem)) {
+            if (!is_null($transactionSystem)) {
                 //update
                 //check must if transaction has 1 confirmation
                 //confirmations must be 1
@@ -131,10 +131,10 @@ class TransactionController extends Controller
                 ]);
 
                 $depositNotifications = 1;
-                if (! is_null($user->bonus_id)) {
+                if (!is_null($user->bonus_id)) {
                     $class = BonusHelper::getClass($user->bonus_id);
                     $bonusObject = new $class($user);
-                    if ((int) $user->bonus_id === 1) {
+                    if ((int)$user->bonus_id === 1) {
                         $depositNotifications = 2;
                         //to do check status
                         $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
@@ -168,7 +168,7 @@ class TransactionController extends Controller
 
                 $response = [
                     'success' => true,
-                    'msg' => ['TXID:'.$txid, "TRANSACTION:{$transaction->id}"],
+                    'msg' => ['TXID:' . $txid, "TRANSACTION:{$transaction->id}"],
                 ];
             }
             DB::commit();
@@ -179,7 +179,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => false,
-                'msg' => $errorMessage.' Line:'.$errorLine,
+                'msg' => $errorMessage . ' Line:' . $errorLine,
             ];
         }
 
@@ -245,7 +245,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => true,
-                'msg' => ['BLOCKHASH:'.$blockhash],
+                'msg' => ['BLOCKHASH:' . $blockhash],
             ];
 
             //to do get block use this command and check block hash
@@ -292,7 +292,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => false,
-                'msg' => $errorMessage.' Line:'.$errorLine,
+                'msg' => $errorMessage . ' Line:' . $errorLine,
             ];
         }
 
