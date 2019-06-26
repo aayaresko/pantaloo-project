@@ -40,11 +40,13 @@ class DepositWithoutTransactionSeeder extends Seeder
                     ]);
                 } else {
                     //update value
-                    SystemNotification::where('id', $checkDepositLike->id)->update([
-                        'ext_id' => $transaction->ext_id,
-                        'confirmations' => $transaction->confirmations,
-                        'transaction_id' => $transaction->id
-                    ]);
+                    if ($checkDepositLike->user_id == $transaction->user_id) {
+                        SystemNotification::where('id', $checkDepositLike->id)->update([
+                            'ext_id' => $transaction->ext_id,
+                            'confirmations' => $transaction->confirmations,
+                            'transaction_id' => $transaction->id
+                        ]);
+                    }
                 }
             }
         }
