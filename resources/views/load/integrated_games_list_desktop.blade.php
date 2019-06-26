@@ -3,8 +3,12 @@
                 <div class="games-block ng-scope">
                     <div class="preloaderPictureGame">
                         <span class="games-block__item ng-scope">
+                            <div class="gameTitleWrapper">
+                                <span class="gameTitle">{{ $game->name }}</span>
+                            </div>
                             <img class="games-block__image show-animated" src="{{ $game->image . '?v=' . time() }}"
                                  onerror="handleImage(this);"/>
+                            
                         </span>
                     </div>
                     <div class="games-block__wrap ng-scope">
