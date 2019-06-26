@@ -34,11 +34,13 @@ class EmailConfirmation
                     return $next($request);
                 }
 
-                if (Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) {
-                    if (Auth::user()->transactions()->deposits()->count() == 0) {
-                        return redirect('/')->with('popup_fixed', 'true');
-                    }
-                }
+                //use deposits table no use transaction
+                //temporary disable FORCE CONFIRM MESSAGE
+//                if (Auth::user()->confirmation_required == 1 and Auth::user()->email_confirmed == 0) {
+//                    if (Auth::user()->transactions()->deposits()->count() == 0) {
+//                        return redirect('/')->with('popup_fixed', 'true');
+//                    }
+//                }
             }
         }
 
