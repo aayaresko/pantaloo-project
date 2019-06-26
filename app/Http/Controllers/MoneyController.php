@@ -494,7 +494,7 @@ class MoneyController extends Controller
             $user = User::where('email', $request->email)->first();
 
             if (is_null($user)) {
-                $errors = ['User is not found'];
+                $errors = ['Problem.User is not found'];
                 throw new \Exception('no_user');
             }
             $userId = $user->id;
