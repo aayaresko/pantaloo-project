@@ -127,7 +127,7 @@
                                                 <button class="update-btn">{{trans('casino.send_mail')}}</button>
                                             </p>
 
-                                            <p class="supportContact">  {{ trans('casino.contact_support_intro') }}
+                                            <p class="supportContact showIntercom">  {{ trans('casino.contact_support_intro') }}
                                                 <a href="#">{{ trans('casino.contact_support') }}</a>
                                             </p>
                                         </form>
