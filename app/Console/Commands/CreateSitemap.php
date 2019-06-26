@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 
-class createSitemap extends Command
+class CreateSitemap extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,7 +37,7 @@ class createSitemap extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @throws \Exception
      */
     public function handle()
     {
@@ -53,7 +53,8 @@ class createSitemap extends Command
         if (!$sitemap->isCached()) {
 
             // add item with translations (url, date, priority, freq, images, title, translations)
-            $languages  = GeneralHelper::getListLanguage();
+            $dateFormat = 'Y-m-dTH:i:sP';
+            $languages = GeneralHelper::getListLanguage();
 
             $relations = [
                 ['array' => 'translations', 'urlPart' => ''],
@@ -65,14 +66,15 @@ class createSitemap extends Command
             ];
 
             foreach ($relations as $relation) {
-                //dd($relation['array']);
                 ${$relation['array']} = [];
                 foreach ($languages as $language) {
-                    array_push(${$relation['array']}, ['language' => $language, 'url' =>  URL::to("/{$language}/" . $relation['urlPart'])]);
+                    array_push(${$relation['array']},
+                        ['language' => $language, 'url' => URL::to("/{$language}/" . $relation['urlPart'])]);
                 }
             }
-//            dd($translationsBonuses);
-            $getCategories = DB::table('games_types')->where('active', 1)->orderBy('id', 'desc')->get();
+
+            $getCategories = DB::table('games_types')
+                ->where('active', 1)->orderBy('id', 'desc')->get();
 
             foreach ($getCategories as $category) {
                 $category_name = $category->default_name;
@@ -89,23 +91,25 @@ class createSitemap extends Command
                     ['language' => 'th', 'url' => URL::to('/th/games/' . $category_name)],
                     ['language' => 'vn', 'url' => URL::to('/vn/games/' . $category_name)],
                 ];
+
                 $sitemap->add(URL::to('/en/games/' . $category_name), $updated_at, '0.7', 'daily', [], null, $translationsCategory);
             }
 
-            $getgames = DB::table('games_list')->orderBy('system_id', 'desc')->get();
+            $getGames = DB::table('games_list')->orderBy('system_id', 'desc')->get();
 
-            foreach ($getgames as $game) {
+            foreach ($getGames as $game) {
                 $game_id = $game->system_id;
                 $provider_id = $game->provider_id;
                 $updated_at = $game->updated_at;
                 $sitemap->add(URL::to('/integratedGameLink/provider/' . $provider_id . '/game/' . $game_id), $updated_at, '0.5', 'weekly');
             }
-            $sitemap->add(URL::to('/en'), date('Y-m-dTH:i:sP', time()), '1', 'always', [], null);
-            $sitemap->add(URL::to('/en/games'), date('Y-m-dTH:i:sP', time()), '0.7', 'daily', [], null);
-            $sitemap->add(URL::to('/en/faq'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null);
-            $sitemap->add(URL::to('/en/bonuses'), date('Y-m-dTH:i:sP', time()), '0.3', 'monthly', [], null);
+            $sitemap->add(URL::to('/en'), date($dateFormat, time()), '1', 'always', [], null, $translations);
+            $sitemap->add(URL::to('/en/games'), date($dateFormat, time()), '0.7', 'daily', [], null, $translationsGames);
+            $sitemap->add(URL::to('/en/faq'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsFaq);
+            $sitemap->add(URL::to('/en/bonuses'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsBonuses);
 
         }
+
         $sitemap->store('xml', 'sitemap', storage_path("app/public"));
     }
 }

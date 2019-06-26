@@ -20,11 +20,15 @@ Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
     Route::post('/sendDeposit', ['uses' => 'TestMode\GeneralController@sendDeposit']);
 });
 
+//for seo
 Route::get('robots.txt', function (Illuminate\Http\Request $request) {
     return view('robots', [
         'host' => $request->getHost(),
     ]);
 });
+
+Route::get('sitemap.xml', ['as' => 'siteMap', 'uses' => 'SitemapController@getSiteMap']);
+//for seo
 
 //for optimization add array keep all language in config
 $languages = Helpers\GeneralHelper::getListLanguage();
@@ -125,7 +129,6 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('post.password.reset');
 
         Route::get('/password/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
-        Route::get('/sitemap.xml', 'SitemapController@index');
         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     });
 
