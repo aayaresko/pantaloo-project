@@ -90,6 +90,7 @@ class TransactionController extends Controller
             $userId = $user->id;
 
             //to do use table for deposit TO DO FIX THIS**********************
+            //now only deposit transaction
             $transactionSystem = Transaction::where('type', 3)->where('ext_id', $txid)->first();
             //after seed run
             //$deposit = SystemNotification::where('ext_id', $txid)->first();
@@ -266,7 +267,13 @@ class TransactionController extends Controller
                             $getTransaction = $service->getTransaction($transaction->ext_id);
 
                             if ($getTransaction) {
+
                                 Transaction::where('id', $transaction->id)
+                                    ->update([
+                                        'confirmations' => $getTransaction['confirmations'],
+                                    ]);
+
+                                SystemNotification::where('transaction_id', $transaction->id)
                                     ->update([
                                         'confirmations' => $getTransaction['confirmations'],
                                     ]);
@@ -286,6 +293,15 @@ class TransactionController extends Controller
                     ['confirmations', '<', $minConfirmBtc - 1],
                 ]
             )->update(['confirmations' => DB::raw('confirmations + 1')]);
+
+
+            SystemNotification::where(
+                [
+                    ['confirmations', '>=', 1],
+                    ['confirmations', '<', $minConfirmBtc - 1],
+                ]
+            )->update(['confirmations' => DB::raw('confirmations + 1')]);
+
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
