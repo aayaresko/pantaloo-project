@@ -17,7 +17,7 @@ class UtmByRef
     {
         if ($request->has('ref')){
             $url = $request->getBaseUrl() . '?utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref');
-            return redirect($url);
+            //return redirect($url);
         }
         return $next($request);
     }
