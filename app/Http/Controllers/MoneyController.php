@@ -415,7 +415,6 @@ class MoneyController extends Controller
             DB::commit();
 
             DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
-                'user_id' => $userId,
                 'response' => json_encode([
                     'transaction_id' => $transaction->id,
                     'withdraw_id' => $withdraw->id,
@@ -452,7 +451,6 @@ class MoneyController extends Controller
             }
 
             DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
-                'user_id' => $userId,
                 'response' => json_encode([
                     'errors' => [$ex->getMessage()]
                 ])
@@ -543,7 +541,6 @@ class MoneyController extends Controller
             DB::commit();
 
             DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
-                'user_id' => $userId,
                 'response' => json_encode([
                     'transaction_id' => $checkTransaction->id,
                     //'withdraw_id' => $checkWithdraw->id,
@@ -558,7 +555,6 @@ class MoneyController extends Controller
             }
 
             DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
-                'user_id' => $userId,
                 'response' => json_encode([
                     'errors' => [$ex->getMessage()]
                 ])
