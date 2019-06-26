@@ -15,7 +15,7 @@ class DepositWithoutTransactionSeeder extends Seeder
     {
         //get all transactions
         //deposits
-        foreach (Transaction::where('type', 3)->cursor() as $transaction) {
+        foreach (Transaction::where('type', 3)->orWhere('type', 13)->cursor() as $transaction) {
             $transactionId = $transaction->id;
 
             $checkDeposit = SystemNotification::where('transaction_id', '=', $transactionId)->first();
