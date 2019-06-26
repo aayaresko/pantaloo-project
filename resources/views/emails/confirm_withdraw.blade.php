@@ -159,7 +159,7 @@
                                                                     <div style="text-align: center;">
                                                                         <span style="font-size:12px;">
                                                                             <span style="color:#ae94cd;">
-                                                                                You are requesting a withdrawal request ( to {{ $valueWithCurrency }}). To confirm, click on the button to confirm the withdrawal of funds. If you did not request the withdrawal of the funds, then ignore the letter and write to the support service
+                                                                                You are requesting a withdrawal request ( to {{ $valueWithCurrency }}). To confirm, click on the button to "CONFIRM WITHDRAWAL". If you did not request the withdrawal of the funds, then ignore the letter and write to the support service
                                                                             </span>
                                                                         </span>
                                                                     </div>
