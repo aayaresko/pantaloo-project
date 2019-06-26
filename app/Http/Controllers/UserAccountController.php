@@ -351,7 +351,6 @@ class UserAccountController extends Controller
                         $item->status = 'Pending';
                 }
 
-
                 $item->date = date(trans('date.action_withdraw'),
                     strtotime($item->date . " + $timezoneOffset minutes"));
 
