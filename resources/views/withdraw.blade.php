@@ -85,6 +85,10 @@
                 this.getDeposits(this.params, true);
             }
 
+            getParams() {
+                return this.params;
+            }
+
             events() {
                 $('.loadMoredataTableBtn').on('click', () => {
                     this.getDeposits(this.params, true);

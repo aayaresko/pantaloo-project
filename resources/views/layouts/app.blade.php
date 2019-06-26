@@ -753,6 +753,10 @@
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');
                         //alert('We got deposit from you ' + data.deposit);
+
+                        if($('#transactionsTable').length > 0) {
+                            table.getDeposits(table.getParams());
+                        }
                     }
 
                     if (data.balance_info) {
