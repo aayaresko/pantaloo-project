@@ -74,6 +74,7 @@
             stepItem: 10,
             getItem: 0,
             lang: '{{ $lang }}',
+            timezoneOffset: new Date().getTimezoneOffset()
         };
 
         class Table {

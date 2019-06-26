@@ -152,6 +152,8 @@ class UserAccountController extends Controller
             }
 
             $param['minConfirmBtc'] = $minConfirmBtc;
+            $param['timezoneOffset'] = $request->filled('timezoneOffset') ?
+                $request->timezoneOffset : 0;
 
             $param['columns'] = [
                 0 => 'created_at',
@@ -196,13 +198,16 @@ class UserAccountController extends Controller
 
             $data->map(function ($item) use ($param) {
 
+                $timezoneOffset =  -1 * $param['timezoneOffset'];
+
                 $item->status = 'No confirmed';
                 $item->statusCode = 0;
                 if ($item->confirmations >= $param['minConfirmBtc']) {
                     $item->status = 'Confirmed';
                     $item->statusCode = 1;
                 }
-                $item->date = date(trans('date.action_deposit'), strtotime($item->date));
+                $item->date = date(trans('date.action_deposit'),
+                    strtotime($item->date . " + $timezoneOffset minutes"));
 
                 unset($item->confirmations);
                 return $item;
@@ -253,6 +258,9 @@ class UserAccountController extends Controller
             }
 
             $param['minConfirmBtc'] = $minConfirmBtc;
+
+            $param['timezoneOffset'] = $request->filled('timezoneOffset') ?
+                $request->timezoneOffset : 0;
 
 //            $param['columns'] = [
 //                0 => 'created_at',
@@ -328,6 +336,8 @@ class UserAccountController extends Controller
 
             $data->map(function ($item) use ($param) {
 
+                $timezoneOffset =  -1 * $param['timezoneOffset'];
+
                 $status = (int)$item->status;
                 $item->statusCode = $status;
                 switch ($status) {
@@ -342,7 +352,8 @@ class UserAccountController extends Controller
                 }
 
 
-                $item->date = date(trans('date.action_withdraw'), strtotime($item->date));
+                $item->date = date(trans('date.action_withdraw'),
+                    strtotime($item->date . " + $timezoneOffset minutes"));
 
                 return $item;
             });
