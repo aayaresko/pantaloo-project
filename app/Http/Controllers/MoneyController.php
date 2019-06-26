@@ -340,7 +340,7 @@ class MoneyController extends Controller
 
             //main act
             $validator = Validator::make($request->all(), [
-                'address' => 'required',
+                'address' => 'required|string',
                 'sum' => 'required|numeric|min:1',
             ]);
 
@@ -352,6 +352,7 @@ class MoneyController extends Controller
                 throw new \Exception('validation');
             }
 
+            //to do fix this double checker
             if ($request->input('sum') < 1) {
                 $errors = ['Minimum sum is 1'];
                 throw new \Exception('minimum_sum_is');
