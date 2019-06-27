@@ -286,6 +286,45 @@ header.header.active .promo-actions-block .promo-action-btn {
   /*margin-top: 8px;*/
 }
 
+.svgWrap {
+  display: block;
+  width: 40px;
+  position: relative;
+  left: 5px;
+  bottom: 33px;
+  overflow: hidden;  
+}
+#anim {
+  width: 200px;
+ 
+}
+#anim.move {
+  animation-name: glitch;
+  animation-iteration-count: infinite;
+  animation-duration: 30ms;
+}
+
+@keyframes glitch {
+  0% {
+      transform: translate(0)
+  }
+  20% {
+      transform: translate(-1px, 0px)
+  }
+  40% {
+      transform: translate(-1px, 0px)
+  }
+  60% {
+      transform: translate(1px, 0px)
+  }
+  80% {
+      transform: translate(1px, 0px)
+  }
+  to {
+      transform: translate(0)
+  }
+}
+
 /* line 48, ../scss/_navigation.scss */
 .header.usr .navigation-container {
   padding-top: 5px;
@@ -580,6 +619,9 @@ header.header.active .promo-actions-block .promo-action-btn {
 .header .logo-block a {
   display: block;
 }
+.header .logoPc img {
+  width: 184px;
+}
 /* line 192, ../scss/_navigation.scss */
 .header .navigation-container {
   display: inline-block;
@@ -761,7 +803,7 @@ header.header.active .promo-actions-block .promo-action-btn {
 }
 /* line 314, ../scss/_navigation.scss */
 .header .header-right-part .menu-button-block {
-  padding: 55px 0;
+  /* padding: 55px 0; */
   margin-left: 64px;
   display: none;
 }
@@ -835,6 +877,7 @@ header.header.active .promo-actions-block .promo-action-btn {
   flex-direction: row;
   justify-content: space-between;
   padding: 24px 20px;
+  background-color: #130b26;
   border-bottom: 2px solid #321e5b;
 }
 .mobTopWrap .balancebox {
@@ -874,6 +917,9 @@ html[lang="th"] .welcome .main-title-block .game-name {
 }
 html[lang="th"] .main-title-block {
   text-align: center;
+}
+.mobTopWrap {
+  height: 84px;
 }
 
 /* line 362, ../scss/_navigation.scss */
@@ -1321,7 +1367,16 @@ html[lang="th"] .main-title-block {
 /* line 2, ../scss/_middle.scss */
 body.cropped,
 html.cropped {
-  overflow: hidden;
+  height: 100vh;
+  overflow: hidden !important;
+}
+
+html.cropped body .header {
+  height: 94px;
+  background: linear-gradient(to bottom, #100920 90%, transparent);
+}
+html.cropped body .header:after{
+  height: 120px;
 }
 
 /* line 6, ../scss/_middle.scss */
@@ -6528,6 +6583,10 @@ input:checked + .remem:before{
       background: rgba(6,3,8,0.99); 
      box-shadow: 0px 0px 97px 220px rgba(6,3,8,0.99); 
   }
+  .svgWrap {
+    left: 1px;
+    bottom: 30px;
+  }
 
   .footer.footer-home .bitcoin-block{
     position: relative;
@@ -6674,8 +6733,8 @@ input:checked + .remem:before{
   }
   /* line 927, ../scss/_responsive.scss */
   body .header .logo-block {
-    max-width: 153px;
-    margin-top: 0;
+    max-width: 160px;
+    margin-top: -1px;
   }
   /* line 931, ../scss/_responsive.scss */
   body .header .header-right-part {
@@ -6684,7 +6743,7 @@ input:checked + .remem:before{
   }
   /* line 934, ../scss/_responsive.scss */
   body .header .header-right-part .login-block {
-    height: 75px;
+    /* height: 75px; */
     padding: 0;
     margin-right: 0;
   }
@@ -6714,6 +6773,7 @@ input:checked + .remem:before{
    height: 4px;
    border-radius: 3px;
    background: #fff;
+   transition: .2s;
   }
   /* line 957, ../scss/_responsive.scss */
   body .header .header-right-part .menu-button-block .menu-btn:before, body .header .header-right-part .menu-button-block .menu-btn:after {
@@ -6727,7 +6787,22 @@ input:checked + .remem:before{
   }
   body .header .header-right-part .menu-button-block .menu-btn:after {
     bottom: 10px;
+    transition: .2s;
   }
+
+  .cropped body .header .header-right-part .menu-btn:before {
+    background-color: transparent;
+    height: 0;
+  }
+  .cropped body .header .header-right-part .menu-button-block .menu-btn span{
+    transform: translateY(10px) rotate(45deg);
+  }
+  .cropped body .header .header-right-part .menu-btn:after {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+
+
   /* line 1603, ../scss/_responsive.scss */
   body .header .header-right-part .login-block .login-btn,
   body .header .header-right-part .login-block .reg-btn,
@@ -6753,7 +6828,11 @@ input:checked + .remem:before{
   }
   /* line 144, ../scss/_responsive.scss */
   body .header {
-    z-index: 99;
+    z-index: 9999999;
+  }
+  html.cropped .header {
+    position: fixed;
+    top: 0;
   }
   /* line 147, ../scss/_responsive.scss */
   body .header.usr {
@@ -6780,7 +6859,7 @@ input:checked + .remem:before{
   /* line 167, ../scss/_responsive.scss */
   body .header .header-right-part .login-block{
     position: relative;
-    height: 146px;
+    /* height: 146px; */
     /* border-right: 1px solid rgba(246, 23, 202, 0.5); */
    
   }
@@ -8589,15 +8668,15 @@ input:checked + .remem:before{
 
   /* line 1596, ../scss/_responsive.scss */
   body .header .logo-block {
-    max-width: 153px;
+    max-width: 160px;
   }
   /* line 1600, ../scss/_responsive.scss */
 
   /* line 1608, ../scss/_responsive.scss */
-  body .header .header-right-part .login-block .login-btn:before {
+  /* body .header .header-right-part .login-block .login-btn:before {
     background-size: 1600%;
     margin-top: -11px;
-  }
+  } */
 
 
   /* line 1616, ../scss/_responsive.scss */
@@ -9009,7 +9088,21 @@ input:checked + .remem:before{
 
 
 
+@media (max-width: 600px) {
 
+  .header-left .logo-block .logoPc {
+    width: 50px;
+    overflow: hidden;
+  }
+  .header .logoPc img {
+    width: auto;
+    max-width: 160px;
+  }
+  /* .svgWrap {
+    left: 2px;
+    bottom: 30px;
+  } */
+}
 
 
 
@@ -9048,6 +9141,16 @@ input:checked + .remem:before{
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+.mobTopWrap {
+  height: 96px;
+}
+  
+  .mobile-menu {
+    width: 100%;
+  }
+  .mobile-menu .popup-entry .close-icon {
+    right: 5px;
+  }
 
   .termWrapperInner {
     max-height: 500px;
@@ -9158,19 +9261,8 @@ input:checked + .remem:before{
     order: 8
   }
 
-  .mobile-menu {
-    width: 100%;
-  }
-  .mobile-menu .popup-entry .close-icon {
-    right: 5px;
-  }
-  .header-left .logo-block .logoPc {
-    display: none;
-  }
-  .header-left .logo-block .logoMob {
-    display: block;
-    margin-top: 2px;
-  }
+
+  
 
 
   /* line 2040, ../scss/_responsive.scss */
@@ -9971,7 +10063,7 @@ input:checked + .remem:before{
 @media (max-height: 400px) {
   body .mobile-container .welcome-mob {
     padding-top: 150px;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
     background: url(../media/images/bg/welcome-mobile-light.jpg) center 15% no-repeat;
     background-size: cover;
   }
