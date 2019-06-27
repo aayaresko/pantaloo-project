@@ -12,10 +12,42 @@ $(document).ready(function () {
     gamePopup();
     bonusSlider();
     controlsInit();
-    blockFilter();
+	blockFilter();
+	animLogo();
     // resizeIframe();
     // $(window).on('resize', resizeIframe);
-    // preloader();
+	// preloader();
+	
+function animLogo() {                   
+	let step = 0
+	let i = 0
+	for(i; i < 5; i++){ 
+		(function(){               
+			let svgWrap = document.querySelector('.svgWrap')
+			let logo = document.getElementById('anim')
+
+			setTimeout(function() {
+				logo.classList.add("move");
+				svgWrap.style.transform = 'scaleX(1.5)'
+				logo.style.filter = 'blur(1.5px)';    
+				logo.style.transform = 'translateX(-'+step+'px)';
+				setTimeout(function() {
+					logo.classList.remove("move");
+					svgWrap.style.transform = 'scale(1)'
+					logo.style.filter = 'blur(0)';
+				}, 200)
+
+				step +=40
+
+			}, 100 + (3000*i));              
+		})(i)
+
+	}
+}
+
+setInterval(function() {
+	animLogo() 
+}, 15000);	
 
 
 function controlsInit() {
@@ -39,9 +71,9 @@ function mobMenuInit() {
     if ($(window).width() < 1080) {
         $('.header-right-part .menu-btn').click(function (e) {
             e.preventDefault();
-            $('body, html').addClass('cropped');
-            $('.mobile-menu').addClass('active');
-            $('.overlayMenu').addClass('active');
+            $('body, html').toggleClass('cropped');
+            $('.mobile-menu').toggleClass('active');
+            $('.overlayMenu').toggleClass('active');
             // return false;
         })
         $('.mobile-menu .close-icon').click(function (e) {
