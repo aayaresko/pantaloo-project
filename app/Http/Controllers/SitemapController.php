@@ -14,12 +14,7 @@ class SitemapController extends Controller
      */
     public function getSiteMap(Request $request)
     {
-        $name = 'sitemap.xml';
-        $path = storage_path("app/public") . '/' . $name;
-        if (!file_exists($path)) {
-            Artisan::call('createSitemap');
-        }
-        return response()->file($path);
+        return \SitemapHelper::gen();
     }
 
     public function index()
