@@ -100,14 +100,30 @@
 <!-- header start -->
 <header class="header @if(Auth::check()) usr @endif">
     <div class="header-left">
-        <div class="logo-block">
-            @if(Route::currentRouteName() == 'main')
-                <a class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
-                <a class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
-            @else
-                <a href="/{{ app()->getLocale() }}" class="logoPc"><img src="/media/images/logo.png" alt="logo"></a>
-                <a href="/{{ app()->getLocale() }}" class="logoMob"><img src="/media/images/logoSmall.png" alt="logo"></a>
-            @endif
+        <div class="logo-block">       
+            <a @if(Route::currentRouteName() != 'main') href="/{{ app()->getLocale() }}" @endif class="logoPc">
+                <img src="/media/images/casinobit_logo_white_empty.svg" alt="logo">
+                <span class="svgWrap">
+                    <svg id="anim" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 1250 110" enable-background="new 0 0 1250 110" xml:space="preserve">
+                    <path fill="#fff" d="M398.7,39.9c-2.6,0-5.1,0.4-7.5,1.2c8-8.9,7.2-22.6-1.7-30.6s-22.6-7.2-30.6,1.7c-7.4,8.2-7.4,20.7,0,29
+                        c-2.4-0.8-5-1.2-7.5-1.2c-13.5,0-24.5,10.9-24.5,24.4s10.9,24.5,24.4,24.5c9.6,0,18.4-5.6,22.3-14.3c-3.7,13.8-14.3,24.8-28,28.8
+                        l1.5,1.7H403l1.5-1.7c-13.7-4.1-24.3-15-28-28.8c5.6,12.3,20.1,17.7,32.4,12.1c12.3-5.6,17.7-20.1,12.1-32.4
+                        C417,45.5,408.3,39.9,398.7,39.9z"/>
+                    <path fill="#fff" d="M875,5c-3.1,8.1-10.5,18.8-20.9,29.1C843.8,44.5,833.1,51.9,825,55c8.1,3.1,18.8,10.5,29.1,20.9
+                        C864.5,86.2,871.9,97,875,105c3.1-8.1,10.5-18.8,20.9-29.1C906.2,65.5,917,58.1,925,55c-8.1-3.1-18.8-10.5-29.1-20.9
+                        C885.5,23.8,878.1,13.1,875,5z"/>
+                    <path fill="#fff" d="M1147.7,52.4c6.2-3.4,9.4-8.6,9.4-15.6c0-10.7-5.9-18.2-19.5-19.9V5h-12.4v11.3c-2,0-2.9,0-9.5,0V5h-12.4
+                        v11.3h-13.1v77.4h13.1V105h12.4V93.7h9.5V105h12.4V93.3c14.7-1.4,22.2-10,22.2-22.8C1159.8,61.3,1156.1,55.4,1147.7,52.4z
+                         M1133.9,40.5c0,8-7.2,6.7-19.6,6.7V33.8C1128.2,33.8,1133.9,33.1,1133.9,40.5z M1114.3,75.6V61.3c13.7,0,22.1-1.3,22.1,7.1
+                        C1136.4,77.1,1127.8,75.6,1114.3,75.6L1114.3,75.6z"/>
+                    <path fill="#fff" d="M625,22.8c-4.9-23.7-44.4-25-53.4,3.3C557.3,70.7,615.2,84.9,625,105c9.8-20.1,67.7-34.3,53.5-78.9
+                        C669.4-2.1,629.9-0.8,625,22.8z"/>
+                    <path fill="#fff" d="M125,5c-8.2,17-57.2,29-45.2,66.7c7.1,22.3,36.7,22.8,44,6.5c-3.1,12.2-12.3,21.8-24.4,25.4l1.3,1.4h48.5
+                        l1.3-1.5c-12-3.6-21.3-13.2-24.4-25.4c7.3,16.4,36.9,15.8,44-6.5C182.2,34,133.3,22,125,5z"/>
+                    </svg>
+                </span>    
+            </a>         
         </div>
     </div>
     <div class="navigation-container">
@@ -269,62 +285,7 @@
 
 <div class="mobile-menu">
     <div class="popup-entry">
-        <div class="mobTopWrap">
-
-            <div class="logo-container">
-                <a href="/" class="logo"><img src="/media/images/logoSmall.png" alt="logo"></a>
-            </div>
-            @if(Auth::guest())
-                <div class="auth-block-mobile">
-                    <div class="login-block floated">
-                        <a href="{{url('#login')}}" class="login-btn"><span
-                                    class="text">{{ trans('casino.login') }}</span></a>
-                    </div>
-                    <div class="registration-block floated">
-                        <a href="{{url('#registr')}}" class="reg-btn"><span
-                                    class="text">{{ trans('casino.registration') }}</span></a>
-                    </div>
-                </div>
-            @endif
-            @if(Auth::check())
-
-
-                <div class="wlc-usr">
-
-                    <ul class="balancebox floated">
-                        <li class="clearfix">
-                            <a href="{{route('deposit', ['lang' => $currentLang])}}" class="usr-add-balance"></a>
-                            <div class="balancebox-title">
-                                <span>{{ trans('casino.balance') }}</span>
-                                <p class="balancebox-getbalance">{{Auth::user()->getBalance()}}
-                                    m{{strtoupper(Auth::user()->currency->title)}}</p>
-                            </div>
-                        </li>
-                        <ul class="balancebox-dropdown">
-                            <li>
-                                <div class="balancebox-dropdown-title">
-                                    <span>Real Balance</span>
-                                    <p class="balancebox-getrealbalance">{{Auth::user()->getRealBalance()}}
-                                        m{{strtoupper(Auth::user()->currency->title)}}</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="balancebox-dropdown-title">
-                                    <span>Bonus Balance</span>
-                                    <p class="balancebox-getbonusbalance">{{Auth::user()->getBonusBalance()}}
-                                        m{{strtoupper(Auth::user()->currency->title)}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </ul>
-
-                </div>
-
-            @endif
-            <a href="#" class="close-icon"></a>
-        </div>
-
-
+        <div class="mobTopWrap"></div>
         <div class="games-listing-block mobGameBlock">{{--{{ trans('casino.gambling_card_games') }}--}}
             <ul class="games-listing">
                 @include('footer_links')

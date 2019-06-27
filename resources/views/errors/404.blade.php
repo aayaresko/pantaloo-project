@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/main.css?v=1">
-    <title>Document</title>
+    <title>Page not found | Casinobit</title>
 </head>
 <body>
     <div class="notFoundWrapper">
             <div class="pageWrap">
                 <img src="/media/images/404img.png">
                 <div class="notFoundPageInfo">
-                    <h3>Woops ... !</h3>
-                    <p>Sorry, we arent able to find what you where looking for</p>
+                    <h3>Whoops!..</h3>
+                    <p>Sorry, we could not find what you were looking for.</p>
                     <a href="#" class="btn-back" onclick="window.history.back();return false">Back</a>
                     <a href="https://casinobit.io/" class="btn-back notArrow">home</a>
                 </div>
