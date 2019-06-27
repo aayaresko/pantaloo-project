@@ -27,7 +27,7 @@ Route::get('robots.txt', function (Illuminate\Http\Request $request) {
     ]);
 });
 
-Route::get('sitemap.xml', ['as' => 'siteMap', 'uses' => 'SitemapController@getSiteMap']);
+Route::get('sitemap.xml', ['as' => 'siteMap', 'uses' => 'SitemapController@index']);
 //for seo
 
 //for optimization add array keep all language in config
