@@ -14,6 +14,7 @@
         <ul class="footerLinks">
             <li class="rightReservedTxt">© All rights reserved</li>
             <li><a href="{{$partnerPage}}" class="afiliate" target="_blank">{{ trans('casino.affiliates') }}</a></li>
+            <li><a href="{{route('privacy-policy', ['lang' => $currentLang])}}" target="_blank">Privacy Policy</a></li>
             <li><a target="_blank" href="{{route('support', ['lang' => $currentLang])}}" class="support">{{ trans('casino.frq') }}</a></li>
             <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
             <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>

@@ -116,7 +116,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
         Route::get('/faq', ['as' => 'support', 'uses' => 'ChatController@index']);
 
-        Route::get('/privacyPolicy', ['as' => 'privacyPolicy', 'uses' => 'ChatController@privacyPolicy']);
+        Route::get('/privacy-policy', ['as' => 'privacy-policy', 'uses' => 'ChatController@privacyPolicy']);
 
         Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
 

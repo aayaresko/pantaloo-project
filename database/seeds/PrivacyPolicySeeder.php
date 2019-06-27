@@ -25,6 +25,17 @@ class PrivacyPolicySeeder extends Seeder
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
+            [
+                'locale' => 'en',
+                'namespace' => '*',
+                'group' => 'casino',
+                'item' => 'privacy_policy_title',
+                'text' => 'privacy_policy',
+                'unstable' => '0',
+                'locked' => '0',
+                'created_at' => $currentDate,
+                'updated_at' => $currentDate,
+            ],
         ];
 
         foreach ($data as $item) {

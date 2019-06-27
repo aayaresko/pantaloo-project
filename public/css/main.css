@@ -5234,13 +5234,27 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: 0px;
 }
 
+.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper,
+.page-content-block .page-content-container.privacyPolicy .page-content-entry .page-entry {
+  font-family: 'MyriadPro-medium' , sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #b8a7cd;
+  /* margin-bottom: 20px; */
+}
 
 .faqWrapper .page-entry > h1,
 .faqWrapper .page-entry > h2,
 .faqWrapper .page-entry > h3,
 .faqWrapper .page-entry > h4,
 .faqWrapper .page-entry > h5,
-.faqWrapper .page-entry > h6{
+.faqWrapper .page-entry > h6,
+.privacyPolicy .page-entry > h1,
+.privacyPolicy .page-entry > h2,
+.privacyPolicy .page-entry > h3,
+.privacyPolicy .page-entry > h4,
+.privacyPolicy .page-entry > h5,
+.privacyPolicy .page-entry > h6{
   padding-left: 20px;
   position: relative;
   font-family: 'MyriadPro-Bold' , sans-serif;
@@ -5251,6 +5265,16 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-bottom: 13px;
   margin-top: 13px;
   cursor: pointer;
+  color: #fff;
+}
+
+.privacyPolicy .page-entry > h1,
+.privacyPolicy .page-entry > h2,
+.privacyPolicy .page-entry > h3,
+.privacyPolicy .page-entry > h4,
+.privacyPolicy .page-entry > h5,
+.privacyPolicy .page-entry > h6{
+  padding-left: 0px;
 }
 
 .faqWrapper .page-entry > h1:before,
@@ -5305,14 +5329,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: 15px;
   margin-bottom: 15px;
   cursor: pointer;
-}
-
-.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper{
-  font-family: 'MyriadPro-medium' , sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-  color: #b8a7cd;
-  /* margin-bottom: 20px; */
 }
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry{
@@ -5745,14 +5761,6 @@ text-transform: uppercase;
 }
 
 /* end pop up ======================================= */
-
-
-
-
-.textWrapper.showFaq{
-  max-height: 2000px;
-  opacity: 1;
-}
 
 .textWrapper > p,
 .textWrapper > ol,
@@ -6287,6 +6295,7 @@ input:checked + .remem:before{
     left: 50%;
     width: 100%;
     transform: translate(-50%,-50%);
+    display: none;
 }
 
 .gameTitle{
@@ -7536,7 +7545,8 @@ input:checked + .remem:before{
     padding-bottom: 40px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 290px 0px;
   }
 
@@ -8350,11 +8360,13 @@ input:checked + .remem:before{
     padding-bottom: 10px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 190px 0px;
   }
 
-  body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading{
+  body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading,
+  body .page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading{
       padding-bottom: 0px;
   }
 
@@ -9074,7 +9086,8 @@ input:checked + .remem:before{
     padding-top: 110px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 230px 0px;
   }
 

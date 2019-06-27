@@ -15,6 +15,6 @@ class ChatController extends Controller
 
     public function privacyPolicy()
     {
-        return view('privacy_policy');
+        return view('privacy-policy');
     }
 }
