@@ -36,6 +36,11 @@ class SitemapHelper
         return $result;
     }
 
+    private static function add_entry($urlTemplate)
+    {
+        $emtyForDefLang = strpos($urlTemplate, "{lang?}");
+    }
+
     public static function gen()
     {
         // create new sitemap object
@@ -55,7 +60,7 @@ class SitemapHelper
         ];
 
         $data = [
-            '/{lang}' => [
+            '/{lang?}' => [
                 'priority' => 1,
                 'freq' => self::FREQ_ALWAYS,
             ],
