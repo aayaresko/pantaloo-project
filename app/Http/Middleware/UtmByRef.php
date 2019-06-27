@@ -15,9 +15,9 @@ class UtmByRef
      */
     public function handle($request, Closure $next)
     {
-        if ($request->has('ref')){
+        if ($request->filled('ref') && $request->isMethod('GET')){
             $url = $request->getBaseUrl() . '?utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref');
-            //return redirect($url);
+            return redirect($url);
         }
         return $next($request);
     }
