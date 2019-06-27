@@ -19,58 +19,24 @@ class SitemapHelper
 
     const MAIN_LANG = 'en';
 
-    private static $alternateLangs;
-    private static $date;
+    private static $alternateLangs, $date, $sitemap, $entrys;
 
-    private static $sitemap;
-
-    private static $entrys = [
-        '{lang?}' => [
-            'priority' => 1,
-            'freq' => self::FREQ_ALWAYS,
-        ],
-        '/{lang}/games' => [
-            'priority' => 0.7,
-            'freq' => self::FREQ_DAILY,
-        ],
-        '/{lang}/faq' => [
-            'priority' => 0.3,
-            'freq' => self::FREQ_MONTHLY,
-        ],
-        '/{lang}/bonuses' => [
-            'priority' => 0.3,
-            'freq' => self::FREQ_MONTHLY,
-        ],
-    ];
-
-    public static function gen()
+    public static function build()
     {
         self::init();
 
-        self::add_categories();
+        self::add_entry_template('{lang?}', 1, self::FREQ_ALWAYS);
+        self::add_entry_template('/{lang}/games', 0.7, self::FREQ_DAILY);
+        self::add_entry_template('/{lang}/faq', 0.3, self::FREQ_MONTHLY);
+        self::add_entry_template('/{lang}/bonuses', 0.3, self::FREQ_MONTHLY);
+
+        self::add_categories_template();
 
         foreach (self::$entrys as $urlTemplate => $extra) {
             self::add_entry($urlTemplate, $extra);
         }
 
         return self::$sitemap->render('xml');
-    }
-
-    private static function add_categories(){
-
-        $getCategories = DB::table('games_types')
-            ->where('active', 1)->get();
-
-        foreach ($getCategories as $category) {
-
-            $urlTemplate = '{lang}/games/' . preg_replace('/\s/', '-', $category->default_name);
-
-            self::add_entry_template($urlTemplate, [
-                'priority' => 0.7,
-                'freq' => self::FREQ_DAILY,
-                'date' => $category->updated_at
-            ]);
-        }
     }
 
     private static function init()
@@ -80,9 +46,22 @@ class SitemapHelper
         self::$sitemap = App::make('sitemap');
     }
 
-    private static function add_entry_template($urlTemplate, $extra)
+    private static function add_entry_template($urlTemplate, $priority, $freq, $extra = [])
     {
-        self::$entrys[$urlTemplate] = $extra;
+        $_extra['priority'] = $priority;
+        $_extra['freq'] = $freq;
+
+        self::$entrys[$urlTemplate] = array_merge($extra, $_extra);
+    }
+
+    private static function add_categories_template()
+    {
+        $getCategories = DB::table('games_types')->where('active', 1)->get();
+
+        foreach ($getCategories as $category) {
+            $urlTemplate = '{lang}/games/' . preg_replace('/\s/', '-', $category->default_name);
+            self::add_entry_template($urlTemplate, 0.7, self::FREQ_DAILY, ['date' => $category->updated_at]);
+        }
     }
 
     private static function prepare_url($template, $lang)
