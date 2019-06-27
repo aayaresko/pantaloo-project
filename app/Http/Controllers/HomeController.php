@@ -32,7 +32,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function index($lang = '')
+    public function index(Request $request, $lang = '')
     {
         if ('en' == $lang){
             return redirect('/');
@@ -60,7 +60,7 @@ class HomeController extends Controller
             return redirect($url, 301);
         }
 
-        return $this->index();
+        return $this->index($request);
 
     }
 }

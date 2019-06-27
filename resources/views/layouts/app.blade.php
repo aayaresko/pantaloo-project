@@ -127,7 +127,6 @@
         </div>
     </div>
     <div class="navigation-container">
-
         @if(!Auth::check())
 
             <ul class="langbox floated">
@@ -137,7 +136,8 @@
                     @foreach ($languages as $language)
                         @if(app()->getLocale() == $language) @continue @endif
                         <li>
-                            <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
+
+                            <a href="{{ LangAlternatePageUrl($language) }}"
                                class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                 <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
                                 <span>{{ $language }}</span>
@@ -260,7 +260,7 @@
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
                             <li>
-                                <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
+                                <a href="{{ LangAlternatePageUrl($language) }}"
                                    class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                     <img src="{{ asset("assets/images/languages/$language.png") }}"
                                          alt="{{ $language }}"/> <span>{{ $language }}</span>
@@ -315,7 +315,7 @@
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
                     <li>
-                        <a href="{{ url("/language/$language") }}"
+                        <a href="{{ LangAlternatePageUrl($language) }}"
                            class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
                             <span>{{ $language }}</span>
