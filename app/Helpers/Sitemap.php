@@ -19,118 +19,102 @@ class SitemapHelper
 
     const MAIN_LANG = 'en';
 
-    private static function prepare_url($template, $lang = self::MAIN_LANG)
+    private static $alternateLangs;
+    private static $date;
+
+    private static $sitemap;
+
+    private static $entrys = [
+        '{lang?}' => [
+            'priority' => 1,
+            'freq' => self::FREQ_ALWAYS,
+        ],
+        '/{lang}/games' => [
+            'priority' => 0.7,
+            'freq' => self::FREQ_DAILY,
+        ],
+        '/{lang}/faq' => [
+            'priority' => 0.3,
+            'freq' => self::FREQ_MONTHLY,
+        ],
+        '/{lang}/bonuses' => [
+            'priority' => 0.3,
+            'freq' => self::FREQ_MONTHLY,
+        ],
+    ];
+
+    public static function gen()
     {
-        return URL::to(str_replace('{lang}', $lang, $template));
+        self::init();
+
+        self::add_categories();
+
+        foreach (self::$entrys as $urlTemplate => $extra) {
+            self::add_entry($urlTemplate, $extra);
+        }
+
+        return self::$sitemap->render('xml');
     }
 
-    private static function prepare_alternate($template, $langs)
+    private static function add_categories(){
+
+        $getCategories = DB::table('games_types')
+            ->where('active', 1)->get();
+
+        foreach ($getCategories as $category) {
+
+            $urlTemplate = '{lang}/games/' . preg_replace('/\s/', '-', $category->default_name);
+
+            self::add_entry_template($urlTemplate, [
+                'priority' => 0.7,
+                'freq' => self::FREQ_DAILY,
+                'date' => $category->updated_at
+            ]);
+        }
+    }
+
+    private static function init()
+    {
+        self::$alternateLangs = array_diff(GeneralHelper::getListLanguage(), [self::MAIN_LANG]);
+        self::$date = date(self::DATE_FORMAT, time());
+        self::$sitemap = App::make('sitemap');
+    }
+
+    private static function add_entry_template($urlTemplate, $extra)
+    {
+        self::$entrys[$urlTemplate] = $extra;
+    }
+
+    private static function prepare_url($template, $lang)
+    {
+        return URL::to(preg_replace('/{lang\??}/', $lang, $template));
+    }
+
+    private static function prepare_alternate($template)
     {
         $result = array_map(function ($v) use ($template) {
             return [
                 'language' => $v,
                 'url' => self::prepare_url($template, $v)
             ];
-        }, $langs);
+        }, self::$alternateLangs);
 
         return $result;
     }
 
-    private static function add_entry($urlTemplate)
+    private static function add_entry($urlTemplate, $extra)
     {
-        $emtyForDefLang = strpos($urlTemplate, "{lang?}");
-    }
+        $ommitDefLang = false !== strpos($urlTemplate, "{lang?}");
+        $mainUrl = self::prepare_url($urlTemplate, $ommitDefLang ? '' : self::MAIN_LANG);
 
-    public static function gen()
-    {
-        // create new sitemap object
-        $sitemap = App::make('sitemap');
+        $priority = $extra['priority'];
+        $freq = $extra['freq'];
 
-        // add item with translations (url, date, priority, freq, images, title, translations)
+        $date = isset($extra['date']) ? $extra['date'] : self::$date;
 
-        $languages = array_diff(GeneralHelper::getListLanguage(), [self::MAIN_LANG]);
+        $alternates = self::prepare_alternate($urlTemplate);
 
-        $relations = [
-            ['array' => 'translations', 'urlPart' => ''],
-            ['array' => 'translationsGames', 'urlPart' => 'games'],
-            ['array' => 'translationsFaq', 'urlPart' => 'faq'],
-            ['array' => 'translationsBonuses', 'urlPart' => 'bonuses'],
-            ['array' => 'translationsPasswordForgot', 'urlPart' => 'password/forgot'],
-            ['array' => 'translationsPasswordEmail', 'urlPart' => 'password/email'],
-        ];
-
-        $data = [
-            '/{lang?}' => [
-                'priority' => 1,
-                'freq' => self::FREQ_ALWAYS,
-            ],
-            '{lang}/games' => [
-                'priority' => 0.7,
-                'freq' => self::FREQ_DAILY,
-            ],
-        ];
-
-        $date = date(self::DATE_FORMAT, time());
-
-        foreach ($data as $urlTemplate => $extra) {
-
-            dd(self::prepare_alternate($urlTemplate, $languages));
-
-            $mainUrl = self::prepare_url($urlTemplate);
-
-            $alternateUrls = [];
-
-            foreach ($languages as $language) {
-                $alternateUrls[] = [
-                    'language' => $language,
-                    'url' => self::prepare_url($urlTemplate, $language)
-                ];
-            }
-
-            $sitemap->add($mainUrl, $date, $extra['priority'], $extra['freq'], [], null, $alternateUrls);
-        }
-
-//        foreach ($relations as $relation) {
-//            ${$relation['array']} = [];
-//            foreach ($languages as $language) {
-//                array_push(${$relation['array']},
-//                    ['language' => $language, 'url' => URL::to("/{$language}/" . $relation['urlPart'])]);
-//            }
-//        }
-//
-//        $getCategories = DB::table('games_types')
-//            ->where('active', 1)->orderBy('id', 'desc')->get();
-//
-//        foreach ($getCategories as $category) {
-//            $category_name = $category->default_name;
-//            $category_name = preg_replace('/\s/', '-', $category_name);
-//            $updated_at = $category->updated_at;
-//
-//            $translationsCategory = [];
-//            foreach ($languages as $language) {
-//                array_push($translationsCategory, ['language' => $language, 'url' => URL::to("/{$language}/games/" . $category_name)]);
-//            }
-//
-//            $sitemap->add(URL::to('/en/games/' . $category_name), $updated_at, '0.7', 'daily', [], null, $translationsCategory);
-//        }
-//
-//        $getGames = DB::table('games_list')->orderBy('system_id', 'desc')->get();
-//
-//        foreach ($getGames as $game) {
-//            $game_id = $game->system_id;
-//            $provider_id = $game->provider_id;
-//            $updated_at = $game->updated_at;
-//            $sitemap->add(URL::to('/integratedGameLink/provider/' . $provider_id . '/game/' . $game_id), $updated_at, '0.5', 'weekly');
-//        }
-
-        //dd($translations);
-
-        //$sitemap->add(URL::to('/en'), date($dateFormat, time()), '1', 'always', [], null, $translations);
-        //$sitemap->add(URL::to('/en/games'), date($dateFormat, time()), '0.7', 'daily', [], null, $translationsGames);
-        //$sitemap->add(URL::to('/en/faq'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsFaq);
-        //$sitemap->add(URL::to('/en/bonuses'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsBonuses);
-
-        return $sitemap->render('xml');
+        self::$sitemap->add($mainUrl, $date, $priority, $freq, [], null, $alternates);
     }
 }
 
