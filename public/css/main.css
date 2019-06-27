@@ -5223,7 +5223,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: url('../media/images/icons/arrow-right.svg') no-repeat;
  }
 
-.page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading .page-title{
+.page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading .page-title,
+.page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading .page-title{
   color: #fff;
   font-family: 'MyriadPro-Bold' , sans-serif;
   font-size: 40px;
@@ -9035,6 +9036,12 @@ input:checked + .remem:before{
   .reg-popup.active,
   .log-popup.active {
     overflow-y: scroll;
+  }
+}
+
+@media (max-width: 991px) and (orientation: landscape){
+  .regPopUpWrapper{
+    margin-top: 100px;
   }
 }
 

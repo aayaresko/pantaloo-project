@@ -395,11 +395,7 @@ function gamePopup() {
 	});
 
 	
-
-
-
 	let inputType = 1;
-
 
 	$('.showPasBtn').on("click", function(){
 
@@ -416,7 +412,7 @@ function gamePopup() {
 
     $(window).on('scroll', function () {
 
-        if ($(window).scrollTop() > 500) {
+        if ($(window).scrollTop() > 400) {
             $(".toTop").addClass("hideBtnToTop");
             // console.log('lol1')
         } else {
@@ -427,7 +423,7 @@ function gamePopup() {
     });
 
     $(".toTop").on("click", function () {
-        $("html").animate({scrollTop: 0}, 1000);
+        $("html, body").animate({scrollTop: 0}, 1000);
     });
 
 
