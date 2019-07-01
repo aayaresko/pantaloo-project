@@ -423,7 +423,7 @@ function gamePopup() {
 
 
 	$(".textWrapper h1, .textWrapper h2, .textWrapper h3, .textWrapper h4, .textWrapper h5, .textWrapper h6").on("click", function(){
-		$(this).nextUntil('h2').toggleClass("showFaq");
+		$(this).nextUntil('h1, h2, h3, h4, h5, h6').toggleClass("showFaq");
 	});
 
 	
@@ -523,5 +523,54 @@ function gamePopup() {
 // }
 //
 // preloader();
+
+	let acceptCookie = 'acceptCookie';
+
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+		  var c = ca[i];
+		  while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		  }
+		  if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		  }
+		}
+		return "";
+	  }
+
+
+	//   console.log(getCookie('acceptCookie'))
+
+	  function checkCookie() {
+		  
+		let user = getCookie(acceptCookie);
+
+		if (user == '') {
+			$(".cookieWarningWrapper").addClass("showCookie");
+		} else {
+			$(".cookieWarningWrapper").removeClass("showCookie");
+		}
+
+	  }
+
+	  checkCookie();
+
+		$(".cookieBtn").on("click", function(){
+
+			setCookie(acceptCookie, true, 0.1);
+
+			$(".cookieWarningWrapper").removeClass("showCookie");
+
+		});
 
 });
