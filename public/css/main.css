@@ -4107,7 +4107,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   letter-spacing: 1px;
   text-decoration: none;
   background-image: linear-gradient(14deg, #421f91 0%, #a92e9f 100%);
-  padding: 10px 35px 10px 35px;
+  padding: 10px 20px 10px 20px;
   position: relative;
 }
 
@@ -4668,17 +4668,22 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   padding: 0;
   margin: 0;
   list-style: none;
-  max-width: 177px;
+  /* max-width: 200px; */
   position: relative;
   z-index: 99999;
 }
+
+.cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li {
+  display: inline-block;
+}
+
 /* line 2409, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
   display: block;
   color: rgba(255, 255, 255, 1);
   padding: 10px 0;
   /* padding-bottom: 17px; */
-  padding-left: 60px;
+  padding-left: 50px;
   padding-right: 16px;
   font-size: 15px;
   text-transform: uppercase;
@@ -4696,7 +4701,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 /* line 2422, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a:before {
   position: absolute;
-  left: 16px;
+  left: 11px;
   content: '';
   display: block;
   width: 29px;
@@ -6088,6 +6093,10 @@ text-transform: uppercase;
   margin-bottom: 18px;
 }
 
+.emailConfInfo:first-letter{
+  text-transform: uppercase;
+}
+
 .emailConfInfo button{
   background-color: transparent;
   border: none;
@@ -6505,6 +6514,10 @@ text-transform: uppercase;
   opacity: 0.4;
 }
 
+.activBonusPoUpWrap p{
+  text-align: center;
+}
+
 .updateUserDataBtn:before{
   content: '';
   position: absolute;
@@ -6677,6 +6690,8 @@ text-transform: uppercase;
   max-height: 2000px;
   opacity: 1;
 }
+
+
 
 .textWrapper > p,
 .textWrapper > ol,
