@@ -32,8 +32,12 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function index()
+    public function index(Request $request, $lang = '')
     {
+        if ('en' == $lang){
+            return redirect('/');
+        }
+
         MetaTag::set('title', trans("metatag.main__title"));
         MetaTag::set('description', trans("metatag.main__description"));
 
@@ -50,8 +54,13 @@ class HomeController extends Controller
         $sessionFlash = $sessionFlashAll['old'];
         $lang = config('currentLang');
 
-        $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()).$_SERVER['REQUEST_URI'], '/');
+        //dd($lang);
+        if ('en' != $lang) {
+            $url = rtrim(url("/$lang", [], GeneralHelper::isSecureProtocol()) . $_SERVER['REQUEST_URI'], '/');
+            return redirect($url, 301);
+        }
 
-        return redirect($url, 301);
+        return $this->index($request);
+
     }
 }

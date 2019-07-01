@@ -27,7 +27,7 @@ Route::get('robots.txt', function (Illuminate\Http\Request $request) {
     ]);
 });
 
-Route::get('sitemap.xml', ['as' => 'siteMap', 'uses' => 'SitemapController@getSiteMap']);
+Route::get('sitemap.xml', ['as' => 'siteMap', 'uses' => 'SitemapController@index']);
 //for seo
 
 //for optimization add array keep all language in config
@@ -120,6 +120,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
         Route::get('/faq', ['as' => 'support', 'uses' => 'ChatController@index']);
         Route::get('/contact', ['as' => 'contact', 'uses' => 'ContactUsController@create']);
+        Route::post('/contact', ['as' => 'contact', 'uses' => 'ContactUsController@store']);
+
+        Route::get('/privacy-policy', ['as' => 'privacy-policy', 'uses' => 'ChatController@privacyPolicy']);
 
         Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
 

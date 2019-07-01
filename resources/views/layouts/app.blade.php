@@ -127,7 +127,6 @@
         </div>
     </div>
     <div class="navigation-container">
-
         @if(!Auth::check())
 
             <ul class="langbox floated">
@@ -137,7 +136,8 @@
                     @foreach ($languages as $language)
                         @if(app()->getLocale() == $language) @continue @endif
                         <li>
-                            <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
+
+                            <a href="{{ LangAlternatePageUrl($language) }}"
                                class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                 <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
                                 <span>{{ $language }}</span>
@@ -260,7 +260,7 @@
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
                             <li>
-                                <a href="{{ preg_replace("/^\w+/", '/'.$language, \Illuminate\Support\Facades\Request::path()) }}"
+                                <a href="{{ LangAlternatePageUrl($language) }}"
                                    class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                                     <img src="{{ asset("assets/images/languages/$language.png") }}"
                                          alt="{{ $language }}"/> <span>{{ $language }}</span>
@@ -315,7 +315,7 @@
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
                     <li>
-                        <a href="{{ url("/language/$language") }}"
+                        <a href="{{ LangAlternatePageUrl($language) }}"
                            class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
                             <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
                             <span>{{ $language }}</span>
@@ -709,6 +709,22 @@
                             }
                         });
                         window.dispatchEvent(event);
+
+                        window.dataLayer.push({
+                            event: 'eec.purchase', //через название ивента мне нужно будет сделать событие  в ГТМ.
+                            ecommerce: {
+                                purchase: {
+                                    actionField: {
+                                        id: data.depositId, //в этом поле должно отправляться случайно сгенерированое число - нужно обязательно, без него ГТМ и ГА не распознают екомерс событие
+                                        revenue: Math.round(data.deposit) //в это поле должно передаваться значение суммы, на какую пополнен депозит  - это нужно, что бы мы могли видеть отчёты
+                                    },
+                                    products: [{
+                                        name: 'deposit' //ещё одно обязательное поле, что бы ГА понимала название нашего продукта.
+                                    }]
+                                }
+                            }
+                        });
+
                         //ga('gtm1.send', 'event', 'Money', 'Deoposite', 'Sum', Math.round(data.deposit));
 
                         $('.deposit-sum').html('<b>' + data.deposit + '</b> @if(Auth::check()) m{{Auth::user()->currency->title}} @else mBtc @endif');

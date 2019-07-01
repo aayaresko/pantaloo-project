@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BaseMailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class ContactUsController extends Controller
@@ -34,7 +36,46 @@ class ContactUsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        dd(request()->all());
+        $data = $request->validate([
+            'email' => 'required|email',
+            'message' => 'required',
+            'files' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+        ]);
+        $documents = $request->file('files');
+        $allowedFileExtension = ['jpeg',
+            'png',
+            'jpg',
+            'gif',
+            'svg',
+            ];
+
+        //Check uploaded file size and type
+        if ($documents->getError() == 1) {
+            foreach ($documents as $document) {
+                $maxSize = $document->getMaxFileSize() / 1024 / 1024;
+                if ($document > $maxSize) {
+                    return redirect()->back()->withErrors(['The document size must be less than 1Mb']);
+                } else {
+                    $extension = $document->getClientOriginalExtension();
+                    $check = in_array($extension,$allowedFileExtension);
+                    if ($check) {
+                        return redirect()->back()->withErrors(['Sorry only upload images']);
+                    }
+                }
+            }
+            return redirect()->back()->with('Success');
+        }
+
+
+//        $mail =
+
+
+//        $mail = new BaseMailable('emails.confirm', ['link' => $link]);
+//        $mail->subject('Confirm email');
+//        Mail::to('support@casinobit.io ')->send(new BaseMailable($));
+
     }
 
     /**

@@ -12,4 +12,9 @@ class ChatController extends Controller
     {
         return view('chat');
     }
+
+    public function privacyPolicy()
+    {
+        return view('privacy-policy');
+    }
 }

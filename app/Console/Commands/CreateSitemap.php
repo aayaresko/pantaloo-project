@@ -47,10 +47,11 @@ class CreateSitemap extends Command
 
         // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
         // by default cache is disabled
-        $sitemap->setCache('laravel.sitemap', 60);
+        $sitemap->setCache('laravel.sitemap', 0);
 
         // check if there is cached sitemap and build new only if is not
         if (!$sitemap->isCached()) {
+
 
             // add item with translations (url, date, priority, freq, images, title, translations)
             $dateFormat = 'Y-m-dTH:i:sP';
@@ -97,13 +98,16 @@ class CreateSitemap extends Command
                 $updated_at = $game->updated_at;
                 $sitemap->add(URL::to('/integratedGameLink/provider/' . $provider_id . '/game/' . $game_id), $updated_at, '0.5', 'weekly');
             }
-            $sitemap->add(URL::to('/en'), date($dateFormat, time()), '1', 'always', [], null, $translations);
-            $sitemap->add(URL::to('/en/games'), date($dateFormat, time()), '0.7', 'daily', [], null, $translationsGames);
-            $sitemap->add(URL::to('/en/faq'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsFaq);
-            $sitemap->add(URL::to('/en/bonuses'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsBonuses);
+
+            //dd($translations);
+
+            //$sitemap->add(URL::to('/en'), date($dateFormat, time()), '1', 'always', [], null, $translations);
+            //$sitemap->add(URL::to('/en/games'), date($dateFormat, time()), '0.7', 'daily', [], null, $translationsGames);
+            //$sitemap->add(URL::to('/en/faq'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsFaq);
+            //$sitemap->add(URL::to('/en/bonuses'), date($dateFormat, time()), '0.3', 'monthly', [], null, $translationsBonuses);
 
         }
 
-        $sitemap->store('xml', 'sitemap', storage_path("app/public"));
+        return $sitemap->render('xml');
     }
 }
