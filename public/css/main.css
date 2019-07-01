@@ -285,6 +285,35 @@ header.header.active .promo-actions-block .promo-action-btn {
   /*padding: 7px 26px;*/
   /*margin-top: 8px;*/
 }
+#contFile {
+  visibility: hidden;
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: -1000px;
+}
+.contacFormWrap input,
+.contacFormWrap textarea {
+  height: 40px;
+  width: 100%;
+  background: #25153e;
+  border: 1px solid #4d397b;
+  color: rgba(255, 255, 255, 0.6);
+  outline: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  line-height: 40px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.contacFormWrap textarea {
+  height: 175px;
+  resize: none;
+}
+.removeTxt {
+  display: none;
+}
 
 .svgWrap {
   display: block;

@@ -460,7 +460,82 @@ function gamePopup() {
 
     $(".toTop").on("click", function () {
         $("html").animate({scrollTop: 0}, 1000);
-    });
+	});
+
+
+	var newFileList
+	
+	$("#contFile").change(function() {
+		let files = this.files
+		
+
+		console.log(files);
+		
+		if(files.length != 0) {
+			$.each(files, function(i, file) {
+				console.log(file);
+				$('#contFilesWrap').append('<span class="removeTxt">'+remove+'</span><span class="fileToUpload" data-index="'+i+'">'+file.name+'</span>')
+				
+			})
+	
+			$('#attachTxt').hide()
+			$('.removeTxt').show()
+
+		} else {
+			console.log('no files');			
+			$('#contFilesWrap').html('')
+			$('#attachTxt').show()
+		}
+		newFileList = Array.from(files);
+
+		$('#contFilesWrap .removeTxt').on('click', function() {
+			let fileToDelete = $(this).next();
+			$(this).next().hide();
+			$(this).hide()
+			console.log(fileToDelete.data('index'));
+			
+
+			
+
+			newFileList.splice(fileToDelete.data('index'),1);
+
+			// newFileList.splice(newFileList.indexOf(fileToDelete), 1);
+			console.log(fileToDelete);
+			console.log(newFileList);
+
+		})
+
+		// $('#contFileName').html(files)
+		// console.log(this.files);
+	});
+
+
+
+	$('#contForm').submit(function(e) {
+		e.preventDefault()
+		var formData = new FormData(); 
+		formData.append('email', $('#contEmail').val());
+		formData.append('contText', $('#contText').val());
+
+		if (newFileList) {
+			formData.append('file', newFileList);
+			// formData.append('file', $('input[type=file]')[0].files[0]);
+		}
+		
+
+		$.ajax({
+			method: 'post',
+			contentType: false,       
+			cache: false,             
+			processData:false, 
+			url: 'contact',
+			data: formData
+		}).done(function (response) {
+
+		})
+		console.log(formData);
+		
+	})
 
 
     // function bonusTerms() {
