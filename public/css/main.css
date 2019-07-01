@@ -4689,17 +4689,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
 }
 
-/*.footer.footer-home .footer-copyrights.showFooterLink{
-  opacity: 1;
-}*/
-
-/* .fp-enabled .footer.footer-home .footer-copyrights {
+.fp-enabled .footer.footer-home .footer-copyrights {
     opacity: 0;
-} */
+}
 
-/* .fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
+.fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
   opacity: 1;
-} */
+}
 
 
 .fp-enabled .section:after{
@@ -6363,9 +6359,68 @@ input:checked + .remem:before{
 }
 
 
+.cookieWarningWrapper{
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #fff;
+  background-color: #421b5f;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 99999;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0,0,0,1);
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
+.cookieWarningWrapper.showCookie{
+  display: flex;
+}
 
+.cookieWarningWrapper p{
+  margin-bottom: 0px;
+}
 
+.cookieWarningText{
+  flex-basis: 90%;
+}
+
+.cookieBtn{
+  background: linear-gradient(76deg, #56359d, #bb4bab);
+  font-size: 15px;
+  color: #fff;
+  padding: 8px 18px;
+  position: relative;
+  font-family: 'MyriadPro-Bold', sans-serif;
+  border-radius: 20px;
+  border: none;
+}
+
+.cookieBtn:hover{
+  box-shadow: inset 0 0 10px #000;
+}
+
+.cookieBtn:after{
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: -2px;
+  background: linear-gradient(90deg, #844099, #34248c);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.4;
+}
 
 
 
@@ -8625,6 +8680,21 @@ input:checked + .remem:before{
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+
+
+  .cookieBtn{
+    margin-top: 20px;
+  } 
+
+  .cookieWarningText{
+    flex-basis: 100%;
+  }
+
+  .cookieWarningWrapper{
+    max-width: 65%;
+    left: 38%;
+  }
+
 
   .flexChild{
     flex-basis: 100%;

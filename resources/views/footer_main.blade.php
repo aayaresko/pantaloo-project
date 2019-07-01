@@ -48,3 +48,10 @@
         </div>
     </div>
 </div>
+
+<div class="cookieWarningWrapper">
+        <div class="cookieWarningText">
+            <p>{!! trans('casino.privacy_policy_cookie') !!} <a href="{{route('privacy-policy', ['lang' => $currentLang])}}" target="_blank">{!! trans('casino.privacy_policy_link') !!}</a></p>
+        </div>
+        <button class="cookieBtn">{!! trans('casino.cookie_ok') !!}</button>
+</div>
