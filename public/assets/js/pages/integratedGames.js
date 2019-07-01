@@ -168,6 +168,7 @@ let events = function () {
 
 function handleImage(img) {
     $(img).attr("src", dummy);
+    $(img).prev().show();
 }
 
 

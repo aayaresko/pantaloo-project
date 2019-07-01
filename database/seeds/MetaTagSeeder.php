@@ -18,6 +18,12 @@ class MetaTagSeeder extends Seeder
                     'description' => 'Play & Win with Casinobit ♠ New Bitcoin Casino Online ✔ 50 Free Spins ✔ Anonymous BTC Gambling Site ✔ Welcome Bonus 110% ✔Provably Fair ✔ 1000+ Games'
                 ],
             ],
+            'privacy-policy' => [
+                '' => [
+                    'title' => 'Privacy Policy | Bitcoin Casino | Casinobit',
+                    'description' => ''
+                ]
+            ],
             'games' => [
                 '' => [
                     'title' => 'Bitcoin Games – Play Casino Games with Bitcoin Online | Casinobit',

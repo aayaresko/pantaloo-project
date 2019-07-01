@@ -4689,17 +4689,13 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
     box-shadow: 0px 0px 97px 111px rgba(6,3,8,0.99);
 }
 
-/*.footer.footer-home .footer-copyrights.showFooterLink{
-  opacity: 1;
-}*/
-
-/* .fp-enabled .footer.footer-home .footer-copyrights {
+.fp-enabled .footer.footer-home .footer-copyrights {
     opacity: 0;
-} */
+}
 
-/* .fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
+.fp-enabled .footer.footer-home .footer-copyrights.showFooterLink{
   opacity: 1;
-} */
+}
 
 
 .fp-enabled .section:after{
@@ -5278,7 +5274,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   background: url('../media/images/icons/arrow-right.svg') no-repeat;
  }
 
-.page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading .page-title{
+.page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading .page-title,
+.page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading .page-title{
   color: #fff;
   font-family: 'MyriadPro-Bold' , sans-serif;
   font-size: 40px;
@@ -5289,13 +5286,27 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: 0px;
 }
 
+.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper,
+.page-content-block .page-content-container.privacyPolicy .page-content-entry .page-entry {
+  font-family: 'MyriadPro-medium' , sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #b8a7cd;
+  /* margin-bottom: 20px; */
+}
 
 .faqWrapper .page-entry > h1,
 .faqWrapper .page-entry > h2,
 .faqWrapper .page-entry > h3,
 .faqWrapper .page-entry > h4,
 .faqWrapper .page-entry > h5,
-.faqWrapper .page-entry > h6{
+.faqWrapper .page-entry > h6,
+.privacyPolicy .page-entry > h1,
+.privacyPolicy .page-entry > h2,
+.privacyPolicy .page-entry > h3,
+.privacyPolicy .page-entry > h4,
+.privacyPolicy .page-entry > h5,
+.privacyPolicy .page-entry > h6{
   padding-left: 20px;
   position: relative;
   font-family: 'MyriadPro-Bold' , sans-serif;
@@ -5306,6 +5317,16 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-bottom: 13px;
   margin-top: 13px;
   cursor: pointer;
+  color: #fff;
+}
+
+.privacyPolicy .page-entry > h1,
+.privacyPolicy .page-entry > h2,
+.privacyPolicy .page-entry > h3,
+.privacyPolicy .page-entry > h4,
+.privacyPolicy .page-entry > h5,
+.privacyPolicy .page-entry > h6{
+  padding-left: 0px;
 }
 
 .faqWrapper .page-entry > h1:before,
@@ -5360,14 +5381,6 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   margin-top: 15px;
   margin-bottom: 15px;
   cursor: pointer;
-}
-
-.page-content-block .page-content-container.faqWrapper .page-content-entry .page-entry .textWrapper{
-  font-family: 'MyriadPro-medium' , sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-  color: #b8a7cd;
-  /* margin-bottom: 20px; */
 }
 
 .page-content-block .page-content-container.faqWrapper .page-content-entry{
@@ -5800,14 +5813,6 @@ text-transform: uppercase;
 }
 
 /* end pop up ======================================= */
-
-
-
-
-.textWrapper.showFaq{
-  max-height: 2000px;
-  opacity: 1;
-}
 
 .textWrapper > p,
 .textWrapper > ol,
@@ -6327,6 +6332,116 @@ input:checked + .remem:before{
 #reg-terms h2 br{
   display: none;
 }
+
+.gameTitleWrapper{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 86px;
+    overflow: hidden;
+    position: absolute;
+    padding: 0px 10px;
+    top: 37%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%,-50%);
+    display: none;
+}
+
+.gameTitle{
+  font-size: 33px;
+  line-height: 40px;
+  text-align: center;
+  font-family: 'MyriadPro-Bold';
+  text-shadow: 3px 3px 0px #210330, 2px 2px 0px #8C206C, 1px 1px 0px #A31A59;
+}
+
+
+.cookieWarningWrapper{
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #fff;
+  background-color: #421b5f;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 99999;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0,0,0,1);
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cookieWarningWrapper.showCookie{
+  display: flex;
+}
+
+.cookieWarningWrapper p{
+  margin-bottom: 0px;
+}
+
+.cookieWarningText{
+  flex-basis: 90%;
+}
+
+.cookieBtn{
+  background: linear-gradient(76deg, #56359d, #bb4bab);
+  font-size: 15px;
+  color: #fff;
+  padding: 8px 18px;
+  position: relative;
+  font-family: 'MyriadPro-Bold', sans-serif;
+  border-radius: 20px;
+  border: none;
+}
+
+.cookieBtn:hover{
+  box-shadow: inset 0 0 10px #000;
+}
+
+.cookieBtn:after{
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: -2px;
+  background: linear-gradient(90deg, #844099, #34248c);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -7565,7 +7680,8 @@ input:checked + .remem:before{
     padding-bottom: 40px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 290px 0px;
   }
 
@@ -7797,6 +7913,11 @@ input:checked + .remem:before{
 
 
 @media (max-width: 991px) {
+
+  .gameTitle{
+    font-size: 25px;
+    line-height: 30px;
+  }
 
   .toTop{
     right: 20px;
@@ -8374,11 +8495,13 @@ input:checked + .remem:before{
     padding-bottom: 10px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 190px 0px;
   }
 
-  body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading{
+  body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading,
+  body .page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading{
       padding-bottom: 0px;
   }
 
@@ -8557,6 +8680,21 @@ input:checked + .remem:before{
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+
+
+  .cookieBtn{
+    margin-top: 20px;
+  } 
+
+  .cookieWarningText{
+    flex-basis: 100%;
+  }
+
+  .cookieWarningWrapper{
+    max-width: 65%;
+    left: 38%;
+  }
+
 
   .flexChild{
     flex-basis: 100%;
@@ -9064,6 +9202,12 @@ input:checked + .remem:before{
   }
 }
 
+@media (max-width: 991px) and (orientation: landscape){
+  .regPopUpWrapper{
+    margin-top: 100px;
+  }
+}
+
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
@@ -9122,7 +9266,8 @@ input:checked + .remem:before{
     padding-top: 110px;
   }
 
-  body .page-content-container.faqWrapper{
+  body .page-content-container.faqWrapper,
+  body .page-content-container.privacyPolicy{
     padding: 150px 0px 230px 0px;
   }
 
@@ -9660,7 +9805,7 @@ input:checked + .remem:before{
 .games-block .img_box:hover .games-block__wrap, .games-block:hover .games-block__wrap, .single-game-hover .games-block .games-block__wrap {
   text-align: center;
   position: absolute;
-  background-color: rgba(131,116,214,.8);
+  background-color: rgba(0,0,0,.8);
   z-index: 10;
   left: 0;
   top: 0;
