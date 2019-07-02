@@ -2222,7 +2222,8 @@ html.cropped body .header:after{
 }
 
 /* line 676, ../scss/_middle.scss */
-.log-popup {
+.log-popup,
+.reset-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -2244,7 +2245,8 @@ html.cropped body .header:after{
   padding: 20px;
 }
 /* line 687, ../scss/_middle.scss */
-.log-popup.active {
+.log-popup.active,
+.reset-popup.active{
   transform: translate(0, 0);
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -5602,7 +5604,8 @@ text-transform: uppercase;
   .mfp-content .mfp-close.closeBtn,
   .activBonusPoUpWrap .push-btn.close-button,
   .regBtn, .loginBtn,
-  .contactUsBtn{
+  .contactUsBtn,
+  .resetBtn{
 	display: inline-block;
 	text-decoration: none;
 	padding: 6px 20px 6px 20px;
@@ -5623,7 +5626,8 @@ text-transform: uppercase;
 }
 
 .popUpBtnBonus,
-.regBtn, .loginBtn, .contactUsBtn{
+.regBtn, .loginBtn, .contactUsBtn,
+.resetBtn{
   padding: 6px 26px 6px 16px;
   background-image: linear-gradient(14deg, #421f91 0%, #a92e9f 100%);
   /* border: 2px solid transparent; */
@@ -5639,7 +5643,8 @@ text-transform: uppercase;
 .popUpBtnBonus:after,
 .regBtn:after,
 .loginBtn:after,
-.contactUsBtn:after{
+.contactUsBtn:after,
+.resetBtn:after{
   content: '';
   display: inline-block;
   width: 10px;
@@ -5661,7 +5666,8 @@ text-transform: uppercase;
 .mfp-content .mfp-close.closeBtn:before,
 .regBtn:before,
 .loginBtn:before,
-.contactUsBtn:before{
+.contactUsBtn:before,
+.resetBtn:before{
   content: '';
   position: absolute;
   display: block;
@@ -5680,7 +5686,8 @@ text-transform: uppercase;
 .activBonusPoUpWrap .push-btn.close-button:hover,
 .regBtn:hover,
 .loginBtn:hover,
-.contactUsBtn:hover{
+.contactUsBtn:hover,
+.resetBtn:hover{
 	box-shadow: inset 0 0 10px #000;
 }
 
@@ -6118,7 +6125,8 @@ label.remem{
 #agree:focus + .termLabel:before, 
 #remember:focus + .remem:before,
 .regBtn:focus,
-.loginBtn:focus{
+.loginBtn:focus,
+.resetBtn:focus{
   outline-color: rgb(77, 144, 254); 
   outline-offset: -2px;
   outline-style: auto;
@@ -6393,7 +6401,7 @@ input:checked + .remem:before{
 }
 
 .cookieBtn{
-  background: linear-gradient(76deg, #56359d, #bb4bab);
+  background: linear-gradient(14deg, #56359d, #bb4bab);
   font-size: 15px;
   color: #fff;
   padding: 8px 18px;
@@ -6422,6 +6430,16 @@ input:checked + .remem:before{
   opacity: 0.4;
 }
 
+.popup-form-subtitle{
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  margin: 30px 0px 15px 0px;
+}
+
+.resetBtn{
+  margin-top: 10px;
+}
 
 
 
