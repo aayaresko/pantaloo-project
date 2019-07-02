@@ -101,6 +101,18 @@ class LoginTransTableSeeder extends Seeder
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
+
+            [
+                'locale' => 'en',
+                'namespace' => '*',
+                'group' => 'casino',
+                'item' => 'reset_hint',
+                'text' => 'Please enter your email address',
+                'unstable' => '0',
+                'locked' => '0',
+                'created_at' => $currentDate,
+                'updated_at' => $currentDate,
+            ],
         ];
 
         foreach ($data as $item) {
