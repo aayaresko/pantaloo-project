@@ -18,7 +18,7 @@
                             <label for="contEmail">Email*</label>
                             <input type="email" id="contEmail" name="email">
                             <label for="contText">Message*</label>
-                            <textarea id="contText" name="contText"></textarea>
+                            <textarea id="contText" name="message"></textarea>
                             <div class="addFileWrap">
                                 <label for="contFile" id="fileLabel">
                                     <span id="attachTxt">Attach file</span>
@@ -28,7 +28,7 @@
 								<span id="contFilesWrap">
 
 								</span>
-                                <input type="file" id="contFile" name="file" multiple>
+                                <input type="file" id="contFile" name="files" multiple>
                             </div>
                             <button class="submitBtn">Send</button>
                          </form>

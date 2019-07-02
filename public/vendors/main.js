@@ -455,7 +455,7 @@ function gamePopup() {
     });
 
 
-	var newFileList
+	var newFileList = []
 	
 	$("#contFile").change(function() {
 		let files = this.files
@@ -507,25 +507,36 @@ function gamePopup() {
 		e.preventDefault()
 		var formData = new FormData(); 
 		formData.append('email', $('#contEmail').val());
-		formData.append('contText', $('#contText').val());
+		formData.append('message', $('#contText').val());
 
-		if (newFileList) {
-			formData.append('file', newFileList);
-			// formData.append('file', $('input[type=file]')[0].files[0]);
+		
+	
+
+		// console.log(formData);
+		// console.log(newFileList);
+		
+
+		if (newFileList) {	
+			newFileList.forEach(file => formData.append("files[]", file));		
+			formData.append('files', newFileList);
+			
 		}
 		
 
 		$.ajax({
 			method: 'post',
-			contentType: false,       
+			contentType: false,   
+			dataType: 'json',    
 			cache: false,             
 			processData:false, 
 			url: 'contact',
 			data: formData
 		}).done(function (response) {
-
+			 console.log(response);
+		}).fail(function(response) {
+			console.log(response);
 		})
-		console.log(formData);
+		// console.log(formData);
 		
 	})
 	$(".toTop").on("click", function () {
