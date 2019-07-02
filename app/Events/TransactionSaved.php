@@ -31,9 +31,9 @@ class TransactionSaved implements ShouldBroadcast
             $this->real_balance = $user->getRealBalance();
             $this->bonus_balance = $user->getBonusBalance();
 
-            $this->real_balance = rand(5000, 50000) / 100;
+            //$this->real_balance = rand(5000, 50000) / 100;
             //$this->bonus_balance = rand(5000, 50000) / 100;
-            $this->balance = $this->real_balance + $this->bonus_balance;
+            //$this->balance = $this->real_balance + $this->bonus_balance;
         }
 
         $this->userId = $userId;
