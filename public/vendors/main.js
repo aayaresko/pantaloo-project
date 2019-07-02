@@ -142,7 +142,7 @@ function gamePopup() {
 		$('.account-btn').click(function(){
 			//alert(100);
 
-			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+			$(".reg-popup, .log-popup, .popup-entry, .reset-popup").removeClass("active");
 			setTimeout(function(){
 				$('.simple-popup').removeClass('active');
 				$('.reg-popup').addClass('active');
@@ -312,7 +312,7 @@ function gamePopup() {
 			e.stopPropagation();
 		});
 		$('button.close-icon').click(function () {
-			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+			$(".reg-popup, .log-popup, .popup-entry, .reset-popup").removeClass("active");
 		});
 		$(document).keydown(function(e) {
 			// ESCAPE key pressed
@@ -572,5 +572,12 @@ function gamePopup() {
 			$(".cookieWarningWrapper").removeClass("showCookie");
 
 		});
+
+	$(".forget-link").on("click", function () {
+		$('.log-popup').removeClass('active');
+		setTimeout(function(){
+			$(".reset-popup").addClass('active');
+		}, 300);
+	});
 
 });

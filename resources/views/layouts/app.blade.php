@@ -339,7 +339,7 @@
             
                 
 
-            @if ($registrationStatus === 1)
+            @if ($registrationStatus === 0)
             <div class="regPopUpWrapper">
             <div class="regPopUpBgTop"></div>
             <button class="close-icon">×</button>
@@ -481,7 +481,7 @@
                                         <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
                                         <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
 
-                                        <a href="{{ url("/{$currentLang}/password/forgot") }}"
+                                        <a href="#"
                                         class="forget-link">{{ trans('casino.i_am_forget') }}</a>
                                         <p class="errorMessage loginError"></p>
                                     </div>
@@ -514,6 +514,45 @@
     </div>
     </div>
 </div>
+
+<div class="reset-popup">
+    <div class='regPopUpWrapper'>
+        <div class="regPopUpBgTop"></div>
+        <div class="popup-entry">
+            <div class="popup-heading">
+                <h2 class="popup-title">{{translate('Reset password')}}</h2>
+            </div> 
+            <button class="close-icon">×</button>
+            <p class='popup-form-subtitle'>
+                        Введите пожалуйста ваш email указанный при регистарции.
+                    </p>
+            <div class='popup-form'>
+                <form method="POST" action="{{ url("/{$currentLang}/password/email") }}">
+                    {{csrf_field()}}
+
+                   
+                
+                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>{{translate('E-mail')}} <span>*</span></label>  
+                                <input type="text" name="email" tabindex="9">
+                            </div>
+                        </div>
+                        <div class="send-btn-block">
+                            <button class="update-btn resetBtn" tabindex="10">{{translate('RESTORE')}}</button>
+                        </div>
+                
+                </form>
+                </div>
+        </div>
+    <div class="popUpFooter">
+        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+                                            class="account-btn">{{ trans('casino.create_account') }}</a></span>
+    </div>
+    </div>
+</div>
+
 
 <div class="simple-popup">
     <div class="popup-entry">
