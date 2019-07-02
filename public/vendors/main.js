@@ -18,19 +18,28 @@ $(document).ready(function () {
     // preloader();
 
 
+// function controlsInit() {
+//     if ($(window).width() > 1080) {
+//         $('.setting-tabs').each(function () {
+//             $(this).tabs();
+//         });
+//     } else {
+//         $('.setting-accordion').each(function () {
+//             $(this).accordion({
+//                 active: true,
+//                 collapsible: true
+//             });
+// 		})
+		
+//     }
+// }
+
 function controlsInit() {
-    if ($(window).width() > 1080) {
-        $('.setting-tabs').each(function () {
-            $(this).tabs();
-        })
-    } else {
-        $('.setting-accordion').each(function () {
-            $(this).accordion({
-                active: false,
-                collapsible: true
-            });
-        })
-    }
+
+	$('.setting-tabs').each(function () {
+		$(this).tabs();
+	});
+
 }
 
 function mobMenuInit() {

@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/css/countrySelect.css">
     <link href="/css/new.css?v=1.0.5" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
