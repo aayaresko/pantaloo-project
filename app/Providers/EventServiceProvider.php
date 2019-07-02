@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\TransactionSaved;
 use Illuminate\Support\Facades\Event;
 use App\Providers\Intercom\IntercomEventHandler;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -14,11 +15,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Register any other events for your application.

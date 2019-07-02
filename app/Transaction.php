@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\TransactionSaved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,6 +13,10 @@ class Transaction extends Model
     protected $fillable = [
         'sum', 'agent_id', 'agent_commission', 'type', 'user_id',
         'round_id', 'comment', 'bonus_sum', 'ext_id', 'confirmations',
+    ];
+
+    protected $dispatchesEvents = [
+        'saved' => TransactionSaved::class,
     ];
 
     public function scopeDeposits($query)

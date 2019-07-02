@@ -24,7 +24,8 @@
         "fideloper/proxy": "^4.0",
         "waavi/translation": "2.3.x",
         "laravelium/sitemap": "^3.1",
-        "torann/laravel-meta-tags": "^3.0"
+        "torann/laravel-meta-tags": "^3.0",
+        "pusher/pusher-php-server": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
