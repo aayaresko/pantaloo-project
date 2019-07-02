@@ -741,11 +741,11 @@
                         //alert('We got deposit from you ' + data.deposit);
                     }
 
-                    if (data.balance_info) {
-                        $(".balancebox-getbalance").html(data.balance_info.balance);
-                        $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
-                        $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
-                    }
+                    // if (data.balance_info) {
+                    //     $(".balancebox-getbalance").html(data.balance_info.balance);
+                    //     $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
+                    //     $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
+                    // }
                 }
             },
             error: function (data) {
@@ -755,7 +755,7 @@
 
     }
 
-    //let updateTimer = setInterval(setBalance, 1000)
+    let updateTimer = setInterval(setBalance, 15000)
 
     //off
     // $(document).on('click', 'a.open_game', function () {
