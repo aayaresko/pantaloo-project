@@ -6400,6 +6400,10 @@ input:checked + .remem:before{
   flex-basis: 90%;
 }
 
+.cookieWarningText a{
+  font-size: inherit;
+}
+
 .cookieBtn{
   background: linear-gradient(14deg, #56359d, #bb4bab);
   font-size: 15px;

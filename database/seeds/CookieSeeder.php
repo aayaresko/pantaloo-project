@@ -18,7 +18,7 @@ class CookieSeeder extends Seeder
                 'namespace' => '*',
                 'group' => 'casino',
                 'item' => 'privacy_policy_cookie',
-                'text' => 'We use cookie to make CasinoBit.io more comfortable for you. By continuing to use the website, you automatically agree with our ',
+                'text' => 'We use cookies to make Casinobit.io more comfortable for you. By continuing to use the website, you automatically agree with our ',
                 'unstable' => '0',
                 'locked' => '0',
                 'created_at' => $currentDate,
