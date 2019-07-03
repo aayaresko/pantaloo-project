@@ -339,7 +339,7 @@
             
                 
 
-            @if ($registrationStatus === 0)
+            @if ($registrationStatus === 1)
             <div class="regPopUpWrapper">
             <div class="regPopUpBgTop"></div>
             <button class="close-icon">×</button>
