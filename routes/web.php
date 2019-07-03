@@ -95,6 +95,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
     //Route::get('/invite-for-welcome-bonus', ['uses' => 'BonusController@getWelcomeBonus']);
     //bonus bonus
 
+    //check withdraw
+    Route::get('/withdrawActivation', ['as' => 'withdrawActivation', 'uses' => 'MoneyController@withdrawActivation']);
+
 
     Route::group([
         'prefix' => '{lang}',
@@ -147,12 +150,18 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
             'where' => ['lang' => '('.implode('|', $languages).')'],
             'middleware' => 'language.switch',
         ], function () {
-            Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
+            Route::get('/account', ['as' => 'account', 'uses' => 'UserAccountController@account']);
+            //Route::get('/deposit', ['as' => 'deposit', 'uses' => 'MoneyController@deposit']);
+            Route::get('/deposit', ['as' => 'deposit', 'uses' => 'UserAccountController@deposit']);
+            Route::get('/getDeposits', ['as' => 'getDeposit', 'uses' => 'UserAccountController@getDeposits']);
+            Route::get('/getWithdraws', ['as' => 'getWithdraws', 'uses' => 'UserAccountController@getWithdraws']);
+            Route::post('/updateUserExtra', ['as' => 'updateUserExtra', 'uses' => 'UserAccountController@updateUserExtra']);
 
-            Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'MoneyController@withdraw']);
+            Route::get('/withdraw', ['as' => 'withdraw', 'uses' => 'UserAccountController@withdraw']);
             Route::post('/withdraw', ['as' => 'withdrawDo', 'uses' => 'MoneyController@withdrawDo']);
-            Route::get('/settings', ['as' => 'settings', 'uses' => 'UsersController@settings']);
-            Route::get('/bonus', ['as' => 'bonus', 'uses' => 'BonusController@index']);
+
+            Route::get('/settings', ['as' => 'settings', 'uses' => 'UserAccountController@settings']);
+            Route::get('/bonus', ['as' => 'bonus', 'uses' => 'UserAccountController@bonuses']);
         });
 
 
@@ -161,11 +170,11 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::get('/contribution/success', ['as' => 'usd.success', 'uses' => 'MoneyController@depositSuccess']);
         Route::get('/contribution/fail', ['as' => 'usd.fail', 'uses' => 'MoneyController@depositFail']);
 
-        Route::get('/bonus/cancel', ['as' => 'bonus.cancel', 'uses' => 'BonusController@cancel']);
 
         Route::post('/password', ['as' => 'password', 'uses' => 'UsersController@password']);
         Route::post('/email/confirm', ['as' => 'email.confirm', 'uses' => 'UsersController@confirmEmail']);
 
+        Route::post('/bonus/cancel', ['as' => 'bonus.cancel', 'uses' => 'BonusController@cancel']);
         Route::post('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
         Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
@@ -237,7 +246,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
                 Route::get('/pending', ['as' => 'pending', 'uses' => 'MoneyController@pending']);
 
-                Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@aprove']);
+                Route::get('/transaction/{transaction}/aprove', ['as' => 'aprove', 'uses' => 'MoneyController@approve']);
                 Route::get('/transaction/{transaction}/freeze', ['as' => 'freeze', 'uses' => 'MoneyController@freeze']);
                 Route::get('/transaction/{transaction}/unfreeze', ['as' => 'unfreeze', 'uses' => 'MoneyController@unfreeze']);
                 Route::get('/transaction/{transaction}/cancel', ['as' => 'cancel', 'uses' => 'MoneyController@cancel']);

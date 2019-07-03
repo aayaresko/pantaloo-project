@@ -5,12 +5,12 @@ $(document).ready(function () {
     console.log('init');
     ParallaxSections();
     lettering();
-    gamesSlider();
+    // gamesSlider();
     mobMenuInit();
     logOut();
     animationInit();
     gamePopup();
-    bonusSlider();
+    // bonusSlider();
     controlsInit();
 	blockFilter();
 	animLogo();
@@ -50,21 +50,28 @@ setInterval(function() {
 }, 15000);	
 
 
+// function controlsInit() {
+//     if ($(window).width() > 1080) {
+//         $('.setting-tabs').each(function () {
+//             $(this).tabs();
+//         });
+//     } else {
+//         $('.setting-accordion').each(function () {
+//             $(this).accordion({
+//                 active: true,
+//                 collapsible: true
+//             });
+// 		})
+		
+//     }
+// }
+
 function controlsInit() {
-    if ($(window).width() > 1080) {
-        $('.setting-tabs').each(function () {
-            $(this).tabs({
-                show: {effect: "blind", duration: 800}
-            });
-        })
-    } else {
-        $('.setting-accordion').each(function () {
-            $(this).accordion({
-                active: false,
-                collapsible: true
-            });
-        })
-    }
+
+	$('.setting-tabs').each(function () {
+		$(this).tabs();
+	});
+
 }
 
 function mobMenuInit() {
@@ -423,7 +430,7 @@ function gamePopup() {
 
 
 	$(".textWrapper h1, .textWrapper h2, .textWrapper h3, .textWrapper h4, .textWrapper h5, .textWrapper h6").on("click", function(){
-		$(this).nextUntil('h2').toggleClass("showFaq");
+		$(this).nextUntil('h1, h2, h3, h4, h5, h6').toggleClass("showFaq");
 	});
 
 	
@@ -438,8 +445,37 @@ function gamePopup() {
 			inputType = 0;
 			$(this).prev().attr('type', 'text');
 		}
-
+	
 	});
+
+		$("#btnKey").on("click", function(){
+
+			let el = $('.generated-key').select();
+			
+			document.execCommand("copy");
+
+			$(".copied").addClass("showCopied");
+
+			setTimeout(function(){
+				$(".copied").removeClass("showCopied");
+			},1200);
+
+		});
+
+
+	// getCurrentScreen()
+
+
+	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
+	 });
+
+	 $(".popUpHideBtn").on("click", function(){
+		$(".popUpBonusUnavail").removeClass("showPoUp");
+	 });
+
+
+	
 
 
     $(window).on('scroll', function () {
@@ -457,6 +493,10 @@ function gamePopup() {
     $(".toTop").on("click", function () {
         $("html, body").animate({scrollTop: 0}, 1000);
     });
+   
+	});
+	
+
 
 
     // function bonusTerms() {
@@ -497,6 +537,7 @@ function gamePopup() {
 
 
 
+
 // let pageCount = location.href;
 
 
@@ -524,4 +565,3 @@ function gamePopup() {
 //
 // preloader();
 
-});

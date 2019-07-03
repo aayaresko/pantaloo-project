@@ -18,9 +18,12 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.17" rel="stylesheet">
-    <link href="/css/new.css?v={{ time() }}" rel="stylesheet">
+    <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/css/countrySelect.css">
+    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
     <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
@@ -35,6 +38,9 @@
     <meta name="msapplication-TileColor" content="#8932ff">
     <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
+
+  
+  
 
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
@@ -530,12 +536,16 @@
 </div>
 <div class="overlayMenu"></div>
 <script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
+
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
 <script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
 <script src="/vendors/lettering/jquery.lettering.js"></script>
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
+<script src="/vendors/countrySelect.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
 <script src="/vendors/main.js?v={{ time() }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
@@ -731,6 +741,10 @@
                         $('.simple-popup').addClass('active');
                         $('.simple-popup .popup-entry').addClass('active');
                         //alert('We got deposit from you ' + data.deposit);
+
+                        if($('#transactionsTable').length > 0) {
+                            table.getDeposits(table.getParams());
+                        }
                     }
 
                     if (data.balance_info) {
@@ -996,6 +1010,12 @@
         Intercom('onUnreadCountChange', function () {
             intercomUpdate();
         });
+    });
+
+
+    $('body').on('click','.showIntercom',function(e) {
+        e.preventDefault();
+        Intercom('show');
     });
 </script>
 

@@ -126,7 +126,9 @@ return [
 
     'normalConfirmBtc' => 6,
 
+    //status withdraw
     'statusPayment' => [
+        '-3' => 'waiting',
         '-2' => 'failed',
         '-1' => 'frozen',
         '0' => 'pending',
@@ -173,6 +175,7 @@ return [
         'depositBonus2' => 30,
         'depositBonus3' => 40,
         'depositBonus4' => 50,
+        'withdraw' => 100,
     ],
 
     'optimization' => [
@@ -180,7 +183,8 @@ return [
     ],
 
     'officeIps' => [
-        '136.0.0.139', '136.0.2.251'
+        '136.0.0.139',
+        '136.0.2.251'
     ],
 
     'users' => [

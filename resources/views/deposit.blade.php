@@ -1,105 +1,166 @@
 @extends('layouts.app')
 
-@section('title', trans('DepositEvent'))
-
-
+@section('title', trans('Deposit'))
 
 @section('content')
     <div class="cabinet-block"
          style="background: #000 url('/media/images/bg/deposit-bg-light.jpg') center no-repeat; background-size: cover;">
-        <div class="cabinet-entry">
+        <div class="cabinet-entry cabinetMod">
             <div class="main-content">
+
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.deposit'), MB_CASE_UPPER) }}</h1>
-                    <span class="sub-text">{{ trans('casino.bonus_deposit') }}</span>
-                    <a href="{{ route('bonus', ['lang' => $currentLang]) }}" class="bonuses-btn">{{ trans('casino.open_bonus') }}</a>
                 </div>
+
+                @include('main_parts.header_account')
+
                 <div class="main-content-entry">
                     <div class="deposit-entry">
-                        <div class="credits-block">
-                            <i class="bitcoin-icon"></i>
-                            <span class="balance">
-                                <span class="value">{{Auth::user()->getBalance()}}</span> {{ trans('casino.credits') }}
-                            </span>
-                            <a class="add-credits-btn" href="{{route('deposit', ['lang' => $currentLang])}}"><span
-                                        class="text">{{ trans('casino.add_credits') }}</span></a>
-                        </div>
+
                         <div class="left-content">
                             <div class="text-block">
                                 <p class="descr">{{ trans('casino.minimum_deposit') }}</p>
                                 <p class="descr">(1 BTC = 1000 mBTC)</p>
-
-                                <p class="descr">{{ trans('casino.send_your_bitcoins') }}</p>
                             </div>
-                            <span class="generated-key">{{ $bitcoin_address }}</span>
+                            <p class="descrTxt">{{ trans('casino.send_your_bitcoins') }}</p>
+                            <div class="generated-key-wrapper">
+                                <input type="text" class="generated-key" value="{{ $user->bitcoin_address }}">
+
+                                <button id="btnKey"
+                                        class="generated-key-btn">{{ trans('casino.deposit_copy') }}</button>
+                                <div class="copied">{{ trans('casino.deposit_copied') }}</div>
+                            </div>
                         </div>
                         <div class="qr-code">
                             <img class="rounded"
-                                 src="https://chart.googleapis.com/chart?chs=201x204&cht=qr&chl={{ $bitcoin_address }}&choe=UTF-8"
+                                 src="https://chart.googleapis.com/chart?chs=201x204&cht=qr&chl={{ $user->bitcoin_address }}&choe=UTF-8"
                                  alt="qr">
                         </div>
                     </div>
-                    <div class="withdraw-entry">
-                        <div class="bottom-block">
-                            @if(count($transactions) > 0) <h3 class="title">{{translate('Your Deposits')}}</h3> @endif
-                            @include('transactions')
-                        </div>
 
-                    </div>
+                </div>
+                <div class='tableTransactionsWrapper'>
+                    <p class="descr">{{ trans('Your Deposits') }}</p>
+                    <table id="transactionsTable" class="display">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('casino.deposit_data') }}</th>
+                            <th>{{ trans('casino.transaction_id') }}</th>
+                            <th>{{ trans('casino.transaction_status') }}</th>
+                            <th>{{ trans('casino.transaction_amount') }}</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <button class="loadMoredataTableBtn">{{ trans('casino.transaction_more') }}</button>
+                    <hr class="devider">
                 </div>
             </div>
             @include('settings')
         </div>
     </div>
-    </div>
 
-     @include('footer_main')
+    @include('footer_main')
 @endsection
 
 @section('js')
     <script>
-        function getTransactions() {
-            $.ajax({
-                type: "GET",
-                url: '/ajax/transactions/' + $('table.withdraws').data('max_id') + '/new', // serializes the form's elements.
-                dateType: 'json',
-                success: function (data) {
-                    if (data.length > 0) {
-                        $('table.withdraws').data('max_id', data[0].id);
+        let paramsTable = {
+            startItem: 0,
+            stepItem: 10,
+            getItem: 0,
+            lang: '{{ $lang }}',
+            timezoneOffset: new Date().getTimezoneOffset()
+        };
 
-                        for (i = data.length - 1; i >= 0; i = i - 1) {
-                            $('table.withdraws tbody').prepend('<tr id="txid_' + data[i].id + '"><td>' + data[i].date + '</td><td>' + data[i].id + '</td><td>' + data[i].status + '</td><td>' + data[i].amount + '</td></tr>');
+        class Table {
+            constructor(params) {
+                //init table
+                this.table = null;
+                this.params = params;
+                this.events();
+                this.getDeposits(this.params, true);
+            }
+
+            getParams() {
+                return this.params;
+            }
+
+            events() {
+                $('.loadMoredataTableBtn').on('click', () => {
+                    this.getDeposits(this.params, true);
+                });
+            }
+
+            getDeposits(params, counter = false) {
+                let order = [0, "desc"];
+
+                if (counter === true) {
+                    this.params.getItem = this.params.getItem + this.params.stepItem;
+                }
+
+                if (this.table != null) {
+                    order = this.table.order()[0];
+                }
+
+                $('#transactionsTable').DataTable().destroy();
+
+                this.table = $('#transactionsTable').DataTable({
+                    "searching": false,
+                    "info": false,
+                    "order": [order],
+                    "columns": [
+                        {"data": "date"},
+                        {"data": "id"},
+                        {"data": "status"},
+                        {"data": "amount"}
+                    ],
+                    "columnDefs": [
+                        {"orderable": false, "targets": 1},
+                        {"orderable": false, "targets": 2}
+                    ],
+                    "serverSide": true,
+                    'processing': true,
+                    //to do preloader
+                    'language': {
+                        'loadingRecords': '&nbsp;',
+                        'processing': 'Loading...'
+                    },
+                    "ajax": {
+                        "url": `/${params.lang}/getDeposits`,
+                        "dataType": "json",
+                        "type": "GET",
+                        "data": this.params,
+                    },
+                    "createdRow": function (row, data, dataIndex) {
+                        // Set the data-status attribute, and add a class
+                        let tdStatus = $(row).find('td:eq(2)');
+                        tdStatus.addClass('statustransAction');
+
+                        switch (data.statusCode) {
+                            case 1:
+                                tdStatus.addClass('confirm');
+                                break;
+                            default:
+                                tdStatus.addClass('notConfirm');
+                        }
+                    },
+                    "initComplete": function (settings, data) {
+                        if (data.status == true) {
+                            if (data.nextCount == 0) {
+                                $('.loadMoredataTableBtn').hide();
+                            }
                         }
                     }
-                    setTimeout(getTransactions, 1000);
-                },
-                error: function (data) {
-                    //alert(data);
-                }
-            });
+                });
+
+
+            }
         }
 
-        function updateTransactions() {
-            $.ajax({
-                type: "GET",
-                url: '/ajax/transactions/all', // serializes the form's elements.
-                dateType: 'json',
-                success: function (data) {
-                    if (data.length > 0) {
-                        for (i = 0; i < data.length; i = i + 1) {
-                            $('#txid_' + data[i].id).html('<td>' + data[i].date + '</td><td>' + data[i].id + '</td><td>' + data[i].status + '</td><td>' + data[i].amount + '</td>');
-                        }
-                    }
+        let table;
+        (function () {
+            table = new Table(paramsTable);
+        })();
 
-                    setTimeout(updateTransactions, 5000);
-                },
-                error: function (data) {
-                    //alert(data);
-                }
-            });
-        }
-
-        getTransactions();
-        updateTransactions();
     </script>
 @endsection

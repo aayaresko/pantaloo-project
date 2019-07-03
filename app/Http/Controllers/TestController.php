@@ -65,7 +65,16 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
-        dd(2);
+        dd(GeneralHelper::visitorIpCloudFlare());
+        $transactionSystem = Transaction::where('type', 3)->where('ext_id', 'e506268a74fdf87757d8b1d67b29f6570cf0dea961cbfdad7fe2961559c0bc0c')->first();
+        dd($transactionSystem);
+        $depositsDate = Transaction::select([
+            'transactions.created_at as date',
+            'transactions.id',
+            'transactions.confirmations',
+            'transactions.sum as amount'
+        ])->where('user_id', 146)->skip(30)->take(10)->get();
+        dd($depositsDate);
         //method is no longer supported!!!!!!!!!!!!!!!!!!!!!
 
         dd(GeneralHelper::visitorIpCloudFlare());

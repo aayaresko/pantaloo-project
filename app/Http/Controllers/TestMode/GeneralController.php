@@ -94,14 +94,17 @@ class GeneralController extends Controller
 
             $amountTransaction = (float) $request->amount;
 
+            $extId = 'TEST MODE';
+            $confirmations = 13;
+
             $transaction = Transaction::create([
                 'comment' => 'TEST MODE',
                 'sum' => $amountTransaction,
                 'bonus_sum' => 0,
                 'type' => 13,
                 'user_id' => $user->id,
-                'ext_id' => 'TEST MODE',
-                'confirmations' => 13,
+                'ext_id' => $extId,
+                'confirmations' => $confirmations,
             ]);
 
             $amountTransactionFormat = GeneralHelper::formatAmount($amountTransaction);
@@ -125,12 +128,16 @@ class GeneralController extends Controller
                 }
             }
 
+
             //to do include notifications
             SystemNotification::create([
                 'user_id' => $user->id,
                 //to do config - mean deposit transactions
                 'type_id' => $depositNotifications,
                 'value' => $amountTransaction,
+                'transaction_id' => $transaction->id,
+                'confirmations' => $confirmations,
+                'ext_id' => $extId,
                 'extra' => json_encode([
                     'transactionId' => $transaction->id,
                     'depositAmount' => $amountTransaction,

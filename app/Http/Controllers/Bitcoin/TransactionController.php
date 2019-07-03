@@ -23,6 +23,7 @@ class TransactionController extends Controller
      *
      * @param Request $request
      * @return array
+     * @throws \Exception
      */
     public function walletNotify(Request $request)
     {
@@ -68,7 +69,7 @@ class TransactionController extends Controller
             //get transaction
             $rawTransaction = $service->getTransaction($txid);
 
-            if (! $rawTransaction) {
+            if (!$rawTransaction) {
                 throw new \Exception('Transactions is not found in node');
             }
 
@@ -88,13 +89,23 @@ class TransactionController extends Controller
             }
             $userId = $user->id;
 
-            $transactionSystem = Transaction::where(['ext_id' => $txid])->first();
+            //to do use table for deposit TO DO FIX THIS**********************
+            //now only deposit transaction
+            $transactionSystem = Transaction::where('type', 3)->where('ext_id', $txid)->first();
+            //after seed run
+            //$deposit = SystemNotification::where('ext_id', $txid)->first();
 
-            if (! is_null($transactionSystem)) {
+            if (!is_null($transactionSystem)) {
                 //update
                 //check must if transaction has 1 confirmation
                 //confirmations must be 1
+                //TO DO USE ONLY ONE TABLE**********************
                 Transaction::where('id', $transactionSystem->id)->update([
+                    'confirmations' => $rawTransaction['confirmations'],
+                ]);
+
+                //to do use $deposit->id
+                SystemNotification::where('transaction_id', $transactionSystem->id)->update([
                     'confirmations' => $rawTransaction['confirmations'],
                 ]);
 
@@ -121,10 +132,10 @@ class TransactionController extends Controller
                 ]);
 
                 $depositNotifications = 1;
-                if (! is_null($user->bonus_id)) {
+                if (!is_null($user->bonus_id)) {
                     $class = BonusHelper::getClass($user->bonus_id);
                     $bonusObject = new $class($user);
-                    if ((int) $user->bonus_id === 1) {
+                    if ((int)$user->bonus_id === 1) {
                         $depositNotifications = 2;
                         //to do check status
                         $setDeposit = $bonusObject->setDeposit($amountTransactionFormat);
@@ -145,6 +156,9 @@ class TransactionController extends Controller
                     //to do config - mean deposit transactions
                     'type_id' => $depositNotifications,
                     'value' => $amountTransaction,
+                    'transaction_id' => $transaction->id,
+                    'confirmations' => $rawTransaction['confirmations'],
+                    'ext_id' => $rawTransaction['txid'],
                     'extra' => json_encode([
                         'transactionId' => $transaction->id,
                         'depositAmount' => $amountTransaction,
@@ -155,7 +169,7 @@ class TransactionController extends Controller
 
                 $response = [
                     'success' => true,
-                    'msg' => ['TXID:'.$txid, "TRANSACTION:{$transaction->id}"],
+                    'msg' => ['TXID:' . $txid, "TRANSACTION:{$transaction->id}"],
                 ];
             }
             DB::commit();
@@ -166,7 +180,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => false,
-                'msg' => $errorMessage.' Line:'.$errorLine,
+                'msg' => $errorMessage . ' Line:' . $errorLine,
             ];
         }
 
@@ -187,6 +201,7 @@ class TransactionController extends Controller
      *
      * @param Request $request
      * @return array
+     * @throws \Exception
      */
     public function blockNotify(Request $request)
     {
@@ -231,7 +246,7 @@ class TransactionController extends Controller
 
             $response = [
                 'success' => true,
-                'msg' => ['BLOCKHASH:'.$blockhash],
+                'msg' => ['BLOCKHASH:' . $blockhash],
             ];
 
             //to do get block use this command and check block hash
@@ -252,7 +267,13 @@ class TransactionController extends Controller
                             $getTransaction = $service->getTransaction($transaction->ext_id);
 
                             if ($getTransaction) {
+
                                 Transaction::where('id', $transaction->id)
+                                    ->update([
+                                        'confirmations' => $getTransaction['confirmations'],
+                                    ]);
+
+                                SystemNotification::where('transaction_id', $transaction->id)
                                     ->update([
                                         'confirmations' => $getTransaction['confirmations'],
                                     ]);
@@ -272,13 +293,22 @@ class TransactionController extends Controller
                     ['confirmations', '<', $minConfirmBtc - 1],
                 ]
             )->update(['confirmations' => DB::raw('confirmations + 1')]);
+
+
+            SystemNotification::where(
+                [
+                    ['confirmations', '>=', 1],
+                    ['confirmations', '<', $minConfirmBtc - 1],
+                ]
+            )->update(['confirmations' => DB::raw('confirmations + 1')]);
+
         } catch (\Throwable $e) {
             $errorMessage = $e->getMessage();
             $errorLine = $e->getLine();
 
             $response = [
                 'success' => false,
-                'msg' => $errorMessage.' Line:'.$errorLine,
+                'msg' => $errorMessage . ' Line:' . $errorLine,
             ];
         }
 

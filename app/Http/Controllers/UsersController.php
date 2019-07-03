@@ -123,7 +123,7 @@ class UsersController extends Controller
 
         return redirect()->back()->with('popup', [
             'E-mail confirmation',
-            'Success',
+            //'Success',
             'We sent you confirmation link. Check your mail please.',
         ]);
     }
@@ -161,7 +161,11 @@ class UsersController extends Controller
             Mail::to($user)->send($mail);
 
             return redirect('/')->with('popup',
-                ['E-mail confirmation', 'Success', 'Congratulations! E-mail was confirmed!']);
+                [
+                    'E-mail confirmation',
+                    //'Success',
+                    'Congratulations! E-mail was confirmed!'
+                ]);
         } else {
             return redirect('/')->withErrors(
                 ['Email wasn\'t confirmed. Invalid link.']);
