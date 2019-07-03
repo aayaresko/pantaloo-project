@@ -423,6 +423,9 @@ class IntegratedGamesController extends Controller
         if ($linkRequest['success'] === true) {
             $link = $linkRequest['message']['gameLink'];
         } else {
+            if (GeneralHelper::isTestMode()){
+                dd($linkRequest);
+            }
             //throw exception
             throw new \Exception('Problem is by getting game link');
         }
