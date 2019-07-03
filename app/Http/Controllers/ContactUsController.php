@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BaseMailable;
+use Faker\Provider\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContactUsController extends Controller
 {
@@ -25,63 +27,66 @@ class ContactUsController extends Controller
      */
     public function create()
     {
-        return view ('contact_us');
+        return view('contact_us');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
-        dd(request()->all());
-        $data = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'message' => 'required',
-            'files' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'files.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
         $documents = $request->file('files');
-        $allowedFileExtension = ['jpeg',
-            'png',
-            'jpg',
-            'gif',
-            'svg',
-            ];
-
-        //Check uploaded file size and type
-        if ($documents->getError() == 1) {
-            foreach ($documents as $document) {
-                $maxSize = $document->getMaxFileSize() / 1024 / 1024;
-                if ($document > $maxSize) {
-                    return redirect()->back()->withErrors(['The document size must be less than 1Mb']);
-                } else {
-                    $extension = $document->getClientOriginalExtension();
-                    $check = in_array($extension,$allowedFileExtension);
-                    if ($check) {
-                        return redirect()->back()->withErrors(['Sorry only upload images']);
-                    }
-                }
+        $paths = [];
+        //Check count uploaded file
+        if ($documents) {
+            $documentsCount = count($documents);
+            if ($documentsCount > 5) {
+                $errorsArr = [
+                    "message" => "The given data was invalid.",
+                    "errors" => "max_file_count",
+                ];
+                return response()->json($errorsArr);
             }
-            return redirect()->back()->with('Success');
+            foreach ($documents as $document) {
+                $fileName = sha1($document->getFilename() . time()) . '.' . $document->getClientOriginalExtension();
+                if (!Storage::disk('local')->exists(storage_path('app/mailImages'))) {
+                    Storage::makeDirectory(storage_path('app/mailImages'));
+                }
+                $paths[] = $document->storeAs('mailImages', $fileName);
+            }
         }
-
-
-//        $mail =
-
-
-//        $mail = new BaseMailable('emails.confirm', ['link' => $link]);
-//        $mail->subject('Confirm email');
-//        Mail::to('support@casinobit.io ')->send(new BaseMailable($));
+        $email = $_POST['email'];
+        $mess = $_POST['message'];
+        Mail::raw("Message: $mess. From: $email", function ($message) use ($paths) {
+            foreach ($paths as $path) {
+                $message->to('support@casinobit.io ');
+                $message->attach(storage_path('app/') . $path);
+            }
+        });
+        if (count(Mail::failures()) > 0) {
+            return response()->json([
+                "message" => "Email",
+                "errors" => "email_not_delivery",
+            ]);
+        }
+        foreach ($paths as $path) {
+            \File::delete(storage_path('app/' . $path));
+        }
+        return response()->json(["message" => "success"]);
 
     }
-
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -92,7 +97,7 @@ class ContactUsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -103,8 +108,8 @@ class ContactUsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -115,7 +120,7 @@ class ContactUsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
