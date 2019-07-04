@@ -124,7 +124,7 @@ img {
 }
 .paginationGame {
   position: relative;
-  z-index: 999999;
+  z-index: 99999;
 }
 .noGamesFound {
   display: none;
