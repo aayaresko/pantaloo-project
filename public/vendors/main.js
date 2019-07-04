@@ -456,22 +456,53 @@ function gamePopup() {
 
 
 	var newFileList = []
+	$("#contFile").click(function() { 
+		$(this).val(null)
+	})
 	
 	$("#contFile").change(function() {
 		let files = this.files
-		
 
 		console.log(files);
 		
+		
+		var removeBlock = $('.addFileWrap .removeTxt').clone()
+
+		if (files.length > 5) {
+			console.log('More then 5!');	
+			$(this).val(null)
+			return
+		}
+
+		let maxFileSize = 1048576; //1mb
+
 		if(files.length != 0) {
-			$.each(files, function(i, file) {
-				console.log(file);
-				$('#contFilesWrap').append('<span class="removeTxt">'+remove+'</span><span class="fileToUpload" data-index="'+i+'">'+file.name+'</span>')
-				
+			$.each(files, function(i, file) {	
+				console.log(file.name);
+				console.log(file.size);
+
+				let validExt = (/\.(jpg|png)$/i).test(file.name)
+
+				console.log(validExt);
+				if (!validExt) {
+					console.log('Not valid ext!');
+					$("#contFile").val(null)
+					return;
+				}				
+
+				if (file.size > maxFileSize) {
+					console.log('Max file size reached!');
+					$("#contFile").val(null)
+					return;
+				} 
+				$('#attachTxt').hide()
+				$('.addFileWrap').addClass('expand')
+							
+				$('#contFilesWrap').append(removeBlock.clone().addClass('showRemove animated fadeIn').append('&nbsp;&nbsp;&nbsp;<span class="fileToUpload">'+file.name+'</span>'))								
 			})
 	
-			$('#attachTxt').hide()
-			$('.removeTxt').show()
+			
+			// $('.removeTxt.showRemove').show()
 
 		} else {
 			console.log('no files');			
@@ -480,25 +511,27 @@ function gamePopup() {
 		}
 		newFileList = Array.from(files);
 
-		$('#contFilesWrap .removeTxt').on('click', function() {
-			let fileToDelete = $(this).next();
-			$(this).next().hide();
+		$('.addFileWrap .removeTxt').on('click', function() {
+
+			
+			let fileToDelete = $(this).find($('.fileToUpload')).html();
+			// $(this).next().hide();
 			$(this).hide()
-			console.log(fileToDelete.data('index'));
-			
-
-			
-
-			newFileList.splice(fileToDelete.data('index'),1);
-
-			// newFileList.splice(newFileList.indexOf(fileToDelete), 1);
 			console.log(fileToDelete);
-			console.log(newFileList);
+			
+
+			const index = newFileList.findIndex(item => item.name === fileToDelete);
+			newFileList.splice(index,1);
+			
+			if (newFileList.length == 0) {
+				$('#contFilesWrap').html('')
+				$('#attachTxt').show()
+			}
+
+			// console.log('Files '+ newFileList);
+			// console.log(newFileList.length);
 
 		})
-
-		// $('#contFileName').html(files)
-		// console.log(this.files);
 	});
 
 
@@ -509,36 +542,32 @@ function gamePopup() {
 		formData.append('email', $('#contEmail').val());
 		formData.append('message', $('#contText').val());
 
-		
-	
-
-		// console.log(formData);
-		// console.log(newFileList);
-		
-
 		if (newFileList) {	
 			newFileList.forEach(file => formData.append("files[]", file));		
-			formData.append('files', newFileList);
-			
 		}
 		
-
 		$.ajax({
 			method: 'post',
 			contentType: false,   
-			dataType: 'json',    
 			cache: false,             
 			processData:false, 
 			url: 'contact',
 			data: formData
 		}).done(function (response) {
-			 console.log(response);
+			$('#contForm')[0].reset();
+			$('#contFilesWrap').html('')
+			newFileList = []
+			$('#attachTxt').show()
+			//  console.log(response);
 		}).fail(function(response) {
-			console.log(response);
+			// console.log(response);
 		})
 		// console.log(formData);
 		
 	})
+
+
+
 	$(".toTop").on("click", function () {
         $("html, body").animate({scrollTop: 0}, 1000);
     });
