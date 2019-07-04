@@ -339,7 +339,7 @@
             
                 
 
-            @if ($registrationStatus === 0)
+            @if ($registrationStatus === 1)
             <div class="regPopUpWrapper">
             <div class="regPopUpBgTop"></div>
             <button class="close-icon">×</button>
@@ -524,15 +524,11 @@
             </div> 
             <button class="close-icon">×</button>
             <p class='popup-form-subtitle'>
-                        Введите пожалуйста ваш email указанный при регистарции.
+                        {{ trans('casino.reset_hint') }}
                     </p>
             <div class='popup-form'>
                 <form method="POST" action="{{ url("/{$currentLang}/password/email") }}">
-                    {{csrf_field()}}
-
-                   
-                
-                        
+                    {{csrf_field()}}          
                         <div class="row">
                             <div class="col-xs-12">
                                 <label>{{translate('E-mail')}} <span>*</span></label>  
@@ -542,7 +538,6 @@
                         <div class="send-btn-block">
                             <button class="update-btn resetBtn" tabindex="10">{{translate('RESTORE')}}</button>
                         </div>
-                
                 </form>
                 </div>
         </div>

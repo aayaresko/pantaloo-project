@@ -124,7 +124,7 @@ img {
 }
 .paginationGame {
   position: relative;
-  z-index: 999999;
+  z-index: 99999;
 }
 .noGamesFound {
   display: none;
@@ -6398,6 +6398,20 @@ input:checked + .remem:before{
 
 .cookieWarningText{
   flex-basis: 90%;
+}
+
+.cookieWarningText a{
+  font-size: inherit;
+  border-bottom: 1px solid #68497f;
+}
+
+.cookieWarningText a:focus{
+  color: #68497f;
+  text-decoration: none;
+}
+
+.cookieWarningText a:hover{
+  border-bottom: 1px solid transparent;
 }
 
 .cookieBtn{

@@ -567,7 +567,7 @@ function gamePopup() {
 
 		$(".cookieBtn").on("click", function(){
 
-			setCookie(acceptCookie, true, 0.1);
+			setCookie(acceptCookie, true, 30);
 
 			$(".cookieWarningWrapper").removeClass("showCookie");
 

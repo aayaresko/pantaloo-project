@@ -1,10 +1,13 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
 use Illuminate\Http\Request;
+
+use Torann\LaravelMetaTags\Facades\MetaTag;
 
 class ChatController extends Controller
 {
@@ -15,6 +18,8 @@ class ChatController extends Controller
 
     public function privacyPolicy()
     {
+        MetaTag::set('title', trans("metatag.privacy-policy__title"));
+        MetaTag::set('description', trans("metatag.privacy-policy__description"));
         return view('privacy-policy');
     }
 }
