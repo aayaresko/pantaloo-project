@@ -580,4 +580,47 @@ function gamePopup() {
 		}, 300);
 	});
 
+	// Create a closure for triggering add/remove css class event
+	(function(){
+		// Your base, I'm in it!
+		var originalAddClassMethod = jQuery.fn.addClass;
+		var originalRemoveClassMethod = jQuery.fn.removeClass;
+
+		jQuery.fn.addClass = function(){
+			// Execute the original method.
+			var result = originalAddClassMethod.apply( this, arguments );
+
+			// trigger a custom event
+			jQuery(this).trigger('cssClassAdded', arguments);
+
+			// return the original result
+			return result;
+		}
+
+		jQuery.fn.removeClass = function(){
+			// Execute the original method.
+			var result = originalRemoveClassMethod.apply( this, arguments );
+
+			// trigger a custom event
+			jQuery(this).trigger('cssClassRemoveded', arguments);
+
+			// return the original result
+			return result;
+		}
+	})();
+
+	// Now you can bind on Class Add/Remove Events
+
+	// $("div.reg-popup").bind('cssClassAdded', function(event, params){
+	// 	//do stuff here
+	// 	console.log(event);
+	// 	console.log(params);
+	// });
+	//
+	// $("div.reg-popup").bind('cssClassRemoveded', function(event, params){
+	// 	//do stuff here
+	// 	console.log(event);
+	// 	console.log(params);
+	// });
+
 });
