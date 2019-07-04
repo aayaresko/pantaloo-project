@@ -46,6 +46,17 @@ class CookieSeeder extends Seeder
                 'created_at' => $currentDate,
                 'updated_at' => $currentDate,
             ],
+            [
+                'locale' => 'en',
+                'namespace' => '*',
+                'group' => 'casino',
+                'item' => 'cookie_and',
+                'text' => 'and',
+                'unstable' => '0',
+                'locked' => '0',
+                'created_at' => $currentDate,
+                'updated_at' => $currentDate,
+            ],
         ];
 
         foreach ($data as $item) {

@@ -6402,6 +6402,16 @@ input:checked + .remem:before{
 
 .cookieWarningText a{
   font-size: inherit;
+  border-bottom: 1px solid #68497f;
+}
+
+.cookieWarningText a:focus{
+  color: #68497f;
+  text-decoration: none;
+}
+
+.cookieWarningText a:hover{
+  border-bottom: 1px solid transparent;
 }
 
 .cookieBtn{
