@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\BaseMailable;
-use Faker\Provider\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +25,7 @@ class ContactUsController extends Controller
      */
     public function create()
     {
-        return view('contact_us');
+        return view ('contact_us');
     }
 
     /**
@@ -41,7 +39,7 @@ class ContactUsController extends Controller
         $request->validate([
             'email' => 'required|email',
             'message' => 'required',
-            'files.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'files.*' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:1024',
         ]);
         $documents = $request->file('files');
         $paths = [];
