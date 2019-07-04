@@ -19,8 +19,8 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
     <link href="/assets/css/languages.css?v=0.0.17" rel="stylesheet">
-    <link href="/css/new.css?v={{ time() }}" rel="stylesheet">
-    <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
+    <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
@@ -570,7 +570,7 @@
 <script src="/vendors/lettering/jquery.lettering.js"></script>
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
-<script src="/vendors/main.js?v={{ time() }}"></script>
+<script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/vendors/new.js?v=1.0.1"></script>
