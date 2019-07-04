@@ -15,10 +15,22 @@
                     @foreach($bonusForView as  $key => $bonus)
                         @php
                             $bonusExtra = json_decode($bonus->extra, true);
+
+                        $bonusStatus = '';
+
+                        if ($bonus->notAvailable === false) {
+                               $bonusStatus = 'unavailableBonus';
+                        }
+
+                        if (!is_null($bonus->activeBonus)) {
+                               $bonusStatus = 'activatedBonus';
+                        }
+
                         @endphp
 
                         <div class="flexChild">
-                            <section class="block-bonus clearfix {{ (is_null($bonus->activeBonus) ? '' : 'activatedBonus') }}"
+{{--                            <section class="block-bonus clearfix {{ (is_null($bonus->activeBonus) ? '' : 'activatedBonus') }}"--}}
+                            <section class="block-bonus clearfix {{ $bonusStatus }}"
                                      style="background-image: url({{ $bonusExtra['mainPicture'] }});">
                                 <div class="block-bonus-left">
                                     <div class="block-bonus-image">
