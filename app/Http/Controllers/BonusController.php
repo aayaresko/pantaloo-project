@@ -50,26 +50,75 @@ class BonusController extends Controller
 
     public function promo(Request $request)
     {
+//        $user = $request->user();
+//        $userId = is_null($user) ? null : $user->id;
+//
+//        $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
+//            $query->where('user_id', $userId);
+//        }])->orderBy('rating', 'desc')->get();
+//
+//        $bonusForView = [];
+//        foreach ($bonuses as $bonus) {
+//            $bonusClass = BonusHelper::getClass($bonus->id);
+//            $bonusObject = new $bonusClass($user);
+//            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
+//
+//            if ($bonusAvailable or !is_null($bonus->activeBonus)) {
+//                array_push($bonusForView, $bonus);
+//            }
+//        }
+
         $user = $request->user();
         $userId = is_null($user) ? null : $user->id;
 
         $bonuses = Bonus::with(['activeBonus' => function ($query) use ($userId) {
             $query->where('user_id', $userId);
         }])->orderBy('rating', 'desc')->get();
-        
+
         $bonusForView = [];
-        foreach ($bonuses as $bonus) {
+
+        //get only availiable bonus
+        foreach ($bonuses as $key => $bonus) {
             $bonusClass = BonusHelper::getClass($bonus->id);
             $bonusObject = new $bonusClass($user);
             $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 1]);
-
-            if ($bonusAvailable or !is_null($bonus->activeBonus)) {
-                array_push($bonusForView, $bonus);
+            if (!$bonusAvailable) {
+                unset($bonuses[$key]);
             }
         }
 
+        //get status bonuses
+        foreach ($bonuses as $bonus) {
+            $bonusClass = BonusHelper::getClass($bonus->id);
+            $bonusObject = new $bonusClass($user);
+            $bonusAvailable = $bonusObject->bonusAvailable(['mode' => 0]);
+
+            $bonus->notAvailable = true;
+            if (!$bonusAvailable) {
+                $bonus->notAvailable = false;
+            }
+
+            if (!is_null($bonus->activeBonus)) {
+                $bonusStatistics = BonusHelper::bonusStatistics($bonus->activeBonus);
+                $bonus->bonusStatistics = $bonusStatistics;
+            }
+
+            array_push($bonusForView, $bonus);
+        }
+
+//        $currencyCode = config('app.currencyCode');
+
+//        return view('bonus', [
+//            'currencyCode' => $currencyCode,
+//            'bonusForView' => $bonusForView,
+//            'user' => $user
+//        ]);
+
+
         return view('bonuses', [
             'bonusForView' => $bonusForView,
+//            'currencyCode' => $currencyCode,
+//            'user' => $user
         ]);
     }
 

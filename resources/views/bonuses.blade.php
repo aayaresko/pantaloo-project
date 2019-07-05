@@ -15,10 +15,22 @@
                     @foreach($bonusForView as  $key => $bonus)
                         @php
                             $bonusExtra = json_decode($bonus->extra, true);
+
+                        $bonusStatus = '';
+
+                        if ($bonus->notAvailable === false) {
+                               $bonusStatus = 'unavailableBonus';
+                        }
+
+                        if (!is_null($bonus->activeBonus)) {
+                               $bonusStatus = 'activatedBonus';
+                        }
+
                         @endphp
 
                         <div class="flexChild">
-                            <section class="block-bonus clearfix {{ (is_null($bonus->activeBonus) ? '' : 'activatedBonus') }}"
+{{--                            <section class="block-bonus clearfix {{ (is_null($bonus->activeBonus) ? '' : 'activatedBonus') }}"--}}
+                            <section class="block-bonus clearfix {{ $bonusStatus }}"
                                      style="background-image: url({{ $bonusExtra['mainPicture'] }});">
                                 <div class="block-bonus-left">
                                     <div class="block-bonus-image">
@@ -44,14 +56,29 @@
                                     </div>
                                 </div>
                             </section>
-                            <!-- <div class="bonusOverlay unavailable">
+                            <div class="bonusOverlay unavailable">
+                                <div class="hideBonus">
                                 <div class="icon"></div>
-                                <h3>Temporarily unavailable</h3>
-                            </div> -->
+                                <h3>Unavailable</h3>
+                                <p class="unavailInfo">Expired!
+                                    <button id="popUpBonus">
+                                        <span class="infoTxt">info</span>
+                                    </button>
+                                </p>
+                                <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
+                                </div>
+                            </div>
 
                             <div class="bonusOverlay activated">
                                 <div class="icon"></div>
                                 <h3>{{ trans('casino.bonus_status') }}</h3>
+                            </div>
+
+                            <div class="popUpBonusUnavail">
+                                <h3>Unavailable <span class="popUpHideBtn"></span></h3>
+                                <p>Bonus expired. Under the terms, you can not use it to run games and get free new bonuses.
+                                    Under the terms, you can not use it to run games and get free new bonuses.
+                                </p>
                             </div>
                         </div>
 

@@ -470,8 +470,15 @@ function gamePopup() {
 		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
 	 });
 
+	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+		$(this).parents('.flexChild').find('.popUpBonusUnavail').addClass("showPoUp");
+		$(".hideBonus").hide();
+		// $(this).parents('.flexChild')
+	});
+
 	 $(".popUpHideBtn").on("click", function(){
 		$(".popUpBonusUnavail").removeClass("showPoUp");
+		$(".hideBonus").show();
 	 });
 
 
