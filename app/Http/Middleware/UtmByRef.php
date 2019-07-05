@@ -9,16 +9,33 @@ class UtmByRef
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
+
     public function handle($request, Closure $next)
     {
-        if ($request->filled('ref') && $request->isMethod('GET')){
-            $url = $request->getBaseUrl() . '?utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref');
-            return redirect($url);
+        if ($request->filled('ref') && $request->isMethod('GET')) {
+
+            $params = [];
+
+            parse_str($request->getQueryString(), $params);
+
+            $params['utm_source'] = 'partner_a';
+            $params['utm_medium'] = 'affiliate';
+            $params['utm_campaign'] = $params['ref'];
+
+            $query = http_build_query($params);
+
+            $question = $request->getBaseUrl() . $request->getPathInfo() === '/' ? '/?' : '?';
+            $redirectUrl = $query ? $request->url() . $question . $query : $request->url();
+
+            if ($request->fullUrl() != $redirectUrl) {
+                return redirect($redirectUrl);
+            }
         }
+
         return $next($request);
     }
 }

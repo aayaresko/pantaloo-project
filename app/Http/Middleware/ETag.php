@@ -37,13 +37,15 @@ class ETag
 
         //dd(md5($response->getContent()));
         // Generate Etag
-        $etag = md5(json_encode($response->headers->get('origin')).$response->getContent());
+        $etag = sha1(json_encode($response->headers->get('origin')).$response->getContent());
 
         // Load the Etag sent by client
-        $requestEtag = str_replace('"', '', $request->getETags());
+        $requestEtag = str_replace('W/"', '', $request->getETags());    //beginning of string
+        $requestEtag = str_replace('"', '', $requestEtag);
 
         // Check to see if Etag has changed
         if ($requestEtag && $requestEtag[0] == $etag) {
+            //dd($requestEtag);
             $response->setNotModified();
         }
 
