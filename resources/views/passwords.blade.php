@@ -123,7 +123,7 @@
                                             </div>
 
                                             <p class="emailConfInfo">
-                                                {{ trans('casino.not_confirmed_email') }} <span>{{ trans('casino.receive_email') }} ?</span>
+                                                {{ trans('casino.not_confirmed_email') }} <span>{{ trans('casino.receive_email') }} </span>
                                                 <button class="update-btn">{{trans('casino.send_mail')}}</button>
                                             </p>
 

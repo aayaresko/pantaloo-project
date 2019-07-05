@@ -4739,7 +4739,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 }
 
 .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li {
-  display: inline-block;
+  display: block;
 }
 
 /* line 2409, ../scss/_middle.scss */
@@ -7502,6 +7502,10 @@ input:checked + .remem:before{
   display: none;
 }
 
+.langbox li span{
+  margin-top: 1.5px;
+}
+
 /*=====================RESPONSIVE======================*/
 /* Large desktop */
 @media (max-width: 1634px) {
@@ -8409,7 +8413,7 @@ input:checked + .remem:before{
   body .cabinet-block .cabinet-entry .main-content .credits-block .add-credits-btn {
      font-weight: bold;
     position: absolute;
-    font-size: 13px;
+    font-size: 11px;
     color: #fff;
     text-transform: uppercase;
     display: inline-block;
@@ -9819,6 +9823,10 @@ input:checked + .remem:before{
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+
+  .cabinet-block .cabinet-entry .main-content .main-content-entry .bonus-entry .middle-block .bonuses-listing .item{
+    flex-basis: 100%;
+  }
 
 
   .cookieBtn{

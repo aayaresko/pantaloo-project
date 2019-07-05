@@ -572,6 +572,8 @@ function gamePopup() {
 //
 // preloader();
 
+$(function(){
+
 	let acceptCookie = 'acceptCookie';
 
 	function setCookie(cname, cvalue, exdays) {
@@ -627,6 +629,8 @@ function gamePopup() {
 			$(".reset-popup").addClass('active');
 		}, 300);
 	});
+
+});
 
 	// Create a closure for triggering add/remove css class event
 	(function(){

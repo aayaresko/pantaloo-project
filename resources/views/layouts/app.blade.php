@@ -483,20 +483,21 @@
                                    title="{{ trans('casino.input_title') }}">
                             <!-- <p class="errorMessage loginErrorEmail"></p> -->
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                    
-                                    <label >{{ trans('casino.password') }} <span>*</span></label>
-                                    <div class="pasInputWrapper">
-                                        <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
-                                        <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                                
+                                <label >{{ trans('casino.password') }} <span>*</span></label>
+                                <div class="pasInputWrapper">
+                                    <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
+                                    <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
 
-                                        <a href="#"
-                                        class="forget-link">{{ trans('casino.i_am_forget') }}</a>
-                                        <p class="errorMessage loginError"></p>
-                                    </div>
-                            </div>
+                                    <a href="#"
+                                    class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                                    <p class="errorMessage loginError"></p>
+                                </div>
                         </div>
+                   
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
