@@ -358,6 +358,7 @@
                     <div class="popup-form">
                         <form id="registr" action="/register" method="POST">
                             {{csrf_field()}}
+                            <input type="hidden" name="ref" value="{{ \Illuminate\Support\Facades\Request::input('ref') }}">
                             <input type="hidden" name="password_confirmation" value="">
                             <input type="hidden" name="name" value="no_name">
                             <div class="row">
