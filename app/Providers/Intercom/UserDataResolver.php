@@ -27,6 +27,7 @@ class UserDataResolver
                 'Account status' => self::getAccountStatus($user),
                 'Email verified' => self::getEmailVerified($user),
                 'IP' => GeneralHelper::visitorIpCloudFlare(),
+                'GEO' => GeneralHelper::visitorCountryCloudFlare()
             ], ];
         foreach ($response['custom_attributes'] as $k => $v) {
             Log::info($k.' => '.$v);

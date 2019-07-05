@@ -18,12 +18,12 @@
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link href="/assets/css/languages.css?v=0.0.14" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="/css/countrySelect.css">
-    <link href="/css/new.css?v=1.0.5" rel="stylesheet">
-    <link href="/css/main.css?v={{ time() }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link href="/assets/css/languages.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
     <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
 
@@ -486,19 +486,18 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                                
+                                <label >{{ trans('casino.password') }} <span>*</span></label>
+                                <div class="pasInputWrapper">
+                                    <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
+                                    <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
 
-                            <label>{{ trans('casino.password') }} <span>*</span></label>
-                            <div class="pasInputWrapper">
-                                <input type="password" name="password" class="pass-input" required tabindex="6"
-                                       title="{{ trans('casino.input_title') }}">
-                                <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i>
-                                </button>
-
-                                <a href="{{ url("/{$currentLang}/password/forgot") }}"
-                                   class="forget-link">{{ trans('casino.i_am_forget') }}</a>
-                                <p class="errorMessage loginError"></p>
-                            </div>
+                                    <a href="#"
+                                    class="forget-link">{{ trans('casino.i_am_forget') }}</a>
+                                    <p class="errorMessage loginError"></p>
+                                </div>
                         </div>
+                   
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -529,6 +528,40 @@
     </div>
 </div>
 
+<div class="reset-popup">
+    <div class='regPopUpWrapper'>
+        <div class="regPopUpBgTop"></div>
+        <div class="popup-entry">
+            <div class="popup-heading">
+                <h2 class="popup-title">{{translate('Reset password')}}</h2>
+            </div> 
+            <button class="close-icon">×</button>
+            <p class='popup-form-subtitle'>
+                        {{ trans('casino.reset_hint') }}
+                    </p>
+            <div class='popup-form'>
+                <form method="POST" action="{{ url("/{$currentLang}/password/email") }}">
+                    {{csrf_field()}}          
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>{{translate('E-mail')}} <span>*</span></label>  
+                                <input type="text" name="email" tabindex="9">
+                            </div>
+                        </div>
+                        <div class="send-btn-block">
+                            <button class="update-btn resetBtn" tabindex="10">{{translate('RESTORE')}}</button>
+                        </div>
+                </form>
+                </div>
+        </div>
+    <div class="popUpFooter">
+        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+                                            class="account-btn">{{ trans('casino.create_account') }}</a></span>
+    </div>
+    </div>
+</div>
+
+
 <div class="simple-popup">
     <div class="popup-entry">
         <span class="side-title">New deposit</span>
@@ -554,7 +587,7 @@
 <script src="/vendors/countrySelect.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
 <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
-<script src="/vendors/main.js?v={{ time() }}"></script>
+<script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="/vendors/new.js?v=1.0.1"></script>

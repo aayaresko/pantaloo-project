@@ -80,7 +80,7 @@
                                                     <button id="popUpBonus">
                                                         <span class="infoTxt">info</span></button>
                                                 </p>
-                                                <a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a>
+                                                <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>
                                             </div>
 
                                             <div class="popUpBonusUnavail">

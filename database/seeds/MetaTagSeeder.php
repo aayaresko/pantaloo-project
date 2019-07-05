@@ -21,7 +21,7 @@ class MetaTagSeeder extends Seeder
             'privacy-policy' => [
                 '' => [
                     'title' => 'Privacy Policy | Bitcoin Casino | Casinobit',
-                    'description' => ''
+                    'description' => 'This Privacy Policy represents what types of personal data we collect from players, why we collect data, how we process, store and use it.'
                 ]
             ],
             'games' => [

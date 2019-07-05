@@ -149,7 +149,7 @@ function gamePopup() {
 		$('.account-btn').click(function(){
 			//alert(100);
 
-			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+			$(".reg-popup, .log-popup, .popup-entry, .reset-popup").removeClass("active");
 			setTimeout(function(){
 				$('.simple-popup').removeClass('active');
 				$('.reg-popup').addClass('active');
@@ -319,7 +319,7 @@ function gamePopup() {
 			e.stopPropagation();
 		});
 		$('button.close-icon').click(function () {
-			$(".reg-popup, .log-popup, .popup-entry").removeClass("active");
+			$(".reg-popup, .log-popup, .popup-entry, .reset-popup").removeClass("active");
 		});
 		$(document).keydown(function(e) {
 			// ESCAPE key pressed
@@ -470,8 +470,15 @@ function gamePopup() {
 		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
 	 });
 
+	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+		$(this).parents('.flexChild').find('.popUpBonusUnavail').addClass("showPoUp");
+		$(".hideBonus").hide();
+		// $(this).parents('.flexChild')
+	});
+
 	 $(".popUpHideBtn").on("click", function(){
 		$(".popUpBonusUnavail").removeClass("showPoUp");
+		$(".hideBonus").show();
 	 });
 
 
@@ -564,4 +571,108 @@ function gamePopup() {
 // }
 //
 // preloader();
+
+$(function(){
+
+	let acceptCookie = 'acceptCookie';
+
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+		  var c = ca[i];
+		  while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		  }
+		  if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		  }
+		}
+		return "";
+	  }
+
+
+	//   console.log(getCookie('acceptCookie'))
+
+	  function checkCookie() {
+		  
+		let user = getCookie(acceptCookie);
+
+		if (user == '') {
+			$(".cookieWarningWrapper").addClass("showCookie");
+		} else {
+			$(".cookieWarningWrapper").removeClass("showCookie");
+		}
+
+	  }
+
+	  checkCookie();
+
+		$(".cookieBtn").on("click", function(){
+
+			setCookie(acceptCookie, true, 30);
+
+			$(".cookieWarningWrapper").removeClass("showCookie");
+
+		});
+
+	$(".forget-link").on("click", function () {
+		$('.log-popup').removeClass('active');
+		setTimeout(function(){
+			$(".reset-popup").addClass('active');
+		}, 300);
+	});
+
+});
+
+	// Create a closure for triggering add/remove css class event
+	(function(){
+		// Your base, I'm in it!
+		var originalAddClassMethod = jQuery.fn.addClass;
+		var originalRemoveClassMethod = jQuery.fn.removeClass;
+
+		jQuery.fn.addClass = function(){
+			// Execute the original method.
+			var result = originalAddClassMethod.apply( this, arguments );
+
+			// trigger a custom event
+			jQuery(this).trigger('cssClassAdded', arguments);
+
+			// return the original result
+			return result;
+		}
+
+		jQuery.fn.removeClass = function(){
+			// Execute the original method.
+			var result = originalRemoveClassMethod.apply( this, arguments );
+
+			// trigger a custom event
+			jQuery(this).trigger('cssClassRemoveded', arguments);
+
+			// return the original result
+			return result;
+		}
+	})();
+
+	// Now you can bind on Class Add/Remove Events
+
+	// $("div.reg-popup").bind('cssClassAdded', function(event, params){
+	// 	//do stuff here
+	// 	console.log(event);
+	// 	console.log(params);
+	// });
+	//
+	// $("div.reg-popup").bind('cssClassRemoveded', function(event, params){
+	// 	//do stuff here
+	// 	console.log(event);
+	// 	console.log(params);
+	// });
+
 

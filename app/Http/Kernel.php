@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ETag;
 use App\Http\Middleware\IpCheck;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Middleware\AgentCheck;
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
             SetCountryCode::class,
             GeneralMiddleware::class,
             UtmByRef::class,
+            ETag::class,
         ],
         'landing' => [
             \App\Http\Middleware\EncryptCookies::class,
