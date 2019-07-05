@@ -216,7 +216,7 @@ class GeneralHelper
 
     public static function isTestMode()
     {
-        return Cookie::get('testmode', false);
+        return Cookie::get('testmode', false) || Request::get('test') == 1;
     }
 
     public static function isSecureProtocol()

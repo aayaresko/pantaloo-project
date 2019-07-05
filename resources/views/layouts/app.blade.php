@@ -58,7 +58,7 @@
         })(window, document, 'script', 'dataLayer', 'GTM-5MGSS83');</script>
     <!-- End Google Tag Manager -->
 </head>
-<body {!! Cookie::get('testmode') ? 'style="border:#cccc00 dashed"' : '' !!}>
+<body {!! \Helpers\GeneralHelper::isTestMode() ? 'style="border:#cccc00 dashed"' : '' !!}>
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
