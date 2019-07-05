@@ -15,7 +15,7 @@ class UserToAgent extends CommonMiddleware
      * @var array
      */
     protected $except = [
-        '/',
+        //'/',
     ];
 
     /**
