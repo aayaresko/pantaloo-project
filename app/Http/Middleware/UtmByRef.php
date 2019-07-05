@@ -32,7 +32,7 @@ class UtmByRef
             $redirectUrl = $query ? $request->url() . $question . $query : $request->url();
 
             if ($request->fullUrl() != $redirectUrl) {
-                //return redirect($redirectUrl);
+                return redirect($redirectUrl);
             }
         }
 
