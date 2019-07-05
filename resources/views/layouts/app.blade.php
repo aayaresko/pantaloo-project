@@ -22,7 +22,7 @@
     <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
     <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
-    <link rel="canonical" href="{{ \Illuminate\Support\Facades\Request::url() }}"/>
+    <link rel="canonical" href="{{ url(\Illuminate\Support\Facades\Request::url()) }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
