@@ -18,6 +18,6 @@ if (!function_exists('LangAlternatePageUrl')) {
 
         $alternateUrl =  str_replace($placeholder, $language, $relAlternateTemplate);
 
-        return url($alternateUrl);
+        return url($alternateUrl, [], GeneralHelper::isSecureProtocol());
     }
 }
