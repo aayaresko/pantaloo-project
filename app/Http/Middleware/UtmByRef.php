@@ -14,14 +14,28 @@ class UtmByRef
      * @return mixed
      */
 
-    public const GET_PARAM_KEY = 'utmbr';
-
     public function handle($request, Closure $next)
     {
-        if ($request->filled('ref') && !$request->filled(self::GET_PARAM_KEY) && $request->isMethod('GET')) {
-            $url = $request->getBaseUrl() . '?' . self::GET_PARAM_KEY . '=1&utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref') . '&ref=' . $request->input('ref');
-            return redirect($url);
+        if ($request->filled('ref') && $request->isMethod('GET')) {
+
+            $params = [];
+
+            parse_str($request->getQueryString(), $params);
+
+            $params['utm_source'] = 'partner_a';
+            $params['utm_medium'] = 'affiliate';
+            $params['utm_campaign'] = $params['ref'];
+
+            $query = http_build_query($params);
+
+            $question = $request->getBaseUrl() . $request->getPathInfo() === '/' ? '/?' : '?';
+            $redirectUrl = $query ? $request->url() . $question . $query : $request->url();
+
+            if ($request->fullUrl() != $redirectUrl) {
+                return redirect($redirectUrl);
+            }
         }
+
         return $next($request);
     }
 }
