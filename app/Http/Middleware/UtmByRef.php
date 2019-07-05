@@ -13,10 +13,13 @@ class UtmByRef
      * @param \Closure $next
      * @return mixed
      */
+
+    public const GET_PARAM_KEY = 'utmbr';
+
     public function handle($request, Closure $next)
     {
-        if ($request->filled('ref') && $request->isMethod('GET')) {
-            $url = $request->getBaseUrl() . '?utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref') . '&ref=' . $request->input('ref');
+        if ($request->filled('ref') && !$request->filled(self::GET_PARAM_KEY) && $request->isMethod('GET')) {
+            $url = $request->getBaseUrl() . '?' . self::GET_PARAM_KEY . '=1&utm_source=partner_a&utm_medium=affiliate&utm_campaign=' . $request->input('ref') . '&ref=' . $request->input('ref');
             return redirect($url);
         }
         return $next($request);
