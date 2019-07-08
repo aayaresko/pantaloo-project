@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class UtmByRef
 {
@@ -32,6 +33,7 @@ class UtmByRef
             $redirectUrl = $query ? $request->url() . $question . $query : $request->url();
 
             if ($request->fullUrl() != $redirectUrl) {
+                Log::info('redirect to: ' . $redirectUrl);
                 return redirect($redirectUrl);
             }
         }
