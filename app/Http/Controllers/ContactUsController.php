@@ -34,25 +34,35 @@ class ContactUsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'message' => 'required',
-            'files.*' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:1024',
+            'files' => 'max:5',
+            'files.*' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
+        ],
+        [
+            'files.max' => 'max_file_count',
+            'files.*.image'  => 'not_valid_ext',
+            'files.*.mimes'  => 'not_valid_ext',
+            'files.*.max'  => 'max_file_size'
         ]);
         $documents = $request->file('files');
         $paths = [];
         //Check count uploaded file
         if ($documents) {
-            $documentsCount = count($documents);
-            if ($documentsCount > 5) {
-                $errorsArr = [
-                    "message" => "The given data was invalid.",
-                    "errors" => "max_file_count",
-                ];
-                return response()->json($errorsArr);
-            }
+            // $documentsCount = count($documents);
+            // if ($documentsCount > 5) {
+            //     $errorsArr = [
+            //         "message" => "The given data was invalid.",
+            //         "errors" => [
+            //             "files.0" => ['max_file_count', '5']
+            //         ]
+            //     ];
+            //     return response()->json($errorsArr, 422);
+            // }
             foreach ($documents as $document) {
                 $fileName = sha1($document->getFilename() . time()) . '.' . $document->getClientOriginalExtension();
                 if (!Storage::disk('local')->exists(storage_path('app/mailImages'))) {
@@ -63,18 +73,18 @@ class ContactUsController extends Controller
         }
         $email = $_POST['email'];
         $mess = $_POST['message'];
-        Mail::raw("Message: $mess. From: $email", function ($message) use ($paths) {
-            foreach ($paths as $path) {
-                $message->to('support@casinobit.io ');
-                $message->attach(storage_path('app/') . $path);
-            }
-        });
-        if (count(Mail::failures()) > 0) {
-            return response()->json([
-                "message" => "Email",
-                "errors" => "email_not_delivery",
-            ]);
-        }
+        // Mail::raw("Message: $mess. From: $email", function ($message) use ($paths) {
+        //     foreach ($paths as $path) {
+        //         $message->to('support@casinobit.io ');
+        //         $message->attach(storage_path('app/') . $path);
+        //     }
+        // });
+        // if (count(Mail::failures()) > 0) {
+        //     return response()->json([
+        //         "message" => "Email",
+        //         "errors" => "email_not_delivery",
+        //     ]);
+        // }
         foreach ($paths as $path) {
             \File::delete(storage_path('app/' . $path));
         }

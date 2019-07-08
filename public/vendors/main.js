@@ -454,11 +454,36 @@ function gamePopup() {
 
     });
 
-
+	//contact page
 	var newFileList = []
 	$("#contFile").click(function() { 
 		$(this).val(null)
 	})
+
+	function resetContForm(fullReset) {
+		$("#contFile").val(null)
+		$('#contFilesWrap').html('')
+		$('#attachTxt').show()
+		if (fullReset) {
+			$('#contForm')[0].reset();
+			newFileList = []
+		}
+	}
+
+	function showNoty(filesErr, otherErr) {
+		// $(".contactError").addClass("showAlert");
+
+		if (filesErr) {
+			$('.'+filesErr).addClass('showAlert')		
+		}
+		if (otherErr) {
+			$('.otherErr .alertText').html(otherErr)
+			$('.otherErr').addClass('showAlert')
+		}
+		setTimeout(function () {
+			$(".contactError").removeClass("showAlert");
+		}, 3000);
+	}
 	
 	$("#contFile").change(function() {
 		let files = this.files
@@ -469,8 +494,8 @@ function gamePopup() {
 		var removeBlock = $('.addFileWrap .removeTxt').clone()
 
 		if (files.length > 5) {
-			console.log('More then 5!');	
-			$(this).val(null)
+			showNoty('max_file_count')
+			resetContForm()		
 			return
 		}
 
@@ -481,19 +506,21 @@ function gamePopup() {
 				console.log(file.name);
 				console.log(file.size);
 
-				let validExt = (/\.(jpg|png)$/i).test(file.name)
+				let validExt = (/\.(jpg|jpeg|png)$/i).test(file.name.replace(/ /g,''))
 
 				console.log(validExt);
 				if (!validExt) {
+					showNoty('not_valid_ext')
+					resetContForm()				
 					console.log('Not valid ext!');
-					$("#contFile").val(null)
-					return;
+					return false;
 				}				
 
 				if (file.size > maxFileSize) {
+					showNoty('max_file_size')
+					resetContForm()
 					console.log('Max file size reached!');
-					$("#contFile").val(null)
-					return;
+					return false;
 				} 
 				$('#attachTxt').hide()
 				$('.addFileWrap').addClass('expand')
@@ -504,11 +531,12 @@ function gamePopup() {
 			
 			// $('.removeTxt.showRemove').show()
 
-		} else {
-			console.log('no files');			
-			$('#contFilesWrap').html('')
-			$('#attachTxt').show()
-		}
+		} 
+		// else {
+		// 	console.log('no files');			
+		// 	$('#contFilesWrap').html('')
+		// 	$('#attachTxt').show()
+		// }
 		newFileList = Array.from(files);
 
 		$('.addFileWrap .removeTxt').on('click', function() {
@@ -524,8 +552,7 @@ function gamePopup() {
 			newFileList.splice(index,1);
 			
 			if (newFileList.length == 0) {
-				$('#contFilesWrap').html('')
-				$('#attachTxt').show()
+				resetContForm()
 			}
 
 			// console.log('Files '+ newFileList);
@@ -554,17 +581,46 @@ function gamePopup() {
 			url: 'contact',
 			data: formData
 		}).done(function (response) {
-			$('#contForm')[0].reset();
-			$('#contFilesWrap').html('')
-			newFileList = []
-			$('#attachTxt').show()
-			//  console.log(response);
+			showNoty('success')
+			resetContForm(1)	
+			
+			console.log(response);
+			console.log(response.message); // = success +					
+
 		}).fail(function(response) {
-			// console.log(response);
+			console.log(response);
+
+			if (response.status == 500) {
+				showNoty(0, 'cant send email')
+				console.log('cant send email');
+				return;
+			}
+
+			let err = response.responseJSON.errors
+
+			if (err.email) {
+				console.log(err.email);
+				showNoty(0, err.email)
+				return;
+			} else if (err.message) {
+				console.log(err.message );
+				showNoty(0, err.message)
+				return;
+			}
+
+			let errorFiles = err[Object.keys(err)[0]]
+			
+			console.log(errorFiles); 
+
+			showNoty(errorFiles)
+			
 		})
 		// console.log(formData);
 		
 	})
+
+
+
 
 
 

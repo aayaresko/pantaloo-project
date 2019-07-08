@@ -362,6 +362,13 @@ header.header.active .promo-actions-block .promo-action-btn {
   top: -4px;
   transform: none;
 }
+
+/* .contactError {
+  display: none;
+} */
+.contactError .alertText {
+  margin-bottom: 0;
+}
 .contacFormWrap .addFileWrap {
   transition: .5s;
   height: auto;
