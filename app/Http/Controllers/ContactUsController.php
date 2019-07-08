@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContactUsController extends Controller
 {
@@ -29,18 +31,70 @@ class ContactUsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'email' => 'required|email',
+            'message' => 'required',
+            'files' => 'max:5',
+            'files.*' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
+        ],
+        [
+            'files.max' => 'max_file_count',
+            'files.*.image'  => 'not_valid_ext',
+            'files.*.mimes'  => 'not_valid_ext',
+            'files.*.max'  => 'max_file_size'
+        ]);
+        $documents = $request->file('files');
+        $paths = [];
+        //Check count uploaded file
+        if ($documents) {
+            // $documentsCount = count($documents);
+            // if ($documentsCount > 5) {
+            //     $errorsArr = [
+            //         "message" => "The given data was invalid.",
+            //         "errors" => [
+            //             "files.0" => ['max_file_count', '5']
+            //         ]
+            //     ];
+            //     return response()->json($errorsArr, 422);
+            // }
+            foreach ($documents as $document) {
+                $fileName = sha1($document->getFilename() . time()) . '.' . $document->getClientOriginalExtension();
+                if (!Storage::disk('local')->exists(storage_path('app/mailImages'))) {
+                    Storage::makeDirectory(storage_path('app/mailImages'));
+                }
+                $paths[] = $document->storeAs('mailImages', $fileName);
+            }
+        }
+        $email = $_POST['email'];
+        $mess = $_POST['message'];
+        // Mail::raw("Message: $mess. From: $email", function ($message) use ($paths) {
+        //     foreach ($paths as $path) {
+        //         $message->to('support@casinobit.io ');
+        //         $message->attach(storage_path('app/') . $path);
+        //     }
+        // });
+        // if (count(Mail::failures()) > 0) {
+        //     return response()->json([
+        //         "message" => "Email",
+        //         "errors" => "email_not_delivery",
+        //     ]);
+        // }
+        foreach ($paths as $path) {
+            \File::delete(storage_path('app/' . $path));
+        }
+        return response()->json(["message" => "success"]);
 
+    }
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +105,7 @@ class ContactUsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +116,8 @@ class ContactUsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +128,7 @@ class ContactUsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

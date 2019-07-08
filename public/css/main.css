@@ -270,6 +270,105 @@ header.header.active .promo-actions-block .promo-action-btn {
   /*padding: 7px 26px;*/
   /*margin-top: 8px;*/
 }
+.underHeadTxt {
+  margin-bottom: 40px;
+}
+.red {
+  color: #c40f0f;
+}
+#contFile {
+  visibility: hidden;
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: -1000px;
+}
+.contacFormWrap .addFileWrap,
+.contacFormWrap input,
+.contacFormWrap textarea {
+  height: 40px;
+  width: 100%;
+  background: #25153e;
+  border: 1px solid #4d397b;
+  color: rgba(255, 255, 255, 0.6);
+  outline: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  line-height: 40px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.contacFormWrap textarea {
+  height: 175px;
+  resize: none;
+}
+.removeTxt {
+  display: none;
+}
+#contForm #fileLabel {
+  display: block;
+  margin: 0;
+}
+.removeTxt.showRemove {
+  display: block;
+  width: 100px;
+  position: relative;
+  top: 4px;
+  font-weight: 700;
+  padding-left: 40px;
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+#attachTxt {
+  position: relative;
+  padding-left: 40px;
+  top: 4px;
+}
+.fileToUpload {
+  font-weight: 400;
+  white-space: nowrap; 
+}
+#attachTxt:before,
+.removeTxt.showRemove:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  background: url(../media/images/icons/plus.svg) no-repeat center , linear-gradient(150deg, #a92e9f, #421f91);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-size: 10px;
+  transform: rotate(45deg);
+}
+#attachTxt:before{ 
+  top: -4px;
+  transform: none;
+}
+
+/* .contactError {
+  display: none;
+} */
+.contactError .alertText {
+  margin-bottom: 0;
+}
+.contacFormWrap .addFileWrap {
+  transition: .5s;
+  height: auto;
+  min-height: 40px;
+  max-height: 40px;
+  line-height: 30px;
+  padding: 2px;
+}
+.contacFormWrap .addFileWrap.expand {
+  max-height: 400px;
+}
+.fileControl .fileItem{
+  display: block;
+}
+
 
 .svgWrap {
   display: block;
