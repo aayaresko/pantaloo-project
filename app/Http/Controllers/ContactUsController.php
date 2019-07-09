@@ -51,18 +51,7 @@ class ContactUsController extends Controller
         ]);
         $documents = $request->file('files');
         $paths = [];
-        //Check count uploaded file
         if ($documents) {
-            // $documentsCount = count($documents);
-            // if ($documentsCount > 5) {
-            //     $errorsArr = [
-            //         "message" => "The given data was invalid.",
-            //         "errors" => [
-            //             "files.0" => ['max_file_count', '5']
-            //         ]
-            //     ];
-            //     return response()->json($errorsArr, 422);
-            // }
             foreach ($documents as $document) {
                 $fileName = sha1($document->getFilename() . time()) . '.' . $document->getClientOriginalExtension();
                 if (!Storage::disk('local')->exists(storage_path('app/mailImages'))) {
@@ -73,18 +62,21 @@ class ContactUsController extends Controller
         }
         $email = $_POST['email'];
         $mess = $_POST['message'];
-        // Mail::raw("Message: $mess. From: $email", function ($message) use ($paths) {
-        //     foreach ($paths as $path) {
-        //         $message->to('support@casinobit.io ');
-        //         $message->attach(storage_path('app/') . $path);
-        //     }
-        // });
-        // if (count(Mail::failures()) > 0) {
-        //     return response()->json([
-        //         "message" => "Email",
-        //         "errors" => "email_not_delivery",
-        //     ]);
-        // }
+        Mail::raw("From: $email  Message: $mess", function ($message) use ($paths) {
+            $message->to('bekkerman.i@devport.io');
+             // $message->to('support@casinobit.io');
+            $message->replyTo($_POST['email']);
+            $message->subject('Contact form request from CasinoBit website');
+            foreach ($paths as $path) { 
+                $message->attach(storage_path('app/') . $path);
+            }
+        });
+        if (count(Mail::failures()) > 0) {
+            return response()->json([
+                "message" => "Email",
+                "errors" => "email_not_delivery",
+            ]);
+        }
         foreach ($paths as $path) {
             \File::delete(storage_path('app/' . $path));
         }
