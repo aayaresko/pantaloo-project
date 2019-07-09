@@ -527,7 +527,7 @@
         <!-- </div> -->
 
         <div class="popUpFooter">
-        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+        <span>{{ trans('casino.dont_have_account') }}<a href="#"
                                                         class="account-btn">{{ trans('casino.create_account') }}</a></span>
         </div>
     </div>
@@ -560,7 +560,7 @@
                 </div>
         </div>
     <div class="popUpFooter">
-        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+        <span>{{ trans('casino.dont_have_account') }}<a href="#"
                                             class="account-btn">{{ trans('casino.create_account') }}</a></span>
     </div>
     </div>
