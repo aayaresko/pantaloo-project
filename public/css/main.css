@@ -5451,7 +5451,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 
 .select2-results__option {
   font-size: 16px;
-  background: #612ba7;
+  /* background: #612ba7; */
 }
 
 .block-filter input[type='text'] {
