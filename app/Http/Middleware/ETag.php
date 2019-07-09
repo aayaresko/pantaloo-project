@@ -50,7 +50,7 @@ class ETag
         }
 
         // Set Etag
-        $response->setEtag($etag);
+        $response->setEtag("W/\"{$etag}\"");
 
         // Set back to original method
         $request->setMethod($initialMethod); // set back to original method
