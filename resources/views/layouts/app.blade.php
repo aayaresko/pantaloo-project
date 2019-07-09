@@ -42,6 +42,10 @@
   
   
 
+    <!-- DataLayer -->
+    <script>
+        var dataLayer = {!! DataLayerHelper::toJson() !!};
+    </script>
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || [];
