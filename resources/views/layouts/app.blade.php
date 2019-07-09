@@ -25,7 +25,7 @@
     <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
     <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
-    <link rel="canonical" href="{{ url(\Illuminate\Support\Facades\Request::url(),[], \Helpers\GeneralHelper::isSecureProtocol()) }}"/>
+    <link rel="canonical" href="{{str_replace("http://", "https://", url(\Illuminate\Support\Facades\Request::url(),[], \Helpers\GeneralHelper::isSecureProtocol())) }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
