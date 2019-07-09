@@ -39,14 +39,6 @@
     <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
 
-  
-  
-
-    <!-- DataLayer -->
-    <script>
-        var dataLayer = [{!! DataLayerHelper::toJson() !!}];
-    </script>
-
     @include('_google_tag_manager')
 
 <div id="preloader" class="preloader-block"><span class="spin"></span></div>
