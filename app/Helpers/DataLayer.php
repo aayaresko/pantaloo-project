@@ -12,7 +12,7 @@ class DataLayerHelper {
         return isset(self::$data[$key]) ? self::$data[$key] : null;
     }
 
-    public static function toJson($options =  JSON_PRETTY_PRINT){
+    public static function toJson($options =  JSON_PRETTY_PRINT & JSON_FORCE_OBJECT){
         return json_encode(self::$data, $options);
     }
 }
