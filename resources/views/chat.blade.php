@@ -8,6 +8,11 @@
         <div class="page-content-container faqWrapper">
             <div class="page-content-entry">
                 <div class="page-heading">
+                    <ul>
+                        <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
+                        <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
+
+                    </ul>
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
                 </div>
                 <div class="page-entry">

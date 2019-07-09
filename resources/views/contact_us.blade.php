@@ -9,6 +9,11 @@
             <div class="page-content-entry">
                 <div class="page-heading">
                     <h1 class="page-title">{{ mb_convert_case(trans('casino.contact'), MB_CASE_UPPER) }}</h1>
+                    <ul>
+                        <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
+                        <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
+
+                    </ul>
                 </div>
                 <div class="page-entry">
                     <p>Our support team agents are glad to help you 24/7. Email us at <a href="mailto: support@casinobit.io">support@casinobit.io</a>  or use the form below.  We will contact you back within 24 hours. 

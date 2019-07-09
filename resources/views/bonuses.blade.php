@@ -11,6 +11,11 @@
             </div>
             <div class="container">
                 <div class="flexContainer">
+                    <ul>
+                        <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
+                        <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
+
+                    </ul>
 
                     @foreach($bonusForView as  $key => $bonus)
                         @php
