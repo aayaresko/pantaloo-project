@@ -25,7 +25,7 @@
     <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
     <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
-    <link rel="canonical" href="{{ url(\Illuminate\Support\Facades\Request::url(),[], \Helpers\GeneralHelper::isSecureProtocol()) }}"/>
+    <link rel="canonical" href="{{str_replace("http://", "https://", url(\Illuminate\Support\Facades\Request::url(),[], \Helpers\GeneralHelper::isSecureProtocol())) }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
@@ -39,33 +39,7 @@
     <meta name="application-name" content="Casinobit">
     <meta name="theme-color" content="#ffffff">
 
-  
-  
-
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5MGSS83');</script>
-    <!-- End Google Tag Manager -->
-</head>
-<body {!! \Helpers\GeneralHelper::isTestMode() ? 'style="border:#cccc00 dashed"' : '' !!}>
-
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MGSS83"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
+    @include('_google_tag_manager')
 
 <div id="preloader" class="preloader-block"><span class="spin"></span></div>
 <div class="preloaderCommon" style="display: none"></div>
@@ -523,7 +497,7 @@
         <!-- </div> -->
 
         <div class="popUpFooter">
-        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+        <span>{{ trans('casino.dont_have_account') }}<a href="#"
                                                         class="account-btn">{{ trans('casino.create_account') }}</a></span>
         </div>
     </div>
@@ -556,7 +530,7 @@
                 </div>
         </div>
     <div class="popUpFooter">
-        <span>{{ trans('casino.dont_have_account') }}<a href="{{ url('/register') }}"
+        <span>{{ trans('casino.dont_have_account') }}<a href="#"
                                             class="account-btn">{{ trans('casino.create_account') }}</a></span>
     </div>
     </div>

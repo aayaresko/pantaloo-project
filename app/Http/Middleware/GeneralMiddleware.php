@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\DataLayerProvider;
 use Closure;
 use Helpers\GeneralHelper;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,12 @@ class GeneralMiddleware
         $partnerPage = config('app.foreignPages.partner');
         View::share('partnerPage', $partnerPage);
         View::share(['currentUser' => Auth::check() ? Auth::user() : false]);
+
+
+        if (Auth::check()){
+            $user = Auth::user();
+            \DataLayerHelper::set('userId', $user->id);
+        }
 
         return $next($request);
     }

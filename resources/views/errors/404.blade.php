@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/main.css?v=1">
     <title>Page not found | Casinobit</title>
-</head>
-<body>
+
+    @include('_google_tag_manager')
+
     <div class="notFoundWrapper">
             <div class="pageWrap">
                 <img src="/media/images/404img.png">
