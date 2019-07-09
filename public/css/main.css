@@ -3611,14 +3611,8 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   text-transform: uppercase;
   font-size: 13px;
   padding: 16px 22px 10px 40px;
-  
   position: relative;
   text-decoration: none;
-  -webkit-transition: 0.2 linear;
-  -moz-transition: 0.2 linear;
-  -ms-transition: 0.2 linear;
-  -o-transition: 0.2 linear;
-  transition: 0.2 linear;
   background: url('../media/images/btn_img_right.png') no-repeat center;
   background-size: cover;
 
@@ -5394,6 +5388,10 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   color: #fff;
   line-height: 40px;
   font-size: 16px;
+} 
+
+#gamesFiterForm .select2-container--default .select2-selection--single .select2-selection__rendered{
+  padding-left: 23px;
 }
 
 .select2-container {
@@ -5434,7 +5432,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 
 .select2-container--open .select2-dropdown {
   left: -14px;
-  top: 6px;
+  top: -14px;
   background: #321d51;
   border: none;
   border-radius: 5px;

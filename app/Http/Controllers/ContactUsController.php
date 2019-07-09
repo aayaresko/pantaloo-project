@@ -63,8 +63,7 @@ class ContactUsController extends Controller
         $email = $_POST['email'];
         $mess = $_POST['message'];
         Mail::raw("From: $email  Message: $mess", function ($message) use ($paths) {
-            $message->to('bekkerman.i@devport.io');
-             // $message->to('support@casinobit.io');
+            $message->to('support@casinobit.io');
             $message->replyTo($_POST['email']);
             $message->subject('Contact form request from CasinoBit website');
             foreach ($paths as $path) { 
