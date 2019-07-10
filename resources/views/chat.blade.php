@@ -8,9 +8,9 @@
         <div class="block-heading">
             <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
             <div class="breadcrumbs">
-                <a href="/">Casinobit</a>
-                <span>/</span>
-                <span>{{ substr($breadcrumbs->first(), 3) }}</span>
+                <a href="/">CasinoBit</a>
+                <span class="bredDelim">/</span>
+                <span class="lastBred">{{ trans('casino.frq') }}</span>
             </div>  
         </div>
         <div class="page-content-container faqWrapper">

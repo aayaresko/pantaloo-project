@@ -5,18 +5,17 @@
 @section('content')
     <div class="cabinet-block act page-bonuses pageBonus"
          style="background: #000 url('/media/images/bg/content-bg-light.jpg') center no-repeat; background-size: cover;">
-        <div class="actions">
-            <div class="page-heading">
-                <h1 class="page-title">{{ mb_convert_case(trans('casino.bonuses'), MB_CASE_UPPER) }}</h1>
-            </div>
+        <div class="block-heading">
+        <h1 class="page-title">{{ mb_convert_case(trans('casino.bonuses'), MB_CASE_UPPER) }}</h1>
+            <div class="breadcrumbs">
+                <a href="/">CasinoBit</a>
+                <span class="bredDelim">/</span>
+                <span class="lastBred">{{trans('casino.bonuses')}}</span>
+            </div>  
+        </div>
+         <div class="actions">
             <div class="container">
-                <div class="flexContainer">
-                    <ul>
-                        <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
-                        <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
-
-                    </ul>
-
+                <div class="flexContainer">                
                     @foreach($bonusForView as  $key => $bonus)
                         @php
                             $bonusExtra = json_decode($bonus->extra, true);

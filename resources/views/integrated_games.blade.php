@@ -51,24 +51,21 @@ if ($title == $titleDefault) {
     <div class="slots-block top-shadow">
         <div class="bg mainBackGround"></div>
         <div class="block-heading">
-            <h1 class="page-title"><span class="tittlePage">{{ trans($gameRoomTitle) }}</span></h1>
-            <span class="subtitle">{{ trans('casino.choose_your_game') }}</span>
-
-            <ul>
-                <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
-                @foreach( $breadcrumbs as $key =>$url)
-                    <li class="{{ $loop->last ? 'is-active' : '' }}">
+            <h1 class="page-title"><span class="tittlePage">{{ trans($gameRoomTitle) }}</span></h1>      
+                <div class="breadcrumbs">
+                    <a href="/">CasinoBit</a>
+                    <span class="bredDelim">/</span>
+                    @foreach( $breadcrumbs as $key =>$url)                      
                         @if( ! $loop->last)
                             <a href="{{ url($url) }}">{{trans("casino."."$key")}}</a>
+                            <span class="bredDelim">/</span>
                         @elseif($key == 'games')
-                            {{ trans('casino.games')}}
-                    @else
-                        {{ trans("casino.type_". str_replace('-', '_', $key))}}
+                            <span class="lastBred">{{ trans('casino.games')}}</span>
+                        @else
+                            <span class="lastBred">{{ trans("casino.type_". str_replace('-', '_', $key))}}</span>
                         @endif
-                    </li>
-                @endforeach
-            </ul>
-
+                    @endforeach
+            </div>
         </div>
 
         <div class="block-filter clearfix">

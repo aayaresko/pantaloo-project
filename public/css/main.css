@@ -117,7 +117,7 @@ p {
 img {
   max-width: 100%;
 }
-
+.page-bonuses .block-heading,
 .page-content-block .block-heading{
   position: absolute;
   top: 105px;
@@ -132,6 +132,25 @@ img {
   color: #fff;
   text-transform: uppercase;
   margin-bottom: 0;
+}
+.breadcrumbs {
+  margin-top: 10px;
+}
+.breadcrumbs span,
+.breadcrumbs a {
+  opacity: 0.6;
+  font-size: 13px;
+}
+.breadcrumbs a {
+  text-decoration: underline;
+}
+.breadcrumbs .bredDelim {
+  margin: 0 8px;
+}
+.breadcrumbs .lastBred {
+  color: #b8a7cd;
+  opacity: 1;
+  text-transform: capitalize;
 }
 
 /* line 51, ../scss/_tipography.scss */
@@ -4595,12 +4614,11 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
   font-size: 40px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  line-height: 60px;
-  margin-bottom: 25px;
+  /* line-height: 60px; */
+  margin-top: 20px;
 }
 .pageBonus .page-title {
-  margin: 0 auto;
-  margin-bottom: 25px;
+  /* margin: 0 auto; */
   text-align: center;
 }
 /* line 2510, ../scss/_middle.scss */
@@ -4986,7 +5004,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   color: #fff;
   line-height: 40px;
-  padding-left: 25px;
+  padding-left: 22px;
   font-size: 16px;
 }
 
@@ -5924,7 +5942,7 @@ text-transform: uppercase;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
           justify-content: center;
-  padding-top: 140px;
+  padding-top: 220px;
   padding-bottom: 190px;
 }
 
