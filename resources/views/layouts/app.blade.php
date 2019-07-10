@@ -334,7 +334,7 @@
             <button class="close-icon">×</button>
             <div class="popup-entry">
                 <div class="popup-heading">
-                    <h2 class="popup-title word-split">{{ trans('casino.registration') }}</h2>
+                    <h2 class="popup-title">{{ trans('casino.registration') }}</h2>
 
                     {{--@if ($registrationStatus === 1)--}}
                     {{--<h5 class="popup-title">Due to high demand we are experiencing technical difficulties.--}}
@@ -455,7 +455,7 @@
         <!-- <div class="popup-container"> -->
         <div class="popup-entry">
             <div class="popup-heading">
-                <h2 class="popup-title word-split">{{ trans('casino.login') }}</h2>
+                <h2 class="popup-title">{{ trans('casino.login') }}</h2>
             </div>
             <div class="popup-form">
                 <form id="login" action="/login" method="POST">
