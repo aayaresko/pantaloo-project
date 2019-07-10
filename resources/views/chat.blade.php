@@ -5,16 +5,16 @@
 @section('content')
     <div class="page-content-block disabledBoxShadow"
          style="background: #000 url('/media/images/bg/faq_bg.jpg') center no-repeat; background-size: cover;">
+        <div class="block-heading">
+            <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
+            <div class="breadcrumbs">
+                <a href="/">Casinobit</a>
+                <span>/</span>
+                <span>{{ substr($breadcrumbs->first(), 3) }}</span>
+            </div>  
+        </div>
         <div class="page-content-container faqWrapper">
-            <div class="page-content-entry">
-                <div class="page-heading">
-                    <ul>
-                        <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
-                        <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
-
-                    </ul>
-                    <h1 class="page-title">{{ mb_convert_case(trans('casino.frq'), MB_CASE_UPPER) }}</h1>
-                </div>
+            <div class="page-content-entry">         
                 <div class="page-entry">
 
                         <h2>{{ trans('casino.support_most_popular') }}</h2>

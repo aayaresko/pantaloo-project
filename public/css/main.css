@@ -118,6 +118,22 @@ img {
   max-width: 100%;
 }
 
+.page-content-block .block-heading{
+  position: absolute;
+  top: 105px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.block-heading .page-title{
+  font-size: 40px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
 /* line 51, ../scss/_tipography.scss */
 .aligned {
   text-align: center;
@@ -2703,7 +2719,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1030, ../scss/_middle.scss */
 .slots-block .block-heading {
-  margin-top: 105px;
+  margin-top: 125px;
   position: relative;
 }
 /* line 1033, ../scss/_middle.scss */
