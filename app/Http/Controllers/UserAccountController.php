@@ -200,7 +200,7 @@ class UserAccountController extends Controller
 
                 $timezoneOffset =  -1 * $param['timezoneOffset'];
 
-                $item->status = 'No confirmed';
+                $item->status = 'Not confirmed';
                 $item->statusCode = 0;
                 if ($item->confirmations >= $param['minConfirmBtc']) {
                     $item->status = 'Confirmed';
