@@ -25,7 +25,16 @@
     <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
     <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
-    <link rel="canonical" href="{{str_replace("http://", "https://", url(\Illuminate\Support\Facades\Request::url(),[], \Helpers\GeneralHelper::isSecureProtocol())) }}"/>
+    @php
+        $canonical = url(\Illuminate\Support\Facades\Request::url(),[]);
+        $isSecure = \Helpers\GeneralHelper::isSecureProtocol();
+        $pattern = "/^(http:\/\/)/";
+            if ($isSecure ) {
+                $canonical = preg_replace($pattern, "https://", $canonical);
+            }
+    @endphp
+
+    <link rel="canonical" href="{{ $canonical }}"/>
 
     @include('_rel_alternate', ['languages' => $languages])
 
