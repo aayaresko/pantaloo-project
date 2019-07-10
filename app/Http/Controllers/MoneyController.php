@@ -290,6 +290,7 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
+
         //preparations
         $errors = [];
         $date = new \DateTime();
@@ -409,6 +410,9 @@ class MoneyController extends Controller
                 'address' => $request->input('address'),
                 'comment' => 'withdraw',
             ]);
+
+            $transaction->address = $request->input('address');
+            $transaction->save();
 
             $withdraw = WithdrawModel::create([
                 'user_id' => $user->id,
