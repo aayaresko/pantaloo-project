@@ -18,6 +18,7 @@
             <li><a href="{{route('privacy-policy', ['lang' => $currentLang])}}" target="_blank">Privacy Policy</a></li>
             <li><a href="#reg-terms" class="reg-terms">{{ trans('casino.accept_the_terms_link') }}</a></li>
             <li><a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a></li>
+            <li><a href="{{route('contact', ['lang' => $currentLang])}}">{{ trans('casino.contact_us_header') }}</a></li>
             @if(App::getLocale() == 'jp') 
             <li><IFRAME SRC="https://licensing.gaming-curacao.com/validator/?lh=625d61ed52ae40b378494428c1137099&template=seal" WIDTH=150 HEIGHT=50 STYLE="border:none;"></IFRAME> </li>
             @endif

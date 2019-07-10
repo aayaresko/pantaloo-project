@@ -394,7 +394,15 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $mail = new BaseMailable('auth.emails.password', ['token' => $token, 'user' => $this]);
+        if ($this->role == 1) {
+            // affiliate
+            $template = 'emails.partner.password';
+        } else {
+            // user, admin, etc
+            $template = 'auth.emails.password';
+        }
+
+        $mail = new BaseMailable($template, ['token' => $token, 'user' => $this]);
         $mail->subject('Password reset');
 
         if (Mail::to($this->getEmailForPasswordReset())->send($mail)) {
