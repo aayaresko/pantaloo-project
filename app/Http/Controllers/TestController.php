@@ -71,6 +71,7 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        dd(111);
         dd(GeneralHelper::visitorIpCloudFlare());
         $transactionSystem = Transaction::where('type', 3)->where('ext_id', 'e506268a74fdf87757d8b1d67b29f6570cf0dea961cbfdad7fe2961559c0bc0c')->first();
         dd($transactionSystem);
@@ -117,6 +118,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(2);
 //
 //        $user = User::where('email', 'anfield-rd@protonmail.com')->first();
 //        $userIds = User::where('agent_id', $user->id)->get()->pluck('id');
