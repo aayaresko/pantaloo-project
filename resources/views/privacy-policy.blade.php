@@ -16,14 +16,7 @@
          <div class="page-content-container privacyPolicy">
             <div class="page-content-entry">
                     <div class="page-entry">
-
                         {!! trans('casino.privacy_policy') !!}
-                        <ul>
-                            <li class=" {{ $breadcrumbs->isEmpty() ? 'is-active' : '' }}"><a href="/">Casinobit</a></li>
-                            <li class="">{{ substr($breadcrumbs->first(), 3) }}</li>
-
-                        </ul>
-
                     </div>
                 </div>
             </div>
