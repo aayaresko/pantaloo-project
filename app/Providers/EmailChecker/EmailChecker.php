@@ -17,6 +17,17 @@ class EmailChecker
         if (GeneralHelper::isTestMode()) {
             return false;
         }
+        $needles = ['verifymail.win', 'owlymail.com'];
+        $explode = explode("@", $email);
+        $last = strtolower(end($explode));
+        if(in_array($last, $needles)) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'errors' => ['Please try another email service!']
+                ]
+            ]);
+        }
         if (! empty($email)) {
             $url = $this->prepareUrl($email);
 
