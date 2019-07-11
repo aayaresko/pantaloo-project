@@ -5,11 +5,16 @@
 @section('content')
     <div class="page-content-block disabledBoxShadow"
          style="background: #000 url('/media/images/bg/faq_bg.jpg') center no-repeat; background-size: cover;">
-        <div class="page-content-container faqWrapper">
+        <div class="block-heading">
+        <h1 class="page-title">{{ mb_convert_case(trans('casino.contact_us_header'), MB_CASE_UPPER) }}</h1>
+            <div class="breadcrumbs">
+                <a href="/">CasinoBit</a>
+                <span class="bredDelim">/</span>
+                <span class="lastBred">{{ trans('casino.contact_us_header') }}</span>
+            </div>  
+        </div>
+         <div class="page-content-container faqWrapper">
             <div class="page-content-entry">
-                <div class="page-heading">
-                    <h1 class="page-title">{{ mb_convert_case(trans('casino.contact_us_header'), MB_CASE_UPPER) }}</h1>
-                </div>
                 <div class="page-entry">
                     <p class="underHeadTxt">{!!trans('casino.contact_us_text')!!}</p> 
                     <div class="contacFormWrap">

@@ -102,6 +102,46 @@ p {
 img {
   max-width: 100%;
 }
+.page-bonuses .block-heading,
+.page-content-block .block-heading{
+  position: absolute;
+  top: 105px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.block-heading .page-title{
+  font-size: 40px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.breadcrumbs {
+  margin-top: 10px;
+}
+.breadcrumbs span,
+.breadcrumbs a {
+  opacity: 0.6;
+  font-size: 13px;
+}
+.breadcrumbs a {
+  text-decoration: underline;
+}
+.breadcrumbs .bredDelim {
+  margin: 0 8px;
+}
+.breadcrumbs .lastBred {
+  display: inline-block;
+  opacity: 1;
+  color: #b8a7cd;
+  /* text-transform: capitalize; */
+}
+.breadcrumbs .lastBred:first-letter {  
+  text-transform: uppercase;
+}
 
 /* line 51, ../scss/_tipography.scss */
 .aligned {
@@ -1461,7 +1501,7 @@ html[lang="th"] .main-title-block {
 /* line 2, ../scss/_middle.scss */
 body.cropped,
 html.cropped {
-  height: 100vh;
+  /* height: 100vh; */
   overflow: hidden !important;
 }
 
@@ -2811,7 +2851,7 @@ html[lang="th"] .log-popup .popup-container .popup-entry .popup-form .block-thum
 }
 /* line 1030, ../scss/_middle.scss */
 .slots-block .block-heading {
-  margin-top: 105px;
+  margin-top: 125px;
   position: relative;
 }
 /* line 1033, ../scss/_middle.scss */
@@ -4970,7 +5010,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 .page-content-block .page-content-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding-top: 205px;
+  padding-top: 220px;
   padding-bottom: 230px;
 }
 /* line 2498, ../scss/_middle.scss */
@@ -4988,12 +5028,11 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   font-size: 40px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  line-height: 60px;
-  margin-bottom: 25px;
+  /* line-height: 60px; */
+  margin-top: 20px;
 }
 .pageBonus .page-title {
-  margin: 0 auto;
-  margin-bottom: 25px;
+  /* margin: 0 auto; */
   text-align: center;
 }
 /* line 2510, ../scss/_middle.scss */
@@ -5387,6 +5426,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   color: #fff;
   line-height: 40px;
+  padding-left: 22px;
   font-size: 16px;
 } 
 
@@ -6964,7 +7004,7 @@ table.dataTable thead .sorting_desc{
   -webkit-box-pack: center;
   -ms-flex-pack: center;
           justify-content: center;
-  padding-top: 140px;
+  padding-top: 220px;
   padding-bottom: 190px;
 }
 
@@ -8830,15 +8870,7 @@ input:checked + .remem:before{
     clear: both;
   }
   /* line 813, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container {
-    padding-top: 100px;
-    padding-bottom: 40px;
-  }
-
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 290px 0px;
-  }
+ 
 
   /* body .page-content-block .page-content-container.faqWrapper{
     padding-bottom: 240px;
@@ -9727,15 +9759,7 @@ input:checked + .remem:before{
     /* border-bottom: 1px solid #fff; */
   }
   /* line 1526, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container {
-    padding-top: 110px;
-    padding-bottom: 10px;
-  }
 
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 190px 0px;
-  }
 
   body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading,
   body .page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading{
@@ -9810,10 +9834,11 @@ input:checked + .remem:before{
 
 
   /* line 1569, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
+  .slots-block .block-heading .page-title,
+  body .page-bonuses .page-title,
+  body .page-content-block .page-title {
     font-size: 24px;
     line-height: 32px;
-    margin-bottom: 20px;
     letter-spacing: 3px;
   }
 
@@ -10554,15 +10579,7 @@ input:checked + .remem:before{
         padding-bottom: 150px;
     }
 
-  body .page-content-block .page-content-container{
-    padding-bottom: 140px;
-    padding-top: 110px;
-  }
 
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 230px 0px;
-  }
 
   .supportWrapper{
     margin-top: 20px;
@@ -10939,11 +10956,7 @@ input:checked + .remem:before{
   /*margin-top: 100px;*/
   /*}*/
   /* line 2277, ../scss/_responsive.scss */
-  body .slots-block .block-heading .page-title {
-    font-size: 36px;
-    /**/
-    line-height: 42px;
-  }
+
   /* line 2282, ../scss/_responsive.scss */
   body .slots-block .block-heading .subtitle {
     font-size: 17px;
