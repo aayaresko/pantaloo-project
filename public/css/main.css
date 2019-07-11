@@ -1501,7 +1501,7 @@ html[lang="th"] .main-title-block {
 /* line 2, ../scss/_middle.scss */
 body.cropped,
 html.cropped {
-  height: 100vh;
+  /* height: 100vh; */
   overflow: hidden !important;
 }
 
