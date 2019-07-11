@@ -449,6 +449,25 @@ class MoneyController extends Controller
 
             event(new WithdrawalRequestedEvent($user));
 
+            //not main code task set this code************
+            try {
+                curl_setopt_array($ch = curl_init(), array(
+                    CURLOPT_URL => "https://api.pushover.net/1/messages.json",
+                    CURLOPT_POSTFIELDS => array(
+                        "token" => "uzgbho5cvkczbux1phvzjkeybudser",
+                        "user" => "overpush@yandex.com",
+                        "message" => "hello world",
+                    ),
+                    CURLOPT_SAFE_UPLOAD => true,
+                    CURLOPT_RETURNTRANSFER => true,
+                ));
+                curl_exec($ch);
+                curl_close($ch);
+            } catch (\Exception $ex) {
+                //nothing
+            }
+            //not main code task set this code*********
+
 
             //SEND EMAIL CONFIRM *************
             //TO DO THIS IN EVENT
