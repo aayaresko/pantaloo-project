@@ -224,6 +224,24 @@ function gamePopup() {
 		});
 
 
+		let regist  = document.getElementById('registr');
+		let registInvalid = 0;
+
+		$("#registr").on("click", function () {
+			registInvalid = 1;
+		});
+
+
+		if (regist.addEventListener) {
+			regist.addEventListener('invalid', function(e) {
+				if (registInvalid === 1) {
+					//to do - send fail data - *****************
+					console.log(e);
+				}
+				registInvalid = 0;
+			}, true);
+		}
+
 		$("#registr").on("submit", function () {
 
 			let regForm = $(this);
@@ -256,7 +274,7 @@ function gamePopup() {
 						registrResult.append($('<p>').html(itemsError[i]));
 						
 					}
-
+					//to do - send fail data - *****************
 					// registrResult.append(item);
 
 				} else{
