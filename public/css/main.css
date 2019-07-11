@@ -107,6 +107,7 @@ img {
   position: absolute;
   top: 105px;
   left: 50%;
+  width: 100%;
   transform: translateX(-50%);
   text-align: center;
 }
@@ -8869,15 +8870,7 @@ input:checked + .remem:before{
     clear: both;
   }
   /* line 813, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container {
-    padding-top: 100px;
-    padding-bottom: 40px;
-  }
-
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 290px 0px;
-  }
+ 
 
   /* body .page-content-block .page-content-container.faqWrapper{
     padding-bottom: 240px;
@@ -9766,15 +9759,7 @@ input:checked + .remem:before{
     /* border-bottom: 1px solid #fff; */
   }
   /* line 1526, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container {
-    padding-top: 110px;
-    padding-bottom: 10px;
-  }
 
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 190px 0px;
-  }
 
   body .page-content-block .page-content-container.faqWrapper .page-content-entry .page-heading,
   body .page-content-block .page-content-container.privacyPolicy .page-content-entry .page-heading{
@@ -9849,10 +9834,11 @@ input:checked + .remem:before{
 
 
   /* line 1569, ../scss/_responsive.scss */
-  body .page-content-block .page-content-container .page-content-entry .page-heading .page-title {
+  .slots-block .block-heading .page-title,
+  body .page-bonuses .page-title,
+  body .page-content-block .page-title {
     font-size: 24px;
     line-height: 32px;
-    margin-bottom: 20px;
     letter-spacing: 3px;
   }
 
@@ -10593,15 +10579,7 @@ input:checked + .remem:before{
         padding-bottom: 150px;
     }
 
-  body .page-content-block .page-content-container{
-    padding-bottom: 140px;
-    padding-top: 110px;
-  }
 
-  body .page-content-container.faqWrapper,
-  body .page-content-container.privacyPolicy{
-    padding: 150px 0px 230px 0px;
-  }
 
   .supportWrapper{
     margin-top: 20px;
@@ -10978,11 +10956,7 @@ input:checked + .remem:before{
   /*margin-top: 100px;*/
   /*}*/
   /* line 2277, ../scss/_responsive.scss */
-  body .slots-block .block-heading .page-title {
-    font-size: 36px;
-    /**/
-    line-height: 42px;
-  }
+
   /* line 2282, ../scss/_responsive.scss */
   body .slots-block .block-heading .subtitle {
     font-size: 17px;
