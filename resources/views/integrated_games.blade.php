@@ -43,7 +43,7 @@ if ($title == $titleDefault) {
                 <a href="" class="exit-btn"><span class="text">Exit</span></a>
             </div>
             <div class="bottom-nav">
-                <a href="#" class="choose-other-link exit-btn">Choose other game</a>
+                <a href="#" class="regBtn exit-btn">Choose other game</a>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@ if ($title == $titleDefault) {
 
         </div>
         <div class="paginationGame">
-           <button class="moreGames">{{trans('casino.load_more')}}</button>
+           <button class="moreGames regBtn">{{trans('casino.load_more')}}</button>
         </div>
        
     </div>

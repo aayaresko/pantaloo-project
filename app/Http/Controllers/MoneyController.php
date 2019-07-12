@@ -290,7 +290,6 @@ class MoneyController extends Controller
 
     public function withdrawDo(Request $request)
     {
-
         //preparations
         $errors = [];
         $date = new \DateTime();
@@ -411,8 +410,8 @@ class MoneyController extends Controller
                 'comment' => 'withdraw',
             ]);
 
-            $transaction->address = $request->input('address');
-            $transaction->save();
+//            $transaction->address = $request->input('address');
+//            $transaction->save();
 
             $withdraw = WithdrawModel::create([
                 'user_id' => $user->id,
@@ -454,8 +453,8 @@ class MoneyController extends Controller
                 curl_setopt_array($ch = curl_init(), array(
                     CURLOPT_URL => "https://api.pushover.net/1/messages.json",
                     CURLOPT_POSTFIELDS => array(
-                        "token" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
-                        "user" => "overpush@protonmail.com",
+                        "user" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
+                        "token" => "axebxmj7c4s5n4uvn2i7zn6sdnq4s1",
                         "message" => "hello world",
                     ),
                     CURLOPT_SAFE_UPLOAD => true,

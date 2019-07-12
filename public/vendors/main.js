@@ -237,17 +237,17 @@ function gamePopup() {
 			registInvalid = 1;
 		});
 
-
-		if (regist.addEventListener) {
-			regist.addEventListener('invalid', function(e) {
-				if (registInvalid === 1) {
-					window.dataLayer.push({
-						event: 'registr_fail_wrongdata',
-					});
-					//to do - send fail data - *****************
-				}
-				registInvalid = 0;
-			}, true);
+		if (regist) {
+			if (regist.addEventListener) {
+				regist.addEventListener('invalid', function(e) {
+					if (registInvalid === 1) {
+						window.dataLayer.push({
+							event: 'registr_fail_wrongdata',
+						});
+					}
+					registInvalid = 0;
+				}, true);
+			}
 		}
 
 		$("#registr").on("submit", function () {
