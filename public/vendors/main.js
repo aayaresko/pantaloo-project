@@ -211,6 +211,9 @@ function gamePopup() {
 					window.location.reload();
 
 				}
+				window.dataLayer.push({
+					event: 'login',
+				});
 
 			}).fail(function(){
 
@@ -228,6 +231,9 @@ function gamePopup() {
 		let registInvalid = 0;
 
 		$("#registr").on("click", function () {
+			window.dataLayer.push({
+				event: 'registration_click',
+			});
 			registInvalid = 1;
 		});
 
@@ -235,8 +241,10 @@ function gamePopup() {
 		if (regist.addEventListener) {
 			regist.addEventListener('invalid', function(e) {
 				if (registInvalid === 1) {
+					window.dataLayer.push({
+						event: 'registr_fail_wrongdata',
+					});
 					//to do - send fail data - *****************
-					console.log(e);
 				}
 				registInvalid = 0;
 			}, true);
@@ -274,6 +282,9 @@ function gamePopup() {
 						registrResult.append($('<p>').html(itemsError[i]));
 						
 					}
+					window.dataLayer.push({
+						event: 'registr_fail_wrongdata',
+					});
 					//to do - send fail data - *****************
 					// registrResult.append(item);
 
@@ -282,6 +293,9 @@ function gamePopup() {
 					window.location.reload();
 					
 				}
+				window.dataLayer.push({
+					event: 'registr_submit',
+				});
 			}).fail(function(){
 
 				$(".registrError").html('There is some problem with your request');

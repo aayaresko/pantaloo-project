@@ -900,6 +900,20 @@
 <!--End of Zendesk Chat Script-->
 
 @yield('js')
+<script>
+    let backEventType = null;
+    @if (session('popup') and isset(session('popup')[2]))
+
+        backEventType = '{{ session('popup')[2] }}';
+        //to do swith
+        if (backEventType === 'mail_confirm') {
+            window.dataLayer.push({
+                event: 'reg_complete',
+            });
+        }
+    @endif
+    //console.log(backEventType);
+</script>
 
 <style>
     .rounded {
