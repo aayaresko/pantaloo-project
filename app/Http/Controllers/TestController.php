@@ -71,7 +71,20 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
-        dd(111);
+        dd(2);
+        curl_setopt_array($ch = curl_init(), array(
+            CURLOPT_URL => "https://api.pushover.net/1/messages.json",
+            CURLOPT_POSTFIELDS => array(
+                "user" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
+                "token" => "axebxmj7c4s5n4uvn2i7zn6sdnq4s1",
+                "message" => "hello world",
+            ),
+            CURLOPT_SAFE_UPLOAD => true,
+            CURLOPT_RETURNTRANSFER => true,
+        ));
+        $response = curl_exec($ch);
+        curl_close($ch);
+        dd($response);
         dd(GeneralHelper::visitorIpCloudFlare());
         $transactionSystem = Transaction::where('type', 3)->where('ext_id', 'e506268a74fdf87757d8b1d67b29f6570cf0dea961cbfdad7fe2961559c0bc0c')->first();
         dd($transactionSystem);
