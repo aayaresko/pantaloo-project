@@ -231,16 +231,19 @@ function gamePopup() {
 			registInvalid = 1;
 		});
 
-
-		if (regist.addEventListener) {
-			regist.addEventListener('invalid', function(e) {
-				if (registInvalid === 1) {
-					//to do - send fail data - *****************
-					console.log(e);
-				}
-				registInvalid = 0;
-			}, true);
+		if (regist) {
+			if (regist.addEventListener) {
+				regist.addEventListener('invalid', function(e) {
+					if (registInvalid === 1) {
+						//to do - send fail data - *****************
+						console.log(e);
+					}
+					registInvalid = 0;
+				}, true);
+			}
 		}
+
+		
 
 		$("#registr").on("submit", function () {
 
