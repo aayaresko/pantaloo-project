@@ -46,13 +46,13 @@
                                     <div class="block-bonus-buttons">
                                         @if(Auth::check())
                                             <a href="#uls"
-                                               class="btn-play-action usl-link"
+                                               class="regBtn usl-link"
                                                data-bonus-url='{{ route('bonus.activate', $bonus->id) }}'>
                                                 <span>{{ trans('casino.activate') }}</span>
                                             </a>
                                         @else
                                             <a href="#"
-                                               class="btn-play-action reg-btn">
+                                               class="regBtn reg-btn">
                                                 <span>{{ trans('casino.join_now') }}</span>
                                             </a>
                                         @endif
