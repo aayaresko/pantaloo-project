@@ -41,7 +41,7 @@ class SitemapHelper
 
     private static function init()
     {
-        self::$alternateLangs = array_diff(GeneralHelper::getListLanguage(), [self::MAIN_LANG]);
+        self::$alternateLangs = GeneralHelper::getListLanguage();
         self::$date = date(self::DATE_FORMAT, time());
         self::$sitemap = App::make('sitemap');
     }
@@ -72,9 +72,10 @@ class SitemapHelper
     private static function prepare_alternate($template)
     {
         $result = array_map(function ($v) use ($template) {
+            $ommitDefLang = false !== strpos($template, "{lang?}");
             return [
                 'language' => $v,
-                'url' => self::prepare_url($template, $v)
+                'url' => self::prepare_url($template, $ommitDefLang && $v == self::MAIN_LANG ? '' : $v)
             ];
         }, self::$alternateLangs);
 
@@ -83,9 +84,6 @@ class SitemapHelper
 
     private static function add_entry($urlTemplate, $extra)
     {
-        $ommitDefLang = false !== strpos($urlTemplate, "{lang?}");
-        $mainUrl = self::prepare_url($urlTemplate, $ommitDefLang ? '' : self::MAIN_LANG);
-
         $priority = $extra['priority'];
         $freq = $extra['freq'];
 
@@ -93,7 +91,9 @@ class SitemapHelper
 
         $alternates = self::prepare_alternate($urlTemplate);
 
-        self::$sitemap->add($mainUrl, $date, $priority, $freq, [], null, $alternates);
+        foreach ($alternates as $alternate) {
+            self::$sitemap->add($alternate['url'], $date, $priority, $freq, [], null, $alternates);
+        }
     }
 }
 
