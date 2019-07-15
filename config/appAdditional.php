@@ -220,5 +220,11 @@ return [
                 'noEdit' => 1
             ]
         ],
+    ],
+
+    'pushoverDate' => [
+        'url' => env('PUSHOVER_URL'),
+        'user' => env('PUSHOVER_USER'),
+        'token' => env('PUSHOVER_TOKEN'),
     ]
 ];

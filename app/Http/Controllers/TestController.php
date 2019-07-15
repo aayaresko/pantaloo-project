@@ -71,6 +71,19 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        $configPushover = config('appAdditional.pushoverDate');
+
+        $client = new Client([]);
+        $request = $client->post($configPushover['url'], [
+            'form_params' => [
+                'user' => $configPushover['user'],
+                'token' => $configPushover['token'],
+                'message' => 'hello world. withdraw',
+            ]
+        ]);
+
+        $responseDate = $request->getBody()->getContents();
+        dd($responseDate);
         dd(2);
         curl_setopt_array($ch = curl_init(), array(
             CURLOPT_URL => "https://api.pushover.net/1/messages.json",
@@ -78,6 +91,21 @@ class TestController extends Controller
                 "user" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
                 "token" => "axebxmj7c4s5n4uvn2i7zn6sdnq4s1",
                 "message" => "hello world",
+            ),
+            CURLOPT_SAFE_UPLOAD => true,
+            CURLOPT_RETURNTRANSFER => true,
+        ));
+        curl_exec($ch);
+        curl_close($ch);
+        ///
+
+
+        curl_setopt_array($ch = curl_init(), array(
+            CURLOPT_URL => "https://api.pushover.net/1/messages.json",
+            CURLOPT_POSTFIELDS => array(
+                "user" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
+                "token" => "axebxmj7c4s5n4uvn2i7zn6sdnq4s1",
+                "message" => "test",
             ),
             CURLOPT_SAFE_UPLOAD => true,
             CURLOPT_RETURNTRANSFER => true,

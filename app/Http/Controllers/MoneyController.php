@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Transaction;
 use Helpers\PayTrio;
 use App\Http\Requests;
+use GuzzleHttp\Client;
 use App\Jobs\Withdraw;
 use App\Bitcoin\Service;
 use Helpers\BonusHelper;
@@ -450,18 +451,18 @@ class MoneyController extends Controller
 
             //not main code task set this code************
             try {
-                curl_setopt_array($ch = curl_init(), array(
-                    CURLOPT_URL => "https://api.pushover.net/1/messages.json",
-                    CURLOPT_POSTFIELDS => array(
-                        "user" => "uf33kvmacm6p4cn7sxc87r9nrc799t",
-                        "token" => "axebxmj7c4s5n4uvn2i7zn6sdnq4s1",
-                        "message" => "hello world",
-                    ),
-                    CURLOPT_SAFE_UPLOAD => true,
-                    CURLOPT_RETURNTRANSFER => true,
-                ));
-                curl_exec($ch);
-                curl_close($ch);
+                $configPushover = config('appAdditional.pushoverDate');
+
+                $client = new Client([]);
+                $request = $client->post($configPushover['url'], [
+                    'form_params' => [
+                        'user' => $configPushover['user'],
+                        'token' => $configPushover['token'],
+                        'message' => 'hello world. withdraw',
+                    ]
+                ]);
+
+                $responseDate = $request->getBody()->getContents();
             } catch (\Exception $ex) {
                 //nothing
             }
