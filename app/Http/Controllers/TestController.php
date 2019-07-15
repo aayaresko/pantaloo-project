@@ -71,6 +71,7 @@ class TestController extends Controller
 
     public function test1(Request $request)
     {
+        dd(2);
         $configPushover = config('appAdditional.pushoverDate');
 
         $client = new Client([]);
