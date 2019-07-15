@@ -37,7 +37,7 @@ class ETag
 
         //dd(md5($response->getContent()));
         // Generate Etag
-        $etag = sha1(json_encode($response->headers->get('origin')).$response->getContent());
+        $etag = sha1(config('sentry.release') . json_encode($response->headers->get('origin')).$response->getContent());
 
         // Load the Etag sent by client
         $requestEtag = str_replace('W/"', '', $request->getETags());    //beginning of string
