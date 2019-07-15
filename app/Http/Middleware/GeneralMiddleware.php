@@ -33,6 +33,7 @@ class GeneralMiddleware
             $user = Auth::user();
             \DataLayerHelper::set('userId', $user->id);
         }
+        \DataLayerHelper::set('userIP', GeneralHelper::visitorIpCloudFlare());
 
         return $next($request);
     }

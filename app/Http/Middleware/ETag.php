@@ -50,7 +50,10 @@ class ETag
         }
 
         // Set Etag
-        $response->setEtag("W/\"{$etag}\"");
+
+        if ($response->status() == 200) {
+            $response->setEtag("W/\"{$etag}\"");
+        }
 
         // Set back to original method
         $request->setMethod($initialMethod); // set back to original method
