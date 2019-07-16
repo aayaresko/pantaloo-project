@@ -5,7 +5,7 @@
     User-agent: *
     Disallow: */logout
     Disallow: */deposit
-    Disallow: */bonus
+    Disallow: */bonus$
     Disallow: */withdraw
     Disallow: */settings
     Disallow: */password/forgot
