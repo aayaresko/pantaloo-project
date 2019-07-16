@@ -25,14 +25,20 @@ class GeneralMiddleware
         View::share('testMode', GeneralHelper::isTestMode());
 
         $partnerPage = config('app.foreignPages.partner');
+
         View::share('partnerPage', $partnerPage);
         View::share(['currentUser' => Auth::check() ? Auth::user() : false]);
 
+        //for ga
+        $backEventTypes = config('appAdditional.backEventType');
+        View::share('backEventTypes', $backEventTypes);
+        //for ga
 
         if (Auth::check()){
             $user = Auth::user();
             \DataLayerHelper::set('userId', $user->id);
         }
+        \DataLayerHelper::set('userIP', GeneralHelper::visitorIpCloudFlare());
 
         return $next($request);
     }
