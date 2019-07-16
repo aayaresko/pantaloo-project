@@ -122,7 +122,7 @@
             <ul class="langbox floated">
                 <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                      alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-               <li> 
+               
                 <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -136,7 +136,7 @@
                             </li>
                         @endforeach
                     </ul>
-                </li>
+                
             </ul>
 
         @endif
@@ -239,7 +239,7 @@
                 <ul class="langbox floated">
                     <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                          alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-                    <li>
+                    
                     <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -252,7 +252,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    </li>
+                    
                 </ul>
 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
@@ -296,7 +296,7 @@
         <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                  alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-            <li>
+            
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
@@ -309,7 +309,7 @@
                     </li>
                 @endforeach
             </ul>
-            </li>
+            
         </ul>
 
         @if(Auth::check())
