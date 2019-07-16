@@ -52,10 +52,11 @@
             data: $(this).serialize(),
             success: function(data)
             {
-                if (data.success == true) {
+                let success = data.success;
+                if (success == true || success == false) {
                     alert(data.msg);
                 } else {
-                    alert(data.msg);
+                    alert('Something is wrong');
                 }
             },
             error: function (data) {
