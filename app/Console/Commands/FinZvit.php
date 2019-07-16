@@ -5,9 +5,13 @@ namespace App\Console\Commands;
 use App\Transaction;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class FinZvit extends Command
 {
+    private static $res = '';
     /**
      * The name and signature of the console command.
      *
@@ -223,65 +227,89 @@ class FinZvit extends Command
         $startDate = '2019-06-01 00:00:00';
         $endDate = '2019-07-01 00:00:00';
 
-        echo '<h2>TOTAL</h2>';
+        $startDate = Carbon::now()->subMonth()->startOfMonth()->__toString();
+        $endDate = Carbon::now()->subMonth()->endOfMonth()->__toString();
+
+        self::dump('FROM ' . $startDate . ' TO ' . $endDate);
+
+        self::dump('TOTAL');
         $select1 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
             ->where('created_at', '>', $startDate)
             ->where('created_at', '<', $endDate);
 
-        dump('withdraw 4');
+        self::dump('withdraw 4');
         $a1 = clone $select1;
-        dump($a1->where('type', 4)->first()->toArray());
+        self::dump($a1->where('type', 4)->first()->toArray());
 
-        dump('deposit 3');
+        self::dump('deposit 3');
         $a2 = clone $select1;
-        dump($a2->where('type', 3)->first()->toArray());
+        self::dump($a2->where('type', 3)->first()->toArray());
 
-        dump('debit 1');
+        self::dump('debit 1');
         $a3 = clone $select1;
-        dump($a3->where('type', 1)->first()->toArray());
+        self::dump($a3->where('type', 1)->first()->toArray());
 
-        dump('credit 2');
+        self::dump('credit 2');
         $a4 = clone $select1;
-        dump($a4->where('type', 2)->first()->toArray());
+        self::dump($a4->where('type', 2)->first()->toArray());
 
-        dump('free 9');
+        self::dump('free 9');
         $a4 = clone $select1;
-        dump($a4->where('type', 9)->first()->toArray());
+        self::dump($a4->where('type', 9)->first()->toArray());
 
-        dump('free 10');
+        self::dump('free 10');
         $a5 = clone $select1;
-        dump($a5->where('type', 10)->first()->toArray());
+        self::dump($a5->where('type', 10)->first()->toArray());
 
-        echo '<br>';
-        echo '<h2>WITHOUT USERS</h2>';
+        self::dump('');
+        self::dump('WITHOUT USERS');
 
         $select2 = Transaction::select([DB::raw('sum(sum) as sum_sum'), DB::raw('sum(bonus_sum) as sum_bonus_sum')])
             ->whereNotIn('user_id', $userOffice)
             ->where('created_at', '>', $startDate)
             ->where('created_at', '<', $endDate);
 
-        dump('withdraw 4');
+        self::dump('withdraw 4');
         $a12 = clone $select2;
-        dump($a12->where('type', 4)->first()->toArray());
+        self::dump($a12->where('type', 4)->first()->toArray());
 
-        dump('deposit 3');
+        self::dump('deposit 3');
         $a22 = clone $select2;
-        dump($a22->where('type', 3)->first()->toArray());
+        self::dump($a22->where('type', 3)->first()->toArray());
 
-        dump('debit 1');
+        self::dump('debit 1');
         $a32 = clone $select2;
-        dump($a32->where('type', 1)->first()->toArray());
+        self::dump($a32->where('type', 1)->first()->toArray());
 
-        dump('credit 2');
+        self::dump('credit 2');
         $a42 = clone $select2;
-        dump($a42->where('type', 2)->first()->toArray());
+        self::dump($a42->where('type', 2)->first()->toArray());
 
-        dump('free 9');
+        self::dump('free 9');
         $a42 = clone $select2;
-        dump($a42->where('type', 9)->first()->toArray());
+        self::dump($a42->where('type', 9)->first()->toArray());
 
-        dump('free 10');
+        self::dump('free 10');
         $a52 = clone $select2;
-        dump($a52->where('type', 10)->first()->toArray());
+        self::dump($a52->where('type', 10)->first()->toArray());
+
+        echo self::$res;
+
+        Mail::raw(self::$res, function ($message) {
+            $message->to('michkire@gmail.com')->cc('michkire@gmail.com');
+        });
+    }
+
+    private static function dump($var)
+    {
+        if (is_string($var)) {
+            self::$res .= $var . PHP_EOL;
+        }
+
+        if (is_array($var)) {
+            foreach ($var as $k => $v) {
+                self::$res .= "  " . $k . ': ' . $v . PHP_EOL;
+            }
+        }
     }
 }
