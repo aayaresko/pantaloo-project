@@ -141,12 +141,10 @@ class BonusController extends Controller
         $bonusObj = new $class($user);
 
         $bonusActivate = $bonusObj->activate();
-
         if ($bonusActivate['success'] === false) {
             DB::rollBack();
-            redirect()->back()->withErrors([$bonusActivate['message']]);
+           return redirect()->back()->withErrors([$bonusActivate['message']]);
         }
-
         DB::commit();
 
         return redirect()->back()->with('popup',
