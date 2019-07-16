@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\View;
 
 class LanguageSwitch extends CommonMiddleware
 {
-    const COOKIE_NAME = 'langs';
+    const COOKIE_NAME = 'lang_c';
     /**
      * @var array
      */
