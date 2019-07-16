@@ -183,7 +183,7 @@
                <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
            </div>
            <div class="login-block reg-modified floated">
-               <a href="#" class="reg-btn regBtn"><span class="text">{{ trans('casino.registration') }}</span></a>
+               <a href="#" class="reg-btn regBtn" onclick="dataLayer.push({'event': 'registration_click',});"><span class="text">{{ trans('casino.registration') }}</span></a>
            </div>
         @endif
         @php
@@ -891,64 +891,79 @@
 <!--End of Zendesk Chat Script-->
 
 @yield('js')
-
-<style>
-    .rounded {
-        border-radius: 20%;
-    }
-</style>
-
-<img src="/images/pixel.png" alt="" style="display: none"/>
-
-
-{{--<!-- Yandex.Metrika counter -->--}}
-{{--<script type="text/javascript">--}}
-{{--(function (d, w, c) {--}}
-{{--(w[c] = w[c] || []).push(function() {--}}
-{{--try {--}}
-{{--w.yaCounter43829254 = new Ya.Metrika({--}}
-{{--id:43829254,--}}
-{{--clickmap:true,--}}
-{{--trackLinks:true,--}}
-{{--accurateTrackBounce:true--}}
-{{--});--}}
-{{--} catch(e) { }--}}
-{{--});--}}
-
-{{--var n = d.getElementsByTagName("script")[0],--}}
-{{--s = d.createElement("script"),--}}
-{{--f = function () { n.parentNode.insertBefore(s, n); };--}}
-{{--s.type = "text/javascript";--}}
-{{--s.async = true;--}}
-{{--s.src = "https://mc.yandex.ru/metrika/watch.js";--}}
-
-{{--if (w.opera == "[object Opera]") {--}}
-{{--d.addEventListener("DOMContentLoaded", f, false);--}}
-{{--} else { f(); }--}}
-{{--})(document, window, "yandex_metrika_callbacks");--}}
-{{--</script>--}}
-{{--<noscript><div><img src="https://mc.yandex.ru/watch/43829254" style="position:absolute; left:-9999px;" alt="" /></div></noscript>--}}
-{{--<!-- /Yandex.Metrika counter -->--}}
-
-{{--<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>--}}
-{{--<script id="_agile_min_js" async type="text/javascript" src="https://d1gwclp1pmzk26.cloudfront.net/agile/agile-cloud.js"> </script>--}}
-{{--<script type="text/javascript" >--}}
-{{--var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){--}}
-{{--_agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);--}}
-{{--_agile.track_page_view();--}}
-{{--_agile_execute_web_rules();};--}}
-{{--</script>--}}
-<!-- Start of uptechsupport Zendesk Widget script -->
-{{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
-<!-- End of uptechsupport Zendesk Widget script -->
-{{--<script type="text/javascript">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"20d401dd0bef4c4a89b7d31699a0965e3f436766499f2fd628d7b7b221e5dda9", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);</script>--}}
-{{--<!-- Start of uptechsupport Zendesk Widget script -->--}}
-{{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
-{{--<!-- End of uptechsupport Zendesk Widget script -->--}}
-
 <script>
-    @php
-        $intercomConfig = \Helpers\IntercomHelper::getIntercomConfig();
+        @if (session('popup') and isset(session('popup')[2]))
+
+            @if (array_key_exists(session('popup')[2], $backEventTypes))
+                let events = {!! json_encode($backEventTypes) !!};
+                let eventType = '{{ session('popup')[2] }}';
+
+                events[eventType].forEach(function(element) {
+                        window.dataLayer.push({
+                            event: element,
+                        });
+                });
+            @endif
+        @endif
+    </script>
+
+    <style>
+        .rounded {
+            border-radius: 20%;
+        }
+    </style>
+
+    <img src="/images/pixel.png" alt="" style="display: none"/>
+
+
+    {{--<!-- Yandex.Metrika counter -->--}}
+    {{--<script type="text/javascript">--}}
+    {{--(function (d, w, c) {--}}
+    {{--(w[c] = w[c] || []).push(function() {--}}
+    {{--try {--}}
+    {{--w.yaCounter43829254 = new Ya.Metrika({--}}
+    {{--id:43829254,--}}
+    {{--clickmap:true,--}}
+    {{--trackLinks:true,--}}
+    {{--accurateTrackBounce:true--}}
+    {{--});--}}
+    {{--} catch(e) { }--}}
+    {{--});--}}
+
+    {{--var n = d.getElementsByTagName("script")[0],--}}
+    {{--s = d.createElement("script"),--}}
+    {{--f = function () { n.parentNode.insertBefore(s, n); };--}}
+    {{--s.type = "text/javascript";--}}
+    {{--s.async = true;--}}
+    {{--s.src = "https://mc.yandex.ru/metrika/watch.js";--}}
+
+    {{--if (w.opera == "[object Opera]") {--}}
+    {{--d.addEventListener("DOMContentLoaded", f, false);--}}
+    {{--} else { f(); }--}}
+    {{--})(document, window, "yandex_metrika_callbacks");--}}
+    {{--</script>--}}
+    {{--<noscript><div><img src="https://mc.yandex.ru/watch/43829254" style="position:absolute; left:-9999px;" alt="" /></div></noscript>--}}
+    {{--<!-- /Yandex.Metrika counter -->--}}
+
+    {{--<script>(function(d,t,u,s,e){e=d.getElementsByTagName(t)[0];s=d.createElement(t);s.src=u;s.async=1;e.parentNode.insertBefore(s,e);})(document,'script','//chat.casinobit.io/php/app.php?widget-init.js&_lang={{ app()->getLocale() }}');</script>--}}
+    {{--<script id="_agile_min_js" async type="text/javascript" src="https://d1gwclp1pmzk26.cloudfront.net/agile/agile-cloud.js"> </script>--}}
+    {{--<script type="text/javascript" >--}}
+    {{--var Agile_API = Agile_API || {}; Agile_API.on_after_load = function(){--}}
+    {{--_agile.set_account('c1cbkc93a03lmrmt73cd0295b7', 'up-tech', false);--}}
+    {{--_agile.track_page_view();--}}
+    {{--_agile_execute_web_rules();};--}}
+    {{--</script>--}}
+    <!-- Start of uptechsupport Zendesk Widget script -->
+    {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
+    <!-- End of uptechsupport Zendesk Widget script -->
+    {{--<script type="text/javascript">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"20d401dd0bef4c4a89b7d31699a0965e3f436766499f2fd628d7b7b221e5dda9", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);</script>--}}
+    {{--<!-- Start of uptechsupport Zendesk Widget script -->--}}
+    {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
+    {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
+
+    <script>
+        @php
+            $intercomConfig = \Helpers\IntercomHelper::getIntercomConfig();
     @endphp
 
             @if (is_null($user))
