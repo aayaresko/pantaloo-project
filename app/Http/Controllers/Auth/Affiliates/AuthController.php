@@ -426,12 +426,7 @@ class AuthController extends Controller
         $user = User::where('email', $email)->first();
 
         if (is_null($user)) {
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => 'User is not found',
-                ],
-            ];
+            return 'User is not found';
         }
 
         $date = Carbon::now();
@@ -454,12 +449,7 @@ class AuthController extends Controller
 //        }
 
         if ($user->email_confirmed == 1) {
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => 'Email already confirmed',
-                ],
-            ];
+            return 'Email already confirmed';
         }
 
         if ($activation) {
@@ -474,19 +464,9 @@ class AuthController extends Controller
 
             Mail::to($user->email)->send($mail);
 
-            return [
-                'status' => true,
-                'message' => [
-                    'messages' => 'Congratulations! E-mail was confirmed!',
-                ],
-            ];
+            return 'Congratulations! E-mail was confirmed!';
         } else {
-            return [
-                'status' => false,
-                'message' => [
-                    'errors' => 'Email wasn\'t confirmed. Invalid link.',
-                ],
-            ];
+            return 'Email wasn\'t confirmed. Invalid link.';
         }
     }
 }

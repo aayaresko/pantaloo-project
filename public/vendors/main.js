@@ -208,6 +208,10 @@ function gamePopup() {
 					}
 
 				}else{
+					window.dataLayer.push({
+						event: 'login',
+					});
+
 					window.location.reload();
 
 				}
@@ -228,6 +232,9 @@ function gamePopup() {
 		let registInvalid = 0;
 
 		$("#registr").on("click", function () {
+			window.dataLayer.push({
+				event: 'registration_click',
+			});
 			registInvalid = 1;
 		});
 
@@ -235,15 +242,14 @@ function gamePopup() {
 			if (regist.addEventListener) {
 				regist.addEventListener('invalid', function(e) {
 					if (registInvalid === 1) {
-						//to do - send fail data - *****************
-						console.log(e);
+						window.dataLayer.push({
+							event: 'registr_fail_wrongdata',
+						});
 					}
 					registInvalid = 0;
 				}, true);
 			}
 		}
-
-		
 
 		$("#registr").on("submit", function () {
 
@@ -277,10 +283,16 @@ function gamePopup() {
 						registrResult.append($('<p>').html(itemsError[i]));
 						
 					}
+					window.dataLayer.push({
+						event: 'registr_fail_wrongdata',
+					});
 					//to do - send fail data - *****************
 					// registrResult.append(item);
 
 				} else{
+					window.dataLayer.push({
+						event: 'registr_submit',
+					});
 
 					window.location.reload();
 					
