@@ -150,7 +150,7 @@ class BonusController extends Controller
         DB::commit();
 
         return redirect()->back()->with('popup',
-            ['BONUS', 'Bonus was activated!', 'Bonus was successfully activated!']);
+            ['BONUS', 'Bonus was activated!',  'bonus' . $bonus->id]);
 
 //        //to do - check this - and edit this way
 //        if (!$bonus->public) {

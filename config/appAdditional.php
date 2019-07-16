@@ -220,5 +220,11 @@ return [
                 'noEdit' => 1
             ]
         ],
-    ]
+    ],
+    'backEventType' => [
+        'confirm_email' => ['confirm_email'],
+        'bonus2' => ['bonus2'],
+        'bonus3' => ['bonus3'],
+        'bonus4' => ['bonus4'],
+    ],
 ];

@@ -165,7 +165,7 @@ class UsersController extends Controller
                     'E-mail confirmation',
                     //'Success',
                     'Congratulations! E-mail was confirmed!',
-                    'mail_confirm'
+                    'confirm_email'
                 ]);
         } else {
             return redirect('/')->withErrors(

@@ -208,12 +208,13 @@ function gamePopup() {
 					}
 
 				}else{
+					window.dataLayer.push({
+						event: 'login',
+					});
+
 					window.location.reload();
 
 				}
-				window.dataLayer.push({
-					event: 'login',
-				});
 
 			}).fail(function(){
 
@@ -289,13 +290,13 @@ function gamePopup() {
 					// registrResult.append(item);
 
 				} else{
+					window.dataLayer.push({
+						event: 'registr_submit',
+					});
 
 					window.location.reload();
 					
 				}
-				window.dataLayer.push({
-					event: 'registr_submit',
-				});
 			}).fail(function(){
 
 				$(".registrError").html('There is some problem with your request');
