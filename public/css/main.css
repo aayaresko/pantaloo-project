@@ -7540,7 +7540,6 @@ input:checked + .remem:before{
   font-size: 33px;
   line-height: 40px;
   text-align: center;
-  font-family: 'MyriadPro-Bold';
   text-shadow: 3px 3px 0px #210330, 2px 2px 0px #8C206C, 1px 1px 0px #A31A59;
 }
 

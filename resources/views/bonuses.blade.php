@@ -65,7 +65,7 @@
                                 <div class="icon"></div>
                                 <h3>Unavailable</h3>
                                 <p class="unavailInfo">Expired!
-                                    <button id="popUpBonus">
+                                    <button class="popUpBonus">
                                         <span class="infoTxt">info</span>
                                     </button>
                                 </p>
