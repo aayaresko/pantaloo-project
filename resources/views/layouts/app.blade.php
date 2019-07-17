@@ -93,7 +93,7 @@
             <a @if(Route::currentRouteName() != 'main') href="/{{ app()->getLocale() }}" @endif class="logoPc">
                 <img src="/media/images/casinobit_logo_white_empty.svg" alt="logo">
                 <span class="svgWrap">
-                    <svg id="anim" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    <svg id="anim" version="1.1" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                          viewBox="0 0 1250 110" enable-background="new 0 0 1250 110" xml:space="preserve">
                     <path fill="#fff" d="M398.7,39.9c-2.6,0-5.1,0.4-7.5,1.2c8-8.9,7.2-22.6-1.7-30.6s-22.6-7.2-30.6,1.7c-7.4,8.2-7.4,20.7,0,29
@@ -122,19 +122,21 @@
             <ul class="langbox floated">
                 <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                      alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
+               <li> 
                 <ul class="langbox-dropdown">
-                    @foreach ($languages as $language)
-                        @if(app()->getLocale() == $language) @continue @endif
-                        <li>
+                        @foreach ($languages as $language)
+                            @if(app()->getLocale() == $language) @continue @endif
+                            <li>
 
-                            <a href="{{ LangAlternatePageUrl($language) }}"
-                               class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
-                                <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
-                                <span>{{ $language }}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                                <a href="{{ LangAlternatePageUrl($language) }}"
+                                class="{{ (app()->getLocale() == $language) ? "active" : '' }}">
+                                    <img src="{{ asset("assets/images/languages/$language.png") }}" alt="{{ $language }}"/>
+                                    <span>{{ $language }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
             </ul>
 
         @endif
@@ -237,6 +239,7 @@
                 <ul class="langbox floated">
                     <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                          alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
+                    <li>
                     <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -249,6 +252,7 @@
                             </li>
                         @endforeach
                     </ul>
+                    </li>
                 </ul>
 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
@@ -292,6 +296,7 @@
         <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                  alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
+            <li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
@@ -304,6 +309,7 @@
                     </li>
                 @endforeach
             </ul>
+            </li>
         </ul>
 
         @if(Auth::check())
@@ -556,12 +562,11 @@
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
 <script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
-<script src="/vendors/lettering/jquery.lettering.js"></script>
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/countrySelect.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
-<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
+<script src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
 <script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
 <script src="/assets/js/helper.js"></script>
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
@@ -572,11 +577,6 @@
 <div class="shadow-container"></div>
 <!-- footer start -->
 
-<div class="hidden">
-    <div id="reg-terms">
-        {!! trans('casino.terms_conditions') !!}
-    </div>
-</div>
 
 <script>
             @if(Session::has('auth'))
@@ -597,7 +597,7 @@
         }
     });
 
-    $('.langbox > li').on('click', function (e) {
+    $('.langbox > li:first-child').on('click', function (e) {
         e.stopPropagation();
         e.preventDefault();
         $('.langbox-dropdown').toggleClass('is-open');
@@ -907,11 +907,7 @@
         @endif
     </script>
 
-    <style>
-        .rounded {
-            border-radius: 20%;
-        }
-    </style>
+
 
     <img src="/images/pixel.png" alt="" style="display: none"/>
 
