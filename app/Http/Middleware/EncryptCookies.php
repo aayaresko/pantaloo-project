@@ -14,5 +14,6 @@ class EncryptCookies extends Middleware
     protected $except = [
         'laravel_session',
         'testmode',
+        'lang_c'
     ];
 }
