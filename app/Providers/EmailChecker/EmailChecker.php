@@ -14,7 +14,7 @@ class EmailChecker
 
     public function isInvalidEmail($email, $default = false)
     {
-        if (true || GeneralHelper::isTestMode()) {
+        if (GeneralHelper::isTestMode()) {
             return false;
         }
         $needles = ['verifymail.win', 'owlymail.com'];
