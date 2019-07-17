@@ -37,22 +37,32 @@ let events = function () {
         return false;
     });
 
+
     $('body').on('click', 'a.open_game', function (e) {
+
+        let paramsGame = {
+                ga: {
+                    category: $(this).attr('data-category'),
+                    name: $(this).attr('data-name').replace(/\b\w/g, l => l.toUpperCase()).replace(/[^\w]/gi, ''),
+                    type: $('.type_of_game').select2().find(':selected').data('type')
+                }
+        }
+
+        //console.log($(this).attr('data-name'));
         let url = String(this.getAttribute('href'));
         e.preventDefault();
         if (auth) {
-            
+
             $('.expand-game').addClass('not-allowed');
-            getGame(url);
-            
+            getGame(url, paramsGame);
         }
         else {
             $('.log-popup').addClass('active');
-
             window.localStorage.setItem('gameUrl', url);
             window.localStorage.setItem('authOpenGame', true);
 
         }
+
         return false;
     });
 
@@ -354,7 +364,7 @@ var showLoader = window.location.href;
     }
 
 
-function getGame(url) {
+function getGame(url, params = {}) {
     //$('.preloaderCommon').show();
     let statusGameRoomLocal = statusGameRoom;
     statusGameRoom++;
@@ -377,7 +387,7 @@ function getGame(url) {
         type: 'GET',
         url: url,
         data: {},
-        success: function (html) {    
+        success: function (html) {
 
 
             //clear
@@ -387,7 +397,7 @@ function getGame(url) {
             if (statusGameRoom === (statusGameRoomLocal + 1)) {
                 // console.log(html);
 
-                let gameUrl = $(html).attr('src')
+                let gameUrl = $(html).attr('src');
 
                 if (mobile) {
                  
@@ -399,9 +409,15 @@ function getGame(url) {
                     $('.expand-game').removeClass('not-allowed');
                     button.addEventListener('click', fullscreen);
                     //$('.preloaderCommon').hide();
-                }  
-               
+                }
 
+                //ga
+                if (typeof params.ga !== 'undefined') {
+                    window.dataLayer.push({
+                        event: "Starting Game", GameCategory: params.ga.type, GameTitle: params.ga.name
+                    });
+                }
+                //ga
             }
         },
         statusCode: {
