@@ -88,7 +88,7 @@ if ($title == $titleDefault) {
                             $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
                             $gamesType->nameType = $nameType;
                             @endphp
-                            <option  data-link="{{$def_name}}" value="{{ $gamesType->id }}">{{ $nameType }}</option>
+                            <option  data-link="{{$def_name}}" value="{{ $gamesType->id }}" data-type = '{{ $gamesType->default_name }}'>{{ $nameType }}</option>
                         @endforeach
                     </select>
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
