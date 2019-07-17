@@ -4,7 +4,7 @@
 $(document).ready(function () {
     console.log('init');
     ParallaxSections();
-    lettering();
+    // lettering();
     // gamesSlider();
     mobMenuInit();
     logOut();
@@ -377,14 +377,7 @@ function gamePopup() {
 		*/
 	}
 
-	function lettering() {
-		$('.word-split').each(function () {
-			// fix th lang on home page headers
-			if (($(this).html() == 'Casinobit') || ($('html').attr('lang') != 'th')) {
-				$(this).lettering();
-			}
-		})
-	}
+
 
 	function ParallaxSections() {
 		let lock = false

@@ -122,7 +122,7 @@
             <ul class="langbox floated">
                 <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                      alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-               
+               <li> 
                 <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -136,7 +136,7 @@
                             </li>
                         @endforeach
                     </ul>
-                
+                </li>
             </ul>
 
         @endif
@@ -239,7 +239,7 @@
                 <ul class="langbox floated">
                     <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                          alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-                    
+                    <li>
                     <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -252,7 +252,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    
+                    </li>
                 </ul>
 
                 <a href="{{url('/logout')}}" class="logout-btn"></a>
@@ -296,7 +296,7 @@
         <ul class="langbox">
             <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                  alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-            
+            <li>
             <ul class="langbox-dropdown">
                 @foreach ($languages as $language)
                     @if(app()->getLocale() == $language) @continue @endif
@@ -309,7 +309,7 @@
                     </li>
                 @endforeach
             </ul>
-            
+            </li>
         </ul>
 
         @if(Auth::check())
@@ -562,7 +562,6 @@
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
 <script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
-<script src="/vendors/lettering/jquery.lettering.js"></script>
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/countrySelect.min.js"></script>
@@ -598,7 +597,7 @@
         }
     });
 
-    $('.langbox > li').on('click', function (e) {
+    $('.langbox > li:first-child').on('click', function (e) {
         e.stopPropagation();
         e.preventDefault();
         $('.langbox-dropdown').toggleClass('is-open');

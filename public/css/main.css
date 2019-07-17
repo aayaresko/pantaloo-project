@@ -1068,17 +1068,7 @@ body .header .header-right-part .login-block .reg-btn:after {
 .mobile-menu .langbox li span {
   font-weight: bold;
 }
-html[lang="th"] .popup-container .popup-entry .popup-heading .popup-title,
-html[lang="th"] .main-title-block .game-name {
-  display: block;
-  text-align: center;
-}
-html[lang="th"] .welcome .main-title-block .game-name {
-  display: flex;
-}
-html[lang="th"] .main-title-block {
-  text-align: center;
-}
+
 .mobTopWrap {
   height: 84px;
 }
@@ -1757,8 +1747,9 @@ html.cropped body .header:after{
   -moz-transform: translate(-50%, 0);
   -o-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
-  max-width: 770px;
+  max-width: 900px;
   width: 100%;
+  text-align: center;
 }
 /* line 184, ../scss/_middle.scss */
 .main-title-block .category-title {
@@ -1772,12 +1763,10 @@ html.cropped body .header:after{
   text-transform: uppercase;
   margin-top: 20px;
   margin-bottom: 0;
-  display: -webkit-flex;
-  /* Safari */
-  -webkit-justify-content: space-between;
-  /* Safari 6.1+ */
-  display: flex;
-  justify-content: space-between;
+  text-align: center;
+  letter-spacing: 26px;
+  padding-left: 26px;
+  text-shadow: 0px 0px 20px #000;
 }
 /* line 201, ../scss/_middle.scss */
 .main-title-block .descr-block {
@@ -7750,9 +7739,7 @@ input:checked + .remem:before{
     top: 24%;
   }
   /* line 42, ../scss/_responsive.scss */
-  body .main-title-block {
-    bottom: 24%;
-  }
+
 }
 @media (max-width: 1220px) {
   /* line 49, ../scss/_responsive.scss */
@@ -7860,8 +7847,8 @@ input:checked + .remem:before{
   }
   /* line 121, ../scss/_responsive.scss */
   body .main-title-block {
-    bottom: 23%;
-    max-width: 480px;
+    bottom: 26%;
+    /* max-width: 480px; */
   }
   /* line 124, ../scss/_responsive.scss */
   body .main-title-block .game-name {
@@ -10214,7 +10201,6 @@ input:checked + .remem:before{
 
   /* line 1790, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block {
-    max-width: 400px;
     margin-bottom: 298px;
   }
   /* line 1793, ../scss/_responsive.scss */
@@ -10919,6 +10905,8 @@ input:checked + .remem:before{
   body .mobile-container .welcome-mob .main-title-block .game-name {
     line-height: 44px;
     font-size: 38px;
+    letter-spacing: 10px; 
+    padding-left: 10px;
   }
   /* line 2196, ../scss/_responsive.scss */
   body .mobile-container .welcome-mob .main-title-block .descr-block .descr {
