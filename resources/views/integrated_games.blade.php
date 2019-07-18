@@ -75,7 +75,7 @@ if ($title == $titleDefault) {
                         @if ($freeSpins === 1)
                             <option class="getFreeSpins" value="free_spins" >{{trans('casino.free_spin_games')}}</option>
                         @endif
-                        <option value="0" selected>{{ trans('casino.all_categories') }}</option>
+                        <option value="0" selected>{{ trans('casino.all_categories') }} ({{ $params['countAllType'] }})</option>
                         @foreach($gamesTypes as $gamesType)
                             @php
                                 $codeLangType = 'casino.type_' . str_replace(' ', '_', $gamesType->name);
@@ -88,15 +88,17 @@ if ($title == $titleDefault) {
                             $nameType = mb_convert_case($nameType, MB_CASE_TITLE);
                             $gamesType->nameType = $nameType;
                             @endphp
-                            <option  data-link="{{$def_name}}" value="{{ $gamesType->id }}">{{ $nameType }}</option>
+                            <option  data-link="{{$def_name}}" value="{{ $gamesType->id }}">{{ $nameType }} ({{ $gamesType->count }})</option>
                         @endforeach
                     </select>
+
                     <select class="js-example-basic-single filter_provider" name="filter_provider">
-                        <option value="0" selected>{{ trans('casino.all_providers') }}</option>
+                        <option value="0" selected>{{ trans('casino.all_providers') }} ({{ $params['countAllCategory'] }})</option>
                         @foreach($gamesCategories as $gamesCategory)
-                            <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }}</option>
+                            <option value="{{ $gamesCategory->id }}">{{ mb_convert_case($gamesCategory->name, MB_CASE_TITLE) }} ({{ $gamesCategory->count }})</option>
                         @endforeach
                     </select>
+
                    <div class="input-search">
                        <input type="text" name="search" placeholder="{{ trans('casino.search_game') }}"/>
                        <input type="submit" value=""/>
