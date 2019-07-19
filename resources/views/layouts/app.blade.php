@@ -36,7 +36,10 @@
 
     <link rel="canonical" href="{{ $canonical }}"/>
 
-    @include('_rel_alternate', ['languages' => $languages])
+    @include('_rel_alternate', [
+        'languages' => $languages,
+        'currentLangCodes' => $currentLangCodes
+     ])
 
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -122,7 +125,7 @@
             <ul class="langbox floated">
                 <li><a href="#"><img src="{{ asset('assets/images/languages/' . app()->getLocale() . '.png') }}"
                                      alt="{{ app()->getLocale() }}"/> <span>{{ app()->getLocale() }}</span></a></li>
-               <li> 
+               <li>
                 <ul class="langbox-dropdown">
                         @foreach ($languages as $language)
                             @if(app()->getLocale() == $language) @continue @endif
@@ -179,7 +182,7 @@
             </div>
         @endif
     </div>
-    <div class="header-right-part">     
+    <div class="header-right-part">
         @if(!Auth::check())
         <div class="login-block floated">
                <a href="#" class="login-btn"><span class="text">{{ trans('casino.login') }}</span></a>
@@ -467,7 +470,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                                
+
                                 <label >{{ trans('casino.password') }} <span>*</span></label>
                                 <div class="pasInputWrapper">
                                     <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
@@ -478,7 +481,7 @@
                                     <p class="errorMessage loginError"></p>
                                 </div>
                         </div>
-                   
+
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -515,17 +518,17 @@
         <div class="popup-entry">
             <div class="popup-heading">
                 <h2 class="popup-title">{{translate('Reset password')}}</h2>
-            </div> 
+            </div>
             <button class="close-icon">×</button>
             <p class='popup-form-subtitle'>
                         {{ trans('casino.reset_hint') }}
                     </p>
             <div class='popup-form'>
                 <form method="POST" action="{{ url("/{$currentLang}/password/email") }}">
-                    {{csrf_field()}}          
+                    {{csrf_field()}}
                         <div class="row">
                             <div class="col-xs-12">
-                                <label>{{translate('E-mail')}} <span>*</span></label>  
+                                <label>{{translate('E-mail')}} <span>*</span></label>
                                 <input type="text" name="email" tabindex="9">
                             </div>
                         </div>
@@ -565,7 +568,7 @@
 <script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/countrySelect.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
 <script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
 <script src="/assets/js/helper.js"></script>

@@ -40,6 +40,11 @@ class GeneralMiddleware
         }
         \DataLayerHelper::set('userIP', GeneralHelper::visitorIpCloudFlare());
 
+        //set current value for lang code
+        $currentLangCodes = config('translator.currentLangCode');
+        View::share('currentLangCodes', $currentLangCodes);
+        //set current value for lang code
+
         return $next($request);
     }
 }

@@ -37,4 +37,9 @@ return [
         'timeout' => env('TRANSLATION_CACHE_TIMEOUT', 60),
         'suffix'  => env('TRANSLATION_CACHE_SUFFIX', 'translation'),
     ],
+
+    'currentLangCode' => [
+        'vn' => 'vi',
+        'jp' => 'ja'
+    ]
 ];
