@@ -458,7 +458,7 @@ class MoneyController extends Controller
                     'form_params' => [
                         'user' => $configPushover['user'],
                         'token' => $configPushover['token'],
-                        'message' => 'hello world. withdraw',
+                        'message' => 'Hello',
                     ]
                 ]);
 
