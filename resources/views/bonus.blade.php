@@ -77,7 +77,7 @@
                                                         <i class="fa fa-plus"></i>Cancel</a>
                                                 </div>
                                                 <p class="unavailInfo">Expired!
-                                                    <button id="popUpBonus">
+                                                    <button class="popUpBonus">
                                                         <span class="infoTxt">info</span></button>
                                                 </p>
                                                 <a href="#uls" class="usl-link">{{ trans('casino.terms') }}</a>

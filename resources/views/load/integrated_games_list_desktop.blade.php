@@ -14,8 +14,9 @@
                     <div class="games-block__wrap ng-scope">
                         <div class="games-block__action">
                             <div class="games-block__buttons is-full">
-                                <a href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}"
+                                <a href="/integratedGameLink/provider/{{ $game->provider_id }}/game/{{ $game->id }}" data-name="{{ $game->name }}" data-category="{{ $game->category }}"
                                    class="open_game games-block__button games-block__button_play-real ng-binding">Play</a>
+
                                 {{--<a href="#" class="games-block__button games-block__button_play-fun ng-binding">Demo</a>--}}
                             </div>
                         </div>

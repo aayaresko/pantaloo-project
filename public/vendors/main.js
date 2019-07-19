@@ -4,7 +4,7 @@
 $(document).ready(function () {
     console.log('init');
     ParallaxSections();
-    lettering();
+    // lettering();
     // gamesSlider();
     mobMenuInit();
     logOut();
@@ -377,14 +377,7 @@ function gamePopup() {
 		*/
 	}
 
-	function lettering() {
-		$('.word-split').each(function () {
-			// fix th lang on home page headers
-			if (($(this).html() == 'Casinobit') || ($('html').attr('lang') != 'th')) {
-				$(this).lettering();
-			}
-		})
-	}
+
 
 	function ParallaxSections() {
 		let lock = false
@@ -499,19 +492,26 @@ function gamePopup() {
 	// getCurrentScreen()
 
 
-	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+	 $(".unavailInfo").on("click", '.popUpBonus',function(){
 		 $(this).parents('.single-bonus').find('.popUpBonusUnavail').addClass("showPoUp");
 	 });
 
-	 $(".unavailInfo").on("click", '#popUpBonus',function(){
+	 $(".unavailInfo").on("click", '.popUpBonus',function(){
 		$(this).parents('.flexChild').find('.popUpBonusUnavail').addClass("showPoUp");
-		$(".hideBonus").hide();
+		$(this).parents('.flexChild').find(".hideBonus").hide();
+		// $(".hideBonus").hide();
 		// $(this).parents('.flexChild')
 	});
 
 	 $(".popUpHideBtn").on("click", function(){
-		$(".popUpBonusUnavail").removeClass("showPoUp");
-		$(".hideBonus").show();
+
+		function closePopup(elem, parent) {
+			$(elem).parents(parent).find(".popUpBonusUnavail").removeClass("showPoUp");
+			$(elem).parents(parent).find(".hideBonus").show();
+		}
+		closePopup(this, '.flexChild')
+		closePopup(this, '.single-bonus')
+
 	 });
 
 
