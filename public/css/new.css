@@ -34,6 +34,7 @@
 .bookof .numb {
   background: linear-gradient(0deg, #ff6600 0%, #ffcc00 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   font-size: 200px;
   line-height: 164px;
@@ -56,6 +57,7 @@
   top: 0px;
   background: linear-gradient(0deg, #ff6600 0%, #ffcc00 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   font-size: 100px;
   text-transform: uppercase;
@@ -271,6 +273,7 @@
 .actions .block-bonus .block-money {
   background: linear-gradient(0deg, #ff6600 0%, #ffcc00 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   float: left;
   margin-top: 21px;
@@ -348,9 +351,7 @@ body .cabinet-block{
   margin-bottom: 25px;
 }
 
-#uls p, #reg-terms p{
-  /* margin-bottom: 25px; */
-}
+
 
 #uls .text, #reg-terms .text {
   position: relative;
@@ -457,9 +458,6 @@ body .cabinet-block{
     /* top: -45px; */
   }
 
-  .bookof .sub-text {
-    /* left: -112px; */
-  }
 
   .bookof .free::after {
     right: 4px;

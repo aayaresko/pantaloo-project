@@ -11,5 +11,11 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+// mix.js('resources/js/app.js', 'public/js')
+//    .sass('resources/sass/app.scss', 'public/css');
+
+mix.styles([
+   'public/assets/css/languages.css',
+   'public/css/new.css',
+   'public/css/main.css',
+], 'public/css/main_bundl.css');

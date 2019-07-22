@@ -12,7 +12,7 @@
 <!-- Bootstrap -->
     <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons -->
-    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
     <!-- Main styles -->
     <link href="/vendors/animate/animate.css" rel="stylesheet">
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
@@ -363,8 +363,8 @@
                                 <div class="pasInputWrapper">
                                     <input type="password" class="pass-input" name="password" required tabindex="2"
                                            title="{{ trans('casino.input_title') }}">
-                                    <button type="button" class="showPasBtn" title="See password"><i
-                                                class="fa fa-eye"></i></button>
+                                    <button type="button" class="showPasBtn" title="See password">
+                                        <i><img src="/media/images/icons/eye-svg.svg" alt=""></i></button>
                                 </div>
                                 <p class="errorMessage registrError"></p>
                             </div>
@@ -471,7 +471,8 @@
                                 <label >{{ trans('casino.password') }} <span>*</span></label>
                                 <div class="pasInputWrapper">
                                     <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
-                                    <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
+                                    <button type="button" class="showPasBtn" title="See password">
+                                    <i><img src="/media/images/icons/eye-svg.svg" alt=""></i></button>
 
                                     <a href="#"
                                     class="forget-link">{{ trans('casino.i_am_forget') }}</a>
@@ -491,9 +492,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn loginBtn" tabindex="8"><span
-                                            class="btn-entry">{{trans('casino.enter_now')}}</span>
-                                </button>
+                                <button class="send-btn loginBtn" tabindex="8">{{trans('casino.enter_now')}}</button>
                             </div>
                         </div>
                     </div>
@@ -562,15 +561,15 @@
 <script src="/vendors/jquery-ui/jquery-ui.js"></script>
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
 <script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
-<script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
+<!-- <script src="/vendors/owl-carousel/owl.carousel.min.js"></script> -->
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/countrySelect.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
 <script src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
-<script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
-<script src="/assets/js/helper.js"></script>
+<!-- <script src="/assets/js/helper.js"></script> -->
 <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="/vendors/new.js?v=1.0.1"></script>
+<script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
+<!-- <script src="/vendors/new.js?v=1.0.1"></script> -->
 
 
 @yield('content')

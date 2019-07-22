@@ -66,6 +66,9 @@ setInterval(function() {
 //     }
 // }
 
+$('.usl-link').magnificPopup();
+$('.reg-terms').magnificPopup();
+
 function controlsInit() {
 
 	$('.setting-tabs').each(function () {
