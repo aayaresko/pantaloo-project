@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Modules\Games\PantalloGamesSystem;
 use App\Models\Pantallo\GamesPantalloSession;
 use App\Models\Pantallo\GamesPantalloSessionGame;
+use App\Models\Pantallo\GamesPantalloTransaction;
 
 class TestController extends Controller
 {
@@ -49,7 +50,7 @@ class TestController extends Controller
     {
 //        \Illuminate\Support\Facades\Auth::loginUsingId(5687);
 //        return redirect('/');
-        if (GeneralHelper::isTestMode() && $request->filled('id') && $request->filled('sign') && md5('enemy1710'.$request->input('id'))){
+        if (GeneralHelper::isTestMode() && $request->filled('id') && $request->filled('sign') && md5('enemy1710' . $request->input('id'))) {
             \Illuminate\Support\Facades\Auth::loginUsingId($request->input('id'));
             return redirect('/');
         }
@@ -72,6 +73,75 @@ class TestController extends Controller
     public function test1(Request $request)
     {
         dd(2);
+        $users = ['igorvitsenko@gmail.com'];
+
+
+        $userInfo = [];
+
+        foreach ($users as $user) {
+            $userSelect = User::where('email', $user)->first();
+            if ($userSelect) {
+                $userInfo[$user] = [];
+                $userInfo[$user]['id'] = $userSelect->id;
+                $userInfo[$user]['country/code'] = $userSelect->country . '/' . $userSelect->ip;
+
+                $ipQualityScoreUrl = config('appAdditional.ipQualityScoreUrl');
+                $ipQualityScoreKey = config('appAdditional.ipQualityScoreKey');
+
+
+                //5 to do config
+                $client = new Client(['timeout' => 5]);
+                //TO DO if exception
+                $responseIpQuality = $client->request('GET', $ipQualityScoreUrl . '/' . $ipQualityScoreKey . '/' . $userSelect->ip);
+                $responseIpQualityJson = json_decode($responseIpQuality->getBody()->getContents(), true);
+
+                if (isset($responseIpQualityJson['success'])) {
+                    if ($responseIpQualityJson['success'] == true) {
+                        $userInfo[$user]['ipInfo'] = $responseIpQualityJson;
+                    }
+                }
+
+
+                $userGameSessions = GamesPantalloSessionGame::join('games_pantallo_session',
+                    'games_pantallo_session.system_id', '=', 'games_pantallo_session_game.session_id')
+                    ->where([
+                        ['games_pantallo_session.user_id', '=', $userSelect->id],
+                    ])
+                    ->select(['games_pantallo_session_game.game_id', 'games_pantallo_session_game.created_at as start'])
+                    ->get()->toArray();
+
+                $fullTransactions = Transaction::where('user_id', $userSelect->id)->select(['id', 'type', 'sum'])->get()->toArray();
+                $userInfo[$user]['fullTransactions'] = $fullTransactions;
+
+                foreach ($userGameSessions as $userGameSession) {
+                    $gamesPantalloTransactions = Transaction::join('games_pantallo_transactions',
+                        'games_pantallo_transactions.transaction_id', '=', 'transactions.id')
+                        ->where('transactions.user_id', $userSelect->id)
+                        ->where('games_pantallo_transactions.game_id', $userGameSession['game_id'])
+//                        ->select([
+//                            'transactions.id',
+//                            'transactions.type',
+//                            'transactions.sum',
+//                            'transactions.bonus_sum',
+//                            'transactions.created_at'
+//                        ])
+                        ->get()->toArray();
+
+                    $game = GamesList::join('games_categories as ct',
+                        'ct.id', '=', 'games_list.category_id')
+                        ->where('games_list.id', $userGameSession['game_id'])
+                        ->select(['games_list.name', 'ct.name as ct_name'])
+                        ->first();
+
+                    $userTranactions = $userGameSession;
+                    $userTranactions['gameName'] = $game->name;
+                    $userTranactions['gameCategory'] = $game->ct_name;
+                    $userTranactions['transactions'] = $gamesPantalloTransactions;
+                    $userInfo[$user]['games'][] = $userTranactions;
+                }
+            }
+        }
+        dd($userInfo);
         $configPushover = config('appAdditional.pushoverDate');
 
         $client = new Client([]);
