@@ -68,6 +68,8 @@
 @endsection
 
 @section('js')
+<script src="/vendors/dataTables.js"></script>
+<script src="/vendors/dataTables_pageLoadMore.js"></script>
     <script>
         let paramsTable = {
             startItem: 0,

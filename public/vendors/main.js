@@ -66,6 +66,9 @@ setInterval(function() {
 //     }
 // }
 
+$('.usl-link').magnificPopup();
+$('.reg-terms').magnificPopup();
+
 function controlsInit() {
 
 	let tabItem = $('.setting-tabs ul li');
