@@ -561,11 +561,10 @@
 </div>
 <div class="overlayMenu"></div>
 <script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
-
-<script src="/vendors/jquery-ui/jquery-ui.js"></script>
+<!-- <script src="/vendors/jquery-ui/jquery-ui.js"></script> -->
 <script src="/vendors/fullPage/scrolloverflow.min.js"></script>
 <script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
-<script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
+<!-- <script src="/vendors/owl-carousel/owl.carousel.min.js"></script> -->
 <script src="/assets/js/select2.min.js"></script>
 <script src="/vendors/countrySelect.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -1011,7 +1010,8 @@
                 w.addEventListener('load', l, false);
             }
         }
-    })();</script>
+    })();
+</script>
 
 <script>
     document.jsBridge = {!!  app(\App\Providers\JsBridge\JsBridge::class)  !!}
@@ -1042,11 +1042,12 @@
     });
 
 
+
     $('body').on('click','.showIntercom',function(e) {
         e.preventDefault();
         Intercom('show');
     });
 </script>
-@include('_ws_balance');
+@include('_ws_balance')
 </body>
 </html>

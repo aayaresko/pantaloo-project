@@ -154,6 +154,7 @@ img {
 .paginationGame {
   position: relative;
   z-index: 99999;
+  margin-bottom: 60px;
 }
 .noGamesFound {
   display: none;
@@ -3864,7 +3865,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   /* padding-top: 16px; */
   text-align: center;
   border-radius: 5px;
-  background-image: linear-gradient(90deg, #2f0d52 0%, #35105b 100%);
+  background: #25153e;
   border: 1px solid #4d397b;
   box-shadow: 0px 10px 20px 0px #00000040;
   outline: none;
@@ -4380,6 +4381,7 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs {
   /* padding-left: 55px; */
   margin-top: 30px;
+  min-height: 410px;
 }
 /* line 1979, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-nav {
@@ -4392,9 +4394,25 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   display: inline-block;
   margin-right: 25px;
 }
+
+.setting-tabs ul{
+  padding-left: 0px;
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.setting-tabs li{
+  display: inline-block;
+  margin-right: 30px;
+}
+
+#tabs-1,#tabs-2,#tabs-3{
+  display: none;
+}
+
 /* line 1986, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-nav li a {
-  color: #6d567f;
+.setting-tabs ul li a {
+  color: #b8a7cd;
   font-size: 20px;
   /* text-transform: uppercase; */
   /* opacity: .6; */
@@ -4406,10 +4424,17 @@ body .cabinet-block .cabinet-entry .main-content .main-content-entry .deposit-en
   font-family: 'MyriadPro-BoldCond', sans-serif;
 }
 /* line 1998, ../scss/_middle.scss */
-.cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-nav li.ui-tabs-active a {
+.setting-tabs li.activeItemTab a {
   color: #fff;
   border-bottom: 1px solid transparent;
 }
+
+div[id^="tabs"].activeTabContent{
+  display: block !important;
+  position: relative;
+  z-index: 99999;
+}
+
 /* line 2006, ../scss/_middle.scss */
 .cabinet-block .cabinet-entry .main-content .main-content-entry .setting-entry .setting-tabs .ui-tabs-panel .single-section {
   margin-bottom: 90px;
@@ -6138,7 +6163,7 @@ table.dataTable thead .sorting_desc{
 
 
 .emailWrapper{
-  background-image: linear-gradient(to top, #35105b 0%, #2f0d52 100%);
+  background-color: #25153e;
   font-size: 13px;
   color: #fff;
   padding: 12px 19px 12px 50px;
@@ -6526,6 +6551,7 @@ table.dataTable thead .sorting_desc{
   letter-spacing: 0.45px;
   outline: none;
   background: linear-gradient(14deg, #421f91 0%, #a92e9f 100%);
+  z-index: 1;
 }
 .submitBtn:after,
 .updateUserDataBtn:after{
@@ -6749,10 +6775,17 @@ table.dataTable thead .sorting_desc{
 }
 .bigBtn span,
 .bigBtn:hover span {
-  color: #fff;
   background: linear-gradient(to bottom, #fbf4f4 30%, #e8b2e3ab 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: #fff;
+}
+
+@supports (-ms-ime-align:auto) {
+    .bigBtn span,
+    .bigBtn:hover span{
+        -webkit-text-fill-color: #fff;
+    }
 }
 /* .bigBtn span:after {
   content: '';
@@ -7592,12 +7625,12 @@ input:checked + .remem:before{
 }
 
 .cookieBtn{
-  background: linear-gradient(14deg, #56359d, #bb4bab);
+  background: linear-gradient(14deg, #421f91 0%, #a92e9f 100%);
   font-size: 15px;
   color: #fff;
   padding: 8px 18px;
   position: relative;
-  font-family: 'MyriadPro-Bold', sans-serif;
+  font-family: inherit;
   border-radius: 20px;
   border: none;
 }
@@ -7615,7 +7648,7 @@ input:checked + .remem:before{
   right: 0;
   left: 0;
   margin: -2px;
-  background: linear-gradient(90deg, #844099, #34248c);
+  background: linear-gradient(90deg, #34248c, #844099);
   border-radius: inherit;
   z-index: -1;
   opacity: 0.4;
@@ -9778,8 +9811,8 @@ input:checked + .remem:before{
   /* line 1495, ../scss/_responsive.scss */
   body .cabinet-block .cabinet-entry .cabinet-sidebar .cabinet-menu-listing li a {
     /* padding: 10px 0; */
-    padding-left: 50px;
-    font-size: 15px;
+    padding-left: 48px;
+    font-size: 14px;
     text-align-last: left;
   }
 
