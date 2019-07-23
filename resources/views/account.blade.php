@@ -147,6 +147,7 @@
             }
          }
     @endphp
+    <script src="/vendors/countrySelect.min.js"></script>
     <script>
         //prepare
         let params = {

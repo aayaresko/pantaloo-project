@@ -10,20 +10,22 @@
 {!! MetaTag::tag('description') !!}
 
 <!-- Bootstrap -->
-    <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Icons -->
     <!-- <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
     <!-- Main styles -->
-    <link href="/vendors/animate/animate.css" rel="stylesheet">
+    <!-- <link href="/vendors/animate/animate.css" rel="stylesheet">
     <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="/css/countrySelect.css">
+    <link rel="stylesheet" type="text/css" href="/css/datatables.css">
+    <link rel="stylesheet" type="text/css" href="/css/countrySelect.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
-    <link href="/assets/css/languages.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <!-- <link href="/assets/css/languages.css?v={{ config('sentry.release') }}" rel="stylesheet">
     <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
-    <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet"> -->
+    <link href="/css/libs.min.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/main.min.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
     @php
         $canonical = url(\Illuminate\Support\Facades\Request::url(),[]);
@@ -556,19 +558,20 @@
     </div>
 </div>
 <div class="overlayMenu"></div>
-<script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
+<!-- <script src="/vendors/jquery/jquery-3.0.0.min.js"></script> -->
 
-<script src="/vendors/jquery-ui/jquery-ui.js"></script>
-<script src="/vendors/fullPage/scrolloverflow.min.js"></script>
-<script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
+<!-- <script src="/vendors/jquery-ui/jquery-ui.js"></script> -->
+<!-- <script src="/vendors/fullPage/scrolloverflow.min.js"></script> -->
+<!-- <script src="/vendors/fullPage/jquery.fullPage.min.js"></script> -->
 <!-- <script src="/vendors/owl-carousel/owl.carousel.min.js"></script> -->
-<script src="/assets/js/select2.min.js"></script>
-<script src="/vendors/countrySelect.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>   
-<script src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
+<!-- <script src="/assets/js/select2.min.js"></script> -->
+<!-- <script src="/vendors/countrySelect.min.js"></script> -->
+<!-- <script src="/vendors/dataTables.js"></script>
+<script src="/vendors/dataTables_pageLoadMore.js"></script> -->
 <!-- <script src="/assets/js/helper.js"></script> -->
-<script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
+<!-- <script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script> -->
+<script src="/js/libs.min.js?v={{ config('sentry.release') }}"></script>
+<script src="/js/main.min.js?v={{ config('sentry.release') }}"></script>
 <!-- <script src="/vendors/new.js?v=1.0.1"></script> -->
 
 
