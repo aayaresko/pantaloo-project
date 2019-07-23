@@ -68,8 +68,22 @@ setInterval(function() {
 
 function controlsInit() {
 
-	$('.setting-tabs').each(function () {
-		$(this).tabs();
+	let tabItem = $('.setting-tabs ul li');
+
+	tabItem.on("click", function(){
+
+		tabItem.removeClass("activeItemTab");
+
+		$(this).addClass("activeItemTab");
+
+		let tabHref = $('.setting-tabs ul li.activeItemTab a').attr("href");
+
+		$('div.activeTabContent').removeClass('activeTabContent');
+
+		$(tabHref).addClass('activeTabContent');
+
+		return false;
+
 	});
 
 }
@@ -396,35 +410,6 @@ function gamePopup() {
 				window.dispatchEvent(event);
 			}
 		});
-	}
-
-	function gamesSlider() {
-		if ($('.games-block').length > 0 && $(window).width() < 1080) {
-			var owl = $('.games-slider');
-			owl.owlCarousel({
-				items: 1,
-				addClassActive: true,
-				loop: true,
-				nav: true,
-				navContainer: '.nav-block',
-				dotsContainer: '.dots-block'
-			})
-		}
-	}
-
-	function bonusSlider() {
-		if ($('.bonuses-listing').length > 0 && $(window).width() < 1080) {
-			var owl = $('.bonuses-listing');
-			owl.owlCarousel({
-				items: 1,
-				addClassActive: true,
-				loop: true,
-				nav: true,
-				navContainer: '.middle-block',
-				dotsContainer: '.nav-block',
-				navText: ''
-			})
-		}
 	}
 
 	function blockFilter() {

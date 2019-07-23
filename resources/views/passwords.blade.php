@@ -19,7 +19,7 @@
                         <div class="setting-tabs">
                             <ul>
                                 {{--                                <li><a href="#tabs-1">{{ trans('casino.pin_code') }}</a></li>--}}
-                                <li><a href="#tabs-2">{{ trans('casino.change_password') }}</a></li>
+                                <li class="activeItemTab"><a href="#tabs-2">{{ trans('casino.change_password') }}</a></li>
                                 <li><a href="#tabs-3">{{ trans('casino.confirm_email') }}</a></li>
                             </ul>
 
@@ -58,7 +58,7 @@
                             {{--                                 <!-- form change pin code  -->--}}
                             {{--                            </div>--}}
 
-                            <div id="tabs-2">
+                            <div id="tabs-2" class="activeTabContent">
                                 <div class="middle-block">
                                     <form action="{{ route('password')}} " method="POST">
 
