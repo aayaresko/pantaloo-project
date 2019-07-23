@@ -35,7 +35,6 @@ mix.scripts([
    'public/vendors/fullPage/scrolloverflow.min.js',
    'public/vendors/fullPage/jquery.fullPage.min.js',
    'public/assets/js/select2.min.js',
-   'public/vendors/countrySelect.min.js',
    'public/vendors/magnific-popup/jquery.magnific-popup.min.js'
 ], 'public/js/libs.min.js');
 
