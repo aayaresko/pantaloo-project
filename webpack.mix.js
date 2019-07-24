@@ -27,7 +27,7 @@ mix.styles([
 ], 'public/css/libs.min.css');
 
 //main css
-mix.styles('public/css/main.css','public/css/main.min.css')
+// mix.styles('public/css/main.css','public/css/main.min.css')
 
 
 mix.scripts([
@@ -38,6 +38,8 @@ mix.scripts([
    'public/vendors/magnific-popup/jquery.magnific-popup.min.js'
 ], 'public/js/libs.min.js');
 
-mix.babel([
-   'public/vendors/main.js',
-], 'public/js/main.min.js');
+// mix.babel([
+//    'public/vendors/main.js',
+// ], 'public/js/main.min.js');
+
+mix.browserSync(process.env.MIX_SENTRY_DSN_PUBLIC);
