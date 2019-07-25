@@ -211,6 +211,25 @@ body .mobile-menu .popup-entry .language-nav img {
   vertical-align: top;
 }
 
+#chatNew {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  outline: none;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: rgb(160, 74, 246);
+  border-radius: 50%;
+  z-index: 99999999;
+  border: none;
+}
+#chatIcon {
+  width: 28px;
+  height: 32px;
+}
+
 @media (max-width: 1080px) {
   body .mobile-menu .popup-entry .block-heading .title {
       letter-spacing: 70px;
