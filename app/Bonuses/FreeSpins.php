@@ -116,6 +116,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -347,6 +348,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -409,6 +411,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . self::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -552,6 +555,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -704,6 +708,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -775,6 +780,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -894,6 +900,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.freeSpins' . static::$id);
 
         if (!isset($this->dataBonus[$key])) {

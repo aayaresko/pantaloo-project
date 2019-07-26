@@ -98,6 +98,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -245,6 +246,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -346,6 +348,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -450,6 +453,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
@@ -521,6 +525,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
         $userId = $user->id;
         $debugGame = new DebugGame();
+        $debugGame->start();
         $rawLogKey = config('appAdditional.rawLogKey.depositBonus' . static::$id);
 
         $rawLogId = DB::connection('logs')->table('raw_log')->insertGetId([
