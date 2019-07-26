@@ -98,7 +98,7 @@ class IntegratedCategoriesController extends Controller
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
             'rating' => 'integer',
-            'ratingItems' => 'integer',
+            'ratingItems' => 'integer|nullable',
             'allowCountryCategories_codes.*' => 'exists:countries,code',
             'banCountryCategories_codes.*' => 'exists:countries,code',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:".implode(',', $imageConfig['mimes']),
@@ -123,10 +123,9 @@ class IntegratedCategoriesController extends Controller
                 $updatedGame['active'] = 0;
             }
 
-            if (isset($request->ratingItems)) {
-                if ($request->ratingItems != '') {
-                    GamesList::where('category_id', $request->id)->update(['rating' => $request->ratingItems]);
-                }
+            if (!is_null($request->ratingItems)) {
+                GamesList::where('category_id', $request->id)->update(['rating' => $request->ratingItems]);
+            } else {
                 unset($updatedGame['ratingItems']);
             }
 
