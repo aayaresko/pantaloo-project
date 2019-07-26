@@ -39,16 +39,15 @@ class SitemapHelper
         return self::$sitemap->render('xml');
     }
 
-    public static function mapLang($lang){
-        switch ($lang){
-            case 'jp':
-                $lang ='ja';
-                break;
-            case 'vn':
-                $lang = 'vi';
-                break;
+    public static function mapLang($lang)
+    {
+        $codeLang = $lang;
+        $currentLangCodes = config('translator.currentLangCode');
+        if (array_key_exists($codeLang, $currentLangCodes)) {
+            $codeLang = $currentLangCodes[$codeLang];
         }
-        return $lang;
+
+        return $codeLang;
     }
 
     private static function init()
