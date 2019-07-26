@@ -9,20 +9,9 @@
     <title>{{ MetaTag::get('title') }}</title>
 {!! MetaTag::tag('description') !!}
 
-<!-- Bootstrap -->
-    <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Icons -->
-    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Main styles -->
-    <link href="/vendors/animate/animate.css" rel="stylesheet">
-    <link href="/vendors/fullPage/jquery.fullPage.css" rel="stylesheet">
-    <link href="/css/select2.min.css" rel="stylesheet">
-    <link href="/vendors/magnific-popup/magnific-popup.css?v=1.0.1" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="/css/countrySelect.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
-    <link href="/assets/css/languages.css?v={{ config('sentry.release') }}" rel="stylesheet">
-    <link href="/css/new.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <link href="/css/libs.min.css?v={{ config('sentry.release') }}" rel="stylesheet">
+    <!-- <link href="/css/main.min.css?v={{ config('sentry.release') }}" rel="stylesheet"> -->
     <link href="/css/main.css?v={{ config('sentry.release') }}" rel="stylesheet">
 
     @php
@@ -366,8 +355,8 @@
                                 <div class="pasInputWrapper">
                                     <input type="password" class="pass-input" name="password" required tabindex="2"
                                            title="{{ trans('casino.input_title') }}">
-                                    <button type="button" class="showPasBtn" title="See password"><i
-                                                class="fa fa-eye"></i></button>
+                                    <button type="button" class="showPasBtn" title="See password">
+                                        <i><img src="/media/images/icons/eye-svg.svg" alt=""></i></button>
                                 </div>
                                 <p class="errorMessage registrError"></p>
                             </div>
@@ -474,7 +463,8 @@
                                 <label >{{ trans('casino.password') }} <span>*</span></label>
                                 <div class="pasInputWrapper">
                                     <input type="password" name="password" class="pass-input" required tabindex="6" title="{{ trans('casino.input_title') }}">
-                                    <button type="button" class="showPasBtn" title="See password"><i class="fa fa-eye"></i></button>
+                                    <button type="button" class="showPasBtn" title="See password">
+                                    <i><img src="/media/images/icons/eye-svg.svg" alt=""></i></button>
 
                                     <a href="#"
                                     class="forget-link">{{ trans('casino.i_am_forget') }}</a>
@@ -494,9 +484,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="send-btn-block">
-                                <button class="send-btn loginBtn" tabindex="8"><span
-                                            class="btn-entry">{{trans('casino.enter_now')}}</span>
-                                </button>
+                                <button class="send-btn loginBtn" tabindex="8">{{trans('casino.enter_now')}}</button>
                             </div>
                         </div>
                     </div>
@@ -560,23 +548,18 @@
     </div>
 </div>
 <div class="overlayMenu"></div>
-<script src="/vendors/jquery/jquery-3.0.0.min.js"></script>
 
-<script src="/vendors/jquery-ui/jquery-ui.js"></script>
-<script src="/vendors/fullPage/scrolloverflow.min.js"></script>
-<script src="/vendors/fullPage/jquery.fullPage.min.js"></script>
-<script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
-<script src="/assets/js/select2.min.js"></script>
-<script src="/vendors/countrySelect.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script src="//gyrocode.github.io/jquery-datatables-pageLoadMore/1.0.0/js/dataTables.pageLoadMore.min.js"></script>
+<script src="/js/libs.min.js?v={{ config('sentry.release') }}"></script>
+<!-- <script src="/js/main.min.js?v={{ config('sentry.release') }}"></script> -->
 <script src="/vendors/main.js?v={{ config('sentry.release') }}"></script>
-<script src="/assets/js/helper.js"></script>
-<script src="/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="/vendors/new.js?v=1.0.1"></script>
+
 
 
 @yield('content')
+
+<button id="chatNew">
+<svg id="chatIcon" focusable="false" aria-hidden="true" fill="#fff" viewBox="0 0 28 32"><path d="M28,32 C28,32 23.2863266,30.1450667 19.4727818,28.6592 L3.43749107,28.6592 C1.53921989,28.6592 0,27.0272 0,25.0144 L0,3.6448 C0,1.632 1.53921989,0 3.43749107,0 L24.5615088,0 C26.45978,0 27.9989999,1.632 27.9989999,3.6448 L27.9989999,22.0490667 L28,22.0490667 L28,32 Z M23.8614088,20.0181333 C23.5309223,19.6105242 22.9540812,19.5633836 22.5692242,19.9125333 C22.5392199,19.9392 19.5537934,22.5941333 13.9989999,22.5941333 C8.51321617,22.5941333 5.48178311,19.9584 5.4277754,19.9104 C5.04295119,19.5629428 4.46760991,19.6105095 4.13759108,20.0170667 C3.97913051,20.2124916 3.9004494,20.4673395 3.91904357,20.7249415 C3.93763774,20.9825435 4.05196575,21.2215447 4.23660523,21.3888 C4.37862552,21.5168 7.77411059,24.5386667 13.9989999,24.5386667 C20.2248893,24.5386667 23.6203743,21.5168 23.7623946,21.3888 C23.9467342,21.2215726 24.0608642,20.9827905 24.0794539,20.7254507 C24.0980436,20.4681109 24.0195551,20.2135019 23.8614088,20.0181333 Z"></path></svg>
+</button>
 <div class="shadow-container"></div>
 <!-- footer start -->
 
@@ -1005,13 +988,15 @@
                 var x = d.getElementsByTagName('script')[0];
                 x.parentNode.insertBefore(s, x);
             };
-            if (w.attachEvent) {
-                w.attachEvent('onload', l);
+            if (localStorage.getItem('intercom-state')) {
+                w.addEventListener('load', l, false); 
             } else {
-                w.addEventListener('load', l, false);
-            }
+                $('#chatNew').css('display', 'flex');
+                $('#chatNew').click(l,Intercom('show'))               
+            }  
         }
-    })();</script>
+    })();
+</script>
 
 <script>
     document.jsBridge = {!!  app(\App\Providers\JsBridge\JsBridge::class)  !!}
@@ -1033,6 +1018,7 @@
 
         //events
         Intercom('onShow', function () {
+            $('#chatNew').hide();
             intercomUpdate();
         });
 
@@ -1042,11 +1028,12 @@
     });
 
 
+
     $('body').on('click','.showIntercom',function(e) {
         e.preventDefault();
         Intercom('show');
     });
 </script>
-@include('_ws_balance');
+@include('_ws_balance')
 </body>
 </html>

@@ -70,11 +70,11 @@
                                                 <div class="btnWrap">
                                                     <a href="{{ route('bonus.activate', $bonus) }}"
                                                        class="push-button activatedBtn bonusAction">
-                                                        <i class="fa fa-check"></i>{{ trans('casino.activate') }}</a>
+                                                        <i><img src="/media/images/icons/check-mark.svg" alt=""></i>{{ trans('casino.activate') }}</a>
 
                                                     <a href="{{ route('bonus.cancel') }}"
                                                        class="push-button canceledBtn bonusAction">
-                                                        <i class="fa fa-plus"></i>Cancel</a>
+                                                        <i>×</i>Cancel</a>
                                                 </div>
                                                 <p class="unavailInfo">Expired!
                                                     <button class="popUpBonus">

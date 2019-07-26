@@ -39,6 +39,18 @@ class SitemapHelper
         return self::$sitemap->render('xml');
     }
 
+    public static function mapLang($lang){
+        switch ($lang){
+            case 'jp':
+                $lang ='ja';
+                break;
+            case 'vn':
+                $lang = 'vi';
+                break;
+        }
+        return $lang;
+    }
+
     private static function init()
     {
         self::$alternateLangs = GeneralHelper::getListLanguage();
@@ -74,7 +86,7 @@ class SitemapHelper
         $result = array_map(function ($v) use ($template) {
             $ommitDefLang = false !== strpos($template, "{lang?}");
             return [
-                'language' => $v,
+                'language' => self::mapLang($v),
                 'url' => self::prepare_url($template, $ommitDefLang && $v == self::MAIN_LANG ? '' : $v)
             ];
         }, self::$alternateLangs);
