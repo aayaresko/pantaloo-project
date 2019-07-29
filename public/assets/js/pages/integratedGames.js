@@ -222,9 +222,9 @@ window.onpopstate = function(event) {
         }, 500);
 
         if (mobile) {
-            localStorage.setItem('gamesLoaded', 10)
+            localStorage.setItem('gamesLoaded', gamesToShowMob)
         } else {
-            localStorage.setItem('gamesLoaded', 15)
+            localStorage.setItem('gamesLoaded', gamesToShowDesk)
         }
        
         // console.log($('.single-game').length);
@@ -256,7 +256,6 @@ window.onpopstate = function(event) {
 // })
 
 
-
 function getListGames(append, hist) {
     $('.preloaderCommon').show();
     $.ajax({
@@ -278,26 +277,10 @@ function getListGames(append, hist) {
             //insert
             // $('html,body').scrollTop(0);
 
-            function parsePesponse(device) {
+            function parsePesponse(device, gamesCount) {
                 var parser = new DOMParser();
 
                 var games = parser.parseFromString(device, 'text/html')
-                // console.log('lol');
-
-                let gamesToShow = 15;
-                if (mobile) {
-                    gamesToShow = 10;
-                }
-                                     
-                
-                if ($(games).find('.single-game').length < gamesToShow) {
-                    $('.moreGames').hide()
-                    // alert('lol');
-                } else {
-                    $('.moreGames').show()
-                }
-
-              
 
                 if (append) {                  
                     // $(".insertGames .games-entry").append('<div class="lol">' +device+ '</div>');
@@ -322,29 +305,29 @@ function getListGames(append, hist) {
                      currPage = 2
                 }
 
+                let gamesShown = $('.single-game').length
+                      
+                if (gamesShown < gamesCount) {
+                    $('.moreGames').show()
+                } else {
+                    $('.moreGames').hide()
+                }
+               
                 if (device.length == 0 && $('.games-entry').is(':empty') === true) {
                     console.log('No games found');
                     $('.noGamesFound').show()
                 } else {
                     $('.noGamesFound').hide()
                 }
-                // console.log($('.games-entry').html());
 
             }
 
-            
-           
-                
-            
-            
-            // console.log($(games).find('.single-game').length);
+                      
 
             if (mobile) {
-                parsePesponse(response.mobile)
-                
+                parsePesponse(response.mobile, response.totalGames)              
             } else {
-                parsePesponse(response.desktop)
-               
+                parsePesponse(response.desktop, response.totalGames)             
             }                 
             $('.preloaderCommon').hide();
             //resizeIframe();

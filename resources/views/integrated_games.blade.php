@@ -146,6 +146,9 @@
 
 @section('js')
     <script>
+        let gamesToShowMob = "{{ $params['paginationCountGames']['mobile'] }}";
+        let gamesToShowDesk = "{{ $params['paginationCountGames']['desktop'] }}";
+
         let dummy = "{{ $dummyPicture }}";
         let defaultTitle = "{{ trans("casino.{$titleDefault}") }}";
     </script>
