@@ -281,7 +281,11 @@ class IntegratedGamesController extends Controller
             $freeSpins = (is_null($freeSpinsBonus)) ? 0 : 1;
         }
         //for free spins
+        //get count games
+        $paginationCountGames = config('integratedGames.common.listGames.pagination');
+        $params['paginationCountGames'] = $paginationCountGames;
 
+        //get count games
         return view('integrated_games')->with([
             'title' => $title,
             'params' => $params,
