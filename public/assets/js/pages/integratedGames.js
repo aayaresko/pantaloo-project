@@ -281,15 +281,6 @@ function getListGames(append, hist) {
                 var parser = new DOMParser();
 
                 var games = parser.parseFromString(device, 'text/html')
-                // console.log('lol');
-
-                // let gamesToShow = 15;
-                // if (mobile) {
-                //     gamesToShow = 10;
-                // }
-                
-        
-              
 
                 if (append) {                  
                     // $(".insertGames .games-entry").append('<div class="lol">' +device+ '</div>');
@@ -315,15 +306,13 @@ function getListGames(append, hist) {
                 }
 
                 let gamesShown = $('.single-game').length
-                                         
+                      
                 if (gamesShown < gamesCount) {
                     $('.moreGames').show()
                 } else {
                     $('.moreGames').hide()
                 }
                
-        
-
                 if (device.length == 0 && $('.games-entry').is(':empty') === true) {
                     console.log('No games found');
                     $('.noGamesFound').show()
@@ -336,11 +325,9 @@ function getListGames(append, hist) {
                       
 
             if (mobile) {
-                parsePesponse(response.mobile, response.gamesCountMob)
-                
+                parsePesponse(response.mobile, response.totalGames)              
             } else {
-                parsePesponse(response.desktop, response.gamesCountDesk)
-               
+                parsePesponse(response.desktop, response.totalGames)             
             }                 
             $('.preloaderCommon').hide();
             //resizeIframe();
