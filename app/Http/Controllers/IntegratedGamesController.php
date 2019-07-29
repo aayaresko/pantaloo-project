@@ -420,6 +420,8 @@ class IntegratedGamesController extends Controller
         return response()->json([
             'mobile' => $viewMobile,
             'desktop' => $viewDesktop,
+            'totalGames' => $gameList->total(),
+            'lastPage' =>  $gameList->lastPage(),
             'time' => round(microtime(true) - $start, 4),
         ]);
     }
