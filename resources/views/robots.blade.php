@@ -1,4 +1,4 @@
-@if ($host != 'casinobit.io')
+@if ($currentHost != $defaultHost)
     User-agent: *
     Disallow: /
 @else

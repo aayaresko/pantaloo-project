@@ -22,8 +22,12 @@ Route::group(['middleware' => ['web'], 'prefix' => 'testMode'], function () {
 
 //for seo
 Route::get('robots.txt', function (Illuminate\Http\Request $request) {
+    $mainUrl = config('partner.main_url');
+    $defaultHost = parse_url($mainUrl)['host'];
+
     return view('robots', [
-        'host' => $request->getHost(),
+        'currentHost' => $request->getHost(),
+        'defaultHost' => $defaultHost
     ]);
 });
 
