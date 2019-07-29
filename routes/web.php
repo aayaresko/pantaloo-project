@@ -27,7 +27,8 @@ Route::get('robots.txt', function (Illuminate\Http\Request $request) {
 
     return view('robots', [
         'currentHost' => $request->getHost(),
-        'defaultHost' => $defaultHost
+        'defaultHost' => $defaultHost,
+        'mainUrl' => $mainUrl
     ]);
 });
 

@@ -7,6 +7,6 @@
     Allow: *.css
     Allow: *.js
 
-    Sitemap: https://casinobit.io/sitemap.xml
+    Sitemap: {{ $mainUrl }}/sitemap.xml
 
 @endif
