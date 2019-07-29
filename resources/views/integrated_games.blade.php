@@ -146,6 +146,9 @@
 
 @section('js')
     <script>
+        //TODO
+        let gamesToShowMob = 10;
+        let gamesToShowDesk = 15;
         let dummy = "{{ $dummyPicture }}";
         let defaultTitle = "{{ trans("casino.{$titleDefault}") }}";
     </script>
