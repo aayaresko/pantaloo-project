@@ -3,15 +3,6 @@
     Disallow: /
 @else
     User-agent: *
-    Disallow: */logout
-    Disallow: */deposit
-    Disallow: */bonus$
-    Disallow: */withdraw
-    Disallow: */settings
-    Disallow: */password/forgot
-    Disallow: */password/email
-    Disallow: */password/reset
-    Disallow: /login
     Disallow: *?*
     Allow: *.css
     Allow: *.js
