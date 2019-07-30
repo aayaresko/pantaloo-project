@@ -69,6 +69,24 @@ setInterval(function() {
 $('.usl-link').magnificPopup();
 $('.reg-terms').magnificPopup();
 
+	if(location.hash == '#uls'){
+		console.log("true")
+		$.magnificPopup.open({
+			items: {
+			  src: '#uls'
+			}
+		});
+	}else if(location.hash == '#reg-terms'){
+		console.log("false")
+		$.magnificPopup.open({
+			items: {
+			  src: '#reg-terms'
+			}
+		});
+	}
+
+// console.log(location.hash)
+
 function controlsInit() {
 
 	let tabItem = $('.setting-tabs ul li');
