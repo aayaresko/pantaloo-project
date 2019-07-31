@@ -284,17 +284,23 @@ class AgentController extends Controller
 
     public function showTree()
     {
-        $users = User::with('koefs', 'benefits')
+        $users = User::with('benefits')
             ->select('id', 'email', 'role', 'agent_id', 'commission', 'created_at')
             ->whereIn('role', [1, 3])
             ->get();
 
         $ids = [];
         foreach ($users as $user) {
+            if ($user->commission == 0 and $user->role == 1 and !$user->agent_id) {
+                continue;
+            }
             $ids[] = $user->id;
         }
         $parentIdChildArr = [];
         foreach ($users as $user) {
+            if ($user->commission == 0 and $user->role == 1 and !$user->agent_id) {
+                continue;
+            }
             $parentId = ($user->agent_id and in_array($user->agent_id, $ids)) ? $user->agent_id : 0;
             $parentIdChildArr[$parentId][] = $user;
             $user->userCount = User::where('role', 0)->where('agent_id', $user->id)->count();

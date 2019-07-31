@@ -37,7 +37,7 @@
 
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.2/vue.js"></script>
-    <script src="https://unpkg.com/vue-ads-table-tree@latest/dist/vue-ads-table-tree.umd.js"></script>
+    <script src="/js/vue-ads-table-tree.umd.js"></script>
     <script>
         const VueAdsTableTree = window["vue-ads-table-tree"].default;
         $(document).ready(function () {
@@ -47,12 +47,12 @@
                     VueAdsTableTree,
                 },
                 props: {
-                    itemsPerPage: 100
+                    itemsPerPage: 200
                 },
                 data: {
                     page: 1,
                     props: {
-                        itemsPerPage: 100
+                        itemsPerPage: 200
                     },
                     filterValue: '',
                     classes: {
@@ -108,7 +108,7 @@
                     rows: {!! json_encode($newTree) !!}
                 },
                 mounted() {
-                    this.$root.$children[0].itemsPerPage = 100;
+                    this.$root.$children[0].itemsPerPage = 200;
                 },
                 methods: {
                     sleep (ms) {
@@ -126,7 +126,7 @@
 
 
 @section('preCss')
-    <link rel="stylesheet" href="https://unpkg.com/vue-ads-table-tree@latest/dist/vue-ads-table-tree.css">
+    <link rel="stylesheet" href="/css/vue-ads-table-tree.css">
     <style>
         .vue-ads-text-sm {
             font-size: 14px;
