@@ -1,4 +1,4 @@
-@if ($host != 'casinobit.io')
+@if ($currentHost != $defaultHost)
     User-agent: *
     Disallow: /
 @else
@@ -7,6 +7,6 @@
     Allow: *.css
     Allow: *.js
 
-    Sitemap: https://casinobit.io/sitemap.xml
+    Sitemap: {{ $mainUrl }}/sitemap.xml
 
 @endif
