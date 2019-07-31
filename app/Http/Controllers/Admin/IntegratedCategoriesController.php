@@ -125,10 +125,9 @@ class IntegratedCategoriesController extends Controller
 
             if (!is_null($request->ratingItems)) {
                 GamesList::where('category_id', $request->id)->update(['rating' => $request->ratingItems]);
-            } else {
-                unset($updatedGame['ratingItems']);
             }
 
+            unset($updatedGame['ratingItems']);
             unset($updatedGame['_token']);
             unset($updatedGame['banCountryCategories_codes']);
             unset($updatedGame['allowCountryCategories_codes']);

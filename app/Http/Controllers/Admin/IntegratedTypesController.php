@@ -127,12 +127,11 @@ class IntegratedTypesController extends Controller
                         ['games_types_games.extra', '=', 1],
                         ['games_types_games.type_id', '=', $request->id],
                     ])
-                    ->groupBy('games_types_games.game_id')->get()->pluck('id');
+                    ->groupBy('games_types_games.game_id')->get()->pluck('id')->toArray();
 
                 GamesList::whereIn('id', $gamesToUpdateArrayIds)->update(['rating' => $request->ratingItems]);
-            } else {
-                unset($updatedGame['ratingItems']);
             }
+            unset($updatedGame['ratingItems']);
 
             //act
             if ($request->toType_id != 0) {
