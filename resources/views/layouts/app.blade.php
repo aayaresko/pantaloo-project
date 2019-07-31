@@ -672,7 +672,7 @@
     */
 
     if (auth) {
-        //setBalance();
+        setInterval(setBalance, 15000)
         userActive();
     }
 
@@ -763,7 +763,7 @@
 
     }
 
-    let updateTimer = setInterval(setBalance, 15000)
+ 
 
     //off
     // $(document).on('click', 'a.open_game', function () {
