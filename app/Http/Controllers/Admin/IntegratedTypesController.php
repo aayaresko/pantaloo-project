@@ -80,6 +80,7 @@ class IntegratedTypesController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
     {
@@ -89,7 +90,7 @@ class IntegratedTypesController extends Controller
         $this->validate($request, [
             'name' => 'string|min:3|max:100',
             'rating' => 'integer',
-            'ratingItems' => 'integer',
+            'ratingItems' => 'integer|nullable',
             'image' => "image|max:{$imageConfig['maxSize']}|mimes:".implode(',', $imageConfig['mimes']),
             'toType_id' => 'required|integer',
         ]);
@@ -116,13 +117,24 @@ class IntegratedTypesController extends Controller
                 $updatedGame['active'] = 0;
             }
 
-            if (isset($request->ratingItems)) {
-                if ($request->ratingItems != '') {
-                    GamesList::where('type_id', $request->id)->update(['rating' => $request->ratingItems]);
-                }
+            //act
+            if (!is_null($request->ratingItems)) {
+                //to do optimize this code
+                $gamesToUpdateArrayIds = DB::table('games_types_games')->select(['games_list.id'])
+                    ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
+                    ->leftJoin('games_list_extra', 'games_list.id', '=', 'games_list_extra.game_id')
+                    ->where([
+                        ['games_types_games.extra', '=', 1],
+                        ['games_types_games.type_id', '=', $request->id],
+                    ])
+                    ->groupBy('games_types_games.game_id')->get()->pluck('id');
+
+                GamesList::whereIn('id', $gamesToUpdateArrayIds)->update(['rating' => $request->ratingItems]);
+            } else {
                 unset($updatedGame['ratingItems']);
             }
 
+            //act
             if ($request->toType_id != 0) {
                 $gamesToUpdate = DB::table('games_types_games')->select(['games_list.id'])
                     ->leftJoin('games_list', 'games_types_games.game_id', '=', 'games_list.id')
@@ -193,13 +205,6 @@ class IntegratedTypesController extends Controller
 
                     unset($updatedGame['defaultAll']);
                 }
-            }
-
-            if (isset($request->ratingItems)) {
-                if ($request->ratingItems != '') {
-                    GamesList::where('type_id', $request->id)->update(['rating' => $request->ratingItems]);
-                }
-                unset($updatedGame['ratingItems']);
             }
 
             unset($updatedGame['_token']);
