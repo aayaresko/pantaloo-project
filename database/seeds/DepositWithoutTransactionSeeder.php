@@ -28,7 +28,7 @@ class DepositWithoutTransactionSeeder extends Seeder
                     SystemNotification::create([
                         'user_id' => $transaction->user_id,
                         //to do config - mean deposit transactions
-                        'type_id' => $transaction->type,
+                        'type_id' => 1, //usual deposit
                         'value' => $transaction->sum,
                         'transaction_id' => $transaction->id,
                         'confirmations' => $transaction->confirmations,
