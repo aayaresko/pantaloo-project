@@ -1268,7 +1268,7 @@ footer .copyRight {
         z-index: 101
     }
     .menu-btn.showNav+.topNavWrap {
-        transform: translateX(-405px);
+        transform: translateX(-420px);
         visibility: visible;
         /* right: 0; */
     }
