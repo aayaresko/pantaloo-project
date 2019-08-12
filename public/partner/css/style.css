@@ -1185,6 +1185,12 @@ footer .copyRight {
 }
 
 @media (max-width: 932px) {
+    body.modal-open .rightTop, .headerWrap .leftTop  {
+        margin-right: 0;
+    }
+    body.modal-open .pageWrap {
+        padding-right: 0 !important;
+    }
     .headerWrap {
         height: 110px;
         background-image: linear-gradient(0deg,rgba(6,3,8,0) 0%,rgba(6,3,8,1) 41%);  
@@ -1254,15 +1260,17 @@ footer .copyRight {
         width: 320px;
         visibility: hidden;
         padding: 80px 0 50px;
+        overflow-y: scroll;
+        height: 100vh;
         transition: .4s;
-        /* transform: translateX(420px); */
+        transform: translateX(0);
         background-image: linear-gradient(180deg, #2f1272 0%, #210030 100%);
         z-index: 101
     }
     .menu-btn.showNav+.topNavWrap {
-        /* transform: translateX(0) */
+        transform: translateX(-405px);
         visibility: visible;
-        right: 0;
+        /* right: 0; */
     }
     .topNavWrap .nav {
         display: flex;
