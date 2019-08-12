@@ -24,7 +24,7 @@
 
     <!-- Stylesheet
         ================================================== -->
-    <link rel="stylesheet" type="text/css" href="/partner/css/style.css?v=996790">
+    <link rel="stylesheet" type="text/css" href="/partner/css/style.css?v={{time()}}">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
