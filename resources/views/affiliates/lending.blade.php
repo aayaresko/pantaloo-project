@@ -42,7 +42,7 @@
             <p>Our affiliate program supports the Revenue Sharing commission type. All payments are made in bitcoins only — it is safe, fast and doesn’t require paying fees to intermediaries.</p>
             <p>You can learn more about our affiliate program by watching the presentation:</p>
             <div class="btnWrap">
-                <a href="#" download="" class="btn">Download</a>
+                <a href="/partner/img/portfolio/Presentation_English_(ENG).pdf" target="_blank" class="btn">Download</a>
             </div>
         </div>
         <div class="rightBlock">
@@ -109,7 +109,7 @@
             <div class="calcDigits">
                 <div class="leftBlock">
                     <p>Player lost <span>(mBTC)</span></p>
-                    <input type="number" id="mainVal" min="0" value="500">
+                    <input type="text" id="mainVal" value="500">
                 </div>
                 <div class="middleBlock">
                     <p>Profit you get</p>

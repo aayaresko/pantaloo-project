@@ -75,6 +75,15 @@ setInterval(function() {
 
 
     $('#mainVal').on('input', function() {
+      
+      $(this).val($(this).val().replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'))
+
+      if($(this).val().length > 7) {
+        $(this).val($(this).val().slice(0,7))
+        return false;
+      }
+
+
         let mainVal = $(this).val()
 
         let valTo
@@ -85,7 +94,7 @@ setInterval(function() {
         } else {
             valN = mainVal / 20000  
             valTo = (valN * 150) + 15
-            console.log(valTo);
+            // console.log(valTo);
         }
 
         $('.rangeCicleWrap').css('transform', 'rotate('+valTo+'deg)')
