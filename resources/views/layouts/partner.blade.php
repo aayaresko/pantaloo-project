@@ -137,7 +137,7 @@
                                         <form id="login-form" action="/affiliates/login" method="post" role="form" style="display: block;">
                                             {{csrf_field()}}
                                             <div class="form-group">
-                                                <input type="text" name="email"  tabindex="1" class="form-control" placeholder="Email" value="" required>
+                                                <input type="email" name="email"  tabindex="1" class="form-control" placeholder="Email" value="" required>
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" required>
