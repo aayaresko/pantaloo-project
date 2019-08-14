@@ -1146,9 +1146,35 @@ footer .copyRight {
 .modal-body .btn-custom {
     width: auto;
 }
-.modal-body input{
+.modal-body input,
+.reset_password input{
     width: 300px;
     margin-bottom: 20px;
+}
+.reset_password .container {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    text-align: center;
+    background-color: #2d1847;
+}
+.reset_password {
+   min-height: calc(100vh - 90px);
+   padding-top: 200px;
+}
+.reset_password .btn {
+    width: auto;
+}
+.reset_password .error-lists li{
+    display: block;
+}
+.reset_password h2 {
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+.reset_password .section-title {
+    margin-top: 30px;
 }
 .itemTitle i {
     position: relative;

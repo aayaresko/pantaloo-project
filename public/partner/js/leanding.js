@@ -168,8 +168,8 @@ function resetPasswordFinish() {
             success: function (response) {
                 if (response['status'] === true) {
                     window.location.replace(response['message']['redirect']);
-                } else {
-                    $.each(response['message']['errors'], function (i, val) {
+                } else {                    
+                      $.each(response['message']['errors'], function (i, val) {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
@@ -178,6 +178,16 @@ function resetPasswordFinish() {
                         $("#reset-password-finish-form + div.error-lists").hide();
                     }, showError);
                 }
+            },
+            error: function (response) {
+                $.each(response.responseJSON['errors']['password'], function (i, val) {
+                    $('.error-lists ul').append('<li>' + val + '</li>');
+                });
+
+                $("#reset-password-finish-form + div.error-lists").show();
+                setTimeout(function () {
+                    $("#reset-password-finish-form + div.error-lists").hide();
+                }, showError);
             }
         });
     });

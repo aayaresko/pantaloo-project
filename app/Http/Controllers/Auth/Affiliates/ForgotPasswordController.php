@@ -51,7 +51,7 @@ class ForgotPasswordController extends Controller
             'status' => false,
             'message' => [
                 'response' => $response,
-                'errors' => ['User with such non-email exists'],
+                'errors' => ['User with such e-mail is not registered'],
             ],
         ]);
     }
