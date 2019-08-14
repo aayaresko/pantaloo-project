@@ -785,7 +785,17 @@ section>p {
 .createAcc .regForm input {
     margin-right: 10px
 }
-
+#myModal2 .termsCheckWrap {
+    margin-bottom: 10px;
+    color: #fff;
+}
+#myModal2 .termsCheckWrap  input[type="checkbox"] {
+    width: 1px;
+}
+#myModal2 .termsCheckWrap a  {
+    color: #b8a7cd;
+    text-decoration: underline;
+}
 .createAcc .termsCheckWrap {
     margin-top: 20px
 }

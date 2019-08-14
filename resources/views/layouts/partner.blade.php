@@ -211,6 +211,11 @@
                                                 <input type="password" name="password_confirmation" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
                                             </div>
                                             <input type="hidden" name="ref" value="{{request()->ref}}">
+                                            <div class="termsCheckWrap">
+                                                <input required type="checkbox" id="agree3" name="agree">
+                                                <label class="checkLabel" for="agree3"></label>
+                                                <span>I accept the <a href="#" class="popUpBtn" data-toggle="modal" data-target="#exampleModalLong">Terms & Conditions</a></span>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <!-- <div class="col-sm-6 col-sm-offset-3"> -->
