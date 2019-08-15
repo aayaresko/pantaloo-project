@@ -215,6 +215,7 @@ body .mobile-menu .popup-entry .language-nav img {
   display: none;
   position: fixed;
   justify-content: center;
+  align-items: center;
   outline: none;
   bottom: 20px;
   right: 20px;
