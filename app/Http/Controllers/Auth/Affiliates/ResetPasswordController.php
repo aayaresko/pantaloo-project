@@ -50,7 +50,7 @@ class ResetPasswordController extends Controller
         return response()->json([
             'status' => false,
             'message' => [
-                'errors' => 'WTF',
+                'errors' => ['User with such e-mail is not registered'],
             ],
         ]);
     }

@@ -1,7 +1,6 @@
 "use strict";
 
 let showError = 5000;
-let durationAnimation = 500;
 let emailCurrent;
 
 function login() {
@@ -23,7 +22,7 @@ function login() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#login-form + div.error-lists").show(durationAnimation);
+                    $("#login-form + div.error-lists").show();
                     setTimeout(function () {
                         $("#login-form + div.error-lists").hide();
                     }, showError);
@@ -74,9 +73,47 @@ function registr() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#register-form + div.error-lists").show(durationAnimation);
+                    $("#register-form + div.error-lists").show();
                     setTimeout(function () {
                         $("#register-form + div.error-lists").hide();
+                    }, showError);
+                }
+            }
+        });
+    });
+}
+
+function registrSmall() {
+    let register = $(".regForm");
+    register.submit(function (event) {
+        $('.regForm .error-lists ul').html('');
+        event.preventDefault();
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            url: '/affiliates/register',
+            data: $(this).serialize(),
+            success: function (response) {
+              
+                if (response['status'] === true) {
+                    //window.location.replace(response['message']['redirect']);
+                    //show popup
+                    clearNotificationMessage();
+                    //insert text and tittle
+                    emailCurrent = response['message']['email'];
+                    fillotificationMessage(response['message']['title'], response['message']['body']);
+                    $("#myModal2").modal('hide');
+                    $("#notificationMessage").modal();
+
+                } else {
+                    //show error
+                    $.each(response['message']['errors'], function (i, val) {
+                        $('.error-lists ul').append('<li>' + val + '</li>');
+                    });
+
+                    $(event.target).find('.error-lists').show();
+                    setTimeout(function () {
+                        $(".regForm .error-lists").hide();
                     }, showError);
                 }
             }
@@ -108,7 +145,7 @@ function resetPassword() {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#reset-password-form + div.error-lists").show(durationAnimation);
+                    $("#reset-password-form + div.error-lists").show();
                     setTimeout(function () {
                         $("#reset-password-form + div.error-lists").hide();
                     }, showError);
@@ -131,16 +168,26 @@ function resetPasswordFinish() {
             success: function (response) {
                 if (response['status'] === true) {
                     window.location.replace(response['message']['redirect']);
-                } else {
-                    $.each(response['message']['errors'], function (i, val) {
+                } else {                    
+                      $.each(response['message']['errors'], function (i, val) {
                         $('.error-lists ul').append('<li>' + val + '</li>');
                     });
 
-                    $("#reset-password-finish-form + div.error-lists").show(durationAnimation);
+                    $("#reset-password-finish-form + div.error-lists").show();
                     setTimeout(function () {
                         $("#reset-password-finish-form + div.error-lists").hide();
                     }, showError);
                 }
+            },
+            error: function (response) {
+                $.each(response.responseJSON['errors']['password'], function (i, val) {
+                    $('.error-lists ul').append('<li>' + val + '</li>');
+                });
+
+                $("#reset-password-finish-form + div.error-lists").show();
+                setTimeout(function () {
+                    $("#reset-password-finish-form + div.error-lists").hide();
+                }, showError);
             }
         });
     });
@@ -333,6 +380,7 @@ function activeMail() {
 $(function () {
     login();
     registr();
+    registrSmall();
     resetPassword();
     resetPasswordFinish();
     sendFormFeedBack();
