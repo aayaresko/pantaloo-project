@@ -14,31 +14,31 @@
 
                 @include('main_parts.header_account')
 
-                <div class="main-content-entry">
-                    <div class="deposit-entry">
+{{--                <div class="main-content-entry">--}}
+{{--                    <div class="deposit-entry">--}}
 
-                        <div class="left-content">
-                            <div class="text-block">
-                                <p class="descr">{{ trans('casino.minimum_deposit') }}</p>
-                                <p class="descr">(1 BTC = 1000 mBTC)</p>
-                            </div>
-                            <p class="descrTxt">{{ trans('casino.send_your_bitcoins') }}</p>
-                            <div class="generated-key-wrapper">
-                                <input type="text" class="generated-key" value="{{ $user->bitcoin_address }}">
+{{--                        <div class="left-content">--}}
+{{--                            <div class="text-block">--}}
+{{--                                <p class="descr">{{ trans('casino.minimum_deposit') }}</p>--}}
+{{--                                <p class="descr">(1 BTC = 1000 mBTC)</p>--}}
+{{--                            </div>--}}
+{{--                            <p class="descrTxt">{{ trans('casino.send_your_bitcoins') }}</p>--}}
+{{--                            <div class="generated-key-wrapper">--}}
+{{--                                <input type="text" class="generated-key" value="{{ $user->bitcoin_address }}">--}}
 
-                                <button id="btnKey"
-                                        class="generated-key-btn">{{ trans('casino.deposit_copy') }}</button>
-                                <div class="copied">{{ trans('casino.deposit_copied') }}</div>
-                            </div>
-                        </div>
-                        <div class="qr-code">
-                            <img class="rounded"
-                                 src="https://chart.googleapis.com/chart?chs=201x204&cht=qr&chl={{ $user->bitcoin_address }}&choe=UTF-8"
-                                 alt="qr">
-                        </div>
-                    </div>
+{{--                                <button id="btnKey"--}}
+{{--                                        class="generated-key-btn">{{ trans('casino.deposit_copy') }}</button>--}}
+{{--                                <div class="copied">{{ trans('casino.deposit_copied') }}</div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="qr-code">--}}
+{{--                            <img class="rounded"--}}
+{{--                                 src="https://chart.googleapis.com/chart?chs=201x204&cht=qr&chl={{ $user->bitcoin_address }}&choe=UTF-8"--}}
+{{--                                 alt="qr">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                </div>
+{{--                </div>--}}
                 <div class='tableTransactionsWrapper'>
                     <p class="descr">{{ trans('Your Deposits') }}</p>
                     <table id="transactionsTable" class="display">
