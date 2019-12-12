@@ -1,5 +1,7 @@
 <?php
 
+die();
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
