@@ -11,7 +11,15 @@
         <div class="content">
             <div class="container">
 
-
+                <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                    <span></span> <b class="caret"></b>
+                </div>
+                <br><br>
+                <form method="POST" enctype="multipart/form-data">
+                  {{csrf_field()}}
+                </form>
+                
                 <div class="row">
 
                 <!--
@@ -79,7 +87,7 @@
                     </div><!-- end col -->
 
 
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <div class="card-box">
 
 
@@ -91,7 +99,24 @@
                                 <p class="text-muted">Frozen sum: {{round(-1*$frozen_money, 2)}} mBTC</p>
                             </div>
                         </div>
-                    </div><!-- end col -->
+                    </div>
+                    -->
+                    <!-- end col -->
+                    
+                     <div class="col-lg-3 col-md-6">
+                        <div class="card-box">
+
+
+                            <h4 class="header-title m-t-0 m-b-30">Deposits</h4>
+
+                            <div class="widget-chart-1">
+
+                                <h2 class="p-t-10 m-b-0">{{$deposit_sum}} mBTC</h2>
+                                <p class="text-muted">Month Deposit: {{$deposit_sum}} mBTC</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
 
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box">
