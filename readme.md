@@ -13,13 +13,20 @@ Change the file mandatory - if you want to go to production to be able to deploy
 # Set up your development git repo
 
 set up : 
+
 git init 
+
 git pull https://<credentials>@github.com/bciosec/casinobit.git development 
+
 git remote add origin https://github.com/bciosec/casinobit.git 
+
 git fetch 
+
 git checkout development 
 
-pushing : git push origin development 
+pushing : 
+
+git push origin development 
 
 To go in production, you will have to submit a merge request (development->master)
 
