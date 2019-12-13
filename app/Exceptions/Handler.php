@@ -38,6 +38,10 @@ class Handler extends ExceptionHandler
     {
         $appDebug = is_null(config('app.debug')) ? true : config('app.debug');
 
+	// If exception - it can be seen why
+
+	print_r($e); die();
+
         if (!$appDebug) {
             if ($this->isHttpException($e)) {
                 if ($e->getStatusCode() == 404) {
