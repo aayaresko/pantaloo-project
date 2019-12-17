@@ -943,7 +943,7 @@
     {{--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1d091fa-2264-45db-b730-50874aca28ee"> </script>--}}
     {{--<!-- End of uptechsupport Zendesk Widget script -->--}}
 
-    <script>
+    {{-- <script>--}}
         @php
             $intercomConfig = \Helpers\IntercomHelper::getIntercomConfig();
     @endphp
@@ -1014,7 +1014,7 @@
                 error: function (data) {
                 }
             });
-        };
+        }; 
 
         //events
         Intercom('onShow', function () {
@@ -1022,7 +1022,7 @@
             intercomUpdate();
         });
 
-        Intercom('onUnreadCountChange', function () {
+        Intercom('onUnreadCountChange', function () { 
             intercomUpdate();
         });
     });
@@ -1034,6 +1034,19 @@
         Intercom('show');
     });
 </script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5df8ac8443be710e1d226e60/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 @include('_ws_balance')
 </body>
 </html>
