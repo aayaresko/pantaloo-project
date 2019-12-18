@@ -14,7 +14,7 @@
 
                 <div class="row">
 
-                <!--
+                
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box">
                             <h4 class="header-title m-t-0 m-b-30">This Month Total</h4>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                -->
+                
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box">
                             <h4 class="header-title m-t-0 m-b-30">Today users</h4>
