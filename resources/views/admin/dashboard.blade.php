@@ -45,7 +45,7 @@
                                 <div class="widget-detail-2">
                                     <span class="badge badge-success pull-left m-t-20">{{$users_procent}}% <i class="zmdi zmdi-trending-up"></i> </span>
                                     <h2 class="m-b-0">{{$today_users}}</h2>
-                                    <p class="text-muted m-b-25">Total users: {{$total_users}}</p>
+                                    <p class="text-muted m-b-25">Total users: </p>
                                 </div>
                                 <div class="progress progress-bar-success-alt progress-sm m-b-0">
                                     <div class="progress-bar progress-bar-success" role="progressbar"
