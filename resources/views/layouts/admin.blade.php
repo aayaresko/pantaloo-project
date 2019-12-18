@@ -96,7 +96,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <!-- <a href="/admin" class="logo"><span>Casino<span>Bit</span></span><i class="zmdi zmdi-layers"></i></a> -->
-            <a href="/admin" class="logo"><img src="/assets/images/logo/casinobit-logo-black-379-102.png" alt="CasinoBit Logo" /></a>
+            <a href="/admin" class=""><img src="/assets/images/logo/casinobit-logo-black-379-102.png" width="80%" height="auto" alt="CasinoBit Logo" /></a>
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
