@@ -60,13 +60,13 @@
 
                     <div class="col-lg-3 col-md-6">
                         <div class="card-box">
-                            <h4 class="header-title m-t-0 m-b-30">Today Total Deposits</h4>
+                            <h4 class="header-title m-t-0 m-b-30">Today Deposits</h4>
 
                             <div class="widget-box-2">
                                 <div class="widget-detail-2">
                                     <span class="badge badge-success pull-left m-t-20">{{round($today_procent*100)}}% <i class="zmdi zmdi-trending-up"></i> </span>
                                     <h2 class="m-b-0">{{round(-1*$today_total, 2)}} mBTC</h2>
-                                    <p class="text-muted m-b-25"> {{round(-1*$month_total, 2)}} mBTC</p>
+                                    <p class="text-muted m-b-25">Total Month Deposits: {{round(-1*$month_total, 2)}} mBTC</p>
                                 </div>
                                 <div class="progress progress-bar-success-alt progress-sm m-b-0">
                                     <div class="progress-bar progress-bar-success" role="progressbar"
@@ -84,7 +84,7 @@
                         <div class="card-box">
 
 
-                            <h4 class="header-title m-t-0 m-b-30">Pending Money</h4>
+                            <h4 class="header-title m-t-0 m-b-30">Pending Withdrawals</h4>
 
                             <div class="widget-chart-1">
 
