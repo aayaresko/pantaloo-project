@@ -41,7 +41,7 @@
                                 <table class="table table-hover">
                                     <tr><th>#</th><th>Sum</th><th>Type</th><th>Status</th><th>Date</th><th>User</th><th>Transaction id</th></tr>
                                 @foreach($transfers as $transfer)
-                                    <tr><td>{{$transfer->id}}</td><td>{{$transfer->getSum()}} mBTC</td><td>@if($transfer->type == 3) Deposit @else Withdraw @endif</td><td>{{$transfer->getStatus()}}</td><td>{{$transfer->created_at->format('d.m.Y')}}</td><td><a href="#">{{$transfer->user->email}}</a></td><td><input type="text" class="form-control" value="{{$transfer->ext_id}}"></td></tr>
+                                    <tr><td>{{$transfer->id}}</td><td>{{$transfer->getSum()}} mBTC</td><td>@if($transfer->type == 3) Deposit @else Withdraw @endif</td><td>{{$transfer->getStatus()}}</td><td>{{$transfer->created_at->format('d.m.Y')}}</td><td><a href="#">{{$transfer->user->email}}</a> | {{ $link }}</td><td><input type="text" class="form-control" value="{{$transfer->ext_id}}"></td></tr>
                                 @endforeach
                                 </table>
                             @endif
