@@ -12,6 +12,7 @@ class IncreaseLocaleLength extends Migration
      */
     public function up()
     {
+        // TODO Lior - why do we have 2 translations edit statements? move to original migration file.
         Schema::table('translator_languages', function ($table) {
             $table->string('locale', 10)->change();
         });

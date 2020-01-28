@@ -14,6 +14,7 @@ class CreateTrackersTable extends Migration
     {
         Schema::create('trackers', function (Blueprint $table) {
             $table->increments('id');
+            // TODO Lior - what's "ref" in trackers table?
             $table->string('ref', 50);
             $table->string('name', 50);
             $table->integer('user_id')->unsigned()->index();

@@ -16,6 +16,8 @@ class CreateGamesFreeRoundsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
+
+            // TODO Lior - what is the logic for round?
             $table->integer('round');
 
             // TODO Lior check logic of valid to and free round policy

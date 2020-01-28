@@ -12,6 +12,7 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - change to Beanstalkd jobs and work with Redis server queue!
         Schema::create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('queue');

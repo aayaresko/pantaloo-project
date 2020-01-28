@@ -12,6 +12,7 @@ class CreateTableRawLogTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - what exact data we save in raw_log and check optimization of "request" and "response" fields.
         Schema::create('raw_log', function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('type_id')->nullable()->index();

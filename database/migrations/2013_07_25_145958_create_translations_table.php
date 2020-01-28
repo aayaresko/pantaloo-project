@@ -19,7 +19,9 @@ class CreateTranslationsTable extends Migration
             $table->string('group', 150);
             $table->string('item', 200);
             $table->text('text');
+            // TODO Lior - check what "unstable" means in translator_translations table
             $table->boolean('unstable')->default(false);
+            // TODO Lior - check what "locked" means in translator_translations table
             $table->boolean('locked')->default(false);
             $table->timestamps();
             $table->foreign('locale')->references('locale')->on('translator_languages');

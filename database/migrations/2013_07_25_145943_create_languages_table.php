@@ -12,6 +12,7 @@ class CreateLanguagesTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - check if we have config file for translations / languages?
         Schema::create('translator_languages', function ($table) {
             $table->increments('id');
             $table->string('locale', 6)->unique();

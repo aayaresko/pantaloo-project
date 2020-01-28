@@ -12,6 +12,7 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - make sure failed jobs table is "up to date".
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->text('connection');

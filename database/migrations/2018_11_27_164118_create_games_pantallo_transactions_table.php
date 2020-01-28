@@ -25,6 +25,7 @@ class CreateGamesPantalloTransactionsTable extends Migration
 //            $table->integer('games_session_id')->nullable()->unsigned();
 //            $table->foreign('games_session_id')->references('id')->on('games_pantallo_session_game');
 
+            // TODO Lior - check decimal() length and make sure we return "float" as number.
             $table->decimal('amount', 14, 5);
             $table->decimal('balance_before', 14, 5)->nullable();
             $table->decimal('balance_after', 14, 5);

@@ -12,6 +12,7 @@ class CreatePartnersFeedbackTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - check if partners_feedback table s for view only or used in logic?
         Schema::create('partners_feedback', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

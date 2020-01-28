@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - MUST to add indexes to users table (name column and check additional columns).
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

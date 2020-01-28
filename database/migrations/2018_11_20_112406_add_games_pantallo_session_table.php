@@ -21,6 +21,7 @@ class AddGamesPantalloSessionTable extends Migration
             $table->integer('system_id')->unsigned()->index();
             $table->string('username');
             $table->decimal('balance', 14, 5);
+            // TODO Lior - what is "currencycode" column in "games_pantallo_session" table?
             $table->string('currencycode');
             $table->dateTime('created');
             $table->decimal('agent_balance', 14, 5);

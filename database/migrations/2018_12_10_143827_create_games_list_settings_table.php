@@ -16,6 +16,7 @@ class CreateGamesListSettingsTable extends Migration
             $table->increments('id');
             $table->string('code')->index();
             $table->string('name');
+            // TODO Lior - what is "value" in games_list_settings table?
             $table->tinyInteger('value')->index();
             $table->timestamps();
         });

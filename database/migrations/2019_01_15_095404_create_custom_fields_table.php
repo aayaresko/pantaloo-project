@@ -12,6 +12,7 @@ class CreateCustomFieldsTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - custom_fields table with code and value columns used for? (probably programmatically)
         Schema::create('custom_fields', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();

@@ -21,6 +21,7 @@ class CreateGamesListTable extends Migration
             $table->foreign('category_id')->references('id')->on('games_categories');
             $table->text('details')->nullable();
             $table->boolean('mobile');
+            // TODO Lior - check logic of file uploading
             $table->text('our_image');
             $table->text('image');
             $table->text('image_preview');

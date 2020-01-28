@@ -15,6 +15,7 @@ class CreateStatisticalDataTable extends Migration
         Schema::create('statistical_data', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned()->index();
+            //  TODO Lior - wha tis the logic of value in statistical_date?
             $table->string('value');
 
             $table->integer('tracker_id')->unsigned();

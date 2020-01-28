@@ -13,6 +13,7 @@ class AddColumnFreeRoundToGamelist extends Migration
     public function up()
     {
         Schema::table('games_list', function ($table) {
+            // TODO Lior - what is "free_round" in games_list table?
             $table->boolean('free_round')->defalut(0)->after('active');
         });
     }
