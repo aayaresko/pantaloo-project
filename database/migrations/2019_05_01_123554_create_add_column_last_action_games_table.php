@@ -13,6 +13,7 @@ class CreateAddColumnLastActionGamesTable extends Migration
     public function up()
     {
         Schema::table('last_action_games', function (Blueprint $table) {
+            // TODO Lior - Add it manually
             $table->timestamp('last_game')->after('last_action')->nullable();
         });
     }

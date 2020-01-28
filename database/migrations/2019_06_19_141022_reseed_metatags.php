@@ -15,6 +15,7 @@ class ReseedMetatags extends Migration
     {
         $seeder = new DatabaseSeeder();
 
+        // TODO Lior - change Seeder to Seeds file
         $seeder->call(
             MetaTagSeeder::class
         );

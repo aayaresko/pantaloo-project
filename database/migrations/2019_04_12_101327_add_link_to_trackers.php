@@ -13,6 +13,7 @@ class AddLinkToTrackers extends Migration
     public function up()
     {
         Schema::table('trackers', function (Blueprint $table) {
+            // TODO Lior - fix it manually and move to main migration file
             $table->string('campaign_link', 255)->nullable()->after('name');
         });
     }

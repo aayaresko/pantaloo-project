@@ -17,6 +17,8 @@ class CreateGamesFreeRoundsTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('round');
+
+            // TODO Lior check logic of valid to and free round policy
             $table->dateTime('valid_to');
 
             $table->string('created');

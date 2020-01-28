@@ -13,10 +13,12 @@ class AddOptTablesTable extends Migration
     public function up()
     {
         Schema::table('raw_log', function ($table) {
+            // TODO Lior - fix it manually
             $table->dropIndex('raw_log_type_id_index');
         });
 
         Schema::table('transactions', function ($table) {
+            // TODO Lior - fix it manually
             $table->dropIndex('token_id');
         });
     }

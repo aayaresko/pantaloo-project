@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+// TODO Lior - what CookieSeeder is used for?
 class CookieSeeder extends Seeder
 {
     /**

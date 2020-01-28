@@ -14,6 +14,7 @@ class AddColumnSystemNotificationsTable extends Migration
     public function up()
     {
         Schema::table('system_notifications', function (Blueprint $table) {
+            // TODO Lior - fix it manually
             $table->string('ext_id')->nullable()->index()->after('value');
             $table->integer('confirmations')->nullable()->after('value');
             $table->integer('transaction_id')->unsigned()->nullable()->index()->after('value');

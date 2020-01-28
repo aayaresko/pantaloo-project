@@ -13,6 +13,7 @@ class AddColumnToUserBonusesTable extends Migration
     public function up()
     {
         Schema::table('user_bonuses', function (Blueprint $table) {
+            // TODO Lior - fix it manually
             //$table->binary('ip_address')->nullable()->index()->after('data');
             DB::statement('ALTER TABLE `user_bonuses` ADD `ip_address` VARBINARY(16) NULL AFTER `data`');
             DB::statement('ALTER TABLE `user_bonuses` ADD INDEX (`ip_address`)');

@@ -13,6 +13,7 @@ class CreateIntercomTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - remove intercom feature
         Schema::create('intercom', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email');

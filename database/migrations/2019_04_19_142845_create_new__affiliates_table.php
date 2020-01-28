@@ -12,6 +12,7 @@ class CreateNewAffiliatesTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - if we have new affiliates table, what happened with the old one?
         Schema::create('new_affiliates', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type_id')->unsigned()->index();

@@ -13,7 +13,7 @@ class AddColumnsGamesPantalloFreeRoundsTable extends Migration
     public function up()
     {
         Schema::table('games_pantallo_free_rounds', function (Blueprint $table) {
-            $table->tinyInteger('deleted')->default(0)->after('free_round_id');
+            $table->tinpantalloyInteger('deleted')->default(0)->after('free_round_id');
         });
     }
 

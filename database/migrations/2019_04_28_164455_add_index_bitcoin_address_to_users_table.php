@@ -13,6 +13,7 @@ class AddIndexBitcoinAddressToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            // TODO Lior - fix it manually
             $table->index('bitcoin_address');
         });
     }

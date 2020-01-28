@@ -13,6 +13,7 @@ class AddUserIdToLogsTable extends Migration
     public function up()
     {
         Schema::table('raw_log', function (Blueprint $table) {
+            // TODO Lior - fix it manually
             $table->integer('user_id')->nullable()->after('type_id');
         });
     }

@@ -13,6 +13,7 @@ class CreateIntercomCountryTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - Why do we have 2 counties tables? work with one countries table
         Schema::create('intercom_country', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('code', 2);

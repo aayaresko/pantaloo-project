@@ -16,6 +16,7 @@ class CreateModernExtraUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            // TODO Lior - What code is used for and why it is unique with user_id at line 23?
             $table->string('code')->index();
             $table->string('value');
             $table->timestamps();

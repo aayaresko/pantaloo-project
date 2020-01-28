@@ -13,6 +13,7 @@ class AddValueToSystemNotificationsTable extends Migration
     public function up()
     {
         Schema::table('system_notifications', function (Blueprint $table) {
+            // TODO Lior - What value is used for and fix it manually
             $table->decimal('value', 14, 5)->after('type_id');
         });
     }

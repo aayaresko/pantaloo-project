@@ -13,6 +13,7 @@ class DeleteForeignColumnTable extends Migration
     public function up()
     {
         Schema::table('games_pantallo_free_rounds', function (Blueprint $table) {
+            // TODO Lior - What is the reason to remove FK for user_id?
             $table->dropForeign(['user_id']);
         });
     }

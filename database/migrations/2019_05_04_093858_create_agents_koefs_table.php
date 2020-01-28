@@ -12,6 +12,7 @@ class CreateAgentsKoefsTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - What koef means in agents_koefs table?
         Schema::create('agents_koefs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');

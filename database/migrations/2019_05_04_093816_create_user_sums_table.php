@@ -12,6 +12,7 @@ class CreateUserSumsTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - Why do we use two decimal versions? 1st decimal(20,8) and second is decimal (14,5) we should choose one.
         Schema::create('user_sums', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
@@ -23,6 +24,7 @@ class CreateUserSumsTable extends Migration
             $table->decimal('bonus', 14, 5);
             $table->integer('bet_count');
             $table->decimal('percent')->nullable();
+            // TODO Lior - What is parent_id in user_sums table?
             $table->integer('parent_id')->nullable();
             $table->timestamps();
         });

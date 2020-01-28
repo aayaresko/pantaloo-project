@@ -4,6 +4,7 @@ namespace App\Console\Commands\Optimization;
 
 use Illuminate\Console\Command;
 
+// TODO Lior - build the logic
 class ClearTables extends Command
 {
     /**

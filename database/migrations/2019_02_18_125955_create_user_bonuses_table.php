@@ -20,6 +20,8 @@ class CreateUserBonusesTable extends Migration
             $table->integer('user_id')->nullable()->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
+            // TODO Lior - check how we activate the bonus, SECURITY
+            // TODO Lior - check we have limit of bonus logic and how we verify it?
             $table->tinyInteger('activated')->index();
             $table->text('data');
             $table->timestamp('expires_at')->nullable();

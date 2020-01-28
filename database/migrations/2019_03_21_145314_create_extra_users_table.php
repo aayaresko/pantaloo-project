@@ -16,6 +16,7 @@ class CreateExtraUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->unique();
             $table->foreign('user_id')->references('id')->on('users');
+            // TODO Lior - what it means base_line_cpa?
             $table->integer('base_line_cpa');
             $table->integer('block')->default(0);
             $table->timestamps();

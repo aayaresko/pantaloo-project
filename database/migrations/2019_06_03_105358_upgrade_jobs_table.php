@@ -8,6 +8,7 @@ class UpgradeJobsTable extends Migration
 {
     public function up()
     {
+        // TODO Lior - change the jobs table to original one
         Schema::table('jobs', function (Blueprint $table) {
             $table->dropIndex('jobs_queue_reserved_reserved_at_index');
             $table->dropColumn('reserved');

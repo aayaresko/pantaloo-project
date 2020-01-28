@@ -12,6 +12,7 @@ class CreateLastActionGamesTable extends Migration
      */
     public function up()
     {
+        // TODO Lior - What last_action_games table is used for?
         Schema::create('last_action_games', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();

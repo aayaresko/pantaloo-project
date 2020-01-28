@@ -16,6 +16,8 @@ class CreateBonusLogTable extends Migration
             $table->increments('id');
             $table->integer('bonus_id')->nullable()->unsigned()->index();
             $table->foreign('bonus_id')->references('id')->on('user_bonuses')->onDelete('cascade');
+
+            // TODO Lior - check what is operation_id in bonus_logs table
             $table->tinyInteger('operation_id')->index();
             $table->text('status');
             $table->timestamps();

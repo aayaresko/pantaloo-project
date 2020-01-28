@@ -13,6 +13,7 @@ class AddColumnExtraToBonusesTable extends Migration
     public function up()
     {
         Schema::table('bonuses', function (Blueprint $table) {
+            // TODO Lior - fix it manually
             $table->text('extra')->nullable()->after('rating');
             //to do delete: min_sum, max_sum, procent, play_factor
         });
