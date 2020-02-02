@@ -4,7 +4,7 @@ namespace App\Console\Commands\Optimization;
 
 use Illuminate\Console\Command;
 
-// TODO Lior - build the logic
+// TODO Lior - build the logic of optimization:clearTables "php artisan command"
 class ClearTables extends Command
 {
     /**
