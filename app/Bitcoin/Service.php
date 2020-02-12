@@ -32,23 +32,26 @@ class Service
         }
     }
 
-    public function test()
-    {
-        $response = $this->client->sendCommand(new Command('getaddressesbyaccount', 'common'));
+    // TODO Lior - remove test code from bitcoin service
+//    public function test()
+//    {
+//        $response = $this->client->sendCommand(new Command('getaddressesbyaccount', 'common'));
+//
+//        print_r($response);
+//        exit;
+//
+//        return static::getResponse($response);
+//    }
 
-        print_r($response);
-        exit;
-
-        return static::getResponse($response);
-    }
-
-    public function connect()
+    private function connect()
     {
         $connection_string = \config('bitcoin.connection');
 
         $this->client = new Client($connection_string);
     }
 
+    // TODO Lior - check who can use this function, from what address?
+    // TODO Lior - must test and make sure to add "authorize" test inside the function.
     public function send($to, $sum)
     {
         $response = $this->client->sendCommand(new Command('sendtoaddress', [$to, $sum]));
@@ -70,6 +73,7 @@ class Service
         return static::getResponse($response);
     }
 
+    // TODO Lior - for what we need new address?
     public function getNewAddress()
     {
         $response = $this->client->sendCommand(new Command('getnewaddress', uniqid()));
@@ -114,7 +118,7 @@ class Service
         }
 
         if (! isset($result['result'])) {
-            throw new \Exception('Result not found');
+            throw new \Exception('Result was not found');
         }
 
         return $result['result'];

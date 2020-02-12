@@ -595,6 +595,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         //TO DO - ADD to where date
         $activeBonus = $this->active_bonus;
         if ($activeBonus->activated == 1) {
+            // TODO Lior - what is wagered_bonus_amount
             $sum = (float)$this->dataBonus['wagered_bonus_amount'];
 //            $sum = -1 * $this->user->transactions()
 //                    ->where('id', '>', $this->get('transaction_id'))

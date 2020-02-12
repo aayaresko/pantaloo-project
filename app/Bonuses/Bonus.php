@@ -27,10 +27,13 @@ abstract class Bonus
         $this->user = $user;
 
         if (!is_null($user)) {
+            // Get the current bonus
+            // TODO Lior - why only the first() and not all of the bonuses, why not "latest" to get the last active one
             $this->active_bonus = $this->user->bonuses()->first();
         }
 
         if (! is_null($this->active_bonus)) {
+            //TODO Lior - why do we need the active bonus data in a new class property?
             $this->dataBonus = $this->active_bonus->data;
         }
     }
