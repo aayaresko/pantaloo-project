@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -17,5 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(GamesSettingSeeder::class);
         $this->call(BonusesTableSeeder::class);
         $this->call(LanguagesSeeder::class);
+        $this->call(IntercomSeeder::class);
+        $this->call(IntercomCountrySeeder::class);
+        $this->call(MetaTagSeeder::class);
+        $this->call(CookieSeeder::class);
+        $this->call(ContactUsSeeder::class);
+        $this->call(AddtranslationKey::class);
     }
 }

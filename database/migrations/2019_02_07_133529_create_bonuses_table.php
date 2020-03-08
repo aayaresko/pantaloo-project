@@ -27,6 +27,7 @@ class CreateBonusesTable extends Migration
             $table->string('name', 50);
             $table->string('descr', 500);
             $table->integer('rating')->default(0);
+            $table->text('extra')->nullable();
 
             $table->timestamps();
         });

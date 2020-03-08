@@ -16,19 +16,11 @@ class CreateIntercomTable extends Migration
         // TODO Lior - remove intercom feature
         Schema::create('intercom', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('appId');
             $table->string('key');
             $table->string('token');
-
-            $table->unique('email');
         });
-
-        $seeder = new DatabaseSeeder();
-
-        $seeder->call(
-            IntercomSeeder::class
-        );
     }
 
     /**

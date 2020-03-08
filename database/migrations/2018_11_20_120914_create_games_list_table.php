@@ -29,6 +29,7 @@ class CreateGamesListTable extends Migration
             $table->text('image_background');
             $table->integer('rating')->unsigned();
             $table->boolean('active')->default(1);
+            $table->boolean('free_round');
             $table->timestamps();
         });
     }

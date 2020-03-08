@@ -23,11 +23,6 @@ class CreateIntercomCountryTable extends Migration
             $table->unique('code');
         });
 
-        $seeder = new DatabaseSeeder();
-
-        $seeder->call(
-            IntercomCountrySeeder::class
-        );
     }
 
     /**

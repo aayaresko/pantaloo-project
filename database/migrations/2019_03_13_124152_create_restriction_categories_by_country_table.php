@@ -19,6 +19,9 @@ class CreateRestrictionCategoriesByCountryTable extends Migration
             $table->string('code_country')->index();
             $table->tinyInteger('mark')->default(0)->index();
             $table->timestamps();
+
+            $table->unique(['category_id', 'code_country', 'mark'], 'unique_restriction_category_id_code_country_mark');
+
         });
     }
 

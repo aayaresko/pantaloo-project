@@ -24,7 +24,11 @@ class CreateUserBonusesTable extends Migration
             // TODO Lior - check we have limit of bonus logic and how we verify it?
             $table->tinyInteger('activated')->index();
             $table->text('data');
+            $table->ipAddress('ip_address')->index();
+
+
             $table->timestamp('expires_at')->nullable();
+            $table->decimal('total_amount', 14, 5)->default(0);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
