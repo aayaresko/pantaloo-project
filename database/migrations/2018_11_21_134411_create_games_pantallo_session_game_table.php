@@ -16,8 +16,12 @@ class CreateGamesPantalloSessionGameTable extends Migration
             $table->increments('id');
             $table->integer('session_id')->unsigned();
             $table->foreign('session_id')->references('system_id')->on('games_pantallo_session');
-            // TODO Lior - what is gamesession_id column in games_pantallo_session_game table and why it is not indexed?
+//            // TODO Lior - what is gamesession_id column in games_pantallo_session_game table and why it is not indexed?
             $table->string('gamesession_id');
+//
+            $table->integer('game_id')->nullable()->unsigned();
+            $table->foreign('game_id')->references('id')->on('games_list');
+
             $table->timestamps();
         });
     }

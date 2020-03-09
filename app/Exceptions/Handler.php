@@ -40,7 +40,6 @@ class Handler extends ExceptionHandler
 
 	// If exception - it can be seen why
 
-	print_r($e); die();
 
         if (!$appDebug) {
             if ($this->isHttpException($e)) {

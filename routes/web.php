@@ -42,8 +42,8 @@ Config::set('getListLanguage', $languages);
 $foreignPages = config('app.foreignPages');
 $partner = parse_url($foreignPages['partner'])['host'];
 $landingPage = parse_url($foreignPages['landingPage'])['host'];
-//$partner = 'partner.test.test';
-//$partner = 'partner.casinobit.localhost';
+$partner = 'partner.test.test';
+$partner = 'partner.casinobit.localhost';
 
 Route::group(['middleware' => ['landing', 'ip.country.block']], function () use ($landingPage) {
     Route::group(['domain' => $landingPage, 'as' => 'landing'], function () {

@@ -16,7 +16,6 @@ class CreateUserSumsTable extends Migration
         Schema::create('user_sums', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-          //  $table->decimal('sum', 14, 5);
             $table->decimal('deposits', 14, 5);
             $table->decimal('bets', 14, 5);
             $table->decimal('wins', 14, 5);

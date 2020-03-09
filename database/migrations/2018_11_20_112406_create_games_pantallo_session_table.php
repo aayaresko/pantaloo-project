@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddGamesPantalloSessionTable extends Migration
+class CreateGamesPantalloSessionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -38,8 +38,6 @@ class AddGamesPantalloSessionTable extends Migration
      */
     public function down()
     {
-        Schema::table('games_pantallo_session', function (Blueprint $table) {
-            Schema::drop('games_pantallo_session');
-        });
+        Schema::drop('games_pantallo_session');
     }
 }

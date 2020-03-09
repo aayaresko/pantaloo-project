@@ -228,6 +228,7 @@ class Transaction extends Model
         }
     }
 
+    /** TODO: Max user relation at the top of model is the same thing */
     public function agent()
     {
         return $this->belongsTo(\App\User::class, 'agent_id', 'id');

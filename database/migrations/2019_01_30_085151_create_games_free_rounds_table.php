@@ -15,7 +15,6 @@ class CreateGamesFreeRoundsTable extends Migration
         Schema::create('games_pantallo_free_rounds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users');
 
             // TODO Lior - what is the logic for round?
             $table->integer('round');
@@ -25,6 +24,7 @@ class CreateGamesFreeRoundsTable extends Migration
 
             $table->string('created');
             $table->string('free_round_id')->unique();
+            $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
     }

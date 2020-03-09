@@ -126,7 +126,8 @@ class RegisterController extends Controller
             $codeCountryCurrent = GeneralHelper::visitorCountryCloudFlare();
             $disableRegistrationCountry = config('appAdditional.disableRegistration');
 
-            if (!GeneralHelper::isTestMode() && in_array($codeCountryCurrent, $disableRegistrationCountry)) {
+            if (!GeneralHelper::isTestMode() && !in_array(config('app.env'), ['local', 'stage']) && in_array
+                ($codeCountryCurrent, $disableRegistrationCountry)) {
                 $errors = ['REGISTRATIONS ARE NOT AVAILABLE IN YOUR REGION.'];
                 throw new \Exception('disableRegistration');
             }
@@ -139,7 +140,8 @@ class RegisterController extends Controller
             //end validation
 
             if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
-                $address = 'bitcoinTestAddress';
+                /** @var  $address - generate random address for local */
+                $address = Str::random();
             } else {
                 $service = new Service();
                 $address = $service->getNewAddress('common');
@@ -225,6 +227,7 @@ class RegisterController extends Controller
 
             $this->guard()->login($user);
         } catch (\Exception $ex) {
+            dd($ex);
             if (empty($errors)) {
                 $errors = ['Some is wrong'];
             }

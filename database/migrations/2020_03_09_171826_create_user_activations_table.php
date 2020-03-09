@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIntercomTable extends Migration
+class CreateUserActivationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateIntercomTable extends Migration
      */
     public function up()
     {
-        // TODO Lior - remove intercom feature
-        Schema::create('intercom', function (Blueprint $table) {
+        Schema::create('user_activations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email')->unique();
-            $table->string('appId');
-            $table->string('key');
-            $table->string('token');
+            $table->integer('user_id');
+            $table->string('token', 200);
+            $table->tinyInteger('activated');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +29,6 @@ class CreateIntercomTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intercom');
+        Schema::dropIfExists('user_activations');
     }
 }
