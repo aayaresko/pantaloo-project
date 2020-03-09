@@ -12,11 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(LanguagesSeeder::class);
+        $this->call(TranslationsKey::class);
         $this->call(GamesCategorySeeder::class);
         $this->call(GamesTypesSeeder::class);
         $this->call(GamesSettingSeeder::class);
         $this->call(BonusesTableSeeder::class);
-        $this->call(LanguagesSeeder::class);
         $this->call(IntercomSeeder::class);
         $this->call(IntercomCountrySeeder::class);
         $this->call(MetaTagSeeder::class);
@@ -28,7 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LoginTransTableSeeder::class);
         $this->call(PrivacyPolicySeeder::class);
         $this->call(RestrictionTablesSeeder::class);
-        $this->call(TranslationsKey::class);
         $this->call(DepositWithoutTransactionSeeder::class);
         $this->call(CurrenciesSeeder::class);
     }
