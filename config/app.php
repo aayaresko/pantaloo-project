@@ -193,13 +193,13 @@ return [
         /*
          * Application Service Providers...
          */
+        Jenssegers\Agent\AgentServiceProvider::class,
         App\Providers\ComposerSericeProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Jenssegers\Agent\AgentServiceProvider::class,
         //browner12\helpers\HelperServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \App\Providers\JsBridgeServiceProvider::class,

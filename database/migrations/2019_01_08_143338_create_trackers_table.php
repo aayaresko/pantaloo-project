@@ -31,6 +31,6 @@ class CreateTrackersTable extends Migration
      */
     public function down()
     {
-//        Schema::drop('trackers');
+        Schema::drop('trackers');
     }
 }

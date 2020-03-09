@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableRawLogTable extends Migration
+class CreateRawLogTable extends Migration
 {
     /**
      * Run the migrations.

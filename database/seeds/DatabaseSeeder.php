@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(GamesCategorySeeder::class);
         $this->call(GamesTypesSeeder::class);
-        $this->call(GamesTagSeeder::class);
         $this->call(GamesSettingSeeder::class);
         $this->call(BonusesTableSeeder::class);
         $this->call(LanguagesSeeder::class);
@@ -24,5 +23,13 @@ class DatabaseSeeder extends Seeder
         $this->call(CookieSeeder::class);
         $this->call(ContactUsSeeder::class);
         $this->call(AddtranslationKey::class);
+        $this->call(AccountLangTableSeeder::class);
+        $this->call(CountryTableSeeder::class);
+        $this->call(LoginTransTableSeeder::class);
+        $this->call(PrivacyPolicySeeder::class);
+        $this->call(RestrictionTablesSeeder::class);
+        $this->call(TranslationsKey::class);
+        $this->call(DepositWithoutTransactionSeeder::class);
+        $this->call(CurrenciesSeeder::class);
     }
 }
