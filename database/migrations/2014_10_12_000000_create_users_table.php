@@ -20,6 +20,9 @@ class  CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
 
+            $table->tinyInteger('email_confirmed')->default(0);
+            $table->tinyInteger('confirmation_required')->default(0);
+
             $table->timestamp('last_activity')->nullable();
             $table->decimal('balance', 14, 5)->nullable();
             $table->decimal('bonus_balance', 14, 5)->default('0.00000');
@@ -39,9 +42,6 @@ class  CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-
-        // TODO Max - there was $table->index('bitcoin_address') in migrations, and this column does not exists
-        // TODO Max - there was $table->index('agent_id'); in migrations, and this column does not exists
     }
 
     /**
