@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::withoutDoubleEncoding();
         Paginator::useBootstrapThree();
 
-        if (env('FORCE_HTTPS', true)) {
+        if (config('appAdditional.forceHttps')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
     }
