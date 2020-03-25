@@ -6,6 +6,7 @@ use App\User;
 use App\Transaction;
 use App\Bitcoin\Service;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use League\Flysystem\Exception;
 
 class BitcoinGetTransactions extends Command
@@ -15,7 +16,7 @@ class BitcoinGetTransactions extends Command
      *
      * @var string
      */
-    protected $signature = 'bitcoin:getTransactions';
+    protected $signature = 'bitcoin:getTransactions {batchSize=100}';
 
     /**
      * The console command description.
@@ -41,42 +42,62 @@ class BitcoinGetTransactions extends Command
      */
     public function handle()
     {
-        $start = time();
-
         $service = new Service();
+        $offset = 0;
+        $batchSize = (int) $this->argument('batchSize');
 
-        while (true) {
-            $raw_transactions = $service->getTransactions(1000);
+        do {
+            $raw_transactions = $service->getTransactions($batchSize, $offset);
 
             foreach ($raw_transactions as $raw_transaction) {
-                if ($raw_transaction['category'] == 'receive') {
-                    $transaction = Transaction::where(['ext_id' => $raw_transaction['txid']])->first();
+                if ('receive' !== $raw_transaction['category']) {
+                    continue;
+                }
 
-                    if (! $transaction) {
-                        $transaction = new Transaction();
-                        $transaction->sum = $raw_transaction['amount'] * 1000;
-                        $transaction->bonus_sum = 0;
-                        $transaction->ext_id = $raw_transaction['txid'];
-                        $transaction->confirmations = $raw_transaction['confirmations'];
+                $txid = $raw_transaction['txid'];
+                $address = $raw_transaction['address'];
+                $transaction = Transaction::where(['ext_id' => $txid])->first();
 
-                        $user = User::where('bitcoin_address', $raw_transaction['address'])->first();
+                if ($transaction instanceof Transaction) {
+                    Log::info(
+                        sprintf("duplicated transaction found %id. exiting...", $transaction->id)
+                    );
 
-                        if ($user) {
-                            $transaction->user()->associate($user);
+                    return 0;
+                }
 
-                            $transaction->type = 3;
+                $user = User::where('bitcoin_address', $address)->first();
 
-                            $user->changeBalance($transaction);
+                if (!$user instanceof User) {
+                    continue;
+                }
 
-                            $transaction->save();
-                        }
-                    } else {
-                        //break;
-                    }
+                $transaction = new Transaction();
+                $transaction->sum = $raw_transaction['amount'] * 1000;
+                $transaction->bonus_sum = 0;
+                $transaction->ext_id = $txid;
+                $transaction->confirmations = $raw_transaction['confirmations'];
+                $transaction->address = $address;
+                $transaction->type = 3;
+
+                $transaction->user()->associate($user);
+
+                try {
+                    // TODO we need to make changes to balance only based on confirmed transactions (e.g. confirmation >= 6)
+                    $user->changeBalance($transaction);
+                    $transaction->save();
+                } catch (\Exception $exception) {
+                    Log::info(
+                        sprintf("user's %s balance was not updated.", $user->email)
+                    );
+
+                    return 1;
                 }
             }
 
-            sleep(1);
-        }
+            $offset += $batchSize;
+        } while (count($raw_transactions) > 0);
+
+        return 0;
     }
 }
