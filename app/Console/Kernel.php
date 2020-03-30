@@ -48,6 +48,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->hourly();
 
         //$schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
+        $schedule->command('bitcoin:getTransactions')->everyMinute();
 
         //add to bitcoin update every sec
 
