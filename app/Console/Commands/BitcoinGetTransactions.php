@@ -47,7 +47,7 @@ class BitcoinGetTransactions extends Command
         $batchSize = (int) $this->argument('batchSize');
 
         do {
-            $raw_transactions = $service->getTransactions($batchSize, $offset);
+            $raw_transactions = array_reverse($service->getTransactions($batchSize, $offset));
 
             foreach ($raw_transactions as $raw_transaction) {
                 if ('receive' !== $raw_transaction['category']) {
