@@ -9,7 +9,7 @@ return [
         'currency' => env('PANTALLO_CURRENCY'),
         'url' => env('PANTALLO_URL'),
         'ssl' => '',
-        'connectTimeout' => 5,
+        'connectTimeout' => 240,
     ],
 
     'additional' => [
