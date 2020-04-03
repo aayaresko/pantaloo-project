@@ -1148,6 +1148,18 @@ class PantalloGamesSystem implements GamesSystem
                     'validTo' => $validTo->format('Y-m-d'),
                 ], true);
 
+                if (!isset($freeRounds->response)) {
+                    //logs to any connection to db
+                    DB::connection('logs')->table('raw_log')->where('id', $rawLogId)->update([
+                        'response' => $freeRounds->message,
+                    ]);
+
+                    return $response = [
+                        'success' => !$freeRounds->error,
+                        'message' => $freeRounds->message,
+                    ];
+                }
+
                 $freeRoundsResponse = json_decode($freeRounds->response);
 
                 $freeRoundsId = $freeRoundsResponse->freeround_id;
