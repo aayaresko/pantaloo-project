@@ -303,6 +303,7 @@ class FreeSpins extends \App\Bonuses\Bonus
 
             User::where('id', $user->id)->update([
                 'bonus_id' => static::$id,
+                'free_spins' => $this->freeSpins
             ]);
 
             event(new OpenBonusEvent($user, 'welcome bonus'));
