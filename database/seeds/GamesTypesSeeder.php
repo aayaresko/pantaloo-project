@@ -10,7 +10,10 @@ class GamesTypesSeeder extends Seeder
 
     public function __construct()
     {
-        $this->types = config('appAdditional.defaultTypes');
+        $this->types = array_merge(
+            require join(DIRECTORY_SEPARATOR , ['data', 'game_types.php']),
+            config('appAdditional.defaultTypes')
+        );
     }
 
     /**
