@@ -14,8 +14,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * Class SlotController
+ *
+ * @deprecated
+ *
+ * @package App\Http\Controllers
+ */
 class SlotController extends Controller
 {
+    public function __construct()
+    {
+        die();
+    }
+
     public function test1()
     {
         $user = User::find(6);
