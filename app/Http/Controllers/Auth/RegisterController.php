@@ -139,13 +139,16 @@ class RegisterController extends Controller
             }
             //end validation
 
-            if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
-                /** @var  $address - generate random address for local */
+            /*if (GeneralHelper::isTestMode() || in_array(config('app.env'), ['local', 'stage'])) {
+                /** @var  $address - generate random address for local
                 $address = Str::random();
             } else {
                 $service = new Service();
                 $address = $service->getNewAddress('common');
-            }
+            }*/
+
+            $service = new Service();
+            $address = $service->getNewAddress();
 
             $user = User::create([
                 'name' => $data['name'],

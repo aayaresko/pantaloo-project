@@ -121,12 +121,15 @@ class AuthController extends Controller
 
         //act
         try {
-            if (GeneralHelper::isTestMode()) {
+            /*if (GeneralHelper::isTestMode()) {
                 $address = 'bitcoinTestAddress';
             } else {
                 $service = new Service();
                 $address = $service->getNewAddress('common');
-            }
+            }*/
+
+            $service = new Service();
+            $address = $service->getNewAddress();
 
             $user = User::create([
                 'name' => $data['name'],
@@ -292,7 +295,7 @@ class AuthController extends Controller
 //        }
         //start
         $service = new Service();
-        $address = $service->getNewAddress('common');
+        $address = $service->getNewAddress();
 
         $user = User::create([
             'name' => $data['name'],
@@ -482,12 +485,15 @@ class AuthController extends Controller
 
         //act
         try {
-            if (GeneralHelper::isTestMode()) {
+            /*if (GeneralHelper::isTestMode()) {
                 $address = 'bitcoinTestAddress';
             } else {
                 $service = new Service();
                 $address = $service->getNewAddress('common');
-            }
+            }*/
+
+            $service = new Service();
+            $address = $service->getNewAddress();
 
             $user = User::create([
                 'name' => $data['name'],

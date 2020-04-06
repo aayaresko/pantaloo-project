@@ -146,12 +146,15 @@ class AuthController extends Controller
         }
 //
 
-        if (GeneralHelper::isTestMode()) {
+        /*if (GeneralHelper::isTestMode()) {
             $address = 'bitcoinTestAddress';
         } else {
             $service = new Service();
             $address = $service->getNewAddress('common');
-        }
+        }*/
+
+        $service = new Service();
+        $address = $service->getNewAddress();
 
         if (isset($data['name'])) {
             $name = $data['name'];
