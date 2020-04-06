@@ -94,7 +94,9 @@ return [
         ],
     ],
 
-    'slotTypeId' => 10001,
+    //TODO there is no type with 10001 in DB!!!
+    //'slotTypeId' => 10001,
+    'slotTypeId' => 10011,
 
     'defaultTitle' => 'games',
 

@@ -1,39 +1,28 @@
 # CASINOBIT.IO
 
-Change the file mandatory - if you want to go to production to be able to deploy in production , you need your IP to be whitelisted (ask for it).
+##bitcoind
 
-# Branches
+####Getting started
 
-- Master is the production branch - Development is the local dev branch
+In order the software to work with the bictoin, you need to install, start and run local bitcoin node. You can do that by running headerless bitcoind.
+You can download the bitcoind [here](https://bitcoin.org/bin/bitcoin-core-0.19.1/bitcoin-0.19.1-x86_64-linux-gnu.tar.gz).
+In order to install bitcoind, read the README.md file in the archive, and follow the instructions.
+If you will keep 'prune' parameter as it is in the resources/bitcoin.conf file, the node will require you to have less than 8Gb of free space in your system.
 
-# Rules
+#####Update the resources/bitcoin.conf file:
+- Set rpcbind to your public IP in 'global' section for live bictoin network
+- Set rpcbind in the '[test]' section to your public IP for the TestNet bitcoin network (make sure that 'testnet' parameter in the config file is set to '1')
+- Set rpcauth in order to allow access to you node via rpc. You should specify <USERNAME>:<SALT>$<HASH> string. You can generate the string and a password with the ./share/rpcauth/rpcauth.py script in the Bitcoin Core repository.
 
-- Develop in Development - When development is tested on https://dev.casinobit.io - and you are satisfied (passed QA) - Then, merge with master, and it will deploy automatically in production (https://www.casinobit.io)
+#####Update .env file:
+- Set BITCOIN_HOST to the same public IP as you did in the resources/bitcoin.conf for rpcbind
+- Set BITCOIN_USERNAME to the same username as you did in the resources/bitcoin.conf for rpcauth
+- Set BITCOIN_PASSWORD to the password, you received after running the ./share/rpcauth/rpcauth.py
 
-# Set up your development git repo
-
-set up : 
-
-git init 
-
-git pull https://<credentials>@github.com/bciosec/casinobit.git development 
-
-git remote add origin https://github.com/bciosec/casinobit.git 
-
-git fetch 
-
-git checkout development 
-
-pushing : 
-
-git push origin development 
-
-To go in production, you will have to submit a merge request (development->master)
-
-# IMPORTANT :
-
-1. DB Changes will need to be done manually on Staging / Production environment (Both must be in synchronization)
-2. RPC calls to the node will not work from development - They will be enabled on request
-3. Change on static assets will need cloudflare cache clearing
-
-
+#####Running the node
+You should either add a cron job or run the node manually
+```
+bitcoind -conf=/root/resources/bitcoin.conf
+```
+The absolute path to the config file should be specified.
+You can find more info about bitcoin.conf variables and their values [here](https://jlopp.github.io/bitcoin-core-config-generator/).
