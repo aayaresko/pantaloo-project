@@ -23,11 +23,6 @@ use Illuminate\Support\Facades\Config;
  */
 class SlotController extends Controller
 {
-    public function __construct()
-    {
-        die();
-    }
-
     public function test1()
     {
         $user = User::find(6);

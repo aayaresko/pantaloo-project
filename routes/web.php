@@ -118,19 +118,19 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         'middleware' => 'language.switch',
     ], function () {
         Route::get('/', ['as' => 'main', 'uses' => 'HomeController@index']);
-        Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
-        Route::get('/dice', ['as' => 'dice', 'uses' => 'SlotController@dice']);
-        Route::get('/blackjack', ['as' => 'blackjack', 'uses' => 'SlotController@blackjack']);
-        Route::get('/roulette', ['as' => 'roulette', 'uses' => 'SlotController@roulette']);
-        Route::get('/baccarat', ['as' => 'baccarat', 'uses' => 'SlotController@baccarat']);
-        Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
-        Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
-        Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
+        //Route::get('/casino', ['as' => 'casino', 'uses' => 'SlotController@casino']);
+        //Route::get('/dice', ['as' => 'dice', 'uses' => 'SlotController@dice']);
+        //Route::get('/blackjack', ['as' => 'blackjack', 'uses' => 'SlotController@blackjack']);
+        //Route::get('/roulette', ['as' => 'roulette', 'uses' => 'SlotController@roulette']);
+        //Route::get('/baccarat', ['as' => 'baccarat', 'uses' => 'SlotController@baccarat']);
+        //Route::get('/numbers', ['as' => 'numbers', 'uses' => 'SlotController@numbers']);
+        //Route::get('/keno', ['as' => 'keno', 'uses' => 'SlotController@keno']);
+        //Route::get('/holdem', ['as' => 'holdem', 'uses' => 'SlotController@holdem']);
 
         Route::get('/games/{type_name?}', ['as' => 'games', 'uses' => 'IntegratedGamesController@index']);
         //Route::get('/slots', ['as' => 'slots', 'uses' => 'SlotController@index']);
-        Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
-        Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
+        //Route::get('/slots/filter', ['as' => 'slots.filter', 'uses' => 'SlotController@filter']);
+        //Route::get('/test', ['as' => 'test', 'uses' => 'SlotController@test']);
 
         Route::get('/page/{page_url}', ['as' => 'page', 'uses' => 'PageController@get']);
 
@@ -140,7 +140,7 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
         Route::get('/privacy-policy', ['as' => 'privacy-policy', 'uses' => 'ChatController@privacyPolicy']);
 
-        Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
+        //Route::get('/demo/{slot}/{game_id?}', ['as' => 'demo', 'uses' => 'SlotController@demo']);
 
         Route::get('/bonuses', ['as' => 'bonus.promo', 'uses' => 'BonusController@promo']);
 
@@ -192,13 +192,13 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
         Route::post('/bonus/cancel', ['as' => 'bonus.cancel', 'uses' => 'BonusController@cancel']);
         Route::post('/bonus/{bonus}/activate', ['as' => 'bonus.activate', 'uses' => 'BonusController@activate']);
 
-        Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
-        Route::get('/free', ['as' => 'freeSpins', 'uses' => 'SlotController@freeSpins']);
+        //Route::get('/slot/{slot}/{game_id?}', ['as' => 'slot', 'uses' => 'SlotController@get']);
+        //Route::get('/free', ['as' => 'freeSpins', 'uses' => 'SlotController@freeSpins']);
 
         Route::get('/free/stop', ['as' => 'stopFree', 'uses' => 'MoneyController@stopFreeGame']);
 
         //Route::get('/ajax/balance', ['as' => 'ajax.balance', 'uses' => 'MoneyController@balance']);
-        Route::get('/ajax/start/{slot}', ['as' => 'ajax.slot', 'uses' => 'SlotController@startUrl']);
+        //Route::get('/ajax/start/{slot}', ['as' => 'ajax.slot', 'uses' => 'SlotController@startUrl']);
 
         Route::get('/ajax/transactions/{transaction_id}/new', ['as' => 'ajax.transactions', 'uses' => 'MoneyController@newTransactions']);
         Route::get('/ajax/transactions/all', ['as' => 'ajax.allTransactions', 'uses' => 'MoneyController@allTransactions']);
@@ -219,9 +219,9 @@ Route::group(['middleware' => ['web', 'ip.country.block']], function () use ($la
 
                 Route::get('/users', ['as' => 'users', 'uses' => 'UsersController@index']);
                 Route::post('/user/{user}', ['as' => 'user.update', 'uses' => 'UsersController@update']);
-                Route::get('/slots', ['as' => 'admin.slots', 'uses' => 'SlotController@adminSlots']);
-                Route::get('/slot/{slot}', ['as' => 'admin.slot', 'uses' => 'SlotController@edit']);
-                Route::post('/slot/{slot}', ['uses' => 'SlotController@update']);
+                //Route::get('/slots', ['as' => 'admin.slots', 'uses' => 'SlotController@adminSlots']);
+                //Route::get('/slot/{slot}', ['as' => 'admin.slot', 'uses' => 'SlotController@edit']);
+                //Route::post('/slot/{slot}', ['uses' => 'SlotController@update']);
 
                 //admin for integrated games
                 //games
