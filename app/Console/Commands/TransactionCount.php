@@ -87,6 +87,7 @@ class TransactionCount extends Command
             //Formula:
             //
             //Net Gaming Revenue = *Bets - Wins - Bonuses - Admin Fee (18%)
+            //from DAV-1 Net Gaming Revenue = *(Bets - Wins - Bonuses - jackpot fees) x 0.8 --> (The Admin Fee (20%))
             // *we have bets as negative
             $userSum->sum = ($userSum->bets + $userSum->wins + $depositBonusSum) * (100 - $casinoFit) / 100;
             $userSum->save();
