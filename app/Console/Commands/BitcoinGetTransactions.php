@@ -73,7 +73,7 @@ class BitcoinGetTransactions extends Command
                 }
 
                 $transaction = new Transaction();
-                $transaction->sum = $raw_transaction['amount'] * GeneralHelper::getTransactionMultiplier();
+                $transaction->sum = $raw_transaction['amount'] * $transaction->getMultiplier();
                 $transaction->bonus_sum = 0;
                 $transaction->ext_id = $txid;
                 $transaction->confirmations = $raw_transaction['confirmations'];

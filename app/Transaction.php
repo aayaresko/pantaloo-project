@@ -51,7 +51,7 @@ class Transaction extends Model
 
     public function getBtcSum()
     {
-        return bcdiv($this->sum, 1000, 8);
+        return bcdiv($this->sum, $this->getMultiplier(), 8);
     }
 
     public function getSum()
@@ -232,5 +232,12 @@ class Transaction extends Model
     public function agent()
     {
         return $this->belongsTo(\App\User::class, 'agent_id', 'id');
+    }
+
+    public function getMultiplier()
+    {
+        $netType = env('BITCOIN_NET_TYPE', 'live');
+
+        return ('testnet' === $netType) ? 10000 : 1000;
     }
 }
