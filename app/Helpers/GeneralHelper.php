@@ -219,6 +219,11 @@ class GeneralHelper
         return Cookie::get('testmode', false) || Request::get('test') == 1;
     }
 
+    public static function getBTCAddressPattern()
+    {
+        return self::isTestMode() ? "^(2|m|n|tb1)[a-km-zA-HJ-NP-Z0-9]{25,39}$" : "^(1|3|bc1)[a-km-zA-HJ-NP-Z0-9]{25,39}$";
+    }
+
     public static function isSecureProtocol()
     {
         $isSecure = false;

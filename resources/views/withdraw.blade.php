@@ -33,7 +33,7 @@
                             <br><br>
                             <form action="" method="POST">               
                                 <span class="text">{{ trans('casino.your_bitcoin_address') }}</span>
-                                <input type="text" name="address"  pattern="^[13][a-km-zA-HJ-NP-Z0-9]{25,35}$" required>
+                                <input type="text" name="address"  pattern="{{ \Helpers\GeneralHelper::getBTCAddressPattern() }}" required>
                                 <span class="text">{{ trans('casino.amount_mbtc') }}</span>
                                 <input type="text" name="sum" pattern="^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]*\.[0-9]*[1-9][0-9]*)$" required>
                                 <button class="withdraw">{{ trans('casino.withdraw') }}</button>
