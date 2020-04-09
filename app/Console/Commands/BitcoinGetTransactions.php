@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use App\User;
 use App\Transaction;
 use App\Bitcoin\Service;
+use Helpers\GeneralHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use League\Flysystem\Exception;
 
 class BitcoinGetTransactions extends Command
 {
@@ -73,7 +73,7 @@ class BitcoinGetTransactions extends Command
                 }
 
                 $transaction = new Transaction();
-                $transaction->sum = $raw_transaction['amount'] * 1000;
+                $transaction->sum = $raw_transaction['amount'] * $transaction->getMultiplier();
                 $transaction->bonus_sum = 0;
                 $transaction->ext_id = $txid;
                 $transaction->confirmations = $raw_transaction['confirmations'];
