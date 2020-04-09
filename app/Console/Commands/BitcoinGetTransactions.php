@@ -60,7 +60,7 @@ class BitcoinGetTransactions extends Command
 
                 if ($transaction instanceof Transaction) {
                     Log::info(
-                        sprintf("duplicated transaction found %id. exiting...", $transaction->id)
+                        sprintf("duplicated transaction found %d. exiting...", $transaction->id)
                     );
 
                     return 0;
