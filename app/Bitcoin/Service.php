@@ -81,6 +81,13 @@ class Service
         return static::getResponse($response);
     }
 
+    public function getBalance()
+    {
+        $response = $this->client->sendCommand(new Command('getbalance'));
+
+        return static::getResponse($response);
+    }
+
     public function getTransactions($count, $offset = 0)
     {
         $response = $this->client->sendCommand(new Command('listtransactions', ['*', $count, $offset]));
