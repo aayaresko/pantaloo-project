@@ -2,6 +2,7 @@
 
 // TODO Lior - make sure to change for SSL (https)
 return [
-    'connection' => 'http://' . env('BITCOIN_USERNAME') . ':' . env('BITCOIN_PASSWORD') . '@' . env('BITCOIN_HOST') . ':' . env('BITCOIN_PORT')
+    'connection' => 'http://' . env('BITCOIN_USERNAME') . ':' . env('BITCOIN_PASSWORD') . '@' . env('BITCOIN_HOST') . ':' . env('BITCOIN_PORT'),
+    'net_type' => env('BITCOIN_NET_TYPE', 'live')
 ];
 
