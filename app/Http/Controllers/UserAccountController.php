@@ -11,9 +11,7 @@ use App\Http\Requests;
 use Helpers\BonusHelper;
 use App\ModernExtraUsers;
 use Illuminate\Http\Request;
-use App\Models\SystemNotification;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Withdraw as WithdrawModel;
 use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class UserAccountController extends Controller
@@ -157,26 +155,27 @@ class UserAccountController extends Controller
 
             $param['columns'] = [
                 0 => 'created_at',
-                1 => 'transaction_id',
+                1 => 'id',
                 2 => 'confirmations',
-                3 => 'value'
+                3 => 'sum'
             ];
 
             $param['columnsAlias'] = [
                 0 => 'created_at as date',
-                1 => 'transaction_id as id',
-                2 => 'confirmations',
-                3 => 'value as amount'
+                1 => 'id',
+                2 => 'confirmations as status',
+                3 => 'sum as amount'
             ];
 
             $param['whereCompare'] = [
-                ['user_id', '=', $user->id]
+                ['type', '=', 3],//to do fix this
+                ['user_id', '=', $user->id],
             ];
 
             /* ACT */
             $whereCompare = $param['whereCompare'];
 
-            $countSum = SystemNotification::select($param['columns'])->where($whereCompare)
+            $countSum = Transaction::select($param['columns'])->where($whereCompare)
                 ->skip($request->startItem)->take($request->getItem)->get()->count();
 
             $totalData = $countSum;
@@ -186,10 +185,10 @@ class UserAccountController extends Controller
             $dir = $request->input('order.0.dir');
 
             /* SORT */
-            $items = SystemNotification::select($param['columnsAlias'])->where($whereCompare)
+            $items = Transaction::select($param['columnsAlias'])->where($whereCompare)
                 ->offset($request->startItem)->limit($request->getItem)->orderBy($order, $dir)->get();
 
-            $nextCount = SystemNotification::where($whereCompare)
+            $nextCount = Transaction::where($whereCompare)
                 ->skip($request->getItem)->take($request->getItem + $request->stepItem)->get()->count();
             /* END */
 
