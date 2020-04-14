@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\User;
 use App\Transaction;
 use App\Bitcoin\Service;
-use Helpers\GeneralHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -56,6 +55,7 @@ class BitcoinGetTransactions extends Command
 
                 $txid = $raw_transaction['txid'];
                 $address = $raw_transaction['address'];
+                $confirmations = $raw_transaction['confirmations'];
                 $transaction = Transaction::where(['ext_id' => $txid])->first();
 
                 if ($transaction instanceof Transaction) {
@@ -72,11 +72,16 @@ class BitcoinGetTransactions extends Command
                     continue;
                 }
 
+                // do not save unconfirmed transactions
+                if (config('appAdditional.minConfirmBtc') > $confirmations) {
+                    continue;
+                }
+
                 $transaction = new Transaction();
                 $transaction->sum = $raw_transaction['amount'] * $transaction->getMultiplier();
                 $transaction->bonus_sum = 0;
                 $transaction->ext_id = $txid;
-                $transaction->confirmations = $raw_transaction['confirmations'];
+                $transaction->confirmations = $confirmations;
                 $transaction->address = $address;
                 $transaction->type = 3;
 

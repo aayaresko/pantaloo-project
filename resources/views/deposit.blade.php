@@ -146,13 +146,13 @@
                                 tdStatus.addClass('notConfirm');
                         }
                     },
-                    "initComplete": function (settings, data) {
+                    /*"initComplete": function (settings, data) {
                         if (data.status == true) {
                             if (data.nextCount == 0) {
                                 $('.loadMoredataTableBtn').hide();
                             }
                         }
-                    }
+                    }*/
                 });
 
 
