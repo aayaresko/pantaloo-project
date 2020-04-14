@@ -236,8 +236,8 @@ class Transaction extends Model
 
     public function getMultiplier()
     {
-        $netType = env('BITCOIN_NET_TYPE', 'live');
+        $netType = config('bitcoin.net_type', 'live');
 
-        return ('testnet' === $netType) ? 10000 : 1000;
+        return ('testnet' === $netType) ? 100000 : 1000;
     }
 }
