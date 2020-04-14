@@ -749,11 +749,11 @@
                         }
                     }
 
-                    // if (data.balance_info) {
-                    //     $(".balancebox-getbalance").html(data.balance_info.balance);
-                    //     $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
-                    //     $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
-                    // }
+                    if (data.balance_info) {
+                         $(".balancebox-getbalance").html(data.balance_info.balance);
+                         $(".balancebox-getrealbalance").html(data.balance_info.real_balance);
+                         $(".balancebox-getbonusbalance").html(data.balance_info.bonus_balance);
+                    }
                 }
             },
             error: function (data) {
