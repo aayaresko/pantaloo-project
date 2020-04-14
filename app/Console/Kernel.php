@@ -45,23 +45,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('inspire')->hourly();
-
-        //$schedule->command('bitcoin:getTransactions')->cron('* * * * * *');
         $schedule->command('bitcoin:getTransactions')->everyMinute();
 
         //add to bitcoin update every sec
 
         //$schedule->command('bonus:jobs')->everyMinute();
 
-        //get games pantallo
-        $schedule->command('games:PantalloGetGames')->hourly();
-        //get games pantallo with image
-        $schedule->command('games:PantalloGetGames getImage')->dailyAt('00:30');
         $schedule->command('transaction:count')->dailyAt('00:00');
         //optimizations
         //clear raw log
-        $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
         $schedule->command('optimization:ClearRawLog')->dailyAt('00:40');
         $schedule->command('createSitemap')->dailyAt('01:40');
 
