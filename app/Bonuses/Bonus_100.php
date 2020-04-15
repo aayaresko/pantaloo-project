@@ -2,13 +2,12 @@
 
 namespace App\Bonuses;
 
+use App\Models\SystemNotification;
 use DB;
 use App\User;
-use App\BonusLog;
 use App\UserBonus;
 use Carbon\Carbon;
 use App\Transaction;
-use App\Models\GamesList;
 use Helpers\GeneralHelper;
 use App\Bonus as BonusModel;
 use App\Events\OpenBonusEvent;
@@ -17,10 +16,7 @@ use App\Events\CloseBonusEvent;
 use App\Events\BonusCancelEvent;
 use App\Events\BonusDepositEvent;
 use App\Modules\Others\DebugGame;
-use App\Models\SystemNotification;
 use App\Events\DepositWagerDoneEvent;
-use App\Modules\Games\PantalloGamesSystem;
-use App\Models\Pantallo\GamesPantalloSessionGame;
 
 class Bonus_100 extends \App\Bonuses\Bonus
 {
@@ -157,13 +153,18 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     throw new \Exception(trans('casino.try_get_bonuses_without_confirmation_email'));
                 }
 
-                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                /*$notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
                     ->where('type_id', 1)
+                    ->count();*/
+
+                $depositTransactions = Transaction::deposits()
+                    ->where('user_id', $user->id)
                     ->count();
 
-                if (!GeneralHelper::isTestMode() && $notificationTransactionDeposits != ($this->depositsCount - 1)) {
-                    throw new \Exception('You cannot activate this bonus in accordance with ' .
-                        'clause 3.4; 4.4; 5.4 of the bonus terms & conditions.');
+                if (!GeneralHelper::isTestMode() && $depositTransactions != $this->depositsCount) {
+                    throw new \Exception(
+                        'You cannot activate this bonus in accordance with clause 3.4 and 4.4 of the bonus terms & conditions.'
+                    );
                 }
 
                 if ($user->bonuses()->where('bonus_id', static::$id)->withTrashed()->count() > 0) {
