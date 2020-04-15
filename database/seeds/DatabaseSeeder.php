@@ -31,6 +31,5 @@ class DatabaseSeeder extends Seeder
         $this->call(RestrictionTablesSeeder::class);
         $this->call(DepositWithoutTransactionSeeder::class);
         $this->call(CurrenciesSeeder::class);
-        $this->call(SlotsSeeder::class);
     }
 }
