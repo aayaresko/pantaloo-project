@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Bonuses\Bonus;
 use App\User;
 use App\Transaction;
 use App\Bitcoin\Service;
+use Helpers\BonusHelper;
+use Helpers\GeneralHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -86,11 +89,11 @@ class BitcoinGetTransactions extends Command
                 $transaction->type = 3;
 
                 $transaction->user()->associate($user);
+                $transaction->save();
 
                 try {
-                    // TODO we need to make changes to balance only based on confirmed transactions (e.g. confirmation >= 6)
                     $user->changeBalance($transaction);
-                    $transaction->save();
+                    $this->activateUserBonus($user, $transaction->sum);
                 } catch (\Exception $exception) {
                     Log::info(
                         sprintf("user's %s balance was not updated.", $user->email)
@@ -104,5 +107,44 @@ class BitcoinGetTransactions extends Command
         } while (count($raw_transactions) > 0);
 
         return 0;
+    }
+
+    private function activateUserBonus(User $user, $sum)
+    {
+        $message = "user's %s bonus %d was NOT activated.";
+        $mode = 0;
+
+        if (is_null($user->bonus_id)) {
+            return false;
+        }
+
+        try {
+            $class = BonusHelper::getClass($user->bonus_id);
+            $bonus = new $class($user);
+        } catch (\Exception $exception) {
+            Log::info(sprintf("user's %s bonus %d not found.", $user->email, $user->bonus_id));
+
+            return false;
+        }
+
+        /** @var Bonus $bonus */
+
+        if (!$bonus->bonusAvailable(compact('mode'))) {
+            Log::info(sprintf("user's %s bonus %d is NOT available.", $user->email, $bonus->id));
+
+            return false;
+        }
+
+        $amount = GeneralHelper::formatAmount($sum);
+        $response = $bonus->realActivation(compact('amount'));
+        $success = $response['success'];
+
+        if (true === $success) {
+            $message = "user's %s bonus %d was activated.";
+        }
+
+        Log::info(sprintf($message, $user->email, $bonus->id));
+
+        return $success;
     }
 }
