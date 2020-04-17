@@ -40,8 +40,14 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     const SPECIAL = 1313;
 
-    public function userCanActivate(User $user)
+    public function userCanActivate()
     {
+        $user = $this->user;
+
+        if (!$user instanceof User) {
+            return true;
+        }
+
         $depositTransactions = Transaction::deposits()
             ->where('user_id', $user->id)
             ->count();
@@ -79,7 +85,9 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 }
 
                 $countBonuses = $this->user->bonuses()
-                    ->where('bonus_id', static::$id)->withTrashed()->count();
+                    ->where('bonus_id', static::$id)
+                    ->withTrashed()
+                    ->count();
 
                 if ($countBonuses > 0) {
                     return false;
@@ -165,7 +173,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     ->where('type_id', 1)
                     ->count();*/
 
-                if (!GeneralHelper::isTestMode() && !$this->userCanActivate($user)) {
+                if (!GeneralHelper::isTestMode() && !$this->userCanActivate()) {
                     throw new \Exception(
                         'You cannot activate this bonus in accordance with clause 3.4 and 4.4 of the bonus terms & conditions.'
                     );
