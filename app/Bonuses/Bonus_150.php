@@ -23,4 +23,6 @@ class Bonus_150 extends Bonus_100
     protected $timeActiveBonusDays = 30;
 
     protected $maxAmount = 1500;
+
+    protected $minActivationBonusBalance = 0.1;
 }

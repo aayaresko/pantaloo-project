@@ -38,6 +38,8 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     protected $maxAmount = 2000;
 
+    protected $minActivationBonusBalance = 0.1;
+
     const SPECIAL = 1313;
 
     public function userCanActivate()
@@ -97,6 +99,11 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     ->count();
 
                 if ($countBonuses > 0) {
+                    return false;
+                }
+
+                // If there is bonus balance, disable other bonus availability, unless the bonus is below 0.10
+                if (1 === bccomp($this->user->bonus_balance, $this->minActivationBonusBalance, 2)) {
                     return false;
                 }
             }
