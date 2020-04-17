@@ -132,7 +132,6 @@ class Bonus_100 extends \App\Bonuses\Bonus
             // already activated bonuses found!
             $countBonuses = $this->user->bonuses()
                 ->where('activated', 1)
-                ->withTrashed()
                 ->count();
 
             if ($countBonuses > 0) {
