@@ -59,6 +59,8 @@ class BitcoinGetTransactions extends Command
                 $txid = $raw_transaction['txid'];
                 $address = $raw_transaction['address'];
                 $confirmations = $raw_transaction['confirmations'];
+                $amount = $raw_transaction['amount'] * Transaction::getMultiplier();
+
                 $transaction = Transaction::where(['ext_id' => $txid])->first();
 
                 if ($transaction instanceof Transaction) {
@@ -80,27 +82,8 @@ class BitcoinGetTransactions extends Command
                     continue;
                 }
 
-                $transaction = new Transaction();
-                $transaction->sum = $raw_transaction['amount'] * $transaction->getMultiplier();
-                $transaction->bonus_sum = 0;
-                $transaction->ext_id = $txid;
-                $transaction->confirmations = $confirmations;
-                $transaction->address = $address;
-                $transaction->type = 3;
-
-                $transaction->user()->associate($user);
-                $transaction->save();
-
-                try {
-                    $user->changeBalance($transaction);
-                    $this->activateUserBonus($user, $transaction->sum);
-                } catch (\Exception $exception) {
-                    Log::info(
-                        sprintf("user's %s balance was not updated.", $user->email)
-                    );
-
-                    return 1;
-                }
+                $this->executeBonusActivation($user, $amount);
+                $this->submitBalanceTransaction($user, $amount, $txid, $confirmations, $address);
             }
 
             $offset += $batchSize;
@@ -109,20 +92,48 @@ class BitcoinGetTransactions extends Command
         return 0;
     }
 
-    private function activateUserBonus(User $user, $sum)
+    private function submitBalanceTransaction(User $user, $amount, $txid, $confirmations, $address)
+    {
+        $transaction = new Transaction();
+        $transaction->sum = $amount;
+        $transaction->bonus_sum = 0;
+        $transaction->ext_id = $txid;
+        $transaction->confirmations = $confirmations;
+        $transaction->address = $address;
+        $transaction->type = 3;
+
+        $transaction->user()->associate($user);
+
+        try {
+            $user->changeBalance($transaction);
+            $transaction->save();
+
+            return true;
+        } catch (\Exception $exception) {
+            Log::info(
+                sprintf("user's %s balance was not updated.", $user->email)
+            );
+
+            return false;
+        }
+    }
+
+    private function executeBonusActivation(User $user, $amount)
     {
         $message = "user's %s bonus %d was NOT activated.";
-        $mode = 0;
+        $mode = 2;
+        $bonusId = $user->bonus_id;
+        $email = $user->email;
 
-        if (is_null($user->bonus_id)) {
+        if (is_null($bonusId)) {
             return false;
         }
 
         try {
-            $class = BonusHelper::getClass($user->bonus_id);
+            $class = BonusHelper::getClass($bonusId);
             $bonus = new $class($user);
         } catch (\Exception $exception) {
-            Log::info(sprintf("user's %s bonus %d not found.", $user->email, $user->bonus_id));
+            Log::info(sprintf("user's %s bonus %d not found.", $email, $bonusId));
 
             return false;
         }
@@ -130,12 +141,12 @@ class BitcoinGetTransactions extends Command
         /** @var Bonus $bonus */
 
         if (!$bonus->bonusAvailable(compact('mode'))) {
-            Log::info(sprintf("user's %s bonus %d is NOT available.", $user->email, $user->bonus_id));
+            Log::info(sprintf("user's %s bonus %d is NOT available.", $email, $bonusId));
 
             return false;
         }
 
-        $amount = GeneralHelper::formatAmount($sum);
+        $amount = GeneralHelper::formatAmount($amount);
         $response = $bonus->realActivation(compact('amount'));
         $success = $response['success'];
 
@@ -143,7 +154,7 @@ class BitcoinGetTransactions extends Command
             $message = "user's %s bonus %d was activated.";
         }
 
-        Log::info(sprintf($message, $user->email, $user->bonus_id));
+        Log::info(sprintf($message, $email, $bonusId));
 
         return $success;
     }
