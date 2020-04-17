@@ -55,6 +55,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
         return $depositTransactions === ($this->depositsCount - 1);
     }
 
+    // use since 17.04.2020
     public function bonusAvailable($params = [])
     {
         $user = $this->user;
@@ -75,12 +76,18 @@ class Bonus_100 extends \App\Bonuses\Bonus
         if ($mode == 0) {
             //check if user isset
             if (!is_null($user)) {
-                //hide if deposit count
-                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
-                    ->where('type_id', 1)
-                    ->count();
+                // bonus should not be available if a user activates other bonus
+                $bonus = $this->user->bonuses()
+                    ->where('bonus_id', '!=', static::$id)
+                    ->where('activated', 1)
+                    ->first();
 
-                if ($notificationTransactionDeposits > $this->depositsCount) {
+                if ($bonus instanceof UserBonus) {
+                    return false;
+                }
+
+                // only for current user's deposits amount
+                if (!$this->userCanActivate()) {
                     return false;
                 }
 
@@ -123,6 +130,53 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
             if ($countBonuses > 0) {
                 return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @deprecated
+     * copied 17.04.2020
+     */
+    public function bonusAvailableOld($params = [])
+    {
+        $user = $this->user;
+        $mode = 0;
+        if (isset($params['mode'])) {
+            $mode = $params['mode'];
+        }
+
+        //GENERAL check****
+        $bonusInfo = BonusModel::where('id', static::$id)->where('public', 1)->first();
+
+        if (is_null($bonusInfo)) {
+            return false;
+        }
+        //GENERAL check****
+
+        //additional check****
+        if ($mode == 0) {
+            //check if user isset
+            if (!is_null($user)) {
+                //hide if deposit count
+                $notificationTransactionDeposits = SystemNotification::where('user_id', $user->id)
+                    ->where('type_id', 1)
+                    ->count();
+
+                if ($notificationTransactionDeposits > $this->depositsCount) {
+                    return false;
+                }
+
+                $countBonuses = $this->user->bonuses()
+                    ->where('bonus_id', static::$id)
+                    ->withTrashed()
+                    ->count();
+
+                if ($countBonuses > 0) {
+                    return false;
+                }
             }
         }
 
