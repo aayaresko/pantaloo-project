@@ -37,7 +37,7 @@ class GeneralHelper
      */
     public static function fullRequest()
     {
-        $request = url('/') . $_SERVER['REQUEST_URI'];
+        $request = url('/') . (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
 
         return $request;
     }
