@@ -295,7 +295,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 ]);
 
                 $this->dataBonus['transaction_id'] = $transaction->id;
-                $this->dataBonus['wagered_sum'] = $this->playFactor * $bonusSum;
+                $this->dataBonus['wagered_sum'] = $this->playFactor * ($bonusSum + $deposit);
 
                 $dataUpdateBonus['data'] = json_encode($this->dataBonus);
                 $dataUpdateBonus['activated'] = 1;
