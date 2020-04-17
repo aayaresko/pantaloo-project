@@ -130,7 +130,7 @@ class BitcoinGetTransactions extends Command
         /** @var Bonus $bonus */
 
         if (!$bonus->bonusAvailable(compact('mode'))) {
-            Log::info(sprintf("user's %s bonus %d is NOT available.", $user->email, $bonus->id));
+            Log::info(sprintf("user's %s bonus %d is NOT available.", $user->email, $user->bonus_id));
 
             return false;
         }
@@ -143,7 +143,7 @@ class BitcoinGetTransactions extends Command
             $message = "user's %s bonus %d was activated.";
         }
 
-        Log::info(sprintf($message, $user->email, $bonus->id));
+        Log::info(sprintf($message, $user->email, $user->bonus_id));
 
         return $success;
     }
