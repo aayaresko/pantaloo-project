@@ -42,7 +42,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     const SPECIAL = 1313;
 
-    public function userCanActivate()
+    public function checkDepositsCountMatch()
     {
         $user = $this->user;
 
@@ -89,7 +89,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 }
 
                 // only for current user's deposits amount
-                if (!$this->userCanActivate()) {
+                if (!$this->checkDepositsCountMatch()) {
                     return false;
                 }
 
@@ -114,7 +114,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                 return true;
             }
 
-            if (!$this->userCanActivate()) {
+            if (!$this->checkDepositsCountMatch()) {
                 return false;
             }
 
@@ -265,7 +265,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
                     ->where('type_id', 1)
                     ->count();*/
 
-                if (!GeneralHelper::isTestMode() && !$this->userCanActivate()) {
+                if (!GeneralHelper::isTestMode() && !$this->checkDepositsCountMatch()) {
                     throw new \Exception(
                         'You cannot activate this bonus in accordance with clause 3.4 and 4.4 of the bonus terms & conditions.'
                     );
