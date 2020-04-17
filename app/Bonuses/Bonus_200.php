@@ -16,7 +16,7 @@ class Bonus_200 extends Bonus_100
 
     protected $depositsCount = 1;
 
-    protected $playFactor = 50;
+    protected $playFactor = 40;
 
     protected $expireDays = 30;
 

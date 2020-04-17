@@ -30,7 +30,7 @@ class Bonus_100 extends \App\Bonuses\Bonus
 
     protected $depositsCount = 3;
 
-    protected $playFactor = 50;
+    protected $playFactor = 40;
 
     protected $expireDays = 30;
 
