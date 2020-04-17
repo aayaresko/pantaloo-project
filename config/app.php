@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'accuracyValues' => 5,
+    'accuracyValues' => 8,
 
     'foreignPages' => [
         'main' => env('MAIN_ADDRESS'),
