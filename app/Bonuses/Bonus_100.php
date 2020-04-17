@@ -95,6 +95,37 @@ class Bonus_100 extends \App\Bonuses\Bonus
             }
         }
 
+        if (2 === $mode) {
+            if (!$user instanceof User) {
+                return true;
+            }
+
+            if (!$this->userCanActivate()) {
+                return false;
+            }
+
+            // has duplicated activated bonuses
+            $countBonuses = $this->user->bonuses()
+                ->where('bonus_id', static::$id)
+                ->where('activated', 1)
+                ->withTrashed()
+                ->count();
+
+            if ($countBonuses > 0) {
+                return false;
+            }
+
+            // already activated bonuses found!
+            $countBonuses = $this->user->bonuses()
+                ->where('activated', 1)
+                ->withTrashed()
+                ->count();
+
+            if ($countBonuses > 0) {
+                return false;
+            }
+        }
+
         return true;
     }
 
